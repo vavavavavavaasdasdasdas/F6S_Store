@@ -51,7 +51,6 @@
             <table data-table-key="admin-danh-muc-kich-co-danh-sach-1" class="admin-table data-table">
                 <thead>
                     <tr><th scope="col" class="row-number">STT</th>
-                        <th style="width: 80px;">ID</th>
                         <th th:text="${kind == 'sizes' ? 'Kích cỡ' : (kind == 'materials' ? 'Tên chất liệu' : (kind == 'soles' ? 'Tên đế giày' : 'Tên thương hiệu'))}"></th>
                         <th th:if="${kind != 'sizes'}" style="width: 160px;">Trạng thái</th>
                         <th th:if="${kind == 'materials' or kind == 'soles'}">Đang dùng</th>
@@ -60,7 +59,6 @@
                 </thead>
                 <tbody>
                     <tr th:each="item, rowIndex : ${items}"><td class="row-number" th:text="${items.number * items.size + rowIndex.count}"></td>
-                        <td th:text="${item.id}"></td>
                         <td>
                             <strong th:text="${kind == 'sizes' ? item.sizeValue : item.name}"></strong>
                         </td>
@@ -93,7 +91,7 @@
                         </td>
                     </tr>
                     <tr th:if="${items.empty}">
-                        <td th:colspan="${kind == 'sizes' ? 4 : (kind == 'materials' or kind == 'soles' ? 6 : 5)}" class="catalog-empty text-center py-4">
+                        <td th:colspan="${kind == 'sizes' ? 3 : (kind == 'materials' or kind == 'soles' ? 5 : 4)}" class="catalog-empty text-center py-4">
                             Không tìm thấy dữ liệu phù hợp. Chọn nút <strong>Thêm</strong> để tạo bản ghi mới.
                         </td>
                     </tr>
