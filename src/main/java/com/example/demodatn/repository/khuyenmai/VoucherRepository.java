@@ -3,7 +3,7 @@ import com.example.demodatn.entity.khuyenmai.Voucher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
-public interface VoucherRepository extends JpaRepository<Voucher, Integer> {
+public interface VoucherRepository extends JpaRepository<Voucher, Integer>, org.springframework.data.jpa.repository.JpaSpecificationExecutor<Voucher> {
     Optional<Voucher> findByCode(String code);
     Optional<Voucher> findByCodeIgnoreCase(String code);
     boolean existsByCodeIgnoreCaseAndIdNot(String code, Integer id);

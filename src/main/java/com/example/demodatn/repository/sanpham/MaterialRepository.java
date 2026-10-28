@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
-public interface MaterialRepository extends JpaRepository<Material, Integer> {
+public interface MaterialRepository extends JpaRepository<Material, Integer>, org.springframework.data.jpa.repository.JpaSpecificationExecutor<Material> {
     boolean existsByNameIgnoreCaseAndIdNot(String name, Integer id);
     boolean existsByName(String name);
     List<Material> findByStatusTrueOrderByNameAscIdAsc();

@@ -1,18 +1,27 @@
 package com.example.demodatn.controller.admin.khachhang;
 import com.example.demodatn.dto.khachhang.CustomerDto;
+import com.example.demodatn.entity.khachhang.Customer;
 import com.example.demodatn.exception.PeopleValidationException;
 import com.example.demodatn.repository.khachhang.CustomerRepository;
 import com.example.demodatn.service.PeopleService;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/admin/customers")
@@ -26,10 +35,49 @@ public class AdminCustomerController {
     private final com.example.demodatn.util.Pagination pagination;
 
     @GetMapping
-    public String list(@RequestParam(defaultValue="") String keyword,@RequestParam(defaultValue="0") String page,Model model) {
-        String query=keyword.trim();
-        var result=pagination.load(page,Sort.by(Sort.Direction.DESC,"id"),request->repository.findByFullNameContainingIgnoreCaseOrPhoneContainingOrEmailContainingIgnoreCase(query,query,query,request));
-        model.addAttribute("peoplePage",result);model.addAttribute("keyword",keyword);
+    public String list(@RequestParam(defaultValue="") String keyword,
+                       @RequestParam(required=false) Boolean status,
+                       @RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+                       @RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
+                       @RequestParam(defaultValue="0") String page,
+                       Model model) {
+        String query=keyword==null?"":keyword.trim();
+        Specification<Customer> spec = (root, cq, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if (!query.isEmpty()) {
+                var userJoin = root.join("user", JoinType.LEFT);
+                String pattern = "%" + query.toLowerCase(Locale.ROOT) + "%";
+                predicates.add(cb.or(
+                        cb.like(cb.lower(cb.coalesce(root.get("customerCode"), "")), pattern),
+                        cb.like(cb.lower(cb.coalesce(root.get("fullName"), "")), pattern),
+                        cb.like(cb.lower(cb.coalesce(root.get("phone"), "")), pattern),
+                        cb.like(cb.lower(cb.coalesce(root.get("email"), "")), pattern),
+                        cb.like(cb.lower(cb.coalesce(userJoin.get("username"), "")), pattern)
+                ));
+            }
+            if (status != null) {
+                predicates.add(cb.equal(root.get("status"), status));
+            }
+            if (from != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("createdAt"), from.atStartOfDay()));
+            }
+            if (to != null) {
+                predicates.add(cb.lessThan(root.get("createdAt"), to.plusDays(1).atStartOfDay()));
+            }
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+        var result=pagination.load(page,Sort.by(Sort.Direction.DESC,"id"),request->repository.findAll(spec,request));
+        model.addAttribute("peoplePage",result);
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("status",status);
+        model.addAttribute("from",from);
+        model.addAttribute("to",to);
+        int activeFilterCount = 0;
+        if (!query.isEmpty()) activeFilterCount++;
+        if (status != null) activeFilterCount++;
+        if (from != null) activeFilterCount++;
+        if (to != null) activeFilterCount++;
+        model.addAttribute("activeFilterCount", activeFilterCount);
         return "admin/khach-hang/danh-sach";
     }
     @GetMapping("/create")

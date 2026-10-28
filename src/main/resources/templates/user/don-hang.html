@@ -1,5 +1,33 @@
 <!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-nguoi-dung :: html}"><body><div th:fragment="content" class="container mt-4">
-    <h2 class="mb-4">Lịch sử Đơn Hàng</h2>
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <h2 class="mb-0">Lịch sử Đơn Hàng</h2>
+        <span class="filter-state-badge" th:if="${activeFilterCount != null and activeFilterCount > 0}" th:text="'Đang áp dụng ' + ${activeFilterCount} + ' bộ lọc'"></span>
+    </div>
+    <form th:action="@{/orders}" method="get" class="filter-bar mb-3" role="search">
+        <div>
+            <label class="form-label" for="user-order-q">Mã đơn hàng</label>
+            <input type="search" id="user-order-q" name="q" class="form-control" th:value="${q}" placeholder="Nhập mã đơn...">
+        </div>
+        <div>
+            <label class="form-label" for="user-order-status">Trạng thái</label>
+            <select id="user-order-status" name="status" class="form-select">
+                <option value="">Tất cả trạng thái</option>
+                <option th:each="entry : ${statusLabels}" th:value="${entry.key}" th:text="${entry.value}" th:selected="${status == entry.key}"></option>
+            </select>
+        </div>
+        <div>
+            <label class="form-label" for="user-order-from">Từ ngày</label>
+            <input type="date" id="user-order-from" name="from" class="form-control" th:value="${from}">
+        </div>
+        <div>
+            <label class="form-label" for="user-order-to">Đến ngày</label>
+            <input type="date" id="user-order-to" name="to" class="form-control" th:value="${to}">
+        </div>
+        <div class="filter-bar-actions">
+            <button type="submit" class="btn btn-primary">Lọc</button>
+            <a th:href="@{/orders}" class="btn btn-outline-secondary">Xóa lọc</a>
+        </div>
+    </form>
     <div class="bg-white p-4 shadow-sm border rounded">
         <div class="table-responsive" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="user-don-hang-1" class="table table-hover align-middle data-table">
             <thead class="table-light">
@@ -23,7 +51,7 @@
                         <a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-sm btn-outline-info">Xem chi tiết</a>
                     </td>
                 </tr>
-            <tr th:if="${#lists.isEmpty(orders)}"><td colspan="6" class="empty-state">Bạn chưa có đơn hàng. <a href="/products">Chọn sản phẩm</a></td></tr></tbody>
+            <tr th:if="${#lists.isEmpty(orders)}"><td colspan="6" class="empty-state">Bạn chưa có đơn hàng phù hợp. <a href="/products">Chọn sản phẩm</a></td></tr></tbody>
         </table></div>
     </div>
 <nav th:replace="~{fragments/phan-trang :: phan-trang(${orderPage},'page')}"></nav></div>

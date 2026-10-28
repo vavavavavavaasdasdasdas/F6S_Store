@@ -9,9 +9,14 @@ import com.example.demodatn.service.donhang.OrderService;
 import com.example.demodatn.service.donhang.OrderStatusService;
 import com.example.demodatn.service.donhang.PricingService;
 import com.example.demodatn.service.khuyenmai.VoucherService;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +26,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -162,9 +170,11 @@ public class OrderController {
 
         BigDecimal fee = subTotal.compareTo(freeShippingThreshold) >= 0 ? BigDecimal.ZERO : shippingFee;
         Customer customer = getCustomer(principal);
-        if(request.getShippingAddressId()!=null)shippingAddresses.owned(principal.getName(),request.getShippingAddressId());
-
         try {
+            if(request.getShippingAddressId()!=null) {
+                if (principal == null) throw new IllegalArgumentException("Địa chỉ nhận hàng không hợp lệ.");
+                shippingAddresses.owned(principal.getName(),request.getShippingAddressId());
+            }
             Order order = orderService.placeOrder(request, cart, customer, fee);
             session.removeAttribute("cart");
             return "redirect:/orders/success/" + order.getId();
@@ -178,11 +188,56 @@ public class OrderController {
     @org.springframework.beans.factory.annotation.Autowired private com.example.demodatn.util.Pagination pagination;
 
     @GetMapping("/orders")
-    public String history(Principal principal,@RequestParam(defaultValue="0") String page,Model model) {
+    public String history(Principal principal,
+                          @RequestParam(defaultValue="") String q,
+                          @RequestParam(required=false) String status,
+                          @RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+                          @RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
+                          @RequestParam(defaultValue="0") String page,
+                          Model model) {
         Customer customer = getCustomer(principal);
-        var result=customer==null ? new org.springframework.data.domain.PageImpl<Order>(List.of(),pagination.request(page,0,org.springframework.data.domain.Sort.unsorted()),0) : pagination.load(page,org.springframework.data.domain.Sort.unsorted(),request->orderRepository.findByCustomer_IdAndOrderTypeOrderByCreatedAtDescIdDesc(customer.getId(),"ONLINE",request));
+        String kw = q == null ? "" : q.trim();
+        String st = (status != null && !status.isBlank()) ? status.trim() : null;
+        org.springframework.data.domain.Page<Order> result;
+        if (customer == null) {
+            result = new PageImpl<>(List.of(), pagination.request(page, 0, Sort.unsorted()), 0);
+        } else {
+            Specification<Order> spec = (root, cq, cb) -> {
+                List<Predicate> predicates = new ArrayList<>();
+                predicates.add(cb.equal(root.get("customer").get("id"), customer.getId()));
+                predicates.add(cb.equal(root.get("orderType"), "ONLINE"));
+                if (!kw.isEmpty()) {
+                    String code = kw.toUpperCase(Locale.ROOT);
+                    predicates.add(cb.like(cb.upper(root.get("orderCode")),
+                            "%" + code.replace("!", "!!").replace("%", "!%").replace("_", "!_") + "%", '!'));
+                }
+                if (st != null) {
+                    predicates.add(cb.equal(root.get("status"), st));
+                }
+                if (from != null) {
+                    predicates.add(cb.greaterThanOrEqualTo(root.get("createdAt"), from.atStartOfDay()));
+                }
+                if (to != null) {
+                    predicates.add(cb.lessThan(root.get("createdAt"), to.plusDays(1).atStartOfDay()));
+                }
+                return cb.and(predicates.toArray(new Predicate[0]));
+            };
+            result = pagination.load(page, Sort.by(Sort.Order.desc("createdAt"), Sort.Order.desc("id")),
+                    request -> orderRepository.findAll(spec, request));
+        }
         model.addAttribute("statusLabels",OrderStatusService.LABELS);
-        model.addAttribute("orders",result.getContent());model.addAttribute("orderPage",result);
+        model.addAttribute("orders",result.getContent());
+        model.addAttribute("orderPage",result);
+        model.addAttribute("q",q);
+        model.addAttribute("status",st);
+        model.addAttribute("from",from);
+        model.addAttribute("to",to);
+        int activeFilterCount = 0;
+        if (!kw.isEmpty()) activeFilterCount++;
+        if (st != null) activeFilterCount++;
+        if (from != null) activeFilterCount++;
+        if (to != null) activeFilterCount++;
+        model.addAttribute("activeFilterCount", activeFilterCount);
         return "user/don-hang";
     }
 

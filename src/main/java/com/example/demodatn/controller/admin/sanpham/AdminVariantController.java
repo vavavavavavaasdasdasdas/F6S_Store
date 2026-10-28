@@ -24,15 +24,32 @@ public class AdminVariantController {
     private final SizeRepository sizes;
     private final MaterialRepository materials;
     @GetMapping("/admin/variants")
-    public String list(@RequestParam(required=false) Integer productId, @RequestParam(defaultValue="0") String page, @RequestParam(required=false) Integer materialId, Model model) { return listFor(productId,page,materialId,model); }
+    public String list(@RequestParam(required=false) Integer productId, @RequestParam(defaultValue="0") String page,
+                       @RequestParam(required=false) Integer materialId, @RequestParam(required=false) Integer sizeId,
+                       @RequestParam(required=false) Boolean status, @RequestParam(defaultValue="") String keyword, Model model) {
+        return listFor(productId,page,materialId,sizeId,status,keyword,model);
+    }
     @GetMapping("/admin/products-crud/{productId}/variants")
-    public String productVariants(@PathVariable Integer productId, @RequestParam(defaultValue="0") String page, @RequestParam(required=false) Integer materialId, Model model) { return listFor(productId,page,materialId,model); }
-    private String listFor(Integer productId, String page, Integer materialId, Model model) {
-        var result=query.variantsPage(productId,"all",0,page,materialId);
+    public String productVariants(@PathVariable Integer productId, @RequestParam(defaultValue="0") String page,
+                                  @RequestParam(required=false) Integer materialId, @RequestParam(required=false) Integer sizeId,
+                                  @RequestParam(required=false) Boolean status, @RequestParam(defaultValue="") String keyword, Model model) {
+        return listFor(productId,page,materialId,sizeId,status,keyword,model);
+    }
+    private String listFor(Integer productId, String page, Integer materialId, Integer sizeId, Boolean status, String keyword, Model model) {
+        var result=query.variantsPage(productId,"all",0,page,materialId,sizeId,status,keyword,null);
         model.addAttribute("variants",result.getContent()); model.addAttribute("dataPage",result);
         model.addAttribute("materials",materials.findAll()); model.addAttribute("materialId",materialId);
+        model.addAttribute("sizes",sizes.findAll()); model.addAttribute("sizeId",sizeId);
+        model.addAttribute("status",status); model.addAttribute("keyword",keyword);
         model.addAttribute("selectedProduct",productId==null?null:catalog.product(productId));
         model.addAttribute("products",products.findAll()); model.addAttribute("productId",productId);
+        int activeFilterCount = 0;
+        if (keyword != null && !keyword.trim().isEmpty()) activeFilterCount++;
+        if (productId != null) activeFilterCount++;
+        if (sizeId != null) activeFilterCount++;
+        if (materialId != null) activeFilterCount++;
+        if (status != null) activeFilterCount++;
+        model.addAttribute("activeFilterCount", activeFilterCount);
         return "admin/bien-the/danh-sach";
     }
     @GetMapping("/admin/variants/create")
@@ -72,4 +89,3 @@ public class AdminVariantController {
         return "admin/bien-the/bieu-mau";
     }
 }
-

@@ -1,9 +1,11 @@
 package com.example.demodatn.controller.admin.thongke;
 import com.example.demodatn.service.thongke.DashboardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
 
 
 @Controller
@@ -13,8 +15,19 @@ public class AdminController {
 
     private final DashboardService dashboardService;
     @GetMapping(value = {"", "/", "/dashboard"})
-    public String dashboard(@RequestParam(defaultValue = "7") int days, Model model) {
-        model.addAttribute("dashboard", dashboardService.load(days == 30 ? 30 : 7));
+    public String dashboard(@RequestParam(defaultValue = "7") int days,
+                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
+                            Model model) {
+        var dash = dashboardService.load(days == 30 ? 30 : 7, from, to);
+        model.addAttribute("dashboard", dash);
+        model.addAttribute("from", dash.get("from"));
+        model.addAttribute("to", dash.get("to"));
+        int activeFilterCount = 0;
+        if (from != null) activeFilterCount++;
+        if (to != null) activeFilterCount++;
+        if (from == null && to == null && days == 30) activeFilterCount++;
+        model.addAttribute("activeFilterCount", activeFilterCount);
         return "admin/bang-dieu-khien";
     }
 

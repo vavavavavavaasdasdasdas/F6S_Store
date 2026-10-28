@@ -2,7 +2,7 @@ package com.example.demodatn.repository.khachhang;
 import com.example.demodatn.entity.khachhang.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Integer>, org.springframework.data.jpa.repository.JpaSpecificationExecutor<Customer> {
     java.util.Optional<Customer> findByUser_Id(Integer userId);
     java.util.Optional<Customer> findByUser_Username(String username);
     @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)

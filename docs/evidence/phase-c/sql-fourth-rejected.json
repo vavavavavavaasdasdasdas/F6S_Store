@@ -1,6 +1,0 @@
-[
-  {
-    "error_number": 547,
-    "error_message": "The INSERT statement conflicted with the CHECK constraint \"CK_dia_chi_thu_tu\". The conflict occurred in database \"shop_verify\", table \"dbo.dia_chi_nhan_hang\", column 'thu_tu'."
-  }
-]

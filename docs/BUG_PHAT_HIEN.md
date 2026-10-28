@@ -16,7 +16,7 @@ SALE/Size/variant/voucher/Dashboard/Online/Email và mã quyền/kênh kỹ thu�
 
 ## BUG-06 — Truy vấn N+1
 
-ProductFilterService truy vấn biến thể từng sản phẩm; PricingService truy vấn khuyến mãi từng biến thể; POS tính cùng giá hai lần. Đã nạp gộp theo danh sách ID và dùng bản đồ giá trong một lần render, không cache qua request. SQL trang chủ 159→14, danh sách 63→8, danh mục 41→9, POS 50→9. HTML tám trang trước/sau giống nhau sau loại riêng token ngẫu nhiên; giá và thứ tự giữ nguyên. Bằng chứng: evidence/kiem-thu/performance. Đã commit 06ae1b0.
+ProductFilterService truy vấn biến thể từng sản phẩm; PricingService truy vấn khuyến mãi từng biến thể; POS tính cùng giá hai lần. Đã nạp gộp theo danh sách ID và dùng bản đồ giá trong một lần render, không cache qua request. SQL trang chủ 159→14, danh sách 63→8, thương hiệu 41→9, POS 50→9. HTML tám trang trước/sau giống nhau sau loại riêng token ngẫu nhiên; giá và thứ tự giữ nguyên. Bằng chứng: evidence/kiem-thu/performance. Đã commit 06ae1b0.
 
 ## BUG-07 — Hướng dẫn POS chuyển khoản không khớp hành vi
 

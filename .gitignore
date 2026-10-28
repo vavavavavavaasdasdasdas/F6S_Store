@@ -47,6 +47,7 @@ target/
 /application-verify.properties
 /deploy-local.sql
 /.env
+/_untracked_backup/
 
 # Tệp cách ly sau đợt dọn dẹp, không đưa dữ liệu phiên hoặc capture lên Git.
 /_cho_xoa/

@@ -4,7 +4,9 @@ import com.example.demodatn.dto.donhang.PosCheckoutRequest;
 import com.example.demodatn.repository.donhang.InvoiceRepository;
 import com.example.demodatn.repository.khachhang.CustomerRepository;
 import com.example.demodatn.repository.nhanvien.EmployeeRepository;
+import com.example.demodatn.repository.sanpham.MaterialRepository;
 import com.example.demodatn.repository.sanpham.ProductVariantRepository;
+import com.example.demodatn.repository.sanpham.SizeRepository;
 import com.example.demodatn.service.donhang.OrderService;
 import com.example.demodatn.service.donhang.PosCatalogQuery;
 import com.example.demodatn.service.donhang.PosHoldService;
@@ -36,6 +38,8 @@ public class AdminPosController {
     private final PosHoldService holds;
     private final PosCatalogQuery catalogQuery;
     private final com.example.demodatn.repository.sanpham.CategoryRepository categories;
+    private final MaterialRepository materials;
+    private final SizeRepository sizes;
 
     @GetMapping("/customers")
     public String customerSearch(@RequestParam(defaultValue="") String customerQuery,@RequestParam(defaultValue="0") String customerPage,Model model){model.addAttribute("customerPage",catalogQuery.customers(customerQuery,customerPage));return "admin/ban-tai-quay/khach-hang :: results";}
@@ -60,19 +64,38 @@ public class AdminPosController {
     }
 
     @GetMapping
-    public String page(@RequestParam(defaultValue="") String q, @RequestParam(required=false) Integer category,@RequestParam(defaultValue="0") String page,@RequestParam(defaultValue="") String customerQuery,@RequestParam(defaultValue="0") String customerPage,
-            HttpSession session, Principal principal, Model model) {
+    public String page(@RequestParam(defaultValue="") String q,
+                       @RequestParam(required=false) Integer category,
+                       @RequestParam(required=false) Integer materialId,
+                       @RequestParam(required=false) Integer sizeId,
+                       @RequestParam(defaultValue="0") String page,
+                       @RequestParam(defaultValue="") String customerQuery,
+                       @RequestParam(defaultValue="0") String customerPage,
+                       HttpSession session, Principal principal, Model model) {
         synchronized(session) {
             var cart = cart(session);
-            var productPage=catalogQuery.products(q,category,page);
+            var productPage=catalogQuery.products(q,category,materialId,sizeId,page);
             var available=productPage.isEmpty()?List.<com.example.demodatn.entity.sanpham.ProductVariant>of():variants.findByProduct_IdInAndStatusTrueAndProduct_StatusTrue(productPage.getContent().stream().map(p->p.getId()).toList());
             model.addAttribute("categories",categories.findAll(org.springframework.data.domain.Sort.by("name","id")));
+            model.addAttribute("materials",materials.findAll(org.springframework.data.domain.Sort.by("name","id")));
+            model.addAttribute("sizes",sizes.findAll(org.springframework.data.domain.Sort.by("id")));
             model.addAttribute("products",productPage.getContent());model.addAttribute("productPage",productPage);
-            model.addAttribute("variants",available.stream().filter(v->v.getQuantity()>0).toList());
+            model.addAttribute("variants",available.stream().filter(v->v.getQuantity()>0
+                    && (materialId == null || v.getMaterial().getId().equals(materialId))
+                    && (sizeId == null || v.getSize().getId().equals(sizeId))).toList());
             var prices=pricing.calculatePrices(available);
             model.addAttribute("variantPrices", prices);
             model.addAttribute("productPrices", available.stream().collect(java.util.stream.Collectors.toMap(v->v.getProduct().getId(),v->prices.get(v.getId()).getFinalPrice(),BigDecimal::min)));
-            model.addAttribute("q", q); model.addAttribute("category", category);
+            model.addAttribute("q", q);
+            model.addAttribute("category", category);
+            model.addAttribute("materialId", materialId);
+            model.addAttribute("sizeId", sizeId);
+            int activeFilterCount = 0;
+            if (q != null && !q.trim().isEmpty()) activeFilterCount++;
+            if (category != null) activeFilterCount++;
+            if (materialId != null) activeFilterCount++;
+            if (sizeId != null) activeFilterCount++;
+            model.addAttribute("activeFilterCount", activeFilterCount);
             model.addAttribute("posCart", cart);
             var productCodes=new HashMap<Integer,String>();
             for(var v:variants.findAllById(cart.stream().map(CartItemDto::getVariantId).toList()))

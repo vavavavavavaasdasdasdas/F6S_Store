@@ -2,7 +2,9 @@ package com.example.demodatn.repository.nhanvien;
 import com.example.demodatn.entity.nhanvien.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+public interface EmployeeRepository extends JpaRepository<Employee, Integer>, org.springframework.data.jpa.repository.JpaSpecificationExecutor<Employee> {
+    @org.springframework.data.jpa.repository.Query("select distinct e.position from Employee e where e.position is not null and trim(e.position) <> '' order by e.position")
+    java.util.List<String> distinctPositions();
     java.util.Optional<Employee> findByUser_Id(Integer userId);
     java.util.Optional<Employee> findByUser_Username(String username);
     boolean existsByEmailIgnoreCaseAndIdNot(String email,Integer id);

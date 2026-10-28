@@ -1,5 +1,6 @@
 package com.example.demodatn.service;
 import com.example.demodatn.util.PasswordPolicy;
+import com.example.demodatn.util.VietnameseText;
 import com.example.demodatn.dto.khachhang.CustomerDto;
 import com.example.demodatn.dto.nhanvien.EmployeeDto;
 import com.example.demodatn.entity.khachhang.Customer;
@@ -17,6 +18,7 @@ import com.example.demodatn.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -87,12 +89,31 @@ public class PeopleService {
         // Status changes have a separate confirmed POST and cannot be smuggled through this form.
         return customers.saveAndFlush(c);
     }
+    public String resolvePosition(String raw) {
+        String cleaned = VietnameseText.clean(raw);
+        if (cleaned.isEmpty()) return null;
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getAuthorities().stream().noneMatch(a -> "ROLE_ADMIN".equals(a.getAuthority()))) {
+            throw new AccessDeniedException("Chỉ quản trị viên mới được tạo hoặc gán chức vụ.");
+        }
+        if (cleaned.length() > 100) {
+            throw new PeopleValidationException("position", "Chức vụ tối đa 100 ký tự.");
+        }
+        for (String existing : employees.distinctPositions()) {
+            if (VietnameseText.sameFolded(existing, cleaned)) {
+                return existing.trim();
+            }
+        }
+        return cleaned;
+    }
     @Transactional
     public Employee saveEmployee(EmployeeDto form) {
         int id=form.getId()==null ? -1 : form.getId();
         if(employees.existsByEmployeeCodeIgnoreCaseAndIdNot(form.getEmployeeCode().trim(),id))throw new PeopleValidationException("employeeCode","Mã nhân viên đã tồn tại.");
         if(employees.existsByEmailIgnoreCaseAndIdNot(email(form.getEmail()),id))throw new PeopleValidationException("email","Thư điện tử đã tồn tại.");
         if(employees.existsByPhoneAndIdNot(phone(form.getPhone()),id))throw new PeopleValidationException("phone","Số điện thoại đã tồn tại.");
+        String rawPos = (form.getNewPosition() != null && !form.getNewPosition().isBlank()) ? form.getNewPosition() : form.getPosition();
+        String resolvedPosition = resolvePosition(rawPos);
         Employee e=form.getId()==null ? new Employee() : employees.findForUpdate(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
         User u=e.getUser()==null ? new User() : e.getUser();
         String username=form.getUsername().trim().toLowerCase(Locale.ROOT);
@@ -112,7 +133,8 @@ public class PeopleService {
         u.setUsername(username);
         e.setUser(users.saveAndFlush(u));
         e.setEmployeeCode(form.getEmployeeCode().trim());e.setFullName(form.getFullName().trim());
-        e.setPhone(phone(form.getPhone()));e.setEmail(email(form.getEmail()));e.setAddress(form.getAddress());e.setPosition(form.getPosition());
+        e.setPhone(phone(form.getPhone()));e.setEmail(email(form.getEmail()));e.setAddress(form.getAddress());e.setPosition(resolvedPosition);
+        form.setPosition(resolvedPosition);
         return employees.saveAndFlush(e);
     }
     @Transactional

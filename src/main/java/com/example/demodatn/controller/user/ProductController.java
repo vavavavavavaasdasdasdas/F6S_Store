@@ -67,6 +67,16 @@ public class ProductController {
         model.addAttribute("maxPrice", maxPrice);
         model.addAttribute("promotion", promotion);
         model.addAttribute("sort", sort);
+        int activeFilterCount = 0;
+        if (keyword != null && !keyword.trim().isEmpty()) activeFilterCount++;
+        if (categoryId != null) activeFilterCount++;
+        if (soleId != null) activeFilterCount++;
+        if (materialId != null) activeFilterCount++;
+        if (sizeId != null) activeFilterCount++;
+        if (minPrice != null) activeFilterCount++;
+        if (maxPrice != null) activeFilterCount++;
+        if (Boolean.TRUE.equals(promotion)) activeFilterCount++;
+        model.addAttribute("activeFilterCount", activeFilterCount);
         
         return "user/san-pham";
     }

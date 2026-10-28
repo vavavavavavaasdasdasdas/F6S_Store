@@ -23,11 +23,21 @@
    if(slot) {slot.textContent=message;slot.hidden=!message;}
    field.setAttribute('aria-invalid',message?'true':'false');
    field.classList.toggle('is-invalid',Boolean(message));
+   if(field._comboInput) {
+     field._comboInput.setAttribute('aria-invalid',message?'true':'false');
+     field._comboInput.classList.toggle('is-invalid',Boolean(message));
+   }
+ }
+ function focusField(el) {
+   if(!el) return;
+   if(el._comboInput) el._comboInput.focus();
+   else el.focus();
  }
  function validate(field) {
-   if(!field.id || field.disabled || field.type==='hidden' || field.type==='submit')return true;
+   if(!field.id || field.disabled || field.type==='hidden' || field.type==='submit' || field.dataset.comboInput==='true')return true;
    let message='';
-   if(field.required && !field.value.trim()) message='Vui lòng nhập hoặc chọn thông tin này.';
+   if(field.dataset.invalidChoice==='true') message='Không có lựa chọn này.';
+   else if(field.required && !field.value.trim()) message='Vui lòng nhập hoặc chọn thông tin này.';
    else if(field.validity.badInput || field.validity.typeMismatch) message='Giá trị không đúng định dạng.';
    else if(field.validity.patternMismatch) message=field.dataset.formatMessage || 'Giá trị không đúng định dạng.';
    else if(field.validity.rangeUnderflow) message='Giá trị phải ≥ '+field.min+'.';
@@ -57,7 +67,7 @@
  forms.forEach(form=>{
    form.addEventListener('input',event=>{if(form.method.toLowerCase()!=='get')form.dataset.dirty='true';if(event.target.getAttribute('aria-invalid')==='true')validate(event.target);});
    form.addEventListener('change',()=>{if(form.method.toLowerCase()!=='get')form.dataset.dirty='true';});
-   form.querySelectorAll('input,select,textarea').forEach(field=>{
+   form.querySelectorAll('input:not([data-combo-input]),select,textarea').forEach(field=>{
      field.addEventListener('blur',()=>validate(field));
      const slot=document.getElementById(field.id+'-error');
      if(slot?.textContent.trim())error(field,slot.textContent.trim());
@@ -65,15 +75,15 @@
    form.addEventListener('submit',event=>{
      if(form.dataset.submitting==='true'){event.preventDefault();return;}
      if(form.querySelector('[data-initial-variants]')) {
-       const selected=Boolean(form.querySelector('[name=initialSizeIds]:checked'));
-       ['initialMaterialId','initialPrice','initialQuantity'].forEach(name=>form.elements[name].required=selected);
+       const selected=Boolean(form.querySelector('[name=initialSizeIds]:checked')) || Boolean(form.querySelector('#newInitialSizeValue')?.value.trim());
+       ['initialMaterialId','initialPrice','initialQuantity'].forEach(name=>{if(form.elements[name])form.elements[name].required=selected;});
      }
-     let valid=true;form.querySelectorAll('input,select,textarea').forEach(f=>{if(!validate(f))valid=false;});
-     if(!valid){event.preventDefault();form.querySelector('[aria-invalid=true]')?.focus();return;}
+     let valid=true;form.querySelectorAll('input:not([data-combo-input]),select,textarea').forEach(f=>{if(!validate(f))valid=false;});
+     if(!valid){event.preventDefault();focusField(form.querySelector('[aria-invalid=true]'));return;}
      if(!navigator.onLine){event.preventDefault();const msg=form.querySelector('.form-message');msg.textContent='Mất kết nối. Thông tin vẫn ở đây; kết nối lại rồi lưu.';msg.hidden=false;return;}
      busy(form);
    });
-   form.querySelector('[aria-invalid=true]')?.focus();
+   focusField(form.querySelector('[aria-invalid=true]'));
  });
  document.querySelectorAll('[data-delete]').forEach(button=>button.addEventListener('click',()=>{
    ask('Xóa '+button.dataset.object+'?',button.dataset.consequence,'Xác nhận xóa',()=>{

@@ -19,6 +19,7 @@ public class EmployeeDto {
     private String email;
     @Size(max=255,message="Địa chỉ tối đa 255 ký tự.") private String address;
     @Size(max=100,message="Chức vụ tối đa 100 ký tự.") private String position;
+    @Size(max=100,message="Chức vụ tối đa 100 ký tự.") private String newPosition;
     @NotBlank(message="Nhập tên đăng nhập.")
     @Pattern(regexp="[A-Za-z0-9_.-]{3,50}",message="Tên đăng nhập gồm 3–50 chữ, số, dấu chấm, gạch dưới hoặc gạch ngang.")
     private String username;

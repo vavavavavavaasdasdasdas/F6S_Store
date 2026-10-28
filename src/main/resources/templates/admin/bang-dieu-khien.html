@@ -2,6 +2,12 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}">
 <body><section>
 <div class="admin-heading"><div><span class="eyebrow">TỔNG QUAN KINH DOANH</span><h1>Bảng điều khiển</h1><p class="admin-description">Theo dõi hoạt động cửa hàng và những việc cần xử lý.</p></div><span class="date-chip" th:text="'Ngày ' + ${dashboard.today}"></span></div>
+<form class="filter-bar mb-3" method="get" th:action="@{/admin/dashboard}" role="search">
+<div><label for="dash-from">Từ ngày</label><input class="form-control" type="date" id="dash-from" name="from" th:value="${from}"></div>
+<div><label for="dash-to">Đến ngày</label><input class="form-control" type="date" id="dash-to" name="to" th:value="${to}"></div>
+<div><label for="dash-days">Khoảng nhanh</label><select class="form-select" id="dash-days" name="days"><option value="7" th:selected="${dashboard.days == 7}">7 ngày gần đây</option><option value="30" th:selected="${dashboard.days == 30}">30 ngày gần đây</option></select></div>
+<div class="filter-bar-actions"><button type="submit" class="btn btn-primary">Lọc</button><a th:href="@{/admin/dashboard}" class="btn btn-outline-secondary">Xóa lọc</a><span class="filter-state-badge" th:if="${activeFilterCount != null and activeFilterCount > 0}" th:text="'Đang áp dụng ' + ${activeFilterCount} + ' bộ lọc'"></span></div>
+</form>
 <div class="metric-grid">
 <a class="metric-card" data-metric="todayRevenue" th:href="@{/admin/reports/revenue?period=today}">
 <span class="metric-title">Doanh thu hôm nay<span class="metric-icon" aria-hidden="true">↗</span></span>

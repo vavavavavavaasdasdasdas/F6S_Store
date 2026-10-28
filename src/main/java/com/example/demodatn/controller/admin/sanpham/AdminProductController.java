@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.math.BigDecimal;
 
 @Controller @RequestMapping("/admin/products-crud") @RequiredArgsConstructor
 public class AdminProductController {
@@ -31,13 +32,24 @@ public class AdminProductController {
     @GetMapping
     public String list(@RequestParam(defaultValue="") String keyword, @RequestParam(required=false) Integer categoryId,
                        @RequestParam(required=false) Integer materialId, @RequestParam(required=false) Boolean status, @RequestParam(defaultValue="newest") String sort,
-                       @RequestParam(defaultValue="0") String page, @RequestParam(required=false) Integer soleId, Model model) {
-        model.addAttribute("productPage",query.products(keyword,categoryId,status,sort,page,materialId,soleId));
+                       @RequestParam(defaultValue="0") String page, @RequestParam(required=false) Integer soleId,
+                       @RequestParam(required=false) BigDecimal minPrice, @RequestParam(required=false) BigDecimal maxPrice, Model model) {
+        model.addAttribute("productPage",query.products(keyword,categoryId,status,sort,page,materialId,soleId,minPrice,maxPrice));
         model.addAttribute("soles",soles.findAll());model.addAttribute("soleId",soleId);
         model.addAttribute("categories",categories.findAll());
         model.addAttribute("materials",materials.findAll()); model.addAttribute("materialId",materialId);
         model.addAttribute("keyword",keyword); model.addAttribute("categoryId",categoryId);
         model.addAttribute("status",status); model.addAttribute("sort",sort);
+        model.addAttribute("minPrice",minPrice); model.addAttribute("maxPrice",maxPrice);
+        int activeFilterCount = 0;
+        if (keyword != null && !keyword.trim().isEmpty()) activeFilterCount++;
+        if (categoryId != null) activeFilterCount++;
+        if (soleId != null) activeFilterCount++;
+        if (materialId != null) activeFilterCount++;
+        if (status != null) activeFilterCount++;
+        if (minPrice != null) activeFilterCount++;
+        if (maxPrice != null) activeFilterCount++;
+        model.addAttribute("activeFilterCount", activeFilterCount);
         return "admin/san-pham/danh-sach";
     }
     @GetMapping("/create")
@@ -59,8 +71,12 @@ public class AdminProductController {
     }
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("product") AdminProductForm product, BindingResult result, Model model, RedirectAttributes flash) {
-        if (product.getId()==null && product.getInitialSizeIds()!=null && !product.getInitialSizeIds().isEmpty()) {
-            if (product.getInitialMaterialId()==null) result.rejectValue("initialMaterialId","required","Chọn chất liệu khi chọn kích cỡ ban đầu.");
+        boolean hasInitialSizes = (product.getInitialSizeIds()!=null && !product.getInitialSizeIds().isEmpty())
+                || (product.getNewInitialSizeValue()!=null && !product.getNewInitialSizeValue().isBlank());
+        if (product.getId()==null && hasInitialSizes) {
+            boolean hasMaterial = product.getInitialMaterialId()!=null
+                    || (product.getNewInitialMaterialName()!=null && !product.getNewInitialMaterialName().isBlank());
+            if (!hasMaterial) result.rejectValue("initialMaterialId","required","Chọn chất liệu khi chọn kích cỡ ban đầu.");
             if (product.getInitialPrice()==null) result.rejectValue("initialPrice","required","Nhập giá khi chọn kích cỡ ban đầu.");
             if (product.getInitialQuantity()==null) result.rejectValue("initialQuantity","required","Nhập tồn kho ban đầu từ 0 trở lên.");
         }

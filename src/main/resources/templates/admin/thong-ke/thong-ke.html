@@ -4,14 +4,15 @@
 
 <div class="admin-page-heading"><div><span class="eyebrow">HIỆU QUẢ KINH DOANH</span><h1>Thống kê cửa hàng</h1></div></div>
 <div class="admin-panel">
-<form class="sales-filters" method="get" novalidate data-admin-form>
+<form class="sales-filters filter-bar" method="get" novalidate data-admin-form>
 <div><label for="from">Từ ngày</label><input class="form-control" type="date" id="from" name="from" th:value="${from}" required aria-describedby="from-error"><span id="from-error" class="field-error" data-error-for="from"></span></div>
 <div><label for="to">Đến ngày</label><input class="form-control" type="date" id="to" name="to" th:value="${to}" required aria-describedby="to-error"><span id="to-error" class="field-error" data-error-for="to"></span></div>
 <div><label for="channel">Kênh bán</label><select id="channel" name="channel" class="form-select" aria-describedby="channel-error"><option value="ALL" th:selected="${channel=='ALL'}">Tất cả</option><option value="ONLINE" th:selected="${channel=='ONLINE'}">Trực tuyến</option><option value="POS" th:selected="${channel=='POS'}">Tại quầy</option></select><span id="channel-error" class="field-error"></span></div>
-<button class="btn btn-primary" type="submit">Áp dụng</button><a class="btn btn-outline-secondary" th:href="@{/admin/statistics}">Đặt lại</a><p class="form-message" role="alert" hidden></p>
+<div><label for="categoryId">Thương hiệu</label><select id="categoryId" name="categoryId" class="form-select"><option value="">Tất cả thương hiệu</option><option th:each="c:${categories}" th:value="${c.id}" th:text="${c.name}" th:selected="${categoryId==c.id}"></option></select></div>
+<div class="filter-bar-actions"><button class="btn btn-primary" type="submit">Lọc</button><a class="btn btn-outline-secondary" th:href="@{/admin/statistics}">Xóa lọc</a><span class="filter-state-badge" th:if="${activeFilterCount != null and activeFilterCount > 0}" th:text="'Đang áp dụng ' + ${activeFilterCount} + ' bộ lọc'"></span></div><p class="form-message" role="alert" hidden></p>
 </form>
 <p th:if="${filterError!=null}" th:text="${filterError}" class="alert alert-danger" role="alert"></p>
-<nav class="statistics-tabs" aria-label="Mục thống kê"><a th:href="@{/admin/statistics/revenue(from=${from},to=${to},channel=${channel})}" th:classappend="${!productsTab} ? 'is-active'" th:attr="aria-current=${!productsTab?'page':null}">Doanh thu</a><a th:href="@{/admin/statistics/best-sellers(from=${from},to=${to},channel=${channel})}" th:classappend="${productsTab} ? 'is-active'" th:attr="aria-current=${productsTab?'page':null}">Sản phẩm bán chạy</a></nav>
+<nav class="statistics-tabs" aria-label="Mục thống kê"><a th:href="@{/admin/statistics/revenue(from=${from},to=${to},channel=${channel},categoryId=${categoryId})}" th:classappend="${!productsTab} ? 'is-active'" th:attr="aria-current=${!productsTab?'page':null}">Doanh thu</a><a th:href="@{/admin/statistics/best-sellers(from=${from},to=${to},channel=${channel},categoryId=${categoryId})}" th:classappend="${productsTab} ? 'is-active'" th:attr="aria-current=${productsTab?'page':null}">Sản phẩm bán chạy</a></nav>
 </div>
 <th:block th:if="${stats!=null}">
 <div class="statistics-metrics"><article class="admin-panel"><p>Tổng doanh thu</p><strong id="stat-revenue" th:text="${@money.format(stats.revenue)}+' ₫'"></strong></article><article class="admin-panel"><p>Số đơn đủ điều kiện</p><strong id="stat-orders" th:text="${stats.orders}"></strong></article><article class="admin-panel"><p>Giá trị đơn trung bình</p><strong id="stat-average" th:text="${@money.format(stats.average)}+' ₫'"></strong></article></div>

@@ -1,6 +1,6 @@
 (() => {
     const data = window.adminStatistics;
-    const labels = {PENDING:'Chờ xử lý',CONFIRMED:'Đã xác nhận',PREPARING:'Đang chuẩn bị',SHIPPING:'Đang giao',DELIVERED:'Hoàn tất',CANCELLED:'Đã hủy'};
+    const labels = {PENDING:'Chờ xử lý',CONFIRMED:'Đã xác nhận',PREPARING:'Đang chuẩn bị',SHIPPING:'Đang giao',DELIVERED:'Hoàn tất',CANCELLED:'Đã hủy',DELIVERY_FAILED:'Giao hàng thất bại'};
     document.querySelectorAll('[data-status]').forEach(el => el.textContent = labels[el.dataset.status] || el.dataset.status);
     const revenue = document.getElementById('statistics-revenue');
     const status = document.getElementById('statistics-status');

@@ -1,7 +1,0 @@
-﻿TABLE_NAME COLUMN_NAME DATA_TYPE CHARACTER_MAXIMUM_LENGTH
----------- ----------- --------- ------------------------
-chat_lieu ten nvarchar 100
-inventory_logs reason nvarchar 500
-order_details ten_chat_lieu nvarchar 100
-
-(3 rows affected)

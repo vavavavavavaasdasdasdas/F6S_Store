@@ -7,6 +7,7 @@ import com.example.demodatn.entity.sanpham.Material;
 import com.example.demodatn.entity.sanpham.Product;
 import com.example.demodatn.entity.sanpham.ProductVariant;
 import com.example.demodatn.entity.sanpham.Size;
+import com.example.demodatn.entity.sanpham.Sole;
 import com.example.demodatn.exception.CatalogValidationException;
 import com.example.demodatn.repository.donhang.OrderDetailRepository;
 import com.example.demodatn.repository.khuyenmai.PromotionDetailRepository;
@@ -16,10 +17,12 @@ import com.example.demodatn.repository.sanpham.MaterialRepository;
 import com.example.demodatn.repository.sanpham.ProductRepository;
 import com.example.demodatn.repository.sanpham.ProductVariantRepository;
 import com.example.demodatn.repository.sanpham.SizeRepository;
+import com.example.demodatn.util.VietnameseText;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.*;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
@@ -38,6 +41,86 @@ public class AdminCatalogService {
     private final ProductImageStorage images;
     private final ProductGalleryService gallery;
 
+    private void requireAdminForCreation() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || auth.getAuthorities().stream().noneMatch(a -> "ROLE_ADMIN".equals(a.getAuthority()))) {
+            throw new AccessDeniedException("Chỉ quản trị viên mới được tạo mới danh mục.");
+        }
+    }
+
+    @Transactional
+    public Category resolveOrCreateCategory(String raw, String field) {
+        requireAdminForCreation();
+        String name = VietnameseText.clean(raw);
+        if (name.isEmpty() || name.length() > 100)
+            throw new CatalogValidationException(field, "Tên thương hiệu từ 1 đến 100 ký tự.");
+        for (Category existing : categories.findAll()) {
+            if (VietnameseText.sameFolded(existing.getName(), name)) {
+                if (!Boolean.TRUE.equals(existing.getStatus()))
+                    throw new CatalogValidationException(field, "Thương hiệu đã tồn tại nhưng đang ẩn.");
+                return existing;
+            }
+        }
+        Category created = new Category();
+        created.setName(name);
+        created.setStatus(true);
+        return categories.saveAndFlush(created);
+    }
+
+    @Transactional
+    public Sole resolveOrCreateSole(String raw, String field) {
+        requireAdminForCreation();
+        String name = VietnameseText.clean(raw);
+        if (name.isEmpty() || name.length() > 100)
+            throw new CatalogValidationException(field, "Tên đế giày từ 1 đến 100 ký tự.");
+        for (Sole existing : soles.findAll()) {
+            if (VietnameseText.sameFolded(existing.getName(), name)) {
+                if (!Boolean.TRUE.equals(existing.getStatus()))
+                    throw new CatalogValidationException(field, "Đế giày đã tồn tại nhưng đang ẩn.");
+                return existing;
+            }
+        }
+        Sole created = new Sole();
+        created.setName(name);
+        created.setStatus(true);
+        return soles.saveAndFlush(created);
+    }
+
+    @Transactional
+    public Material resolveOrCreateMaterial(String raw, String field) {
+        requireAdminForCreation();
+        String name = VietnameseText.clean(raw);
+        if (name.isEmpty() || name.length() > 100)
+            throw new CatalogValidationException(field, "Tên chất liệu từ 1 đến 100 ký tự.");
+        for (Material existing : materials.findAll()) {
+            if (VietnameseText.sameFolded(existing.getName(), name)) {
+                if (!Boolean.TRUE.equals(existing.getStatus()))
+                    throw new CatalogValidationException(field, "Chất liệu đã tồn tại nhưng đang ẩn.");
+                return existing;
+            }
+        }
+        Material created = new Material();
+        created.setName(name);
+        created.setStatus(true);
+        return materials.saveAndFlush(created);
+    }
+
+    @Transactional
+    public Size resolveOrCreateSize(String raw, String field) {
+        requireAdminForCreation();
+        String value = VietnameseText.clean(raw);
+        if (value.isEmpty() || value.length() > 10)
+            throw new CatalogValidationException(field, "Kích cỡ từ 1 đến 10 ký tự.");
+        for (Size existing : sizes.findAll()) {
+            if (VietnameseText.sameFolded(existing.getSizeValue(), value)) {
+                return existing;
+            }
+        }
+        Size created = new Size();
+        created.setSizeValue(value);
+        return sizes.saveAndFlush(created);
+    }
+
     public Product product(Integer id) {
         return products.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy sản phẩm."));
     }
@@ -46,6 +129,22 @@ public class AdminCatalogService {
     }
     @Transactional
     public Product saveProduct(AdminProductForm form) {
+        if (form.getNewCategoryName() != null && !form.getNewCategoryName().isBlank()) {
+            form.setCategoryId(resolveOrCreateCategory(form.getNewCategoryName(), "categoryId").getId());
+        }
+        if (form.getNewSoleName() != null && !form.getNewSoleName().isBlank()) {
+            form.setSoleId(resolveOrCreateSole(form.getNewSoleName(), "soleId").getId());
+        }
+        if (form.getNewInitialMaterialName() != null && !form.getNewInitialMaterialName().isBlank()) {
+            form.setInitialMaterialId(resolveOrCreateMaterial(form.getNewInitialMaterialName(), "initialMaterialId").getId());
+        }
+        if (form.getNewInitialSizeValue() != null && !form.getNewInitialSizeValue().isBlank()) {
+            Size newSize = resolveOrCreateSize(form.getNewInitialSizeValue(), "initialSizeIds");
+            var sizeIds = new java.util.ArrayList<>(form.getInitialSizeIds() == null ? java.util.List.of() : form.getInitialSizeIds());
+            sizeIds.removeIf(id -> id != null && id <= 0);
+            if (!sizeIds.contains(newSize.getId())) sizeIds.add(newSize.getId());
+            form.setInitialSizeIds(sizeIds);
+        }
         boolean initialize = form.getId() == null && form.getInitialSizeIds() != null && !form.getInitialSizeIds().isEmpty();
         Material initialMaterial = null;
         java.util.List<Size> initialSizes = new java.util.ArrayList<>();
@@ -67,6 +166,8 @@ public class AdminCatalogService {
         String code = form.getCode().trim();
         if (products.existsByCodeIgnoreCaseAndIdNot(code, form.getId() == null ? -1 : form.getId()))
             throw new CatalogValidationException("code","Mã sản phẩm đã tồn tại.");
+        if (form.getCategoryId() == null)
+            throw new CatalogValidationException("categoryId","Chọn thương hiệu.");
         Category category = categories.findById(form.getCategoryId()).orElseThrow(() -> new CatalogValidationException("categoryId","Thương hiệu không tồn tại."));
         Product product = form.getId() == null ? new Product() : products.lockById(form.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         com.example.demodatn.entity.sanpham.Sole sole=null;
@@ -109,9 +210,21 @@ public class AdminCatalogService {
     }
     @Transactional
     public ProductVariant saveVariant(VariantForm form) {
-        Product product = product(form.getProductId());
+        if (form.getNewSizeValue() != null && !form.getNewSizeValue().isBlank()) {
+            form.setSizeId(resolveOrCreateSize(form.getNewSizeValue(), "sizeId").getId());
+        }
+        if (form.getNewMaterialName() != null && !form.getNewMaterialName().isBlank()) {
+            form.setMaterialId(resolveOrCreateMaterial(form.getNewMaterialName(), "materialId").getId());
+        }
+        if (form.getProductId() == null)
+            throw new CatalogValidationException("productId", "Chọn sản phẩm.");
+        Product product = products.findById(form.getProductId()).orElseThrow(() -> new CatalogValidationException("productId", "Sản phẩm không tồn tại."));
+        if (form.getSizeId() == null)
+            throw new CatalogValidationException("sizeId", "Chọn kích cỡ.");
         Size size = sizes.findById(form.getSizeId()).orElseThrow(() -> new CatalogValidationException("sizeId","Kích cỡ không tồn tại."));
         ProductVariant current = form.getId() == null ? null : inventory.lock(form.getId());
+        if (form.getMaterialId() == null)
+            throw new CatalogValidationException("materialId", "Chọn chất liệu.");
         Material material = materials.findById(form.getMaterialId()).filter(m -> Boolean.TRUE.equals(m.getStatus())
                 || (current != null && current.getMaterial().getId().equals(m.getId())))
                 .orElseThrow(() -> new CatalogValidationException("materialId","Chọn chất liệu đang hiển thị."));
@@ -172,4 +285,3 @@ public class AdminCatalogService {
         categories.deleteById(id); categories.flush(); return "Đã xóa thương hiệu.";
     }
 }
-

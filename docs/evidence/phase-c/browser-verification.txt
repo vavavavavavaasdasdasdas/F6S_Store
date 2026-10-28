@@ -1,8 +1,0 @@
-Playwright session phase-c / localhost:18085 / shop_verify
-Checkout: 3 saved options fill recipient/phone/address exactly; orders 7230,7231,7232.
-Temporary checkout edits: order 7233; SQL address book before==after.
-Profile: 3 options, default label, Add hidden at limit.
-Delete confirmation: Escape cancels. Unsaved selection change: Escape preserves address text and selection.
-Save edited address: redirect to /profile?addressId=32.
-Mobile viewport=390x844; document scrollWidth=375; no horizontal overflow.
-Console total=1, errors=0, warnings=0; one preexisting DOM password username accessibility hint.

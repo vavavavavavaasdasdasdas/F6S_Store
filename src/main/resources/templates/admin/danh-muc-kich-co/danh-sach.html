@@ -16,18 +16,34 @@
 
     <div class="admin-panel">
         <form class="catalog-filters mb-3" method="get" th:action="@{/admin/{kind}(kind=${kind})}" novalidate>
-            <div style="flex:1; max-width: 360px;">
-                <label for="keyword" th:text="'Tìm kiếm ' + ${lookupTitle.toLowerCase()}"></label>
+            <div>
+                <label for="keyword" th:text="'Từ khóa ' + ${lookupTitle.toLowerCase()}"></label>
                 <div class="search-control">
                     <input class="form-control" type="search" id="keyword" name="keyword" th:value="${keyword}"
                            th:placeholder="'Nhập ' + ${lookupTitle.toLowerCase()} + ' cần tìm...'" maxlength="100">
-                    <button th:if="${keyword != null and !keyword.isBlank()}" type="button" class="search-clear"
-                            aria-label="Xóa tìm kiếm" onclick="window.location.href=this.closest('form').action">×</button>
+                    <button type="button" class="search-clear" aria-label="Xóa tìm kiếm" data-clear-search>×</button>
                 </div>
             </div>
-            <div style="display:flex; align-items:flex-end; gap:8px;">
-                <button class="btn btn-outline-primary" type="submit">Tìm kiếm</button>
-                <a th:if="${keyword != null and !keyword.isBlank()}" th:href="@{/admin/{kind}(kind=${kind})}" class="btn btn-outline-secondary">Bỏ lọc</a>
+            <div>
+                <label for="lookup-status">Trạng thái</label>
+                <select id="lookup-status" name="status" class="form-select">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="true" th:selected="${status == true}">Đang hiển thị</option>
+                    <option value="false" th:selected="${status == false}">Đang ẩn</option>
+                </select>
+            </div>
+            <div>
+                <label for="lookup-inUse">Tình trạng sử dụng</label>
+                <select id="lookup-inUse" name="inUse" class="form-select">
+                    <option value="">Tất cả tình trạng</option>
+                    <option value="true" th:selected="${inUse == true}">Đang dùng</option>
+                    <option value="false" th:selected="${inUse == false}">Chưa dùng</option>
+                </select>
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-outline-primary" type="submit">Lọc</button>
+                <a th:href="@{/admin/{kind}(kind=${kind})}" class="btn btn-outline-secondary">Xóa lọc</a>
+                <span class="filter-status-badge" data-filter-count th:text="${activeFilterCount > 0 ? 'Đang lọc: ' + activeFilterCount + ' bộ lọc' : 'Chưa áp dụng bộ lọc'}"></span>
             </div>
         </form>
 

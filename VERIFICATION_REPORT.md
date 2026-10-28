@@ -281,6 +281,13 @@ Script HTTP tái nghiệm thu ở `verify/phase_a_live.py` yêu cầu `PHASE_A_A
 Giới hạn bổ sung: audit UI toàn project còn các mục ngoài giai đoạn, xem [ui-audit-summary.json](docs/evidence/phase-a/ui-audit-summary.json). Không kiểm thử máy in vật lý; bản PDF và CSS print đã được kiểm tra. Không triển khai hay chạy migration lên database thật.
 
 
+# Giai đoạn B — Đang dừng ở bước tái hiện
+
+Ngày 24/10/2026: Chưa tái hiện được lỗi trên shop_verify hoặc bản sao shopbangiay_thu. 6306 GET trả HTTP 200; browser 424 tổ hợp không lỗi JS sau khi cấu hình đúng thư mục ảnh test. Tổng/số đơn/trung bình và top 10 hai cách ở cả ba kênh khớp SELECT độc lập. **Chưa sửa code/thêm test/commit sửa lỗi. Dừng theo mục 1, cần stacktrace từ người dùng.**
+
+[Báo cáo B, bảng URL/status, SQL cạnh số trên trang và bằng chứng thô](docs/GIAI_DOAN_B_TAI_HIEN.md).
+
+
 ## Giai đoạn C — Sổ địa chỉ nhận hàng (24/10/2026)
 
 Hoàn tất tối đa 3 địa chỉ bằng service có khóa customer và ràng buộc SQL; hồ sơ/checkout dùng combo box, admin chỉ xem, snapshot đơn và Unicode đã đối chiếu SQL. Chỉ chạy shop_verify. Migration 009 chạy hai lần (thêm 1 rồi 0); 117 test PASS, 0 lỗi/bỏ qua; 23 URL chính HTTP 200; 8 ca bảo mật PASS; browser 0 lỗi JS. Audit UI toàn repo còn 90 findings, ghi rõ trong báo cáo.

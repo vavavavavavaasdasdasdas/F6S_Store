@@ -24,10 +24,16 @@
                 <div class="collapse d-lg-block" id="filterPanel">
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body">
-                            <h5 class="card-title fw-bold mb-3">BỘ LỌC</h5>
+                            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-1">
+                                <h5 class="card-title fw-bold mb-0">BỘ LỌC</h5>
+                                <span class="filter-state-badge" th:if="${activeFilterCount != null and activeFilterCount > 0}" th:text="'Đang áp dụng ' + ${activeFilterCount} + ' bộ lọc'"></span>
+                            </div>
                             <form id="filterForm" th:action="@{/products}" method="get">
-                                <input type="hidden" name="keyword" th:value="${keyword}">
                                 <input type="hidden" name="promotion" th:if="${promotion}" th:value="${promotion}">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold" for="keyword-filter">Từ khóa (mã/tên)</label>
+                                    <input type="search" id="keyword-filter" class="form-control form-control-sm" name="keyword" th:value="${keyword}" placeholder="Nhập tên hoặc mã...">
+                                </div>
 
                                 <div class="mb-4">
                                     <h6 class="fw-bold mb-2">Thương hiệu</h6>

@@ -1,7 +1,0 @@
-2026-10-24T14:01:31.616+07:00 ERROR 25492 --- [io-18086-exec-1] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-18086-exec-1] Exception processing template "user/trang-chu": An error happened during template parsing (template: "class path resource [templates/user/trang-chu.html]")
-Caused by: org.attoparser.ParseException: Instantiation of new objects and access to static classes or parameters is forbidden in this context (template: "user/trang-chu" - line 20, col 26)
-Caused by: org.thymeleaf.exceptions.TemplateProcessingException: Instantiation of new objects and access to static classes or parameters is forbidden in this context (template: "user/trang-chu" - line 20, col 26)
-2026-10-24T14:01:31.676+07:00 ERROR 25492 --- [io-18086-exec-3] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-18086-exec-3] Exception processing template "user/san-pham": An error happened during template parsing (template: "class path resource [templates/user/san-pham.html]")
-Caused by: org.attoparser.ParseException: Instantiation of new objects and access to static classes or parameters is forbidden in this context (template: "user/fragments/the-san-pham" - line 10, col 14)
-Caused by: org.thymeleaf.exceptions.TemplateProcessingException: Instantiation of new objects and access to static classes or parameters is forbidden in this context (template: "user/fragments/the-san-pham" - line 10, col 14)
-Retested: 121 tests PASS, final crawl 0 HTTP500, browser 0 pageerror.

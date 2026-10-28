@@ -1,5 +1,0 @@
-ORDER_SQL {"id": 7230, "receiver_name": "Người nhận số 1", "phone_number": "0901234561", "shipping_address": "Số 12, đường Nguyễn Huệ, Đà Nẵng"}
-ORDER_SQL {"id": 7231, "receiver_name": "Người nhận số 4", "phone_number": "0901234564", "shipping_address": "Địa chỉ thay thế ở Huế"}
-ORDER_SQL {"id": 7232, "receiver_name": "Người nhận số 3", "phone_number": "0901234563", "shipping_address": "Địa chỉ nhận hàng số 3"}
-ORDER_SQL {"id": 7233, "receiver_name": "Người nhận tạm", "phone_number": "0908888999", "shipping_address": "Địa chỉ tạm cho riêng đơn này"}
-ADDRESS_BOOK_UNCHANGED after temporary checkout edit PASS

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/he-thong-thiet-ke.css}">
     <link rel="stylesheet" th:href="@{/css/quan-tri.css}">
+    <script th:src="@{/js/combo-box.js}" defer></script>
     <script th:src="@{/js/quan-tri.js}" defer></script>
     <script th:src="@{/js/quan-tri-danh-muc.js}" defer></script>
 </head>
@@ -26,8 +27,7 @@
         <div th:replace="~{fragments/thong-bao-quan-tri :: flash}"></div>
         <th:block th:replace="${content}"></th:block>
     </main>
-    <footer class="admin-footer">ShoeAdmin · Không gian quản trị cửa hàng</footer>
+    <footer class="admin-footer">F6S · Không gian quản trị</footer>
 </div>
 </body>
 </html>
-
