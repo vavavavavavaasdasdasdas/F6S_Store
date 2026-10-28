@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class AdminProductForm {
     private Integer id;
+    private Integer soleId;
     private Integer initialMaterialId;
     private java.util.List<Integer> initialSizeIds = new java.util.ArrayList<>();
     @DecimalMin(value="0.01", message="Giá phải lớn hơn 0.")
@@ -17,7 +18,7 @@ public class AdminProductForm {
     private String code;
     @NotBlank(message="Nhập tên sản phẩm.") @jakarta.validation.constraints.Size(max=255,message="Tên tối đa 255 ký tự.")
     private String name;
-    @NotNull(message="Chọn danh mục.") private Integer categoryId;
+    @NotNull(message="Chọn thương hiệu.") private Integer categoryId;
     @jakarta.validation.constraints.Size(max=4000,message="Mô tả tối đa 4000 ký tự.") private String description;
     @NotNull(message="Chọn trạng thái.") private Boolean status = true;
     private MultipartFile image;

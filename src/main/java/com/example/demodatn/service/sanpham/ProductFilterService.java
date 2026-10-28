@@ -47,6 +47,10 @@ public class ProductFilterService {
 
     public Page<ProductDto> filterProducts(String keyword, Integer categoryId, Integer sizeId,
             BigDecimal minPrice, BigDecimal maxPrice, Boolean promotion, String sort, int page, int size, Integer materialId) {
+        return filterProducts(keyword,categoryId,sizeId,minPrice,maxPrice,promotion,sort,page,size,materialId,null);
+    }
+    public Page<ProductDto> filterProducts(String keyword,Integer categoryId,Integer sizeId,
+            BigDecimal minPrice,BigDecimal maxPrice,Boolean promotion,String sort,int page,int size,Integer materialId,Integer soleId) {
         if (size <= 0) size = pagination.getSize();
         if (page < 0) page = 0;
 
@@ -71,6 +75,7 @@ public class ProductFilterService {
                 if (!name.contains(kw) && !code.contains(kw)) continue;
             }
             if (categoryId != null && (p.getCategory() == null || !p.getCategory().getId().equals(categoryId))) continue;
+            if (soleId != null && (p.getSole()==null || !p.getSole().getId().equals(soleId))) continue;
 
             List<ProductVariant> variants = variantsByProduct.getOrDefault(p.getId(),List.of());
             if (variants.isEmpty()) continue;

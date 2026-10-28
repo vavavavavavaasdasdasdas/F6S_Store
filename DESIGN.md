@@ -18,7 +18,7 @@ Cửa hàng tiếng Việt, Thymeleaf và Bootstrap. Giữ nguyên giao diện h
 
 ### Biến thể theo size và chất liệu
 
-Chất liệu là danh mục riêng. Trang chi tiết và thêm nhanh dùng hai thẻ select có nhãn Size và Chất liệu; chỉ kết hợp có biến thể còn hàng mới chọn được. Khi chỉ có một chất liệu, chọn sẵn và vẫn hiển thị tên. POS dùng cùng cách chọn hai trường. Giỏ và kho phân biệt bằng ID biến thể; đơn hàng và hóa đơn dùng tên chất liệu đã chụp tại thời điểm mua, không đọc lại tên danh mục.
+Chất liệu được quản lý riêng. Trang chi tiết và thêm nhanh dùng hai thẻ select có nhãn Size và Chất liệu; chỉ kết hợp có biến thể còn hàng mới chọn được. Khi chỉ có một chất liệu, chọn sẵn và vẫn hiển thị tên. POS dùng cùng cách chọn hai trường. Giỏ và kho phân biệt bằng ID biến thể; đơn hàng và hóa đơn dùng tên chất liệu đã chụp tại thời điểm mua, không đọc lại tên hiện tại.
 
 ### Luồng trạng thái và nhãn tồn kho của đơn
 
@@ -47,3 +47,7 @@ Dùng select native của Bootstrap (popup do hệ điều hành sở hữu), nh
 ### Chính sách mật khẩu và ngôn ngữ — 25/10/2026
 
 Người dùng chọn mật khẩu mới ít nhất 8 ký tự, có chữ và số; giữ trần 72 byte UTF-8 của BCrypt. PasswordPolicy là nguồn kiểm tra dùng chung cho đăng ký/đổi mật khẩu User/Admin/tài khoản nhân viên. Hiển thị hướng dẫn cạnh trường bằng primitive form-text/field-help có sẵn; giữ tham chiếu aria-describedby hiện có khi thêm lỗi. Nhãn chức năng dùng GIẢM/Kích cỡ; giữ tên riêng/thương hiệu SHOES, F6S Store, Nike, Adidas theo lựa chọn người dùng. Không đổi màu hoặc bố cục.
+
+### Góp ý giảng viên — Giai đoạn 1
+
+Categories chỉ đổi nhãn thành Thương hiệu, giữ route và mô hình. Đế giày thuộc sản phẩm, là lựa chọn không bắt buộc; dùng select native và cùng component field/error, dialog xác nhận, bảng và phân trang hiện có. Đế ẩn không chọn cho sản phẩm mới, sản phẩm đang dùng vẫn giữ tên và có thể giữ lựa chọn cũ khi sửa. Cột Đang dùng dẫn sang bộ lọc sản phẩm. Nhóm khách/nhân viên mang tên TÀI KHOẢN; trang cá nhân admin mang tên Hồ sơ của tôi. Không đổi màu hoặc bố cục chuẩn.

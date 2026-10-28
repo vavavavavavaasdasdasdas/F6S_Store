@@ -42,6 +42,7 @@
                                 </div>
 
                                 <div class="mb-4">
+                                    <label class="form-label" for="sole-filter">Đế giày</label><select id="sole-filter" class="form-select mb-3" name="soleId"><option value="">Tất cả đế giày</option><option th:each="s:${soles}" th:value="${s.id}" th:text="${s.name}" th:selected="${soleId==s.id}"></option></select>
                                     <label class="form-label" for="material-filter">Chất liệu</label><select id="material-filter" class="form-select mb-3" name="materialId"><option value="">Tất cả chất liệu</option><option th:each="m:${materials}" th:value="${m.id}" th:selected="${materialId==m.id}" th:text="${m.name}"></option></select>
                                     <h6 class="fw-bold mb-2">Kích cỡ</h6>
                                     <div class="d-flex flex-wrap gap-2">

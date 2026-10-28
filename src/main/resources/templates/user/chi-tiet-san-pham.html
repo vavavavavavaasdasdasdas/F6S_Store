@@ -35,7 +35,9 @@
             <!-- Product Info -->
             <div class="col-md-6">
                 <h2 class="fw-bold mb-2" th:text="${product.name}">Tên sản phẩm</h2>
-                <div class="text-muted mb-3">Mã SP: <span th:text="${product.code}">SP001</span> | Danh mục: <span th:text="${product.category != null ? product.category.name : 'Chưa phân loại'}">Thể thao</span></div>
+                <div class="text-muted mb-3">Mã SP: <span th:text="${product.code}">SP001</span> | Thương hiệu: <span th:text="${product.category != null ? product.category.name : 'Chưa phân loại'}">Thể thao</span></div>
+
+                <p>Đế giày: <span th:text="${product.sole!=null ? product.sole.name : 'Chưa chọn'}"></span></p>
 
                 <!-- Display Price from the first variant by default -->
                 <div class="price-display mb-4" th:if="${!variants.isEmpty()}" th:with="firstPrice=${variantPrices.get(variants[0].id)}">

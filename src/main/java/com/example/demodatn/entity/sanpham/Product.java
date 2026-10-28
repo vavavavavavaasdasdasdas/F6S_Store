@@ -25,6 +25,10 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name="de_giay_id")
+    private Sole sole;
+
     @Column(name = "image_url")
     @org.hibernate.annotations.Nationalized private String imageUrl;
 

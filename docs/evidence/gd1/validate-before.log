@@ -1,0 +1,57 @@
+21:10:51.212 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to System property 'spring.devtools.restart.enabled' being set to false
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-28T21:10:51.545+07:00  INFO 34696 --- [           main] c.example.demodatn.DemoDatnApplication   : Starting DemoDatnApplication using Java 17.0.17 with PID 34696 (C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN\target\classes started by ADMIN in C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN)
+2026-10-28T21:10:51.547+07:00  INFO 34696 --- [           main] c.example.demodatn.DemoDatnApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-10-28T21:10:51.596+07:00  INFO 34696 --- [           main] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-10-28T21:10:52.175+07:00  INFO 34696 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-28T21:10:52.272+07:00  INFO 34696 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 86 ms. Found 20 JPA repository interfaces.
+2026-10-28T21:10:53.032+07:00  INFO 34696 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 18110 (http)
+2026-10-28T21:10:53.044+07:00  INFO 34696 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-28T21:10:53.045+07:00  INFO 34696 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-28T21:10:53.096+07:00  INFO 34696 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1500 ms
+2026-10-28T21:10:53.389+07:00  INFO 34696 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-28T21:10:53.622+07:00  INFO 34696 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 22144756-4b5a-45fb-b727-68818b4f4fb0
+2026-10-28T21:10:53.624+07:00  INFO 34696 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-28T21:10:53.843+07:00 ERROR 34696 --- [           main] c.example.demodatn.config.SchemaCheck    : SCHEMA_CHECK: Thiếu bảng dbo.de_giay — 010_de_giay.sql
+2026-10-28T21:10:53.844+07:00 ERROR 34696 --- [           main] c.example.demodatn.config.SchemaCheck    : SCHEMA_CHECK: Thiếu cột dbo.products.de_giay_id — 010_de_giay.sql
+2026-10-28T21:10:53.850+07:00  WARN 34696 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/hibernate/autoconfigure/HibernateJpaConfiguration.class]: Schema chưa đầy đủ: Thiếu bảng dbo.de_giay — 010_de_giay.sql; Thiếu cột dbo.products.de_giay_id — 010_de_giay.sql. Chạy database/migrations/chay_tat_ca.sql trên đúng database trước khi khởi động.
+2026-10-28T21:10:53.853+07:00  INFO 34696 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-28T21:10:53.867+07:00  INFO 34696 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-10-28T21:10:53.870+07:00  INFO 34696 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-10-28T21:10:53.878+07:00  INFO 34696 --- [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-10-28T21:10:53.894+07:00 ERROR 34696 --- [           main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/hibernate/autoconfigure/HibernateJpaConfiguration.class]: Schema chưa đầy đủ: Thiếu bảng dbo.de_giay — 010_de_giay.sql; Thiếu cột dbo.products.de_giay_id — 010_de_giay.sql. Chạy database/migrations/chay_tat_ca.sql trên đúng database trước khi khởi động.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:609) ~[spring-beans-7.0.9.jar:7.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.9.jar:7.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.9.jar:7.0.9]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.9.jar:7.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.9.jar:7.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.9.jar:7.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:977) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.1.1.jar:4.1.1]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.1.1.jar:4.1.1]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.1.1.jar:4.1.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.1.1.jar:4.1.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.1.1.jar:4.1.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.1.1.jar:4.1.1]
+	at com.example.demodatn.DemoDatnApplication.main(DemoDatnApplication.java:9) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: Schema chưa đầy đủ: Thiếu bảng dbo.de_giay — 010_de_giay.sql; Thiếu cột dbo.products.de_giay_id — 010_de_giay.sql. Chạy database/migrations/chay_tat_ca.sql trên đúng database trước khi khởi động.
+	at com.example.demodatn.config.SchemaCheck.postProcessBeforeInitialization(SchemaCheck.java:39) ~[classes/:na]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:426) ~[spring-beans-7.0.9.jar:7.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1807) ~[spring-beans-7.0.9.jar:7.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603) ~[spring-beans-7.0.9.jar:7.0.9]
+	... 14 common frames omitted
+

@@ -30,6 +30,7 @@ public class AdminCatalogService {
     private final CategoryRepository categories;
     private final SizeRepository sizes;
     private final MaterialRepository materials;
+    private final com.example.demodatn.repository.sanpham.SoleRepository soles;
     private final OrderDetailRepository details;
     private final PromotionDetailRepository promotions;
     private final InventoryLogRepository inventoryLogs;
@@ -66,8 +67,15 @@ public class AdminCatalogService {
         String code = form.getCode().trim();
         if (products.existsByCodeIgnoreCaseAndIdNot(code, form.getId() == null ? -1 : form.getId()))
             throw new CatalogValidationException("code","Mã sản phẩm đã tồn tại.");
-        Category category = categories.findById(form.getCategoryId()).orElseThrow(() -> new CatalogValidationException("categoryId","Danh mục không tồn tại."));
+        Category category = categories.findById(form.getCategoryId()).orElseThrow(() -> new CatalogValidationException("categoryId","Thương hiệu không tồn tại."));
         Product product = form.getId() == null ? new Product() : products.lockById(form.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        com.example.demodatn.entity.sanpham.Sole sole=null;
+        if(form.getSoleId()!=null) {
+            sole=soles.findById(form.getSoleId()).orElseThrow(()->new CatalogValidationException("soleId","Đế giày không tồn tại."));
+            if(!Boolean.TRUE.equals(sole.getStatus()) && (product.getSole()==null || !form.getSoleId().equals(product.getSole().getId())))
+                throw new CatalogValidationException("soleId","Chọn đế giày đang hiển thị.");
+        }
+        product.setSole(sole);
         product.setCode(code); product.setName(form.getName().trim()); product.setDescription(form.getDescription());
         product.setCategory(category); product.setStatus(form.getStatus());
         products.saveAndFlush(product);
@@ -124,22 +132,29 @@ public class AdminCatalogService {
     }
     @Transactional
     public void saveLookup(String kind, LookupForm form) {
-        String value = form.getValue().trim();
+        String value = form.getValue() != null ? form.getValue().trim() : "";
+        if (value.isBlank()) {
+            if ("sizes".equals(kind)) throw new CatalogValidationException("value", "Vui lòng nhập kích cỡ kích cỡ.");
+            if ("materials".equals(kind)) throw new CatalogValidationException("value", "Vui lòng nhập tên chất liệu.");
+            throw new CatalogValidationException("value", "Vui lòng nhập tên thương hiệu.");
+        }
         if ("sizes".equals(kind)) {
-            if (value.length()>10) throw new CatalogValidationException("value","Kích cỡ tối đa 10 ký tự.");
-            if (sizes.existsBySizeValueIgnoreCaseAndIdNot(value,form.getId()==null ? -1 : form.getId()))
-                throw new CatalogValidationException("value","Kích cỡ đã tồn tại.");
-            Size size = form.getId()==null ? new Size() : sizes.findById(form.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            if (value.length() > 10) throw new CatalogValidationException("value", "Kích cỡ kích cỡ tối đa 10 ký tự.");
+            if (sizes.existsBySizeValueIgnoreCaseAndIdNot(value, form.getId() == null ? -1 : form.getId()))
+                throw new CatalogValidationException("value", "Kích cỡ kích cỡ đã tồn tại.");
+            Size size = form.getId() == null ? new Size() : sizes.findById(form.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             size.setSizeValue(value); sizes.saveAndFlush(size);
         } else if ("materials".equals(kind)) {
-            if (materials.existsByNameIgnoreCaseAndIdNot(value,form.getId()==null ? -1 : form.getId()))
-                throw new CatalogValidationException("value","Tên chất liệu đã tồn tại.");
-            Material material = form.getId()==null ? new Material() : materials.findById(form.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            if (value.length() > 100) throw new CatalogValidationException("value", "Tên chất liệu tối đa 100 ký tự.");
+            if (materials.existsByNameIgnoreCaseAndIdNot(value, form.getId() == null ? -1 : form.getId()))
+                throw new CatalogValidationException("value", "Tên chất liệu đã tồn tại.");
+            Material material = form.getId() == null ? new Material() : materials.findById(form.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             material.setName(value); material.setStatus(Boolean.TRUE.equals(form.getStatus())); materials.saveAndFlush(material);
         } else {
-            if (categories.existsByNameIgnoreCaseAndIdNot(value,form.getId()==null ? -1 : form.getId()))
-                throw new CatalogValidationException("value","Danh mục đã tồn tại.");
-            Category category = form.getId()==null ? new Category() : categories.findById(form.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            if (value.length() > 100) throw new CatalogValidationException("value", "Tên thương hiệu tối đa 100 ký tự.");
+            if (categories.existsByNameIgnoreCaseAndIdNot(value, form.getId() == null ? -1 : form.getId()))
+                throw new CatalogValidationException("value", "Tên thương hiệu đã tồn tại.");
+            Category category = form.getId() == null ? new Category() : categories.findById(form.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             category.setName(value); category.setStatus(Boolean.TRUE.equals(form.getStatus())); categories.saveAndFlush(category);
         }
     }
@@ -153,8 +168,8 @@ public class AdminCatalogService {
             if (variants.existsByMaterial_Id(id)) return "Không thể xóa chất liệu đang được biến thể tham chiếu.";
             materials.deleteById(id); materials.flush(); return "Đã xóa chất liệu.";
         }
-        if (products.existsByCategory_Id(id)) return "Không thể xóa danh mục đang được sản phẩm tham chiếu.";
-        categories.deleteById(id); categories.flush(); return "Đã xóa danh mục.";
+        if (products.existsByCategory_Id(id)) return "Không thể xóa thương hiệu đang được sản phẩm tham chiếu.";
+        categories.deleteById(id); categories.flush(); return "Đã xóa thương hiệu.";
     }
 }
 

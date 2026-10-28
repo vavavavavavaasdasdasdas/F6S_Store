@@ -1,6 +1,91 @@
-<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section class="catalog-page">
-<div class="admin-heading"><div><span class="eyebrow">THIẾT LẬP HÀNG HÓA</span><h1 th:text="${lookupTitle}"></h1><p class="admin-description">Dữ liệu đang được sử dụng sẽ được giữ lại khi có yêu cầu xóa.</p></div><a class="btn btn-primary" th:href="@{/admin/{kind}/create(kind=${kind})}" th:text="'Thêm '+${lookupTitle.toLowerCase()}"></a></div>
-<div class="admin-panel"><div class="table-wrap"><table class="admin-table"><thead><tr><th>ID</th><th th:text="${lookupTitle}"></th><th th:if="${kind=='categories' or kind=='materials'}">Trạng thái</th><th th:if="${kind=='materials'}">Đang dùng</th><th>Hành động</th></tr></thead><tbody>
-<tr th:each="item:${items}"><td th:text="${item.id}"></td><td th:text="${kind=='sizes' ? item.sizeValue : item.name}"></td><td th:if="${kind=='categories' or kind=='materials'}" th:text="${item.status == true ? 'Đang hoạt động' : 'Ngừng hoạt động'}"></td><td th:if="${kind=='materials'}"><a th:href="@{/admin/variants(materialId=${item.id})}" th:text="${materialUsage[item.id] ?: 0}+' biến thể'"></a></td><td><div class="catalog-actions"><a th:href="@{/admin/{kind}/edit/{id}(kind=${kind},id=${item.id})}">Sửa</a><form th:if="${kind=='materials'}" th:action="@{/admin/materials/toggle-status/{id}(id=${item.id})}" method="post" novalidate><button th:if="${item.status==true}" class="btn btn-sm btn-outline-warning" type="button" data-confirm data-confirm-title="Ẩn chất liệu?" th:attr="data-confirm-message=${'Chất liệu có '+(materialUsage[item.id] ?: 0)+' biến thể đang dùng. Sau khi ẩn, không thể chọn cho biến thể mới; biến thể và đơn cũ vẫn hiển thị bình thường.'}">Ẩn</button><button th:unless="${item.status==true}" class="btn btn-sm btn-outline-success" type="submit">Hiện</button></form><form th:if="${kind!='materials' or materialUsage[item.id]==null or materialUsage[item.id]==0}" th:action="@{/admin/{kind}/delete/{id}(kind=${kind},id=${item.id})}" method="post" novalidate data-delete-form><button class="btn-link-danger" type="button" data-delete th:attr="data-object=${kind=='sizes' ? item.sizeValue : item.name}" data-consequence="Chỉ xóa khi chưa được tham chiếu. Không thể khôi phục bản ghi đã xóa.">Xóa</button></form></div></td></tr>
-<tr th:if="${items.empty}"><td colspan="4" class="catalog-empty">Chưa có dữ liệu. Chọn nút Thêm để tạo bản ghi đầu tiên.</td></tr></tbody></table></div>
-<nav class="catalog-pagination" aria-label="Phân trang"><span th:text="${items.totalElements}+' bản ghi · Trang '+${items.number+1}"></span><div><a th:if="${items.hasPrevious()}" class="btn btn-outline-secondary btn-sm" th:href="@{/admin/{kind}(kind=${kind},page=${items.number-1})}">Trang trước</a><a th:if="${items.hasNext()}" class="btn btn-outline-secondary btn-sm" th:href="@{/admin/{kind}(kind=${kind},page=${items.number+1})}">Trang sau</a></div></nav></div></section></body></html>
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}">
+<body>
+<section class="catalog-page">
+    <div class="admin-heading">
+        <div>
+            <span class="eyebrow">THIẾT LẬP HÀNG HÓA</span>
+            <h1 th:text="${lookupTitle}"></h1>
+            <p class="admin-description" th:if="${kind == 'sizes'}">Quản lý kích cỡ giày. Chỉ cho phép xóa khi chưa có biến thể nào sử dụng.</p>
+            <p class="admin-description" th:if="${kind == 'categories'}">Quản lý thương hiệu sản phẩm. Hỗ trợ hiển thị hoặc ẩn thương hiệu linh hoạt.</p>
+            <p class="admin-description" th:if="${kind == 'soles'}">Quản lý đế giày của sản phẩm. Chỉ xóa khi chưa được sản phẩm sử dụng.</p>
+            <p class="admin-description" th:if="${kind == 'materials'}">Quản lý chất liệu sản phẩm. Hỗ trợ hiển thị hoặc ẩn chất liệu linh hoạt.</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/admin/{kind}/create(kind=${kind})}" th:text="'Thêm ' + ${lookupTitle.toLowerCase()}"></a>
+    </div>
+
+    <div class="admin-panel">
+        <form class="catalog-filters mb-3" method="get" th:action="@{/admin/{kind}(kind=${kind})}" novalidate>
+            <div style="flex:1; max-width: 360px;">
+                <label for="keyword" th:text="'Tìm kiếm ' + ${lookupTitle.toLowerCase()}"></label>
+                <div class="search-control">
+                    <input class="form-control" type="search" id="keyword" name="keyword" th:value="${keyword}"
+                           th:placeholder="'Nhập ' + ${lookupTitle.toLowerCase()} + ' cần tìm...'" maxlength="100">
+                    <button th:if="${keyword != null and !keyword.isBlank()}" type="button" class="search-clear"
+                            aria-label="Xóa tìm kiếm" onclick="window.location.href=this.closest('form').action">×</button>
+                </div>
+            </div>
+            <div style="display:flex; align-items:flex-end; gap:8px;">
+                <button class="btn btn-outline-primary" type="submit">Tìm kiếm</button>
+                <a th:if="${keyword != null and !keyword.isBlank()}" th:href="@{/admin/{kind}(kind=${kind})}" class="btn btn-outline-secondary">Bỏ lọc</a>
+            </div>
+        </form>
+
+        <div class="table-wrap">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">ID</th>
+                        <th th:text="${kind == 'sizes' ? 'Kích cỡ' : (kind == 'materials' ? 'Tên chất liệu' : (kind == 'soles' ? 'Tên đế giày' : 'Tên thương hiệu'))}"></th>
+                        <th th:if="${kind != 'sizes'}" style="width: 160px;">Trạng thái</th>
+                        <th th:if="${kind == 'materials' or kind == 'soles'}">Đang dùng</th>
+                        <th style="width: 180px;">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${items}">
+                        <td th:text="${item.id}"></td>
+                        <td>
+                            <strong th:text="${kind == 'sizes' ? item.sizeValue : item.name}"></strong>
+                        </td>
+                        <td th:if="${kind != 'sizes'}">
+                            <span th:if="${item.status == true}" class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Đang hiển thị</span>
+                            <span th:unless="${item.status == true}" class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1">Đang ẩn</span>
+                        </td>
+                        <td th:if="${kind == 'soles'}"><a th:href="@{/admin/products-crud(soleId=${item.id})}" th:text="${soleUsage[item.id] ?: 0} + ' sản phẩm'"></a></td>
+                        <td th:if="${kind == 'materials'}"><a th:href="@{/admin/variants(materialId=${item.id})}" th:text="${materialUsage[item.id] ?: 0} + ' biến thể'"></a></td>
+                        <td>
+                            <div class="catalog-actions" style="display:flex; align-items:center; gap:8px;">
+                                <a class="btn btn-sm btn-outline-primary" th:href="@{/admin/{kind}/edit/{id}(kind=${kind}, id=${item.id})}">Sửa</a>
+                                <!-- Thương hiệu và Chất liệu: chuyển đổi trạng thái ẩn/hiện thay vì xóa cứng -->
+                                <th:block th:if="${kind != 'sizes'}">
+                                    <form th:if="${item.status == true}" th:action="@{/admin/{kind}/toggle-status/{id}(kind=${kind}, id=${item.id})}" method="post" novalidate style="display:inline;">
+                                        <button class="btn btn-sm btn-outline-warning" type="button" data-confirm data-confirm-title="Ẩn mục này?" th:attr="data-confirm-message=${kind == 'materials' ? 'Chất liệu có ' + (materialUsage[item.id] ?: 0) + ' biến thể đang dùng. Sau khi ẩn, không thể chọn cho biến thể mới; biến thể và đơn cũ vẫn hiển thị bình thường.' : (kind == 'soles' ? 'Đế giày có ' + (soleUsage[item.id] ?: 0) + ' sản phẩm đang dùng. Sau khi ẩn, sản phẩm cũ vẫn giữ tên; không chọn được cho sản phẩm mới.' : 'Bạn có muốn chuyển thương hiệu sang trạng thái ẩn?')}">Ẩn</button>
+                                    </form>
+                                    <form th:unless="${item.status == true}" th:action="@{/admin/{kind}/toggle-status/{id}(kind=${kind}, id=${item.id})}" method="post" novalidate style="display:inline;">
+                                        <button class="btn btn-sm btn-outline-success" type="submit">Hiện</button>
+                                    </form>
+                                </th:block>
+                                <!-- Kích cỡ: cho phép xóa khi chưa có variant nào dùng -->
+                                <th:block th:if="${kind == 'sizes' or (kind == 'soles' and (soleUsage[item.id] == null or soleUsage[item.id] == 0)) or (kind == 'materials' and (materialUsage[item.id] == null or materialUsage[item.id] == 0))}">
+                                    <form th:action="@{/admin/{kind}/delete/{id}(kind=${kind}, id=${item.id})}" method="post" novalidate style="display:inline;" data-delete-form>
+                                        <button class="btn btn-sm btn-outline-danger" type="button" data-delete
+                                                th:attr="data-object=${kind == 'sizes' ? item.sizeValue : item.name},data-consequence=${kind == 'soles' ? 'Chỉ xóa được khi chưa có sản phẩm nào sử dụng. Thao tác không thể hoàn tác.' : 'Chỉ xóa được khi chưa có biến thể nào sử dụng. Thao tác không thể hoàn tác.'}">Xóa</button>
+                                    </form>
+                                </th:block>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${items.empty}">
+                        <td th:colspan="${kind == 'sizes' ? 3 : (kind == 'materials' or kind == 'soles' ? 5 : 4)}" class="catalog-empty text-center py-4">
+                            Không tìm thấy dữ liệu phù hợp. Chọn nút <strong>Thêm</strong> để tạo bản ghi mới.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <nav th:replace="~{fragments/phan-trang :: phan-trang(${items}, 'page')}"></nav>
+</section>
+</body>
+</html>

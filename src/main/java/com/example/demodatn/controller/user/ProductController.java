@@ -38,6 +38,7 @@ public class ProductController {
     private final SizeRepository sizeRepository;
     private final MaterialRepository materialRepository;
     private final ProductGalleryService gallery;
+    private final com.example.demodatn.repository.sanpham.SoleRepository soleRepository;
 
     @GetMapping({"/products", "/search"})
     public String list(
@@ -49,9 +50,10 @@ public class ProductController {
             @RequestParam(required = false) BigDecimal maxPrice,
             @RequestParam(required = false) Boolean promotion,
             @RequestParam(defaultValue = "newest") String sort,
-            @RequestParam(defaultValue = "0") String page, Model model) {
+            @RequestParam(defaultValue = "0") String page, @RequestParam(required=false) Integer soleId, Model model) {
         
-        Page<ProductDto> productPage = productFilterService.filterProducts(keyword, categoryId, sizeId, minPrice, maxPrice, promotion, sort, pagination.index(page), pagination.getSize(), materialId);
+        Page<ProductDto> productPage = productFilterService.filterProducts(keyword, categoryId, sizeId, minPrice, maxPrice, promotion, sort, pagination.index(page), pagination.getSize(), materialId,soleId);
+        model.addAttribute("soles",soleRepository.findAll());model.addAttribute("soleId",soleId);
         
         model.addAttribute("productPage", productPage);
         model.addAttribute("categories", categoryRepository.findAll());
@@ -72,7 +74,7 @@ public class ProductController {
     @GetMapping("/category/{id}")
     public String categoryList(@PathVariable Integer id,@RequestParam(required=false) String keyword,@RequestParam(required=false) Integer sizeId,@RequestParam(required=false) Integer materialId,@RequestParam(required=false) BigDecimal minPrice,@RequestParam(required=false) BigDecimal maxPrice,@RequestParam(required=false) Boolean promotion,@RequestParam(defaultValue="newest") String sort,@RequestParam(defaultValue="0") String page,Model model,jakarta.servlet.http.HttpServletResponse response) {
         if(!categoryRepository.existsById(id)){response.setStatus(404);return "loi/404";}
-        return list(keyword,id,sizeId,materialId,minPrice,maxPrice,promotion,sort,page,model);
+        return list(keyword,id,sizeId,materialId,minPrice,maxPrice,promotion,sort,page,null,model);
     }
 
     @GetMapping("/products/{id}")

@@ -1,0 +1,8 @@
+{
+  "order_id": 1,
+  "address_id": 1,
+  "before_sha256": "228ee11830c96fd7db6e9129d0b1e7a9aaaa1b0fcafef2aea2a0de0a8f6cfce5",
+  "after_sha256": "228ee11830c96fd7db6e9129d0b1e7a9aaaa1b0fcafef2aea2a0de0a8f6cfce5",
+  "equal": true,
+  "note": "Canonical JSON UTF-8; private contact fields remain only in local verify/gd1 snapshots."
+}

@@ -12,7 +12,7 @@ Mỗi mục UI chạy ở 1280px và 375px; ma trận HTTP/SQL được lưu ri�
 | SC-06 | Clean test nhóm schema | Hệ thống | Chạy mvnw clean test trên đúng nội dung commit schema | PASS | schema/schema-clean-test.log:123 tests |
 | SC-07 | Phục hồi sau test phá dữ liệu | Hệ thống | Dừng app; restore checkpoint; so sánh toàn bộ COUNT/schema | PASS | schema/reset-schema-tests.log; after-schema-tests-reset.json |
 | G-01 | Trang chủ | Khách | Mở trang chủ, đọc các khối sản phẩm | PASS | guest-password/guest-results.json (1280 và 375px) |
-| G-02 | Lọc danh mục | Khách | Chọn danh mục và áp dụng bộ lọc | PASS | guest-password/guest-results.json (1280 và 375px) |
+| G-02 | Lọc thương hiệu | Khách | Chọn thương hiệu và áp dụng bộ lọc | PASS | guest-password/guest-results.json (1280 và 375px) |
 | G-03 | Lọc kích cỡ | Khách | Chọn kích cỡ và áp dụng bộ lọc | PASS | guest-password/guest-results.json (1280 và 375px) |
 | G-04 | Lọc chất liệu | Khách | Chọn chất liệu và kiểm tra sản phẩm hiển thị | PASS | guest-password/guest-results.json (1280 và 375px) |
 | G-05 | Lọc giá | Khách | Nhập khoảng giá, áp dụng và đọc giá trên thẻ | PASS | guest-password/guest-results.json (1280 và 375px) |
@@ -60,7 +60,7 @@ Mỗi mục UI chạy ở 1280px và 375px; ma trận HTTP/SQL được lưu ri�
 | A-05 | Sửa sản phẩm | Admin | Đổi tên sản phẩm trong form sửa, lưu rồi tải lại | PASS | admin/*-results.json; admin/pos-stock-ledger.json; admin/statistics-independent-sql.json |
 | A-06 | Xóa sản phẩm có/không đơn | Admin | Xóa sản phẩm trống và sản phẩm đã có đơn; kiểm tra xóa/vô hiệu hóa | PASS | final/*-results.json; final/admin-orders-sql.json; final/quality-all-results.json |
 | A-07 | Chặn trùng bộ ba biến thể | Admin | Tạo lại cùng sản phẩm+kích cỡ+chất liệu, đọc lỗi và SELECT | PASS | admin/*-results.json; admin/pos-stock-ledger.json; admin/statistics-independent-sql.json |
-| A-08 | Danh mục | Admin | Thêm/sửa danh mục rồi ẩn, tải lại kiểm tra trạng thái | PASS | admin/*-results.json; admin/pos-stock-ledger.json; admin/statistics-independent-sql.json |
+| A-08 | Thương hiệu | Admin | Thêm/sửa thương hiệu rồi ẩn, tải lại kiểm tra trạng thái | PASS | admin/*-results.json; admin/pos-stock-ledger.json; admin/statistics-independent-sql.json |
 | A-09 | kích cỡ | Admin | Thêm/sửa/xóa kích cỡ; thử trùng và đọc thông báo sau lưu | PASS | admin/*-results.json; admin/pos-stock-ledger.json; admin/statistics-independent-sql.json |
 | A-10 | Chất liệu ẩn/xóa | Admin | CRUD chất liệu chưa dùng; ẩn chất liệu dùng; kiểm tra combo/đơn cũ/xóa bị chặn | PASS | admin/*-results.json; admin/pos-stock-ledger.json; admin/statistics-independent-sql.json |
 | A-11 | Điều chỉnh tồn | Admin | Nhập thêm bốn đơn vị kèm lý do, SELECT tồn | PASS | admin/*-results.json; admin/pos-stock-ledger.json; admin/statistics-independent-sql.json |

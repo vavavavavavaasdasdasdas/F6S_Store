@@ -1,0 +1,33 @@
+[
+  {
+    "scope": "application",
+    "command": [
+      "rg",
+      "-n",
+      "-i",
+      "danh mục",
+      "src/main/resources/templates",
+      "src/main/resources/static/js",
+      "src/main/java"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "scope": "documentation",
+    "command": [
+      "rg",
+      "-n",
+      "-i",
+      "danh mục",
+      "README.md",
+      "docs",
+      "--glob",
+      "*.md"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": ""
+  }
+]

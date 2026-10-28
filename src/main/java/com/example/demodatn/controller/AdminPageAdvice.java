@@ -15,17 +15,18 @@ public class AdminPageAdvice {
         new NavItem("", "Hóa đơn", "/admin/invoices", "invoices"),
         new NavItem("SẢN PHẨM", "Sản phẩm", "/admin/products-crud", "products"),
         new NavItem("", "Biến thể", "/admin/variants", "variants"),
-        new NavItem("", "Danh mục", "/admin/categories", "categories"),
+        new NavItem("", "Thương hiệu", "/admin/categories", "categories"),
         new NavItem("", "Kích cỡ", "/admin/sizes", "sizes"),
+        new NavItem("", "Đế giày", "/admin/soles", "soles"),
         new NavItem("", "Chất liệu", "/admin/materials", "materials"),
         new NavItem("", "Tồn kho", "/admin/inventory", "inventory"),
-        new NavItem("KHÁCH HÀNG", "Khách hàng", "/admin/customers", "customers"),
+        new NavItem("TÀI KHOẢN", "Khách hàng", "/admin/customers", "customers"),
         new NavItem("", "Nhân viên", "/admin/employees", "employees"),
         new NavItem("KHUYẾN MÃI", "Phiếu giảm giá", "/admin/vouchers", "vouchers"),
         new NavItem("", "Đợt giảm giá", "/admin/promotions", "promotions"),
         new NavItem("THỐNG KÊ", "Doanh thu", "/admin/statistics/revenue", "revenue"),
         new NavItem("", "Sản phẩm bán chạy", "/admin/statistics/best-sellers", "best-sellers"),
-        new NavItem("HỆ THỐNG", "Tài khoản", "/admin/account", "account")
+        new NavItem("HỆ THỐNG", "Hồ sơ của tôi", "/admin/account", "account")
     );
     @ModelAttribute
     public void navigation(HttpServletRequest request, Model model) {

@@ -1,7 +1,47 @@
-<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section class="catalog-page">
-<div class="admin-heading"><div><span class="eyebrow">THIẾT LẬP HÀNG HÓA</span><h1 th:text="(${lookup.id==null} ? 'Thêm ' : 'Sửa ')+${lookupTitle.toLowerCase()}"></h1></div></div>
-<form class="admin-panel catalog-form catalog-form-narrow" method="post" th:action="@{/admin/{kind}/save(kind=${kind})}" th:object="${lookup}" novalidate data-admin-form><input type="hidden" th:field="*{id}"><p class="form-message" role="alert" hidden></p>
-<div class="catalog-field"><label for="value" th:text="${lookupTitle}+' *'"></label><input class="form-control" type="text" id="value" th:field="*{value}" required th:maxlength="${kind=='sizes' ? 10 : 100}" aria-describedby="value-error"><p class="field-error" id="value-error" aria-live="polite"><span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span></p></div>
-<div class="catalog-field" th:if="${kind=='categories'}"><label for="status">Trạng thái</label><select class="form-select" id="status" th:field="*{status}"><option value="true">Đang hoạt động</option><option value="false">Ngừng hoạt động</option></select></div>
-<div class="catalog-form-actions"><button type="submit" class="btn btn-primary" th:text="'Lưu '+${lookupTitle.toLowerCase()}"></button><a class="btn btn-outline-secondary" th:href="@{/admin/{kind}(kind=${kind})}">Quay lại danh sách</a></div></form></section></body></html>
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}">
+<body>
+<section class="catalog-page">
+    <div class="admin-heading">
+        <div>
+            <span class="eyebrow">THIẾT LẬP HÀNG HÓA</span>
+            <h1 th:text="(${lookup.id == null} ? 'Thêm ' : 'Sửa ') + ${lookupTitle.toLowerCase()}"></h1>
+            <p class="admin-description" th:text="(${lookup.id == null} ? 'Tạo mới ' : 'Cập nhật thông tin ') + ${lookupTitle.toLowerCase()} + ' cho hệ thống.'"></p>
+        </div>
+    </div>
+    <form class="admin-panel catalog-form catalog-form-narrow" method="post"
+          th:action="@{/admin/{kind}/save(kind=${kind})}" th:object="${lookup}" novalidate data-admin-form>
+        <input type="hidden" th:field="*{id}">
+        <p class="form-message" role="alert" hidden></p>
 
+        <div class="catalog-field">
+            <label for="value">
+                <span th:text="${kind == 'sizes' ? 'Kích cỡ' : (kind == 'materials' ? 'Tên chất liệu' : (kind == 'soles' ? 'Tên đế giày' : 'Tên thương hiệu'))}"></span>
+                <span class="text-danger">*</span>
+            </label>
+            <input class="form-control" type="text" id="value" th:field="*{value}" required
+                   th:maxlength="${kind == 'sizes' ? 10 : 100}"
+                   th:placeholder="${kind == 'sizes' ? 'Ví dụ: 38, 39, 40, 41...' : (kind == 'materials' ? 'Ví dụ: Da thật, Vải canvas...' : (kind == 'soles' ? 'Ví dụ: Cao su, EVA, PU...' : 'Ví dụ: Nike, Adidas...'))}"
+                   aria-describedby="value-error" autofocus>
+            <p class="field-error text-danger small mt-1" id="value-error" aria-live="polite">
+                <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
+            </p>
+        </div>
+
+        <div class="catalog-field" th:if="${kind != 'sizes'}">
+            <label for="status">Trạng thái hiển thị</label>
+            <select class="form-select" id="status" th:field="*{status}">
+                <option value="true">Đang hiển thị (Hoạt động)</option>
+                <option value="false">Đang ẩn (Ngừng hoạt động)</option>
+            </select>
+            <small class="text-muted d-block mt-1">Khi chuyển sang trạng thái Ẩn, mục này không còn trong lựa chọn tạo mới; dữ liệu đang sử dụng vẫn giữ tên.</small>
+        </div>
+
+        <div class="catalog-form-actions mt-4" style="display:flex; gap:12px;">
+            <button type="submit" class="btn btn-primary" th:text="(${lookup.id == null} ? 'Thêm mới' : 'Cập nhật')"></button>
+            <a class="btn btn-outline-secondary" th:href="@{/admin/{kind}(kind=${kind})}">Quay lại danh sách</a>
+        </div>
+    </form>
+</section>
+</body>
+</html>

@@ -18,7 +18,7 @@ public class ProductDto {
     
     private String imageUrl;
     
-    @NotNull(message = "Danh mục không được để trống")
+    @NotNull(message = "Thương hiệu không được để trống")
     private Integer categoryId;
     
     private String categoryName;

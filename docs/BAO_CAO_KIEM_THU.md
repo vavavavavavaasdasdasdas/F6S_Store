@@ -52,7 +52,7 @@ Runner chay_tat_ca.sql gộp vật lý 004–009, có DB_NAME guard và PRINT t�
 | Hạng mục | Cách kiểm tra | Kết quả thực tế | Trạng thái |
 |---|---|---|---|
 | Sản phẩm/ảnh/biến thể | Form thật: 2 kích cỡ, 1 chất liệu, upload 3 PNG, đổi ảnh chính; SELECT | Đúng 2 dòng, giá 123456, tồn 7 mỗi dòng, 2 log Khởi tạo; 3 ảnh tải được, ảnh chính đổi đúng ID | PASS |
-| Validation/danh mục/chất liệu | Thiếu chất liệu, trùng bộ ba; CRUD; ẩn/xóa chất liệu đang dùng | Lỗi cạnh ô; không tạo trùng; combo loại chất liệu ẩn, biến thể/đơn cũ giữ tên; xóa chất liệu dùng bị chặn | PASS |
+| Validation/thương hiệu/chất liệu | Thiếu chất liệu, trùng bộ ba; CRUD; ẩn/xóa chất liệu đang dùng | Lỗi cạnh ô; không tạo trùng; combo loại chất liệu ẩn, biến thể/đơn cũ giữ tên; xóa chất liệu dùng bị chặn | PASS |
 | Khách/nhân viên | CRUD, vô hiệu hóa, sổ địa chỉ chỉ xem, đăng nhập tài khoản nhân viên, tự khóa | SQL đúng; vô hiệu hóa khách chặn tài khoản liên kết; tự khóa bị chặn | PASS |
 | Địa chỉ/checkout | Thêm đủ 3/chặn thứ 4, sửa/xóa/default, chọn combo, sửa tạm | Điền đúng; default chuyển đúng; customers.address khớp; sửa tạm không đổi sổ | PASS |
 | Giỏ/phiếu giảm giá | Cộng dồn, số lượng, vượt tồn, xóa/rỗng; hợp lệ và 7 lý do từ chối | Giảm hợp lệ 5000; không tồn tại/khóa/chưa tới/hết hạn/hết lượt/tối thiểu/riêng tư đều bị chặn | PASS |

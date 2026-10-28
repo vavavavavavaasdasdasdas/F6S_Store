@@ -1,17 +1,92 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"><body>
 <aside th:fragment="sidebar" id="admin-sidebar" class="admin-sidebar" aria-label="Điều hướng quản trị">
-    <a class="admin-brand" th:href="@{/admin/dashboard}"><span class="brand-mark">S</span><span>ShoeAdmin<small>QUẢN TRỊ CỬA HÀNG</small></span></a>
-    <nav class="admin-nav">
+    <a class="admin-brand" th:href="@{/admin/dashboard}"><span class="brand-mark">S</span><span>F6S_Store<small>QUẢN TRỊ CỬA HÀNG</small></span></a>
+    <nav class="admin-nav" th:with="isProductSubActive=${adminActive == 'products' or adminActive == 'variants' or adminActive == 'categories' or adminActive == 'sizes' or adminActive == 'materials' or adminActive == 'soles' or adminActive == 'inventory'}">
         <th:block th:each="item : ${adminNav}">
-            <p class="admin-nav-group" th:if="${!item.group().isEmpty()}" th:text="${item.group()}"></p>
-            <a th:href="@{__${item.route()}__}" th:classappend="${adminActive == item.key()} ? 'is-active'"
-               th:attr="aria-current=${adminActive == item.key() ? 'page' : null}">
-               <span class="nav-dot" aria-hidden="true"></span><span th:text="${item.title()}"></span>
-            </a>
+            <th:block th:if="${item.group() == 'SẢN PHẨM'}">
+                <p class="admin-nav-group">SẢN PHẨM</p>
+                <div class="admin-nav-collapsible" th:classappend="${isProductSubActive} ? 'is-open'">
+                    <button type="button" class="admin-nav-parent" id="productParentBtn"
+                            onclick="toggleAdminProductMenu(this)"
+                            th:classappend="${isProductSubActive} ? 'has-active-child'"
+                            th:attr="aria-expanded=${isProductSubActive ? 'true' : 'false'}"
+                            aria-controls="productSubmenu">
+                        <span class="nav-parent-text">
+                            <span class="nav-dot nav-dot-parent" aria-hidden="true"></span>
+                            <span>Sản phẩm</span>
+                        </span>
+                        <svg class="admin-nav-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="admin-nav-submenu" id="productSubmenu"
+                         th:style="${isProductSubActive} ? 'display:flex;' : 'display:none;'">
+                        <a th:href="@{/admin/products-crud}" th:classappend="${adminActive == 'products'} ? 'is-active'"
+                           th:attr="aria-current=${adminActive == 'products' ? 'page' : null}">
+                           <span class="nav-dot" aria-hidden="true"></span><span>Sản phẩm</span>
+                        </a>
+                        <a th:href="@{/admin/categories}" th:classappend="${adminActive == 'categories'} ? 'is-active'"
+                           th:attr="aria-current=${adminActive == 'categories' ? 'page' : null}">
+                           <span class="nav-dot" aria-hidden="true"></span><span>Thương hiệu</span>
+                        </a>
+                        <a th:href="@{/admin/sizes}" th:classappend="${adminActive == 'sizes'} ? 'is-active'"
+                           th:attr="aria-current=${adminActive == 'sizes' ? 'page' : null}">
+                           <span class="nav-dot" aria-hidden="true"></span><span>Kích cỡ</span>
+                        </a>
+                        <a th:href="@{/admin/soles}" th:classappend="${adminActive == 'soles'} ? 'is-active'" th:attr="aria-current=${adminActive == 'soles' ? 'page' : null}"><span class="nav-dot" aria-hidden="true"></span><span>Đế giày</span></a>
+                        <a th:href="@{/admin/materials}" th:classappend="${adminActive == 'materials'} ? 'is-active'"
+                           th:attr="aria-current=${adminActive == 'materials' ? 'page' : null}">
+                           <span class="nav-dot" aria-hidden="true"></span><span>Chất liệu</span>
+                        </a>
+                        <a th:href="@{/admin/inventory}" th:classappend="${adminActive == 'inventory'} ? 'is-active'"
+                           th:attr="aria-current=${adminActive == 'inventory' ? 'page' : null}">
+                           <span class="nav-dot" aria-hidden="true"></span><span>Tồn kho</span>
+                        </a>
+                    </div>
+                </div>
+            </th:block>
+            <th:block th:unless="${item.key() == 'products' or item.key() == 'variants' or item.key() == 'categories' or item.key() == 'sizes' or item.key() == 'materials' or item.key() == 'soles' or item.key() == 'inventory'}">
+                <p class="admin-nav-group" th:if="${!item.group().isEmpty()}" th:text="${item.group()}"></p>
+                <a th:href="@{__${item.route()}__}" th:classappend="${adminActive == item.key()} ? 'is-active'"
+                   th:attr="aria-current=${adminActive == item.key() ? 'page' : null}">
+                   <span class="nav-dot" aria-hidden="true"></span><span th:text="${item.title()}"></span>
+                </a>
+            </th:block>
         </th:block>
     </nav>
     <form class="admin-logout" th:action="@{/logout}" method="post"><button type="submit">↪ &nbsp; Đăng xuất</button></form>
+
+    <style>
+        .admin-nav-collapsible { margin: 2px 0; }
+        .admin-nav-parent { display:flex; align-items:center; justify-content:space-between; width:100%; min-height:38px; padding:8px 12px; border-radius:var(--bs-border-radius, 8px); color:#535c67; font-family:inherit; font-size:inherit; font-weight:500; margin:0; background:transparent; border:0; cursor:pointer; text-align:left; transition:background .15s,color .15s; }
+        .admin-nav-parent:hover { background:#f5f6f8; color:#20262e; }
+        .admin-nav-parent:focus-visible { outline:3px solid var(--bs-primary); outline-offset:2px; }
+        .admin-nav-parent .nav-parent-text { display:flex; align-items:center; gap:12px; }
+        .admin-nav-chevron { flex:none; color:#9ba1aa; transition:transform .2s ease, color .15s; transform:rotate(-90deg); }
+        .admin-nav-collapsible.is-open .admin-nav-chevron { transform:rotate(0deg); color:#535c67; }
+        .admin-nav-submenu { display:none; flex-direction:column; padding-left:14px; border-left:1px solid #e7e9ec; margin-left:15px; margin-top:2px; margin-bottom:4px; }
+        .admin-nav-collapsible.is-open .admin-nav-submenu { display:flex; }
+        .admin-nav-submenu a { display:flex; align-items:center; gap:10px; min-height:34px; padding:6px 10px; border-radius:var(--bs-border-radius, 8px); color:#535c67; font-weight:500; font-size:13.5px; margin:1px 0; text-decoration:none; }
+        .admin-nav-submenu a:hover { background:#f5f6f8; color:#20262e; }
+        .admin-nav-submenu a.is-active { background:rgba(var(--bs-primary-rgb, 185, 67, 18),.10); color:#ab3b0f; font-weight:700; }
+        .admin-nav-submenu a .nav-dot { width:6px; height:6px; border:1px solid #9ba1aa; border-radius:50%; background:transparent; flex:none; }
+        .admin-nav-submenu a.is-active .nav-dot { background:var(--bs-primary, #b94312); border-color:var(--bs-primary, #b94312); border-radius:50%; }
+        .nav-dot-parent { width:6px; height:6px; border:1px solid #9ba1aa; border-radius:50%; background:transparent; flex:none; }
+        .admin-nav-parent.has-active-child .nav-dot-parent { background:var(--bs-primary, #b94312); border-color:var(--bs-primary, #b94312); }
+    </style>
+    <script>
+        function toggleAdminProductMenu(btn) {
+            var container = btn.closest('.admin-nav-collapsible');
+            if (!container) return;
+            var submenu = container.querySelector('.admin-nav-submenu');
+            var isOpen = container.classList.toggle('is-open');
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            if (submenu) {
+                submenu.style.display = isOpen ? 'flex' : 'none';
+            }
+        }
+    </script>
 </aside>
 </body></html>
 

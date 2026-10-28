@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section>
-<div class="admin-heading"><div><span class="eyebrow">QUẢN TRỊ</span><h1>Tài khoản</h1><p class="admin-description">Thông tin cá nhân và bảo mật tài khoản đang đăng nhập.</p></div></div>
+<div class="admin-heading"><div><span class="eyebrow">QUẢN TRỊ</span><h1>Hồ sơ của tôi</h1><p class="admin-description">Thông tin cá nhân và bảo mật tài khoản đang đăng nhập.</p></div></div>
 <div class="admin-panel"><h2>Hồ sơ tài khoản</h2><dl class="row">
 <dt class="col-sm-4">Tên đăng nhập</dt><dd class="col-sm-8" th:text="${account.username}"></dd>
 <dt class="col-sm-4">Họ tên</dt><dd class="col-sm-8" th:text="${accountProfile.fullName ?: 'Chưa cập nhật'}"></dd>

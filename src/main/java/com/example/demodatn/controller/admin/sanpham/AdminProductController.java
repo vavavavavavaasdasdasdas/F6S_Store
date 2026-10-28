@@ -23,6 +23,7 @@ public class AdminProductController {
     private final ProductGalleryService gallery;
     private final com.example.demodatn.repository.sanpham.MaterialRepository materials;
     private final com.example.demodatn.repository.sanpham.SizeRepository sizes;
+    private final com.example.demodatn.repository.sanpham.SoleRepository soles;
     private final com.example.demodatn.repository.sanpham.ProductVariantRepository variants;
     private final com.example.demodatn.util.Pagination pagination;
     @org.springframework.beans.factory.annotation.Value("${shop.upload-max-bytes:5242880}") private long maxBytes;
@@ -30,8 +31,9 @@ public class AdminProductController {
     @GetMapping
     public String list(@RequestParam(defaultValue="") String keyword, @RequestParam(required=false) Integer categoryId,
                        @RequestParam(required=false) Integer materialId, @RequestParam(required=false) Boolean status, @RequestParam(defaultValue="newest") String sort,
-                       @RequestParam(defaultValue="0") String page,  Model model) {
-        model.addAttribute("productPage",query.products(keyword,categoryId,status,sort,page,materialId));
+                       @RequestParam(defaultValue="0") String page, @RequestParam(required=false) Integer soleId, Model model) {
+        model.addAttribute("productPage",query.products(keyword,categoryId,status,sort,page,materialId,soleId));
+        model.addAttribute("soles",soles.findAll());model.addAttribute("soleId",soleId);
         model.addAttribute("categories",categories.findAll());
         model.addAttribute("materials",materials.findAll()); model.addAttribute("materialId",materialId);
         model.addAttribute("keyword",keyword); model.addAttribute("categoryId",categoryId);
@@ -46,6 +48,7 @@ public class AdminProductController {
         AdminProductForm form=new AdminProductForm();
         form.setId(id); form.setCode(product.getCode()); form.setName(product.getName());
         form.setDescription(product.getDescription()); form.setImageUrl(product.getImageUrl());
+        form.setSoleId(product.getSole()==null?null:product.getSole().getId());
         form.setCategoryId(product.getCategory()==null?null:product.getCategory().getId()); form.setStatus(product.getStatus());
         model.addAttribute("product",form); return form(model);
     }
@@ -83,6 +86,12 @@ public class AdminProductController {
         model.addAttribute("productImages", form.getId()==null ? java.util.List.of() : gallery.list(form.getId()));
         model.addAttribute("categories",categories.findAll());
         model.addAttribute("materials",materials.findByStatusTrueOrderByNameAscIdAsc());
+        var choices=new java.util.ArrayList<>(soles.findByStatusTrueOrderByNameAscIdAsc());
+        if(form.getId()!=null) {
+            var current=catalog.product(form.getId()).getSole();
+            if(current!=null&&!Boolean.TRUE.equals(current.getStatus()))choices.add(current);
+        }
+        model.addAttribute("soles",choices);
         model.addAttribute("sizes",sizes.findAll());
         model.addAttribute("existingMaterials",form.getId()==null ? java.util.List.of() : variants.materialNames(form.getId()));
         model.addAttribute("uploadMaxBytes",maxBytes);

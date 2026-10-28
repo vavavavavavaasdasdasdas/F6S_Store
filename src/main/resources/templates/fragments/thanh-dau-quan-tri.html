@@ -2,5 +2,5 @@
 <header th:fragment="topbar" class="admin-topbar">
     <div class="topbar-start"><button id="admin-menu-toggle" type="button" aria-label="Mở menu quản trị" aria-controls="admin-sidebar" aria-expanded="false">☰</button>
     <span class="topbar-label">Không gian quản trị</span></div>
-    <div class="d-flex align-items-center gap-2 flex-wrap"><a class="admin-user" th:href="@{/admin/account}" aria-label="Tài khoản"><span class="admin-avatar" aria-hidden="true">A</span><span th:text="${#authentication.name}">Admin</span><span class="admin-role">Tài khoản</span></a><form th:action="@{/logout}" method="post" novalidate><button class="btn btn-sm btn-outline-secondary" type="submit">Đăng xuất</button></form></div>
+    <div class="d-flex align-items-center gap-2 flex-wrap"><a class="admin-user" th:href="@{/admin/account}" aria-label="Hồ sơ của tôi"><span class="admin-avatar" aria-hidden="true">A</span><span th:text="${#authentication.name}">Admin</span><span class="admin-role">Hồ sơ của tôi</span></a><form th:action="@{/logout}" method="post" novalidate><button class="btn btn-sm btn-outline-secondary" type="submit">Đăng xuất</button></form></div>
 </header></body></html>

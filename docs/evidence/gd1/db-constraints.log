@@ -1,0 +1,17 @@
+IF DB_NAME()<>N'shopbangiay_kt_20261028_gd1' THROW 51000,N'Wrong DB',1; BEGIN TRAN; BEGIN TRY INSERT dbo.de_giay(ten,trang_thai) VALUES(N'cAO SU',1); THROW 51000,N'ERROR duplicate accepted',1; END TRY BEGIN CATCH SELECT ERROR_NUMBER() error_number,ERROR_MESSAGE() error_message; END CATCH; ROLLBACK; SELECT COUNT(*) sole_count FROM de_giay; SELECT c.name,TYPE_NAME(c.user_type_id) type,c.max_length,c.is_nullable,c.collation_name FROM sys.columns c WHERE c.object_id=OBJECT_ID(N'dbo.de_giay'); SELECT name,is_disabled,is_not_trusted FROM sys.foreign_keys WHERE name=N'FK_products_de_giay';
+
+(0 rows affected)
+2601 Cannot insert duplicate key row in object 'dbo.de_giay' with unique index 'UX_de_giay_ten'. The duplicate key value is (cAO SU).
+
+(1 rows affected)
+10
+
+(1 rows affected)
+id int 4 0 NULL
+ten nvarchar 200 0 Latin1_General_100_CI_AS
+trang_thai bit 1 0 NULL
+
+(3 rows affected)
+FK_products_de_giay 0 0
+
+(1 rows affected)

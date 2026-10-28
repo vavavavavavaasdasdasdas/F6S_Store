@@ -16,7 +16,7 @@
                         <a class="nav-link fw-bold" th:href="@{/products}">Sản phẩm</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <button type="button" class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown" aria-expanded="false">Danh mục</button>
+                        <button type="button" class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown" aria-expanded="false">Thương hiệu</button>
                         <ul class="dropdown-menu border-0 shadow-sm">
                             <li th:each="cat : ${globalCategories}">
                                 <a class="dropdown-item" th:href="@{/category/{id}(id=${cat.id})}" th:text="${cat.name}"></a>
