@@ -1,9 +1,9 @@
 <!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-nguoi-dung :: html}"><body><div th:fragment="content" class="container mt-4">
     <h2 class="mb-4">Lịch sử Đơn Hàng</h2>
     <div class="bg-white p-4 shadow-sm border rounded">
-        <div class="table-responsive"><table class="table table-hover align-middle">
+        <div class="table-responsive" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="user-don-hang-1" class="table table-hover align-middle data-table">
             <thead class="table-light">
-                <tr>
+                <tr><th scope="col" class="row-number">STT</th>
                     <th>Mã Đơn Hàng</th>
                     <th>Ngày đặt</th>
                     <th>Tổng tiền</th>
@@ -12,19 +12,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="order : ${orders}" th:if="${order.orderType == 'ONLINE'}">
+                <tr th:each="order, rowIndex : ${orders}" th:if="${order.orderType == 'ONLINE'}"><td class="row-number" th:text="${orderPage.number * orderPage.size + rowIndex.count}"></td>
                     <td th:text="${order.orderCode}"></td>
                     <td th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
                     <td class="text-danger fw-bold" th:text="${@money.format(order.finalAmount)} + ' đ'"></td>
                     <td>
-                        <span class="badge bg-primary" th:text="${order.status}"></span>
+                        <span class="badge bg-primary" th:text="${statusLabels[order.status] ?: order.status}"></span>
                     </td>
                     <td>
                         <a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-sm btn-outline-info">Xem chi tiết</a>
                     </td>
                 </tr>
-            <tr th:if="${#lists.isEmpty(orders)}"><td colspan="5" class="empty-state">Bạn chưa có đơn hàng. <a href="/products">Chọn sản phẩm</a></td></tr></tbody>
+            <tr th:if="${#lists.isEmpty(orders)}"><td colspan="6" class="empty-state">Bạn chưa có đơn hàng. <a href="/products">Chọn sản phẩm</a></td></tr></tbody>
         </table></div>
     </div>
-</div>
+<nav th:replace="~{fragments/phan-trang :: phan-trang(${orderPage},'page')}"></nav></div>
 </body></html>

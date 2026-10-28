@@ -1,0 +1,609 @@
+[
+  {
+    "id": "register-user",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "login-admin",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "login-user",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "login-before-admin",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "login-before-user",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "populate-user",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "populate-admin",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "populate-before-user",
+    "width": 1280,
+    "role": "before-user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "populate-before-admin",
+    "width": 1280,
+    "role": "before-admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "save-hold",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-before-admin",
+    "width": 1280,
+    "role": "before-admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 ()"
+    ]
+  },
+  {
+    "id": "tables-before-user",
+    "width": 1280,
+    "role": "before-user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-before-admin",
+    "width": 375,
+    "role": "before-admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-before-user",
+    "width": 375,
+    "role": "before-user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-admin",
+    "width": 1280,
+    "role": "admin",
+    "result": "FAIL",
+    "message": "Cell/header count mismatch /admin/orders/674 table 0: 1,1,1,1,1,1,1/9",
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-user",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-admin",
+    "width": 375,
+    "role": "admin",
+    "result": "FAIL",
+    "message": "Cell/header count mismatch /admin/orders/674 table 0: 1,1,1,1,1,1,1/9",
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-user",
+    "width": 375,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "login-admin",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "login-user",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "populate-user",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "populate-admin",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-admin",
+    "width": 1280,
+    "role": "admin",
+    "result": "FAIL",
+    "message": "Overflow /admin/pos 1360/1280",
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-user",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-admin",
+    "width": 375,
+    "role": "admin",
+    "result": "FAIL",
+    "message": "Overflow /admin/pos 537/375",
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-user",
+    "width": 375,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "pos-layout-debug",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "pos-overflow-origin",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "pos-overflow-cause",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-admin",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-user",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-admin",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "tables-user",
+    "width": 375,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "logical-before-admin",
+    "width": 1280,
+    "role": "before-admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "logical-before-user",
+    "width": 1280,
+    "role": "before-user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "logical-admin",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 ()"
+    ]
+  },
+  {
+    "id": "logical-user",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "S01",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "S02",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "S03",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "S04",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "S05",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "S06",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "S07",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "S08",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "logical-before-admin",
+    "width": 1280,
+    "role": "before-admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "logical-before-user",
+    "width": 1280,
+    "role": "before-user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "logical-admin",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "logical-user",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "main-table-screens",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "user-table-screens",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "cart-actions",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "pos-actions",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "main-table-screens",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "user-table-screens",
+    "width": 375,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "cart-actions",
+    "width": 375,
+    "role": "user",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "pos-actions",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "selection-action",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "selection-action",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "invoice-print",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "paging-links",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "frame-keyboard",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "pos-frame-clean",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "paging-links",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "frame-keyboard",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "pos-frame-clean",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "id": "alias-pages",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "message": null,
+    "errors": [],
+    "consoleErrors": []
+  }
+]

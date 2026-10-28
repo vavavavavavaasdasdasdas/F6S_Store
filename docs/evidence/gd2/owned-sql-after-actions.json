@@ -1,0 +1,293 @@
+{
+  "product_variants": [
+    {
+      "code": "GD2-P000",
+      "id": 598,
+      "price": 123456.0,
+      "quantity": 86
+    },
+    {
+      "code": "GD2-P000",
+      "id": 612,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P000",
+      "id": 613,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P000",
+      "id": 614,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P000",
+      "id": 615,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P000",
+      "id": 616,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P000",
+      "id": 617,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P000",
+      "id": 618,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P000",
+      "id": 619,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P000",
+      "id": 620,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P000",
+      "id": 621,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P000",
+      "id": 622,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P000",
+      "id": 623,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P000",
+      "id": 624,
+      "price": 123456.0,
+      "quantity": 100
+    },
+    {
+      "code": "GD2-P001",
+      "id": 599,
+      "price": 123456.0,
+      "quantity": 99
+    },
+    {
+      "code": "GD2-P002",
+      "id": 600,
+      "price": 123456.0,
+      "quantity": 99
+    },
+    {
+      "code": "GD2-P003",
+      "id": 601,
+      "price": 123456.0,
+      "quantity": 99
+    },
+    {
+      "code": "GD2-P004",
+      "id": 602,
+      "price": 123456.0,
+      "quantity": 99
+    },
+    {
+      "code": "GD2-P005",
+      "id": 603,
+      "price": 123456.0,
+      "quantity": 99
+    },
+    {
+      "code": "GD2-P006",
+      "id": 604,
+      "price": 123456.0,
+      "quantity": 99
+    },
+    {
+      "code": "GD2-P007",
+      "id": 605,
+      "price": 123456.0,
+      "quantity": 99
+    },
+    {
+      "code": "GD2-P008",
+      "id": 606,
+      "price": 123456.0,
+      "quantity": 99
+    },
+    {
+      "code": "GD2-P009",
+      "id": 607,
+      "price": 123456.0,
+      "quantity": 99
+    },
+    {
+      "code": "GD2-P010",
+      "id": 608,
+      "price": 123456.0,
+      "quantity": 99
+    },
+    {
+      "code": "GD2-P011",
+      "id": 609,
+      "price": 123456.0,
+      "quantity": 99
+    },
+    {
+      "code": "GD2-P012",
+      "id": 610,
+      "price": 123456.0,
+      "quantity": 99
+    },
+    {
+      "code": "GD2-P013",
+      "id": 611,
+      "price": 123456.0,
+      "quantity": 99
+    }
+  ],
+  "order_lines": [
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 00",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 01",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 02",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 03",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 04",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 05",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 06",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 07",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 08",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 09",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 10",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 11",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 12",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    },
+    {
+      "product_name": "Giày GD2 Nguyễn Huệ 13",
+      "size_name": "36",
+      "ten_chat_lieu": "Da thật",
+      "quantity": 1,
+      "price": 123456.0,
+      "total_price": 123456.0
+    }
+  ],
+  "invoice": [
+    {
+      "invoice_code": "GD2-I000",
+      "order_code": "GD2-O000",
+      "total_amount": 1728384.0,
+      "final_amount": 1728384.0
+    }
+  ],
+  "promotion_selection": [
+    {
+      "product_id": 961
+    }
+  ]
+}

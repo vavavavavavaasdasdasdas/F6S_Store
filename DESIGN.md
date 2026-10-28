@@ -51,3 +51,7 @@ Người dùng chọn mật khẩu mới ít nhất 8 ký tự, có chữ và s�
 ### Góp ý giảng viên — Giai đoạn 1
 
 Categories chỉ đổi nhãn thành Thương hiệu, giữ route và mô hình. Đế giày thuộc sản phẩm, là lựa chọn không bắt buộc; dùng select native và cùng component field/error, dialog xác nhận, bảng và phân trang hiện có. Đế ẩn không chọn cho sản phẩm mới, sản phẩm đang dùng vẫn giữ tên và có thể giữ lựa chọn cũ khi sửa. Cột Đang dùng dẫn sang bộ lọc sản phẩm. Nhóm khách/nhân viên mang tên TÀI KHOẢN; trang cá nhân admin mang tên Hồ sơ của tôi. Không đổi màu hoặc bố cục chuẩn.
+
+### Góp ý giảng viên — Giai đoạn 2
+
+Mọi bảng dữ liệu dùng STT theo Page.number * Page.size + vị trí dòng (bắt đầu 1); danh sách không phân trang dùng vị trí dòng. ID nếu có vẫn là cột riêng. Mã, tên, ảnh, kích cỡ, chất liệu, ngày bắt đầu/kết thúc và các số liệu độc lập có cột riêng. data-table dùng khung table-wrap/table-responsive/data-table-scroll chung, cuộn ngang bằng bàn phím trên mobile; không đổi sắp xếp, lọc, giá hay hành động. Bản in hóa đơn dùng cùng dữ liệu với quy tắc chia cột riêng cho giấy in.

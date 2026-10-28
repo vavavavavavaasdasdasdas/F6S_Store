@@ -1,0 +1,467 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< com.example:DemoDATN >------------------------
+[INFO] Building DemoDATN 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ DemoDATN ---
+[INFO] Deleting C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN\verify\gd2\candidate\target
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ DemoDATN ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 84 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ DemoDATN ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 129 source files with javac [debug parameters release 17] to target\classes
+[INFO] /C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/verify/gd2/candidate/src/main/java/com/example/demodatn/controller/ProductUploadExceptionAdvice.java: C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN\verify\gd2\candidate\src\main\java\com\example\demodatn\controller\ProductUploadExceptionAdvice.java uses or overrides a deprecated API.
+[INFO] /C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/verify/gd2/candidate/src/main/java/com/example/demodatn/controller/ProductUploadExceptionAdvice.java: Recompile with -Xlint:deprecation for details.
+[INFO] /C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/verify/gd2/candidate/src/main/java/com/example/demodatn/controller/user/OrderController.java: C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN\verify\gd2\candidate\src\main\java\com\example\demodatn\controller\user\OrderController.java uses unchecked or unsafe operations.
+[INFO] /C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/verify/gd2/candidate/src/main/java/com/example/demodatn/controller/user/OrderController.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ DemoDATN ---
+[INFO] skip non existing resourceDirectory C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN\verify\gd2\candidate\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ DemoDATN ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 30 source files with javac [debug parameters release 17] to target\test-classes
+[INFO] /C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/verify/gd2/candidate/src/test/java/com/example/demodatn/service/thongke/StatisticsIntegrationTest.java: C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN\verify\gd2\candidate\src\test\java\com\example\demodatn\service\thongke\StatisticsIntegrationTest.java uses unchecked or unsafe operations.
+[INFO] /C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/verify/gd2/candidate/src/test/java/com/example/demodatn/service/thongke/StatisticsIntegrationTest.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ DemoDATN ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.demodatn.config.DataInitializerTest
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.637 s -- in com.example.demodatn.config.DataInitializerTest
+[INFO] Running com.example.demodatn.config.SchemaCheckTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.427 s -- in com.example.demodatn.config.SchemaCheckTest
+[INFO] Running com.example.demodatn.controller.PaginationIntegrationTest
+22:18:12.344 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.demodatn.controller.PaginationIntegrationTest]: PaginationIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:18:12.687 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.controller.PaginationIntegrationTest
+22:18:12.861 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.demodatn.controller.PaginationIntegrationTest]: PaginationIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:18:12.866 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.controller.PaginationIntegrationTest
+22:18:12.985 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-28T22:18:13.465+07:00  INFO 6960 --- [           main] c.e.d.c.PaginationIntegrationTest        : Starting PaginationIntegrationTest using Java 17.0.17 with PID 6960 (started by ADMIN in C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN\verify\gd2\candidate)
+2026-10-28T22:18:13.467+07:00  INFO 6960 --- [           main] c.e.d.c.PaginationIntegrationTest        : No active profile set, falling back to 1 default profile: "default"
+2026-10-28T22:18:15.365+07:00  INFO 6960 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-28T22:18:15.653+07:00  INFO 6960 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 266 ms. Found 20 JPA repository interfaces.
+2026-10-28T22:18:17.517+07:00  INFO 6960 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-28T22:18:18.249+07:00  INFO 6960 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 61ead83e-1532-4d1f-bea4-5086709af2b3
+2026-10-28T22:18:18.251+07:00  INFO 6960 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-28T22:18:18.691+07:00  INFO 6960 --- [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-28T22:18:18.795+07:00  INFO 6960 --- [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-10-28T22:18:19.369+07:00  INFO 6960 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-28T22:18:19.520+07:00  WARN 6960 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-28T22:18:19.547+07:00  INFO 6960 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:sqlserver://localhost:1433;concatNullYieldsNull=ON;quotedIdentifier=ON;connectRetryInterval=10;connectRetryCount=1;maxResultBuffer=-1;sendTemporalDataTypesAsStringForBulkCopy=true;delayLoadingLobs=true;useFmtOnly=false;vectorTypeSupport=v1;cacheBulkCopyMetadata=false;bulkCopyForBatchInsertAllowEncryptedValueModifications=false;bulkCopyForBatchInsertTableLock=false;bulkCopyForBatchInsertKeepNulls=false;bulkCopyForBatchInsertKeepIdentity=false;bulkCopyForBatchInsertFireTriggers=false;bulkCopyForBatchInsertCheckConstraints=false;bulkCopyForBatchInsertBatchSize=0;useBulkCopyForBatchInsert=false;cancelQueryTimeout=-1;sslProtocol=TLS;calcBigDecimalPrecision=false;useDefaultJaasConfig=false;jaasConfigurationName=SQLJDBCDriver;statementPoolingCacheSize=0;serverPreparedStatementDiscardThreshold=10;enablePrepareOnFirstPreparedStatementCall=false;fips=false;socketTimeout=0;authentication=NotSpecified;authenticationScheme=nativeAuthentication;xopenStates=false;datetimeParameterType=datetime2;sendTimeAsDatetime=true;replication=false;trustStoreType=JKS;trustServerCertificate=true;TransparentNetworkIPResolution=true;iPAddressPreference=IPv4First;serverNameAsACE=false;sendStringParametersAsUnicode=true;selectMethod=direct;responseBuffering=adaptive;queryTimeout=-1;packetSize=8000;multiSubnetFailover=false;loginTimeout=30;lockTimeout=-1;lastUpdateCount=true;useDefaultGSSCredential=false;prepareMethod=prepexec;encrypt=true;disableStatementPooling=true;databaseName=shopbangiay_kt_20261028_gd2_unit;columnEncryptionSetting=Disabled;applicationName=Microsoft JDBC Driver for SQL Server;applicationIntent=readwrite;]
+	Database driver: Microsoft JDBC Driver 13.4 for SQL Server
+	Database dialect: SQLServerDialect
+	Database version: 17.0
+	Default catalog/schema: shopbangiay_kt_20261028_gd2_unit/dbo
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 128
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-28T22:18:21.180+07:00  INFO 6960 --- [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-28T22:18:21.418+07:00  INFO 6960 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-28T22:18:21.631+07:00  INFO 6960 --- [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-28T22:18:25.561+07:00  WARN 6960 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-28T22:18:26.080+07:00  INFO 6960 --- [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-10-28T22:18:26.081+07:00  WARN 6960 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-10-28T22:18:28.218+07:00  INFO 6960 --- [           main] c.e.d.c.PaginationIntegrationTest        : Started PaginationIntegrationTest in 15.249 seconds (process running for 20.934)
+2026-10-28T22:18:28.693+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:28.693+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:28.696+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:38.048+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:38.048+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:38.051+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:38.551+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:38.551+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:38.554+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:39.193+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:39.193+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:39.196+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 27.81 s -- in com.example.demodatn.controller.PaginationIntegrationTest
+[INFO] Running com.example.demodatn.controller.PasswordPolicyIntegrationTest
+2026-10-28T22:18:39.547+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.controller.PasswordPolicyIntegrationTest]: PasswordPolicyIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:39.550+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.controller.PasswordPolicyIntegrationTest
+2026-10-28T22:18:39.552+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.controller.PasswordPolicyIntegrationTest]: PasswordPolicyIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:39.553+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.controller.PasswordPolicyIntegrationTest
+2026-10-28T22:18:39.567+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:39.567+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:39.570+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-10-28T22:18:40.213+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:40.213+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:40.214+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-10-28T22:18:40.411+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:40.411+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:40.414+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.080 s -- in com.example.demodatn.controller.PasswordPolicyIntegrationTest
+[INFO] Running com.example.demodatn.controller.RouteErrorIntegrationTest
+2026-10-28T22:18:40.628+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.controller.RouteErrorIntegrationTest]: RouteErrorIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:40.630+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.controller.RouteErrorIntegrationTest
+2026-10-28T22:18:40.631+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.controller.RouteErrorIntegrationTest]: RouteErrorIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:40.632+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.controller.RouteErrorIntegrationTest
+2026-10-28T22:18:40.639+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:40.640+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:40.641+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+ROUTE_AUDIT full Spring context mappings=126
+2026-10-28T22:18:40.921+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:40.922+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:40.924+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.584 s -- in com.example.demodatn.controller.RouteErrorIntegrationTest
+[INFO] Running com.example.demodatn.controller.TablePresentationIntegrationTest
+2026-10-28T22:18:41.214+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.controller.TablePresentationIntegrationTest]: TablePresentationIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:41.217+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.controller.TablePresentationIntegrationTest
+2026-10-28T22:18:41.218+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.controller.TablePresentationIntegrationTest]: TablePresentationIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:41.220+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.controller.TablePresentationIntegrationTest
+2026-10-28T22:18:41.302+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:41.302+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:41.303+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.220 s -- in com.example.demodatn.controller.TablePresentationIntegrationTest
+[INFO] Running com.example.demodatn.controller.user.UserUiIntegrationTest
+2026-10-28T22:18:41.436+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.controller.user.UserUiIntegrationTest]: UserUiIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:41.474+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.controller.user.UserUiIntegrationTest
+2026-10-28T22:18:41.475+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.controller.user.UserUiIntegrationTest]: UserUiIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:41.477+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.controller.user.UserUiIntegrationTest
+2026-10-28T22:18:41.484+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:41.484+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:41.485+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-10-28T22:18:41.557+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:41.557+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:41.559+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-10-28T22:18:41.605+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:41.605+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:41.607+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-10-28T22:18:41.681+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:41.681+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:41.682+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.305 s -- in com.example.demodatn.controller.user.UserUiIntegrationTest
+[INFO] Running com.example.demodatn.DemoDatnApplicationTests
+2026-10-28T22:18:41.741+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.DemoDatnApplicationTests]: DemoDatnApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:41.764+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.DemoDatnApplicationTests
+2026-10-28T22:18:41.766+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.DemoDatnApplicationTests]: DemoDatnApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:41.767+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.DemoDatnApplicationTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.032 s -- in com.example.demodatn.DemoDatnApplicationTests
+[INFO] Running com.example.demodatn.entity.UnicodePersistenceIntegrationTest
+2026-10-28T22:18:41.774+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.entity.UnicodePersistenceIntegrationTest]: UnicodePersistenceIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:41.803+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.entity.UnicodePersistenceIntegrationTest
+2026-10-28T22:18:41.804+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.entity.UnicodePersistenceIntegrationTest]: UnicodePersistenceIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:41.805+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.entity.UnicodePersistenceIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.051 s -- in com.example.demodatn.entity.UnicodePersistenceIntegrationTest
+[INFO] Running com.example.demodatn.security.StandaloneAccountTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.099 s -- in com.example.demodatn.security.StandaloneAccountTest
+[INFO] Running com.example.demodatn.service.donhang.BankTransferDeadlineTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.example.demodatn.service.donhang.BankTransferDeadlineTest
+[INFO] Running com.example.demodatn.service.donhang.OrderRollbackIntegrationTest
+2026-10-28T22:18:41.938+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.donhang.OrderRollbackIntegrationTest]: OrderRollbackIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:41.986+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.donhang.OrderRollbackIntegrationTest
+2026-10-28T22:18:41.988+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.donhang.OrderRollbackIntegrationTest]: OrderRollbackIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:41.997+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.donhang.OrderRollbackIntegrationTest
+2026-10-28T22:18:42.005+07:00  INFO 6960 --- [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-28T22:18:42.051+07:00  INFO 6960 --- [           main] c.e.d.s.d.OrderRollbackIntegrationTest   : Starting OrderRollbackIntegrationTest using Java 17.0.17 with PID 6960 (started by ADMIN in C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN\verify\gd2\candidate)
+2026-10-28T22:18:42.052+07:00  INFO 6960 --- [           main] c.e.d.s.d.OrderRollbackIntegrationTest   : No active profile set, falling back to 1 default profile: "default"
+2026-10-28T22:18:42.373+07:00  INFO 6960 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-28T22:18:42.476+07:00  INFO 6960 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 101 ms. Found 20 JPA repository interfaces.
+2026-10-28T22:18:42.653+07:00  INFO 6960 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-10-28T22:18:42.871+07:00  INFO 6960 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection ConnectionID:11 ClientConnectionId: 2638411c-56b8-45af-96e6-9fae7493145e
+2026-10-28T22:18:42.871+07:00  INFO 6960 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-10-28T22:18:42.936+07:00  INFO 6960 --- [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-28T22:18:43.034+07:00  INFO 6960 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-28T22:18:43.037+07:00  WARN 6960 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-28T22:18:43.039+07:00  INFO 6960 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:sqlserver://localhost:1433;concatNullYieldsNull=ON;quotedIdentifier=ON;connectRetryInterval=10;connectRetryCount=1;maxResultBuffer=-1;sendTemporalDataTypesAsStringForBulkCopy=true;delayLoadingLobs=true;useFmtOnly=false;vectorTypeSupport=v1;cacheBulkCopyMetadata=false;bulkCopyForBatchInsertAllowEncryptedValueModifications=false;bulkCopyForBatchInsertTableLock=false;bulkCopyForBatchInsertKeepNulls=false;bulkCopyForBatchInsertKeepIdentity=false;bulkCopyForBatchInsertFireTriggers=false;bulkCopyForBatchInsertCheckConstraints=false;bulkCopyForBatchInsertBatchSize=0;useBulkCopyForBatchInsert=false;cancelQueryTimeout=-1;sslProtocol=TLS;calcBigDecimalPrecision=false;useDefaultJaasConfig=false;jaasConfigurationName=SQLJDBCDriver;statementPoolingCacheSize=0;serverPreparedStatementDiscardThreshold=10;enablePrepareOnFirstPreparedStatementCall=false;fips=false;socketTimeout=0;authentication=NotSpecified;authenticationScheme=nativeAuthentication;xopenStates=false;datetimeParameterType=datetime2;sendTimeAsDatetime=true;replication=false;trustStoreType=JKS;trustServerCertificate=true;TransparentNetworkIPResolution=true;iPAddressPreference=IPv4First;serverNameAsACE=false;sendStringParametersAsUnicode=true;selectMethod=direct;responseBuffering=adaptive;queryTimeout=-1;packetSize=8000;multiSubnetFailover=false;loginTimeout=30;lockTimeout=-1;lastUpdateCount=true;useDefaultGSSCredential=false;prepareMethod=prepexec;encrypt=true;disableStatementPooling=true;databaseName=shopbangiay_kt_20261028_gd2_unit;columnEncryptionSetting=Disabled;applicationName=Microsoft JDBC Driver for SQL Server;applicationIntent=readwrite;]
+	Database driver: Microsoft JDBC Driver 13.4 for SQL Server
+	Database dialect: SQLServerDialect
+	Database version: 17.0
+	Default catalog/schema: shopbangiay_kt_20261028_gd2_unit/dbo
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 128
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-28T22:18:43.450+07:00  INFO 6960 --- [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-28T22:18:43.520+07:00  INFO 6960 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-28T22:18:44.651+07:00  WARN 6960 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-28T22:18:44.830+07:00  INFO 6960 --- [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-10-28T22:18:44.832+07:00  WARN 6960 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-10-28T22:18:45.660+07:00  INFO 6960 --- [           main] c.e.d.s.d.OrderRollbackIntegrationTest   : Started OrderRollbackIntegrationTest in 3.656 seconds (process running for 38.376)
+2026-10-28T22:18:45.803+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:45.804+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:45.809+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 5 ms
+2026-10-28T22:18:46.250+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:46.250+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:46.255+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 5 ms
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.440 s -- in com.example.demodatn.service.donhang.OrderRollbackIntegrationTest
+[INFO] Running com.example.demodatn.service.donhang.OrderStockIntegrationTest
+2026-10-28T22:18:46.385+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.donhang.OrderStockIntegrationTest]: OrderStockIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:46.388+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.donhang.OrderStockIntegrationTest
+2026-10-28T22:18:46.390+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.donhang.OrderStockIntegrationTest]: OrderStockIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:46.392+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.donhang.OrderStockIntegrationTest
+2026-10-28T22:18:47.596+07:00  INFO 6960 --- [           main] c.e.d.s.donhang.BankTransferExpiryJob    : ?� h?y ??n chuy?n kho?n qu� h?n 669.
+2026-10-28T22:18:47.615+07:00  INFO 6960 --- [           main] c.e.d.s.donhang.BankTransferExpiryJob    : ?� h?y ??n chuy?n kho?n qu� h?n 809.
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.395 s -- in com.example.demodatn.service.donhang.OrderStockIntegrationTest
+[INFO] Running com.example.demodatn.service.donhang.PosHoldServiceTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.514 s -- in com.example.demodatn.service.donhang.PosHoldServiceTest
+[INFO] Running com.example.demodatn.service.donhang.PosInvoiceIntegrationTest
+2026-10-28T22:18:48.298+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.donhang.PosInvoiceIntegrationTest]: PosInvoiceIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:48.302+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.donhang.PosInvoiceIntegrationTest
+2026-10-28T22:18:48.303+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.donhang.PosInvoiceIntegrationTest]: PosInvoiceIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:48.304+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.donhang.PosInvoiceIntegrationTest
+2026-10-28T22:18:48.410+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:48.410+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:48.414+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:48.544+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:48.545+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:48.549+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-28T22:18:48.754+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:48.754+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:48.758+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-28T22:18:48.798+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:48.798+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:48.801+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:48.864+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:48.864+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:48.868+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-28T22:18:48.988+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:48.988+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:48.991+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.769 s -- in com.example.demodatn.service.donhang.PosInvoiceIntegrationTest
+[INFO] Running com.example.demodatn.service.donhang.PricingServiceTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.259 s -- in com.example.demodatn.service.donhang.PricingServiceTest
+[INFO] Running com.example.demodatn.service.khachhang.ShippingAddressIntegrationTest
+2026-10-28T22:18:49.343+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.khachhang.ShippingAddressIntegrationTest]: ShippingAddressIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:49.376+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.khachhang.ShippingAddressIntegrationTest
+2026-10-28T22:18:49.378+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.khachhang.ShippingAddressIntegrationTest]: ShippingAddressIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:49.379+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.khachhang.ShippingAddressIntegrationTest
+2026-10-28T22:18:49.388+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:49.388+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:49.392+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-28T22:18:49.515+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:49.515+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:49.518+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+PHASE_C before=0 after=3 fourth service rejected; Unicode equality=true
+2026-10-28T22:18:49.557+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:49.557+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:49.560+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+PHASE_C order=819 addressId=14 temporary=false snapshot equality=true
+PHASE_C order=820 addressId=15 temporary=false snapshot equality=true
+PHASE_C order=821 addressId=16 temporary=false snapshot equality=true
+PHASE_C order=822 addressId=14 temporary=true snapshot equality=true
+2026-10-28T22:18:49.785+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:49.785+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:49.789+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-28T22:18:49.904+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:49.904+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:49.908+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+PHASE_C concurrency: before=2 requests=2 success=1 rejected=1 after=3
+2026-10-28T22:18:49.959+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:49.960+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:49.963+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+PHASE_C direct SQL: slot4 CHECK rejected; duplicate slot UNIQUE rejected; second default UNIQUE rejected
+2026-10-28T22:18:50.064+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:50.064+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:50.068+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-28T22:18:50.194+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:50.194+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:50.198+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+C_SECURITY 1 anonymous profile=302
+C_SECURITY 2 owner missing CSRF=403
+C_SECURITY 3 invalid CSRF=403
+C_SECURITY 4 foreign edit=404
+C_SECURITY 5 foreign delete=404
+C_SECURITY 6 foreign default=404
+C_SECURITY 7 foreign view=404
+C_SECURITY 8 checkout foreign ID=404
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.949 s -- in com.example.demodatn.service.khachhang.ShippingAddressIntegrationTest
+[INFO] Running com.example.demodatn.service.khuyenmai.DiscountIntegrationTest
+2026-10-28T22:18:50.295+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.khuyenmai.DiscountIntegrationTest]: DiscountIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:50.333+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.khuyenmai.DiscountIntegrationTest
+2026-10-28T22:18:50.334+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.khuyenmai.DiscountIntegrationTest]: DiscountIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:50.337+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.khuyenmai.DiscountIntegrationTest
+2026-10-28T22:18:50.526+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:50.526+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:50.530+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-28T22:18:50.846+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:50.846+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:50.850+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-28T22:18:50.877+07:00  WARN 6960 --- [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.642 s -- in com.example.demodatn.service.khuyenmai.DiscountIntegrationTest
+[INFO] Running com.example.demodatn.service.nhanvien.AdminAccountServiceTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.335 s -- in com.example.demodatn.service.nhanvien.AdminAccountServiceTest
+[INFO] Running com.example.demodatn.service.PeopleIntegrationTest
+2026-10-28T22:18:52.278+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.PeopleIntegrationTest]: PeopleIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:52.310+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.PeopleIntegrationTest
+2026-10-28T22:18:52.311+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.PeopleIntegrationTest]: PeopleIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:52.313+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.PeopleIntegrationTest
+2026-10-28T22:18:52.615+07:00  WARN 6960 --- [           main] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 2628, SQLState: S0001
+2026-10-28T22:18:52.615+07:00  WARN 6960 --- [           main] org.hibernate.orm.jdbc.error             : String or binary data would be truncated in table 'shopbangiay_kt_20261028_gd2_unit.dbo.employees', column 'full_name'. Truncated value: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.
+2026-10-28T22:18:53.930+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:53.930+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:53.934+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:54.751+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:54.751+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:54.754+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:54.763+07:00  WARN 6960 --- [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.806 s -- in com.example.demodatn.service.PeopleIntegrationTest
+[INFO] Running com.example.demodatn.service.sanpham.CatalogIntegrationTest
+2026-10-28T22:18:55.091+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.sanpham.CatalogIntegrationTest]: CatalogIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:55.127+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.sanpham.CatalogIntegrationTest
+2026-10-28T22:18:55.130+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.sanpham.CatalogIntegrationTest]: CatalogIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:55.131+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.sanpham.CatalogIntegrationTest
+2026-10-28T22:18:55.953+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:55.953+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:55.956+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:56.034+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:56.035+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:56.038+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:56.107+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:56.108+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:56.110+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.561 s -- in com.example.demodatn.service.sanpham.CatalogIntegrationTest
+[INFO] Running com.example.demodatn.service.sanpham.InitialMaterialIntegrationTest
+2026-10-28T22:18:56.654+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.sanpham.InitialMaterialIntegrationTest]: InitialMaterialIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:56.657+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.sanpham.InitialMaterialIntegrationTest
+2026-10-28T22:18:56.658+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.sanpham.InitialMaterialIntegrationTest]: InitialMaterialIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:56.660+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.sanpham.InitialMaterialIntegrationTest
+2026-10-28T22:18:56.666+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:56.667+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:56.670+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:56.925+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:56.925+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:56.928+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:56.970+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:56.970+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:56.973+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+PHASE_A material summary=Cao su, T�m t?t 0 84ccd449-c047-4105-94f2-91f7b08ab7f1, T�m t?t 1 a9196daa-1e45-4540-a90a-22840cd31749 +1; filter total=14; pagination materialId=7 retained
+2026-10-28T22:18:57.288+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:57.288+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:57.292+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:57.369+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:57.369+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:57.373+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-10-28T22:18:57.493+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:57.493+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:57.497+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+PHASE_A rollback product=0 variants=0 logs before=64 after=64
+2026-10-28T22:18:57.534+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:57.534+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:57.538+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+PHASE_A SQL two sizes: [{price=321000.50, quantity=7, chat_lieu_id=7, quantity_before=0, quantity_change=7, quantity_after=7, reason=Kh?i t?o}, {price=321000.50, quantity=7, chat_lieu_id=7, quantity_before=0, quantity_change=7, quantity_after=7, reason=Kh?i t?o}]
+2026-10-28T22:18:57.576+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:57.576+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:57.579+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+SECURITY 1 anonymous admin GET=302
+SECURITY 2 USER admin GET=403
+SECURITY 3 product POST missing CSRF=403
+SECURITY 4 hide invalid CSRF=403
+SECURITY 5 USER variant POST=403
+SECURITY 6 forged size rejected HTTP=200 field error
+SECURITY 7 negative price/stock rejected HTTP=200 field errors
+SECURITY 8 SQL injection filter/sort HTTP=200 zero products
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.029 s -- in com.example.demodatn.service.sanpham.InitialMaterialIntegrationTest
+[INFO] Running com.example.demodatn.service.sanpham.MaterialIntegrationTest
+2026-10-28T22:18:57.685+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.sanpham.MaterialIntegrationTest]: MaterialIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:57.688+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.sanpham.MaterialIntegrationTest
+2026-10-28T22:18:57.689+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.sanpham.MaterialIntegrationTest]: MaterialIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:57.701+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.sanpham.MaterialIntegrationTest
+2026-10-28T22:18:57.834+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:57.834+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:57.836+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-10-28T22:18:57.916+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:57.916+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:57.919+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:58.028+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:58.028+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:58.033+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 5 ms
+2026-10-28T22:18:58.086+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:58.086+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:58.089+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.573 s -- in com.example.demodatn.service.sanpham.MaterialIntegrationTest
+[INFO] Running com.example.demodatn.service.sanpham.ProductGalleryIntegrationTest
+2026-10-28T22:18:58.259+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.sanpham.ProductGalleryIntegrationTest]: ProductGalleryIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:58.261+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.sanpham.ProductGalleryIntegrationTest
+2026-10-28T22:18:58.262+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.sanpham.ProductGalleryIntegrationTest]: ProductGalleryIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:58.264+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.sanpham.ProductGalleryIntegrationTest
+2026-10-28T22:18:58.433+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:58.434+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:58.438+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.362 s -- in com.example.demodatn.service.sanpham.ProductGalleryIntegrationTest
+[INFO] Running com.example.demodatn.service.sanpham.ProductImageUrlServiceTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.example.demodatn.service.sanpham.ProductImageUrlServiceTest
+[INFO] Running com.example.demodatn.service.sanpham.SoleIntegrationTest
+2026-10-28T22:18:58.631+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.sanpham.SoleIntegrationTest]: SoleIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:58.634+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.sanpham.SoleIntegrationTest
+2026-10-28T22:18:58.635+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.sanpham.SoleIntegrationTest]: SoleIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:58.637+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.sanpham.SoleIntegrationTest
+2026-10-28T22:18:58.644+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:58.645+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:58.647+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-10-28T22:18:58.974+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:58.974+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:58.977+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.453 s -- in com.example.demodatn.service.sanpham.SoleIntegrationTest
+[INFO] Running com.example.demodatn.service.thongke.DashboardIntegrationTest
+2026-10-28T22:18:59.084+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.thongke.DashboardIntegrationTest]: DashboardIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:59.123+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.thongke.DashboardIntegrationTest
+2026-10-28T22:18:59.124+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.thongke.DashboardIntegrationTest]: DashboardIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:59.125+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.thongke.DashboardIntegrationTest
+2026-10-28T22:18:59.131+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:59.131+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:59.134+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.155 s -- in com.example.demodatn.service.thongke.DashboardIntegrationTest
+[INFO] Running com.example.demodatn.service.thongke.StatisticsIntegrationTest
+2026-10-28T22:18:59.241+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.thongke.StatisticsIntegrationTest]: StatisticsIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:59.243+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.thongke.StatisticsIntegrationTest
+2026-10-28T22:18:59.244+07:00  INFO 6960 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.thongke.StatisticsIntegrationTest]: StatisticsIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-28T22:18:59.245+07:00  INFO 6960 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.thongke.StatisticsIntegrationTest
+2026-10-28T22:18:59.252+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:59.252+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:59.255+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-10-28T22:18:59.387+07:00  INFO 6960 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-28T22:18:59.387+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-28T22:18:59.391+07:00  INFO 6960 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.230 s -- in com.example.demodatn.service.thongke.StatisticsIntegrationTest
+[INFO] Running com.example.demodatn.util.PaginationTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.example.demodatn.util.PaginationTest
+[INFO] Running com.example.demodatn.util.PasswordPolicyTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.example.demodatn.util.PasswordPolicyTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 133, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:10 min
+[INFO] Finished at: 2026-10-28T22:18:59+07:00
+[INFO] ------------------------------------------------------------------------

@@ -96,8 +96,13 @@ public class OrderController {
         
         model.addAttribute("cartItems", cart);
         Map<Integer,String> variantImages=new HashMap<>();
-        for (CartItemDto item:cart) productVariants.findById(item.getVariantId()).ifPresent(v->variantImages.put(v.getId(),v.getProduct().getDisplayImageUrl()));
+        Map<Integer,String> variantCodes=new HashMap<>();
+        for (CartItemDto item:cart) productVariants.findById(item.getVariantId()).ifPresent(v->{
+            variantImages.put(v.getId(),v.getProduct().getDisplayImageUrl());
+            variantCodes.put(v.getId(),v.getProduct().getCode());
+        });
         model.addAttribute("variantImages",variantImages);
+        model.addAttribute("variantCodes",variantCodes);
         model.addAttribute("variantPrices",cart.stream().collect(java.util.stream.Collectors.toMap(CartItemDto::getVariantId,i->pricingService.priceForVariant(i.getVariantId()),(a,b)->a)));
         model.addAttribute("subTotal", subTotal);
         model.addAttribute("shippingFee", fee);

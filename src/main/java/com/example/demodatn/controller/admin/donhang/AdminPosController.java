@@ -74,6 +74,10 @@ public class AdminPosController {
             model.addAttribute("productPrices", available.stream().collect(java.util.stream.Collectors.toMap(v->v.getProduct().getId(),v->prices.get(v.getId()).getFinalPrice(),BigDecimal::min)));
             model.addAttribute("q", q); model.addAttribute("category", category);
             model.addAttribute("posCart", cart);
+            var productCodes=new HashMap<Integer,String>();
+            for(var v:variants.findAllById(cart.stream().map(CartItemDto::getVariantId).toList()))
+                productCodes.put(v.getId(),v.getProduct().getCode());
+            model.addAttribute("productCodes",productCodes);
             boolean valid = true;
             var lineWarnings=new HashMap<Integer,String>();
             Long loadedId=(Long)session.getAttribute("posLoadedHold");

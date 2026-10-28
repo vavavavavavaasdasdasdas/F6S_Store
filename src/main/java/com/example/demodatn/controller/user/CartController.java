@@ -49,6 +49,7 @@ public class CartController {
             item.setQuantity(dto.getQuantity());
 
             ProductVariant variant = productService.getVariantById(dto.getVariantId());
+            item.setProductCode(variant == null || variant.getProduct() == null ? null : variant.getProduct().getCode());
             item.setMaterialName(variant == null ? dto.getMaterialName() : variant.getMaterial().getName());
             if (variant == null || Boolean.FALSE.equals(variant.getStatus()) || 
                 variant.getProduct() == null || Boolean.FALSE.equals(variant.getProduct().getStatus())) {
@@ -231,6 +232,7 @@ public class CartController {
         private Integer variantId;
         private Integer productId;
         private String productName;
+        private String productCode;
         private String imageUrl;
         private String size;
         private String materialName;

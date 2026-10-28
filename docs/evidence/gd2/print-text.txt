@@ -1,0 +1,208 @@
+SHOES Store                                                                                      HÓA ĐƠN BÁN HÀNG
+123 Đường Số 1, HCM                                                                              GD2-I000
+SĐT: 1900 1234                                                                                   28/10/2026 10:00
+
+
+
+Đơn hàng: GD2-O000                                                                              Khách: Khách GD2 Nguyễn Huệ
+Kênh bán: Trực tuyến                                                                            SĐT: 0790000002
+                                                                                                Nhân viên: Nhân viên GD2
+
+
+ STT   Ảnh        Mã            Tên sản phẩm                  Kích     Chất liệu       SL            Đơn giá (đ)        Thành tiền (đ)
+                                                              cỡ
+
+  1               GD2-P000      Giày GD2 Nguyễn Huệ           36       Da thật         1                  123.456               123.456
+
+
+
+
+
+
+
+
+           Chưa có ảnh
+                                00
+
+
+  2               GD2-P001      Giày GD2 Nguyễn Huệ           36       Da thật         1                  123.456               123.456
+
+
+
+
+
+
+
+
+           Chưa có ảnh          01
+
+
+  3               GD2-P002      Giày GD2 Nguyễn Huệ           36       Da thật         1                  123.456               123.456
+
+
+
+
+
+
+
+
+           Chưa có ảnh
+                                02
+
+
+  4               GD2-P003      Giày GD2 Nguyễn Huệ           36       Da thật         1                  123.456               123.456
+
+
+
+
+
+
+
+
+           Chưa có ảnh
+                                03
+
+
+  5               GD2-P004      Giày GD2 Nguyễn Huệ           36       Da thật         1                  123.456               123.456
+
+
+
+
+
+
+
+
+           Chưa có ảnh          04
+
+
+  6               GD2-P005      Giày GD2 Nguyễn Huệ           36       Da thật         1                  123.456               123.456
+
+
+
+
+
+
+
+
+           Chưa có ảnh
+                                05
+
+
+  7               GD2-P006      Giày GD2 Nguyễn Huệ           36       Da thật         1                  123.456               123.456
+
+
+
+
+
+
+
+
+           Chưa có ảnh
+                                06
+
+
+  8               GD2-P007      Giày GD2 Nguyễn Huệ           36       Da thật         1                  123.456               123.456
+
+
+
+
+
+
+
+
+           Chưa có ảnh
+                                07
+
+
+  9               GD2-P008      Giày GD2 Nguyễn Huệ           36       Da thật         1                  123.456               123.456
+
+
+
+
+
+
+
+           Chưa có ảnh
+                                08
+
+
+  10              GD2-P009      Giày GD2 Nguyễn Huệ           36       Da thật         1                  123.456               123.456
+
+
+
+
+
+
+
+
+           Chưa có ảnh
+                                09
+
+
+  11              GD2-P010      Giày GD2 Nguyễn Huệ           36       Da thật         1                  123.456               123.456
+
+
+
+
+
+
+
+
+           Chưa có ảnh
+                                10
+
+
+  12              GD2-P011      Giày GD2 Nguyễn Huệ           36       Da thật         1                  123.456               123.456
+
+
+
+
+
+
+
+           Chưa có ảnh
+                                11
+STT  Ảnh        Mã           Tên sản phẩm                Kích    Chất liệu      SL           Đơn giá (đ)       Thành tiền (đ)
+                                                         cỡ
+
+13              GD2-P012     Giày GD2 Nguyễn Huệ         36      Da thật        1                 123.456              123.456
+
+
+
+
+
+
+
+
+         Chưa có ảnh
+                             12
+
+
+14              GD2-P013     Giày GD2 Nguyễn Huệ         36      Da thật        1                 123.456              123.456
+
+
+
+
+
+
+
+
+         Chưa có ảnh         13
+
+
+
+                                                      Tạm tính                                                    1.728.384 đ
+
+                                                      Giảm giá                                                              0 đ
+
+                                                      Phí giao hàng                                                         0 đ
+
+                                                      TỔNG THANH TOÁN                                            1.728.384 đ
+
+                                                      Phương thức                                              Chuyển khoản
+
+                                                      Thanh toán                                               Đã thanh toán
+
+
+
+                                                    Cảm ơn quý khách!

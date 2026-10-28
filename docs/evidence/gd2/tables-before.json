@@ -1,0 +1,1022 @@
+[
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Ngày",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Doanh thu (₫)",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "label, iter : ${dashboard.labels}"
+    ],
+    "line": 35,
+    "file": "src/main/resources/templates/admin/bang-dieu-khien.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Mã đơn / Ngày tạo",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Khách hàng",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Tổng tiền",
+        "expr": null,
+        "attrs": {
+          "class": "money"
+        }
+      }
+    ],
+    "rows": [
+      "row : ${dashboard.recent}"
+    ],
+    "line": 42,
+    "file": "src/main/resources/templates/admin/bang-dieu-khien.html",
+    "ordinal": 2
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Sản phẩm",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Kích cỡ",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Chất liệu",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Tồn kho",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Thao tác",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "row : ${dashboard.lowStock}"
+    ],
+    "line": 51,
+    "file": "src/main/resources/templates/admin/bang-dieu-khien.html",
+    "ordinal": 3
+  },
+  {
+    "attrs": {
+      "class": "table mt-3"
+    },
+    "columns": [
+      {
+        "text": "Sản phẩm",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Kích cỡ",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Chất liệu",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Số lượng",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Đơn giá",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Thành tiền",
+        "expr": null,
+        "attrs": {
+          "class": "text-end"
+        }
+      }
+    ],
+    "rows": [
+      "detail : ${orderDetails}"
+    ],
+    "line": 25,
+    "file": "src/main/resources/templates/user/chi-tiet-don-hang.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "table table-hover align-middle"
+    },
+    "columns": [
+      {
+        "text": "Mã Đơn Hàng",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Ngày đặt",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Tổng tiền",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Hành động",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "order : ${orders}"
+    ],
+    "line": 4,
+    "file": "src/main/resources/templates/user/don-hang.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "table align-middle mb-0"
+    },
+    "columns": [
+      {
+        "text": "Sản Phẩm",
+        "expr": null,
+        "attrs": {
+          "class": "ps-4"
+        }
+      },
+      {
+        "text": "Đơn Giá",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Số Lượng",
+        "expr": null,
+        "attrs": {
+          "class": "quantity-column"
+        }
+      },
+      {
+        "text": "Thành Tiền",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Thao Tác",
+        "expr": null,
+        "attrs": {
+          "class": "text-end pe-4"
+        }
+      }
+    ],
+    "rows": [
+      "item : ${cartItems}"
+    ],
+    "line": 23,
+    "file": "src/main/resources/templates/user/gio-hang.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table catalog-table"
+    },
+    "columns": [
+      {
+        "text": "Sản phẩm",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Kích cỡ",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Chất liệu",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Giá (₫)",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Tồn kho",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Hành động",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "v:${variants}"
+    ],
+    "line": 4,
+    "file": "src/main/resources/templates/admin/bien-the/danh-sach.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "ID",
+        "expr": null,
+        "attrs": {
+          "style": "width: 80px;"
+        }
+      },
+      {
+        "text": "",
+        "expr": "${kind == 'sizes' ? 'Kích cỡ' : (kind == 'materials' ? 'Tên chất liệu' : (kind == 'soles' ? 'Tên đế giày' : 'Tên thương hiệu'))}",
+        "attrs": {
+          "th:text": "${kind == 'sizes' ? 'Kích cỡ' : (kind == 'materials' ? 'Tên chất liệu' : (kind == 'soles' ? 'Tên đế giày' : 'Tên thương hiệu'))}"
+        }
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {
+          "th:if": "${kind != 'sizes'}",
+          "style": "width: 160px;"
+        }
+      },
+      {
+        "text": "Đang dùng",
+        "expr": null,
+        "attrs": {
+          "th:if": "${kind == 'materials' or kind == 'soles'}"
+        }
+      },
+      {
+        "text": "Hành động",
+        "expr": null,
+        "attrs": {
+          "style": "width: 180px;"
+        }
+      }
+    ],
+    "rows": [
+      "item : ${items}"
+    ],
+    "line": 35,
+    "file": "src/main/resources/templates/admin/danh-muc-kich-co/danh-sach.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Sản phẩm",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Kích cỡ",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Chất liệu",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "SL",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Đơn giá (đ)",
+        "expr": null,
+        "attrs": {
+          "class": "money"
+        }
+      },
+      {
+        "text": "Thành tiền (đ)",
+        "expr": null,
+        "attrs": {
+          "class": "money"
+        }
+      }
+    ],
+    "rows": [
+      "d:${order.orderDetails}"
+    ],
+    "line": 9,
+    "file": "src/main/resources/templates/admin/don-hang/chi-tiet.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Mã đơn",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Kênh",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Khách",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Thanh toán",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Tổng (đ)",
+        "expr": null,
+        "attrs": {
+          "class": "money"
+        }
+      },
+      {
+        "text": "Ngày tạo",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "o:${orders.content}"
+    ],
+    "line": 3,
+    "file": "src/main/resources/templates/admin/don-hang/danh-sach.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "invoice-table"
+    },
+    "columns": [
+      {
+        "text": "Sản phẩm",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Kích cỡ",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Chất liệu",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "SL",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Đơn giá (đ)",
+        "expr": null,
+        "attrs": {
+          "class": "money"
+        }
+      },
+      {
+        "text": "Thành tiền (đ)",
+        "expr": null,
+        "attrs": {
+          "class": "money"
+        }
+      }
+    ],
+    "rows": [
+      "d:${o.orderDetails}"
+    ],
+    "line": 2,
+    "file": "src/main/resources/templates/admin/hoa-don/chi-tiet.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Hóa đơn",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Đơn hàng",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Ngày",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Khách",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Nhân viên",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Tổng (đ)",
+        "expr": null,
+        "attrs": {
+          "class": "money"
+        }
+      },
+      {
+        "text": "Thanh toán",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "i:${invoices.content}"
+    ],
+    "line": 2,
+    "file": "src/main/resources/templates/admin/hoa-don/danh-sach.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Mã đơn",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Ngày tạo",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Thành tiền",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "o:${orderPage.content}"
+    ],
+    "line": 8,
+    "file": "src/main/resources/templates/admin/khach-hang/chi-tiet.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Mã / Họ tên",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Liên hệ",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Tài khoản",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Hành động",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "p:${peoplePage.content}"
+    ],
+    "line": 5,
+    "file": "src/main/resources/templates/admin/khach-hang/danh-sach.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Tên",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Mức giảm",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Thời gian",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Hành động",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "p:${promotions}"
+    ],
+    "line": 1,
+    "file": "src/main/resources/templates/admin/khuyen-mai/danh-sach.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Áp dụng",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Mã",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Sản phẩm",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "p:${products}"
+    ],
+    "line": 4,
+    "file": "src/main/resources/templates/admin/khuyen-mai/san-pham-ap-dung.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Mã / Họ tên",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Liên hệ",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Tài khoản",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Hành động",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "p:${peoplePage.content}"
+    ],
+    "line": 5,
+    "file": "src/main/resources/templates/admin/nhan-vien/danh-sach.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Kích cỡ",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Chất liệu",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Giá (₫)",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Tồn kho",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "v:${variants}"
+    ],
+    "line": 4,
+    "file": "src/main/resources/templates/admin/san-pham/chi-tiet.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table catalog-table"
+    },
+    "columns": [
+      {
+        "text": "Ảnh",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Mã / Tên sản phẩm",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Thương hiệu",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Đế giày",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Chất liệu",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Giá (₫)",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Tồn kho",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Hành động",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "p:${productPage.content}"
+    ],
+    "line": 13,
+    "file": "src/main/resources/templates/admin/san-pham/danh-sach.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table",
+      "id": "daily-table"
+    },
+    "columns": [
+      {
+        "text": "Ngày",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Số đơn",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Doanh thu (đ)",
+        "expr": null,
+        "attrs": {
+          "class": "money"
+        }
+      }
+    ],
+    "rows": [
+      "d:${stats.dailyPage.content}"
+    ],
+    "line": 19,
+    "file": "src/main/resources/templates/admin/thong-ke/thong-ke.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table",
+      "th:id": "${rank}"
+    },
+    "columns": [
+      {
+        "text": "#",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Sản phẩm",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "SL bán",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Doanh thu (đ)",
+        "expr": null,
+        "attrs": {
+          "class": "money"
+        }
+      }
+    ],
+    "rows": [
+      "p,it:${stats.get(rank)}"
+    ],
+    "line": 21,
+    "file": "src/main/resources/templates/admin/thong-ke/thong-ke.html",
+    "ordinal": 2
+  },
+  {
+    "attrs": {
+      "class": "admin-table",
+      "id": "status-table"
+    },
+    "columns": [
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Số đơn",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "s:${stats.statuses}"
+    ],
+    "line": 22,
+    "file": "src/main/resources/templates/admin/thong-ke/thong-ke.html",
+    "ordinal": 3
+  },
+  {
+    "attrs": {
+      "class": "admin-table catalog-table"
+    },
+    "columns": [
+      {
+        "text": "Sản phẩm",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Kích cỡ",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Chất liệu",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Tồn kho",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái biến thể",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Hành động",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "v:${variants}"
+    ],
+    "line": 4,
+    "file": "src/main/resources/templates/admin/ton-kho/danh-sach.html",
+    "ordinal": 1
+  },
+  {
+    "attrs": {
+      "class": "admin-table catalog-table"
+    },
+    "columns": [
+      {
+        "text": "Thời gian",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Sản phẩm / Kích cỡ",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trước",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Thay đổi",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Sau",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Lý do",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Người thực hiện",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "log:${history}"
+    ],
+    "line": 6,
+    "file": "src/main/resources/templates/admin/ton-kho/danh-sach.html",
+    "ordinal": 2
+  },
+  {
+    "attrs": {
+      "class": "admin-table"
+    },
+    "columns": [
+      {
+        "text": "Mã / Tên",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Mức giảm",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Phạm vi",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Thời gian",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Lượt dùng",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Trạng thái",
+        "expr": null,
+        "attrs": {}
+      },
+      {
+        "text": "Hành động",
+        "expr": null,
+        "attrs": {}
+      }
+    ],
+    "rows": [
+      "p:${vouchers}"
+    ],
+    "line": 1,
+    "file": "src/main/resources/templates/admin/voucher/danh-sach.html",
+    "ordinal": 1
+  }
+]

@@ -1,0 +1,915 @@
+[
+  {
+    "table": "Sản phẩm",
+    "url": "/admin/products-crud?",
+    "before_columns": 9,
+    "before_kind": "table",
+    "before_headers": [
+      "Ảnh",
+      "Mã / Tên sản phẩm",
+      "Thương hiệu",
+      "Đế giày",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_columns": 11,
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Thương hiệu",
+      "Đế giày",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Biến thể",
+    "url": "/admin/variants?",
+    "before_columns": 7,
+    "before_kind": "table",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_columns": 9,
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Biến thể trong chi tiết sản phẩm",
+    "url": "/admin/products-crud/view/{id}",
+    "before_columns": 5,
+    "before_kind": "table",
+    "before_headers": [
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái"
+    ],
+    "after_columns": 6,
+    "after_headers": [
+      "STT",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Thương hiệu",
+    "url": "/admin/categories?",
+    "before_columns": 4,
+    "before_kind": "table",
+    "before_headers": [
+      "ID",
+      "Tên thương hiệu",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_columns": 5,
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên thương hiệu",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Kích cỡ",
+    "url": "/admin/sizes?",
+    "before_columns": 3,
+    "before_kind": "table",
+    "before_headers": [
+      "ID",
+      "Kích cỡ",
+      "Hành động"
+    ],
+    "after_columns": 4,
+    "after_headers": [
+      "STT",
+      "ID",
+      "Kích cỡ",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Chất liệu",
+    "url": "/admin/materials?",
+    "before_columns": 5,
+    "before_kind": "table",
+    "before_headers": [
+      "ID",
+      "Tên chất liệu",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "after_columns": 6,
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên chất liệu",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Đế giày",
+    "url": "/admin/soles?",
+    "before_columns": 5,
+    "before_kind": "table",
+    "before_headers": [
+      "ID",
+      "Tên đế giày",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "after_columns": 6,
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên đế giày",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Tồn kho",
+    "url": "/admin/inventory?",
+    "before_columns": 6,
+    "before_kind": "table",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Trạng thái biến thể",
+      "Hành động"
+    ],
+    "after_columns": 8,
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Trạng thái biến thể",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Lịch sử kho",
+    "url": "/admin/inventory?",
+    "before_columns": 7,
+    "before_kind": "table",
+    "before_headers": [
+      "Thời gian",
+      "Sản phẩm / Kích cỡ",
+      "Trước",
+      "Thay đổi",
+      "Sau",
+      "Lý do",
+      "Người thực hiện"
+    ],
+    "after_columns": 11,
+    "after_headers": [
+      "STT",
+      "Thời gian",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Trước",
+      "Thay đổi",
+      "Sau",
+      "Lý do",
+      "Người thực hiện"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Khách hàng",
+    "url": "/admin/customers?",
+    "before_columns": 5,
+    "before_kind": "table",
+    "before_headers": [
+      "Mã / Họ tên",
+      "Liên hệ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_columns": 9,
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Họ tên",
+      "SĐT",
+      "Email",
+      "Địa chỉ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Nhân viên",
+    "url": "/admin/employees?",
+    "before_columns": 5,
+    "before_kind": "table",
+    "before_headers": [
+      "Mã / Họ tên",
+      "Liên hệ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_columns": 9,
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Họ tên",
+      "SĐT",
+      "Email",
+      "Địa chỉ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Lịch sử đơn của khách",
+    "url": "/admin/customers/detail/{id}",
+    "before_columns": 4,
+    "before_kind": "table",
+    "before_headers": [
+      "Mã đơn",
+      "Ngày tạo",
+      "Trạng thái",
+      "Thành tiền"
+    ],
+    "after_columns": 5,
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Ngày tạo",
+      "Trạng thái",
+      "Thành tiền"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Địa chỉ khách",
+    "url": "/admin/customers/detail/{id}",
+    "before_columns": 0,
+    "before_kind": "structured list",
+    "before_headers": [
+      "Người nhận",
+      "SĐT",
+      "Địa chỉ",
+      "Mặc định"
+    ],
+    "after_columns": 5,
+    "after_headers": [
+      "STT",
+      "Người nhận",
+      "SĐT",
+      "Địa chỉ",
+      "Mặc định"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Đơn hàng Admin",
+    "url": "/admin/orders?",
+    "before_columns": 7,
+    "before_kind": "table",
+    "before_headers": [
+      "Mã đơn",
+      "Kênh",
+      "Khách",
+      "Trạng thái",
+      "Thanh toán",
+      "Tổng (đ)",
+      "Ngày tạo"
+    ],
+    "after_columns": 8,
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Kênh",
+      "Khách",
+      "Trạng thái",
+      "Thanh toán",
+      "Tổng (đ)",
+      "Ngày tạo"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Chi tiết đơn Admin",
+    "url": "/admin/orders/{id}; /admin/orders/detail/{id}",
+    "before_columns": 6,
+    "before_kind": "table",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "after_columns": 8,
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Hóa đơn",
+    "url": "/admin/invoices?",
+    "before_columns": 7,
+    "before_kind": "table",
+    "before_headers": [
+      "Hóa đơn",
+      "Đơn hàng",
+      "Ngày",
+      "Khách",
+      "Nhân viên",
+      "Tổng (đ)",
+      "Thanh toán"
+    ],
+    "after_columns": 8,
+    "after_headers": [
+      "STT",
+      "Hóa đơn",
+      "Đơn hàng",
+      "Ngày",
+      "Khách",
+      "Nhân viên",
+      "Tổng (đ)",
+      "Thanh toán"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Chi tiết hóa đơn",
+    "url": "/admin/invoices/{id}",
+    "before_columns": 6,
+    "before_kind": "table",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "after_columns": 9,
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Bản in hóa đơn",
+    "url": "/admin/invoices/{id} — chế độ in",
+    "before_columns": 6,
+    "before_kind": "table",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "after_columns": 9,
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Phiếu giảm giá",
+    "url": "/admin/vouchers?",
+    "before_columns": 7,
+    "before_kind": "table",
+    "before_headers": [
+      "Mã / Tên",
+      "Mức giảm",
+      "Phạm vi",
+      "Thời gian",
+      "Lượt dùng",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_columns": 13,
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên",
+      "Loại giảm",
+      "Giá trị giảm",
+      "Phạm vi",
+      "Khách hàng áp dụng",
+      "Bắt đầu",
+      "Kết thúc",
+      "Đã dùng",
+      "Giới hạn lượt",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Đợt giảm giá",
+    "url": "/admin/promotions?",
+    "before_columns": 5,
+    "before_kind": "table",
+    "before_headers": [
+      "Tên",
+      "Mức giảm",
+      "Thời gian",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_columns": 8,
+    "after_headers": [
+      "STT",
+      "Tên",
+      "Loại giảm",
+      "Giá trị giảm",
+      "Bắt đầu",
+      "Kết thúc",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Chọn sản phẩm giảm giá",
+    "url": "/admin/promotions/{id}/products",
+    "before_columns": 4,
+    "before_kind": "table",
+    "before_headers": [
+      "Áp dụng",
+      "Mã",
+      "Sản phẩm",
+      "Trạng thái"
+    ],
+    "after_columns": 5,
+    "after_headers": [
+      "STT",
+      "Áp dụng",
+      "Mã",
+      "Sản phẩm",
+      "Trạng thái"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Doanh thu ngày",
+    "url": "/admin/statistics; /admin/statistics/revenue; /admin/reports/revenue",
+    "before_columns": 3,
+    "before_kind": "table",
+    "before_headers": [
+      "Ngày",
+      "Số đơn",
+      "Doanh thu (đ)"
+    ],
+    "after_columns": 4,
+    "after_headers": [
+      "STT",
+      "Ngày",
+      "Số đơn",
+      "Doanh thu (đ)"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Top số lượng",
+    "url": "/admin/statistics/best-sellers; /admin/reports/best-sellers",
+    "before_columns": 4,
+    "before_kind": "table",
+    "before_headers": [
+      "#",
+      "Sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "after_columns": 6,
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Top doanh thu",
+    "url": "/admin/statistics/best-sellers; /admin/reports/best-sellers",
+    "before_columns": 4,
+    "before_kind": "table",
+    "before_headers": [
+      "#",
+      "Sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "after_columns": 6,
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Thống kê trạng thái",
+    "url": "/admin/statistics*; /admin/reports/*",
+    "before_columns": 2,
+    "before_kind": "table",
+    "before_headers": [
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "after_columns": 3,
+    "after_headers": [
+      "STT",
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Dashboard — ngày",
+    "url": "/admin/dashboard",
+    "before_columns": 2,
+    "before_kind": "table",
+    "before_headers": [
+      "Ngày",
+      "Doanh thu (₫)"
+    ],
+    "after_columns": 3,
+    "after_headers": [
+      "STT",
+      "Ngày",
+      "Doanh thu (₫)"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Dashboard — đơn gần đây",
+    "url": "/admin/dashboard",
+    "before_columns": 4,
+    "before_kind": "table",
+    "before_headers": [
+      "Mã đơn / Ngày tạo",
+      "Khách hàng",
+      "Trạng thái",
+      "Tổng tiền"
+    ],
+    "after_columns": 6,
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Ngày tạo",
+      "Khách hàng",
+      "Trạng thái",
+      "Tổng tiền"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Dashboard — sắp hết",
+    "url": "/admin/dashboard",
+    "before_columns": 5,
+    "before_kind": "table",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Thao tác"
+    ],
+    "after_columns": 7,
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Thao tác"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Dashboard — trạng thái",
+    "url": "/admin/dashboard",
+    "before_columns": 0,
+    "before_kind": "structured list",
+    "before_headers": [
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "after_columns": 3,
+    "after_headers": [
+      "STT",
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Dashboard — bán chạy",
+    "url": "/admin/dashboard",
+    "before_columns": 0,
+    "before_kind": "structured list",
+    "before_headers": [
+      "Tên sản phẩm",
+      "Số lượng"
+    ],
+    "after_columns": 4,
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Số lượng"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Đơn User",
+    "url": "/orders",
+    "before_columns": 5,
+    "before_kind": "table",
+    "before_headers": [
+      "Mã Đơn Hàng",
+      "Ngày đặt",
+      "Tổng tiền",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_columns": 6,
+    "after_headers": [
+      "STT",
+      "Mã Đơn Hàng",
+      "Ngày đặt",
+      "Tổng tiền",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Chi tiết đơn User",
+    "url": "/orders/{id}",
+    "before_columns": 6,
+    "before_kind": "table",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Số lượng",
+      "Đơn giá",
+      "Thành tiền"
+    ],
+    "after_columns": 9,
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Số lượng",
+      "Đơn giá",
+      "Thành tiền"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Giỏ hàng",
+    "url": "/cart",
+    "before_columns": 5,
+    "before_kind": "table",
+    "before_headers": [
+      "Sản Phẩm",
+      "Đơn Giá",
+      "Số Lượng",
+      "Thành Tiền",
+      "Thao Tác"
+    ],
+    "after_columns": 11,
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Đơn giá",
+      "Giá gốc",
+      "Số lượng",
+      "Thành tiền",
+      "Thao tác"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Checkout",
+    "url": "/checkout",
+    "before_columns": 0,
+    "before_kind": "structured list",
+    "before_headers": [
+      "Ảnh",
+      "Tên",
+      "Kích cỡ",
+      "Chất liệu",
+      "Số lượng",
+      "Giá bán",
+      "Giá gốc",
+      "Giảm (%)"
+    ],
+    "after_columns": 11,
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Số lượng",
+      "Đơn giá",
+      "Giá gốc",
+      "Giảm (%)",
+      "Thành tiền"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Đặt hàng thành công",
+    "url": "/orders/success/{id}",
+    "before_columns": 0,
+    "before_kind": "structured list",
+    "before_headers": [
+      "Tên",
+      "Kích cỡ",
+      "Chất liệu",
+      "Số lượng"
+    ],
+    "after_columns": 8,
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Số lượng",
+      "Đơn giá",
+      "Thành tiền"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Giỏ POS",
+    "url": "/admin/pos",
+    "before_columns": 0,
+    "before_kind": "structured list",
+    "before_headers": [
+      "Tên",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá",
+      "Thành tiền",
+      "Số lượng",
+      "Hành động"
+    ],
+    "after_columns": 9,
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Đơn giá",
+      "Số lượng",
+      "Thành tiền",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Hóa đơn chờ POS",
+    "url": "/admin/pos",
+    "before_columns": 0,
+    "before_kind": "structured list",
+    "before_headers": [
+      "Mã",
+      "Chất liệu",
+      "Số món",
+      "Tổng tiền",
+      "Hết hạn",
+      "Hành động"
+    ],
+    "after_columns": 7,
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Chất liệu",
+      "Số món",
+      "Tổng tiền",
+      "Hết hạn",
+      "Hành động"
+    ],
+    "result": "PASS"
+  },
+  {
+    "table": "Chọn khách POS",
+    "url": "/admin/pos; GET /admin/pos/customers",
+    "before_columns": 0,
+    "before_kind": "structured list",
+    "before_headers": [
+      "Họ tên",
+      "SĐT"
+    ],
+    "after_columns": 4,
+    "after_headers": [
+      "STT",
+      "Họ tên",
+      "SĐT",
+      "Hành động"
+    ],
+    "result": "PASS"
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "url": "/admin/dashboard",
+    "collection": "statuses",
+    "rows": 4,
+    "equal": true,
+    "before_sha256": "9e76100b9ce10f72d55ee109c089b93dbef173f0ec363dab5c75f6c9ee6633c0",
+    "after_sha256": "9e76100b9ce10f72d55ee109c089b93dbef173f0ec363dab5c75f6c9ee6633c0"
+  },
+  {
+    "url": "/admin/dashboard",
+    "collection": "best",
+    "rows": 5,
+    "equal": true,
+    "before_sha256": "79c5ffbac5cf2183b63e45af5b22a9e7effcba02395456d90727f1aee84c44c1",
+    "after_sha256": "79c5ffbac5cf2183b63e45af5b22a9e7effcba02395456d90727f1aee84c44c1"
+  },
+  {
+    "url": "/admin/customers/detail/100",
+    "collection": "addresses",
+    "rows": 2,
+    "equal": true,
+    "before_sha256": "404fc9e4410ea7889c2a05f02ce5826d3f9b2480b649d42f90f68e5a4c9731ce",
+    "after_sha256": "404fc9e4410ea7889c2a05f02ce5826d3f9b2480b649d42f90f68e5a4c9731ce"
+  },
+  {
+    "url": "/admin/pos",
+    "collection": "cart",
+    "rows": 14,
+    "equal": true,
+    "before_sha256": "bb45838b5e19f19f852f7434df46d2562587710c8c6b8c74ed761140aace8208",
+    "after_sha256": "bb45838b5e19f19f852f7434df46d2562587710c8c6b8c74ed761140aace8208"
+  },
+  {
+    "url": "/admin/pos",
+    "collection": "holds",
+    "rows": 1,
+    "equal": true,
+    "before_sha256": "453cbf15c8032651bfee97fbd88a2b66b625cfff203a4775b12ebf7796c4f81b",
+    "after_sha256": "453cbf15c8032651bfee97fbd88a2b66b625cfff203a4775b12ebf7796c4f81b"
+  },
+  {
+    "url": "/admin/pos",
+    "collection": "customerChoices",
+    "rows": 12,
+    "equal": true,
+    "before_sha256": "dbf2055a6a34e71570b3704f5d29ddea50aee3e32577928a9271d4317e2c2544",
+    "after_sha256": "dbf2055a6a34e71570b3704f5d29ddea50aee3e32577928a9271d4317e2c2544"
+  },
+  {
+    "url": "/admin/pos/customers?customerPage=1",
+    "collection": "customerChoices",
+    "rows": 3,
+    "equal": true,
+    "before_sha256": "ee53b1116f4f750409f458506b70abf144dcce0ff4d558a87fb54d521ec93aae",
+    "after_sha256": "ee53b1116f4f750409f458506b70abf144dcce0ff4d558a87fb54d521ec93aae"
+  },
+  {
+    "url": "/checkout",
+    "collection": "items",
+    "rows": 14,
+    "equal": true,
+    "before_sha256": "2044f5a6f5acf415d6aab19b5b928871ad5ebdb06170aa2247e581b401a153b8",
+    "after_sha256": "2044f5a6f5acf415d6aab19b5b928871ad5ebdb06170aa2247e581b401a153b8"
+  },
+  {
+    "url": "/orders/success/674",
+    "collection": "items",
+    "rows": 14,
+    "equal": true,
+    "before_sha256": "9f98b9bfb11519e771fc471b4d3d8e0be549a43d1f5b8630e4992b6d6abb2124",
+    "after_sha256": "9f98b9bfb11519e771fc471b4d3d8e0be549a43d1f5b8630e4992b6d6abb2124"
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "browser_copy_restored": true,
+  "unit_copy_restored": true,
+  "schema_unchanged": true,
+  "all_21_table_counts_match": true,
+  "original_sample_stock": [
+    {
+      "id": 596,
+      "quantity": 18
+    }
+  ],
+  "original_sample_order": [
+    {
+      "id": 669,
+      "status": "PENDING"
+    }
+  ]
+}

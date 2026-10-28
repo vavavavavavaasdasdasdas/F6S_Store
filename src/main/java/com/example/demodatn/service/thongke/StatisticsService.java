@@ -41,7 +41,7 @@ public class StatisticsService {
             daily.add(days.getOrDefault(day,Map.of("day",day.toString(),"amount",BigDecimal.ZERO,"orders",0)));
         result.put("daily",daily);
         result.put("statuses",jdbc.queryForList("SELECT o.status,COUNT_BIG(*) AS total FROM orders o WHERE" + FILTER + " GROUP BY o.status ORDER BY o.status",args));
-        String products = "SELECT p.id,p.name,p.image_url,SUM(CAST(d.quantity AS bigint)) AS quantity,SUM(d.total_price) AS amount FROM order_details d JOIN orders o ON o.id=d.order_id JOIN product_variants v ON v.id=d.product_variant_id JOIN products p ON p.id=v.product_id WHERE" + ELIGIBLE + " GROUP BY p.id,p.name,p.image_url ORDER BY ";
+        String products = "SELECT p.id,p.code,p.name,p.image_url,SUM(CAST(d.quantity AS bigint)) AS quantity,SUM(d.total_price) AS amount FROM order_details d JOIN orders o ON o.id=d.order_id JOIN product_variants v ON v.id=d.product_variant_id JOIN products p ON p.id=v.product_id WHERE" + ELIGIBLE + " GROUP BY p.id,p.code,p.name,p.image_url ORDER BY ";
         String countSql="SELECT COUNT_BIG(*) FROM (SELECT p.id FROM order_details d JOIN orders o ON o.id=d.order_id JOIN product_variants v ON v.id=d.product_variant_id JOIN products p ON p.id=v.product_id WHERE"+ELIGIBLE+" GROUP BY p.id) ranks";
         var quantities=pagination.sql(jdbc,products+"quantity DESC,amount DESC,p.id",countSql,Arrays.asList(args),quantityPage);
         var revenues=pagination.sql(jdbc,products+"amount DESC,quantity DESC,p.id",countSql,Arrays.asList(args),revenuePage);

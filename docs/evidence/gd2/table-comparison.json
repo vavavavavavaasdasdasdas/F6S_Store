@@ -1,0 +1,2920 @@
+[
+  {
+    "url": "/admin/dashboard",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-bang-dieu-khien-1",
+    "before_headers": [
+      "Ngày",
+      "Doanh thu (₫)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ngày",
+      "Doanh thu (₫)"
+    ],
+    "before_columns": 2,
+    "after_columns": 3,
+    "rows": 7,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/dashboard",
+    "width": 1280,
+    "table": 1,
+    "after_key": "admin-bang-dieu-khien-3",
+    "before_headers": [
+      "Mã đơn / Ngày tạo",
+      "Khách hàng",
+      "Trạng thái",
+      "Tổng tiền"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Ngày tạo",
+      "Khách hàng",
+      "Trạng thái",
+      "Tổng tiền"
+    ],
+    "before_columns": 4,
+    "after_columns": 6,
+    "rows": 10,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/dashboard",
+    "width": 1280,
+    "table": 2,
+    "after_key": "admin-bang-dieu-khien-5",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Thao tác"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Thao tác"
+    ],
+    "before_columns": 5,
+    "after_columns": 7,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/products-crud?keyword=GD2-P&sort=code&page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-san-pham-danh-sach-1",
+    "before_headers": [
+      "Ảnh",
+      "Mã / Tên sản phẩm",
+      "Thương hiệu",
+      "Đế giày",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Thương hiệu",
+      "Đế giày",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 9,
+    "after_columns": 11,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/products-crud?keyword=GD2-P&sort=code&page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-san-pham-danh-sach-1",
+    "before_headers": [
+      "Ảnh",
+      "Mã / Tên sản phẩm",
+      "Thương hiệu",
+      "Đế giày",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Thương hiệu",
+      "Đế giày",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 9,
+    "after_columns": 11,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/variants?productId=949&page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-bien-the-danh-sach-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 7,
+    "after_columns": 9,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/variants?productId=949&page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-bien-the-danh-sach-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 7,
+    "after_columns": 9,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/products-crud/view/949?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-san-pham-chi-tiet-1",
+    "before_headers": [
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái"
+    ],
+    "after_headers": [
+      "STT",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/products-crud/view/949?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-san-pham-chi-tiet-1",
+    "before_headers": [
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái"
+    ],
+    "after_headers": [
+      "STT",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/categories?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Tên thương hiệu",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên thương hiệu",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 4,
+    "after_columns": 5,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/categories?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Tên thương hiệu",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên thương hiệu",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 4,
+    "after_columns": 5,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/sizes?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Kích cỡ",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Kích cỡ",
+      "Hành động"
+    ],
+    "before_columns": 3,
+    "after_columns": 4,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/sizes?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Kích cỡ",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Kích cỡ",
+      "Hành động"
+    ],
+    "before_columns": 3,
+    "after_columns": 4,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/materials?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Tên chất liệu",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên chất liệu",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/materials?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Tên chất liệu",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên chất liệu",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/soles?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Tên đế giày",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên đế giày",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/soles?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Tên đế giày",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên đế giày",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/customers?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-khach-hang-danh-sach-1",
+    "before_headers": [
+      "Mã / Họ tên",
+      "Liên hệ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Họ tên",
+      "SĐT",
+      "Email",
+      "Địa chỉ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 9,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/customers?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-khach-hang-danh-sach-1",
+    "before_headers": [
+      "Mã / Họ tên",
+      "Liên hệ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Họ tên",
+      "SĐT",
+      "Email",
+      "Địa chỉ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 9,
+    "rows": 3,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/employees?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-nhan-vien-danh-sach-1",
+    "before_headers": [
+      "Mã / Họ tên",
+      "Liên hệ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Họ tên",
+      "SĐT",
+      "Email",
+      "Địa chỉ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 9,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/employees?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-nhan-vien-danh-sach-1",
+    "before_headers": [
+      "Mã / Họ tên",
+      "Liên hệ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Họ tên",
+      "SĐT",
+      "Email",
+      "Địa chỉ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 9,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/orders?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-don-hang-danh-sach-1",
+    "before_headers": [
+      "Mã đơn",
+      "Kênh",
+      "Khách",
+      "Trạng thái",
+      "Thanh toán",
+      "Tổng (đ)",
+      "Ngày tạo"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Kênh",
+      "Khách",
+      "Trạng thái",
+      "Thanh toán",
+      "Tổng (đ)",
+      "Ngày tạo"
+    ],
+    "before_columns": 7,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/orders?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-don-hang-danh-sach-1",
+    "before_headers": [
+      "Mã đơn",
+      "Kênh",
+      "Khách",
+      "Trạng thái",
+      "Thanh toán",
+      "Tổng (đ)",
+      "Ngày tạo"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Kênh",
+      "Khách",
+      "Trạng thái",
+      "Thanh toán",
+      "Tổng (đ)",
+      "Ngày tạo"
+    ],
+    "before_columns": 7,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/invoices?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-hoa-don-danh-sach-1",
+    "before_headers": [
+      "Hóa đơn",
+      "Đơn hàng",
+      "Ngày",
+      "Khách",
+      "Nhân viên",
+      "Tổng (đ)",
+      "Thanh toán"
+    ],
+    "after_headers": [
+      "STT",
+      "Hóa đơn",
+      "Đơn hàng",
+      "Ngày",
+      "Khách",
+      "Nhân viên",
+      "Tổng (đ)",
+      "Thanh toán"
+    ],
+    "before_columns": 7,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/invoices?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-hoa-don-danh-sach-1",
+    "before_headers": [
+      "Hóa đơn",
+      "Đơn hàng",
+      "Ngày",
+      "Khách",
+      "Nhân viên",
+      "Tổng (đ)",
+      "Thanh toán"
+    ],
+    "after_headers": [
+      "STT",
+      "Hóa đơn",
+      "Đơn hàng",
+      "Ngày",
+      "Khách",
+      "Nhân viên",
+      "Tổng (đ)",
+      "Thanh toán"
+    ],
+    "before_columns": 7,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/vouchers?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-voucher-danh-sach-1",
+    "before_headers": [
+      "Mã / Tên",
+      "Mức giảm",
+      "Phạm vi",
+      "Thời gian",
+      "Lượt dùng",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên",
+      "Loại giảm",
+      "Giá trị giảm",
+      "Phạm vi",
+      "Khách hàng áp dụng",
+      "Bắt đầu",
+      "Kết thúc",
+      "Đã dùng",
+      "Giới hạn lượt",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 7,
+    "after_columns": 13,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/vouchers?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-voucher-danh-sach-1",
+    "before_headers": [
+      "Mã / Tên",
+      "Mức giảm",
+      "Phạm vi",
+      "Thời gian",
+      "Lượt dùng",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên",
+      "Loại giảm",
+      "Giá trị giảm",
+      "Phạm vi",
+      "Khách hàng áp dụng",
+      "Bắt đầu",
+      "Kết thúc",
+      "Đã dùng",
+      "Giới hạn lượt",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 7,
+    "after_columns": 13,
+    "rows": 3,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/promotions?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-khuyen-mai-danh-sach-1",
+    "before_headers": [
+      "Tên",
+      "Mức giảm",
+      "Thời gian",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Tên",
+      "Loại giảm",
+      "Giá trị giảm",
+      "Bắt đầu",
+      "Kết thúc",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/promotions?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-khuyen-mai-danh-sach-1",
+    "before_headers": [
+      "Tên",
+      "Mức giảm",
+      "Thời gian",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Tên",
+      "Loại giảm",
+      "Giá trị giảm",
+      "Bắt đầu",
+      "Kết thúc",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 8,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/inventory?page=0&historyPage=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-ton-kho-danh-sach-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Trạng thái biến thể",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Trạng thái biến thể",
+      "Hành động"
+    ],
+    "before_columns": 6,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/inventory?page=0&historyPage=0",
+    "width": 1280,
+    "table": 1,
+    "after_key": "admin-ton-kho-danh-sach-2",
+    "before_headers": [
+      "Thời gian",
+      "Sản phẩm / Kích cỡ",
+      "Trước",
+      "Thay đổi",
+      "Sau",
+      "Lý do",
+      "Người thực hiện"
+    ],
+    "after_headers": [
+      "STT",
+      "Thời gian",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Trước",
+      "Thay đổi",
+      "Sau",
+      "Lý do",
+      "Người thực hiện"
+    ],
+    "before_columns": 7,
+    "after_columns": 11,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/inventory?page=1&historyPage=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-ton-kho-danh-sach-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Trạng thái biến thể",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Trạng thái biến thể",
+      "Hành động"
+    ],
+    "before_columns": 6,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/inventory?page=1&historyPage=1",
+    "width": 1280,
+    "table": 1,
+    "after_key": "admin-ton-kho-danh-sach-2",
+    "before_headers": [
+      "Thời gian",
+      "Sản phẩm / Kích cỡ",
+      "Trước",
+      "Thay đổi",
+      "Sau",
+      "Lý do",
+      "Người thực hiện"
+    ],
+    "after_headers": [
+      "STT",
+      "Thời gian",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Trước",
+      "Thay đổi",
+      "Sau",
+      "Lý do",
+      "Người thực hiện"
+    ],
+    "before_columns": 7,
+    "after_columns": 11,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/customers/detail/100?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-khach-hang-chi-tiet-2",
+    "before_headers": [
+      "Mã đơn",
+      "Ngày tạo",
+      "Trạng thái",
+      "Thành tiền"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Ngày tạo",
+      "Trạng thái",
+      "Thành tiền"
+    ],
+    "before_columns": 4,
+    "after_columns": 5,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/customers/detail/100?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-khach-hang-chi-tiet-2",
+    "before_headers": [
+      "Mã đơn",
+      "Ngày tạo",
+      "Trạng thái",
+      "Thành tiền"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Ngày tạo",
+      "Trạng thái",
+      "Thành tiền"
+    ],
+    "before_columns": 4,
+    "after_columns": 5,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/promotions/77/products?page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-khuyen-mai-san-pham-ap-dung-1",
+    "before_headers": [
+      "Áp dụng",
+      "Mã",
+      "Sản phẩm",
+      "Trạng thái"
+    ],
+    "after_headers": [
+      "STT",
+      "Áp dụng",
+      "Mã",
+      "Sản phẩm",
+      "Trạng thái"
+    ],
+    "before_columns": 4,
+    "after_columns": 5,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/promotions/77/products?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-khuyen-mai-san-pham-ap-dung-1",
+    "before_headers": [
+      "Áp dụng",
+      "Mã",
+      "Sản phẩm",
+      "Trạng thái"
+    ],
+    "after_headers": [
+      "STT",
+      "Áp dụng",
+      "Mã",
+      "Sản phẩm",
+      "Trạng thái"
+    ],
+    "before_columns": 4,
+    "after_columns": 5,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/orders/674",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-don-hang-chi-tiet-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "before_columns": 6,
+    "after_columns": 8,
+    "rows": 14,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/orders/detail/674",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-don-hang-chi-tiet-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "before_columns": 6,
+    "after_columns": 8,
+    "rows": 14,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/invoices/287",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-hoa-don-chi-tiet-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "before_columns": 6,
+    "after_columns": 9,
+    "rows": 14,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/revenue?from=2026-10-01&to=2026-10-28&page=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-thong-ke-thong-ke-1",
+    "before_headers": [
+      "Ngày",
+      "Số đơn",
+      "Doanh thu (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ngày",
+      "Số đơn",
+      "Doanh thu (đ)"
+    ],
+    "before_columns": 3,
+    "after_columns": 4,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/revenue?from=2026-10-01&to=2026-10-28&page=0",
+    "width": 1280,
+    "table": 1,
+    "after_key": "admin-thong-ke-thong-ke-3",
+    "before_headers": [
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "after_headers": [
+      "STT",
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "before_columns": 2,
+    "after_columns": 3,
+    "rows": 4,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/revenue?from=2026-10-01&to=2026-10-28&page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-thong-ke-thong-ke-1",
+    "before_headers": [
+      "Ngày",
+      "Số đơn",
+      "Doanh thu (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ngày",
+      "Số đơn",
+      "Doanh thu (đ)"
+    ],
+    "before_columns": 3,
+    "after_columns": 4,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/revenue?from=2026-10-01&to=2026-10-28&page=1",
+    "width": 1280,
+    "table": 1,
+    "after_key": "admin-thong-ke-thong-ke-3",
+    "before_headers": [
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "after_headers": [
+      "STT",
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "before_columns": 2,
+    "after_columns": 3,
+    "rows": 4,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/best-sellers?from=2026-10-01&to=2026-10-28&quantityPage=0&revenuePage=0",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-thong-ke-thong-ke-2",
+    "before_headers": [
+      "#",
+      "Sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "before_columns": 4,
+    "after_columns": 6,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/best-sellers?from=2026-10-01&to=2026-10-28&quantityPage=0&revenuePage=0",
+    "width": 1280,
+    "table": 1,
+    "after_key": "admin-thong-ke-thong-ke-2",
+    "before_headers": [
+      "#",
+      "Sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "before_columns": 4,
+    "after_columns": 6,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/best-sellers?from=2026-10-01&to=2026-10-28&quantityPage=0&revenuePage=0",
+    "width": 1280,
+    "table": 2,
+    "after_key": "admin-thong-ke-thong-ke-3",
+    "before_headers": [
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "after_headers": [
+      "STT",
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "before_columns": 2,
+    "after_columns": 3,
+    "rows": 4,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/best-sellers?from=2026-10-01&to=2026-10-28&quantityPage=1&revenuePage=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "admin-thong-ke-thong-ke-2",
+    "before_headers": [
+      "#",
+      "Sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "before_columns": 4,
+    "after_columns": 6,
+    "rows": 7,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/best-sellers?from=2026-10-01&to=2026-10-28&quantityPage=1&revenuePage=1",
+    "width": 1280,
+    "table": 1,
+    "after_key": "admin-thong-ke-thong-ke-2",
+    "before_headers": [
+      "#",
+      "Sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "before_columns": 4,
+    "after_columns": 6,
+    "rows": 7,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/best-sellers?from=2026-10-01&to=2026-10-28&quantityPage=1&revenuePage=1",
+    "width": 1280,
+    "table": 2,
+    "after_key": "admin-thong-ke-thong-ke-3",
+    "before_headers": [
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "after_headers": [
+      "STT",
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "before_columns": 2,
+    "after_columns": 3,
+    "rows": 4,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/cart",
+    "width": 1280,
+    "table": 0,
+    "after_key": "user-gio-hang-1",
+    "before_headers": [
+      "Sản Phẩm",
+      "Đơn Giá",
+      "Số Lượng",
+      "Thành Tiền",
+      "Thao Tác"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Đơn giá",
+      "Giá gốc",
+      "Số lượng",
+      "Thành tiền",
+      "Thao tác"
+    ],
+    "before_columns": 5,
+    "after_columns": 11,
+    "rows": 14,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/orders",
+    "width": 1280,
+    "table": 0,
+    "after_key": "user-don-hang-1",
+    "before_headers": [
+      "Mã Đơn Hàng",
+      "Ngày đặt",
+      "Tổng tiền",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã Đơn Hàng",
+      "Ngày đặt",
+      "Tổng tiền",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/orders?page=1",
+    "width": 1280,
+    "table": 0,
+    "after_key": "user-don-hang-1",
+    "before_headers": [
+      "Mã Đơn Hàng",
+      "Ngày đặt",
+      "Tổng tiền",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã Đơn Hàng",
+      "Ngày đặt",
+      "Tổng tiền",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/orders/674",
+    "width": 1280,
+    "table": 0,
+    "after_key": "user-chi-tiet-don-hang-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Số lượng",
+      "Đơn giá",
+      "Thành tiền"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Số lượng",
+      "Đơn giá",
+      "Thành tiền"
+    ],
+    "before_columns": 6,
+    "after_columns": 9,
+    "rows": 14,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/dashboard",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-bang-dieu-khien-1",
+    "before_headers": [
+      "Ngày",
+      "Doanh thu (₫)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ngày",
+      "Doanh thu (₫)"
+    ],
+    "before_columns": 2,
+    "after_columns": 3,
+    "rows": 7,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/dashboard",
+    "width": 375,
+    "table": 1,
+    "after_key": "admin-bang-dieu-khien-3",
+    "before_headers": [
+      "Mã đơn / Ngày tạo",
+      "Khách hàng",
+      "Trạng thái",
+      "Tổng tiền"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Ngày tạo",
+      "Khách hàng",
+      "Trạng thái",
+      "Tổng tiền"
+    ],
+    "before_columns": 4,
+    "after_columns": 6,
+    "rows": 10,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/dashboard",
+    "width": 375,
+    "table": 2,
+    "after_key": "admin-bang-dieu-khien-5",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Thao tác"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Thao tác"
+    ],
+    "before_columns": 5,
+    "after_columns": 7,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/products-crud?keyword=GD2-P&sort=code&page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-san-pham-danh-sach-1",
+    "before_headers": [
+      "Ảnh",
+      "Mã / Tên sản phẩm",
+      "Thương hiệu",
+      "Đế giày",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Thương hiệu",
+      "Đế giày",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 9,
+    "after_columns": 11,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/products-crud?keyword=GD2-P&sort=code&page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-san-pham-danh-sach-1",
+    "before_headers": [
+      "Ảnh",
+      "Mã / Tên sản phẩm",
+      "Thương hiệu",
+      "Đế giày",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Thương hiệu",
+      "Đế giày",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 9,
+    "after_columns": 11,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/variants?productId=949&page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-bien-the-danh-sach-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 7,
+    "after_columns": 9,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/variants?productId=949&page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-bien-the-danh-sach-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 7,
+    "after_columns": 9,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/products-crud/view/949?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-san-pham-chi-tiet-1",
+    "before_headers": [
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái"
+    ],
+    "after_headers": [
+      "STT",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/products-crud/view/949?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-san-pham-chi-tiet-1",
+    "before_headers": [
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái"
+    ],
+    "after_headers": [
+      "STT",
+      "Kích cỡ",
+      "Chất liệu",
+      "Giá (₫)",
+      "Tồn kho",
+      "Trạng thái"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/categories?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Tên thương hiệu",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên thương hiệu",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 4,
+    "after_columns": 5,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/categories?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Tên thương hiệu",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên thương hiệu",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 4,
+    "after_columns": 5,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/sizes?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Kích cỡ",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Kích cỡ",
+      "Hành động"
+    ],
+    "before_columns": 3,
+    "after_columns": 4,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/sizes?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Kích cỡ",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Kích cỡ",
+      "Hành động"
+    ],
+    "before_columns": 3,
+    "after_columns": 4,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/materials?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Tên chất liệu",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên chất liệu",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/materials?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Tên chất liệu",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên chất liệu",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/soles?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Tên đế giày",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên đế giày",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/soles?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-danh-muc-kich-co-danh-sach-1",
+    "before_headers": [
+      "ID",
+      "Tên đế giày",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "ID",
+      "Tên đế giày",
+      "Trạng thái",
+      "Đang dùng",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/customers?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-khach-hang-danh-sach-1",
+    "before_headers": [
+      "Mã / Họ tên",
+      "Liên hệ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Họ tên",
+      "SĐT",
+      "Email",
+      "Địa chỉ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 9,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/customers?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-khach-hang-danh-sach-1",
+    "before_headers": [
+      "Mã / Họ tên",
+      "Liên hệ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Họ tên",
+      "SĐT",
+      "Email",
+      "Địa chỉ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 9,
+    "rows": 3,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/employees?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-nhan-vien-danh-sach-1",
+    "before_headers": [
+      "Mã / Họ tên",
+      "Liên hệ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Họ tên",
+      "SĐT",
+      "Email",
+      "Địa chỉ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 9,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/employees?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-nhan-vien-danh-sach-1",
+    "before_headers": [
+      "Mã / Họ tên",
+      "Liên hệ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Họ tên",
+      "SĐT",
+      "Email",
+      "Địa chỉ",
+      "Tài khoản",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 9,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/orders?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-don-hang-danh-sach-1",
+    "before_headers": [
+      "Mã đơn",
+      "Kênh",
+      "Khách",
+      "Trạng thái",
+      "Thanh toán",
+      "Tổng (đ)",
+      "Ngày tạo"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Kênh",
+      "Khách",
+      "Trạng thái",
+      "Thanh toán",
+      "Tổng (đ)",
+      "Ngày tạo"
+    ],
+    "before_columns": 7,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/orders?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-don-hang-danh-sach-1",
+    "before_headers": [
+      "Mã đơn",
+      "Kênh",
+      "Khách",
+      "Trạng thái",
+      "Thanh toán",
+      "Tổng (đ)",
+      "Ngày tạo"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Kênh",
+      "Khách",
+      "Trạng thái",
+      "Thanh toán",
+      "Tổng (đ)",
+      "Ngày tạo"
+    ],
+    "before_columns": 7,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/invoices?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-hoa-don-danh-sach-1",
+    "before_headers": [
+      "Hóa đơn",
+      "Đơn hàng",
+      "Ngày",
+      "Khách",
+      "Nhân viên",
+      "Tổng (đ)",
+      "Thanh toán"
+    ],
+    "after_headers": [
+      "STT",
+      "Hóa đơn",
+      "Đơn hàng",
+      "Ngày",
+      "Khách",
+      "Nhân viên",
+      "Tổng (đ)",
+      "Thanh toán"
+    ],
+    "before_columns": 7,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/invoices?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-hoa-don-danh-sach-1",
+    "before_headers": [
+      "Hóa đơn",
+      "Đơn hàng",
+      "Ngày",
+      "Khách",
+      "Nhân viên",
+      "Tổng (đ)",
+      "Thanh toán"
+    ],
+    "after_headers": [
+      "STT",
+      "Hóa đơn",
+      "Đơn hàng",
+      "Ngày",
+      "Khách",
+      "Nhân viên",
+      "Tổng (đ)",
+      "Thanh toán"
+    ],
+    "before_columns": 7,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/vouchers?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-voucher-danh-sach-1",
+    "before_headers": [
+      "Mã / Tên",
+      "Mức giảm",
+      "Phạm vi",
+      "Thời gian",
+      "Lượt dùng",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên",
+      "Loại giảm",
+      "Giá trị giảm",
+      "Phạm vi",
+      "Khách hàng áp dụng",
+      "Bắt đầu",
+      "Kết thúc",
+      "Đã dùng",
+      "Giới hạn lượt",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 7,
+    "after_columns": 13,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/vouchers?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-voucher-danh-sach-1",
+    "before_headers": [
+      "Mã / Tên",
+      "Mức giảm",
+      "Phạm vi",
+      "Thời gian",
+      "Lượt dùng",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên",
+      "Loại giảm",
+      "Giá trị giảm",
+      "Phạm vi",
+      "Khách hàng áp dụng",
+      "Bắt đầu",
+      "Kết thúc",
+      "Đã dùng",
+      "Giới hạn lượt",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 7,
+    "after_columns": 13,
+    "rows": 3,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/promotions?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-khuyen-mai-danh-sach-1",
+    "before_headers": [
+      "Tên",
+      "Mức giảm",
+      "Thời gian",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Tên",
+      "Loại giảm",
+      "Giá trị giảm",
+      "Bắt đầu",
+      "Kết thúc",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/promotions?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-khuyen-mai-danh-sach-1",
+    "before_headers": [
+      "Tên",
+      "Mức giảm",
+      "Thời gian",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Tên",
+      "Loại giảm",
+      "Giá trị giảm",
+      "Bắt đầu",
+      "Kết thúc",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 8,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/inventory?page=0&historyPage=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-ton-kho-danh-sach-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Trạng thái biến thể",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Trạng thái biến thể",
+      "Hành động"
+    ],
+    "before_columns": 6,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/inventory?page=0&historyPage=0",
+    "width": 375,
+    "table": 1,
+    "after_key": "admin-ton-kho-danh-sach-2",
+    "before_headers": [
+      "Thời gian",
+      "Sản phẩm / Kích cỡ",
+      "Trước",
+      "Thay đổi",
+      "Sau",
+      "Lý do",
+      "Người thực hiện"
+    ],
+    "after_headers": [
+      "STT",
+      "Thời gian",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Trước",
+      "Thay đổi",
+      "Sau",
+      "Lý do",
+      "Người thực hiện"
+    ],
+    "before_columns": 7,
+    "after_columns": 11,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/inventory?page=1&historyPage=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-ton-kho-danh-sach-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Trạng thái biến thể",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Tồn kho",
+      "Trạng thái biến thể",
+      "Hành động"
+    ],
+    "before_columns": 6,
+    "after_columns": 8,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/inventory?page=1&historyPage=1",
+    "width": 375,
+    "table": 1,
+    "after_key": "admin-ton-kho-danh-sach-2",
+    "before_headers": [
+      "Thời gian",
+      "Sản phẩm / Kích cỡ",
+      "Trước",
+      "Thay đổi",
+      "Sau",
+      "Lý do",
+      "Người thực hiện"
+    ],
+    "after_headers": [
+      "STT",
+      "Thời gian",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Trước",
+      "Thay đổi",
+      "Sau",
+      "Lý do",
+      "Người thực hiện"
+    ],
+    "before_columns": 7,
+    "after_columns": 11,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/customers/detail/100?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-khach-hang-chi-tiet-2",
+    "before_headers": [
+      "Mã đơn",
+      "Ngày tạo",
+      "Trạng thái",
+      "Thành tiền"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Ngày tạo",
+      "Trạng thái",
+      "Thành tiền"
+    ],
+    "before_columns": 4,
+    "after_columns": 5,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/customers/detail/100?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-khach-hang-chi-tiet-2",
+    "before_headers": [
+      "Mã đơn",
+      "Ngày tạo",
+      "Trạng thái",
+      "Thành tiền"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã đơn",
+      "Ngày tạo",
+      "Trạng thái",
+      "Thành tiền"
+    ],
+    "before_columns": 4,
+    "after_columns": 5,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/promotions/77/products?page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-khuyen-mai-san-pham-ap-dung-1",
+    "before_headers": [
+      "Áp dụng",
+      "Mã",
+      "Sản phẩm",
+      "Trạng thái"
+    ],
+    "after_headers": [
+      "STT",
+      "Áp dụng",
+      "Mã",
+      "Sản phẩm",
+      "Trạng thái"
+    ],
+    "before_columns": 4,
+    "after_columns": 5,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/promotions/77/products?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-khuyen-mai-san-pham-ap-dung-1",
+    "before_headers": [
+      "Áp dụng",
+      "Mã",
+      "Sản phẩm",
+      "Trạng thái"
+    ],
+    "after_headers": [
+      "STT",
+      "Áp dụng",
+      "Mã",
+      "Sản phẩm",
+      "Trạng thái"
+    ],
+    "before_columns": 4,
+    "after_columns": 5,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/orders/674",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-don-hang-chi-tiet-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "before_columns": 6,
+    "after_columns": 8,
+    "rows": 14,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/orders/detail/674",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-don-hang-chi-tiet-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "before_columns": 6,
+    "after_columns": 8,
+    "rows": 14,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/invoices/287",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-hoa-don-chi-tiet-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "SL",
+      "Đơn giá (đ)",
+      "Thành tiền (đ)"
+    ],
+    "before_columns": 6,
+    "after_columns": 9,
+    "rows": 14,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/revenue?from=2026-10-01&to=2026-10-28&page=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-thong-ke-thong-ke-1",
+    "before_headers": [
+      "Ngày",
+      "Số đơn",
+      "Doanh thu (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ngày",
+      "Số đơn",
+      "Doanh thu (đ)"
+    ],
+    "before_columns": 3,
+    "after_columns": 4,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/revenue?from=2026-10-01&to=2026-10-28&page=0",
+    "width": 375,
+    "table": 1,
+    "after_key": "admin-thong-ke-thong-ke-3",
+    "before_headers": [
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "after_headers": [
+      "STT",
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "before_columns": 2,
+    "after_columns": 3,
+    "rows": 4,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/revenue?from=2026-10-01&to=2026-10-28&page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-thong-ke-thong-ke-1",
+    "before_headers": [
+      "Ngày",
+      "Số đơn",
+      "Doanh thu (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ngày",
+      "Số đơn",
+      "Doanh thu (đ)"
+    ],
+    "before_columns": 3,
+    "after_columns": 4,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/revenue?from=2026-10-01&to=2026-10-28&page=1",
+    "width": 375,
+    "table": 1,
+    "after_key": "admin-thong-ke-thong-ke-3",
+    "before_headers": [
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "after_headers": [
+      "STT",
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "before_columns": 2,
+    "after_columns": 3,
+    "rows": 4,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/best-sellers?from=2026-10-01&to=2026-10-28&quantityPage=0&revenuePage=0",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-thong-ke-thong-ke-2",
+    "before_headers": [
+      "#",
+      "Sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "before_columns": 4,
+    "after_columns": 6,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/best-sellers?from=2026-10-01&to=2026-10-28&quantityPage=0&revenuePage=0",
+    "width": 375,
+    "table": 1,
+    "after_key": "admin-thong-ke-thong-ke-2",
+    "before_headers": [
+      "#",
+      "Sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "before_columns": 4,
+    "after_columns": 6,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/best-sellers?from=2026-10-01&to=2026-10-28&quantityPage=0&revenuePage=0",
+    "width": 375,
+    "table": 2,
+    "after_key": "admin-thong-ke-thong-ke-3",
+    "before_headers": [
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "after_headers": [
+      "STT",
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "before_columns": 2,
+    "after_columns": 3,
+    "rows": 4,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/best-sellers?from=2026-10-01&to=2026-10-28&quantityPage=1&revenuePage=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "admin-thong-ke-thong-ke-2",
+    "before_headers": [
+      "#",
+      "Sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "before_columns": 4,
+    "after_columns": 6,
+    "rows": 7,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/best-sellers?from=2026-10-01&to=2026-10-28&quantityPage=1&revenuePage=1",
+    "width": 375,
+    "table": 1,
+    "after_key": "admin-thong-ke-thong-ke-2",
+    "before_headers": [
+      "#",
+      "Sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "SL bán",
+      "Doanh thu (đ)"
+    ],
+    "before_columns": 4,
+    "after_columns": 6,
+    "rows": 7,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/admin/statistics/best-sellers?from=2026-10-01&to=2026-10-28&quantityPage=1&revenuePage=1",
+    "width": 375,
+    "table": 2,
+    "after_key": "admin-thong-ke-thong-ke-3",
+    "before_headers": [
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "after_headers": [
+      "STT",
+      "Trạng thái",
+      "Số đơn"
+    ],
+    "before_columns": 2,
+    "after_columns": 3,
+    "rows": 4,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/cart",
+    "width": 375,
+    "table": 0,
+    "after_key": "user-gio-hang-1",
+    "before_headers": [
+      "Sản Phẩm",
+      "Đơn Giá",
+      "Số Lượng",
+      "Thành Tiền",
+      "Thao Tác"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Đơn giá",
+      "Giá gốc",
+      "Số lượng",
+      "Thành tiền",
+      "Thao tác"
+    ],
+    "before_columns": 5,
+    "after_columns": 11,
+    "rows": 14,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/orders",
+    "width": 375,
+    "table": 0,
+    "after_key": "user-don-hang-1",
+    "before_headers": [
+      "Mã Đơn Hàng",
+      "Ngày đặt",
+      "Tổng tiền",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã Đơn Hàng",
+      "Ngày đặt",
+      "Tổng tiền",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 12,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/orders?page=1",
+    "width": 375,
+    "table": 0,
+    "after_key": "user-don-hang-1",
+    "before_headers": [
+      "Mã Đơn Hàng",
+      "Ngày đặt",
+      "Tổng tiền",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "after_headers": [
+      "STT",
+      "Mã Đơn Hàng",
+      "Ngày đặt",
+      "Tổng tiền",
+      "Trạng thái",
+      "Hành động"
+    ],
+    "before_columns": 5,
+    "after_columns": 6,
+    "rows": 2,
+    "same_values_order_links_images": true,
+    "errors": []
+  },
+  {
+    "url": "/orders/674",
+    "width": 375,
+    "table": 0,
+    "after_key": "user-chi-tiet-don-hang-1",
+    "before_headers": [
+      "Sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Số lượng",
+      "Đơn giá",
+      "Thành tiền"
+    ],
+    "after_headers": [
+      "STT",
+      "Ảnh",
+      "Mã",
+      "Tên sản phẩm",
+      "Kích cỡ",
+      "Chất liệu",
+      "Số lượng",
+      "Đơn giá",
+      "Thành tiền"
+    ],
+    "before_columns": 6,
+    "after_columns": 9,
+    "rows": 14,
+    "same_values_order_links_images": true,
+    "errors": []
+  }
+]

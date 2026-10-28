@@ -1,0 +1,107 @@
+[
+  {
+    "table_name": "categories",
+    "row_count": 14,
+    "data_checksum": -1715352495
+  },
+  {
+    "table_name": "chat_lieu",
+    "row_count": 14,
+    "data_checksum": -1571549326
+  },
+  {
+    "table_name": "customers",
+    "row_count": 15,
+    "data_checksum": -1374569456
+  },
+  {
+    "table_name": "de_giay",
+    "row_count": 14,
+    "data_checksum": -1366842169
+  },
+  {
+    "table_name": "dia_chi_nhan_hang",
+    "row_count": 9,
+    "data_checksum": 382408575
+  },
+  {
+    "table_name": "employees",
+    "row_count": 14,
+    "data_checksum": 1247894434
+  },
+  {
+    "table_name": "inventory_logs",
+    "row_count": 77,
+    "data_checksum": 1139884392
+  },
+  {
+    "table_name": "invoices",
+    "row_count": 42,
+    "data_checksum": -1377549387
+  },
+  {
+    "table_name": "order_details",
+    "row_count": 62,
+    "data_checksum": 197460470
+  },
+  {
+    "table_name": "orders",
+    "row_count": 42,
+    "data_checksum": -912839363
+  },
+  {
+    "table_name": "pos_held_items",
+    "row_count": 14,
+    "data_checksum": 4112
+  },
+  {
+    "table_name": "pos_held_orders",
+    "row_count": 1,
+    "data_checksum": -2146567168
+  },
+  {
+    "table_name": "product_images",
+    "row_count": 6,
+    "data_checksum": 1852433386
+  },
+  {
+    "table_name": "product_variants",
+    "row_count": 47,
+    "data_checksum": 1554397928
+  },
+  {
+    "table_name": "products",
+    "row_count": 24,
+    "data_checksum": 1842517973
+  },
+  {
+    "table_name": "promotion_details",
+    "row_count": 7,
+    "data_checksum": 22082
+  },
+  {
+    "table_name": "promotions",
+    "row_count": 14,
+    "data_checksum": 85723640
+  },
+  {
+    "table_name": "roles",
+    "row_count": 2,
+    "data_checksum": 952044497
+  },
+  {
+    "table_name": "sizes",
+    "row_count": 14,
+    "data_checksum": 145
+  },
+  {
+    "table_name": "users",
+    "row_count": 22,
+    "data_checksum": -1596326969
+  },
+  {
+    "table_name": "vouchers",
+    "row_count": 15,
+    "data_checksum": -392678723
+  }
+]

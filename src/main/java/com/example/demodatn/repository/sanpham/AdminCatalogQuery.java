@@ -71,7 +71,7 @@ public class AdminCatalogQuery {
         List<Object> args=new ArrayList<>();
         if(variantId!=null){from+=" AND l.variant_id=? ";args.add(variantId);}
         if(materialId!=null){from+=" AND v.chat_lieu_id=? ";args.add(materialId);}
-        return pagination.sql(jdbc,"SELECT l.*,p.name,s.size_value,m.ten AS material_name"+from+" ORDER BY l.created_at DESC,l.id DESC","SELECT COUNT_BIG(*)"+from,args,page);
+        return pagination.sql(jdbc,"SELECT l.*,p.code,p.name,s.size_value,m.ten AS material_name"+from+" ORDER BY l.created_at DESC,l.id DESC","SELECT COUNT_BIG(*)"+from,args,page);
     }
 }
 
