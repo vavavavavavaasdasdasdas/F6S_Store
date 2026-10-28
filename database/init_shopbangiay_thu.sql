@@ -1,19 +1,30 @@
 -- =====================================================================
--- FILE KHỞI TẠO TOÀN BỘ DATABASE: shopbangiay_thu (20 BẢNG + DỮ LIỆU MẪU)
--- Đã gộp:
---   1. Schema cuối cùng (20 bảng: gồm 19 bảng gốc + bảng dia_chi_nhan_hang từ migration 009)
---      kèm đầy đủ khóa ngoại, unique index, check constraint (phase 6 -> 9, migrations 004 -> 009).
---   2. Dữ liệu nền & dữ liệu mẫu đầy đủ (6 danh mục, 8 size, 8 chất liệu,
---      15 sản phẩm SP001..SP015, 61 biến thể, 60 lịch sử nhập kho,
---      8 khách hàng mẫu KH001..KH008, 8 sổ địa chỉ nhận hàng mặc định,
---      5 voucher, 2 chương trình khuyến mãi).
+-- FILE KHỞI TẠO TOÀN BỘ DATABASE: shopbangiay_thu (21 BẢNG + DỮ LIỆU MẪU)
+-- Hệ thống bán giày thể thao F6S Store
+--
+-- Đã gộp đầy đủ:
+--   1. Schema chuẩn 21 bảng:
+--      - roles, users, customers, dia_chi_nhan_hang, employees
+--      - categories (thương hiệu), sizes, chat_lieu, de_giay
+--      - products, product_images, product_variants, inventory_logs
+--      - vouchers, promotions, promotion_details
+--      - orders, order_details, invoices
+--      - pos_held_orders, pos_held_items
+--      kèm đầy đủ khóa ngoại, unique index, check constraint, unicode NVARCHAR.
+--   2. Dữ liệu nền & dữ liệu mẫu đầy đủ:
+--      - 6 thương hiệu, 8 kích cỡ, 8 chất liệu, 8 loại đế giày
+--      - 15 sản phẩm (SP001..SP015) đầy đủ danh mục & đế giày
+--      - 61 biến thể sản phẩm có số lượng và giá bán
+--      - 60 lịch sử nhập kho ban đầu
+--      - 8 khách hàng mẫu (KH001..KH008) kèm sổ địa chỉ nhận hàng mặc định
+--      - 5 phiếu giảm giá (vouchers), 2 đợt khuyến mãi (promotions)
 --   3. Tài khoản đăng nhập mẫu:
 --      - Khách hàng (ROLE_USER): khach01 ... khach08 (Mật khẩu: Khach@123)
---      - Quản trị viên (ROLE_ADMIN): DataInitializer tự tạo admin / admin123 khi chạy app.
+--      - Quản trị viên (ROLE_ADMIN): DataInitializer tự động tạo admin / admin123 khi chạy app.
 --
 -- Cách chạy:
---   Mở file này trong SSMS và nhấn F5 (hoặc chạy bằng sqlcmd).
---   Script tự động tạo mới (hoặc làm mới nếu đã tồn tại) database shopbangiay_thu.
+--   Mở file này trong SSMS (SQL Server Management Studio) và nhấn F5 (Execute).
+--   Script tự động tạo mới (hoặc làm mới nếu đã có) database shopbangiay_thu.
 -- =====================================================================
 SET NOCOUNT ON;
 SET QUOTED_IDENTIFIER ON;
@@ -52,12 +63,12 @@ SET XACT_ABORT ON;
 GO
 
 -- =====================================================================
--- PHẦN 1: TẠO SCHEMA 20 BẢNG & DỮ LIỆU NỀN
+-- PHẦN 1: TẠO SCHEMA 21 BẢNG & DỮ LIỆU NỀN
 -- =====================================================================
 BEGIN TRY
     BEGIN TRANSACTION;
 
-    -- 1. Roles
+    -- 1. Roles (vai trò)
     CREATE TABLE roles (
         id INT IDENTITY(1,1) PRIMARY KEY,
         name VARCHAR(50) NOT NULL UNIQUE
@@ -88,7 +99,7 @@ BEGIN TRY
         created_at DATETIME DEFAULT GETDATE(),
         status BIT DEFAULT 1
     );
-    CREATE UNIQUE INDEX UX_customers_email_phase7 ON customers(email)
+    CREATE UNIQUE INDEX UX_customers_email ON customers(email)
         WHERE email IS NOT NULL AND email <> N'';
 
     -- 4. Sổ địa chỉ nhận hàng (tối đa 3 địa chỉ / khách hàng)
@@ -120,8 +131,8 @@ BEGIN TRY
         user_id INT NOT NULL FOREIGN KEY REFERENCES users(id),
         status BIT DEFAULT 1
     );
-    CREATE UNIQUE INDEX UX_employees_user_phase7 ON employees(user_id);
-    CREATE UNIQUE INDEX UX_employees_email_phase7 ON employees(email)
+    CREATE UNIQUE INDEX UX_employees_user ON employees(user_id);
+    CREATE UNIQUE INDEX UX_employees_email ON employees(email)
         WHERE email IS NOT NULL AND email <> N'';
 
     -- 6. Categories (danh mục / thương hiệu)
@@ -144,18 +155,28 @@ BEGIN TRY
         trang_thai BIT NOT NULL DEFAULT 1
     );
 
-    -- 9. Products (sản phẩm)
+    -- 9. Đế giày
+    CREATE TABLE de_giay (
+        id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_de_giay PRIMARY KEY,
+        ten NVARCHAR(100) NOT NULL,
+        trang_thai BIT NOT NULL CONSTRAINT DF_de_giay_trang_thai DEFAULT 1
+    );
+    CREATE UNIQUE INDEX UX_de_giay_ten ON de_giay(ten);
+
+    -- 10. Products (sản phẩm)
     CREATE TABLE products (
         id INT IDENTITY(1,1) PRIMARY KEY,
         code VARCHAR(50) UNIQUE,
         name NVARCHAR(255) NOT NULL,
         description NVARCHAR(MAX),
         category_id INT FOREIGN KEY REFERENCES categories(id),
+        de_giay_id INT NULL FOREIGN KEY REFERENCES de_giay(id),
         image_url NVARCHAR(500),
         status BIT DEFAULT 1
     );
+    CREATE INDEX IX_products_de_giay ON products(de_giay_id);
 
-    -- 10. Ảnh sản phẩm
+    -- 11. Ảnh sản phẩm
     CREATE TABLE product_images (
         id BIGINT IDENTITY(1,1) NOT NULL PRIMARY KEY,
         product_id INT NOT NULL,
@@ -169,7 +190,7 @@ BEGIN TRY
     CREATE UNIQUE INDEX UX_product_images_main ON product_images(product_id)
         WHERE la_anh_chinh = 1;
 
-    -- 11. Product Variants (biến thể: sản phẩm + size + chất liệu)
+    -- 12. Product Variants (biến thể sản phẩm)
     CREATE TABLE product_variants (
         id INT IDENTITY(1,1) PRIMARY KEY,
         product_id INT FOREIGN KEY REFERENCES products(id),
@@ -185,7 +206,7 @@ BEGIN TRY
     CREATE UNIQUE INDEX UX_product_variants_product_size_material
         ON product_variants(product_id, size_id, chat_lieu_id);
 
-    -- 12. Lịch sử tồn kho
+    -- 13. Lịch sử tồn kho
     CREATE TABLE inventory_logs (
         id BIGINT IDENTITY(1,1) PRIMARY KEY,
         variant_id INT NOT NULL REFERENCES product_variants(id),
@@ -200,7 +221,7 @@ BEGIN TRY
     CREATE INDEX IX_inventory_logs_variant_time
         ON inventory_logs(variant_id, created_at DESC, id DESC);
 
-    -- 13. Vouchers
+    -- 14. Vouchers (phiếu giảm giá)
     CREATE TABLE vouchers (
         id INT IDENTITY(1,1) PRIMARY KEY,
         code VARCHAR(50) UNIQUE NOT NULL,
@@ -214,11 +235,11 @@ BEGIN TRY
         usage_limit INT DEFAULT 100,
         used_count INT DEFAULT 0,
         is_public BIT DEFAULT 1,
-        customer_id INT FOREIGN KEY REFERENCES customers(id), -- voucher riêng cho khách
+        customer_id INT FOREIGN KEY REFERENCES customers(id),
         status BIT DEFAULT 1
     );
 
-    -- 14. Promotions (chương trình khuyến mãi)
+    -- 15. Promotions (đợt giảm giá)
     CREATE TABLE promotions (
         id INT IDENTITY(1,1) PRIMARY KEY,
         name NVARCHAR(100) NOT NULL,
@@ -229,21 +250,21 @@ BEGIN TRY
         status BIT DEFAULT 1
     );
 
-    -- 15. Promotion Details (sản phẩm thuộc khuyến mãi)
+    -- 16. Promotion Details (sản phẩm áp dụng đợt giảm giá)
     CREATE TABLE promotion_details (
         id INT IDENTITY(1,1) PRIMARY KEY,
         promotion_id INT FOREIGN KEY REFERENCES promotions(id),
         product_id INT FOREIGN KEY REFERENCES products(id)
     );
-    CREATE UNIQUE INDEX UX_promotion_details_product_phase8
+    CREATE UNIQUE INDEX UX_promotion_details_product
         ON promotion_details(promotion_id, product_id);
 
-    -- 16. Orders (đơn hàng)
+    -- 17. Orders (đơn hàng)
     CREATE TABLE orders (
         id INT IDENTITY(1,1) PRIMARY KEY,
         order_code VARCHAR(50) UNIQUE NOT NULL,
         customer_id INT FOREIGN KEY REFERENCES customers(id),
-        employee_id INT FOREIGN KEY REFERENCES employees(id), -- NULL nếu đơn online
+        employee_id INT FOREIGN KEY REFERENCES employees(id),
         order_type VARCHAR(20) NOT NULL, -- ONLINE, POS
         status VARCHAR(50) NOT NULL, -- PENDING, CONFIRMED, PREPARING, SHIPPING, DELIVERED, CANCELLED
         total_amount DECIMAL(18,2) NOT NULL,
@@ -262,7 +283,7 @@ BEGIN TRY
         da_tru_kho BIT NOT NULL CONSTRAINT DF_orders_da_tru_kho DEFAULT 0
     );
 
-    -- 17. Order Details (chi tiết đơn hàng)
+    -- 18. Order Details (chi tiết đơn hàng)
     CREATE TABLE order_details (
         id INT IDENTITY(1,1) PRIMARY KEY,
         order_id INT FOREIGN KEY REFERENCES orders(id),
@@ -275,7 +296,7 @@ BEGIN TRY
         ten_chat_lieu NVARCHAR(100) NULL
     );
 
-    -- 18. Invoices (hóa đơn)
+    -- 19. Invoices (hóa đơn)
     CREATE TABLE invoices (
         id INT IDENTITY(1,1) PRIMARY KEY,
         order_id INT NOT NULL UNIQUE REFERENCES orders(id),
@@ -288,7 +309,7 @@ BEGIN TRY
         change_amount DECIMAL(19,2) NULL
     );
 
-    -- 19. POS: đơn tạm giữ
+    -- 20. POS: Đơn tạm giữ
     CREATE TABLE pos_held_orders (
         id BIGINT IDENTITY PRIMARY KEY,
         code VARCHAR(40) NOT NULL UNIQUE,
@@ -303,7 +324,7 @@ BEGIN TRY
     );
     CREATE INDEX ix_pos_hold_staff_expiry ON pos_held_orders(staff_user_id, expires_at);
 
-    -- 20. POS: sản phẩm trong đơn tạm giữ
+    -- 21. POS: Mặt hàng trong đơn tạm giữ
     CREATE TABLE pos_held_items (
         id BIGINT IDENTITY PRIMARY KEY,
         held_id BIGINT NOT NULL REFERENCES pos_held_orders(id),
@@ -312,13 +333,16 @@ BEGIN TRY
         CONSTRAINT uq_pos_hold_variant UNIQUE (held_id, variant_id)
     );
 
-    -- Dữ liệu khởi tạo nền
+    -- Dữ liệu cơ sở nền tảng
     INSERT INTO roles(name) VALUES ('ROLE_ADMIN'), ('ROLE_USER');
     INSERT INTO categories(name) VALUES (N'Nike'), (N'Adidas'), (N'Converse');
     INSERT INTO sizes(size_value) VALUES (N'39'), (N'40'), (N'41');
     INSERT INTO chat_lieu(ten) VALUES
         (N'Da thật'), (N'Da tổng hợp'), (N'Da lộn'), (N'Vải canvas'),
         (N'Vải lưới'), (N'Vải dệt kim'), (N'Cao su'), (N'Khác');
+    INSERT INTO de_giay(ten) VALUES
+        (N'Cao su'), (N'EVA'), (N'PU'), (N'TPU'),
+        (N'Đế bằng'), (N'Đế độn'), (N'Đế chống trượt'), (N'Khác');
 
     COMMIT TRANSACTION;
 END TRY
@@ -329,12 +353,12 @@ END CATCH;
 GO
 
 -- =====================================================================
--- PHẦN 2: NHẬP LIỆU ĐẦY ĐỦ (DANH MỤC, SIZE, SẢN PHẨM, BIẾN THỂ, KHÁCH HÀNG, VOUCHER, KHUYẾN MÃI)
+-- PHẦN 2: DỮ LIỆU ĐẦY ĐỦ (THƯƠNG HIỆU, SIZE, SẢN PHẨM, BIẾN THỂ, KHÁCH HÀNG, VOUCHER, KHUYẾN MÃI)
 -- =====================================================================
 BEGIN TRY
     BEGIN TRANSACTION;
 
-    -- 1. Danh mục bổ sung
+    -- 1. Danh mục / Thương hiệu bổ sung
     INSERT INTO categories(name)
     SELECT v.name FROM (VALUES (N'Vans'), (N'Puma'), (N'New Balance')) v(name)
     WHERE NOT EXISTS (SELECT 1 FROM categories c WHERE c.name = v.name);
@@ -344,32 +368,33 @@ BEGIN TRY
     SELECT v.s FROM (VALUES (N'36'), (N'37'), (N'38'), (N'42'), (N'43')) v(s)
     WHERE NOT EXISTS (SELECT 1 FROM sizes z WHERE z.size_value = v.s);
 
-    -- 3. Sản phẩm (15 sản phẩm)
-    DECLARE @sp TABLE (code VARCHAR(50), ten NVARCHAR(255), mo_ta NVARCHAR(MAX), danh_muc NVARCHAR(100));
-    INSERT INTO @sp(code, ten, mo_ta, danh_muc) VALUES
-        ('SP001', N'Nike Air Force 1', N'Giày thể thao Nike Air Force 1 trắng', N'Nike'),
-        ('SP002', N'Adidas Ultraboost', N'Giày chạy bộ Adidas Ultraboost đen', N'Adidas'),
-        ('SP003', N'Converse Chuck Taylor', N'Giày Converse cổ cao đen', N'Converse'),
-        ('SP004', N'Nike Air Max 90', N'Giày Nike Air Max 90 đệm khí, phong cách retro', N'Nike'),
-        ('SP005', N'Nike Dunk Low', N'Giày Nike Dunk Low phối màu cổ điển', N'Nike'),
-        ('SP006', N'Nike Pegasus 40', N'Giày chạy bộ Nike Pegasus 40 thoáng khí', N'Nike'),
-        ('SP007', N'Adidas Stan Smith', N'Giày Adidas Stan Smith trắng gót xanh', N'Adidas'),
-        ('SP008', N'Adidas Gazelle', N'Giày Adidas Gazelle da lộn', N'Adidas'),
-        ('SP009', N'Converse Chuck 70', N'Giày Converse Chuck 70 cổ thấp', N'Converse'),
-        ('SP010', N'Vans Old Skool', N'Giày Vans Old Skool đen sọc trắng', N'Vans'),
-        ('SP011', N'Vans Authentic', N'Giày Vans Authentic basic', N'Vans'),
-        ('SP012', N'Puma Suede Classic', N'Giày Puma Suede Classic da lộn', N'Puma'),
-        ('SP013', N'Puma RS-X', N'Giày Puma RS-X đế dày thể thao', N'Puma'),
-        ('SP014', N'New Balance 574', N'Giày New Balance 574 phối da lộn', N'New Balance'),
-        ('SP015', N'New Balance 530', N'Giày New Balance 530 phong cách running retro', N'New Balance');
+    -- 3. 15 Sản phẩm mẫu (gán chuẩn thương hiệu và đế giày)
+    DECLARE @sp TABLE (code VARCHAR(50), ten NVARCHAR(255), mo_ta NVARCHAR(MAX), danh_muc NVARCHAR(100), de_giay NVARCHAR(100));
+    INSERT INTO @sp(code, ten, mo_ta, danh_muc, de_giay) VALUES
+        ('SP001', N'Nike Air Force 1', N'Giày thể thao Nike Air Force 1 trắng cổ điển', N'Nike', N'Đế bằng'),
+        ('SP002', N'Adidas Ultraboost', N'Giày chạy bộ Adidas Ultraboost êm ái', N'Adidas', N'Cao su'),
+        ('SP003', N'Converse Chuck Taylor', N'Giày Converse cổ cao kinh điển', N'Converse', N'Cao su'),
+        ('SP004', N'Nike Air Max 90', N'Giày Nike Air Max 90 đệm khí, phong cách retro', N'Nike', N'PU'),
+        ('SP005', N'Nike Dunk Low', N'Giày Nike Dunk Low phối màu trẻ trung', N'Nike', N'Đế bằng'),
+        ('SP006', N'Nike Pegasus 40', N'Giày chạy bộ Nike Pegasus 40 thoáng khí', N'Nike', N'EVA'),
+        ('SP007', N'Adidas Stan Smith', N'Giày Adidas Stan Smith trắng gót xanh', N'Adidas', N'Đế bằng'),
+        ('SP008', N'Adidas Gazelle', N'Giày Adidas Gazelle da lộn thanh lịch', N'Adidas', N'Cao su'),
+        ('SP009', N'Converse Chuck 70', N'Giày Converse Chuck 70 cổ thấp vải dệt cao cấp', N'Converse', N'Cao su'),
+        ('SP010', N'Vans Old Skool', N'Giày Vans Old Skool sọc Jazz cá tính', N'Vans', N'Đế bằng'),
+        ('SP011', N'Vans Authentic', N'Giày Vans Authentic thiết kế tối giản', N'Vans', N'Đế bằng'),
+        ('SP012', N'Puma Suede Classic', N'Giày Puma Suede Classic da lộn êm ái', N'Puma', N'Cao su'),
+        ('SP013', N'Puma RS-X', N'Giày Puma RS-X phong cách thể thao hầm hố', N'Puma', N'PU'),
+        ('SP014', N'New Balance 574', N'Giày New Balance 574 phối màu vintage', N'New Balance', N'EVA'),
+        ('SP015', N'New Balance 530', N'Giày New Balance 530 phong cách running retro', N'New Balance', N'EVA');
 
-    INSERT INTO products(code, name, description, category_id)
+    INSERT INTO products(code, name, description, category_id, de_giay_id)
     SELECT s.code, s.ten, s.mo_ta,
-           (SELECT TOP 1 c.id FROM categories c WHERE c.name = s.danh_muc ORDER BY c.id)
+           (SELECT TOP 1 c.id FROM categories c WHERE c.name = s.danh_muc ORDER BY c.id),
+           (SELECT TOP 1 d.id FROM de_giay d WHERE d.ten = s.de_giay ORDER BY d.id)
     FROM @sp s
     WHERE NOT EXISTS (SELECT 1 FROM products p WHERE p.code = s.code);
 
-    -- 4. Biến thể sản phẩm (61 biến thể)
+    -- 4. 61 Biến thể sản phẩm (Kích cỡ + Chất liệu + Giá + Tồn kho)
     DECLARE @bt TABLE (code VARCHAR(50), size_value NVARCHAR(10), chat_lieu NVARCHAR(100), gia DECIMAL(18,2), sl INT);
     INSERT INTO @bt(code, size_value, chat_lieu, gia, sl) VALUES
         ('SP001', N'39', N'Da thật', 2500000, 25),
@@ -475,20 +500,20 @@ BEGIN TRY
     WHERE NULLIF(LTRIM(RTRIM(c.address)), N'') IS NOT NULL
       AND NOT EXISTS (SELECT 1 FROM dia_chi_nhan_hang a WHERE a.customer_id = c.id);
 
-    -- 8. Voucher (5 voucher)
+    -- 8. Phiếu giảm giá (5 voucher)
     INSERT INTO vouchers(code, name, discount_type, discount_value, min_order_value, max_discount, start_date, end_date, usage_limit, is_public, customer_id)
     SELECT v.code, v.name, v.loai, v.gia_tri, v.don_toi_thieu, v.giam_toi_da, '20260101', '20301231', v.gioi_han, v.cong_khai,
            CASE WHEN v.cong_khai = 0 THEN (SELECT TOP 1 c.id FROM customers c WHERE c.customer_code = 'KH001') END
     FROM (VALUES
-        ('WELCOME10',   N'Giảm 10% khách mới',      'PERCENT', 10,     500000,  200000, 1000, 1),
-        ('GIAM50K',     N'Giảm 50K đơn từ 1 triệu', 'FIXED',   50000,  1000000, NULL,   500,  1),
+        ('WELCOME10',   N'Giảm 10% khách mới',       'PERCENT', 10,     500000,  200000, 1000, 1),
+        ('GIAM50K',     N'Giảm 50K đơn từ 1 triệu',  'FIXED',   50000,  1000000, NULL,   500,  1),
         ('SALE20',      N'Giảm 20% đơn từ 1,5 triệu','PERCENT', 20,    1500000, 300000, 200,  1),
-        ('VIP100K',     N'Giảm 100K đơn từ 2 triệu','FIXED',   100000, 2000000, NULL,   100,  1),
-        ('TRIAN-KH001', N'Voucher tri ân khách hàng KH001','PERCENT', 15, 500000, 250000, 1, 0)
+        ('VIP100K',     N'Giảm 100K đơn từ 2 triệu', 'FIXED',   100000, 2000000, NULL,   100,  1),
+        ('TRIAN-KH001', N'Voucher tri ân KH001',     'PERCENT', 15,     500000,  250000, 1,    0)
     ) v(code, name, loai, gia_tri, don_toi_thieu, giam_toi_da, gioi_han, cong_khai)
     WHERE NOT EXISTS (SELECT 1 FROM vouchers x WHERE x.code = v.code);
 
-    -- 9. Khuyến mãi (2 chương trình khuyến mãi)
+    -- 9. Đợt giảm giá (2 chương trình khuyến mãi)
     INSERT INTO promotions(name, discount_type, discount_value, start_date, end_date)
     SELECT v.name, 'PERCENT', v.gia_tri, '20260101', '20301231'
     FROM (VALUES
@@ -556,13 +581,16 @@ BEGIN CATCH
 END CATCH;
 GO
 
--- Kiểm tra kết quả khởi tạo (20 bảng)
-SELECT DB_NAME() AS database_name, COUNT(*) AS so_bang
+-- =====================================================================
+-- KIỂM TRA TỔNG QUAN KẾT QUẢ KHỞI TẠO (21 BẢNG)
+-- =====================================================================
+SELECT DB_NAME() AS database_name, COUNT(*) AS tong_so_bang
 FROM sys.tables WHERE schema_id = SCHEMA_ID(N'dbo');
 
-SELECT N'categories' AS bang, COUNT(*) AS so_dong FROM categories
+SELECT N'categories' AS ten_bang, COUNT(*) AS so_ban_ghi FROM categories
 UNION ALL SELECT N'sizes', COUNT(*) FROM sizes
 UNION ALL SELECT N'chat_lieu', COUNT(*) FROM chat_lieu
+UNION ALL SELECT N'de_giay', COUNT(*) FROM de_giay
 UNION ALL SELECT N'products', COUNT(*) FROM products
 UNION ALL SELECT N'product_variants', COUNT(*) FROM product_variants
 UNION ALL SELECT N'inventory_logs', COUNT(*) FROM inventory_logs
