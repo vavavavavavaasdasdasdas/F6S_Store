@@ -2,5 +2,5 @@
 <div th:fragment="flash" class="admin-flash" aria-live="polite">
 <div th:if="${message != null or success != null}" class="alert alert-success" role="status"><span th:text="${message != null ? message : success}"></span><button type="button" class="flash-close" aria-label="Đóng thông báo">×</button></div>
 <div th:if="${error != null}" class="alert alert-danger" role="alert"><span th:text="${error}"></span><button type="button" class="flash-close" aria-label="Đóng thông báo">×</button></div>
-</div></body></html>
+<div th:if="${warning != null}" class="alert alert-warning" role="alert" th:text="${warning}"></div></div></body></html>
 

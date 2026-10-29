@@ -1,0 +1,90 @@
+[
+  {
+    "id": 100,
+    "username": "g4c1280",
+    "email": "g4c1280@example.test",
+    "mailText": "Xin chào Nguyễn Văn Ánh,\r\n\r\nTài khoản của bạn đã sẵn sàng.\r\nTên đăng nhập: g4c1280\r\nMật khẩu tạm: [ĐÃ CHE]\r\nĐăng nhập: http://localhost:18140/login\r\n\r\nBạn phải đổi mật khẩu ngay sau lần đăng nhập đầu tiên. Không chia sẻ mật khẩu này.\r\nNếu đây là thư gửi lại, mật khẩu tạm trước đó đã hết hiệu lực.\r\n\r\nTrân trọng,\r\nF6S Store",
+    "detailPath": "/admin/customers/detail/100",
+    "kind": "customers",
+    "sql": [
+      {
+        "id": 100,
+        "full_name": "Nguyễn Văn Ánh",
+        "address": "Số 12, đường Nguyễn Huệ, Đà Nẵng",
+        "cccd_last4": "1280",
+        "ngay_sinh": "1995-01-01",
+        "gioi_tinh": "Nam",
+        "username": "g4c1280",
+        "must_change_password": true,
+        "credential_mail_failed": false,
+        "bcrypt": 1
+      }
+    ]
+  },
+  {
+    "id": 502,
+    "username": "g4e1280",
+    "email": "g4e1280@example.test",
+    "mailText": "Xin chào Nguyễn Văn Ánh,\r\n\r\nTài khoản của bạn đã sẵn sàng.\r\nTên đăng nhập: g4e1280\r\nMật khẩu tạm: [ĐÃ CHE]\r\nĐăng nhập: http://localhost:18140/login\r\n\r\nBạn phải đổi mật khẩu ngay sau lần đăng nhập đầu tiên. Không chia sẻ mật khẩu này.\r\nNếu đây là thư gửi lại, mật khẩu tạm trước đó đã hết hiệu lực.\r\n\r\nTrân trọng,\r\nF6S Store",
+    "detailPath": "/admin/employees/detail/502",
+    "kind": "employees",
+    "sql": [
+      {
+        "id": 502,
+        "full_name": "Nguyễn Văn Ánh",
+        "address": "Số 12, đường Nguyễn Huệ, Đà Nẵng",
+        "cccd_last4": "1280",
+        "ngay_sinh": "1995-01-01",
+        "gioi_tinh": "Nam",
+        "username": "g4e1280",
+        "must_change_password": true,
+        "credential_mail_failed": false,
+        "bcrypt": 1
+      }
+    ]
+  },
+  {
+    "id": 101,
+    "username": "g4c375",
+    "email": "g4c375@example.test",
+    "mailText": "Xin chào Nguyễn Văn Ánh,\r\n\r\nTài khoản của bạn đã sẵn sàng.\r\nTên đăng nhập: g4c375\r\nMật khẩu tạm: [ĐÃ CHE]\r\nĐăng nhập: http://localhost:18140/login\r\n\r\nBạn phải đổi mật khẩu ngay sau lần đăng nhập đầu tiên. Không chia sẻ mật khẩu này.\r\nNếu đây là thư gửi lại, mật khẩu tạm trước đó đã hết hiệu lực.\r\n\r\nTrân trọng,\r\nF6S Store",
+    "detailPath": "/admin/customers/detail/101",
+    "kind": "customers",
+    "sql": [
+      {
+        "id": 101,
+        "full_name": "Nguyễn Văn Ánh",
+        "address": "Số 12, đường Nguyễn Huệ, Đà Nẵng",
+        "cccd_last4": "0375",
+        "ngay_sinh": "1995-01-01",
+        "gioi_tinh": "Nam",
+        "username": "g4c375",
+        "must_change_password": true,
+        "credential_mail_failed": false,
+        "bcrypt": 1
+      }
+    ]
+  },
+  {
+    "id": 503,
+    "username": "g4e375",
+    "email": "g4e375@example.test",
+    "mailText": "Xin chào Nguyễn Văn Ánh,\r\n\r\nTài khoản của bạn đã sẵn sàng.\r\nTên đăng nhập: g4e375\r\nMật khẩu tạm: [ĐÃ CHE]\r\nĐăng nhập: http://localhost:18140/login\r\n\r\nBạn phải đổi mật khẩu ngay sau lần đăng nhập đầu tiên. Không chia sẻ mật khẩu này.\r\nNếu đây là thư gửi lại, mật khẩu tạm trước đó đã hết hiệu lực.\r\n\r\nTrân trọng,\r\nF6S Store",
+    "detailPath": "/admin/employees/detail/503",
+    "kind": "employees",
+    "sql": [
+      {
+        "id": 503,
+        "full_name": "Nguyễn Văn Ánh",
+        "address": "Số 12, đường Nguyễn Huệ, Đà Nẵng",
+        "cccd_last4": "0375",
+        "ngay_sinh": "1995-01-01",
+        "gioi_tinh": "Nam",
+        "username": "g4e375",
+        "must_change_password": true,
+        "credential_mail_failed": false,
+        "bcrypt": 1
+      }
+    ]
+  }
+]

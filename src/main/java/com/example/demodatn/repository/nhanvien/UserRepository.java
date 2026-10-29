@@ -14,4 +14,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @org.springframework.data.jpa.repository.Query("select count(u) from User u where u.id<>:id and (lower(u.email)=lower(:email) or u.id in (select e.user.id from Employee e where lower(e.email)=lower(:email)) or u.id in (select c.user.id from Customer c where lower(c.email)=lower(:email)))")
     long otherAccountsWithEmail(@org.springframework.data.repository.query.Param("email") String email,
             @org.springframework.data.repository.query.Param("id") Integer id);
+    @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+    @org.springframework.data.jpa.repository.Query("select u from User u where u.id=:id")
+    Optional<User> lockById(@org.springframework.data.repository.query.Param("id") Integer id);
 }

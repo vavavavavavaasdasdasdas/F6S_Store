@@ -16,7 +16,7 @@ Tạo `shop_verify` bằng SSMS. Chạy `shopgiay.sql` với database đích đ�
 sqlcmd -S 'localhost,1433' -E -C -I -b -d shop_verify -i shopgiay.sql
 ```
 
-Với database hiện có, làm theo [hướng dẫn triển khai](docs/HUONG_DAN_TRIEN_KHAI.md): kiểm kê trước, migration **004 → 005 → 006 → 007 → 008 → 009 → 010**, đối chiếu dữ liệu sau. **003 xóa dữ liệu nghiệp vụ**, không thuộc quy trình nâng cấp thông thường.
+Với database hiện có, làm theo [hướng dẫn triển khai](docs/HUONG_DAN_TRIEN_KHAI.md): kiểm kê trước, migration **004 → 005 → 006 → 007 → 008 → 009 → 010 → 011**, đối chiếu dữ liệu sau. **003 xóa dữ liệu nghiệp vụ**, không thuộc quy trình nâng cấp thông thường.
 
 ## Cấu hình và chạy
 
@@ -62,4 +62,19 @@ Xem [cấu trúc dự án](docs/CAU_TRUC_DU_AN.md) và [báo cáo chốt triển
 
 Thư mục upload thật, `target/`, `verify/`, log và cấu hình bí mật cục bộ không đưa vào Git. Mật khẩu từng có trong lịch sử Git phải được thay mới; bỏ khỏi file hiện tại không xóa được lịch sử.
 
-Đế giày thuộc sản phẩm, tùy chọn và có thể lọc tại `/products` hoặc `/admin/products-crud`. Quản lý tại `/admin/soles`; migration `010_de_giay.sql` thêm bảng, khóa ngoại và tám giá trị mặc định. `chay_tat_ca.sql` đã gộp 004–010; chạy trên bản sao trước khi triển khai. Thương hiệu giữ nguyên bảng `categories`, lớp `Category` và các route cũ.
+Đế giày thuộc sản phẩm, tùy chọn và có thể lọc tại `/products` hoặc `/admin/products-crud`. Quản lý tại `/admin/soles`; migration `010_de_giay.sql` thêm bảng, khóa ngoại và tám giá trị mặc định. `chay_tat_ca.sql` đã gộp 004–011; chạy trên bản sao trước khi triển khai. Thương hiệu giữ nguyên bảng `categories`, lớp `Category` và các route cũ.
+
+
+## Quét căn cước và gửi tài khoản — Giai đoạn 4
+
+Chạy migration `011_can_cuoc_tai_khoan_email.sql` sau 010 trước khi khởi động; Hibernate mặc định `ddl-auto=validate`, không tự sửa schema. Script gộp hiện gồm 004–011. Xem lệnh triển khai và bằng chứng tại [báo cáo Giai đoạn 4](docs/GIAI_DOAN_4_QR_EMAIL.md).
+
+Form tạo/sửa khách hàng và nhân viên có nút **Quét QR căn cước**. Camera chỉ hoạt động trong HTTPS hoặc localhost; phải cấp quyền camera. Nếu không có camera hoặc từ chối quyền, chọn ảnh PNG/JPEG/WebP tối đa 10 MB. Thư viện jsQR được lưu trong `static/js/vendor`, đọc ảnh trên trình duyệt, không tải lên máy chủ và không lưu ảnh. Kiểm tra lại họ tên, CCCD, ngày sinh, giới tính, địa chỉ trước khi lưu; nhập tay SĐT và thư điện tử. Danh sách chỉ hiện bốn số cuối CCCD; Admin được xem đầy đủ tại chi tiết hồ sơ; hóa đơn không chứa CCCD.
+
+Cấu hình biến môi trường `MAIL_HOST`, `MAIL_PORT` (mặc định 587), `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM`, `PUBLIC_BASE_URL` (địa chỉ gốc công khai của website, không kèm `/login`). Mặc định xác thực SMTP và STARTTLS được bật, thời gian chờ kết nối 3 giây, đọc/ghi 5 giây. Không ghi mật khẩu mail vào file theo dõi bởi Git. `application-example.properties` dùng các biến này; nếu chưa cấu hình SMTP, tài khoản vẫn được lưu và trang báo **Chưa gửi được email**. Chỉ với máy chủ mail giả localhost mới đặt `MAIL_AUTH=false`, `MAIL_STARTTLS=false`.
+
+Admin tạo hồ sơ sẽ tạo tài khoản theo quyền hiện có: khách `ROLE_USER`, nhân viên theo `shop.employee-role`. Tên đăng nhập được gợi ý từ email, kiểm tra không trùng, cho phép sửa. Mật khẩu tạm ngẫu nhiên 12 ký tự chỉ được gửi qua email sau khi commit, được lưu bằng BCrypt. Đăng nhập lần đầu bắt buộc đổi mật khẩu (ít nhất 8 ký tự, có chữ và số, tối đa 72 byte UTF-8) trước khi dùng trang khác; vẫn có thể đăng xuất. Hồ sơ cũ chưa có tài khoản dùng **Gửi lại tài khoản** để tạo.
+
+**Gửi lại tài khoản** cần xác nhận: hủy mật khẩu cũ, tạo mật khẩu tạm mới, tối đa 3 lần gửi lại/tài khoản/giờ. Tài khoản đang vô hiệu hóa vẫn bị khóa. Nếu SMTP lỗi, sửa cấu hình rồi gửi lại; không có mật khẩu tạm trong thông báo trang, URL hoặc log.
+
+Thử thủ công camera thật: mở HTTPS/localhost bằng thiết bị có camera → Admin tạo hồ sơ → Quét QR → Mở camera → cấp quyền → đưa căn cước vào khung → đối chiếu năm trường, nhập SĐT/email và sửa trước khi lưu. Thử hộp thư thật: cấu hình SMTP và `PUBLIC_BASE_URL` đúng → tạo hồ sơ bằng email bạn kiểm soát → kiểm tra thư và thư rác → đăng nhập bằng mật khẩu tạm → đổi mật khẩu → kiểm tra gửi lại làm mật khẩu cũ hết hiệu lực. Hai thử nghiệm này **NOT TESTED** trong báo cáo tự động; GreenMail chỉ nhận thư giả trên loopback.

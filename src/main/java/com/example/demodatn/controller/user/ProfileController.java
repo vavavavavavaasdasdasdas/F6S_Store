@@ -93,7 +93,7 @@ public class ProfileController {
                 return "redirect:/profile";
             }
             if(!PasswordPolicy.isValid(newPassword)){ra.addFlashAttribute("error",PasswordPolicy.MESSAGE);return "redirect:/profile";}
-            user.setPassword(passwordEncoder.encode(newPassword));
+            user.setMustChangePassword(false);user.setPassword(passwordEncoder.encode(newPassword));
             userRepository.save(user);
             ra.addFlashAttribute("message", "Đổi mật khẩu thành công!");
         }

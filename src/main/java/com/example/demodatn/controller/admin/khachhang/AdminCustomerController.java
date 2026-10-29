@@ -29,6 +29,7 @@ import java.util.Locale;
 public class AdminCustomerController {
     private final CustomerRepository repository;
     private final PeopleService people;
+    private final com.example.demodatn.service.nhanvien.AccountProvisioningService accounts;
     private final com.example.demodatn.repository.khachhang.ShippingAddressRepository shippingAddresses;
     private final com.example.demodatn.repository.donhang.OrderRepository orders;
 
@@ -85,6 +86,7 @@ public class AdminCustomerController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id,Model model) {
         var item=people.customer(id);var form=new CustomerDto();BeanUtils.copyProperties(item,form);
+        form.setUsername(item.getUser()==null?null:item.getUser().getUsername());
         model.addAttribute("customer",form);return "admin/khach-hang/bieu-mau";
     }
     @GetMapping("/detail/{id}")
@@ -98,10 +100,10 @@ public class AdminCustomerController {
     public String save(@Valid @ModelAttribute("customer") CustomerDto form,BindingResult errors,Model model,RedirectAttributes flash) {
         if(!errors.hasErrors()) {
             try {
-                var saved=people.saveCustomer(form);flash.addFlashAttribute("message","Đã lưu thông tin.");
-                return "redirect:/admin/customers/detail/"+saved.getId();
+                var saved=accounts.saveCustomer(form);flash.addFlashAttribute(saved.issued()&&!saved.sent()?"warning":"message",saved.message());
+                return "redirect:/admin/customers/detail/"+saved.personId();
             } catch(PeopleValidationException ex) { errors.rejectValue(ex.getField(),"invalid",ex.getMessage()); }
-            catch(DataIntegrityViolationException ex) { errors.reject("duplicate","Dữ liệu mã/thư điện tử/SĐT/tài khoản vừa được sử dụng. Kiểm tra lại trước khi lưu."); }
+            catch(DataIntegrityViolationException ex) { errors.reject("duplicate","Dữ liệu mã/thư điện tử/SĐT/căn cước/tài khoản vừa được sử dụng. Kiểm tra lại trước khi lưu."); }
         }
         return "admin/khach-hang/bieu-mau";
     }
@@ -117,5 +119,11 @@ public class AdminCustomerController {
         catch(IllegalArgumentException ex) { flash.addFlashAttribute("error",ex.getMessage()); }
         catch(DataIntegrityViolationException ex) { flash.addFlashAttribute("error","Dữ liệu vừa phát sinh tham chiếu. Không xóa; hãy vô hiệu hóa hồ sơ."); }
         return "redirect:/admin/customers";
+    }
+    @PostMapping("/{id}/send-account")
+    public String sendAccount(@PathVariable Integer id,@RequestParam(defaultValue="false") boolean confirmed,RedirectAttributes flash) {
+        try {var result=accounts.resend("customers",id,confirmed);flash.addFlashAttribute(result.sent()?"message":"warning",result.message());}
+        catch(PeopleValidationException ex){flash.addFlashAttribute("warning",ex.getMessage());}
+        return "redirect:/admin/customers/detail/"+id;
     }
 }

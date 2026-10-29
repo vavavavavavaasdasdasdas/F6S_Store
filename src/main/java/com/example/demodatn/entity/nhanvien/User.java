@@ -31,4 +31,9 @@ public class User {
     @org.hibernate.annotations.Nationalized private String phone;
     @Column(name = "created_at")
     private java.time.LocalDateTime createdAt = java.time.LocalDateTime.now();
+    @Column(name="must_change_password",nullable=false) private Boolean mustChangePassword=false;
+    @Column(name="credential_mail_failed",nullable=false) private Boolean credentialMailFailed=false;
+    @Column(name="credential_mail_window") private java.time.LocalDateTime credentialMailWindow;
+    @Column(name="credential_mail_count",nullable=false) private Integer credentialMailCount=0;
+    @Column(name="credential_mail_pending_until") private java.time.LocalDateTime credentialMailPendingUntil;
 }

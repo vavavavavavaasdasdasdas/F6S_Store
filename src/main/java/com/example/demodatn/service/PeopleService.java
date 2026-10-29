@@ -37,6 +37,7 @@ public class PeopleService {
     private final OrderRepository orders;
     private final VoucherRepository vouchers;
     private final PasswordEncoder encoder;
+    private final com.example.demodatn.repository.nhanvien.AccountIssueRepository accountIssues;
     @Value("${shop.employee-role:ROLE_ADMIN}") private String employeeRole;
 
     public Customer customer(Integer id) {
@@ -82,6 +83,12 @@ public class PeopleService {
         if(customers.existsByEmailIgnoreCaseAndIdNot(email(form.getEmail()),id))throw new PeopleValidationException("email","Thư điện tử đã tồn tại.");
         if(customers.existsByPhoneAndIdNot(phone(form.getPhone()),id))throw new PeopleValidationException("phone","Số điện thoại đã tồn tại.");
         Customer c=form.getId()==null ? new Customer() : customers.findForUpdate(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        String document=form.getSoCccd()==null||form.getSoCccd().isBlank()?null:form.getSoCccd().trim();
+        if(document!=null && !document.matches("[0-9]{12}"))
+            throw new PeopleValidationException("soCccd","Số căn cước phải gồm đúng 12 chữ số.");
+        if(document!=null && accountIssues.documentUsed("customers",document,id))
+            throw new PeopleValidationException("soCccd","Số căn cước đã tồn tại.");
+        c.setSoCccd(document);c.setNgaySinh(form.getNgaySinh());c.setGioiTinh(form.getGioiTinh()==null||form.getGioiTinh().isBlank()?null:form.getGioiTinh());
         c.setCustomerCode(form.getCustomerCode().trim());c.setFullName(form.getFullName().trim());
         c.setPhone(phone(form.getPhone()));c.setEmail(email(form.getEmail()));
         c.setAddress(form.getId()==null ? form.getAddress() : shippingAddresses.findByCustomer_IdOrderBySlotAsc(id).stream()
@@ -107,7 +114,10 @@ public class PeopleService {
         return cleaned;
     }
     @Transactional
-    public Employee saveEmployee(EmployeeDto form) {
+    public Employee saveEmployee(EmployeeDto form) { return persistEmployee(form,null,false); }
+    @Transactional
+    public Employee saveEmployeeGenerated(EmployeeDto form,String temporaryHash) { return persistEmployee(form,temporaryHash,true); }
+    private Employee persistEmployee(EmployeeDto form,String temporaryHash,boolean generated) {
         int id=form.getId()==null ? -1 : form.getId();
         if(employees.existsByEmployeeCodeIgnoreCaseAndIdNot(form.getEmployeeCode().trim(),id))throw new PeopleValidationException("employeeCode","Mã nhân viên đã tồn tại.");
         if(employees.existsByEmailIgnoreCaseAndIdNot(email(form.getEmail()),id))throw new PeopleValidationException("email","Thư điện tử đã tồn tại.");
@@ -118,8 +128,9 @@ public class PeopleService {
         User u=e.getUser()==null ? new User() : e.getUser();
         String username=form.getUsername().trim().toLowerCase(Locale.ROOT);
         if(users.existsByUsernameIgnoreCaseAndIdNot(username,u.getId()==null ? -1 : u.getId()))throw new PeopleValidationException("username","Tên đăng nhập đã tồn tại.");
-        String password=form.getPassword();
-        if(u.getId()==null && (password==null || password.isBlank()))throw new PeopleValidationException("password","Nhập mật khẩu cho tài khoản mới.");
+        String password=generated?null:form.getPassword();
+        if(temporaryHash!=null)u.setPassword(temporaryHash);
+        if(u.getId()==null && temporaryHash==null && (password==null || password.isBlank()))throw new PeopleValidationException("password","Nhập mật khẩu cho tài khoản mới.");
         if(password!=null && !password.isEmpty()) {
             if(!PasswordPolicy.isValid(password))
                 throw new PeopleValidationException("password",PasswordPolicy.MESSAGE);
@@ -132,6 +143,12 @@ public class PeopleService {
         }
         u.setUsername(username);
         e.setUser(users.saveAndFlush(u));
+        String document=form.getSoCccd()==null||form.getSoCccd().isBlank()?null:form.getSoCccd().trim();
+        if(document!=null && !document.matches("[0-9]{12}"))
+            throw new PeopleValidationException("soCccd","Số căn cước phải gồm đúng 12 chữ số.");
+        if(document!=null && accountIssues.documentUsed("employees",document,id))
+            throw new PeopleValidationException("soCccd","Số căn cước đã tồn tại.");
+        e.setSoCccd(document);e.setNgaySinh(form.getNgaySinh());e.setGioiTinh(form.getGioiTinh()==null||form.getGioiTinh().isBlank()?null:form.getGioiTinh());
         e.setEmployeeCode(form.getEmployeeCode().trim());e.setFullName(form.getFullName().trim());
         e.setPhone(phone(form.getPhone()));e.setEmail(email(form.getEmail()));e.setAddress(form.getAddress());e.setPosition(resolvedPosition);
         form.setPosition(resolvedPosition);

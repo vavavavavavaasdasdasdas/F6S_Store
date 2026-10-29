@@ -14,6 +14,8 @@ public class CustomUserDetails implements UserDetails {
     private final User user;
     private final boolean profileEnabled;
 
+    public boolean isMustChangePassword() { return Boolean.TRUE.equals(user.getMustChangePassword()); }
+
     public Integer getUserId() { return user.getId(); }
 
     @Override

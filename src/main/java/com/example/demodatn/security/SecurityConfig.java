@@ -48,6 +48,7 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .successHandler((request, response, authentication) -> {
+                    if(authentication.getPrincipal() instanceof CustomUserDetails user && user.isMustChangePassword()) {response.sendRedirect("/account/change-required");return;}
                     org.springframework.security.web.savedrequest.SavedRequest savedRequest =
                         new org.springframework.security.web.savedrequest.HttpSessionRequestCache().getRequest(request, response);
                     

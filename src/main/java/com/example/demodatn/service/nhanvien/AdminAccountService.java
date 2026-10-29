@@ -60,6 +60,6 @@ public class AdminAccountService {
         if(!PasswordPolicy.isValid(form.getNewPassword()))errors.rejectValue("newPassword","policy",PasswordPolicy.MESSAGE);
         if(!newTooLong && encoder.matches(form.getNewPassword(),user.getPassword()))
             errors.rejectValue("newPassword","same","Mật khẩu mới phải khác mật khẩu hiện tại.");
-        if(!errors.hasErrors()) {user.setPassword(encoder.encode(form.getNewPassword()));users.save(user);}
+        if(!errors.hasErrors()) {user.setPassword(encoder.encode(form.getNewPassword()));user.setMustChangePassword(false);users.save(user);}
     }
 }

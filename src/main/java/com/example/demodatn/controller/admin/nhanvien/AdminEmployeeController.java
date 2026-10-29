@@ -29,12 +29,15 @@ import java.util.Locale;
 public class AdminEmployeeController {
     private final EmployeeRepository repository;
     private final PeopleService people;
+    private final com.example.demodatn.service.nhanvien.AccountProvisioningService accounts;
 
     private final com.example.demodatn.util.Pagination pagination;
 
     @ModelAttribute("positions")
     public List<String> positions() {
-        return repository.distinctPositions();
+        var values=new java.util.ArrayList<>(java.util.List.of("Quản lý","Nhân viên bán hàng","Thu ngân","Thủ kho","Kế toán"));
+        for(String value:repository.distinctPositions())if(values.stream().noneMatch(v->com.example.demodatn.util.VietnameseText.sameFolded(v,value)))values.add(value);
+        return values;
     }
 
     @GetMapping
@@ -107,10 +110,10 @@ public class AdminEmployeeController {
     public String save(@Valid @ModelAttribute("employee") EmployeeDto form,BindingResult errors,Model model,RedirectAttributes flash) {
         if(!errors.hasErrors()) {
             try {
-                var saved=people.saveEmployee(form);flash.addFlashAttribute("message","Đã lưu thông tin.");
-                return "redirect:/admin/employees/detail/"+saved.getId();
+                var saved=accounts.saveEmployee(form);flash.addFlashAttribute(saved.issued()&&!saved.sent()?"warning":"message",saved.message());
+                return "redirect:/admin/employees/detail/"+saved.personId();
             } catch(PeopleValidationException ex) { errors.rejectValue(ex.getField(),"invalid",ex.getMessage()); }
-            catch(DataIntegrityViolationException ex) { errors.reject("duplicate","Dữ liệu mã/thư điện tử/SĐT/tài khoản vừa được sử dụng. Kiểm tra lại trước khi lưu."); }
+            catch(DataIntegrityViolationException ex) { errors.reject("duplicate","Dữ liệu mã/thư điện tử/SĐT/căn cước/tài khoản vừa được sử dụng. Kiểm tra lại trước khi lưu."); }
         }
         form.setPassword(null);
         return "admin/nhan-vien/bieu-mau";
@@ -127,5 +130,11 @@ public class AdminEmployeeController {
         catch(IllegalArgumentException ex) { flash.addFlashAttribute("error",ex.getMessage()); }
         catch(DataIntegrityViolationException ex) { flash.addFlashAttribute("error","Dữ liệu vừa phát sinh tham chiếu. Không xóa; hãy vô hiệu hóa hồ sơ."); }
         return "redirect:/admin/employees";
+    }
+    @PostMapping("/{id}/send-account")
+    public String sendAccount(@PathVariable Integer id,@RequestParam(defaultValue="false") boolean confirmed,RedirectAttributes flash) {
+        try {var result=accounts.resend("employees",id,confirmed);flash.addFlashAttribute(result.sent()?"message":"warning",result.message());}
+        catch(PeopleValidationException ex){flash.addFlashAttribute("warning",ex.getMessage());}
+        return "redirect:/admin/employees/detail/"+id;
     }
 }

@@ -55,3 +55,10 @@ Categories chỉ đổi nhãn thành Thương hiệu, giữ route và mô hình.
 ### Góp ý giảng viên — Giai đoạn 2
 
 Mọi bảng dữ liệu dùng STT theo Page.number * Page.size + vị trí dòng (bắt đầu 1); danh sách không phân trang dùng vị trí dòng. ID nếu có vẫn là cột riêng. Mã, tên, ảnh, kích cỡ, chất liệu, ngày bắt đầu/kết thúc và các số liệu độc lập có cột riêng. data-table dùng khung table-wrap/table-responsive/data-table-scroll chung, cuộn ngang bằng bàn phím trên mobile; không đổi sắp xếp, lọc, giá hay hành động. Bản in hóa đơn dùng cùng dữ liệu với quy tắc chia cột riêng cho giấy in.
+
+
+### Góp ý giảng viên — Giai đoạn 4
+
+Giữ layout, màu và primitive form/confirm hiện có. Chức vụ dùng combo có thể gõ của Giai đoạn 3, kèm năm gợi ý mặc định. QR dùng dialog chung cho hai form, có camera và input file native không có name, nằm ngoài form gửi dữ liệu; xử lý ảnh tại trình duyệt. Sau giải mã vẫn cần người dùng rà soát và nhập tay SĐT/email. Lỗi QR không thay đổi bất kỳ trường nào; camera bị từ chối vẫn cho tải ảnh. Đóng dialog hoặc rời trang phải dừng camera.
+
+Danh sách chỉ hiện CCCD dạng ***1234, chi tiết Admin hiện đầy đủ, không đưa vào tìm kiếm URL hoặc hóa đơn. Tài khoản mới hiển thị kết quả lưu tách biệt kết quả gửi mail: SMTP lỗi vẫn giữ tài khoản, cảnh báo Chưa gửi được email và nút gửi lại có xác nhận. Mật khẩu tạm không hiển thị trong UI. Trang đổi mật khẩu lần đầu là trang độc lập dùng token/CSS hiện có, chỉ có đổi mật khẩu và đăng xuất; không thay đổi quyền nhân viên hiện tại.

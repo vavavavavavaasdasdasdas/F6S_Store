@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org"><body>
+<div th:fragment="scanner">
+<dialog id="id-scanner" aria-labelledby="id-scanner-title" style="width:min(560px,calc(100% - 24px));max-height:90vh;border:0;border-radius:12px;padding:24px;overflow:auto">
+<h2 id="id-scanner-title">Quét QR căn cước</h2>
+<p>Ảnh chỉ được đọc trên thiết bị của bạn, không gửi lên máy chủ và không lưu lại. Camera cần HTTPS hoặc localhost.</p>
+<button class="btn btn-primary" type="button" id="id-camera">Mở camera</button>
+<div class="catalog-field mt-3"><label for="id-image">Hoặc tải ảnh chứa mã QR</label><input id="id-image" type="file" accept="image/png,image/jpeg,image/webp" class="form-control"></div>
+<video id="id-video" playsinline muted style="width:100%;max-height:280px" hidden></video>
+<p id="id-scanner-status" role="status" aria-live="polite"></p>
+<button class="btn btn-outline-secondary" type="button" id="id-scanner-close">Đóng</button>
+</dialog>
+<script th:src="@{/js/vendor/jsQR-1.4.0.js}"></script><script th:src="@{/js/can-cuoc.js}"></script>
+</div>
+<div th:fragment="resend(kind)" class="admin-panel mt-3">
+<p th:if="${person.user!=null and person.user.credentialMailFailed==true}" class="alert alert-warning">Chưa gửi được email. Kiểm tra cấu hình thư rồi gửi lại tài khoản.</p>
+<p>Mỗi lần gửi lại sẽ tạo mật khẩu tạm mới và hủy mật khẩu cũ. Tài khoản đang vô hiệu hóa vẫn bị khóa. Tối đa 3 lần gửi lại trong một giờ.</p>
+<form method="post" th:action="@{/admin/{kind}/{id}/send-account(kind=${kind},id=${person.id})}">
+<input type="hidden" name="confirmed" value="true">
+<button type="button" class="btn btn-outline-primary" data-confirm data-confirm-title="Gửi lại tài khoản?" data-confirm-message="Mật khẩu cũ sẽ hết hiệu lực, kể cả khi người nhận đã đổi mật khẩu. Tài khoản vô hiệu hóa vẫn bị khóa.">Gửi lại tài khoản</button>
+</form></div>
+</body></html>

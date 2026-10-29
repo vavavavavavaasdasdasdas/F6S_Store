@@ -1,0 +1,30 @@
+[
+  {
+    "path": "/admin/customers/detail/102",
+    "id": 102,
+    "warning": "Chưa gửi được email",
+    "kind": "customers",
+    "sql": [
+      {
+        "id": 102,
+        "must_change_password": true,
+        "credential_mail_failed": false,
+        "credential_mail_count": 1
+      }
+    ]
+  },
+  {
+    "path": "/admin/employees/detail/504",
+    "id": 504,
+    "warning": "Chưa gửi được email",
+    "kind": "employees",
+    "sql": [
+      {
+        "id": 504,
+        "must_change_password": true,
+        "credential_mail_failed": false,
+        "credential_mail_count": 1
+      }
+    ]
+  }
+]

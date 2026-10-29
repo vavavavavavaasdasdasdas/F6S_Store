@@ -34,5 +34,9 @@ public class Customer {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private com.example.demodatn.entity.nhanvien.User user;
+    @Column(name="so_cccd",length=12) @ToString.Exclude private String soCccd;
+    @Column(name="ngay_sinh") private java.time.LocalDate ngaySinh;
+    @org.hibernate.annotations.Nationalized @Column(name="gioi_tinh",length=10) private String gioiTinh;
+    public String getMaskedSoCccd(){return soCccd==null || soCccd.isBlank()?"Chưa có":"***"+soCccd.substring(Math.max(0,soCccd.length()-4));}
 }
 

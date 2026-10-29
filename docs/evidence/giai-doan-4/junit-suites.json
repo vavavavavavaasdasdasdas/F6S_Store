@@ -1,0 +1,266 @@
+[
+  {
+    "name": "com.example.demodatn.config.DataInitializerTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "1.114"
+  },
+  {
+    "name": "com.example.demodatn.config.SchemaCheckTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.19"
+  },
+  {
+    "name": "com.example.demodatn.controller.PaginationIntegrationTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "11.925"
+  },
+  {
+    "name": "com.example.demodatn.controller.PasswordPolicyIntegrationTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.566"
+  },
+  {
+    "name": "com.example.demodatn.controller.Phase3ComboFilterIntegrationTest",
+    "tests": "5",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.737"
+  },
+  {
+    "name": "com.example.demodatn.controller.RouteErrorIntegrationTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.207"
+  },
+  {
+    "name": "com.example.demodatn.controller.TablePresentationIntegrationTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.117"
+  },
+  {
+    "name": "com.example.demodatn.controller.user.UserUiIntegrationTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.156"
+  },
+  {
+    "name": "com.example.demodatn.DemoDatnApplicationTests",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.011"
+  },
+  {
+    "name": "com.example.demodatn.entity.UnicodePersistenceIntegrationTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.02"
+  },
+  {
+    "name": "com.example.demodatn.security.StandaloneAccountTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.051"
+  },
+  {
+    "name": "com.example.demodatn.service.AccountCredentialPrivacyTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.047"
+  },
+  {
+    "name": "com.example.demodatn.service.AccountProvisioningIntegrationTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "2.318"
+  },
+  {
+    "name": "com.example.demodatn.service.donhang.BankTransferDeadlineTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.001"
+  },
+  {
+    "name": "com.example.demodatn.service.donhang.OrderRollbackIntegrationTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "1.74"
+  },
+  {
+    "name": "com.example.demodatn.service.donhang.OrderStockIntegrationTest",
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.78"
+  },
+  {
+    "name": "com.example.demodatn.service.donhang.PosHoldServiceTest",
+    "tests": "9",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.204"
+  },
+  {
+    "name": "com.example.demodatn.service.donhang.PosInvoiceIntegrationTest",
+    "tests": "10",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.319"
+  },
+  {
+    "name": "com.example.demodatn.service.donhang.PricingServiceTest",
+    "tests": "5",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.09"
+  },
+  {
+    "name": "com.example.demodatn.service.khachhang.ShippingAddressIntegrationTest",
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.653"
+  },
+  {
+    "name": "com.example.demodatn.service.khuyenmai.DiscountIntegrationTest",
+    "tests": "10",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.257"
+  },
+  {
+    "name": "com.example.demodatn.service.nhanvien.AdminAccountServiceTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.801"
+  },
+  {
+    "name": "com.example.demodatn.service.PeopleIntegrationTest",
+    "tests": "10",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "1.551"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.CatalogIntegrationTest",
+    "tests": "12",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.972"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.InitialMaterialIntegrationTest",
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.482"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.MaterialIntegrationTest",
+    "tests": "5",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.286"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.ProductGalleryIntegrationTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.174"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.ProductImageUrlServiceTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.005"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.SoleIntegrationTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.229"
+  },
+  {
+    "name": "com.example.demodatn.service.thongke.DashboardIntegrationTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.077"
+  },
+  {
+    "name": "com.example.demodatn.service.thongke.StatisticsIntegrationTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.115"
+  },
+  {
+    "name": "com.example.demodatn.util.PaginationTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.001"
+  },
+  {
+    "name": "com.example.demodatn.util.PasswordPolicyTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.001"
+  }
+]
