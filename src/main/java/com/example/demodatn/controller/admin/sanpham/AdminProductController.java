@@ -88,8 +88,14 @@ public class AdminProductController {
             } catch(CatalogValidationException ex) { result.rejectValue(ex.getField(),"invalid",ex.getMessage()); }
               catch(DataIntegrityViolationException ex) { result.rejectValue("code","duplicate","Mã sản phẩm đã tồn tại hoặc dữ liệu liên quan vừa thay đổi."); }
         }
-        if(product.getId()!=null) product.setImageUrl(catalog.product(product.getId()).getImageUrl());
+        if(product.getId()!=null) {var stored=catalog.product(product.getId());product.setImageUrl(stored.getImageUrl());product.setCode(stored.getCode());} else product.setCode(null);
         return form(model);
+    }
+    @PostMapping("/status/{id}")
+    public String status(@PathVariable Integer id,@RequestParam boolean selling,RedirectAttributes flash) {
+        catalog.productStatus(id,selling);
+        flash.addFlashAttribute("message",selling?"Đã bán lại sản phẩm. Trạng thái từng biến thể được giữ nguyên.":"Đã ngừng bán sản phẩm. Tồn kho, biến thể và lịch sử được giữ nguyên.");
+        return "redirect:/admin/products-crud/view/"+id;
     }
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id, RedirectAttributes flash) {

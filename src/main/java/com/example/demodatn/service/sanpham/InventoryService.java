@@ -1,4 +1,5 @@
 package com.example.demodatn.service.sanpham;
+import com.example.demodatn.service.sanpham.ProductSalePolicy;
 import com.example.demodatn.dto.sanpham.InventoryForm;
 import com.example.demodatn.entity.sanpham.InventoryLog;
 import com.example.demodatn.entity.sanpham.ProductVariant;
@@ -26,6 +27,7 @@ public class InventoryService {
         ProductVariant variant = variants.findForUpdate(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy biến thể."));
         // A request may have read this entity before the sale transaction acquired its lock.
         entityManager.refresh(variant);
+        entityManager.refresh(variant.getProduct(),jakarta.persistence.LockModeType.PESSIMISTIC_READ);
         return variant;
     }
     @Transactional
@@ -46,7 +48,7 @@ public class InventoryService {
         if (Boolean.TRUE.equals(lockedOrder.getDaTruKho())) return;
         for (var line : quantities(lockedOrder).entrySet()) {
             ProductVariant variant = lock(line.getKey());
-            if (!Boolean.TRUE.equals(variant.getStatus()) || !Boolean.TRUE.equals(variant.getProduct().getStatus()))
+            if (!ProductSalePolicy.isSelling(variant))
                 throw new IllegalArgumentException("Sản phẩm đã ngừng bán: " + variant.getProduct().getName());
             int before = variant.getQuantity();
             int changed = entityManager.createNativeQuery("UPDATE product_variants SET quantity=quantity-:q WHERE id=:id AND quantity>=:q")
@@ -55,6 +57,7 @@ public class InventoryService {
                 throw new IllegalArgumentException("Không đủ tồn kho: " + variant.getProduct().getName() + " / Size " + variant.getSize().getSizeValue()
                         + " / " + variant.getMaterial().getName() + ". Cần " + line.getValue() + ", còn " + before + ". Đơn chưa được xác nhận.");
             entityManager.refresh(variant);
+        entityManager.refresh(variant.getProduct(),jakarta.persistence.LockModeType.PESSIMISTIC_READ);
             record(variant,before,variant.getQuantity(),"Trừ kho đơn " + lockedOrder.getOrderCode() + " · " + lockedOrder.getOrderType() + " / " + lockedOrder.getPaymentMethod());
         }
         lockedOrder.setDaTruKho(true);
@@ -71,6 +74,7 @@ public class InventoryService {
                     .setParameter("maximum",Integer.MAX_VALUE-line.getValue()).executeUpdate();
             if (changed != 1) throw new IllegalArgumentException("Tồn kho sau hoàn vượt giới hạn hợp lệ.");
             entityManager.refresh(variant);
+        entityManager.refresh(variant.getProduct(),jakarta.persistence.LockModeType.PESSIMISTIC_READ);
             record(variant,before,variant.getQuantity(),"Hoàn kho đơn " + lockedOrder.getOrderCode() + " · hủy hoặc giao hàng thất bại");
         }
         lockedOrder.setDaTruKho(false);

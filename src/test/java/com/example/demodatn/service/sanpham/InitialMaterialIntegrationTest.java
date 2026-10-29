@@ -49,22 +49,23 @@ class InitialMaterialIntegrationTest {
     @Test @org.springframework.transaction.annotation.Transactional
     void formPostCreatesTwoVariantsAndExactInitializationLogs() throws Exception {
         var f=form();
-        mvc.perform(multipart("/admin/products-crud/save").with(csrf()).param("code",f.getCode()).param("name",f.getName())
+        var saved=mvc.perform(multipart("/admin/products-crud/save").with(csrf()).param("code",f.getCode()).param("name",f.getName())
             .param("categoryId",f.getCategoryId().toString()).param("status","false")
             .param("initialMaterialId",f.getInitialMaterialId().toString()).param("initialSizeIds",f.getInitialSizeIds().stream().map(Object::toString).toArray(String[]::new))
-            .param("initialPrice","321000.50").param("initialQuantity","7")).andExpect(status().is3xxRedirection());
-        var rows=jdbc.queryForList("SELECT v.price,v.quantity,v.chat_lieu_id,l.quantity_before,l.quantity_change,l.quantity_after,l.reason FROM product_variants v JOIN products p ON p.id=v.product_id JOIN inventory_logs l ON l.variant_id=v.id WHERE p.code=?",f.getCode());
+            .param("initialPrice","321000.50").param("initialQuantity","7")).andExpect(status().is3xxRedirection()).andReturn();
+        int savedId=Integer.parseInt(saved.getResponse().getRedirectedUrl().replaceAll(".*/",""));
+        var rows=jdbc.queryForList("SELECT v.price,v.quantity,v.chat_lieu_id,l.quantity_before,l.quantity_change,l.quantity_after,l.reason FROM product_variants v JOIN products p ON p.id=v.product_id JOIN inventory_logs l ON l.variant_id=v.id WHERE p.id=?",savedId);
         assertEquals(2,rows.size());
         for(var r:rows) {assertEquals(0,new BigDecimal(r.get("price").toString()).compareTo(f.getInitialPrice()));assertEquals(7,r.get("quantity"));assertEquals(f.getInitialMaterialId(),r.get("chat_lieu_id"));assertEquals(0,r.get("quantity_before"));assertEquals(7,r.get("quantity_change"));assertEquals(7,r.get("quantity_after"));assertEquals("Khởi tạo",r.get("reason"));}
         System.out.println("PHASE_A SQL two sizes: "+rows);
     }
     @Test @org.springframework.transaction.annotation.Transactional
     void missingMaterialAndPriceShowErrorsBesideBothFieldsWithoutCreatingProduct() throws Exception {
-        var f=form();mvc.perform(multipart("/admin/products-crud/save").with(csrf()).param("code",f.getCode()).param("name",f.getName())
+        var f=form();long beforeProducts=products.count();mvc.perform(multipart("/admin/products-crud/save").with(csrf()).param("code",f.getCode()).param("name",f.getName())
             .param("categoryId",f.getCategoryId().toString()).param("status","false").param("initialSizeIds",f.getInitialSizeIds().get(0).toString()))
             .andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("product","initialMaterialId","initialPrice"))
             .andExpect(content().string(containsString("Chọn chất liệu khi chọn kích cỡ ban đầu.")));
-        assertFalse(products.existsByCodeIgnoreCaseAndIdNot(f.getCode(),-1));
+        assertEquals(beforeProducts,products.count());
     }
     @Test @org.springframework.transaction.annotation.Transactional
     void emptySizesKeepProductOnlyAndZeroStockStillWritesInitialization() {
@@ -121,7 +122,7 @@ class InitialMaterialIntegrationTest {
         assertTrue(summary.endsWith(" +1"),summary);
         assertFalse(summary.contains("Tóm tắt 3"));
         String code="PAGEA-"+UUID.randomUUID().toString().substring(0,8);
-        for(int n=0;n<14;n++){f=form();f.setCode(code+"-"+n);catalog.saveProduct(f);}
+        for(int n=0;n<14;n++){f=form();f.setCode(code+"-"+n);f.setName(code+" "+n);catalog.saveProduct(f);}
         r=mvc.perform(get("/admin/products-crud").param("keyword",code).param("materialId",f.getInitialMaterialId().toString()))
                 .andExpect(status().isOk()).andReturn();
         String markup=r.getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8);

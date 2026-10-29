@@ -1,0 +1,8 @@
+<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org"><body>
+<form th:fragment="button(kind,id,selling)" method="post" th:action="${kind=='product'} ? @{/admin/products-crud/status/{id}(id=${id})} : @{/admin/variants/status/{id}(id=${id})}">
+<input type="hidden" name="selling" th:value="${selling!=true}">
+<button class="btn btn-sm btn-outline-secondary" type="button" data-confirm
+ th:text="${selling==true ? 'Ngừng bán' : 'Bán lại'}"
+ th:attr="data-confirm-title=${selling==true ? 'Ngừng bán?' : 'Bán lại?'},data-confirm-message=${kind=='product' ? (selling==true ? 'Sản phẩm sẽ ẩn khỏi cửa hàng và POS. Giỏ hàng, hóa đơn chờ có sản phẩm này sẽ bị chặn thanh toán. Trạng thái biến thể, tồn kho và lịch sử được giữ nguyên.' : 'Sản phẩm được bán lại với đúng trạng thái từng biến thể trước đó. Tồn kho và lịch sử được giữ nguyên.') : (selling==true ? 'Biến thể này không thể thêm vào giỏ hoặc thanh toán. Tồn kho và lịch sử được giữ nguyên.' : 'Biến thể được bán lại khi sản phẩm đang bán. Tồn kho và lịch sử được giữ nguyên.')}"></button>
+</form>
+</body></html>

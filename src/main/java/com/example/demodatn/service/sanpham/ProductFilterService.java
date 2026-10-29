@@ -1,4 +1,5 @@
 package com.example.demodatn.service.sanpham;
+import com.example.demodatn.service.sanpham.ProductSalePolicy;
 import com.example.demodatn.dto.donhang.PriceInfo;
 import com.example.demodatn.dto.sanpham.ProductDto;
 import com.example.demodatn.entity.sanpham.Product;
@@ -55,7 +56,7 @@ public class ProductFilterService {
         if (page < 0) page = 0;
 
         List<Product> allProducts = productRepository.findAll();
-        var activeIds=allProducts.stream().filter(p->Boolean.TRUE.equals(p.getStatus())).map(Product::getId).toList();
+        var activeIds=allProducts.stream().filter(p->ProductSalePolicy.isSelling(p)).map(Product::getId).toList();
         var allVariants=activeIds.isEmpty()?List.<ProductVariant>of():productVariantRepository.findByProduct_IdInAndStatusTrueAndProduct_StatusTrue(activeIds);
         var variantsByProduct=allVariants.stream().collect(Collectors.groupingBy(v->v.getProduct().getId()));
         var prices=pricingService.calculatePrices(allVariants);
@@ -67,7 +68,7 @@ public class ProductFilterService {
         List<ProductDto> dtoList = new ArrayList<>();
 
         for (Product p : allProducts) {
-            if (!Boolean.TRUE.equals(p.getStatus())) continue;
+            if (!ProductSalePolicy.isSelling(p)) continue;
             if (keyword != null && !keyword.trim().isEmpty()) {
                 String kw = keyword.trim().toLowerCase();
                 String name = p.getName() == null ? "" : p.getName().toLowerCase();

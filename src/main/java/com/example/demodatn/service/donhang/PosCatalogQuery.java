@@ -1,4 +1,5 @@
 package com.example.demodatn.service.donhang;
+import com.example.demodatn.service.sanpham.ProductSalePolicy;
 import com.example.demodatn.entity.sanpham.Product;
 import com.example.demodatn.entity.sanpham.ProductVariant;
 import com.example.demodatn.repository.sanpham.ProductRepository;
@@ -28,7 +29,7 @@ public class PosCatalogQuery {
             if (sizeId != null) variantPreds.add(cb.equal(v.get("size").get("id"), sizeId));
             variants.select(v.get("id")).where(variantPreds.toArray(new Predicate[0]));
             var text=cb.or(cb.like(cb.lower(root.get("name")),like(q),'!'),cb.like(cb.lower(root.get("code")),like(q),'!'));
-            var active=cb.and(cb.isTrue(root.get("status")),cb.exists(variants),text);
+            var active=cb.and(ProductSalePolicy.selling(root,cb),cb.exists(variants),text);
             return category==null?active:cb.and(active,cb.equal(root.get("category").get("id"),category));
         };
         return pagination.load(page,Sort.by("name","id"),request->products.findAll(filter,request));

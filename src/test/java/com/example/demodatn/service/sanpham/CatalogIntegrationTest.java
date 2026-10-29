@@ -163,9 +163,9 @@ class CatalogIntegrationTest {
         assertTrue(variants.existsById(v.getId()));
     }
     @Test @Transactional
-    void duplicateCodeAndSizeHaveFieldErrorsAndNegativePriceFailsValidation() throws Exception {
+    void postedProductCodeIsIgnoredAndDuplicateVariantHasFieldError() throws Exception {
         Product p=product();catalog.saveVariant(variantForm(p,10));
-        assertEquals("code",assertThrows(CatalogValidationException.class,()->catalog.saveProduct(productForm(p.getCode()))).getField());
+        assertNotEquals(p.getCode(),catalog.saveProduct(productForm(p.getCode())).getCode());
         assertEquals("materialId",assertThrows(CatalogValidationException.class,()->catalog.saveVariant(variantForm(p,1))).getField());
         VariantForm invalid=variantForm(p,0);invalid.setPrice(new BigDecimal("-1"));
         assertTrue(validator.validate(invalid).stream().anyMatch(v->v.getPropertyPath().toString().equals("price")));
@@ -185,24 +185,24 @@ class CatalogIntegrationTest {
     @Test @Transactional
     void productPaginationFilteringAndSortRunInSql() {
         String prefix="P6PAGE-"+UUID.randomUUID().toString().substring(0,8);
-        for(int i=0;i<30;i++){AdminProductForm f=productForm(prefix+"-"+String.format("%02d",i));f.setName("Pagination "+i);catalog.saveProduct(f);}
+        for(int i=0;i<30;i++){AdminProductForm f=productForm(prefix+"-"+String.format("%02d",i));f.setName(prefix+" "+i);catalog.saveProduct(f);}
         var first=query.products(prefix,null,true,"code",0);
         var second=query.products(prefix,null,true,"code",1);
         assertEquals(30,first.getTotalElements());assertEquals(12,first.getNumberOfElements());assertEquals(12,second.getNumberOfElements());
-        assertTrue(first.getContent().get(0).get("code").toString().endsWith("-00"));
+        assertTrue(first.getContent().get(0).get("code").toString().matches("SP[0-9]{3,}"));
         assertEquals(2,query.products(prefix,null,true,"code",999).getNumber());
     }
     @Test
     void failedCheckoutRollsBackProductStockOrderAndLogsTogether() {
         String code="T6-rollback-"+UUID.randomUUID().toString().substring(0,8);
-        long ordersBefore=orderRepository.count(), logsBefore=logs.count();
+        long ordersBefore=orderRepository.count(), logsBefore=logs.count(), productsBefore=products.count();
         TransactionTemplate tx=new TransactionTemplate(transactionManager);
         assertThrows(IllegalArgumentException.class,()->tx.execute(status->{
             Product p=catalog.saveProduct(productForm(code));
             ProductVariant v=catalog.saveVariant(variantForm(p,1));
             return orders.createPosOrder(List.of(item(v,1),item(v,1)),null,employees.findByUser_Username("admin").orElseThrow(),null,"CASH","Quầy",new BigDecimal("300000"));
         }));
-        assertFalse(products.existsByCodeIgnoreCaseAndIdNot(code,-1));
+        assertEquals(productsBefore,products.count());
         assertEquals(ordersBefore,orderRepository.count());assertEquals(logsBefore,logs.count());
     }
     @Test

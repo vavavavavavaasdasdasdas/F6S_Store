@@ -1,4 +1,5 @@
 package com.example.demodatn.service.donhang;
+import com.example.demodatn.service.sanpham.ProductSalePolicy;
 import com.example.demodatn.dto.donhang.PriceInfo;
 import com.example.demodatn.entity.khuyenmai.Promotion;
 import com.example.demodatn.entity.khuyenmai.PromotionDetail;
@@ -27,7 +28,7 @@ public class PricingService {
         BigDecimal total=BigDecimal.ZERO;
         for(var item:cart) {
             var variant=variants.findById(item.getVariantId()).orElseThrow(()->new IllegalArgumentException("Sản phẩm không tồn tại."));
-            if(!Boolean.TRUE.equals(variant.getStatus()) || !Boolean.TRUE.equals(variant.getProduct().getStatus()) || item.getQuantity()==null || item.getQuantity()<=0 || variant.getQuantity()<item.getQuantity()) throw new IllegalArgumentException("Sản phẩm đã ngừng bán hoặc không đủ tồn kho: "+variant.getProduct().getName());
+            if(!ProductSalePolicy.isSelling(variant) || item.getQuantity()==null || item.getQuantity()<=0 || variant.getQuantity()<item.getQuantity()) throw new IllegalArgumentException("Sản phẩm đã ngừng bán hoặc không đủ tồn kho: "+variant.getProduct().getName());
             item.setMaterialName(variant.getMaterial().getName());
             item.setPrice(calculatePrice(variant).getFinalPrice());
             total=total.add(item.getTotalPrice());

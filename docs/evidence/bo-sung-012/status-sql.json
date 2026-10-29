@@ -1,0 +1,460 @@
+[
+  {
+    "productId": 949,
+    "code": "SP006",
+    "width": 1280,
+    "before": {
+      "product": {
+        "id": 949,
+        "code": "SP006",
+        "status": true
+      },
+      "variants": [
+        {
+          "id": 598,
+          "status": true,
+          "quantity": 9,
+          "price": 190000.0
+        },
+        {
+          "id": 599,
+          "status": false,
+          "quantity": 12,
+          "price": 190000.0
+        }
+      ],
+      "history": [
+        {
+          "id": 676,
+          "status": "CONFIRMED",
+          "payment_status": "PAID",
+          "final_amount": 190000.0,
+          "invoice_id": 289
+        }
+      ],
+      "revenue": [
+        {
+          "order_count": 14,
+          "revenue": 26890000.0
+        }
+      ],
+      "promotionVoucher": {
+        "promotions": [
+          {
+            "n": 6,
+            "checksum": 698228237
+          }
+        ],
+        "promotion_details": [
+          {
+            "n": 9,
+            "checksum": 21825
+          }
+        ],
+        "vouchers": [
+          {
+            "n": 15,
+            "checksum": -392678723
+          }
+        ]
+      }
+    },
+    "stopped": {
+      "product": {
+        "id": 949,
+        "code": "SP006",
+        "status": false
+      },
+      "variants": [
+        {
+          "id": 598,
+          "status": true,
+          "quantity": 9,
+          "price": 190000.0
+        },
+        {
+          "id": 599,
+          "status": false,
+          "quantity": 12,
+          "price": 190000.0
+        }
+      ],
+      "history": [
+        {
+          "id": 676,
+          "status": "CONFIRMED",
+          "payment_status": "PAID",
+          "final_amount": 190000.0,
+          "invoice_id": 289
+        }
+      ],
+      "revenue": [
+        {
+          "order_count": 14,
+          "revenue": 26890000.0
+        }
+      ],
+      "promotionVoucher": {
+        "promotions": [
+          {
+            "n": 6,
+            "checksum": 698228237
+          }
+        ],
+        "promotion_details": [
+          {
+            "n": 9,
+            "checksum": 21825
+          }
+        ],
+        "vouchers": [
+          {
+            "n": 15,
+            "checksum": -392678723
+          }
+        ]
+      }
+    },
+    "afterRejectedSales": {
+      "product": {
+        "id": 949,
+        "code": "SP006",
+        "status": false
+      },
+      "variants": [
+        {
+          "id": 598,
+          "status": true,
+          "quantity": 9,
+          "price": 190000.0
+        },
+        {
+          "id": 599,
+          "status": false,
+          "quantity": 12,
+          "price": 190000.0
+        }
+      ],
+      "history": [
+        {
+          "id": 676,
+          "status": "CONFIRMED",
+          "payment_status": "PAID",
+          "final_amount": 190000.0,
+          "invoice_id": 289
+        }
+      ],
+      "revenue": [
+        {
+          "order_count": 14,
+          "revenue": 26890000.0
+        }
+      ],
+      "promotionVoucher": {
+        "promotions": [
+          {
+            "n": 6,
+            "checksum": 698228237
+          }
+        ],
+        "promotion_details": [
+          {
+            "n": 9,
+            "checksum": 21825
+          }
+        ],
+        "vouchers": [
+          {
+            "n": 15,
+            "checksum": -392678723
+          }
+        ]
+      }
+    },
+    "resumed": {
+      "product": {
+        "id": 949,
+        "code": "SP006",
+        "status": true
+      },
+      "variants": [
+        {
+          "id": 598,
+          "status": true,
+          "quantity": 9,
+          "price": 190000.0
+        },
+        {
+          "id": 599,
+          "status": false,
+          "quantity": 12,
+          "price": 190000.0
+        }
+      ],
+      "history": [
+        {
+          "id": 676,
+          "status": "CONFIRMED",
+          "payment_status": "PAID",
+          "final_amount": 190000.0,
+          "invoice_id": 289
+        }
+      ],
+      "revenue": [
+        {
+          "order_count": 14,
+          "revenue": 26890000.0
+        }
+      ],
+      "promotionVoucher": {
+        "promotions": [
+          {
+            "n": 6,
+            "checksum": 698228237
+          }
+        ],
+        "promotion_details": [
+          {
+            "n": 9,
+            "checksum": 21825
+          }
+        ],
+        "vouchers": [
+          {
+            "n": 15,
+            "checksum": -392678723
+          }
+        ]
+      }
+    }
+  },
+  {
+    "productId": 950,
+    "code": "SP007",
+    "width": 375,
+    "before": {
+      "product": {
+        "id": 950,
+        "code": "SP007",
+        "status": true
+      },
+      "variants": [
+        {
+          "id": 600,
+          "status": true,
+          "quantity": 11,
+          "price": 190000.0
+        },
+        {
+          "id": 601,
+          "status": false,
+          "quantity": 12,
+          "price": 190000.0
+        }
+      ],
+      "history": [
+        {
+          "id": 677,
+          "status": "CONFIRMED",
+          "payment_status": "PAID",
+          "final_amount": 190000.0,
+          "invoice_id": 290
+        }
+      ],
+      "revenue": [
+        {
+          "order_count": 14,
+          "revenue": 26890000.0
+        }
+      ],
+      "promotionVoucher": {
+        "promotions": [
+          {
+            "n": 6,
+            "checksum": 698228237
+          }
+        ],
+        "promotion_details": [
+          {
+            "n": 9,
+            "checksum": 21825
+          }
+        ],
+        "vouchers": [
+          {
+            "n": 15,
+            "checksum": -392678723
+          }
+        ]
+      }
+    },
+    "stopped": {
+      "product": {
+        "id": 950,
+        "code": "SP007",
+        "status": false
+      },
+      "variants": [
+        {
+          "id": 600,
+          "status": true,
+          "quantity": 11,
+          "price": 190000.0
+        },
+        {
+          "id": 601,
+          "status": false,
+          "quantity": 12,
+          "price": 190000.0
+        }
+      ],
+      "history": [
+        {
+          "id": 677,
+          "status": "CONFIRMED",
+          "payment_status": "PAID",
+          "final_amount": 190000.0,
+          "invoice_id": 290
+        }
+      ],
+      "revenue": [
+        {
+          "order_count": 14,
+          "revenue": 26890000.0
+        }
+      ],
+      "promotionVoucher": {
+        "promotions": [
+          {
+            "n": 6,
+            "checksum": 698228237
+          }
+        ],
+        "promotion_details": [
+          {
+            "n": 9,
+            "checksum": 21825
+          }
+        ],
+        "vouchers": [
+          {
+            "n": 15,
+            "checksum": -392678723
+          }
+        ]
+      }
+    },
+    "afterRejectedSales": {
+      "product": {
+        "id": 950,
+        "code": "SP007",
+        "status": false
+      },
+      "variants": [
+        {
+          "id": 600,
+          "status": true,
+          "quantity": 11,
+          "price": 190000.0
+        },
+        {
+          "id": 601,
+          "status": false,
+          "quantity": 12,
+          "price": 190000.0
+        }
+      ],
+      "history": [
+        {
+          "id": 677,
+          "status": "CONFIRMED",
+          "payment_status": "PAID",
+          "final_amount": 190000.0,
+          "invoice_id": 290
+        }
+      ],
+      "revenue": [
+        {
+          "order_count": 14,
+          "revenue": 26890000.0
+        }
+      ],
+      "promotionVoucher": {
+        "promotions": [
+          {
+            "n": 6,
+            "checksum": 698228237
+          }
+        ],
+        "promotion_details": [
+          {
+            "n": 9,
+            "checksum": 21825
+          }
+        ],
+        "vouchers": [
+          {
+            "n": 15,
+            "checksum": -392678723
+          }
+        ]
+      }
+    },
+    "resumed": {
+      "product": {
+        "id": 950,
+        "code": "SP007",
+        "status": true
+      },
+      "variants": [
+        {
+          "id": 600,
+          "status": true,
+          "quantity": 11,
+          "price": 190000.0
+        },
+        {
+          "id": 601,
+          "status": false,
+          "quantity": 12,
+          "price": 190000.0
+        }
+      ],
+      "history": [
+        {
+          "id": 677,
+          "status": "CONFIRMED",
+          "payment_status": "PAID",
+          "final_amount": 190000.0,
+          "invoice_id": 290
+        }
+      ],
+      "revenue": [
+        {
+          "order_count": 14,
+          "revenue": 26890000.0
+        }
+      ],
+      "promotionVoucher": {
+        "promotions": [
+          {
+            "n": 6,
+            "checksum": 698228237
+          }
+        ],
+        "promotion_details": [
+          {
+            "n": 9,
+            "checksum": 21825
+          }
+        ],
+        "vouchers": [
+          {
+            "n": 15,
+            "checksum": -392678723
+          }
+        ]
+      }
+    }
+  }
+]

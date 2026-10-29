@@ -1,0 +1,235 @@
+{
+  "parallel": {
+    "requests": [
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/953"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/951"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/952"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/956"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/955"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/954"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/962"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/965"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/968"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/967"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/966"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/957"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/970"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/959"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/963"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/964"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/961"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/960"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/958"
+      },
+      {
+        "status": 302,
+        "location": "http://localhost:18150/admin/products-crud/view/969"
+      }
+    ],
+    "ids": [
+      953,
+      951,
+      952,
+      956,
+      955,
+      954,
+      962,
+      965,
+      968,
+      967,
+      966,
+      957,
+      970,
+      959,
+      963,
+      964,
+      961,
+      960,
+      958,
+      969
+    ]
+  },
+  "sql": [
+    {
+      "id": 951,
+      "code": "SP008",
+      "name": "Giày đồng thời HTTP 1"
+    },
+    {
+      "id": 952,
+      "code": "SP009",
+      "name": "Giày đồng thời HTTP 2"
+    },
+    {
+      "id": 953,
+      "code": "SP010",
+      "name": "Giày đồng thời HTTP 0"
+    },
+    {
+      "id": 954,
+      "code": "SP011",
+      "name": "Giày đồng thời HTTP 5"
+    },
+    {
+      "id": 955,
+      "code": "SP012",
+      "name": "Giày đồng thời HTTP 4"
+    },
+    {
+      "id": 956,
+      "code": "SP013",
+      "name": "Giày đồng thời HTTP 3"
+    },
+    {
+      "id": 957,
+      "code": "SP014",
+      "name": "Giày đồng thời HTTP 11"
+    },
+    {
+      "id": 958,
+      "code": "SP016",
+      "name": "Giày đồng thời HTTP 18"
+    },
+    {
+      "id": 959,
+      "code": "SP015",
+      "name": "Giày đồng thời HTTP 13"
+    },
+    {
+      "id": 960,
+      "code": "SP017",
+      "name": "Giày đồng thời HTTP 17"
+    },
+    {
+      "id": 961,
+      "code": "SP018",
+      "name": "Giày đồng thời HTTP 16"
+    },
+    {
+      "id": 962,
+      "code": "SP019",
+      "name": "Giày đồng thời HTTP 6"
+    },
+    {
+      "id": 963,
+      "code": "SP020",
+      "name": "Giày đồng thời HTTP 14"
+    },
+    {
+      "id": 964,
+      "code": "SP021",
+      "name": "Giày đồng thời HTTP 15"
+    },
+    {
+      "id": 965,
+      "code": "SP022",
+      "name": "Giày đồng thời HTTP 7"
+    },
+    {
+      "id": 966,
+      "code": "SP023",
+      "name": "Giày đồng thời HTTP 10"
+    },
+    {
+      "id": 967,
+      "code": "SP024",
+      "name": "Giày đồng thời HTTP 9"
+    },
+    {
+      "id": 968,
+      "code": "SP025",
+      "name": "Giày đồng thời HTTP 8"
+    },
+    {
+      "id": 969,
+      "code": "SP026",
+      "name": "Giày đồng thời HTTP 19"
+    },
+    {
+      "id": 970,
+      "code": "SP027",
+      "name": "Giày đồng thời HTTP 12"
+    }
+  ],
+  "rollback": {
+    "before": {
+      "sequence": {
+        "current_value": 27,
+        "last_used_value": 27
+      },
+      "count": 32
+    },
+    "http": {
+      "status": 200,
+      "error": "Nội dung file không phải ảnh hợp lệ."
+    },
+    "after": {
+      "sequence": {
+        "current_value": 28,
+        "last_used_value": 28
+      },
+      "count": 32
+    },
+    "next": {
+      "id": 972,
+      "code": "SP029",
+      "status": 302
+    }
+  }
+}

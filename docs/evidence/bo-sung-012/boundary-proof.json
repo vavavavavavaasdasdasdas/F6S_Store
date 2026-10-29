@@ -1,0 +1,44 @@
+{
+  "beforeAllocation": [
+    {
+      "current_value": 1000
+    }
+  ],
+  "created": {
+    "id": 950,
+    "code": "SP1000"
+  },
+  "sql": [
+    {
+      "id": 950,
+      "code": "SP1000",
+      "name": "Giày kiểm thử qua mã 999",
+      "status": false
+    }
+  ],
+  "sequenceAfter": [
+    {
+      "current_value": 1000,
+      "last_used_value": 1000
+    }
+  ],
+  "uniqueIndex": [
+    {
+      "name": "PK__products__3213E83F8E5573E0",
+      "is_unique": true,
+      "has_filter": false,
+      "is_disabled": false
+    },
+    {
+      "name": "UQ__products__357D4CF9368AB807",
+      "is_unique": true,
+      "has_filter": false,
+      "is_disabled": false
+    }
+  ],
+  "duplicateInsert": [
+    {
+      "error_number": 2627
+    }
+  ]
+}

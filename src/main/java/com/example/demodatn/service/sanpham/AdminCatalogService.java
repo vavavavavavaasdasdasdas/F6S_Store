@@ -29,6 +29,7 @@ import org.springframework.http.HttpStatus;
 @Service @RequiredArgsConstructor
 public class AdminCatalogService {
     private final ProductRepository products;
+    private final com.example.demodatn.repository.sanpham.ProductCodeRepository codes;
     private final ProductVariantRepository variants;
     private final CategoryRepository categories;
     private final SizeRepository sizes;
@@ -163,9 +164,6 @@ public class AdminCatalogService {
                 initialSizes.add(sizes.findById(sizeId).orElseThrow(() -> new CatalogValidationException("initialSizeIds","Kích cỡ không tồn tại.")));
             }
         }
-        String code = form.getCode().trim();
-        if (products.existsByCodeIgnoreCaseAndIdNot(code, form.getId() == null ? -1 : form.getId()))
-            throw new CatalogValidationException("code","Mã sản phẩm đã tồn tại.");
         if (form.getCategoryId() == null)
             throw new CatalogValidationException("categoryId","Chọn thương hiệu.");
         Category category = categories.findById(form.getCategoryId()).orElseThrow(() -> new CatalogValidationException("categoryId","Thương hiệu không tồn tại."));
@@ -177,7 +175,9 @@ public class AdminCatalogService {
                 throw new CatalogValidationException("soleId","Chọn đế giày đang hiển thị.");
         }
         product.setSole(sole);
-        product.setCode(code); product.setName(form.getName().trim()); product.setDescription(form.getDescription());
+        if(form.getId()==null) product.setCode(codes.next());
+        form.setCode(product.getCode());
+        product.setName(form.getName().trim()); product.setDescription(form.getDescription());
         product.setCategory(category); product.setStatus(form.getStatus());
         products.saveAndFlush(product);
         gallery.save(product,form);
@@ -193,11 +193,21 @@ public class AdminCatalogService {
         return products.saveAndFlush(product);
     }
     @Transactional
+    public void productStatus(Integer id,boolean selling) {
+        Product product=products.lockById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        product.setStatus(selling);
+    }
+    @Transactional
+    public Integer variantStatus(Integer id,boolean selling) {
+        ProductVariant variant=variants.findForUpdate(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        variant.setStatus(selling);return variant.getProduct().getId();
+    }
+    @Transactional
     public String deleteProduct(Integer id) {
         Product product = product(id);
         if (details.existsByProductVariant_Product_Id(id)) {
             product.setStatus(false);
-            return "Sản phẩm đã có trong đơn hàng: đã chuyển sang ngừng bán, không xóa dữ liệu đơn cũ.";
+            return "Sản phẩm đã có trong đơn hàng: đã chuyển sang ngừng bán, không xóa dữ liệu đơn cũ. Hãy dùng nút Ngừng bán để quản lý trạng thái.";
         }
         if (variants.existsByProduct_Id(id) || inventoryLogs.existsByVariant_Product_Id(id) || !promotions.findByProductId(id).isEmpty()) {
             product.setStatus(false);

@@ -1,4 +1,5 @@
 package com.example.demodatn.controller.user;
+import com.example.demodatn.service.sanpham.ProductSalePolicy;
 import com.example.demodatn.dto.donhang.CartItemDto;
 import com.example.demodatn.dto.donhang.PriceInfo;
 import com.example.demodatn.entity.sanpham.ProductVariant;
@@ -51,9 +52,8 @@ public class CartController {
             ProductVariant variant = productService.getVariantById(dto.getVariantId());
             item.setProductCode(variant == null || variant.getProduct() == null ? null : variant.getProduct().getCode());
             item.setMaterialName(variant == null ? dto.getMaterialName() : variant.getMaterial().getName());
-            if (variant == null || Boolean.FALSE.equals(variant.getStatus()) || 
-                variant.getProduct() == null || Boolean.FALSE.equals(variant.getProduct().getStatus())) {
-                item.setWarningMessage("Sản phẩm đã ngừng bán hoặc không tồn tại.");
+            if (!ProductSalePolicy.isSelling(variant)) {
+                item.setWarningMessage("Sản phẩm đã ngừng bán");
                 item.setPrice(dto.getPrice());
                 hasWarning = true;
             } else {
@@ -125,8 +125,8 @@ public class CartController {
             return ResponseEntity.badRequest().body(Map.of("error", "Số lượng không hợp lệ"));
         }
         ProductVariant variant = productService.getVariantById(variantId);
-        if (variant == null) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Sản phẩm không tồn tại"));
+        if (!ProductSalePolicy.isSelling(variant)) {
+            return ResponseEntity.badRequest().body(Map.of("error", ProductSalePolicy.STOPPED));
         }
         int stock = variant.getQuantity() != null ? variant.getQuantity() : 0;
         if (quantity > stock) {
@@ -183,7 +183,7 @@ public class CartController {
             return "Vui lòng chọn kích cỡ và số lượng hợp lệ!";
         }
         ProductVariant variant = productService.getVariantById(variantId);
-        if (variant == null || !Boolean.TRUE.equals(variant.getStatus()) || !Boolean.TRUE.equals(variant.getProduct().getStatus())) {
+        if (!ProductSalePolicy.isSelling(variant)) {
             return "Sản phẩm không tồn tại hoặc đã ngừng bán";
         }
         int stock = variant.getQuantity() == null ? 0 : variant.getQuantity();

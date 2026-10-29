@@ -62,3 +62,10 @@ Mọi bảng dữ liệu dùng STT theo Page.number * Page.size + vị trí dòn
 Giữ layout, màu và primitive form/confirm hiện có. Chức vụ dùng combo có thể gõ của Giai đoạn 3, kèm năm gợi ý mặc định. QR dùng dialog chung cho hai form, có camera và input file native không có name, nằm ngoài form gửi dữ liệu; xử lý ảnh tại trình duyệt. Sau giải mã vẫn cần người dùng rà soát và nhập tay SĐT/email. Lỗi QR không thay đổi bất kỳ trường nào; camera bị từ chối vẫn cho tải ảnh. Đóng dialog hoặc rời trang phải dừng camera.
 
 Danh sách chỉ hiện CCCD dạng ***1234, chi tiết Admin hiện đầy đủ, không đưa vào tìm kiếm URL hoặc hóa đơn. Tài khoản mới hiển thị kết quả lưu tách biệt kết quả gửi mail: SMTP lỗi vẫn giữ tài khoản, cảnh báo Chưa gửi được email và nút gửi lại có xác nhận. Mật khẩu tạm không hiển thị trong UI. Trang đổi mật khẩu lần đầu là trang độc lập dùng token/CSS hiện có, chỉ có đổi mật khẩu và đăng xuất; không thay đổi quyền nhân viên hiện tại.
+
+
+### Bổ sung 012 — Ngừng bán và mã tự sinh
+
+Dùng fragment `trang-thai-ban` cho nút trạng thái sản phẩm/biến thể, cùng nút Bootstrap và hộp xác nhận `admin-confirm` hiện có. Gửi trạng thái đích qua POST có CSRF; xác nhận giải thích việc ẩn khỏi User/POS, chặn giỏ/hóa đơn chờ, giữ nguyên biến thể/tồn kho/lịch sử. Nút trong bảng nằm trong khung cuộn ngang hiện có, nhóm hành động trên trang xem được xuống dòng ở mobile. Cảnh báo dòng giỏ và hóa đơn chờ dùng cơ chế hiện có; điều kiện bán hiện tại thuộc ProductSalePolicy, không áp dụng lên dữ liệu báo cáo lịch sử.
+
+Ô Mã sản phẩm dùng input readonly cả tạo/sửa. Khi tạo không dự đoán số, chỉ có placeholder Tự động tạo khi lưu; server tạo khi lưu thành công bằng sequence. Khi sửa luôn hiển thị mã đã lưu, kể cả khi POST bị giả mạo hoặc form có lỗi. Không đổi mã cũ, route hay tên bảng.

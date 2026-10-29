@@ -17,7 +17,6 @@ public class AdminProductForm {
     private java.math.BigDecimal initialPrice;
     @Min(value=0,message="Tồn kho ban đầu không được âm.")
     private Integer initialQuantity = 0;
-    @NotBlank(message="Nhập mã sản phẩm.") @Pattern(regexp="[A-Za-z0-9_-]{1,50}", message="Mã gồm 1–50 chữ, số, dấu - hoặc _.")
     private String code;
     @NotBlank(message="Nhập tên sản phẩm.") @jakarta.validation.constraints.Size(max=255,message="Tên tối đa 255 ký tự.")
     private String name;

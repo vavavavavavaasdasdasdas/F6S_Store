@@ -1,4 +1,5 @@
 package com.example.demodatn.controller.user;
+import com.example.demodatn.service.sanpham.ProductSalePolicy;
 import com.example.demodatn.dto.donhang.PriceInfo;
 import com.example.demodatn.dto.sanpham.ProductDto;
 import com.example.demodatn.entity.sanpham.Material;
@@ -90,7 +91,7 @@ public class ProductController {
     @GetMapping("/products/{id}")
     public String detail(@PathVariable Integer id, Model model, jakarta.servlet.http.HttpServletResponse response) {
         Product product = productService.getProductById(id);
-        if (product == null || !Boolean.TRUE.equals(product.getStatus())) {
+        if (!ProductSalePolicy.isSelling(product)) {
             response.setStatus(404);
             return "loi/404";
         }

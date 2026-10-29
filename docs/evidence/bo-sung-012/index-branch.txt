@@ -1,0 +1,17 @@
+HOÀN TẤT 012_ma_san_pham_tu_sinh.sql
+test_step   name                                                                                                                             is_unique
+----------- -------------------------------------------------------------------------------------------------------------------------------- ---------
+after_first UX_products_code                                                                                                                         1
+
+(1 rows affected)
+HOÀN TẤT 012_ma_san_pham_tu_sinh.sql
+test_step    name                                                                                                                             is_unique
+------------ -------------------------------------------------------------------------------------------------------------------------------- ---------
+after_second UX_products_code                                                                                                                         1
+
+(1 rows affected)
+test_step      product_count       
+-------------- --------------------
+after_rollback                   10
+
+(1 rows affected)

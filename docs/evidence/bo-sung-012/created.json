@@ -1,0 +1,58 @@
+[
+  {
+    "id": 949,
+    "code": "SP006",
+    "forgedCreateIgnored": true,
+    "forgedEditIgnored": true,
+    "readonly": true,
+    "width": 1280,
+    "variants": [
+      {
+        "id": 598,
+        "product_id": 949,
+        "status": true,
+        "quantity": 12,
+        "price": 190000.0,
+        "size_value": "36",
+        "material_name": "Da thật"
+      },
+      {
+        "id": 599,
+        "product_id": 949,
+        "status": true,
+        "quantity": 12,
+        "price": 190000.0,
+        "size_value": "37",
+        "material_name": "Da thật"
+      }
+    ]
+  },
+  {
+    "id": 950,
+    "code": "SP007",
+    "forgedCreateIgnored": true,
+    "forgedEditIgnored": true,
+    "readonly": true,
+    "width": 375,
+    "variants": [
+      {
+        "id": 600,
+        "product_id": 950,
+        "status": true,
+        "quantity": 12,
+        "price": 190000.0,
+        "size_value": "36",
+        "material_name": "Da thật"
+      },
+      {
+        "id": 601,
+        "product_id": 950,
+        "status": true,
+        "quantity": 12,
+        "price": 190000.0,
+        "size_value": "37",
+        "material_name": "Da thật"
+      }
+    ]
+  }
+]

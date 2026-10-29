@@ -1,4 +1,5 @@
 package com.example.demodatn.controller.admin.donhang;
+import com.example.demodatn.service.sanpham.ProductSalePolicy;
 import com.example.demodatn.dto.donhang.CartItemDto;
 import com.example.demodatn.dto.donhang.PosCheckoutRequest;
 import com.example.demodatn.repository.donhang.InvoiceRepository;
@@ -115,7 +116,7 @@ public class AdminPosController {
                 var baseline=prices(session);
                 for(var item:cart) {
                     var v=variants.findById(item.getVariantId()).orElse(null);
-                    if(v==null || !Boolean.TRUE.equals(v.getStatus()) || !Boolean.TRUE.equals(v.getProduct().getStatus()))
+                    if(!ProductSalePolicy.isSelling(v))
                         lineWarnings.put(item.getVariantId(),"Sản phẩm đã ngừng bán. Xóa dòng này để tiếp tục.");
                     else {
                         var current=pricing.calculatePrice(v).getFinalPrice();
@@ -151,7 +152,7 @@ public class AdminPosController {
         synchronized(session) {
             try {
                 var v = variants.findById(variantId).orElseThrow(()->new IllegalArgumentException("Sản phẩm không tồn tại."));
-                if(quantity<=0 || !Boolean.TRUE.equals(v.getStatus()) || !Boolean.TRUE.equals(v.getProduct().getStatus()))
+                if(quantity<=0 || !ProductSalePolicy.isSelling(v))
                     throw new IllegalArgumentException("Sản phẩm hoặc số lượng không hợp lệ.");
                 var cart = cart(session);
                 var item = cart.stream().filter(i->i.getVariantId().equals(variantId)).findFirst().orElse(null);

@@ -1,0 +1,15 @@
+{
+  "adjustWhileStopped": true,
+  "stockBefore": 12,
+  "stockAdjusted": 13,
+  "stockRestored": 12,
+  "referencedDeleteRetainedProduct": true,
+  "guidance": "Hãy dùng nút Ngừng bán",
+  "sql": [
+    {
+      "id": 599,
+      "status": false,
+      "quantity": 12
+    }
+  ]
+}

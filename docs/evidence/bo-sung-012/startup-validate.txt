@@ -1,0 +1,16 @@
+2026-10-29 10:14:53.836  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-29 10:14:55.958  INFO o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 18150 (http) with context path '/'
+2026-10-29 10:14:55.967  INFO c.example.demodatn.DemoDatnApplication : Started DemoDatnApplication in 6.194 seconds (process running for 6.498)
+2026-10-29 10:26:28.523  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-29 10:26:30.823  INFO o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 18150 (http) with context path '/'
+2026-10-29 10:26:30.840  INFO c.example.demodatn.DemoDatnApplication : Started DemoDatnApplication in 6.428 seconds (process running for 6.744)
+2026-10-29 10:27:54.821  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-29 10:27:57.020  INFO o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 18150 (http) with context path '/'
+2026-10-29 10:27:57.033  INFO c.example.demodatn.DemoDatnApplication : Started DemoDatnApplication in 6.242 seconds (process running for 6.531)
+2026-10-29 09:58:46.949  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-29 09:58:49.204  INFO o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 18150 (http) with context path '/'
+2026-10-29 09:58:49.215  INFO c.example.demodatn.DemoDatnApplication : Started DemoDatnApplication in 6.285 seconds (process running for 6.582)
+2026-10-29 10:27:54.821  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-29 10:27:57.020  INFO o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 18150 (http) with context path '/'
+2026-10-29 10:27:57.033  INFO c.example.demodatn.DemoDatnApplication : Started DemoDatnApplication in 6.242 seconds (process running for 6.531)
+ddl-auto=validate; application DB=shopbangiay_kt_20261029_bs012; port=18150

@@ -1,4 +1,5 @@
 package com.example.demodatn.service.sanpham;
+import com.example.demodatn.service.sanpham.ProductSalePolicy;
 import com.example.demodatn.entity.sanpham.Product;
 import com.example.demodatn.entity.sanpham.ProductVariant;
 import com.example.demodatn.repository.sanpham.ProductRepository;
@@ -15,7 +16,7 @@ public class ProductService {
     private final ProductVariantRepository productVariantRepository;
 
     public List<Product> getAllProducts() {
-        return productRepository.findByStatusTrue();
+        return productRepository.findByStatusTrue().stream().filter(ProductSalePolicy::isSelling).toList();
     }
 
     public Product getProductById(Integer id) {
@@ -24,7 +25,7 @@ public class ProductService {
 
     public List<ProductVariant> getVariantsByProductId(Integer productId) {
         // We might need a custom query, let's just fetch all and filter for simplicity if repo method is missing
-        return productVariantRepository.findByProduct_IdAndStatusTrue(productId);
+        return productVariantRepository.findByProduct_IdAndStatusTrue(productId).stream().filter(ProductSalePolicy::isSelling).toList();
     }
 
     public ProductVariant getVariantById(Integer variantId) {

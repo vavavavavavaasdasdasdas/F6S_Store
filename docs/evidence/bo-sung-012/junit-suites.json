@@ -1,0 +1,274 @@
+[
+  {
+    "name": "com.example.demodatn.config.DataInitializerTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "1.119"
+  },
+  {
+    "name": "com.example.demodatn.config.SchemaCheckTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.214"
+  },
+  {
+    "name": "com.example.demodatn.controller.PaginationIntegrationTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "11.183"
+  },
+  {
+    "name": "com.example.demodatn.controller.PasswordPolicyIntegrationTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.569"
+  },
+  {
+    "name": "com.example.demodatn.controller.Phase3ComboFilterIntegrationTest",
+    "tests": "5",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.747"
+  },
+  {
+    "name": "com.example.demodatn.controller.RouteErrorIntegrationTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.199"
+  },
+  {
+    "name": "com.example.demodatn.controller.TablePresentationIntegrationTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.118"
+  },
+  {
+    "name": "com.example.demodatn.controller.user.UserUiIntegrationTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.14"
+  },
+  {
+    "name": "com.example.demodatn.DemoDatnApplicationTests",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.011"
+  },
+  {
+    "name": "com.example.demodatn.entity.UnicodePersistenceIntegrationTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.021"
+  },
+  {
+    "name": "com.example.demodatn.security.StandaloneAccountTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.048"
+  },
+  {
+    "name": "com.example.demodatn.service.AccountCredentialPrivacyTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.041"
+  },
+  {
+    "name": "com.example.demodatn.service.AccountProvisioningIntegrationTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "2.273"
+  },
+  {
+    "name": "com.example.demodatn.service.donhang.BankTransferDeadlineTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.0"
+  },
+  {
+    "name": "com.example.demodatn.service.donhang.OrderRollbackIntegrationTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "1.668"
+  },
+  {
+    "name": "com.example.demodatn.service.donhang.OrderStockIntegrationTest",
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.836"
+  },
+  {
+    "name": "com.example.demodatn.service.donhang.PosHoldServiceTest",
+    "tests": "9",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.207"
+  },
+  {
+    "name": "com.example.demodatn.service.donhang.PosInvoiceIntegrationTest",
+    "tests": "10",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.403"
+  },
+  {
+    "name": "com.example.demodatn.service.donhang.PricingServiceTest",
+    "tests": "5",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.11"
+  },
+  {
+    "name": "com.example.demodatn.service.khachhang.ShippingAddressIntegrationTest",
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.485"
+  },
+  {
+    "name": "com.example.demodatn.service.khuyenmai.DiscountIntegrationTest",
+    "tests": "10",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.299"
+  },
+  {
+    "name": "com.example.demodatn.service.nhanvien.AdminAccountServiceTest",
+    "tests": "6",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.842"
+  },
+  {
+    "name": "com.example.demodatn.service.PeopleIntegrationTest",
+    "tests": "10",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "1.634"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.CatalogIntegrationTest",
+    "tests": "12",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.766"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.InitialMaterialIntegrationTest",
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.532"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.MaterialIntegrationTest",
+    "tests": "5",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.329"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.ProductGalleryIntegrationTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.183"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.ProductImageUrlServiceTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.003"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.SaleStatusAndCodeIntegrationTest",
+    "tests": "7",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.39"
+  },
+  {
+    "name": "com.example.demodatn.service.sanpham.SoleIntegrationTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.195"
+  },
+  {
+    "name": "com.example.demodatn.service.thongke.DashboardIntegrationTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.051"
+  },
+  {
+    "name": "com.example.demodatn.service.thongke.StatisticsIntegrationTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.111"
+  },
+  {
+    "name": "com.example.demodatn.util.PaginationTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.0"
+  },
+  {
+    "name": "com.example.demodatn.util.PasswordPolicyTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.0"
+  }
+]

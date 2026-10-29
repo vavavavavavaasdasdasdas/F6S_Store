@@ -1,4 +1,5 @@
 package com.example.demodatn.service.donhang;
+import com.example.demodatn.service.sanpham.ProductSalePolicy;
 import com.example.demodatn.entity.donhang.Order;
 import com.example.demodatn.repository.donhang.OrderRepository;
 import com.example.demodatn.service.sanpham.InventoryService;
@@ -61,7 +62,7 @@ public class OrderStatusService {
             for(var detail:order.getOrderDetails())quantities.merge(detail.getProductVariant().getId(),detail.getQuantity(),Math::addExact);
             for(var line:quantities.entrySet()) {
                 var variant=inventory.lock(line.getKey());
-                if(!Boolean.TRUE.equals(variant.getStatus()) || !Boolean.TRUE.equals(variant.getProduct().getStatus()) || variant.getQuantity()<line.getValue())
+                if(!ProductSalePolicy.isSelling(variant) || variant.getQuantity()<line.getValue())
                     throw new IllegalArgumentException("Không đủ tồn kho hoặc sản phẩm ngừng bán: "+variant.getProduct().getName()+" / Kích cỡ "+variant.getSize().getSizeValue()+" / "+variant.getMaterial().getName());
             }
         }

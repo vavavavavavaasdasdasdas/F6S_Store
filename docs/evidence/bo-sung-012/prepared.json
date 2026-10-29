@@ -1,0 +1,120 @@
+[
+  {
+    "id": 949,
+    "code": "SP006",
+    "forgedCreateIgnored": true,
+    "forgedEditIgnored": true,
+    "readonly": true,
+    "width": 1280,
+    "variants": [
+      {
+        "id": 598,
+        "product_id": 949,
+        "status": true,
+        "quantity": 12,
+        "price": 190000.0,
+        "size_value": "36",
+        "material_name": "Da thật"
+      },
+      {
+        "id": 599,
+        "product_id": 949,
+        "status": true,
+        "quantity": 12,
+        "price": 190000.0,
+        "size_value": "37",
+        "material_name": "Da thật"
+      }
+    ],
+    "orderId": 676,
+    "holdId": 6,
+    "variantStopped": true,
+    "invoiceShowsCode": true,
+    "invoiceId": 289,
+    "beforeStop": {
+      "id": 949,
+      "code": "SP006",
+      "status": true,
+      "variants": [
+        {
+          "id": 598,
+          "status": true,
+          "quantity": 9
+        },
+        {
+          "id": 599,
+          "status": false,
+          "quantity": 12
+        }
+      ]
+    },
+    "historyBefore": [
+      {
+        "id": 676,
+        "status": "CONFIRMED",
+        "payment_status": "PAID",
+        "final_amount": 190000.0,
+        "invoice_id": 289
+      }
+    ]
+  },
+  {
+    "id": 950,
+    "code": "SP007",
+    "forgedCreateIgnored": true,
+    "forgedEditIgnored": true,
+    "readonly": true,
+    "width": 375,
+    "variants": [
+      {
+        "id": 600,
+        "product_id": 950,
+        "status": true,
+        "quantity": 12,
+        "price": 190000.0,
+        "size_value": "36",
+        "material_name": "Da thật"
+      },
+      {
+        "id": 601,
+        "product_id": 950,
+        "status": true,
+        "quantity": 12,
+        "price": 190000.0,
+        "size_value": "37",
+        "material_name": "Da thật"
+      }
+    ],
+    "orderId": 677,
+    "holdId": 7,
+    "variantStopped": true,
+    "invoiceShowsCode": true,
+    "invoiceId": 290,
+    "beforeStop": {
+      "id": 950,
+      "code": "SP007",
+      "status": true,
+      "variants": [
+        {
+          "id": 600,
+          "status": true,
+          "quantity": 11
+        },
+        {
+          "id": 601,
+          "status": false,
+          "quantity": 12
+        }
+      ]
+    },
+    "historyBefore": [
+      {
+        "id": 677,
+        "status": "CONFIRMED",
+        "payment_status": "PAID",
+        "final_amount": 190000.0,
+        "invoice_id": 290
+      }
+    ]
+  }
+]

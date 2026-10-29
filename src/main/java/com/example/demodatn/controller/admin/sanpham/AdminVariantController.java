@@ -76,6 +76,12 @@ public class AdminVariantController {
         }
         return form(model);
     }
+    @PostMapping("/admin/variants/status/{id}")
+    public String status(@PathVariable Integer id,@RequestParam boolean selling,RedirectAttributes flash) {
+        Integer productId=catalog.variantStatus(id,selling);
+        flash.addFlashAttribute("message",selling?"Đã bán lại biến thể. Tồn kho được giữ nguyên.":"Đã ngừng bán biến thể. Tồn kho và lịch sử được giữ nguyên.");
+        return "redirect:/admin/products-crud/"+productId+"/variants";
+    }
     private String form(Model model) {
         model.addAttribute("products",products.findAll()); model.addAttribute("sizes",sizes.findAll()); model.addAttribute("materials",materials.findByStatusTrueOrderByNameAscIdAsc());
         VariantForm current=(VariantForm)model.getAttribute("variant");

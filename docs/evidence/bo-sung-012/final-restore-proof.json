@@ -1,0 +1,63 @@
+{
+  "database": "shopbangiay_kt_20261029_bs012",
+  "all21TableCountsAndColumnMetadataMatchCheckpoint": true,
+  "allOriginalProductCodesAndStatusesUnchanged": true,
+  "products": [
+    {
+      "id": 1,
+      "code": "SP001",
+      "status": false
+    },
+    {
+      "id": 2,
+      "code": "SP002",
+      "status": true
+    },
+    {
+      "id": 3,
+      "code": "SP003",
+      "status": true
+    },
+    {
+      "id": 4,
+      "code": "SP004",
+      "status": true
+    },
+    {
+      "id": 5,
+      "code": "SP005",
+      "status": true
+    },
+    {
+      "id": 24,
+      "code": "P6-E2E-1007",
+      "status": false
+    },
+    {
+      "id": 833,
+      "code": "P12-0845",
+      "status": false
+    },
+    {
+      "id": 834,
+      "code": "P12-0850",
+      "status": false
+    },
+    {
+      "id": 947,
+      "code": "P12-0900",
+      "status": false
+    },
+    {
+      "id": 948,
+      "code": "NA_LCD100",
+      "status": true
+    }
+  ],
+  "sequence": [
+    {
+      "name": "product_code_seq",
+      "current_value": 6
+    }
+  ]
+}
