@@ -81,3 +81,7 @@ Bảng chín cột dùng khung cuộn/STT/phân trang12 hiện có. Dòng sửa 
 ### Giai đoạn 7 — POS và QR chuyển khoản
 
 Tìm khách bắt đầu từ trạng thái Khách lẻ, danh sách chỉ xuất hiện sau truy vấn hai ký tự; debounce300ms, hủy truy vấn cũ, thẻ khách có Đổi khách/Bỏ chọn. Input có form owner bên ngoài không làm bẩn form thanh toán; liên kết AJAX đã xử lý không kích hoạt cảnh báo rời trang. QR dùng canvas có viền trắng trong panel hiện có, thông tin tài khoản/số tiền/nội dung tách riêng, responsive375px. Xác nhận nhận tiền bị xóa khi tổng thay đổi. Chưa cấu hình ngân hàng có thông báo, không hiện QR giả.
+
+### Giai đoạn 8 — Giao hàng và hóa đơn khách
+
+Tiến trình online dùng năm bước chữ/thời gian/người thực hiện, cuộn trong khung ở mobile; POS giữ điều khiển cũ. Nút bước kế tiếp mở dialog có xác nhận; hủy/thất bại cần lý do, giao vận có hai trường tùy chọn. Dùng quan-tri-danh-muc.js cho validation/busy/guard; shared validator đọc form.elements để hỗ trợ các input liên kết form ở bảng cấu hình. Tỉnh dùng combo-box.js bắt buộc, tìm được nhưng không tạo tùy ý. Runtime token không đổi. Hóa đơn khách dùng cùng dữ liệu snapshot, khung cuộn và cột bản in Admin; CSS riêng theo customer-invoice-page, bản in A4 ẩn điều hướng. UX-CONTRACT.md ghi chủ sở hữu tương tác và ngoại lệ nghiệp vụ.

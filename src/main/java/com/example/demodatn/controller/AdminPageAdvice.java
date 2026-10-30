@@ -27,7 +27,8 @@ public class AdminPageAdvice {
         new NavItem("", "Đợt giảm giá", "/admin/promotions", "promotions"),
         new NavItem("THỐNG KÊ", "Doanh thu", "/admin/statistics/revenue", "revenue"),
         new NavItem("", "Sản phẩm bán chạy", "/admin/statistics/best-sellers", "best-sellers"),
-        new NavItem("HỆ THỐNG", "Hồ sơ của tôi", "/admin/account", "account")
+        new NavItem("HỆ THỐNG", "Thời gian giao hàng", "/admin/shipping-times", "shipping-times"),
+        new NavItem("", "Hồ sơ của tôi", "/admin/account", "account")
     );
     @ModelAttribute
     public void navigation(HttpServletRequest request, Model model) {

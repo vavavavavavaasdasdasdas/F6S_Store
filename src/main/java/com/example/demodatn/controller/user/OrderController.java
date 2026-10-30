@@ -96,7 +96,7 @@ public class OrderController {
                 req.setEmail(customer.getEmail());
                 req.setShippingAddress(customer.getAddress());
                 addressBook.stream().filter(com.example.demodatn.entity.khachhang.ShippingAddress::isDefaultAddress).findFirst().ifPresent(a -> {
-                    req.setShippingAddressId(a.getId());req.setReceiverName(a.getReceiverName());req.setPhone(a.getPhone());req.setShippingAddress(a.getAddress());
+                    req.setShippingAddressId(a.getId());req.setReceiverName(a.getReceiverName());req.setPhone(a.getPhone());req.setShippingAddress(a.getAddress());req.setProvinceId(a.getProvince()==null?null:a.getProvince().getId());
                 });
             }
             model.addAttribute("checkoutRequest", req);
@@ -250,12 +250,21 @@ public class OrderController {
         return "redirect:/orders/"+id;
     }
 
+    @org.springframework.beans.factory.annotation.Autowired private com.example.demodatn.repository.donhang.InvoiceRepository invoices;
+    @GetMapping("/orders/{id}/hoa-don")
+    public String invoice(@PathVariable Integer id,Principal principal,Model model) {
+        Order order=customerOrder(id,principal);
+        var invoice=invoices.findByOrder_Id(id).orElseThrow(()->new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));
+        model.addAttribute("order",order);model.addAttribute("invoice",invoice);return "user/hoa-don";
+    }
+
     @GetMapping("/orders/{id}")
     public String detail(@PathVariable Integer id, Principal principal, Model model) {
         Order order = customerOrder(id,principal);
         model.addAttribute("order",order);model.addAttribute("orderDetails",order.getOrderDetails());
         model.addAttribute("statusLabels",OrderStatusService.LABELS);
         model.addAttribute("canCancel",statuses.allowedStatuses(order).contains("CANCELLED"));
+        model.addAttribute("invoice",invoices.findByOrder_Id(id).orElse(null));
         return "user/chi-tiet-don-hang";
     }
 

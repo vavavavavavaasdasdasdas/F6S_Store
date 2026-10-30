@@ -14,5 +14,6 @@ public class ShippingAddress {
     @org.hibernate.annotations.Nationalized @Column(name="dia_chi",nullable=false,length=255) private String address;
     @Column(name="la_mac_dinh",nullable=false) private boolean defaultAddress;
     @Column(name="thu_tu",nullable=false,columnDefinition="tinyint") private Integer slot;
+    @ManyToOne @JoinColumn(name="tinh_thanh_id") private com.example.demodatn.entity.donhang.Province province;
     @Column(name="created_at",nullable=false) private LocalDateTime createdAt;
 }

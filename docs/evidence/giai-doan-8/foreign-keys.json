@@ -1,0 +1,38 @@
+[
+  {
+    "table_name": "dia_chi_nhan_hang",
+    "foreign_key": "FK_dia_chi_customer"
+  },
+  {
+    "table_name": "dia_chi_nhan_hang",
+    "foreign_key": "FK_dia_chi_nhan_hang_tinh_thanh"
+  },
+  {
+    "table_name": "order_status_history",
+    "foreign_key": "FK__order_sta__order__3B0BC30C"
+  },
+  {
+    "table_name": "orders",
+    "foreign_key": "FK__orders__customer__7E37BEF6"
+  },
+  {
+    "table_name": "orders",
+    "foreign_key": "FK__orders__employee__7F2BE32F"
+  },
+  {
+    "table_name": "orders",
+    "foreign_key": "FK__orders__voucher___01142BA1"
+  },
+  {
+    "table_name": "orders",
+    "foreign_key": "FK_orders_tinh_thanh"
+  },
+  {
+    "table_name": "ten_tinh_thanh_cu",
+    "foreign_key": "FK__ten_tinh___tinh___36470DEF"
+  },
+  {
+    "table_name": "tinh_thanh",
+    "foreign_key": "FK__tinh_thanh__vung__32767D0B"
+  }
+]

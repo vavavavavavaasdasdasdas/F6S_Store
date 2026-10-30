@@ -101,7 +101,7 @@ class OrderRollbackIntegrationTest {
             }).when(pricing).refreshCart(anyList());
             var session = new MockHttpSession(); session.setAttribute("cart", items(f));
             var mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-            mvc.perform(post("/checkout/place").session(session).with(csrf())
+            mvc.perform(post("/checkout/place").param("provinceId",jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",String.class)).session(session).with(csrf())
                     .param("receiverName", "QA rollback").param("phone", "0901234567").param("email", "qa@example.test")
                     .param("shippingAddress", "QA address").param("paymentMethod", "BANK_TRANSFER").param("voucherCode", f.voucher().getCode()))
                     .andExpect(status().isFound()).andExpect(redirectedUrl("/checkout"))

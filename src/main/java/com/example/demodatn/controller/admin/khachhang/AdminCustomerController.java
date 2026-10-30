@@ -87,6 +87,7 @@ public class AdminCustomerController {
     public String edit(@PathVariable Integer id,Model model) {
         var item=people.customer(id);var form=new CustomerDto();BeanUtils.copyProperties(item,form);
         form.setUsername(item.getUser()==null?null:item.getUser().getUsername());
+        shippingAddresses.findByCustomer_IdOrderBySlotAsc(id).stream().filter(com.example.demodatn.entity.khachhang.ShippingAddress::isDefaultAddress).findFirst().ifPresent(a->{form.setProvinceId(a.getProvince()==null?null:a.getProvince().getId());form.setAddress(a.getAddress());});
         model.addAttribute("customer",form);return "admin/khach-hang/bieu-mau";
     }
     @GetMapping("/detail/{id}")

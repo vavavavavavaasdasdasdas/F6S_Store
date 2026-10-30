@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class ShippingAddressForm {
     private Integer id;
+    @jakarta.validation.constraints.NotNull(message="Vui lòng chọn Tỉnh/Thành phố.") private Integer provinceId;
     @NotBlank(message="Nhập tên người nhận.") @Size(max=100,message="Tên người nhận tối đa 100 ký tự.")
     private String receiverName;
     @NotBlank(message="Nhập số điện thoại.")

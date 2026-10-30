@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class CheckoutRequest {
     private Integer shippingAddressId;
+    @jakarta.validation.constraints.NotNull(message="Vui lòng chọn Tỉnh/Thành phố.") private Integer provinceId;
     @NotBlank(message = "Vui lòng nhập họ tên người nhận")
     private String receiverName;
 

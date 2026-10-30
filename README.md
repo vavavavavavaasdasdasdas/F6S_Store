@@ -101,3 +101,11 @@ Chạy migration `014_tham_chieu_thanh_toan.sql` sau 013 trước khi khởi đ�
 POS không nạp danh sách khách khi mở. Nhập ít nhất hai ký tự tên/SĐT để tìm, kết quả tối đa 12 dòng mỗi trang. Khách lẻ là mặc định. Thư viện QR cục bộ và giấy phép: [THU_VIEN_QR.md](docs/THU_VIEN_QR.md).
 
 Thử với ứng dụng ngân hàng thật (**NOT TESTED** trong kiểm thử tự động): cấu hình tài khoản do bạn kiểm soát, tạo đơn giá trị nhỏ, quét QR và đối chiếu ngân hàng, tài khoản, số tiền, nội dung trước khi chuyển. Chỉ xác nhận nhận tiền sau khi kiểm tra giao dịch thực tế. Không dùng thông tin ngân hàng giả trong bằng chứng tự động để chuyển tiền.
+
+## Giai đoạn 8: Theo dõi giao hàng
+
+Chạy `015_theo_doi_giao_hang.sql` sau014 trước khi khởi động; aggregate004–015 và rootshopgiay.sql đã đồng bộ. Giữ `ddl-auto=validate`. Chỉ chạy trên database thật sau khi sao lưu và dùng lệnh trong báo cáo; không dùng bootstrap để ghi đè dữ liệu.
+
+Tỉnh/Thành phố bắt buộc khi lưu địa chỉ hoặc checkout mới. Danh sách34 tên và tên cũ đã đối chiếu nguồn chính thức ngày30/10/2026 trong [NGUON_TINH_THANH_2026.md](docs/NGUON_TINH_THANH_2026.md). Địa chỉ cũ không khớp rõ để trống, Admin sửa tỉnh đơn trước khi giao cho vận chuyển. Địa chỉ chi tiết và tỉnh được chụp riêng vào đơn; sửa tạm checkout không đổi sổ.
+
+Admin sửa số ngày tại `/admin/shipping-times`: Bắc3–3, Trung/Nam5–7 ngày lịch mặc định. Dự kiến được lưu khi xác nhận, theo ngày đặt ở Asia/Ho_Chi_Minh; nếu đã muộn thì tính từ ngày xác nhận và ghi chú. Đổi cấu hình không đổi đơn đã lưu. Thanh tiến trình và lịch sử hiện ở chi tiết đơn online; đơn POS giữ luồng cũ. Hủy/giao thất bại cần lý do. Chủ đơn xem/in hóa đơn tại `/orders/{id}/hoa-don` từ nút Xem hóa đơn; tài khoản khác bị chặn.

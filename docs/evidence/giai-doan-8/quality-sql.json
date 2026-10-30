@@ -1,0 +1,41 @@
+{
+  "legacy": [
+    {
+      "id": 1,
+      "status": "DELIVERED"
+    }
+  ],
+  "customerAddress": [
+    {
+      "id": 9,
+      "dia_chi": "Số 12, đường Nguyễn Huệ",
+      "ten": "Đà Nẵng"
+    }
+  ],
+  "pendingOrder": {
+    "order": {
+      "id": 680,
+      "status": "CONFIRMED",
+      "ten_tinh_thanh": "Đà Nẵng",
+      "du_kien_giao_tu": "2026-11-04",
+      "du_kien_giao_den": "2026-11-06"
+    },
+    "history": [
+      {
+        "status": "PENDING",
+        "actor": "gd8_user_375",
+        "note": "Đã tạo đơn hàng."
+      },
+      {
+        "status": "PENDING",
+        "actor": "admin",
+        "note": "Đổi tỉnh/thành từ Hà Nội sang Đà Nẵng."
+      },
+      {
+        "status": "CONFIRMED",
+        "actor": "admin"
+      }
+    ],
+    "quantity": 94
+  }
+}

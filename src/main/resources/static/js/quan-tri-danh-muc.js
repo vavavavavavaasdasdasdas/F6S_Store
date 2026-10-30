@@ -18,6 +18,7 @@
  accept.addEventListener('click',()=>{const action=decision;dialog.close();action?.();});
  dialog.addEventListener('close',()=>{trigger?.focus();decision=null;});
  const forms=[...document.querySelectorAll('[data-admin-form]')];
+ const fields=form=>[...form.elements].filter(field=>field.matches('input:not([data-combo-input]),select,textarea'));
  function busy(form) { form.dataset.submitting='true';form.setAttribute('aria-busy','true');form.querySelectorAll('[type=submit]').forEach(b=>b.disabled=true); }
  function error(field,message) {
    const slot=document.getElementById(field.id+'-error');
@@ -46,6 +47,7 @@
    else if(field.validity.stepMismatch) message='Số lượng phải là số nguyên; giá tối đa 2 chữ số thập phân.';
    else if(field.maxLength>0 && field.value.length>field.maxLength) message='Tối đa '+field.maxLength+' ký tự.';
    else if(field.minLength>0 && field.value && field.value.length<field.minLength) message='Ít nhất '+field.minLength+' ký tự.';
+   if(field.dataset.notLessThan && field.value && Number(field.value)<Number(document.getElementById(field.dataset.notLessThan)?.value))message='Ngày tối đa không được nhỏ hơn ngày tối thiểu.';
    if(field.dataset.match && field.value!==document.getElementById(field.dataset.match)?.value)message='Xác nhận mật khẩu không khớp.';
    if(field.dataset.byteLimit && new TextEncoder().encode(field.value).length>Number(field.dataset.byteLimit))message='Mật khẩu vượt quá 72 byte UTF-8.';
    if(field.id==='endDate' && field.form.matches('[data-discount-form]')) {
@@ -68,8 +70,9 @@
  forms.forEach(form=>{
    form.addEventListener('input',event=>{if(event.target.form!==form)return;if(form.method.toLowerCase()!=='get')form.dataset.dirty='true';if(event.target.getAttribute('aria-invalid')==='true')validate(event.target);});
    form.addEventListener('change',event=>{if(event.target.form!==form)return;if(form.method.toLowerCase()!=='get')form.dataset.dirty='true';});
-   form.querySelectorAll('input:not([data-combo-input]),select,textarea').forEach(field=>{
+   fields(form).forEach(field=>{
      field.addEventListener('blur',()=>validate(field));
+     if(!form.contains(field))['input','change'].forEach(type=>field.addEventListener(type,()=>{if(form.method.toLowerCase()!=='get')form.dataset.dirty='true';if(field.getAttribute('aria-invalid')==='true')validate(field);}));
      const slot=document.getElementById(field.id+'-error');
      if(slot?.textContent.trim())error(field,slot.textContent.trim());
    });
@@ -79,12 +82,12 @@
        const selected=Boolean(form.querySelector('[name=initialSizeIds]:checked')) || Boolean(form.querySelector('#newInitialSizeValue')?.value.trim());
        ['initialMaterialId','initialPrice','initialQuantity'].forEach(name=>{if(form.elements[name])form.elements[name].required=selected;});
      }
-     let valid=true;form.querySelectorAll('input:not([data-combo-input]),select,textarea').forEach(f=>{if(!validate(f))valid=false;});
-     if(!valid){event.preventDefault();focusField(form.querySelector('[aria-invalid=true]'));return;}
+     let valid=true;fields(form).forEach(f=>{if(!validate(f))valid=false;});
+     if(!valid){event.preventDefault();focusField(fields(form).find(field=>field.getAttribute('aria-invalid')==='true'));return;}
      if(!navigator.onLine){event.preventDefault();const msg=form.querySelector('.form-message');msg.textContent='Mất kết nối. Thông tin vẫn ở đây; kết nối lại rồi lưu.';msg.hidden=false;return;}
      busy(form);
    });
-   focusField(form.querySelector('[aria-invalid=true]'));
+   focusField(fields(form).find(field=>field.getAttribute('aria-invalid')==='true'));
  });
  document.querySelectorAll('[data-delete]').forEach(button=>button.addEventListener('click',()=>{
    ask('Xóa '+button.dataset.object+'?',button.dataset.consequence,'Xác nhận xóa',()=>{

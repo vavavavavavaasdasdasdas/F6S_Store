@@ -121,9 +121,17 @@ public class AdminOrderController {
     }
 
     @PostMapping({"/update-status/{id}","/{id}/status"})
-    public String updateStatus(@PathVariable Integer id,@RequestParam String status,RedirectAttributes flash) {
-        try { orderService.updateStatus(id,status); flash.addFlashAttribute("message","Đã cập nhật đơn hàng. Đơn hủy được hoàn kho và ghi lịch sử."); }
+    public String updateStatus(@PathVariable Integer id,@RequestParam String status,@RequestParam(required=false) String reason,@RequestParam(required=false) String carrier,@RequestParam(required=false) String trackingCode,RedirectAttributes flash) {
+        try { orderService.transition(id,status,reason,carrier,trackingCode); flash.addFlashAttribute("message","Đã cập nhật đơn hàng. Đơn hủy được hoàn kho và ghi lịch sử."); }
         catch(IllegalArgumentException ex) { flash.addFlashAttribute("error",ex.getMessage()); }
+        return "redirect:/admin/orders/"+id;
+    }
+
+    @PostMapping("/{id}/province")
+    public String province(@PathVariable Integer id,@RequestParam(defaultValue="") String provinceId,RedirectAttributes flash) {
+        try {orderService.updateProvince(id,Integer.valueOf(provinceId));flash.addFlashAttribute("message","Đã cập nhật tỉnh/thành và ghi lịch sử.");}
+        catch(NumberFormatException ex){flash.addFlashAttribute("error","Vui lòng chọn Tỉnh/Thành phố hợp lệ trong danh sách.");}
+        catch(IllegalArgumentException ex){flash.addFlashAttribute("error",ex.getMessage());}
         return "redirect:/admin/orders/"+id;
     }
 

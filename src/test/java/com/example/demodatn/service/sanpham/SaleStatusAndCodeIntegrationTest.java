@@ -80,7 +80,7 @@ class SaleStatusAndCodeIntegrationTest {
         mvc.perform(get("/cart").session(session)).andExpect(content().string(org.hamcrest.Matchers.containsString("Sản phẩm đã ngừng bán")));
         mvc.perform(post("/cart/add-ajax").with(csrf()).param("variantId",v.getId().toString()).param("quantity","1")).andExpect(status().isBadRequest());
         mvc.perform(get("/checkout").session(session)).andExpect(redirectedUrl("/cart"));
-        var checkout=new CheckoutRequest();checkout.setPaymentMethod("COD");
+        var checkout=new CheckoutRequest();checkout.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));checkout.setPaymentMethod("COD");
         assertThrows(IllegalArgumentException.class,()->orders.placeOrder(checkout,basket,null,BigDecimal.ZERO));
         assertThrows(IllegalArgumentException.class,()->holds.checkout("admin",hold,basket,request));
         catalog.productStatus(p.getId(),true);assertTrue(ProductSalePolicy.isSelling(v));assertFalse(ProductSalePolicy.isSelling(children.get(1)));

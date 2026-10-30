@@ -1,0 +1,79 @@
+[
+  {
+    "table_name": "order_status_history",
+    "column_name": "status",
+    "type": "nvarchar",
+    "max_length": 510,
+    "is_nullable": false
+  },
+  {
+    "table_name": "order_status_history",
+    "column_name": "actor",
+    "type": "nvarchar",
+    "max_length": 200,
+    "is_nullable": false
+  },
+  {
+    "table_name": "order_status_history",
+    "column_name": "note",
+    "type": "nvarchar",
+    "max_length": 2000,
+    "is_nullable": true
+  },
+  {
+    "table_name": "order_status_history",
+    "column_name": "carrier",
+    "type": "nvarchar",
+    "max_length": 200,
+    "is_nullable": true
+  },
+  {
+    "table_name": "order_status_history",
+    "column_name": "tracking_code",
+    "type": "nvarchar",
+    "max_length": 200,
+    "is_nullable": true
+  },
+  {
+    "table_name": "orders",
+    "column_name": "ten_tinh_thanh",
+    "type": "nvarchar",
+    "max_length": 200,
+    "is_nullable": true
+  },
+  {
+    "table_name": "ten_tinh_thanh_cu",
+    "column_name": "ten",
+    "type": "nvarchar",
+    "max_length": 200,
+    "is_nullable": false
+  },
+  {
+    "table_name": "tinh_thanh",
+    "column_name": "ten",
+    "type": "nvarchar",
+    "max_length": 200,
+    "is_nullable": false
+  },
+  {
+    "table_name": "tinh_thanh",
+    "column_name": "vung",
+    "type": "nvarchar",
+    "max_length": 20,
+    "is_nullable": false
+  },
+  {
+    "table_name": "vung_giao_hang",
+    "column_name": "ma",
+    "type": "nvarchar",
+    "max_length": 20,
+    "is_nullable": false
+  },
+  {
+    "table_name": "vung_giao_hang",
+    "column_name": "ten",
+    "type": "nvarchar",
+    "max_length": 200,
+    "is_nullable": false
+  }
+]

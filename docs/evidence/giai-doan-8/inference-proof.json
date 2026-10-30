@@ -1,0 +1,116 @@
+[
+  {
+    "customerId": 100,
+    "addressId": 8,
+    "orderId": 674,
+    "input": "Số 12, đường Lê Lợi, Da Nang",
+    "expected": "Đà Nẵng",
+    "actual": {
+      "orderProvince": "Đà Nẵng",
+      "addressProvince": "Đà Nẵng",
+      "historyCount": 1
+    }
+  },
+  {
+    "customerId": 101,
+    "addressId": 9,
+    "orderId": 675,
+    "input": "Số 12, Hải Dương",
+    "expected": "Hải Phòng",
+    "actual": {
+      "orderProvince": "Hải Phòng",
+      "addressProvince": "Hải Phòng",
+      "historyCount": 1
+    }
+  },
+  {
+    "customerId": 102,
+    "addressId": 10,
+    "orderId": 676,
+    "input": "Số 12, Bắc Giang",
+    "expected": "Bắc Ninh",
+    "actual": {
+      "orderProvince": "Bắc Ninh",
+      "addressProvince": "Bắc Ninh",
+      "historyCount": 1
+    }
+  },
+  {
+    "customerId": 103,
+    "addressId": 11,
+    "orderId": 677,
+    "input": "Số 12, đường Hà Nội",
+    "expected": null,
+    "actual": {
+      "historyCount": 1
+    }
+  },
+  {
+    "customerId": 104,
+    "addressId": 12,
+    "orderId": 678,
+    "input": "Số 12, tỉnh Hà Nội, thành phố Đà Nẵng",
+    "expected": null,
+    "actual": {
+      "historyCount": 1
+    }
+  },
+  {
+    "customerId": 105,
+    "addressId": 13,
+    "orderId": 679,
+    "input": "Số 12, Đắk Nông",
+    "expected": "Lâm Đồng",
+    "actual": {
+      "orderProvince": "Lâm Đồng",
+      "addressProvince": "Lâm Đồng",
+      "historyCount": 1
+    }
+  },
+  {
+    "customerId": 106,
+    "addressId": 14,
+    "orderId": 680,
+    "input": "Số 12, TP. HCM",
+    "expected": "Hồ Chí Minh",
+    "actual": {
+      "orderProvince": "Hồ Chí Minh",
+      "addressProvince": "Hồ Chí Minh",
+      "historyCount": 1
+    }
+  },
+  {
+    "customerId": 107,
+    "addressId": 15,
+    "orderId": 681,
+    "input": "Địa chỉ không xác định",
+    "expected": null,
+    "actual": {
+      "historyCount": 1
+    }
+  },
+  {
+    "customerId": 108,
+    "addressId": 16,
+    "orderId": 682,
+    "input": "Số 12, Hà Nội, Việt Nam",
+    "expected": "Hà Nội",
+    "actual": {
+      "orderProvince": "Hà Nội",
+      "addressProvince": "Hà Nội",
+      "historyCount": 1
+    }
+  },
+  {
+    "customerId": 109,
+    "addressId": 17,
+    "orderId": 683,
+    "input": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx, Hà Nội",
+    "expected": "Hà Nội",
+    "actual": {
+      "orderProvince": "Hà Nội",
+      "addressProvince": "Hà Nội",
+      "historyCount": 1
+    }
+  }
+]

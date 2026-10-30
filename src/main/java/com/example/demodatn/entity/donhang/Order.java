@@ -86,6 +86,12 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
+    @ManyToOne @JoinColumn(name="tinh_thanh_id") private Province province;
+    @org.hibernate.annotations.Nationalized @Column(name="ten_tinh_thanh",length=100) private String provinceName;
+    @Column(name="du_kien_giao_tu") private java.time.LocalDate estimatedFrom;
+    @Column(name="du_kien_giao_den") private java.time.LocalDate estimatedTo;
+    @Column(name="ngay_giao_thuc_te") private java.time.LocalDate deliveredOn;
+
     public void addDetail(OrderDetail detail) {
         orderDetails.add(detail);
         detail.setOrder(this);

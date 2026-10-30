@@ -50,7 +50,7 @@ class AccountProvisioningIntegrationTest {
     }
     @AfterAll static void close(){SMTP.stop();}
     CustomerDto form() {
-        String token=UUID.randomUUID().toString().substring(0,8);var f=new CustomerDto();
+        String token=UUID.randomUUID().toString().substring(0,8);var f=new CustomerDto();f.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));
         f.setCustomerCode("G4-"+token);f.setFullName("Nguyễn Văn Ánh");f.setEmail(token+"@example.test");
         f.setPhone("09"+String.format("%08d",Math.floorMod(token.hashCode(),100000000)));f.setAddress("Số 12, đường Lê Lợi, Đà Nẵng");
         SMTP.setUser(f.getEmail(),token,token);return f;

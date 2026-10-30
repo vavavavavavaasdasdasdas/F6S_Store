@@ -37,6 +37,7 @@ public class PeopleService {
     private final OrderRepository orders;
     private final VoucherRepository vouchers;
     private final PasswordEncoder encoder;
+    private final com.example.demodatn.service.khachhang.ShippingAddressService addressService;
     private final com.example.demodatn.repository.nhanvien.AccountIssueRepository accountIssues;
     @Value("${shop.employee-role:ROLE_ADMIN}") private String employeeRole;
 
@@ -91,8 +92,12 @@ public class PeopleService {
         c.setSoCccd(document);c.setNgaySinh(form.getNgaySinh());c.setGioiTinh(form.getGioiTinh()==null||form.getGioiTinh().isBlank()?null:form.getGioiTinh());
         c.setCustomerCode(form.getCustomerCode().trim());c.setFullName(form.getFullName().trim());
         c.setPhone(phone(form.getPhone()));c.setEmail(email(form.getEmail()));
-        c.setAddress(form.getId()==null ? form.getAddress() : shippingAddresses.findByCustomer_IdOrderBySlotAsc(id).stream()
-                .filter(com.example.demodatn.entity.khachhang.ShippingAddress::isDefaultAddress).map(com.example.demodatn.entity.khachhang.ShippingAddress::getAddress).findFirst().orElse(form.getAddress()));
+        // Customer editing uses the same address service and keeps other saved addresses intact.
+        customers.saveAndFlush(c);
+        var address=new com.example.demodatn.dto.khachhang.ShippingAddressForm();
+        shippingAddresses.findByCustomer_IdOrderBySlotAsc(c.getId()).stream().filter(com.example.demodatn.entity.khachhang.ShippingAddress::isDefaultAddress).findFirst().ifPresent(a->address.setId(a.getId()));
+        address.setReceiverName(c.getFullName());address.setPhone(c.getPhone());address.setAddress(form.getAddress());address.setProvinceId(form.getProvinceId());address.setMakeDefault(true);
+        addressService.saveForCustomer(c.getId(),address);
         // Status changes have a separate confirmed POST and cannot be smuggled through this form.
         return customers.saveAndFlush(c);
     }

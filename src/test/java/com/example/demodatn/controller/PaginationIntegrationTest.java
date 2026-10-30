@@ -27,7 +27,7 @@ class PaginationIntegrationTest {
     @BeforeEach void thirtyRowsPerType() {
         assertTrue((Set.of("shopbangiay_kt","shop_verify","shopbangiay_thu").contains(jdbc.queryForObject("SELECT DB_NAME()",String.class)) || jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_")),"Never run fixtures against the real DB");
         mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-        for(String table:List.of("pos_held_items","pos_held_orders","invoices","order_details","orders","inventory_logs","promotion_details","product_images","product_variants","products"))jdbc.update("DELETE FROM "+table);
+        for(String table:List.of("pos_held_items","pos_held_orders","invoices","order_details","order_status_history","orders","inventory_logs","promotion_details","product_images","product_variants","products"))jdbc.update("DELETE FROM "+table);
         jdbc.update("UPDATE vouchers SET customer_id=NULL");
         for(String table:List.of("customers","employees","vouchers","promotions","categories","sizes"))jdbc.update("DELETE FROM "+table);
         int role=jdbc.queryForObject("SELECT id FROM roles WHERE name='ROLE_USER'",Integer.class);

@@ -79,7 +79,7 @@ class DiscountIntegrationTest {
         var v=new ProductVariant();v.setProduct(p);v.setSize(sizes.findAll().get(0));v.setMaterial(materials.findAll().get(0));v.setColor(phase5Colors.findAll().get(0));v.setSole(phase5Soles.findAll().get(0));v.setPrice(new BigDecimal("200000"));v.setQuantity(10);return variants.saveAndFlush(v);
     }
     private CartItemDto item(ProductVariant v) { return new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),BigDecimal.ONE,1); }
-    private CheckoutRequest request(String code) { var r=new CheckoutRequest();r.setReceiverName("Kiểm thử");r.setPhone("0987000000");r.setEmail("p8@example.invalid");r.setShippingAddress("Địa chỉ kiểm thử");r.setPaymentMethod("COD");r.setVoucherCode(code);return r; }
+    private CheckoutRequest request(String code) { var r=new CheckoutRequest();r.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));r.setReceiverName("Kiểm thử");r.setPhone("0987000000");r.setEmail("p8@example.invalid");r.setShippingAddress("Địa chỉ kiểm thử");r.setPaymentMethod("COD");r.setVoucherCode(code);return r; }
     private void money(String expected,BigDecimal actual) { assertEquals(0,new BigDecimal(expected).compareTo(actual)); }
 
     @Test @Transactional
@@ -146,7 +146,7 @@ class DiscountIntegrationTest {
         } finally { start.countDown();pool.shutdownNow();cleanup(ids[4],List.of(ids[0],ids[2]),List.of(ids[1],ids[3])); }
     }
     private void cleanup(Integer voucherId,List<Integer> variantIds,List<Integer> productIds) {
-        new TransactionTemplate(manager).executeWithoutResult(s->{jdbc.update("DELETE FROM invoices WHERE order_id IN (SELECT id FROM orders WHERE voucher_id=?)",voucherId);jdbc.update("DELETE FROM order_details WHERE order_id IN (SELECT id FROM orders WHERE voucher_id=?)",voucherId);jdbc.update("DELETE FROM orders WHERE voucher_id=?",voucherId);jdbc.update("DELETE FROM vouchers WHERE id=?",voucherId);for(int id:variantIds){jdbc.update("DELETE FROM inventory_logs WHERE variant_id=?",id);jdbc.update("DELETE FROM product_variants WHERE id=?",id);}for(int id:productIds)jdbc.update("DELETE FROM products WHERE id=?",id);});
+        new TransactionTemplate(manager).executeWithoutResult(s->{jdbc.update("DELETE FROM invoices WHERE order_id IN (SELECT id FROM orders WHERE voucher_id=?)",voucherId);jdbc.update("DELETE FROM order_details WHERE order_id IN (SELECT id FROM orders WHERE voucher_id=?)",voucherId);jdbc.update("DELETE FROM order_status_history WHERE order_id IN (SELECT id FROM orders WHERE voucher_id=?)",voucherId);jdbc.update("DELETE FROM orders WHERE voucher_id=?",voucherId);jdbc.update("DELETE FROM vouchers WHERE id=?",voucherId);for(int id:variantIds){jdbc.update("DELETE FROM inventory_logs WHERE variant_id=?",id);jdbc.update("DELETE FROM product_variants WHERE id=?",id);}for(int id:productIds)jdbc.update("DELETE FROM products WHERE id=?",id);});
     }
     @Test @WithMockUser(roles="USER")
     void ordinaryUserCannotManageDiscounts() throws Exception {

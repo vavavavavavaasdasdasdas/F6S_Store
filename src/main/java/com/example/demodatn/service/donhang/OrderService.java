@@ -28,6 +28,7 @@ public class OrderService {
 
     private final InvoiceRepository invoices;
     private final OrderStatusService statuses;
+    private final DeliveryService delivery;
     private final com.example.demodatn.repository.donhang.OrderRepository orders;
 
     @Transactional(rollbackFor = Exception.class)
@@ -42,6 +43,7 @@ public class OrderService {
         order.setPhoneNumber(request.getPhone());
         order.setEmail(request.getEmail());
         order.setShippingAddress(request.getShippingAddress());
+        var province=delivery.province(request.getProvinceId());order.setProvince(province);order.setProvinceName(province.getName());
         return saveSale(order, cartItems, request.getVoucherCode(), null);
     }
 

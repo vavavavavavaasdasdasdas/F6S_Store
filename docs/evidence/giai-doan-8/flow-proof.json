@@ -1,0 +1,942 @@
+{
+  "variant": {
+    "id": 5,
+    "product_id": 3,
+    "quantity": 97,
+    "code": "SP003"
+  },
+  "orders": [
+    {
+      "orderId": 674,
+      "invoiceHeaders": [
+        "STT",
+        "Ảnh",
+        "Mã",
+        "Tên sản phẩm",
+        "Kích cỡ",
+        "Chất liệu",
+        "Màu sắc",
+        "Đế giày",
+        "SL",
+        "Đơn giá (đ)",
+        "Thành tiền (đ)"
+      ],
+      "kind": "delivered",
+      "width": 1280,
+      "snapshots": [
+        {
+          "order": {
+            "id": 674,
+            "status": "PENDING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false,
+            "tinh_thanh_id": 1,
+            "ten_tinh_thanh": "Hà Nội",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 97,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:13.6318367",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 674,
+            "status": "CONFIRMED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 1,
+            "ten_tinh_thanh": "Hà Nội",
+            "du_kien_giao_tu": "2026-11-02",
+            "du_kien_giao_den": "2026-11-02",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 96,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:13.6318367",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:50:17.5037656",
+              "actor": "admin"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 674,
+            "status": "PREPARING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 1,
+            "ten_tinh_thanh": "Hà Nội",
+            "du_kien_giao_tu": "2026-11-02",
+            "du_kien_giao_den": "2026-11-02",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 96,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:13.6318367",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:50:17.5037656",
+              "actor": "admin"
+            },
+            {
+              "status": "PREPARING",
+              "changed_at": "2026-10-30T16:50:24.7467665",
+              "actor": "admin"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 674,
+            "status": "SHIPPING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 1,
+            "ten_tinh_thanh": "Hà Nội",
+            "du_kien_giao_tu": "2026-11-02",
+            "du_kien_giao_den": "2026-11-02",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 96,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:13.6318367",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:50:17.5037656",
+              "actor": "admin"
+            },
+            {
+              "status": "PREPARING",
+              "changed_at": "2026-10-30T16:50:24.7467665",
+              "actor": "admin"
+            },
+            {
+              "status": "SHIPPING",
+              "changed_at": "2026-10-30T16:50:28.4677671",
+              "actor": "admin",
+              "carrier": "Đơn vị giao hàng Việt",
+              "tracking_code": "VN674"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 674,
+            "status": "DELIVERED",
+            "payment_status": "PAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 1,
+            "ten_tinh_thanh": "Hà Nội",
+            "du_kien_giao_tu": "2026-11-02",
+            "du_kien_giao_den": "2026-11-02",
+            "ngay_giao_thuc_te": "2026-10-30",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 96,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:13.6318367",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:50:17.5037656",
+              "actor": "admin"
+            },
+            {
+              "status": "PREPARING",
+              "changed_at": "2026-10-30T16:50:24.7467665",
+              "actor": "admin"
+            },
+            {
+              "status": "SHIPPING",
+              "changed_at": "2026-10-30T16:50:28.4677671",
+              "actor": "admin",
+              "carrier": "Đơn vị giao hàng Việt",
+              "tracking_code": "VN674"
+            },
+            {
+              "status": "DELIVERED",
+              "changed_at": "2026-10-30T16:50:31.9957704",
+              "actor": "admin"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "orderId": 675,
+      "invoiceHeaders": [
+        "STT",
+        "Ảnh",
+        "Mã",
+        "Tên sản phẩm",
+        "Kích cỡ",
+        "Chất liệu",
+        "Màu sắc",
+        "Đế giày",
+        "SL",
+        "Đơn giá (đ)",
+        "Thành tiền (đ)"
+      ],
+      "kind": "cancelled",
+      "width": 1280,
+      "snapshots": [
+        {
+          "order": {
+            "id": 675,
+            "status": "PENDING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false,
+            "tinh_thanh_id": 29,
+            "ten_tinh_thanh": "Đà Nẵng",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 96,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:38.9637711",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 675,
+            "status": "CONFIRMED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 29,
+            "ten_tinh_thanh": "Đà Nẵng",
+            "du_kien_giao_tu": "2026-11-04",
+            "du_kien_giao_den": "2026-11-06",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 95,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:38.9637711",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:50:42.6817652",
+              "actor": "admin"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 675,
+            "status": "CANCELLED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false,
+            "tinh_thanh_id": 29,
+            "ten_tinh_thanh": "Đà Nẵng",
+            "du_kien_giao_tu": "2026-11-04",
+            "du_kien_giao_den": "2026-11-06",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 96,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:38.9637711",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:50:42.6817652",
+              "actor": "admin"
+            },
+            {
+              "status": "CANCELLED",
+              "changed_at": "2026-10-30T16:50:46.1997697",
+              "actor": "admin",
+              "note": "Khách yêu cầu hủy"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "orderId": 676,
+      "invoiceHeaders": [
+        "STT",
+        "Ảnh",
+        "Mã",
+        "Tên sản phẩm",
+        "Kích cỡ",
+        "Chất liệu",
+        "Màu sắc",
+        "Đế giày",
+        "SL",
+        "Đơn giá (đ)",
+        "Thành tiền (đ)"
+      ],
+      "kind": "failed",
+      "width": 1280,
+      "snapshots": [
+        {
+          "order": {
+            "id": 676,
+            "status": "PENDING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false,
+            "tinh_thanh_id": 17,
+            "ten_tinh_thanh": "Hồ Chí Minh",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 96,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:53.0877686",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 676,
+            "status": "CONFIRMED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 17,
+            "ten_tinh_thanh": "Hồ Chí Minh",
+            "du_kien_giao_tu": "2026-11-04",
+            "du_kien_giao_den": "2026-11-06",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 95,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:53.0877686",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:50:56.8747736",
+              "actor": "admin"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 676,
+            "status": "PREPARING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 17,
+            "ten_tinh_thanh": "Hồ Chí Minh",
+            "du_kien_giao_tu": "2026-11-04",
+            "du_kien_giao_den": "2026-11-06",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 95,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:53.0877686",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:50:56.8747736",
+              "actor": "admin"
+            },
+            {
+              "status": "PREPARING",
+              "changed_at": "2026-10-30T16:51:00.5107665",
+              "actor": "admin"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 676,
+            "status": "SHIPPING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 17,
+            "ten_tinh_thanh": "Hồ Chí Minh",
+            "du_kien_giao_tu": "2026-11-04",
+            "du_kien_giao_den": "2026-11-06",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 95,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:53.0877686",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:50:56.8747736",
+              "actor": "admin"
+            },
+            {
+              "status": "PREPARING",
+              "changed_at": "2026-10-30T16:51:00.5107665",
+              "actor": "admin"
+            },
+            {
+              "status": "SHIPPING",
+              "changed_at": "2026-10-30T16:51:04.1707668",
+              "actor": "admin",
+              "carrier": "Đơn vị giao hàng Việt",
+              "tracking_code": "VN676"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 676,
+            "status": "DELIVERY_FAILED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false,
+            "tinh_thanh_id": 17,
+            "ten_tinh_thanh": "Hồ Chí Minh",
+            "du_kien_giao_tu": "2026-11-04",
+            "du_kien_giao_den": "2026-11-06",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 96,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:50:53.0877686",
+              "actor": "gd8_user_1280",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:50:56.8747736",
+              "actor": "admin"
+            },
+            {
+              "status": "PREPARING",
+              "changed_at": "2026-10-30T16:51:00.5107665",
+              "actor": "admin"
+            },
+            {
+              "status": "SHIPPING",
+              "changed_at": "2026-10-30T16:51:04.1707668",
+              "actor": "admin",
+              "carrier": "Đơn vị giao hàng Việt",
+              "tracking_code": "VN676"
+            },
+            {
+              "status": "DELIVERY_FAILED",
+              "changed_at": "2026-10-30T16:51:07.7927666",
+              "actor": "admin",
+              "note": "Không liên hệ được người nhận"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "orderId": 677,
+      "invoiceHeaders": [
+        "STT",
+        "Ảnh",
+        "Mã",
+        "Tên sản phẩm",
+        "Kích cỡ",
+        "Chất liệu",
+        "Màu sắc",
+        "Đế giày",
+        "SL",
+        "Đơn giá (đ)",
+        "Thành tiền (đ)"
+      ],
+      "kind": "delivered",
+      "width": 375,
+      "snapshots": [
+        {
+          "order": {
+            "id": 677,
+            "status": "PENDING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false,
+            "tinh_thanh_id": 1,
+            "ten_tinh_thanh": "Hà Nội",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 96,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:18.3507671",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 677,
+            "status": "CONFIRMED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 1,
+            "ten_tinh_thanh": "Hà Nội",
+            "du_kien_giao_tu": "2026-11-02",
+            "du_kien_giao_den": "2026-11-02",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 95,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:18.3507671",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:51:22.0357680",
+              "actor": "admin"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 677,
+            "status": "PREPARING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 1,
+            "ten_tinh_thanh": "Hà Nội",
+            "du_kien_giao_tu": "2026-11-02",
+            "du_kien_giao_den": "2026-11-02",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 95,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:18.3507671",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:51:22.0357680",
+              "actor": "admin"
+            },
+            {
+              "status": "PREPARING",
+              "changed_at": "2026-10-30T16:51:29.1257669",
+              "actor": "admin"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 677,
+            "status": "SHIPPING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 1,
+            "ten_tinh_thanh": "Hà Nội",
+            "du_kien_giao_tu": "2026-11-02",
+            "du_kien_giao_den": "2026-11-02",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 95,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:18.3507671",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:51:22.0357680",
+              "actor": "admin"
+            },
+            {
+              "status": "PREPARING",
+              "changed_at": "2026-10-30T16:51:29.1257669",
+              "actor": "admin"
+            },
+            {
+              "status": "SHIPPING",
+              "changed_at": "2026-10-30T16:51:32.6637669",
+              "actor": "admin",
+              "carrier": "Đơn vị giao hàng Việt",
+              "tracking_code": "VN677"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 677,
+            "status": "DELIVERED",
+            "payment_status": "PAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 1,
+            "ten_tinh_thanh": "Hà Nội",
+            "du_kien_giao_tu": "2026-11-02",
+            "du_kien_giao_den": "2026-11-02",
+            "ngay_giao_thuc_te": "2026-10-30",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 95,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:18.3507671",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:51:22.0357680",
+              "actor": "admin"
+            },
+            {
+              "status": "PREPARING",
+              "changed_at": "2026-10-30T16:51:29.1257669",
+              "actor": "admin"
+            },
+            {
+              "status": "SHIPPING",
+              "changed_at": "2026-10-30T16:51:32.6637669",
+              "actor": "admin",
+              "carrier": "Đơn vị giao hàng Việt",
+              "tracking_code": "VN677"
+            },
+            {
+              "status": "DELIVERED",
+              "changed_at": "2026-10-30T16:51:36.3177668",
+              "actor": "admin"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "orderId": 678,
+      "invoiceHeaders": [
+        "STT",
+        "Ảnh",
+        "Mã",
+        "Tên sản phẩm",
+        "Kích cỡ",
+        "Chất liệu",
+        "Màu sắc",
+        "Đế giày",
+        "SL",
+        "Đơn giá (đ)",
+        "Thành tiền (đ)"
+      ],
+      "kind": "cancelled",
+      "width": 375,
+      "snapshots": [
+        {
+          "order": {
+            "id": 678,
+            "status": "PENDING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false,
+            "tinh_thanh_id": 29,
+            "ten_tinh_thanh": "Đà Nẵng",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 95,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:43.5227682",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 678,
+            "status": "CONFIRMED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 29,
+            "ten_tinh_thanh": "Đà Nẵng",
+            "du_kien_giao_tu": "2026-11-04",
+            "du_kien_giao_den": "2026-11-06",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 94,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:43.5227682",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:51:47.3147663",
+              "actor": "admin"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 678,
+            "status": "CANCELLED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false,
+            "tinh_thanh_id": 29,
+            "ten_tinh_thanh": "Đà Nẵng",
+            "du_kien_giao_tu": "2026-11-04",
+            "du_kien_giao_den": "2026-11-06",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 95,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:43.5227682",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:51:47.3147663",
+              "actor": "admin"
+            },
+            {
+              "status": "CANCELLED",
+              "changed_at": "2026-10-30T16:51:50.9587672",
+              "actor": "admin",
+              "note": "Khách yêu cầu hủy"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "orderId": 679,
+      "invoiceHeaders": [
+        "STT",
+        "Ảnh",
+        "Mã",
+        "Tên sản phẩm",
+        "Kích cỡ",
+        "Chất liệu",
+        "Màu sắc",
+        "Đế giày",
+        "SL",
+        "Đơn giá (đ)",
+        "Thành tiền (đ)"
+      ],
+      "kind": "failed",
+      "width": 375,
+      "snapshots": [
+        {
+          "order": {
+            "id": 679,
+            "status": "PENDING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false,
+            "tinh_thanh_id": 17,
+            "ten_tinh_thanh": "Hồ Chí Minh",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 95,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:57.9277673",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 679,
+            "status": "CONFIRMED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 17,
+            "ten_tinh_thanh": "Hồ Chí Minh",
+            "du_kien_giao_tu": "2026-11-04",
+            "du_kien_giao_den": "2026-11-06",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 94,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:57.9277673",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:52:01.7582737",
+              "actor": "admin"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 679,
+            "status": "PREPARING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 17,
+            "ten_tinh_thanh": "Hồ Chí Minh",
+            "du_kien_giao_tu": "2026-11-04",
+            "du_kien_giao_den": "2026-11-06",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 94,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:57.9277673",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:52:01.7582737",
+              "actor": "admin"
+            },
+            {
+              "status": "PREPARING",
+              "changed_at": "2026-10-30T16:52:05.5020512",
+              "actor": "admin"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 679,
+            "status": "SHIPPING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "tinh_thanh_id": 17,
+            "ten_tinh_thanh": "Hồ Chí Minh",
+            "du_kien_giao_tu": "2026-11-04",
+            "du_kien_giao_den": "2026-11-06",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 94,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:57.9277673",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:52:01.7582737",
+              "actor": "admin"
+            },
+            {
+              "status": "PREPARING",
+              "changed_at": "2026-10-30T16:52:05.5020512",
+              "actor": "admin"
+            },
+            {
+              "status": "SHIPPING",
+              "changed_at": "2026-10-30T16:52:09.0960893",
+              "actor": "admin",
+              "carrier": "Đơn vị giao hàng Việt",
+              "tracking_code": "VN679"
+            }
+          ]
+        },
+        {
+          "order": {
+            "id": 679,
+            "status": "DELIVERY_FAILED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false,
+            "tinh_thanh_id": 17,
+            "ten_tinh_thanh": "Hồ Chí Minh",
+            "du_kien_giao_tu": "2026-11-04",
+            "du_kien_giao_den": "2026-11-06",
+            "shipping_address": "Số 12, đường Nguyễn Huệ, địa chỉ tạm"
+          },
+          "quantity": 95,
+          "history": [
+            {
+              "status": "PENDING",
+              "changed_at": "2026-10-30T16:51:57.9277673",
+              "actor": "gd8_user_375",
+              "note": "Đã tạo đơn hàng."
+            },
+            {
+              "status": "CONFIRMED",
+              "changed_at": "2026-10-30T16:52:01.7582737",
+              "actor": "admin"
+            },
+            {
+              "status": "PREPARING",
+              "changed_at": "2026-10-30T16:52:05.5020512",
+              "actor": "admin"
+            },
+            {
+              "status": "SHIPPING",
+              "changed_at": "2026-10-30T16:52:09.0960893",
+              "actor": "admin",
+              "carrier": "Đơn vị giao hàng Việt",
+              "tracking_code": "VN679"
+            },
+            {
+              "status": "DELIVERY_FAILED",
+              "changed_at": "2026-10-30T16:52:12.6940901",
+              "actor": "admin",
+              "note": "Không liên hệ được người nhận"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

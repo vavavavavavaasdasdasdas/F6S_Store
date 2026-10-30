@@ -142,7 +142,7 @@ class CatalogIntegrationTest {
     @Test @Transactional
     void onlineSaleAndCancellationShareTheStockLedger() {
         ProductVariant v=catalog.saveVariant(variantForm(product(),5));
-        CheckoutRequest request=new CheckoutRequest();
+        CheckoutRequest request=new CheckoutRequest();request.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));
         request.setPaymentMethod("COD");request.setReceiverName("Phase 6 test");
         request.setPhone("0900000000");request.setShippingAddress("Địa chỉ kiểm thử");
         Order order=orders.placeOrder(request,List.of(item(v,2)),null,BigDecimal.ZERO);

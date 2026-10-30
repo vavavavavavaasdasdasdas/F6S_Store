@@ -5,6 +5,9 @@
         form.elements.receiverName.value=option.dataset.receiver || '';
         form.elements.phone.value=option.dataset.phone || '';
         form.elements.shippingAddress.value=option.dataset.address || '';
+        form.elements.provinceId.value=option.dataset.province || '';
+        form.elements.provinceId.dispatchEvent(new Event('combo:sync'));
+        form.elements.provinceId.dispatchEvent(new Event('change',{bubbles:true}));
         ['receiverName','phone','shippingAddress'].forEach(name=>form.elements[name].dispatchEvent(new Event('input',{bubbles:true})));
     });
     const editor=document.querySelector('[data-address-form]');let dirty=false;

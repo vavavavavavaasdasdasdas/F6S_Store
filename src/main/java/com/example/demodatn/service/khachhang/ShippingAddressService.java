@@ -23,6 +23,7 @@ public class ShippingAddressService {
     private final ShippingAddressRepository addresses;
     private final Validator validator;
     private final Clock clock;
+    private final com.example.demodatn.service.donhang.DeliveryService delivery;
 
     private Customer owner(String username,boolean lock) {
         return (lock ? customers.findForUpdateByUsername(username) : customers.findByUser_Username(username))
@@ -44,7 +45,19 @@ public class ShippingAddressService {
             var v=violations.stream().sorted(java.util.Comparator.comparing(x -> x.getPropertyPath().toString())).findFirst().orElseThrow();
             throw new PeopleValidationException(v.getPropertyPath().toString(),v.getMessage());
         }
-        Customer customer=owner(username,true);
+        return persist(owner(username,true),form);
+    }
+    @Transactional
+    public ShippingAddress saveForCustomer(Integer customerId,ShippingAddressForm form) {
+        var customer=customers.findForUpdate(customerId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        var errors=validator.validate(form);
+        if(!errors.isEmpty()){var e=errors.iterator().next();throw new PeopleValidationException(e.getPropertyPath().toString(),e.getMessage());}
+        return persist(customer,form);
+    }
+    private ShippingAddress persist(Customer customer,ShippingAddressForm form) {
+        final com.example.demodatn.entity.donhang.Province province;
+        try {province=delivery.province(form.getProvinceId());}
+        catch(IllegalArgumentException ex){throw new PeopleValidationException("provinceId",ex.getMessage());}
         var rows=addresses.findByCustomer_IdOrderBySlotAsc(customer.getId());
         ShippingAddress address;
         if(form.getId()==null) {
@@ -55,6 +68,7 @@ public class ShippingAddressService {
             address.setSlot(slot);
         } else address=rows.stream().filter(a -> a.getId().equals(form.getId())).findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy địa chỉ."));
+        address.setProvince(province);
         address.setReceiverName(form.getReceiverName().trim());address.setPhone(form.getPhone().trim());address.setAddress(form.getAddress().trim());
         boolean chooseDefault=rows.isEmpty() || address.isDefaultAddress() || form.isMakeDefault();
         addresses.saveAndFlush(address);

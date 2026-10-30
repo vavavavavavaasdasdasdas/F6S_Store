@@ -1,0 +1,38 @@
+{
+  "headCommit": "6fc8cbf",
+  "head": {
+    "errors": 139,
+    "total": 139,
+    "unresolved": 45,
+    "violations": 94,
+    "warnings": 0
+  },
+  "current": {
+    "errors": 143,
+    "total": 143,
+    "unresolved": 46,
+    "violations": 97,
+    "warnings": 0
+  },
+  "new": [
+    [
+      "src/main/resources/templates/admin/giao-hang/thoi-gian.html",
+      "ownership.native-select-undecided",
+      "Native select is used without an explicit ownership decision.",
+      1
+    ],
+    [
+      "src/main/resources/templates/admin/don-hang/chi-tiet.html",
+      "affordance.actionless-button",
+      "Enabled literal button has no detectable action or submit behavior.",
+      2
+    ],
+    [
+      "src/main/resources/templates/user/hoa-don.html",
+      "affordance.actionless-button",
+      "Enabled literal button has no detectable action or submit behavior.",
+      1
+    ]
+  ],
+  "removed": []
+}

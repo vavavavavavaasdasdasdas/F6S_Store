@@ -1,0 +1,68 @@
+[
+  {
+    "orderId": 674,
+    "province": "Hà Nội",
+    "placedDateFromInitialHistory": "2026-10-30",
+    "expectedFrom": "2026-11-02",
+    "actualFrom": "2026-11-02",
+    "expectedTo": "2026-11-02",
+    "actualTo": "2026-11-02",
+    "stockBefore": 97,
+    "stockAfter": 96
+  },
+  {
+    "orderId": 675,
+    "province": "Đà Nẵng",
+    "placedDateFromInitialHistory": "2026-10-30",
+    "expectedFrom": "2026-11-04",
+    "actualFrom": "2026-11-04",
+    "expectedTo": "2026-11-06",
+    "actualTo": "2026-11-06",
+    "stockBefore": 96,
+    "stockAfter": 96
+  },
+  {
+    "orderId": 676,
+    "province": "Hồ Chí Minh",
+    "placedDateFromInitialHistory": "2026-10-30",
+    "expectedFrom": "2026-11-04",
+    "actualFrom": "2026-11-04",
+    "expectedTo": "2026-11-06",
+    "actualTo": "2026-11-06",
+    "stockBefore": 96,
+    "stockAfter": 96
+  },
+  {
+    "orderId": 677,
+    "province": "Hà Nội",
+    "placedDateFromInitialHistory": "2026-10-30",
+    "expectedFrom": "2026-11-02",
+    "actualFrom": "2026-11-02",
+    "expectedTo": "2026-11-02",
+    "actualTo": "2026-11-02",
+    "stockBefore": 96,
+    "stockAfter": 95
+  },
+  {
+    "orderId": 678,
+    "province": "Đà Nẵng",
+    "placedDateFromInitialHistory": "2026-10-30",
+    "expectedFrom": "2026-11-04",
+    "actualFrom": "2026-11-04",
+    "expectedTo": "2026-11-06",
+    "actualTo": "2026-11-06",
+    "stockBefore": 95,
+    "stockAfter": 95
+  },
+  {
+    "orderId": 679,
+    "province": "Hồ Chí Minh",
+    "placedDateFromInitialHistory": "2026-10-30",
+    "expectedFrom": "2026-11-04",
+    "actualFrom": "2026-11-04",
+    "expectedTo": "2026-11-06",
+    "actualTo": "2026-11-06",
+    "stockBefore": 95,
+    "stockAfter": 95
+  }
+]

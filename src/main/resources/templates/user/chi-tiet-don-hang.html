@@ -5,6 +5,7 @@
     </div>
 
 <th:block th:replace="~{fragments/han-chuyen-khoan :: deadline(${order},false)}"></th:block>
+    <th:block th:replace="~{fragments/giao-hang :: tracking(${order})}"></th:block><th:block th:replace="~{fragments/giao-hang :: estimate(${order},false)}"></th:block><a class="btn btn-primary mb-3" th:if="${invoice!=null}" th:href="@{/orders/{id}/hoa-don(id=${order.id})}">Xem hóa đơn</a>
     <div class="row">
         <div class="col-md-4">
             <div class="p-3 border rounded bg-light shadow-sm">
