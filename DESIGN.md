@@ -85,3 +85,11 @@ Tìm khách bắt đầu từ trạng thái Khách lẻ, danh sách chỉ xuất
 ### Giai đoạn 8 — Giao hàng và hóa đơn khách
 
 Tiến trình online dùng năm bước chữ/thời gian/người thực hiện, cuộn trong khung ở mobile; POS giữ điều khiển cũ. Nút bước kế tiếp mở dialog có xác nhận; hủy/thất bại cần lý do, giao vận có hai trường tùy chọn. Dùng quan-tri-danh-muc.js cho validation/busy/guard; shared validator đọc form.elements để hỗ trợ các input liên kết form ở bảng cấu hình. Tỉnh dùng combo-box.js bắt buộc, tìm được nhưng không tạo tùy ý. Runtime token không đổi. Hóa đơn khách dùng cùng dữ liệu snapshot, khung cuộn và cột bản in Admin; CSS riêng theo customer-invoice-page, bản in A4 ẩn điều hướng. UX-CONTRACT.md ghi chủ sở hữu tương tác và ngoại lệ nghiệp vụ.
+
+### Địa chỉ, phí vận chuyển, đơn giao hàng tại POS và biểu trưng
+
+Giữ hệ thống giao diện hiện có. `fragments/dia-chi-giao-hang.html` sở hữu bộ chọn phụ thuộc dùng combo-box.js, ô số nhà, trạng thái định vị và khung bản đồ cố định chiều cao. Leaflet cục bộ có attribution; người dùng luôn chọn tay được. `dia-chi-giao-hang.js` sở hữu request hủy được, chống kết quả cũ ghi đè, trạng thái tính phí và nút đặt hàng bận. Không tạo bộ combo/validation/dialog thứ hai.
+
+POS chọn chế độ bằng radio, tách form giao hàng và form tại quầy; QR đơn giao hàng xuất hiện sau khi có mã đơn thật. Phí/địa chỉ được chụp vào đơn; UI không quyết định số tiền. `nut-hanh-dong.js` trang trí cột Hành động/Thao tác và dòng thêm qua AJAX bằng cùng class/SVG chữ rõ, màu theo tác dụng, cao tối thiểu 36px. Không thay handler, form POST hay confirm. Bảng giữ khung cuộn ngang.
+
+Logo do chủ dự án cung cấp dùng object-fit:contain, favicon 32/180, bản in và MIME email inline; không thiết kế lại. Phần kiểm thử ghi riêng mock bản đồ và các mục cần thử thiết bị/dịch vụ thật.

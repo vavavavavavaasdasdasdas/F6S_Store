@@ -24,6 +24,7 @@ public class ShippingAddressService {
     private final Validator validator;
     private final Clock clock;
     private final com.example.demodatn.service.donhang.DeliveryService delivery;
+    private final com.example.demodatn.service.donhang.ShippingFeeService shipping;
 
     private Customer owner(String username,boolean lock) {
         return (lock ? customers.findForUpdateByUsername(username) : customers.findByUser_Username(username))
@@ -56,8 +57,9 @@ public class ShippingAddressService {
     }
     private ShippingAddress persist(Customer customer,ShippingAddressForm form) {
         final com.example.demodatn.entity.donhang.Province province;
-        try {province=delivery.province(form.getProvinceId());}
-        catch(IllegalArgumentException ex){throw new PeopleValidationException("provinceId",ex.getMessage());}
+        final com.example.demodatn.entity.donhang.Ward ward;
+        try {ward=shipping.validateAddress(form);province=ward.getProvince();}
+        catch(IllegalArgumentException ex){throw new PeopleValidationException(ex.getMessage().contains("Phường")?"wardId":"streetAddress",ex.getMessage());}
         var rows=addresses.findByCustomer_IdOrderBySlotAsc(customer.getId());
         ShippingAddress address;
         if(form.getId()==null) {
@@ -68,8 +70,9 @@ public class ShippingAddressService {
             address.setSlot(slot);
         } else address=rows.stream().filter(a -> a.getId().equals(form.getId())).findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy địa chỉ."));
-        address.setProvince(province);
-        address.setReceiverName(form.getReceiverName().trim());address.setPhone(form.getPhone().trim());address.setAddress(form.getAddress().trim());
+        address.setProvince(province);address.setWard(ward);address.setStreetAddress(form.getStreetAddress().trim());
+        var point=shipping.quote(form,0,false,"address-book");address.setLatitude(point.latitude());address.setLongitude(point.longitude());address.setCoordinateSource(point.coordinateSource());
+        address.setReceiverName(form.getReceiverName().trim());address.setPhone(form.getPhone().trim());address.setAddress(form.getStreetAddress().trim());
         boolean chooseDefault=rows.isEmpty() || address.isDefaultAddress() || form.isMakeDefault();
         addresses.saveAndFlush(address);
         if(!rows.contains(address))rows.add(address);

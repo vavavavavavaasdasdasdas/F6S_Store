@@ -20,8 +20,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-    @org.springframework.beans.factory.annotation.Value("${shop.shipping.fee:30000}") private BigDecimal configuredShippingFee;
-    @org.springframework.beans.factory.annotation.Value("${shop.shipping.free-threshold:500000}") private BigDecimal freeShippingThreshold;
+    private final ShippingFeeService shipping;
     private final VoucherService voucherService;
     private final PricingService pricingService;
     private final com.example.demodatn.service.sanpham.InventoryService inventoryService;
@@ -32,19 +31,21 @@ public class OrderService {
     private final com.example.demodatn.repository.donhang.OrderRepository orders;
 
     @Transactional(rollbackFor = Exception.class)
-    public Order placeOrder(CheckoutRequest request, List<CartItemDto> cartItems, Customer customer, BigDecimal ignoredShippingFee) {
-        Order order = new Order();
-        order.setCustomer(customer);
-        order.setOrderType("ONLINE");
-
-        order.setPaymentMethod(request.getPaymentMethod());
-
-        order.setReceiverName(request.getReceiverName());
-        order.setPhoneNumber(request.getPhone());
-        order.setEmail(request.getEmail());
-        order.setShippingAddress(request.getShippingAddress());
-        var province=delivery.province(request.getProvinceId());order.setProvince(province);order.setProvinceName(province.getName());
-        return saveSale(order, cartItems, request.getVoucherCode(), null);
+    public Order placeOrder(CheckoutRequest request,List<CartItemDto> items,Customer customer,BigDecimal ignoredShippingFee) {
+        return saveSale(online(request,items,customer),items,request.getVoucherCode(),null);
+    }
+    private Order online(CheckoutRequest request,List<CartItemDto> items,Customer customer){
+        var order=new Order();order.setCustomer(customer);order.setOrderType("ONLINE");order.setPaymentMethod(request.getPaymentMethod());
+        order.setReceiverName(request.getReceiverName());order.setPhoneNumber(request.getPhone());order.setEmail(request.getEmail());
+        shipping.apply(order,request,ShippingFeeService.quantity(items));return order;
+    }
+    @Transactional(rollbackFor=Exception.class)
+    public Order createAssistedOnline(CheckoutRequest request,List<CartItemDto> items,Customer customer,Employee employee,String source,String note){
+        if(employee==null || !Boolean.TRUE.equals(employee.getStatus()) || employee.getUser()==null || !Boolean.TRUE.equals(employee.getUser().getStatus()))throw new IllegalArgumentException("Tài khoản chưa gắn với nhân viên đang hoạt động.");
+        if(!Order.SOURCE_LABELS.containsKey(source))throw new IllegalArgumentException("Nguồn đơn không hợp lệ.");
+        if(note!=null && note.length()>1000)throw new IllegalArgumentException("Ghi chú tối đa 1000 ký tự.");
+        var order=online(request,items,customer);order.setEmployee(employee);order.setOrderSource(source);order.setSalesNote(note);
+        return saveSale(order,items,request.getVoucherCode(),null);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -96,8 +97,7 @@ public class OrderService {
             subtotal = subtotal.add(detail.getTotalPrice());
         }
         order.setTotalAmount(subtotal);
-        order.setShippingFee("POS".equals(order.getOrderType()) || subtotal.compareTo(freeShippingThreshold) >= 0
-                ? BigDecimal.ZERO : configuredShippingFee);
+        if("POS".equals(order.getOrderType())){order.setShippingFee(BigDecimal.ZERO);order.setFreeShip(false);order.setShippingPolicyVersion(1);}
         order.setDiscountAmount(BigDecimal.ZERO);
         if (voucherCode != null && !voucherCode.isBlank()) {
             var result = voucherService.consume(voucherCode, order.getCustomer(), subtotal);

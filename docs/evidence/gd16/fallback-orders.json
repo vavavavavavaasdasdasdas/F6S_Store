@@ -1,0 +1,30 @@
+[
+  {
+    "orderId": 683,
+    "note": "Phí tạm tính, shop sẽ xác nhận lại",
+    "sql": {
+      "id": 683,
+      "shipping_fee": 55000.0,
+      "is_free_ship": false,
+      "shipping_note": "Phí tạm tính, shop sẽ xác nhận lại",
+      "final_amount": 3030000.0,
+      "dia_chi_giao_snapshot": "Số 15, đường Lê Lợi, Phường Hoàn Kiếm, Hà Nội"
+    },
+    "quantity": 1,
+    "width": 1280
+  },
+  {
+    "orderId": 684,
+    "note": "Miễn phí vận chuyển",
+    "sql": {
+      "id": 684,
+      "shipping_fee": 0.0,
+      "is_free_ship": true,
+      "shipping_note": "Miễn phí vận chuyển",
+      "final_amount": 5950000.0,
+      "dia_chi_giao_snapshot": "Số 15, đường Lê Lợi, Phường Hoàn Kiếm, Hà Nội"
+    },
+    "quantity": 2,
+    "width": 375
+  }
+]

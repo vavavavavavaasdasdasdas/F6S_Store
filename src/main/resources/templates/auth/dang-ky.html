@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-nguoi-dung :: html}">
 <head>
-    <title>Đăng ký - SHOP GIÀY</title>
+    <title>Đăng ký - F6S Store</title>
 </head>
 <body>
     <div th:fragment="content">
@@ -13,7 +13,7 @@
                         <h4 class="mt-2">Đăng ký tài khoản</h4>
                     </div>
 
-                    <form th:action="@{/register}" th:object="${registerRequest}" method="post" data-user-form novalidate>
+                    <img class="shop-logo shop-logo-auth" src="/images/logo.jpg" alt="Biểu trưng F6S Store"><form th:action="@{/register}" th:object="${registerRequest}" method="post" data-user-form novalidate>
 
                         <div class="mb-3">
                             <label for="username" class="form-label">Tên đăng nhập *</label>

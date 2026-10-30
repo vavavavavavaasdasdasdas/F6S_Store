@@ -12,9 +12,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DashboardRepository {
     private final JdbcTemplate jdbc;
-    // Revenue is final order value (including shipping), excluding failed/cancelled sales,
+    // Legacy revenue stays unchanged; new shipping-policy orders exclude shipping.
     // attributed to creation date because this schema has no paid_at timestamp.
-    public static final String REVENUE = "SELECT COALESCE(SUM(o.final_amount),0) FROM orders o WHERE " + RevenueCondition.SQL + " AND o.created_at >= ? AND o.created_at < ?";
+    public static final String REVENUE = "SELECT COALESCE(SUM(" + RevenueCondition.AMOUNT + "),0) FROM orders o WHERE " + RevenueCondition.SQL + " AND o.created_at >= ? AND o.created_at < ?";
     public Number revenue(LocalDate from, LocalDate to) {
         return jdbc.queryForObject(REVENUE, java.math.BigDecimal.class, from, to);
     }
@@ -30,7 +30,7 @@ public class DashboardRepository {
                 from, to, from, to, from, to);
     }
     public List<Map<String, Object>> daily(LocalDate from, LocalDate to) {
-        return jdbc.queryForList("SELECT CAST(o.created_at AS date) AS day, SUM(o.final_amount) AS amount FROM orders o WHERE " + RevenueCondition.SQL + " AND o.created_at >= ? AND o.created_at < ? GROUP BY CAST(o.created_at AS date) ORDER BY day", from, to);
+        return jdbc.queryForList("SELECT CAST(o.created_at AS date) AS day, SUM(" + RevenueCondition.AMOUNT + ") AS amount FROM orders o WHERE " + RevenueCondition.SQL + " AND o.created_at >= ? AND o.created_at < ? GROUP BY CAST(o.created_at AS date) ORDER BY day", from, to);
     }
     public List<Map<String, Object>> statuses() {
         return jdbc.queryForList("SELECT status, COUNT_BIG(*) AS total FROM orders GROUP BY status ORDER BY status");

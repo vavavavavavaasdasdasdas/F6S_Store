@@ -80,6 +80,7 @@ public class SchemaCheck implements BeanPostProcessor {
 
     private static String migration(String table, String column) {
         if(java.util.Set.of("so_cccd","ngay_sinh","gioi_tinh","must_change_password","credential_mail_failed","credential_mail_window","credential_mail_count","credential_mail_pending_until").contains(column))return "011_can_cuoc_tai_khoan_email.sql";
+        if(java.util.Set.of("phuong_xa","cau_hinh_phi_ship").contains(table) || java.util.Set.of("ma_hanh_chinh","phuong_xa_id","so_nha_duong","latitude","longitude","nguon_toa_do","distance_km","is_free_ship","shipping_policy_version","shipping_note","order_source","sales_note","ma_tinh_giao","ma_phuong_giao","ten_phuong_giao","dia_chi_giao_snapshot").contains(column))return "016_dia_chi_phi_ship_don_online.sql";
         if(java.util.Set.of("tinh_thanh","vung_giao_hang","order_status_history").contains(table) || java.util.Set.of("tinh_thanh_id","ten_tinh_thanh","du_kien_giao_tu","du_kien_giao_den","ngay_giao_thuc_te").contains(column))return "015_theo_doi_giao_hang.sql";
         if(column.equals("payment_reference"))return "014_tham_chieu_thanh_toan.sql";
         if(table.equals("mau_sac") || column.equals("mau_sac_id") || column.equals("ten_mau_sac") || column.equals("ten_de_giay") || (table.equals("product_variants") && column.equals("de_giay_id")))return "013_mau_sac_bien_the.sql";

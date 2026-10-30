@@ -1,0 +1,33 @@
+{
+  "sql": "SELECT COALESCE(SUM(CASE WHEN shipping_policy_version>=1 THEN final_amount-COALESCE(shipping_fee,0) ELSE final_amount END),0) revenue FROM orders WHERE payment_status='PAID' AND status NOT IN ('CANCELLED','DELIVERY_FAILED') AND created_at>=CONVERT(date,GETDATE()) AND created_at<DATEADD(day,1,CONVERT(date,GETDATE()))",
+  "sqlRows": [
+    {
+      "revenue": 1500000.0
+    }
+  ],
+  "page": {
+    "dashboardRevenue": 1500000,
+    "assets": [
+      {
+        "path": "/images/logo.jpg",
+        "status": 200
+      },
+      {
+        "path": "/images/favicon-32.png",
+        "status": 200
+      },
+      {
+        "path": "/images/favicon-180.png",
+        "status": 200
+      },
+      {
+        "path": "/js/vendor/leaflet/leaflet.js",
+        "status": 200
+      },
+      {
+        "path": "/js/vendor/leaflet/leaflet.css",
+        "status": 200
+      }
+    ]
+  }
+}

@@ -109,3 +109,17 @@ Chạy `015_theo_doi_giao_hang.sql` sau014 trước khi khởi động; aggregat
 Tỉnh/Thành phố bắt buộc khi lưu địa chỉ hoặc checkout mới. Danh sách34 tên và tên cũ đã đối chiếu nguồn chính thức ngày30/10/2026 trong [NGUON_TINH_THANH_2026.md](docs/NGUON_TINH_THANH_2026.md). Địa chỉ cũ không khớp rõ để trống, Admin sửa tỉnh đơn trước khi giao cho vận chuyển. Địa chỉ chi tiết và tỉnh được chụp riêng vào đơn; sửa tạm checkout không đổi sổ.
 
 Admin sửa số ngày tại `/admin/shipping-times`: Bắc3–3, Trung/Nam5–7 ngày lịch mặc định. Dự kiến được lưu khi xác nhận, theo ngày đặt ở Asia/Ho_Chi_Minh; nếu đã muộn thì tính từ ngày xác nhận và ghi chú. Đổi cấu hình không đổi đơn đã lưu. Thanh tiến trình và lịch sử hiện ở chi tiết đơn online; đơn POS giữ luồng cũ. Hủy/giao thất bại cần lý do. Chủ đơn xem/in hóa đơn tại `/orders/{id}/hoa-don` từ nút Xem hóa đơn; tài khoản khác bị chặn.
+
+## Bổ sung: địa chỉ, phí vận chuyển và đơn online tại POS
+
+Sau migration 015, chạy **016_dia_chi_phi_ship_don_online.sql** trước khi khởi động (`ddl-auto=validate`). `chay_tat_ca.sql` và `shopgiay.sql` đã chứa 016. Sao lưu database trước khi nâng cấp; lệnh và bằng chứng nằm trong [báo cáo bổ sung](docs/BO_SUNG_DIA_CHI_PHI_SHIP_POS.md).
+
+Checkout, sổ địa chỉ và đơn giao hàng POS dùng chung bộ chọn tỉnh → phường/xã và số nhà/tên đường. Dữ liệu 34 tỉnh, 3.321 phường/xã lấy từ file tĩnh; không có bước quận/huyện theo danh mục hiện hành. Tọa độ ghim/GPS được ưu tiên, sau đó tâm phường đã cache. Bản đồ có thể bấm hoặc kéo ghim; Enter tại tâm bản đồ là phương án bàn phím. **Định vị cần HTTPS hoặc localhost**; từ chối quyền/lỗi dịch vụ vẫn chọn tay được.
+
+Admin chỉnh kho, nấc khoảng cách/phí, ngưỡng miễn phí tại `/admin/shipping-times`. Mặc định ≤30km:25.000đ; >30–50km:35.000đ; >50km hoặc thiếu tọa độ:55.000đ; tổng số lượng ≥2 miễn phí. Khoảng cách là đường chim bay, không phải quãng đường xe chạy. Thiếu tọa độ hiện phí tạm tính. Voucher chỉ giảm tiền hàng, server tính lại phí từ giỏ và địa chỉ, bỏ qua phí/khoảng cách POST lên.
+
+Theo quyết định chủ dự án, **chỉ đơn mới có `shipping_policy_version=1` loại ship khỏi doanh thu**; đơn lịch sử có NULL giữ số liệu trước đây. Điều kiện PAID và loại hủy/giao thất bại không đổi; bán chạy vẫn dùng chi tiết hàng. QR dùng tổng thanh toán gồm ship. Địa chỉ đầy đủ và tọa độ/nguồn/khoảng cách/phí được chụp vào đơn; thay cấu hình hoặc tên hành chính không sửa snapshot đơn cũ.
+
+Tại POS, chọn **Đơn giao hàng (online)**, nhập người nhận/SĐT, nguồn đơn, địa chỉ và COD hoặc chuyển khoản. SĐT có sẵn được dùng lại, SĐT mới chỉ tạo khách vãng lai, không tạo tài khoản. Đơn thuộc kênh ONLINE và dùng nguyên luồng trạng thái/kho hiện có. Với chuyển khoản, tạo đơn trước để có mã đơn thật, rồi dùng QR đúng tổng tiền ở chi tiết đơn; việc tạo QR không tự xác nhận đã nhận tiền. Nhân viên có nút sao chép nội dung xác nhận để tự gửi khách.
+
+Leaflet cục bộ, nguồn dữ liệu, giấy phép, giới hạn Nominatim và điểm kho: [NGUON_DIA_CHI_BAN_DO.md](docs/NGUON_DIA_CHI_BAN_DO.md). Biến môi trường xem `application-example.properties`: `SHOP_GEOCODING_ENABLED`, `SHOP_GEOCODER_URL`, `SHOP_GEOCODER_USER_AGENT`, `SHOP_MAP_TILE_URL`, timeout/cache/rate. Test tự động phải tắt geocoding hoặc trỏ stub localhost và mock tile. Không ghi bí mật SMTP/ngân hàng vào repo.

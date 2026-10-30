@@ -1,0 +1,266 @@
+[
+  {
+    "role": "admin",
+    "url": "/admin/dashboard",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/products-crud",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/products-crud?page=1",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/products-crud/view/3",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/variants",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/categories",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/sizes",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/materials",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/soles",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/colors",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/inventory",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/inventory?stock=low",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/customers",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/customers/detail/100",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/customers/create",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/employees",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/employees/detail/1",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/vouchers",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/promotions",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/promotions/1/products",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/orders",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/orders/680",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/orders/1",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/invoices",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/invoices/292",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/pos",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/shipping-times",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/statistics/revenue",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/statistics/best-sellers",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "admin",
+    "url": "/admin/account",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "user",
+    "url": "/profile",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "user",
+    "url": "/orders",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "user",
+    "url": "/orders/679",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "user",
+    "url": "/orders/679/hoa-don",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "user",
+    "url": "/cart",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "user",
+    "url": "/checkout",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "guest",
+    "url": "/",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "guest",
+    "url": "/products",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "guest",
+    "url": "/products/3",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "guest",
+    "url": "/category/1",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "guest",
+    "url": "/promotions",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "guest",
+    "url": "/cart",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "guest",
+    "url": "/login",
+    "status1280": 200,
+    "status375": 200
+  },
+  {
+    "role": "guest",
+    "url": "/register",
+    "status1280": 200,
+    "status375": 200
+  }
+]

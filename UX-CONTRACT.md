@@ -52,3 +52,13 @@ Chuyển bước là pessimistic transaction có khóa đơn, gửi trạng thá
 ## Verification
 
 Từng báo cáo ghi output test, HTTP, SQL, screenshots và mục NOT TESTED. Audit tĩnh của premium là kiểm tra bổ sung, không thay browser; các cảnh báo toàn repo có từ trước phải được ghi rõ, không mở rộng giai đoạn để sửa giao diện không liên quan.
+
+## Địa chỉ và phí vận chuyển
+
+Địa chỉ dùng fragment/service chung cho profile, checkout, khách hàng Admin và đơn online POS. Chỉ chọn trong dữ liệu hành chính; đổi tỉnh tải lại phường và hủy kết quả cũ. Ghim thủ công/GPS được giữ ưu tiên khi sửa địa chỉ; nút Dùng tâm phường/xã bỏ ghim để tính theo phường. Có thông báo rõ nguồn điểm và khoảng cách đường chim bay. Không nhận phí/khoảng cách từ client làm số tiền thanh toán. API bận/lỗi/timeout không chặn nhập tay; fallback phí có ghi chú.
+
+GPS có trạng thái đang lấy, bị từ chối, chưa hỗ trợ, timeout. Bấm bản đồ hoặc Enter tại tâm thay thế thao tác kéo. Nút tạo đơn bận khi đang nhận báo phí; server vẫn xác nhận lại khi lưu. Trường hợp request lỗi giữ nội dung form và cho biết phí sẽ tính lại. Voucher thay đổi luôn bỏ kết quả giảm cũ cho đến khi áp dụng lại.
+
+Đơn giao hàng tại POS là ONLINE; không coi là đã thu tiền chỉ vì có QR. QR theo mã đơn sau khi tạo, rồi nhân viên xác nhận tiền theo luồng cũ. Tin nhắn chỉ sao chép clipboard, không tự gửi mạng xã hội. Clipboard không được cấp quyền thì hiện nội dung để chọn/copy tay. Sổ địa chỉ giữ cơ chế mặc định/xóa và ba địa chỉ.
+
+Nút cột bảng dùng class chung, icon aria-hidden kèm chữ, cao ≥36px, vẫn dùng confirm và CSRF. MutationObserver chỉ trang trí trình bày cho dòng AJAX; không thay endpoint/quyền/nghiệp vụ. In hóa đơn có logo và số liệu snapshot, ẩn điều hướng/map.

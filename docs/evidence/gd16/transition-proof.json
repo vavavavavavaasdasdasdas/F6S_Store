@@ -1,0 +1,204 @@
+[
+  {
+    "id": 680,
+    "before": {
+      "order": {
+        "id": 680,
+        "status": "PENDING",
+        "payment_status": "UNPAID",
+        "da_tru_kho": false,
+        "shipping_fee": 25000.0,
+        "final_amount": 1525000.0
+      },
+      "stock": 91,
+      "history": [
+        {
+          "status": "PENDING",
+          "note": "Đã tạo đơn hàng."
+        }
+      ]
+    },
+    "steps": [
+      {
+        "order": {
+          "id": 680,
+          "status": "CONFIRMED",
+          "payment_status": "UNPAID",
+          "da_tru_kho": true,
+          "shipping_fee": 25000.0,
+          "final_amount": 1525000.0,
+          "du_kien_giao_tu": "2026-11-02",
+          "du_kien_giao_den": "2026-11-02"
+        },
+        "stock": 90,
+        "history": [
+          {
+            "status": "PENDING",
+            "note": "Đã tạo đơn hàng."
+          },
+          {
+            "status": "CONFIRMED"
+          }
+        ]
+      },
+      {
+        "order": {
+          "id": 680,
+          "status": "PREPARING",
+          "payment_status": "UNPAID",
+          "da_tru_kho": true,
+          "shipping_fee": 25000.0,
+          "final_amount": 1525000.0,
+          "du_kien_giao_tu": "2026-11-02",
+          "du_kien_giao_den": "2026-11-02"
+        },
+        "stock": 90,
+        "history": [
+          {
+            "status": "PENDING",
+            "note": "Đã tạo đơn hàng."
+          },
+          {
+            "status": "CONFIRMED"
+          },
+          {
+            "status": "PREPARING"
+          }
+        ]
+      },
+      {
+        "order": {
+          "id": 680,
+          "status": "SHIPPING",
+          "payment_status": "UNPAID",
+          "da_tru_kho": true,
+          "shipping_fee": 25000.0,
+          "final_amount": 1525000.0,
+          "du_kien_giao_tu": "2026-11-02",
+          "du_kien_giao_den": "2026-11-02"
+        },
+        "stock": 90,
+        "history": [
+          {
+            "status": "PENDING",
+            "note": "Đã tạo đơn hàng."
+          },
+          {
+            "status": "CONFIRMED"
+          },
+          {
+            "status": "PREPARING"
+          },
+          {
+            "status": "SHIPPING",
+            "carrier": "Đơn vị giao hàng Việt",
+            "tracking_code": "VN680"
+          }
+        ]
+      },
+      {
+        "order": {
+          "id": 680,
+          "status": "DELIVERED",
+          "payment_status": "PAID",
+          "da_tru_kho": true,
+          "shipping_fee": 25000.0,
+          "final_amount": 1525000.0,
+          "du_kien_giao_tu": "2026-11-02",
+          "du_kien_giao_den": "2026-11-02"
+        },
+        "stock": 90,
+        "history": [
+          {
+            "status": "PENDING",
+            "note": "Đã tạo đơn hàng."
+          },
+          {
+            "status": "CONFIRMED"
+          },
+          {
+            "status": "PREPARING"
+          },
+          {
+            "status": "SHIPPING",
+            "carrier": "Đơn vị giao hàng Việt",
+            "tracking_code": "VN680"
+          },
+          {
+            "status": "DELIVERED"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 682,
+    "before": {
+      "order": {
+        "id": 682,
+        "status": "PENDING",
+        "payment_status": "UNPAID",
+        "da_tru_kho": true,
+        "shipping_fee": 25000.0,
+        "final_amount": 1525000.0
+      },
+      "stock": 90,
+      "history": [
+        {
+          "status": "PENDING",
+          "note": "Đã tạo đơn hàng."
+        }
+      ]
+    },
+    "steps": [
+      {
+        "order": {
+          "id": 682,
+          "status": "CONFIRMED",
+          "payment_status": "UNPAID",
+          "da_tru_kho": true,
+          "shipping_fee": 25000.0,
+          "final_amount": 1525000.0,
+          "du_kien_giao_tu": "2026-11-02",
+          "du_kien_giao_den": "2026-11-02"
+        },
+        "stock": 90,
+        "history": [
+          {
+            "status": "PENDING",
+            "note": "Đã tạo đơn hàng."
+          },
+          {
+            "status": "CONFIRMED"
+          }
+        ]
+      },
+      {
+        "order": {
+          "id": 682,
+          "status": "CANCELLED",
+          "payment_status": "UNPAID",
+          "da_tru_kho": false,
+          "shipping_fee": 25000.0,
+          "final_amount": 1525000.0,
+          "du_kien_giao_tu": "2026-11-02",
+          "du_kien_giao_den": "2026-11-02"
+        },
+        "stock": 91,
+        "history": [
+          {
+            "status": "PENDING",
+            "note": "Đã tạo đơn hàng."
+          },
+          {
+            "status": "CONFIRMED"
+          },
+          {
+            "status": "CANCELLED",
+            "note": "Khách yêu cầu hủy đơn thử"
+          }
+        ]
+      }
+    ]
+  }
+]

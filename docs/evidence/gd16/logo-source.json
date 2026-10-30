@@ -1,0 +1,11 @@
+﻿{
+    "source":  "src/main/resources/static/anh/logo.jpg",
+    "width":  221,
+    "height":  166,
+    "sourceSHA256":  "1D25540EF0CCD87FD38472F05C0A024C55F098579E61F089E11789278FB54F13",
+    "copySHA256":  "1D25540EF0CCD87FD38472F05C0A024C55F098579E61F089E11789278FB54F13",
+    "favicons":  [
+                     32,
+                     180
+                 ]
+}

@@ -50,9 +50,9 @@ class AccountProvisioningIntegrationTest {
     }
     @AfterAll static void close(){SMTP.stop();}
     CustomerDto form() {
-        String token=UUID.randomUUID().toString().substring(0,8);var f=new CustomerDto();f.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));
+        String token=UUID.randomUUID().toString().substring(0,8);var f=new CustomerDto();f.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));f.setWardId(jdbc.queryForObject("SELECT TOP 1 id FROM phuong_xa WHERE tinh_thanh_id=? ORDER BY id",Integer.class,f.getProvinceId()));f.setStreetAddress("Số 12, đường Nguyễn Huệ");
         f.setCustomerCode("G4-"+token);f.setFullName("Nguyễn Văn Ánh");f.setEmail(token+"@example.test");
-        f.setPhone("09"+String.format("%08d",Math.floorMod(token.hashCode(),100000000)));f.setAddress("Số 12, đường Lê Lợi, Đà Nẵng");
+        f.setPhone("09"+String.format("%08d",Math.floorMod(token.hashCode(),100000000)));f.setAddress("Số 12, đường Lê Lợi, Đà Nẵng");f.setStreetAddress("Số 12, đường Lê Lợi, Đà Nẵng");
         SMTP.setUser(f.getEmail(),token,token);return f;
     }
     MimeMessage received(String email) {
@@ -60,13 +60,23 @@ class AccountProvisioningIntegrationTest {
         return java.util.Arrays.stream(SMTP.getReceivedMessages()).filter(m->{try{return m.getAllRecipients()[0].toString().equals(email);}catch(Exception ex){return false;}}).reduce((a,b)->b).orElseThrow();
     }
     String password(MimeMessage message) throws Exception {
-        String text=(String)message.getContent();return text.substring(text.indexOf("Mật khẩu tạm: ")+13).split("\\r?\\n",2)[0].trim();
+        String text=plainText(message);return text.substring(text.indexOf("Mật khẩu tạm: ")+13).split("\\r?\\n",2)[0].trim();
+    }
+    String plainText(jakarta.mail.Part part) throws Exception {
+        if(part.isMimeType("text/plain"))return (String)part.getContent();
+        if(part.getContent() instanceof jakarta.mail.Multipart multi)for(int i=0;i<multi.getCount();i++) {
+            String text=plainText(multi.getBodyPart(i));if(!text.isEmpty())return text;
+        }
+        return "";
     }
     @Test void vietnameseMailCommittedAccountAndForcedPasswordGate() throws Exception {
         var f=form();var result=accounts.saveCustomer(f);assertTrue(result.sent());
         var c=customers.findById(result.personId()).orElseThrow();var u=users.findById(c.getUser().getId()).orElseThrow();
-        var message=received(f.getEmail());String body=(String)message.getContent(),temporary=password(message);
+        var message=received(f.getEmail());String body=plainText(message),temporary=password(message);
+        var wire=new java.io.ByteArrayOutputStream();message.writeTo(wire);
+        assertTrue(wire.toString(java.nio.charset.StandardCharsets.UTF_8).contains("Content-ID: <f6s-logo>"));
         assertTrue(body.contains("Xin chào Nguyễn Văn Ánh")&&body.contains("http://localhost:18140/login")&&body.contains(u.getUsername()));
+        System.out.println("GD16 MAIL GreenMail: Vietnamese plain text=true; multipart=true; inline logo Content-ID=f6s-logo; no password printed");
         assertTrue(temporary.length()==12&&PasswordPolicy.isValid(temporary));assertTrue(encoder.matches(temporary,u.getPassword()));
         assertTrue(u.getMustChangePassword());assertFalse(u.getCredentialMailFailed());assertEquals("ROLE_USER",u.getRole().getName());
         var principal=details.loadUserByUsername(u.getUsername());

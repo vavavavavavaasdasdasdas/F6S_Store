@@ -36,6 +36,8 @@ public class AdminPosController {
     private final CustomerRepository customers;
     private final EmployeeRepository employees;
     private final OrderService orders;
+    private final com.example.demodatn.service.donhang.PosOnlineOrderService onlineOrders;
+    private final com.example.demodatn.service.donhang.ShippingFeeService shipping;
     private final InvoiceRepository invoices;
     private final PosHoldService holds;
     private final PosCatalogQuery catalogQuery;
@@ -148,6 +150,8 @@ public class AdminPosController {
             if(session.getAttribute("posPaymentReference")==null)session.setAttribute("posPaymentReference",com.example.demodatn.service.donhang.VietQrService.newReference());
             model.addAttribute("paymentReference",session.getAttribute("posPaymentReference"));
         }
+        if(!model.containsAttribute("posOnlineRequest"))model.addAttribute("posOnlineRequest",new com.example.demodatn.dto.donhang.PosOnlineOrderForm());
+        model.addAttribute("orderSources",com.example.demodatn.entity.donhang.Order.SOURCE_LABELS);
         return "admin/ban-tai-quay/ban-tai-quay";
     }
 
@@ -268,6 +272,22 @@ public class AdminPosController {
             if(errors.hasErrors())flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX+"posCheckoutRequest",errors);
             return "redirect:/admin/pos";
         }
+    }
+
+    @PostMapping("/online-orders")
+    public String onlineOrder(@Valid @ModelAttribute("posOnlineRequest") com.example.demodatn.dto.donhang.PosOnlineOrderForm form,BindingResult errors,HttpSession session,Principal principal,RedirectAttributes flash){
+        synchronized(session){try{
+            if(errors.hasErrors())throw new IllegalArgumentException("Kiểm tra thông tin người nhận và địa chỉ giao hàng.");
+            if(form.getCheckoutToken()==null || !form.getCheckoutToken().equals(session.getAttribute("posCheckoutToken")))throw new IllegalArgumentException("Phiên thanh toán đã thay đổi. Kiểm tra giỏ rồi tạo đơn lại.");
+            if(cart(session).isEmpty())throw new IllegalArgumentException("Giỏ hàng trống.");
+            if(Boolean.TRUE.equals(session.getAttribute("posHoldReview")))throw new IllegalArgumentException("Xác nhận lại giá hóa đơn chờ trước khi tạo đơn.");
+            shipping.prepare(form,principal.getName());Long heldId=(Long)session.getAttribute("posLoadedHold");
+            var order=heldId==null?onlineOrders.create(principal.getName(),form,cart(session)):holds.checkoutOnline(principal.getName(),heldId,cart(session),form);
+            clearCart(session);flash.addFlashAttribute("message","Đã tạo đơn giao hàng online. Đơn đang chờ xác nhận.");return "redirect:/admin/orders/"+order.getId();
+        }catch(IllegalArgumentException ex){flash.addFlashAttribute("error",ex.getMessage());}
+        catch(org.springframework.web.server.ResponseStatusException ex){throw ex;}
+        catch(Exception ex){flash.addFlashAttribute("error","Không thể tạo đơn. Giỏ được giữ lại; kiểm tra tồn kho và thử lại.");}
+        flash.addFlashAttribute("posOnlineRequest",form);flash.addFlashAttribute("deliveryMode",true);if(errors.hasErrors())flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX+"posOnlineRequest",errors);return "redirect:/admin/pos";}
     }
 
     @PostMapping("/holds")

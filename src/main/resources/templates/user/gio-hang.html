@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-nguoi-dung :: html}">
 <head>
-    <title>Giỏ Hàng | SHOP GIÀY</title>
+    <title>Giỏ Hàng | F6S Store</title>
 </head>
 <body>
 <div th:fragment="content" class="px-0">
@@ -38,13 +38,11 @@
 
                         <div class="d-flex justify-content-between mb-3">
                             <span class="text-muted">Phí giao hàng:</span>
-                            <span th:if="${shippingFee == 0}" class="text-success fw-bold">Miễn phí</span>
+                            <span th:if="${shippingFee == 0}" class="text-success fw-bold">Miễn phí vận chuyển</span>
                             <span th:unless="${shippingFee == 0}" class="fw-bold" th:text="${@money.format(shippingFee)} + ' đ'"></span>
                         </div>
 
-                        <div th:if="${shippingFee > 0}" class="alert alert-info small py-2 mb-3 text-center">
-                            Mua thêm <strong th:text="${@money.format(freeShippingThreshold - subTotal)} + ' đ'"></strong> để được Freeship!
-                        </div>
+                        <div th:if="${!cartItems.empty}" class="alert alert-info small py-2 mb-3 text-center"><span th:text="${shippingQuote.note}"></span><br><span th:text="${shippingQuote.hint}"></span></div>
 
                         <hr>
 

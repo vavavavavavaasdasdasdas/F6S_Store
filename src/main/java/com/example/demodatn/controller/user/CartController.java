@@ -28,11 +28,7 @@ public class CartController {
     private final ProductService productService;
     private final PricingService pricingService;
 
-    @Value("${shop.shipping.fee:30000}")
-    private BigDecimal shippingFee;
-
-    @Value("${shop.shipping.free-threshold:500000}")
-    private BigDecimal freeShippingThreshold;
+    private final com.example.demodatn.service.donhang.ShippingFeeService shipping;
 
     @GetMapping
     public String viewCart(HttpSession session, Model model) {
@@ -91,15 +87,18 @@ public class CartController {
             viewCart.add(item);
         }
 
-        BigDecimal fee = subTotal.compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : 
-                        (subTotal.compareTo(freeShippingThreshold) >= 0 ? BigDecimal.ZERO : shippingFee);
-        BigDecimal total = subTotal.add(fee);
+        var destination=(com.example.demodatn.dto.donhang.DeliveryAddressForm)session.getAttribute("shippingDestination");
+        if(destination==null)destination=new com.example.demodatn.dto.donhang.DeliveryAddressForm();
+        com.example.demodatn.service.donhang.ShippingFeeService.Quote quote;
+        try{quote=shipping.quote(destination,com.example.demodatn.service.donhang.ShippingFeeService.quantity(sessionCart),false,"cart");}
+        catch(IllegalArgumentException ex){quote=shipping.quote(new com.example.demodatn.dto.donhang.DeliveryAddressForm(),com.example.demodatn.service.donhang.ShippingFeeService.quantity(sessionCart),false,"cart");}
+        BigDecimal fee=sessionCart.isEmpty()?BigDecimal.ZERO:quote.shippingFee();BigDecimal total=subTotal.add(fee);
 
         model.addAttribute("cartItems", viewCart);
         model.addAttribute("subTotal", subTotal);
         model.addAttribute("shippingFee", fee);
         model.addAttribute("total", total);
-        model.addAttribute("freeShippingThreshold", freeShippingThreshold);
+        model.addAttribute("shippingQuote",quote);
         model.addAttribute("hasWarning", hasWarning);
         
         return "user/gio-hang";

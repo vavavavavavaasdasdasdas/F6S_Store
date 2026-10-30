@@ -23,12 +23,15 @@ public class AccountMailService {
             var link=java.net.URI.create(publicBaseUrl);
             if(!java.util.Set.of("http","https").contains(link.getScheme()) || link.getHost()==null)return false;
             var message=sender.getObject().createMimeMessage();
-            var helper=new MimeMessageHelper(message,false,java.nio.charset.StandardCharsets.UTF_8.name());
+            var helper=new MimeMessageHelper(message,true,java.nio.charset.StandardCharsets.UTF_8.name());
             helper.setFrom(from);helper.setTo(email);helper.setSubject("Tài khoản đăng nhập F6S Store");
-            helper.setText("Xin chào "+name+",\n\nTài khoản của bạn đã sẵn sàng.\nTên đăng nhập: "+username+
+            String text="Xin chào "+name+",\n\nTài khoản của bạn đã sẵn sàng.\nTên đăng nhập: "+username+
                     "\nMật khẩu tạm: "+password+"\nĐăng nhập: "+publicBaseUrl.replaceAll("/+$","")+"/login"+
                     "\n\nBạn phải đổi mật khẩu ngay sau lần đăng nhập đầu tiên. Không chia sẻ mật khẩu này.\n"+
-                    "Nếu đây là thư gửi lại, mật khẩu tạm trước đó đã hết hiệu lực.\n\nTrân trọng,\nF6S Store",false);
+                    "Nếu đây là thư gửi lại, mật khẩu tạm trước đó đã hết hiệu lực.\n\nTrân trọng,\nF6S Store";
+            helper.setText(text,"<!doctype html><html lang=\"vi\"><body><img src=\"cid:f6s-logo\" alt=\"Biểu trưng F6S Store\" width=\"120\" height=\"90\" style=\"object-fit:contain\"><p>"+
+                    org.springframework.web.util.HtmlUtils.htmlEscape(text).replace("\n","<br>")+"</p></body></html>");
+            helper.addInline("f6s-logo",new org.springframework.core.io.ClassPathResource("static/images/logo.jpg"),"image/jpeg");
             sender.getObject().send(message);
             return true;
         } catch(Exception ignored) {

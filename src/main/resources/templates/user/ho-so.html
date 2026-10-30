@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-nguoi-dung :: html}">
 <head>
-    <title>Hồ Sơ | SHOP GIÀY</title>
+    <title>Hồ Sơ | F6S Store</title>
 </head>
 <body>
 <div th:fragment="content" class="px-0">
@@ -80,7 +80,7 @@
                     <label class="form-label" for="profile-address">Chọn địa chỉ để xem hoặc sửa</label>
                     <select id="profile-address" name="addressId" class="form-select" th:data-selected="${shippingAddress.id}">
                         <option value="" th:if="${shippingAddress.id==null}" selected>Đang thêm địa chỉ mới</option>
-                        <option th:each="a:${shippingAddresses}" th:value="${a.id}" th:selected="${a.id==shippingAddress.id}" th:text="${a.slot}+'. '+${a.receiverName}+' — '+${a.address}+(${a.defaultAddress} ? ' · Mặc định' : '')"></option>
+                        <option th:each="a:${shippingAddresses}" th:value="${a.id}" th:selected="${a.id==shippingAddress.id}" th:text="${a.slot}+'. '+${a.receiverName}+' — '+${a.fullAddress}+(${a.defaultAddress} ? ' · Mặc định' : '')"></option>
                     </select><button type="submit" class="btn btn-outline-secondary mt-2">Xem địa chỉ</button>
                 </form>
                 <form th:if="${shippingAddress.id!=null or shippingAddresses.size()<3}" th:action="@{/profile/addresses/save}" method="post" th:object="${shippingAddress}" data-user-form data-address-form novalidate>
@@ -88,7 +88,7 @@
                     <p class="text-danger" role="alert" th:if="${#fields.hasGlobalErrors()}" th:each="e:${#fields.globalErrors()}" th:text="${e}"></p>
                     <div class="mb-3"><label class="form-label" for="address-receiver">Tên người nhận</label><input id="address-receiver" class="form-control" type="text" th:field="*{receiverName}" required maxlength="100" aria-describedby="address-receiver-error" th:attr="aria-invalid=${#fields.hasErrors('receiverName')}"><p class="user-message" id="address-receiver-error" aria-live="polite"><span th:if="${#fields.hasErrors('receiverName')}" th:errors="*{receiverName}"></span></p></div>
                     <div class="mb-3"><label class="form-label" for="address-phone">Số điện thoại</label><input id="address-phone" class="form-control" type="tel" th:field="*{phone}" required maxlength="20" pattern="(?:0[0-9]{9}|\+84[0-9]{9})" aria-describedby="address-phone-error" th:attr="aria-invalid=${#fields.hasErrors('phone')}"><p class="user-message" id="address-phone-error" aria-live="polite"><span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span></p></div>
-                    <div class="mb-3"><label class="form-label" for="address-province">Tỉnh/Thành phố *</label><select class="form-select" id="address-province" th:field="*{provinceId}" required aria-describedby="address-province-error"><option value="">Chọn Tỉnh/Thành phố</option><option th:each="p:${provinces}" th:value="${p.id}" th:text="${p.name}"></option></select><p class="field-error" id="address-province-error" th:if="${#fields.hasErrors('provinceId')}" th:errors="*{provinceId}"></p></div><div class="mb-3"><label class="form-label" for="address-text">Địa chỉ chi tiết</label><textarea id="address-text" class="resize-none form-control" th:field="*{address}" required rows="3" maxlength="255" aria-describedby="address-text-error" th:attr="aria-invalid=${#fields.hasErrors('address')}"></textarea><p class="user-message" id="address-text-error" aria-live="polite"><span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span></p></div>
+                    <div th:replace="~{fragments/dia-chi-giao-hang :: address('address','address-text','USER',false)}"></div>
                     <div class="form-check mb-3"><input class="form-check-input" id="address-default" type="checkbox" th:field="*{makeDefault}"><label class="form-check-label" for="address-default">Đặt làm mặc định</label></div>
                     <button type="submit" class="btn btn-primary" th:text="${shippingAddress.id==null ? 'Lưu địa chỉ mới' : 'Lưu sửa địa chỉ'}"></button>
                 </form>

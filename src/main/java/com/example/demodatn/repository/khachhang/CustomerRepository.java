@@ -18,4 +18,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer>, or
     java.util.Optional<Customer> findForUpdate(@org.springframework.data.repository.query.Param("id") Integer id);
     java.util.Optional<Customer> findByEmail(String email);
     java.util.Optional<Customer> findByPhone(String phone);
+    java.util.List<Customer> findByPhoneInOrderByIdAsc(java.util.Collection<String> phones);
 }

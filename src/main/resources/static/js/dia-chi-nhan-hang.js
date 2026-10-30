@@ -4,11 +4,8 @@
         const option=picker.selectedOptions[0],form=picker.form;
         form.elements.receiverName.value=option.dataset.receiver || '';
         form.elements.phone.value=option.dataset.phone || '';
-        form.elements.shippingAddress.value=option.dataset.address || '';
-        form.elements.provinceId.value=option.dataset.province || '';
-        form.elements.provinceId.dispatchEvent(new Event('combo:sync'));
-        form.elements.provinceId.dispatchEvent(new Event('change',{bubbles:true}));
-        ['receiverName','phone','shippingAddress'].forEach(name=>form.elements[name].dispatchEvent(new Event('input',{bubbles:true})));
+        form.querySelector('[data-delivery-address]')?.dispatchEvent(new CustomEvent('delivery:select-address',{detail:{provinceId:option.dataset.province||'',wardId:option.dataset.ward||'',streetAddress:option.dataset.address||'',latitude:option.dataset.latitude||'',longitude:option.dataset.longitude||'',coordinateSource:option.dataset.source||''}}));
+        ['receiverName','phone'].forEach(name=>form.elements[name].dispatchEvent(new Event('input',{bubbles:true})));
     });
     const editor=document.querySelector('[data-address-form]');let dirty=false;
     editor?.addEventListener('input',()=>dirty=true);

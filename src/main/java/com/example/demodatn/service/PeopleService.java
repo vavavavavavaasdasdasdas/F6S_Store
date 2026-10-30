@@ -96,7 +96,7 @@ public class PeopleService {
         customers.saveAndFlush(c);
         var address=new com.example.demodatn.dto.khachhang.ShippingAddressForm();
         shippingAddresses.findByCustomer_IdOrderBySlotAsc(c.getId()).stream().filter(com.example.demodatn.entity.khachhang.ShippingAddress::isDefaultAddress).findFirst().ifPresent(a->address.setId(a.getId()));
-        address.setReceiverName(c.getFullName());address.setPhone(c.getPhone());address.setAddress(form.getAddress());address.setProvinceId(form.getProvinceId());address.setMakeDefault(true);
+        address.setReceiverName(c.getFullName());address.setPhone(c.getPhone());address.setAddress(form.getStreetAddress());address.setProvinceId(form.getProvinceId());address.setWardId(form.getWardId());address.setStreetAddress(form.getStreetAddress());address.setLatitude(form.getLatitude());address.setLongitude(form.getLongitude());address.setCoordinateSource(form.getCoordinateSource());address.setMakeDefault(true);
         addressService.saveForCustomer(c.getId(),address);
         // Status changes have a separate confirmed POST and cannot be smuggled through this form.
         return customers.saveAndFlush(c);

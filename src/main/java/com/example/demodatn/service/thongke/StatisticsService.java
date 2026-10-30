@@ -32,11 +32,11 @@ public class StatisticsService {
     public Map<String,Object> load(LocalDate from, LocalDate to, String channel, Integer categoryId, Object page, Object quantityPage, Object revenuePage) {
         Object[] args = {from, to.plusDays(1), channel, channel, categoryId, categoryId};
         Map<String,Object> result = new LinkedHashMap<>(jdbc.queryForMap(
-                "SELECT COALESCE(SUM(o.final_amount),0) AS revenue,COUNT_BIG(*) AS orders FROM orders o WHERE" + ELIGIBLE, args));
+                "SELECT COALESCE(SUM(" + RevenueCondition.AMOUNT + "),0) AS revenue,COUNT_BIG(*) AS orders FROM orders o WHERE" + ELIGIBLE, args));
         BigDecimal revenue = (BigDecimal) result.get("revenue");
         long count = ((Number) result.get("orders")).longValue();
         result.put("average",count==0 ? BigDecimal.ZERO : revenue.divide(BigDecimal.valueOf(count),2,RoundingMode.HALF_UP));
-        var rows = jdbc.queryForList("SELECT CAST(o.created_at AS date) AS day,SUM(o.final_amount) AS amount,COUNT_BIG(*) AS orders FROM orders o WHERE" + ELIGIBLE + " GROUP BY CAST(o.created_at AS date) ORDER BY day",args);
+        var rows = jdbc.queryForList("SELECT CAST(o.created_at AS date) AS day,SUM(" + RevenueCondition.AMOUNT + ") AS amount,COUNT_BIG(*) AS orders FROM orders o WHERE" + ELIGIBLE + " GROUP BY CAST(o.created_at AS date) ORDER BY day",args);
         Map<LocalDate,Map<String,Object>> days = new HashMap<>();
         rows.forEach(row -> {
             LocalDate day = LocalDate.parse(row.get("day").toString());
@@ -58,7 +58,7 @@ public class StatisticsService {
         var request=pagination.request(page,daysCount,org.springframework.data.domain.Sort.by("day"));
         LocalDate first=from.plusDays(request.getOffset()),last=first.plusDays(request.getPageSize()-1);
         if(last.isAfter(to))last=to;
-        String calendar="WITH days AS (SELECT CAST(? AS date) AS day UNION ALL SELECT DATEADD(day,1,day) FROM days WHERE day<?) SELECT CONVERT(varchar(10),days.day,23) AS day,COUNT_BIG(o.id) AS orders,COALESCE(SUM(o.final_amount),0) AS amount FROM days LEFT JOIN orders o ON o.created_at>=days.day AND o.created_at<DATEADD(day,1,days.day) AND " + RevenueCondition.SQL + " AND (?='ALL' OR o.order_type=?)" + CAT_EXISTS + " GROUP BY days.day ORDER BY days.day OPTION(MAXRECURSION 0)";
+        String calendar="WITH days AS (SELECT CAST(? AS date) AS day UNION ALL SELECT DATEADD(day,1,day) FROM days WHERE day<?) SELECT CONVERT(varchar(10),days.day,23) AS day,COUNT_BIG(o.id) AS orders,COALESCE(SUM(" + RevenueCondition.AMOUNT + "),0) AS amount FROM days LEFT JOIN orders o ON o.created_at>=days.day AND o.created_at<DATEADD(day,1,days.day) AND " + RevenueCondition.SQL + " AND (?='ALL' OR o.order_type=?)" + CAT_EXISTS + " GROUP BY days.day ORDER BY days.day OPTION(MAXRECURSION 0)";
         var dayRows=jdbc.queryForList(calendar,first,last,channel,channel,categoryId,categoryId);
         result.put("dailyPage",new org.springframework.data.domain.PageImpl<>(dayRows,request,daysCount));
         return result;

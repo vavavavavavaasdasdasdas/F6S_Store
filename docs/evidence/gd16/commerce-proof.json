@@ -1,0 +1,170 @@
+{
+  "orders": [
+    {
+      "orderId": 679,
+      "qr": "00020101021238530010A0000007270123000697042201091234567890208QRIBFTTA5303704540715250005802VN62120808DH00067963047631",
+      "escaped": true,
+      "width": 1280,
+      "kind": "website",
+      "snapshot": {
+        "order": {
+          "id": 679,
+          "order_code": "DH000679",
+          "customer_id": 100,
+          "order_type": "ONLINE",
+          "status": "PENDING",
+          "payment_status": "UNPAID",
+          "shipping_fee": 25000.0,
+          "distance_km": 0.0,
+          "latitude": 21.03801,
+          "longitude": 105.7469,
+          "nguon_toa_do": "TAM_PHUONG_XA",
+          "is_free_ship": false,
+          "shipping_policy_version": 1,
+          "total_amount": 1500000.0,
+          "discount_amount": 0.0,
+          "final_amount": 1525000.0,
+          "shipping_address": "Số 12, đường Nguyễn Huệ <script>window.__xss=true</script>",
+          "dia_chi_giao_snapshot": "Số 12, đường Nguyễn Huệ <script>window.__xss=true</script>, Phường Ba Đình, Hà Nội",
+          "ma_tinh_giao": "01",
+          "ma_phuong_giao": "00004",
+          "ten_phuong_giao": "Phường Ba Đình"
+        },
+        "stock": 93,
+        "history": [
+          {
+            "status": "PENDING",
+            "note": "Đã tạo đơn hàng."
+          }
+        ]
+      }
+    },
+    {
+      "orderId": 680,
+      "confirmation": "Xin chào Khách Facebook Nguyễn Ánh!\nCửa hàng xác nhận đã tiếp nhận đơn DH000680.\nSản phẩm:\n- Converse Chuck Taylor / 39 / Khác / Khác / Khác × 1 — 1.500.000 đ\nTiền hàng: 1.500.000 đ\nGiảm giá: 0 đ\nPhí vận chuyển: 25.000 đ\nTổng thanh toán: 1.525.000 đ\nĐịa chỉ: Số 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội\nSẽ có sau khi cửa hàng xác nhận đơn",
+      "qr": 0,
+      "actions": 0,
+      "width": 1280,
+      "kind": "pos-online",
+      "snapshot": {
+        "order": {
+          "id": 680,
+          "order_code": "DH000680",
+          "customer_id": 101,
+          "order_type": "ONLINE",
+          "order_source": "FACEBOOK",
+          "status": "PENDING",
+          "payment_status": "UNPAID",
+          "shipping_fee": 25000.0,
+          "distance_km": 0.0,
+          "latitude": 21.03801,
+          "longitude": 105.7469,
+          "nguon_toa_do": "TAM_PHUONG_XA",
+          "is_free_ship": false,
+          "shipping_policy_version": 1,
+          "total_amount": 1500000.0,
+          "discount_amount": 0.0,
+          "final_amount": 1525000.0,
+          "shipping_address": "Số 12, đường Nguyễn Huệ",
+          "dia_chi_giao_snapshot": "Số 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội",
+          "ma_tinh_giao": "01",
+          "ma_phuong_giao": "00004",
+          "ten_phuong_giao": "Phường Ba Đình"
+        },
+        "stock": 93,
+        "history": [
+          {
+            "status": "PENDING",
+            "note": "Đã tạo đơn hàng."
+          }
+        ]
+      }
+    },
+    {
+      "orderId": 681,
+      "qr": "00020101021238530010A0000007270123000697042201091234567890208QRIBFTTA5303704540715250005802VN62120808DH0006816304B11F",
+      "escaped": true,
+      "width": 375,
+      "kind": "website",
+      "snapshot": {
+        "order": {
+          "id": 681,
+          "order_code": "DH000681",
+          "customer_id": 100,
+          "order_type": "ONLINE",
+          "status": "PENDING",
+          "payment_status": "UNPAID",
+          "shipping_fee": 25000.0,
+          "distance_km": 0.0,
+          "latitude": 21.03801,
+          "longitude": 105.7469,
+          "nguon_toa_do": "TAM_PHUONG_XA",
+          "is_free_ship": false,
+          "shipping_policy_version": 1,
+          "total_amount": 1500000.0,
+          "discount_amount": 0.0,
+          "final_amount": 1525000.0,
+          "shipping_address": "Số 12, đường Nguyễn Huệ <script>window.__xss=true</script>",
+          "dia_chi_giao_snapshot": "Số 12, đường Nguyễn Huệ <script>window.__xss=true</script>, Phường Ba Đình, Hà Nội",
+          "ma_tinh_giao": "01",
+          "ma_phuong_giao": "00004",
+          "ten_phuong_giao": "Phường Ba Đình"
+        },
+        "stock": 92,
+        "history": [
+          {
+            "status": "PENDING",
+            "note": "Đã tạo đơn hàng."
+          }
+        ]
+      }
+    },
+    {
+      "orderId": 682,
+      "confirmation": "Xin chào Khách Facebook Nguyễn Ánh!\nCửa hàng xác nhận đã tiếp nhận đơn DH000682.\nSản phẩm:\n- Converse Chuck Taylor / 39 / Khác / Khác / Khác × 1 — 1.500.000 đ\nTiền hàng: 1.500.000 đ\nGiảm giá: 0 đ\nPhí vận chuyển: 25.000 đ\nTổng thanh toán: 1.525.000 đ\nĐịa chỉ: Số 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội\nSẽ có sau khi cửa hàng xác nhận đơn",
+      "qr": 1,
+      "actions": 0,
+      "width": 375,
+      "kind": "pos-online",
+      "snapshot": {
+        "order": {
+          "id": 682,
+          "order_code": "DH000682",
+          "customer_id": 101,
+          "order_type": "ONLINE",
+          "order_source": "FACEBOOK",
+          "status": "PENDING",
+          "payment_status": "UNPAID",
+          "shipping_fee": 25000.0,
+          "distance_km": 0.0,
+          "latitude": 21.03801,
+          "longitude": 105.7469,
+          "nguon_toa_do": "TAM_PHUONG_XA",
+          "is_free_ship": false,
+          "shipping_policy_version": 1,
+          "total_amount": 1500000.0,
+          "discount_amount": 0.0,
+          "final_amount": 1525000.0,
+          "shipping_address": "Số 12, đường Nguyễn Huệ",
+          "dia_chi_giao_snapshot": "Số 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội",
+          "ma_tinh_giao": "01",
+          "ma_phuong_giao": "00004",
+          "ten_phuong_giao": "Phường Ba Đình"
+        },
+        "stock": 91,
+        "history": [
+          {
+            "status": "PENDING",
+            "note": "Đã tạo đơn hàng."
+          }
+        ]
+      }
+    }
+  ],
+  "variant": {
+    "id": 5,
+    "product_id": 3,
+    "quantity": 94,
+    "code": "SP003"
+  }
+}

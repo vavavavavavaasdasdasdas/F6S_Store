@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"><body>
 <aside th:fragment="sidebar" id="admin-sidebar" class="admin-sidebar" aria-label="Điều hướng quản trị">
-    <a class="admin-brand" th:href="@{/admin/dashboard}"><span class="brand-mark">S</span><span>F6S_Store<small>QUẢN TRỊ CỬA HÀNG</small></span></a>
+    <a class="admin-brand" th:href="@{/admin/dashboard}"><img class="shop-logo" src="/images/logo.jpg" alt="Biểu trưng F6S Store"><span>F6S_Store<small>QUẢN TRỊ CỬA HÀNG</small></span></a>
     <nav class="admin-nav" th:with="isProductSubActive=${adminActive == 'products' or adminActive == 'variants' or adminActive == 'categories' or adminActive == 'sizes' or adminActive == 'materials' or adminActive == 'colors' or adminActive == 'soles' or adminActive == 'inventory'}">
         <th:block th:each="item : ${adminNav}">
             <th:block th:if="${item.group() == 'SẢN PHẨM'}">

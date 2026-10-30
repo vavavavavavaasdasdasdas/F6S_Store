@@ -24,6 +24,7 @@ public class AdminOrderController {
     private final OrderStatusService orderService;
     private final InvoiceRepository invoices;
     private final CustomerRepository customers;
+    private final com.example.demodatn.service.donhang.OrderConfirmationService confirmations;
     public static final java.util.Map<String,String> STATUS_LABELS=OrderStatusService.LABELS;
 
     @ModelAttribute public void labels(Model model) { model.addAttribute("statusLabels",STATUS_LABELS); }
@@ -115,6 +116,7 @@ public class AdminOrderController {
     public String detail(@PathVariable Integer id,Model model) {
         var order=orderRepository.findById(id).orElseThrow(()->new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));
         model.addAttribute("order",order);
+        model.addAttribute("confirmationMessage",confirmations.text(order));
         model.addAttribute("allowedStatuses",orderService.allowedStatuses(order));
         model.addAttribute("invoice",invoices.findByOrder_Id(id).orElse(null));
         return "admin/don-hang/chi-tiet";

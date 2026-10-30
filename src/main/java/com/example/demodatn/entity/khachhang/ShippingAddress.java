@@ -15,5 +15,13 @@ public class ShippingAddress {
     @Column(name="la_mac_dinh",nullable=false) private boolean defaultAddress;
     @Column(name="thu_tu",nullable=false,columnDefinition="tinyint") private Integer slot;
     @ManyToOne @JoinColumn(name="tinh_thanh_id") private com.example.demodatn.entity.donhang.Province province;
+
+    @Column(precision=10,scale=7) private java.math.BigDecimal latitude;
+    @Column(precision=10,scale=7) private java.math.BigDecimal longitude;
+    @org.hibernate.annotations.Nationalized @Column(name="nguon_toa_do",length=20) private String coordinateSource;
+    @org.hibernate.annotations.Nationalized @Column(name="so_nha_duong",length=255) private String streetAddress;
+    @ManyToOne @JoinColumn(name="phuong_xa_id") private com.example.demodatn.entity.donhang.Ward ward;
+    public String getDisplayStreetAddress(){return streetAddress==null?address:streetAddress;}
+    public String getFullAddress(){return ward==null?address:getDisplayStreetAddress()+", "+ward.getName()+", "+ward.getProvince().getName();}
     @Column(name="created_at",nullable=false) private LocalDateTime createdAt;
 }

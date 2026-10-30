@@ -79,7 +79,7 @@ class DiscountIntegrationTest {
         var v=new ProductVariant();v.setProduct(p);v.setSize(sizes.findAll().get(0));v.setMaterial(materials.findAll().get(0));v.setColor(phase5Colors.findAll().get(0));v.setSole(phase5Soles.findAll().get(0));v.setPrice(new BigDecimal("200000"));v.setQuantity(10);return variants.saveAndFlush(v);
     }
     private CartItemDto item(ProductVariant v) { return new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),BigDecimal.ONE,1); }
-    private CheckoutRequest request(String code) { var r=new CheckoutRequest();r.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));r.setReceiverName("Kiểm thử");r.setPhone("0987000000");r.setEmail("p8@example.invalid");r.setShippingAddress("Địa chỉ kiểm thử");r.setPaymentMethod("COD");r.setVoucherCode(code);return r; }
+    private CheckoutRequest request(String code) { var r=new CheckoutRequest();r.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));r.setWardId(jdbc.queryForObject("SELECT TOP 1 id FROM phuong_xa WHERE tinh_thanh_id=? ORDER BY id",Integer.class,r.getProvinceId()));r.setStreetAddress("Số 12, đường Nguyễn Huệ");r.setReceiverName("Kiểm thử");r.setPhone("0987000000");r.setEmail("p8@example.invalid");r.setShippingAddress("Địa chỉ kiểm thử");r.setStreetAddress("Địa chỉ kiểm thử");r.setPaymentMethod("COD");r.setVoucherCode(code);return r; }
     private void money(String expected,BigDecimal actual) { assertEquals(0,new BigDecimal(expected).compareTo(actual)); }
 
     @Test @Transactional
@@ -112,7 +112,7 @@ class DiscountIntegrationTest {
         admin.selectProducts(p.getId(),List.of(a.getProduct().getId(),b.getProduct().getId(),a.getProduct().getId()));assertEquals(2,details.findByPromotion_Id(p.getId()).size());
         money("160000",pricing.calculatePrice(a).getFinalPrice());money("160000",pricing.calculatePrice(b).getFinalPrice());
         var cart=new ArrayList<>(List.of(item(a),item(b)));money("320000",pricing.refreshCart(cart));
-        var o=orders.placeOrder(request(null),cart,customer(),BigDecimal.ZERO);money("320000",o.getTotalAmount());money("350000",o.getFinalAmount());
+        var o=orders.placeOrder(request(null),cart,customer(),BigDecimal.ZERO);money("320000",o.getTotalAmount());money("320000",o.getFinalAmount());
         p.setEndDate(LocalDateTime.now().minusHours(1));promotions.flush();money("400000",pricing.refreshCart(cart));assertFalse(pricing.calculatePrice(a).isHasPromotion());money("320000",orderRepo.findById(o.getId()).orElseThrow().getTotalAmount());
         p.setEndDate(LocalDateTime.now().plusDays(1));p.setStatus(false);promotions.flush();money("200000",pricing.calculatePrice(a).getFinalPrice());
         admin.deletePromotion(p.getId());assertEquals(0,details.findByPromotion_Id(p.getId()).size());
@@ -120,7 +120,7 @@ class DiscountIntegrationTest {
     @Test @Transactional
     void checkoutAndPosConsumeSamePercentageFormulaAndReferencedDeleteLocksVoucher() {
         var a=variant();var f=voucherForm();f.setMaxDiscount(new BigDecimal("30000"));var v=admin.saveVoucher(f);
-        var online=orders.placeOrder(request(v.getCode()),List.of(item(a)),customer(),BigDecimal.ZERO);money("30000",online.getDiscountAmount());money("200000",online.getFinalAmount());
+        var online=orders.placeOrder(request(v.getCode()),List.of(item(a)),customer(),BigDecimal.ZERO);money("30000",online.getDiscountAmount());money("225000",online.getFinalAmount());
         var pos=orders.createPosOrder(List.of(item(a)),null,employees.findByUser_Username("admin").orElseThrow(),v.getCode(),"CASH","Tại quầy",new BigDecimal("200000"));money("30000",pos.getDiscountAmount());money("170000",pos.getFinalAmount());assertEquals(2,v.getUsedCount());
         assertTrue(admin.deleteVoucher(v.getId()).contains("giữ"));assertTrue(voucherRepo.existsById(v.getId()));assertFalse(v.getStatus());money("30000",online.getDiscountAmount());
     }

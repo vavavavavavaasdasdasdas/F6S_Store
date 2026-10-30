@@ -45,12 +45,9 @@ public class OrderController {
     @org.springframework.beans.factory.annotation.Autowired
     private com.example.demodatn.repository.sanpham.ProductVariantRepository productVariants;
 
-    @Value("${shop.shipping.fee:30000}")
-    private BigDecimal shippingFee;
+    @org.springframework.beans.factory.annotation.Autowired private com.example.demodatn.service.donhang.ShippingFeeService shipping;
+    @org.springframework.beans.factory.annotation.Autowired private com.example.demodatn.service.donhang.ShippingPreviewService shippingPreview;
 
-    @Value("${shop.shipping.free-threshold:500000}")
-    private BigDecimal freeShippingThreshold;
-    
     @Value("${shop.bank.name:}")
     private String bankName;
     @Value("${shop.bank.account:}")
@@ -83,7 +80,7 @@ public class OrderController {
         try { subTotal=pricingService.refreshCart(cart); }
         catch(IllegalArgumentException ex) { redirectAttributes.addFlashAttribute("error",ex.getMessage());return "redirect:/cart"; }
 
-        BigDecimal fee = subTotal.compareTo(freeShippingThreshold) >= 0 ? BigDecimal.ZERO : shippingFee;
+
         
         Customer customer = getCustomer(principal);
         var addressBook=customer==null ? java.util.List.<com.example.demodatn.entity.khachhang.ShippingAddress>of() : shippingAddresses.list(principal.getName());
@@ -94,9 +91,9 @@ public class OrderController {
                 req.setReceiverName(customer.getFullName());
                 req.setPhone(customer.getPhone());
                 req.setEmail(customer.getEmail());
-                req.setShippingAddress(customer.getAddress());
+                req.setShippingAddress(customer.getAddress());req.setStreetAddress(customer.getAddress());
                 addressBook.stream().filter(com.example.demodatn.entity.khachhang.ShippingAddress::isDefaultAddress).findFirst().ifPresent(a -> {
-                    req.setShippingAddressId(a.getId());req.setReceiverName(a.getReceiverName());req.setPhone(a.getPhone());req.setShippingAddress(a.getAddress());req.setProvinceId(a.getProvince()==null?null:a.getProvince().getId());
+                    req.setShippingAddressId(a.getId());req.setReceiverName(a.getReceiverName());req.setPhone(a.getPhone());req.setShippingAddress(a.getAddress());req.setWardId(a.getWard()==null?null:a.getWard().getId());req.setStreetAddress(a.getDisplayStreetAddress());req.setLatitude(a.getLatitude());req.setLongitude(a.getLongitude());req.setCoordinateSource(a.getCoordinateSource());req.setProvinceId(a.getProvince()==null?null:a.getProvince().getId());
                 });
             }
             model.addAttribute("checkoutRequest", req);
@@ -113,8 +110,11 @@ public class OrderController {
         model.addAttribute("variantCodes",variantCodes);
         model.addAttribute("variantPrices",cart.stream().collect(java.util.stream.Collectors.toMap(CartItemDto::getVariantId,i->pricingService.priceForVariant(i.getVariantId()),(a,b)->a)));
         model.addAttribute("subTotal", subTotal);
-        model.addAttribute("shippingFee", fee);
-        model.addAttribute("total", subTotal.add(fee));
+        var form=(CheckoutRequest)model.getAttribute("checkoutRequest");
+        com.example.demodatn.service.donhang.ShippingFeeService.Quote quote;
+        try{quote=shipping.quote(form,com.example.demodatn.service.donhang.ShippingFeeService.quantity(cart),false,"checkout");}
+        catch(IllegalArgumentException ex){model.addAttribute("error",ex.getMessage());quote=shipping.quote(new com.example.demodatn.dto.donhang.DeliveryAddressForm(),com.example.demodatn.service.donhang.ShippingFeeService.quantity(cart),false,"checkout");}
+        model.addAttribute("shippingQuote",quote);model.addAttribute("shippingFee",quote.shippingFee());model.addAttribute("total",subTotal.add(quote.shippingFee()));
         
         model.addAttribute("bankName", bankName);
         model.addAttribute("bankAccount", bankAccount);
@@ -125,27 +125,12 @@ public class OrderController {
     
     @PostMapping("/checkout/validate-voucher-ajax")
     @ResponseBody
-    public ResponseEntity<?> validateVoucher(@RequestParam String code, HttpSession session, Principal principal) {
-        List<CartItemDto> cart = (List<CartItemDto>) session.getAttribute("cart");
-        if (cart == null || cart.isEmpty()) return ResponseEntity.badRequest().body(Map.of("message", "Giỏ hàng rỗng."));
-        
-        BigDecimal subTotal;
-        try { subTotal=pricingService.refreshCart(cart); }
-        catch(IllegalArgumentException ex) { return ResponseEntity.badRequest().body(Map.of("valid",false,"message",ex.getMessage())); }
-        
-        Customer customer = getCustomer(principal);
-        VoucherService.VoucherResult res = voucherService.validateAndCalculate(code, customer, subTotal);
-        
-        Map<String, Object> response = new HashMap<>();
-        response.put("valid", res.valid);
-        response.put("message", res.message);
-        BigDecimal fee=subTotal.compareTo(freeShippingThreshold)>=0 ? BigDecimal.ZERO : shippingFee;
-        response.put("subtotal",subTotal);response.put("shippingFee",fee);
-        response.put("total",subTotal.subtract(res.discountAmount).add(fee));
-        if (res.valid) {
-            response.put("discountAmount", res.discountAmount);
-        }
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> validateVoucher(@RequestParam String code,@ModelAttribute com.example.demodatn.dto.donhang.DeliveryAddressForm address,org.springframework.validation.BindingResult errors,HttpSession session,Principal principal) {
+        @SuppressWarnings("unchecked") var cart=(List<CartItemDto>)session.getAttribute("cart");
+        if(cart==null || cart.isEmpty())return ResponseEntity.badRequest().body(Map.of("message","Giỏ hàng rỗng."));
+        if(errors.hasErrors())return ResponseEntity.badRequest().body(Map.of("message","Thông tin giao hàng không hợp lệ."));
+        try{return ResponseEntity.ok(shippingPreview.preview(cart,address,getCustomer(principal),code,false,"voucher"));}
+        catch(IllegalArgumentException ex){return ResponseEntity.badRequest().body(Map.of("message",ex.getMessage()));}
     }
 
     @PostMapping("/checkout/place")
@@ -168,14 +153,15 @@ public class OrderController {
             return "redirect:/checkout";
         }
 
-        BigDecimal fee = subTotal.compareTo(freeShippingThreshold) >= 0 ? BigDecimal.ZERO : shippingFee;
+
         Customer customer = getCustomer(principal);
         try {
             if(request.getShippingAddressId()!=null) {
                 if (principal == null) throw new IllegalArgumentException("Địa chỉ nhận hàng không hợp lệ.");
                 shippingAddresses.owned(principal.getName(),request.getShippingAddressId());
             }
-            Order order = orderService.placeOrder(request, cart, customer, fee);
+            shipping.prepare(request,principal.getName());
+            Order order = orderService.placeOrder(request, cart, customer, BigDecimal.ZERO);
             session.removeAttribute("cart");
             return "redirect:/orders/success/" + order.getId();
         } catch (IllegalArgumentException e) {

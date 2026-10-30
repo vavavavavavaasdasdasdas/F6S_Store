@@ -64,7 +64,7 @@ class PosInvoiceIntegrationTest {
     }
     @Test @Transactional
     void onlineSaleAlsoCreatesInvoiceAndStatusCannotSkipSteps() {
-        var v=variant();var r=new CheckoutRequest();r.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));r.setReceiverName("Online P9");r.setPaymentMethod("COD");
+        var v=variant();var r=new CheckoutRequest();r.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));r.setWardId(jdbc.queryForObject("SELECT TOP 1 id FROM phuong_xa WHERE tinh_thanh_id=? ORDER BY id",Integer.class,r.getProvinceId()));r.setStreetAddress("Số 12, đường Nguyễn Huệ");r.setReceiverName("Online P9");r.setPaymentMethod("COD");
         var o=service.placeOrder(r,List.of(item(v)),null,BigDecimal.ZERO);
         assertTrue(invoices.findByOrder_Id(o.getId()).isPresent());
         assertThrows(IllegalArgumentException.class,()->service.updateStatus(o.getId(),"DELIVERED"));

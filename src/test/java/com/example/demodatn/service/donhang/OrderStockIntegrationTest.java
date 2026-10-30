@@ -60,7 +60,7 @@ class OrderStockIntegrationTest {
         var item=new CartItemDto(pid,vid,"Kiểm thử","39",BigDecimal.ONE,1);
         Order o;
         if(pos)o=orders.createPosOrder(List.of(item),null,employees.findByUser_Username("admin").orElseThrow(),null,method,"Quầy",BigDecimal.valueOf(200000));
-        else {var request=new CheckoutRequest();request.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));request.setPaymentMethod(method);request.setReceiverName("Khách kiểm thử");o=orders.placeOrder(request,List.of(item),null,BigDecimal.ZERO);}
+        else {var request=new CheckoutRequest();request.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));request.setWardId(jdbc.queryForObject("SELECT TOP 1 id FROM phuong_xa WHERE tinh_thanh_id=? ORDER BY id",Integer.class,request.getProvinceId()));request.setStreetAddress("Số 12, đường Nguyễn Huệ");request.setPaymentMethod(method);request.setReceiverName("Khách kiểm thử");o=orders.placeOrder(request,List.of(item),null,BigDecimal.ZERO);}
         return o.getId();});created.add(id);return id;}
     int stock(){return jdbc.queryForObject("SELECT quantity FROM product_variants WHERE id=?",Integer.class,vid);}
     Map<String,Object> row(int id){return jdbc.queryForMap("SELECT status,da_tru_kho,payment_status FROM orders WHERE id=?",id);}

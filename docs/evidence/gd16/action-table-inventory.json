@@ -1,0 +1,5939 @@
+[
+  {
+    "role": "admin",
+    "url": "/admin/dashboard",
+    "table": "admin-bang-dieu-khien-5",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-bang-dieu-khien-5",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Tồn kho",
+          "Thao tác"
+        ],
+        "actionButtons": [
+          {
+            "label": "Kiểm tra tồn kho →",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Kiểm tra tồn kho →",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-bang-dieu-khien-5",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Tồn kho",
+          "Thao tác"
+        ],
+        "actionButtons": [
+          {
+            "label": "Kiểm tra tồn kho →",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Kiểm tra tồn kho →",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/products-crud",
+    "table": "admin-san-pham-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-san-pham-danh-sach-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Thương hiệu",
+          "Đế giày",
+          "Chất liệu",
+          "Màu sắc",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-san-pham-danh-sach-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Thương hiệu",
+          "Đế giày",
+          "Chất liệu",
+          "Màu sắc",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/products-crud?page=1",
+    "table": "admin-san-pham-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-san-pham-danh-sach-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Thương hiệu",
+          "Đế giày",
+          "Chất liệu",
+          "Màu sắc",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-san-pham-danh-sach-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Thương hiệu",
+          "Đế giày",
+          "Chất liệu",
+          "Màu sắc",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Bán lại",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Quản lý biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/products-crud/view/3",
+    "table": "product-editable-variants",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "product-editable-variants",
+        "headers": [
+          "STT",
+          "Kích cỡ",
+          "Màu sắc",
+          "Chất liệu",
+          "Đế giày",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lưu",
+            "styled": true,
+            "icon": true,
+            "height": 0,
+            "visible": false
+          },
+          {
+            "label": "Hủy",
+            "styled": true,
+            "icon": true,
+            "height": 0,
+            "visible": false
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lưu",
+            "styled": true,
+            "icon": true,
+            "height": 0,
+            "visible": false
+          },
+          {
+            "label": "Hủy",
+            "styled": true,
+            "icon": true,
+            "height": 0,
+            "visible": false
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "product-editable-variants",
+        "headers": [
+          "STT",
+          "Kích cỡ",
+          "Màu sắc",
+          "Chất liệu",
+          "Đế giày",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lưu",
+            "styled": true,
+            "icon": true,
+            "height": 0,
+            "visible": false
+          },
+          {
+            "label": "Hủy",
+            "styled": true,
+            "icon": true,
+            "height": 0,
+            "visible": false
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lưu",
+            "styled": true,
+            "icon": true,
+            "height": 0,
+            "visible": false
+          },
+          {
+            "label": "Hủy",
+            "styled": true,
+            "icon": true,
+            "height": 0,
+            "visible": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/variants",
+    "table": "admin-bien-the-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-bien-the-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-bien-the-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ngừng bán",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa biến thể",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/categories",
+    "table": "admin-danh-muc-kich-co-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên thương hiệu",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên thương hiệu",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/sizes",
+    "table": "admin-danh-muc-kich-co-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Kích cỡ",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Kích cỡ",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/materials",
+    "table": "admin-danh-muc-kich-co-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên chất liệu",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên chất liệu",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/soles",
+    "table": "admin-danh-muc-kich-co-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên đế giày",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên đế giày",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/colors",
+    "table": "admin-mau-sac-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-mau-sac-danh-sach-1",
+        "headers": [
+          "STT",
+          "Ô màu mẫu",
+          "Mã màu",
+          "Tên màu sắc",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-mau-sac-danh-sach-1",
+        "headers": [
+          "STT",
+          "Ô màu mẫu",
+          "Mã màu",
+          "Tên màu sắc",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Ẩn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/inventory",
+    "table": "admin-ton-kho-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-ton-kho-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Tồn kho",
+          "Trạng thái biến thể",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-ton-kho-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Tồn kho",
+          "Trạng thái biến thể",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/inventory?stock=low",
+    "table": "admin-ton-kho-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-ton-kho-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Tồn kho",
+          "Trạng thái biến thể",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-ton-kho-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Tồn kho",
+          "Trạng thái biến thể",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Điều chỉnh tồn",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lịch sử",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/customers",
+    "table": "admin-khach-hang-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-khach-hang-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Họ tên",
+          "CCCD",
+          "SĐT",
+          "Email",
+          "Địa chỉ",
+          "Tài khoản",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-khach-hang-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Họ tên",
+          "CCCD",
+          "SĐT",
+          "Email",
+          "Địa chỉ",
+          "Tài khoản",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/employees",
+    "table": "admin-nhan-vien-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-nhan-vien-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Họ tên",
+          "CCCD",
+          "SĐT",
+          "Email",
+          "Địa chỉ",
+          "Tài khoản",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-nhan-vien-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Họ tên",
+          "CCCD",
+          "SĐT",
+          "Email",
+          "Địa chỉ",
+          "Tài khoản",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/vouchers",
+    "table": "admin-voucher-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-voucher-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên",
+          "Loại giảm",
+          "Giá trị giảm",
+          "Phạm vi",
+          "Khách hàng áp dụng",
+          "Bắt đầu",
+          "Kết thúc",
+          "Đã dùng",
+          "Giới hạn lượt",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-voucher-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên",
+          "Loại giảm",
+          "Giá trị giảm",
+          "Phạm vi",
+          "Khách hàng áp dụng",
+          "Bắt đầu",
+          "Kết thúc",
+          "Đã dùng",
+          "Giới hạn lượt",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/promotions",
+    "table": "admin-khuyen-mai-danh-sach-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-khuyen-mai-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên",
+          "Loại giảm",
+          "Giá trị giảm",
+          "Bắt đầu",
+          "Kết thúc",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Chọn sản phẩm",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Chọn sản phẩm",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Chọn sản phẩm",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Chọn sản phẩm",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Chọn sản phẩm",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "admin-khuyen-mai-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên",
+          "Loại giảm",
+          "Giá trị giảm",
+          "Bắt đầu",
+          "Kết thúc",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Chọn sản phẩm",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Chọn sản phẩm",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Chọn sản phẩm",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Chọn sản phẩm",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Sửa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Chọn sản phẩm",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xóa",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/pos",
+    "table": "admin-ban-tai-quay-ban-tai-quay-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-ban-tai-quay-ban-tai-quay-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Số món",
+          "Tổng tiền",
+          "Hết hạn",
+          "Hành động"
+        ],
+        "actionButtons": []
+      },
+      {
+        "width": 375,
+        "key": "admin-ban-tai-quay-ban-tai-quay-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Số món",
+          "Tổng tiền",
+          "Hết hạn",
+          "Hành động"
+        ],
+        "actionButtons": []
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/pos",
+    "table": "admin-ban-tai-quay-ban-tai-quay-2",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "admin-ban-tai-quay-ban-tai-quay-2",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Đơn giá",
+          "Số lượng",
+          "Thành tiền",
+          "Hành động"
+        ],
+        "actionButtons": []
+      },
+      {
+        "width": 375,
+        "key": "admin-ban-tai-quay-ban-tai-quay-2",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Đơn giá",
+          "Số lượng",
+          "Thành tiền",
+          "Hành động"
+        ],
+        "actionButtons": []
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "url": "/admin/shipping-times",
+    "table": "table",
+    "checks": [
+      {
+        "width": 1280,
+        "headers": [
+          "STT",
+          "Vùng",
+          "Ngày tối thiểu",
+          "Ngày tối đa",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Lưu",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lưu",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lưu",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "headers": [
+          "STT",
+          "Vùng",
+          "Ngày tối thiểu",
+          "Ngày tối đa",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Lưu",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lưu",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Lưu",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "url": "/orders",
+    "table": "user-don-hang-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "user-don-hang-1",
+        "headers": [
+          "STT",
+          "Mã Đơn Hàng",
+          "Ngày đặt",
+          "Tổng tiền",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "user-don-hang-1",
+        "headers": [
+          "STT",
+          "Mã Đơn Hàng",
+          "Ngày đặt",
+          "Tổng tiền",
+          "Trạng thái",
+          "Hành động"
+        ],
+        "actionButtons": [
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          },
+          {
+            "label": "Xem chi tiết",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "url": "/cart",
+    "table": "user-gio-hang-1",
+    "checks": [
+      {
+        "width": 1280,
+        "key": "user-gio-hang-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Đơn giá",
+          "Giá gốc",
+          "Số lượng",
+          "Thành tiền",
+          "Thao tác"
+        ],
+        "actionButtons": [
+          {
+            "label": "Xóa Adidas Ultraboost",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "width": 375,
+        "key": "user-gio-hang-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Đơn giá",
+          "Giá gốc",
+          "Số lượng",
+          "Thành tiền",
+          "Thao tác"
+        ],
+        "actionButtons": [
+          {
+            "label": "Xóa Adidas Ultraboost",
+            "styled": true,
+            "icon": true,
+            "height": 36,
+            "visible": true
+          }
+        ]
+      }
+    ]
+  }
+]

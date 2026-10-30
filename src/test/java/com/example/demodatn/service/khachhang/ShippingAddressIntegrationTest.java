@@ -44,7 +44,7 @@ class ShippingAddressIntegrationTest {
         int id=jdbc.queryForObject("INSERT customers(customer_code,full_name,phone,email,user_id,status) OUTPUT INSERTED.id VALUES(?,N'Khách Nguyễn Huệ',?,?,?,1)",Integer.class,"ADDR-"+UUID.randomUUID().toString().substring(0,12),"08"+String.format("%08d",sequence.incrementAndGet()),name+"@example.test",user);
         return new Owner(id,user,name);
     }
-    ShippingAddressForm form(String text) {var f=new ShippingAddressForm();f.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));f.setReceiverName("Nguyễn Đà Nẵng");f.setPhone("+84901234567");f.setAddress(text);return f;}
+    ShippingAddressForm form(String text) {var f=new ShippingAddressForm();f.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));f.setWardId(jdbc.queryForObject("SELECT TOP 1 id FROM phuong_xa WHERE tinh_thanh_id=? ORDER BY id",Integer.class,f.getProvinceId()));f.setStreetAddress("Số 12, đường Nguyễn Huệ");f.setReceiverName("Nguyễn Đà Nẵng");f.setPhone("+84901234567");f.setAddress(text);f.setStreetAddress(text);return f;}
     MockHttpSession cart() {
         var v=variants.findByStatusTrueAndProduct_StatusTrue().stream().filter(x->x.getQuantity()>0).findFirst().orElseThrow();
         var s=new MockHttpSession();s.setAttribute("cart",new ArrayList<>(List.of(new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),v.getPrice(),1))));return s;
@@ -90,9 +90,9 @@ class ShippingAddressIntegrationTest {
     @Test @Transactional void validationAndProfileAdminBookRender() throws Exception {
         var o=owner();var f=form(UNICODE);f.setReceiverName(" ");assertThrows(PeopleValidationException.class,()->service.save(o.username(),f));
         f.setReceiverName("Nguyễn Huệ");f.setPhone("12345");assertThrows(PeopleValidationException.class,()->service.save(o.username(),f));
-        f.setPhone("0901234567");f.setAddress("a".repeat(256));assertThrows(PeopleValidationException.class,()->service.save(o.username(),f));
+        f.setPhone("0901234567");f.setAddress("a".repeat(256));f.setStreetAddress("a".repeat(256));assertThrows(PeopleValidationException.class,()->service.save(o.username(),f));
         mvc.perform(post("/profile/addresses/save").with(user(o.username()).roles("USER")).with(csrf()).param("receiverName","").param("phone","wrong").param("address",""))
-            .andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("shippingAddress","receiverName","phone","address"));
+            .andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("shippingAddress","receiverName","phone","streetAddress"));
         for(int n=0;n<3;n++)service.save(o.username(),form(n==0?UNICODE:"Địa chỉ "+n));
         mvc.perform(get("/profile").with(user(o.username()).roles("USER"))).andExpect(status().isOk()).andExpect(content().string(containsString(ShippingAddressService.LIMIT_MESSAGE))).andExpect(content().string(not(containsString(">Thêm địa chỉ</a>"))));
         mvc.perform(get("/admin/customers/detail/"+o.id()).with(user("admin").roles("ADMIN"))).andExpect(status().isOk()).andExpect(content().string(containsString(UNICODE))).andExpect(content().string(not(containsString("/profile/addresses/"))));
@@ -104,7 +104,7 @@ class ShippingAddressIntegrationTest {
         var req=(com.example.demodatn.dto.donhang.CheckoutRequest)r.getModelAndView().getModel().get("checkoutRequest");assertEquals(book.get(1).getId(),req.getShippingAddressId());
         for(int n=0;n<4;n++) {
             var a=book.get(n%3);String text=n==3?"Địa chỉ tạm cho đơn này":a.getAddress();
-            r=mvc.perform(post("/checkout/place").with(user(o.username()).roles("USER")).with(csrf()).session(cart()).param("shippingAddressId",a.getId().toString()).param("receiverName",a.getReceiverName()).param("phone",a.getPhone()).param("email","order@example.test").param("shippingAddress",text).param("provinceId",jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",String.class)).param("paymentMethod","COD")).andExpect(status().is3xxRedirection()).andReturn();
+            r=mvc.perform(post("/checkout/place").with(user(o.username()).roles("USER")).with(csrf()).session(cart()).param("shippingAddressId",a.getId().toString()).param("receiverName",a.getReceiverName()).param("phone",a.getPhone()).param("email","order@example.test").param("streetAddress",text).param("provinceId",jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",String.class)).param("wardId",jdbc.queryForObject("SELECT TOP 1 w.id FROM phuong_xa w WHERE w.tinh_thanh_id=(SELECT TOP 1 id FROM tinh_thanh ORDER BY id) ORDER BY w.id",String.class)).param("paymentMethod","COD")).andExpect(status().is3xxRedirection()).andReturn();
             String url=r.getResponse().getRedirectedUrl();assertTrue(url.startsWith("/orders/success/"),url);int id=Integer.parseInt(url.substring(url.lastIndexOf('/')+1));
             var row=jdbc.queryForMap("SELECT receiver_name,phone_number,shipping_address FROM orders WHERE id=?",id);assertEquals(a.getReceiverName(),row.get("receiver_name"));assertEquals(a.getPhone(),row.get("phone_number"));assertEquals(text,row.get("shipping_address"));
             System.out.println("PHASE_C order="+id+" addressId="+a.getId()+" temporary="+(n==3)+" snapshot equality=true");
@@ -127,7 +127,7 @@ class ShippingAddressIntegrationTest {
         mvc.perform(post("/profile/addresses/"+id+"/delete").with(user(b.username()).roles("USER")).with(csrf())).andExpect(status().isNotFound());System.out.println("C_SECURITY 5 foreign delete=404");
         mvc.perform(post("/profile/addresses/"+id+"/default").with(user(b.username()).roles("USER")).with(csrf())).andExpect(status().isNotFound());System.out.println("C_SECURITY 6 foreign default=404");
         mvc.perform(get("/profile").param("addressId",""+id).with(user(b.username()).roles("USER"))).andExpect(status().isNotFound());System.out.println("C_SECURITY 7 foreign view=404");
-        mvc.perform(post("/checkout/place").with(user(b.username()).roles("USER")).with(csrf()).session(cart()).param("shippingAddressId",""+id).param("receiverName","Khách B").param("phone","0901234567").param("email","b@example.test").param("shippingAddress","Địa chỉ B").param("provinceId",jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",String.class)).param("paymentMethod","COD")).andExpect(status().isNotFound());System.out.println("C_SECURITY 8 checkout foreign ID=404");
+        mvc.perform(post("/checkout/place").with(user(b.username()).roles("USER")).with(csrf()).session(cart()).param("shippingAddressId",""+id).param("receiverName","Khách B").param("phone","0901234567").param("email","b@example.test").param("streetAddress","Địa chỉ B").param("provinceId",jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",String.class)).param("wardId",jdbc.queryForObject("SELECT TOP 1 w.id FROM phuong_xa w WHERE w.tinh_thanh_id=(SELECT TOP 1 id FROM tinh_thanh ORDER BY id) ORDER BY w.id",String.class)).param("paymentMethod","COD")).andExpect(status().isNotFound());System.out.println("C_SECURITY 8 checkout foreign ID=404");
         assertEquals(UNICODE,service.owned(a.username(),id).getAddress());
     }
 }

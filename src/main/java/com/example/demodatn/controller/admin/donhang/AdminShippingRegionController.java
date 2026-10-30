@@ -10,7 +10,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.*;
 @Controller @RequestMapping("/admin/shipping-times") @RequiredArgsConstructor
 public class AdminShippingRegionController {
+ private final com.example.demodatn.service.donhang.ShippingFeeService shipping;
  private final ShippingRegionRepository regions;private final DeliveryService delivery;private final Pagination pagination;
+ @ModelAttribute("shippingSettings") public com.example.demodatn.dto.donhang.ShippingSettingsForm settings(){var f=new com.example.demodatn.dto.donhang.ShippingSettingsForm();org.springframework.beans.BeanUtils.copyProperties(shipping.settings(),f);return f;}
+ @PostMapping("/settings") public String settings(@jakarta.validation.Valid @ModelAttribute("shippingSettings") com.example.demodatn.dto.donhang.ShippingSettingsForm form,org.springframework.validation.BindingResult errors,Model model,RedirectAttributes flash){
+  if(!errors.hasErrors())try{shipping.update(form);flash.addFlashAttribute("message","Đã cập nhật kho và các nấc phí. Đơn cũ giữ phí đã lưu.");return "redirect:/admin/shipping-times";}
+  catch(com.example.demodatn.exception.PeopleValidationException ex){errors.rejectValue(ex.getField(),"invalid",ex.getMessage());}
+  return list("","0",model);
+ }
  @GetMapping public String list(@RequestParam(defaultValue="") String region,@RequestParam(defaultValue="0") String page,Model model){
   var rows=regions.findAll(Sort.by("code")).stream().filter(r->region.isBlank() || r.getCode().equals(region)).toList();
   var request=pagination.request(page,rows.size(),Sort.by("code"));int start=(int)request.getOffset();

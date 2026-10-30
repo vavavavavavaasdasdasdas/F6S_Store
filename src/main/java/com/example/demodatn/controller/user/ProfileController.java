@@ -33,7 +33,7 @@ public class ProfileController {
         if(!newAddress && !rows.isEmpty()) {
             var selected=addressId==null ? rows.stream().filter(com.example.demodatn.entity.khachhang.ShippingAddress::isDefaultAddress).findFirst().orElse(rows.get(0)) : shippingAddresses.owned(auth.getName(),addressId);
             form.setId(selected.getId());form.setReceiverName(selected.getReceiverName());form.setPhone(selected.getPhone());form.setAddress(selected.getAddress());
-            form.setMakeDefault(selected.isDefaultAddress());form.setProvinceId(selected.getProvince()==null?null:selected.getProvince().getId());
+            form.setMakeDefault(selected.isDefaultAddress());form.setWardId(selected.getWard()==null?null:selected.getWard().getId());form.setStreetAddress(selected.getDisplayStreetAddress());form.setLatitude(selected.getLatitude());form.setLongitude(selected.getLongitude());form.setCoordinateSource(selected.getCoordinateSource());form.setProvinceId(selected.getProvince()==null?null:selected.getProvince().getId());
         } else if(addressId!=null) shippingAddresses.owned(auth.getName(),addressId);
         model.addAttribute("shippingAddress",form);
         return profile(auth,model);

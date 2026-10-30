@@ -1,0 +1,389 @@
+[
+  {
+    "id": "login-admin",
+    "role": "guest",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "register-user",
+    "role": "guest",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "address-map-fee",
+    "role": "user",
+    "width": 1280,
+    "result": "FAIL",
+    "message": "Console error: Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED; Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+  },
+  {
+    "id": "register-user",
+    "role": "guest",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "address-map-fee",
+    "role": "user",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "address-map-fee",
+    "role": "user",
+    "width": 375,
+    "result": "FAIL",
+    "message": "Near fee"
+  },
+  {
+    "id": "address-map-fee",
+    "role": "user",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "address-map-fee",
+    "role": "user",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "checkout-snapshot-qr",
+    "role": "user",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "pos-online-create",
+    "role": "admin",
+    "width": 1280,
+    "result": "FAIL",
+    "message": "page.waitForNavigation: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================"
+  },
+  {
+    "id": "checkout-snapshot-qr",
+    "role": "user",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "pos-online-create",
+    "role": "admin",
+    "width": 1280,
+    "result": "FAIL",
+    "message": "Copy"
+  },
+  {
+    "id": "checkout-snapshot-qr",
+    "role": "user",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "pos-online-create",
+    "role": "admin",
+    "width": 1280,
+    "result": "FAIL",
+    "message": "Clipboard content"
+  },
+  {
+    "id": "checkout-snapshot-qr",
+    "role": "user",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "pos-online-create",
+    "role": "admin",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "checkout-snapshot-qr",
+    "role": "user",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "pos-online-create",
+    "role": "admin",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "gps-denied-drag-provider-error-free-shipping",
+    "role": "user",
+    "width": 1280,
+    "result": "FAIL",
+    "message": "page.waitForFunction: Timeout 10000ms exceeded."
+  },
+  {
+    "id": "gps-denied-drag-provider-error-free-shipping",
+    "role": "user",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "gps-denied-drag-provider-error-free-shipping",
+    "role": "user",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "all-tables-crawl-admin",
+    "role": "admin",
+    "width": 1280,
+    "result": "FAIL",
+    "message": "Action button /admin/products-crud Xem 32"
+  },
+  {
+    "id": "all-tables-crawl-admin",
+    "role": "admin",
+    "width": 375,
+    "result": "FAIL",
+    "message": "Action button /admin/products-crud Xem 32"
+  },
+  {
+    "id": "all-tables-crawl-user",
+    "role": "user",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "all-tables-crawl-user",
+    "role": "user",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "all-tables-crawl-guest",
+    "role": "guest",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "all-tables-crawl-guest",
+    "role": "guest",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "pos-online-status-confirmed",
+    "role": "admin",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "pos-online-status-preparing",
+    "role": "admin",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "pos-online-status-shipping",
+    "role": "admin",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "pos-online-status-delivered",
+    "role": "admin",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "pos-online-status-confirmed",
+    "role": "admin",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "pos-online-status-cancelled",
+    "role": "admin",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "all-tables-crawl-admin",
+    "role": "admin",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "all-tables-crawl-admin",
+    "role": "admin",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "all-tables-crawl-user",
+    "role": "user",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "all-tables-crawl-user",
+    "role": "user",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "all-tables-crawl-guest",
+    "role": "guest",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "all-tables-crawl-guest",
+    "role": "guest",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "lazy-customer-held-action-buttons-confirmations",
+    "role": "admin",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "lazy-customer-held-action-buttons-confirmations",
+    "role": "admin",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "eight-security-groups-guest",
+    "role": "guest",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "eight-security-groups-user",
+    "role": "user",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "eight-security-groups-admin",
+    "role": "admin",
+    "width": 375,
+    "result": "FAIL",
+    "message": "/admin/shipping-times/settings valid 302"
+  },
+  {
+    "id": "eight-security-groups-guest",
+    "role": "guest",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "eight-security-groups-user",
+    "role": "user",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "eight-security-groups-admin",
+    "role": "admin",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "independent-revenue-logo-invoice-channel",
+    "role": "admin",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "provider-down-order-fallback-or-free",
+    "role": "user",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "provider-down-order-fallback-or-free",
+    "role": "user",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "login-admin",
+    "role": "guest",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "final-register-user",
+    "role": "guest",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "final-build-crawl-admin",
+    "role": "admin",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "final-build-crawl-admin",
+    "role": "admin",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "final-build-crawl-user",
+    "role": "user",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "final-build-crawl-user",
+    "role": "user",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "final-build-crawl-guest",
+    "role": "guest",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "final-build-crawl-guest",
+    "role": "guest",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "final-action-buttons-visible",
+    "role": "admin",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "final-action-buttons-visible",
+    "role": "admin",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "final-settings-malformed-number-and-precision",
+    "role": "admin",
+    "width": 375,
+    "result": "PASS"
+  },
+  {
+    "id": "dynamic-action-color-and-icon",
+    "role": "admin",
+    "width": 1280,
+    "result": "PASS"
+  },
+  {
+    "id": "dynamic-action-color-and-icon",
+    "role": "admin",
+    "width": 375,
+    "result": "PASS"
+  }
+]

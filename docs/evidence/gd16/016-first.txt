@@ -1,0 +1,39 @@
+
+(1 rows affected)
+
+(34 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(200 rows affected)
+
+(121 rows affected)
+HOÀN TẤT 016_dia_chi_phi_ship_don_online.sql

@@ -29,6 +29,7 @@ public class PosHoldService {
     private final ProductVariantRepository variants;
     private final PricingService pricing;
     private final OrderService orders;
+    private final PosOnlineOrderService onlineOrders;
     private final Clock clock;
     @Value("${shop.pos.hold.expiry-mode:END_OF_DAY}") private String expiryMode="END_OF_DAY";
 
@@ -122,6 +123,13 @@ public class PosHoldService {
         var order=orders.createPosOrder(cart,customer,employee,request.getVoucherCode(),request.getPaymentMethod(),"Tại quầy",request.getCashReceived(),request.getPaymentReference());
         holds.delete(hold);holds.flush();
         return order;
+    }
+
+    @Transactional(rollbackFor=Exception.class)
+    public Order checkoutOnline(String username,Long id,List<CartItemDto> cart,com.example.demodatn.dto.donhang.PosOnlineOrderForm form){
+        var hold=locked(username,id);
+        for(var item:cart)if(pricing.priceForVariant(item.getVariantId()).getFinalPrice().compareTo(item.getPrice())!=0)throw new IllegalArgumentException("Giá đã thay đổi. Kiểm tra và xác nhận lại giá trước khi tạo đơn.");
+        var order=onlineOrders.create(username,form,cart);holds.delete(hold);holds.flush();return order;
     }
 
     @Transactional

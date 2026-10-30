@@ -1,0 +1,13 @@
+{
+  "favicons": {
+    "favicon-32.png": [
+      32,
+      32
+    ],
+    "favicon-180.png": [
+      180,
+      180
+    ]
+  },
+  "logoByteEquality": true
+}

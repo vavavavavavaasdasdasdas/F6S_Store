@@ -23,7 +23,7 @@ class PosHoldServiceTest {
     private final ProductVariantRepository variants=mock(ProductVariantRepository.class);
     private final PricingService pricing=mock(PricingService.class);
     private final OrderService orders=mock(OrderService.class);
-    private final PosHoldService service=new PosHoldService(holds,users,mock(EmployeeRepository.class),mock(CustomerRepository.class),variants,pricing,orders,clock);
+    private final PosHoldService service=new PosHoldService(holds,users,mock(EmployeeRepository.class),mock(CustomerRepository.class),variants,pricing,orders,mock(PosOnlineOrderService.class),clock);
 
     @Test void endOfDayAt2350ExpiresAtNextMidnight() {
         assertEquals(LocalDateTime.parse("2026-10-09T00:00"),PosHoldService.expiry(clock,"END_OF_DAY"));

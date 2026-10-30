@@ -1,5 +1,6 @@
 (() => {
  document.querySelectorAll('[data-voucher-preview]').forEach(box=>{
+   if(box.closest('form')?.querySelector('[data-delivery-address]'))return;
    const input=box.querySelector('[name=voucherCode]'),button=box.querySelector('[data-apply-voucher]'),message=box.querySelector('[data-voucher-message]');
    const customer=box.querySelector('[name=customerId]'),subtotal=box.querySelector('[data-subtotal]'),total=box.querySelector('[data-total]'),discount=box.querySelector('[data-discount]'),row=box.querySelector('[data-discount-row]');
    const money=n=>new Intl.NumberFormat('vi-VN').format(n)+' đ';let pending=null,revision=0;

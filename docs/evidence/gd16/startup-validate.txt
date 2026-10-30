@@ -1,0 +1,4 @@
+	Default catalog/schema: shopbangiay_kt_20261030_gd16/dbo
+2026-10-30 22:45:38.599  INFO o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 18210 (http) with context path '/'
+2026-10-30 22:45:38.610  INFO c.example.demodatn.DemoDatnApplication : Started DemoDatnApplication in 9.164 seconds (process running for 9.507)
+SCHEMA_CHECK missing errors=0

@@ -1,0 +1,50 @@
+{
+  "headCommit": "6109a2f",
+  "head": {
+    "errors": 143,
+    "total": 143,
+    "unresolved": 46,
+    "violations": 97,
+    "warnings": 0
+  },
+  "current": {
+    "errors": 150,
+    "total": 150,
+    "unresolved": 47,
+    "violations": 103,
+    "warnings": 0
+  },
+  "new": [
+    [
+      "src/main/resources/templates/fragments/dia-chi-giao-hang.html",
+      "ownership.native-select-undecided",
+      "Native select is used without an explicit ownership decision.",
+      1
+    ],
+    [
+      "src/main/resources/templates/admin/ban-tai-quay/ban-tai-quay.html",
+      "affordance.actionless-button",
+      "Enabled literal button has no detectable action or submit behavior.",
+      1
+    ],
+    [
+      "src/main/resources/templates/admin/don-hang/chi-tiet.html",
+      "affordance.actionless-button",
+      "Enabled literal button has no detectable action or submit behavior.",
+      1
+    ],
+    [
+      "src/main/resources/templates/fragments/dia-chi-giao-hang.html",
+      "affordance.actionless-button",
+      "Enabled literal button has no detectable action or submit behavior.",
+      2
+    ],
+    [
+      "src/main/resources/static/js/vendor/leaflet/leaflet.js",
+      "affordance.empty-href",
+      "Empty hash links look actionable but have no destination.",
+      2
+    ]
+  ],
+  "removed": []
+}
