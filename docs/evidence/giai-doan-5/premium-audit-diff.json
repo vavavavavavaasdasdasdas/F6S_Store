@@ -1,0 +1,63 @@
+{
+  "baseline": {
+    "errors": 125,
+    "total": 125,
+    "unresolved": 41,
+    "violations": 84,
+    "warnings": 0
+  },
+  "current": {
+    "errors": 130,
+    "total": 130,
+    "unresolved": 43,
+    "violations": 87,
+    "warnings": 0
+  },
+  "newFindings": [
+    {
+      "category": "unresolved",
+      "file": "src/main/resources/templates/admin/mau-sac/bieu-mau.html",
+      "line": 36,
+      "message": "Native select is used without an explicit ownership decision.",
+      "remediation": "Record Select/Listbox as native or reuse the authored canonical owner.",
+      "ruleId": "ownership.native-select-undecided",
+      "severity": "error"
+    },
+    {
+      "category": "unresolved",
+      "file": "src/main/resources/templates/admin/mau-sac/danh-sach.html",
+      "line": 29,
+      "message": "Native select is used without an explicit ownership decision.",
+      "remediation": "Record Select/Listbox as native or reuse the authored canonical owner.",
+      "ruleId": "ownership.native-select-undecided",
+      "severity": "error"
+    },
+    {
+      "category": "violation",
+      "file": "src/main/resources/templates/admin/mau-sac/danh-sach.html",
+      "line": 24,
+      "message": "Enabled literal button has no detectable action or submit behavior.",
+      "remediation": "Connect the button to a real action, make it a submit button, or disable/remove it.",
+      "ruleId": "affordance.actionless-button",
+      "severity": "error"
+    },
+    {
+      "category": "violation",
+      "file": "src/main/resources/templates/admin/mau-sac/danh-sach.html",
+      "line": 79,
+      "message": "Enabled literal button has no detectable action or submit behavior.",
+      "remediation": "Connect the button to a real action, make it a submit button, or disable/remove it.",
+      "ruleId": "affordance.actionless-button",
+      "severity": "error"
+    },
+    {
+      "category": "violation",
+      "file": "src/main/resources/templates/admin/mau-sac/danh-sach.html",
+      "line": 88,
+      "message": "Enabled literal button has no detectable action or submit behavior.",
+      "remediation": "Connect the button to a real action, make it a submit button, or disable/remove it.",
+      "ruleId": "affordance.actionless-button",
+      "severity": "error"
+    }
+  ]
+}

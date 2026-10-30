@@ -25,6 +25,8 @@ public class AdminInventoryController {
     private final AdminCatalogService catalog;
     private final InventoryService inventory;
     private final MaterialRepository materials;
+    private final com.example.demodatn.repository.sanpham.ColorRepository colors;
+    private final com.example.demodatn.repository.sanpham.SoleRepository soles;
     private final CategoryRepository categories;
     private final SizeRepository sizes;
     @Value("${shop.low-stock-threshold:5}") private int threshold;
@@ -42,8 +44,10 @@ public class AdminInventoryController {
                        @RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate historyFrom,
                        @RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate historyTo,
                        @RequestParam(defaultValue="") String actor,
-                       Model model) {
-        var result=query.variantsPage(null,stock,Math.max(0,threshold),page,materialId,sizeId,null,keyword,categoryId);
+                       @RequestParam(required=false) Integer colorId,@RequestParam(required=false) Integer soleId, Model model) {
+        var result=query.variantsPage(null,stock,Math.max(0,threshold),page,materialId,sizeId,null,keyword,categoryId,colorId,soleId);
+        model.addAttribute("colors",colors.findAll());model.addAttribute("colorId",colorId);
+        model.addAttribute("soles",soles.findAll());model.addAttribute("soleId",soleId);
         model.addAttribute("materials",materials.findAll()); model.addAttribute("materialId",materialId);
         model.addAttribute("categories",categories.findAll()); model.addAttribute("categoryId",categoryId);
         model.addAttribute("sizes",sizes.findAll()); model.addAttribute("sizeId",sizeId);
@@ -51,6 +55,8 @@ public class AdminInventoryController {
         model.addAttribute("variants",result.getContent()); model.addAttribute("dataPage",result); model.addAttribute("stock",stock);
         model.addAttribute("threshold",Math.max(0,threshold));
         int activeFilterCount = 0;
+        if(colorId!=null) activeFilterCount++;
+        if(soleId!=null) activeFilterCount++;
         if (keyword != null && !keyword.trim().isEmpty()) activeFilterCount++;
         if (categoryId != null) activeFilterCount++;
         if (materialId != null) activeFilterCount++;
@@ -58,7 +64,7 @@ public class AdminInventoryController {
         if (stock != null && !"all".equalsIgnoreCase(stock)) activeFilterCount++;
         model.addAttribute("activeFilterCount", activeFilterCount);
 
-        var logs=query.history(variantId,historyPage,materialId,changeType,historyFrom,historyTo,actor,historyKeyword);
+        var logs=query.history(variantId,historyPage,materialId,changeType,historyFrom,historyTo,actor,historyKeyword,colorId,soleId);
         model.addAttribute("history",logs.getContent());model.addAttribute("historyPage",logs);
         model.addAttribute("historyVariant",variantId);
         model.addAttribute("historyKeyword",historyKeyword);

@@ -30,6 +30,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @WithMockUser(username="admin",roles="ADMIN")
 class PosInvoiceIntegrationTest {
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.ColorRepository phase5Colors;
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.SoleRepository phase5Soles;
+
     @Autowired OrderService service;
     @Autowired OrderRepository orders;
     @Autowired InvoiceRepository invoices;
@@ -43,7 +46,7 @@ class PosInvoiceIntegrationTest {
 
     private ProductVariant variant() {
         var p=new Product();p.setName("Kiểm thử Phase 9");p.setCode("P9-"+UUID.randomUUID());products.save(p);
-        var v=new ProductVariant();v.setProduct(p);v.setSize(sizes.findAll().get(0));v.setMaterial(materials.findAll().get(0));v.setPrice(new BigDecimal("150000"));v.setQuantity(5);return variants.saveAndFlush(v);
+        var v=new ProductVariant();v.setProduct(p);v.setSize(sizes.findAll().get(0));v.setMaterial(materials.findAll().get(0));v.setColor(phase5Colors.findAll().get(0));v.setSole(phase5Soles.findAll().get(0));v.setPrice(new BigDecimal("150000"));v.setQuantity(5);return variants.saveAndFlush(v);
     }
     private CartItemDto item(ProductVariant v) {
         return new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),BigDecimal.ONE,2);

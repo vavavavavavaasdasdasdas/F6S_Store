@@ -8,7 +8,7 @@
             <h1 th:text="${lookupTitle}"></h1>
             <p class="admin-description" th:if="${kind == 'sizes'}">Quản lý kích cỡ giày. Chỉ cho phép xóa khi chưa có biến thể nào sử dụng.</p>
             <p class="admin-description" th:if="${kind == 'categories'}">Quản lý thương hiệu sản phẩm. Hỗ trợ hiển thị hoặc ẩn thương hiệu linh hoạt.</p>
-            <p class="admin-description" th:if="${kind == 'soles'}">Quản lý đế giày của sản phẩm. Chỉ xóa khi chưa được sản phẩm sử dụng.</p>
+            <p class="admin-description" th:if="${kind == 'soles'}">Quản lý đế giày của biến thể. Chỉ xóa khi chưa được biến thể sử dụng.</p>
             <p class="admin-description" th:if="${kind == 'materials'}">Quản lý chất liệu sản phẩm. Hỗ trợ hiển thị hoặc ẩn chất liệu linh hoạt.</p>
         </div>
         <a class="btn btn-primary" th:href="@{/admin/{kind}/create(kind=${kind})}" th:text="'Thêm ' + ${lookupTitle.toLowerCase()}"></a>
@@ -66,7 +66,7 @@
                             <span th:if="${item.status == true}" class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Đang hiển thị</span>
                             <span th:unless="${item.status == true}" class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1">Đang ẩn</span>
                         </td>
-                        <td th:if="${kind == 'soles'}"><a th:href="@{/admin/products-crud(soleId=${item.id})}" th:text="${soleUsage[item.id] ?: 0} + ' sản phẩm'"></a></td>
+                        <td th:if="${kind == 'soles'}"><a th:href="@{/admin/variants(soleId=${item.id})}" th:text="${soleUsage[item.id] ?: 0} + ' biến thể'"></a></td>
                         <td th:if="${kind == 'materials'}"><a th:href="@{/admin/variants(materialId=${item.id})}" th:text="${materialUsage[item.id] ?: 0} + ' biến thể'"></a></td>
                         <td>
                             <div class="catalog-actions" style="display:flex; align-items:center; gap:8px;">
@@ -74,7 +74,7 @@
                                 <!-- Thương hiệu và Chất liệu: chuyển đổi trạng thái ẩn/hiện thay vì xóa cứng -->
                                 <th:block th:if="${kind != 'sizes'}">
                                     <form th:if="${item.status == true}" th:action="@{/admin/{kind}/toggle-status/{id}(kind=${kind}, id=${item.id})}" method="post" novalidate style="display:inline;">
-                                        <button class="btn btn-sm btn-outline-warning" type="button" data-confirm data-confirm-title="Ẩn mục này?" th:attr="data-confirm-message=${kind == 'materials' ? 'Chất liệu có ' + (materialUsage[item.id] ?: 0) + ' biến thể đang dùng. Sau khi ẩn, không thể chọn cho biến thể mới; biến thể và đơn cũ vẫn hiển thị bình thường.' : (kind == 'soles' ? 'Đế giày có ' + (soleUsage[item.id] ?: 0) + ' sản phẩm đang dùng. Sau khi ẩn, sản phẩm cũ vẫn giữ tên; không chọn được cho sản phẩm mới.' : 'Bạn có muốn chuyển thương hiệu sang trạng thái ẩn?')}">Ẩn</button>
+                                        <button class="btn btn-sm btn-outline-warning" type="button" data-confirm data-confirm-title="Ẩn mục này?" th:attr="data-confirm-message=${kind == 'materials' ? 'Chất liệu có ' + (materialUsage[item.id] ?: 0) + ' biến thể đang dùng. Sau khi ẩn, không thể chọn cho biến thể mới; biến thể và đơn cũ vẫn hiển thị bình thường.' : (kind == 'soles' ? 'Đế giày có ' + (soleUsage[item.id] ?: 0) + ' biến thể đang dùng. Sau khi ẩn, sản phẩm cũ vẫn giữ tên; không chọn được cho biến thể mới.' : 'Bạn có muốn chuyển thương hiệu sang trạng thái ẩn?')}">Ẩn</button>
                                     </form>
                                     <form th:unless="${item.status == true}" th:action="@{/admin/{kind}/toggle-status/{id}(kind=${kind}, id=${item.id})}" method="post" novalidate style="display:inline;">
                                         <button class="btn btn-sm btn-outline-success" type="submit">Hiện</button>
@@ -84,7 +84,7 @@
                                 <th:block th:if="${kind == 'sizes' or (kind == 'soles' and (soleUsage[item.id] == null or soleUsage[item.id] == 0)) or (kind == 'materials' and (materialUsage[item.id] == null or materialUsage[item.id] == 0))}">
                                     <form th:action="@{/admin/{kind}/delete/{id}(kind=${kind}, id=${item.id})}" method="post" novalidate style="display:inline;" data-delete-form>
                                         <button class="btn btn-sm btn-outline-danger" type="button" data-delete
-                                                th:attr="data-object=${kind == 'sizes' ? item.sizeValue : item.name},data-consequence=${kind == 'soles' ? 'Chỉ xóa được khi chưa có sản phẩm nào sử dụng. Thao tác không thể hoàn tác.' : 'Chỉ xóa được khi chưa có biến thể nào sử dụng. Thao tác không thể hoàn tác.'}">Xóa</button>
+                                                th:attr="data-object=${kind == 'sizes' ? item.sizeValue : item.name},data-consequence=${kind == 'soles' ? 'Chỉ xóa được khi chưa có biến thể nào sử dụng. Thao tác không thể hoàn tác.' : 'Chỉ xóa được khi chưa có biến thể nào sử dụng. Thao tác không thể hoàn tác.'}">Xóa</button>
                                     </form>
                                 </th:block>
                             </div>

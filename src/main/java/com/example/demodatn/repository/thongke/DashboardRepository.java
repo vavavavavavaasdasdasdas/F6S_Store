@@ -48,6 +48,6 @@ public class DashboardRepository {
         return jdbc.queryForList("SELECT TOP (10) o.id,o.order_code,o.status,o.final_amount,o.created_at,COALESCE(c.full_name,o.receiver_name,N'Khách lẻ') AS customer FROM orders o LEFT JOIN customers c ON c.id=o.customer_id WHERE o.created_at >= ? AND o.created_at < ? ORDER BY o.created_at DESC,o.id DESC", from, to);
     }
     public List<Map<String, Object>> lowStock(int threshold) {
-        return jdbc.queryForList("SELECT v.id,p.code,p.name,s.size_value,m.ten AS material_name,v.quantity FROM product_variants v JOIN products p ON p.id=v.product_id JOIN sizes s ON s.id=v.size_id JOIN chat_lieu m ON m.id=v.chat_lieu_id WHERE v.status=1 AND p.status=1 AND v.quantity <= ? ORDER BY v.quantity,v.id", threshold);
+        return jdbc.queryForList("SELECT v.id,p.code,p.name,s.size_value,m.ten AS material_name,c.ten AS color_name,sole.ten AS sole_name,v.quantity FROM product_variants v JOIN products p ON p.id=v.product_id JOIN sizes s ON s.id=v.size_id JOIN chat_lieu m ON m.id=v.chat_lieu_id JOIN mau_sac c ON c.id=v.mau_sac_id JOIN de_giay sole ON sole.id=v.de_giay_id WHERE v.status=1 AND p.status=1 AND v.quantity <= ? ORDER BY v.quantity,v.id", threshold);
     }
 }

@@ -49,9 +49,11 @@ public class PosHoldService {
                     h.getItems().stream().mapToInt(PosHeldItem::getQuantity).sum(),
                     h.getItems().stream().map(i->pricing.calculatePrice(i.getVariant()).getFinalPrice().multiply(BigDecimal.valueOf(i.getQuantity()))).reduce(BigDecimal.ZERO,BigDecimal::add),
                     h.getExpiresAt().atZone(clock.getZone()).toInstant().toEpochMilli(),
-                    h.getItems().stream().map(i -> i.getVariant().getMaterial().getName()).distinct().sorted().collect(java.util.stream.Collectors.joining(", ")))).toList();
+                    h.getItems().stream().map(i -> i.getVariant().getMaterial().getName()).distinct().sorted().collect(java.util.stream.Collectors.joining(", ")),
+                    h.getItems().stream().map(i -> i.getVariant().getColor().getName()).distinct().sorted().collect(java.util.stream.Collectors.joining(", ")),
+                    h.getItems().stream().map(i -> i.getVariant().getSole().getName()).distinct().sorted().collect(java.util.stream.Collectors.joining(", ")))).toList();
     }
-    public record HoldSummary(Long id,String code,int itemCount,BigDecimal subtotal,long expiresEpoch,String materialNames) {}
+    public record HoldSummary(Long id,String code,int itemCount,BigDecimal subtotal,long expiresEpoch,String materialNames,String colorNames,String soleNames) {}
     public record Loaded(Long id,String code,List<CartItemDto> cart,PosCheckoutRequest request) {}
 
     private PosHeldOrder locked(String username,Long id) {
@@ -92,7 +94,7 @@ public class PosHoldService {
         var h=locked(username,id);var request=new PosCheckoutRequest();
         request.setCustomerId(h.getCustomer()==null ? null : h.getCustomer().getId());
         request.setVoucherCode(h.getVoucherCode());request.setPaymentMethod(h.getPaymentMethod());request.setNote(h.getNote());
-        var cart=h.getItems().stream().map(i->{var v=i.getVariant();return new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),v.getMaterial().getName(),pricing.calculatePrice(v).getFinalPrice(),i.getQuantity());}).toList();
+        var cart=h.getItems().stream().map(i->{var v=i.getVariant();return new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),v.getMaterial().getName(),v.getColor().getName(),v.getSole().getName(),pricing.calculatePrice(v).getFinalPrice(),i.getQuantity());}).toList();
         return new Loaded(h.getId(),h.getCode(),new ArrayList<>(cart),request);
     }
 

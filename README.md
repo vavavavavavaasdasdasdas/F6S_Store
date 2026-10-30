@@ -87,3 +87,9 @@ Danh sách và trang xem sản phẩm có **Ngừng bán / Bán lại**, từng 
 Mã của luồng tạo sản phẩm Admin được sinh trong transaction bằng SQL SEQUENCE `dbo.product_code_seq`: `SP006`, `SP007`… theo dữ liệu hiện có, tối thiểu ba chữ số; sau `SP999` là `SP1000`. Form tạo chỉ hiện **Tự động tạo khi lưu**, form sửa chỉ đọc; server bỏ qua mã gửi lên. Mã cũ không đổi; rollback có thể tạo khoảng trống số, không tái dùng số. Các fixture tạo trực tiếp entity vẫn tự đặt mã như trước; DataInitializer hiện không seed sản phẩm.
 
 Sau khi sao lưu và dừng ứng dụng, chạy migration **012_ma_san_pham_tu_sinh.sql** sau 011; `chay_tat_ca.sql` đã gộp 004–012, `shopgiay.sql` đã đồng bộ. Lệnh triển khai thủ công, SQL trước/sau và kết quả kiểm thử nằm trong [báo cáo bổ sung 012](docs/BO_SUNG_NGUNG_BAN_MA_TU_SINH.md). Không chạy lại bootstrap `shopgiay.sql` lên DB có dữ liệu.
+
+## Giai đoạn 5: Màu sắc và thuộc tính biến thể
+
+Biến thể được xác định bởi sản phẩm + kích cỡ + màu sắc + chất liệu + đế giày. Đế giày ở `products.de_giay_id` chỉ giữ gợi ý cũ; hiển thị và lọc lấy từ biến thể. Trang quản trị màu sắc: `/admin/colors`. Đơn mới chụp tên màu/đế; đơn cũ để trống hiển thị `—`.
+
+Trước khi chạy bản mã này cần migration `database/migrations/013_mau_sac_bien_the.sql` sau 012, hoặc bộ `chay_tat_ca.sql` đã cập nhật. Giữ `ddl-auto=validate`. Không tự chạy migration trên database thật; sao lưu và dùng lệnh trong [báo cáo Giai đoạn 5](docs/GIAI_DOAN_5_MAU_SAC_BIEN_THE.md). Báo cáo có SQL trước/sau, 160 test, Playwright hai viewport và hướng dẫn triển khai.

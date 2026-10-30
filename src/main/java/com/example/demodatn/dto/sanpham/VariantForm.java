@@ -11,6 +11,10 @@ public class VariantForm {
     private String newSizeValue;
     @NotNull(message="Chọn chất liệu.") private Integer materialId;
     private String newMaterialName;
+    private Integer colorId;
+    private String newColorName;
+    private Integer soleId;
+    private String newSoleName;
     @NotNull(message="Nhập giá.") @DecimalMin(value="0.01", message="Giá phải lớn hơn 0.")
     @Digits(integer=16,fraction=2,message="Giá tối đa 16 chữ số và 2 số thập phân.") private BigDecimal price;
     @NotNull(message="Nhập số lượng.") @Min(value=0,message="Số lượng không được âm.") private Integer quantity = 0;

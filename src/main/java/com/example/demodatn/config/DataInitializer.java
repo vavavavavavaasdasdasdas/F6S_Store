@@ -28,6 +28,8 @@ public class DataInitializer implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final SizeRepository sizeRepository;
     private final MaterialRepository materialRepository;
+    private final com.example.demodatn.repository.sanpham.ColorRepository colors;
+    private final com.example.demodatn.repository.sanpham.SoleRepository soles;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -69,6 +71,12 @@ public class DataInitializer implements CommandLineRunner {
             if (!materialRepository.existsByName(name)) { Material material = new Material(); material.setName(name); materialRepository.save(material); }
         }
 
+        if(colors.findAll().stream().noneMatch(c->"Khác".equals(c.getName()))) {
+            var color=new com.example.demodatn.entity.sanpham.Color();color.setName("Khác");colors.save(color);
+        }
+        if(soles.findAll().stream().noneMatch(c->"Khác".equals(c.getName()))) {
+            var sole=new com.example.demodatn.entity.sanpham.Sole();sole.setName("Khác");soles.save(sole);
+        }
         // 4. Sizes
         Size size39 = createSizeIfNotFound(4, "39");
         Size size40 = createSizeIfNotFound(5, "40");

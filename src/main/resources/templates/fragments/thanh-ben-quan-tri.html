@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"><body>
 <aside th:fragment="sidebar" id="admin-sidebar" class="admin-sidebar" aria-label="Điều hướng quản trị">
     <a class="admin-brand" th:href="@{/admin/dashboard}"><span class="brand-mark">S</span><span>F6S_Store<small>QUẢN TRỊ CỬA HÀNG</small></span></a>
-    <nav class="admin-nav" th:with="isProductSubActive=${adminActive == 'products' or adminActive == 'variants' or adminActive == 'categories' or adminActive == 'sizes' or adminActive == 'materials' or adminActive == 'soles' or adminActive == 'inventory'}">
+    <nav class="admin-nav" th:with="isProductSubActive=${adminActive == 'products' or adminActive == 'variants' or adminActive == 'categories' or adminActive == 'sizes' or adminActive == 'materials' or adminActive == 'colors' or adminActive == 'soles' or adminActive == 'inventory'}">
         <th:block th:each="item : ${adminNav}">
             <th:block th:if="${item.group() == 'SẢN PHẨM'}">
                 <p class="admin-nav-group">SẢN PHẨM</p>
@@ -38,7 +38,7 @@
                         <a th:href="@{/admin/materials}" th:classappend="${adminActive == 'materials'} ? 'is-active'"
                            th:attr="aria-current=${adminActive == 'materials' ? 'page' : null}">
                            <span class="nav-dot" aria-hidden="true"></span><span>Chất liệu</span>
-                        </a>
+                        </a><a th:href="@{/admin/colors}" th:classappend="${adminActive == 'colors'} ? 'is-active'" th:attr="aria-current=${adminActive == 'colors' ? 'page' : null}"><span class="nav-dot" aria-hidden="true"></span><span>Màu sắc</span></a>
                         <a th:href="@{/admin/inventory}" th:classappend="${adminActive == 'inventory'} ? 'is-active'"
                            th:attr="aria-current=${adminActive == 'inventory' ? 'page' : null}">
                            <span class="nav-dot" aria-hidden="true"></span><span>Tồn kho</span>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </th:block>
-            <th:block th:unless="${item.key() == 'products' or item.key() == 'variants' or item.key() == 'categories' or item.key() == 'sizes' or item.key() == 'materials' or item.key() == 'soles' or item.key() == 'inventory'}">
+            <th:block th:unless="${item.key() == 'products' or item.key() == 'variants' or item.key() == 'categories' or item.key() == 'sizes' or item.key() == 'materials' or item.key() == 'colors' or item.key() == 'soles' or item.key() == 'inventory'}">
                 <p class="admin-nav-group" th:if="${!item.group().isEmpty()}" th:text="${item.group()}"></p>
                 <a th:href="@{__${item.route()}__}" th:classappend="${adminActive == item.key()} ? 'is-active'"
                    th:attr="aria-current=${adminActive == item.key() ? 'page' : null}">

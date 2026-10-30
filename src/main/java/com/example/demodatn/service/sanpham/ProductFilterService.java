@@ -52,10 +52,14 @@ public class ProductFilterService {
     }
     public Page<ProductDto> filterProducts(String keyword,Integer categoryId,Integer sizeId,
             BigDecimal minPrice,BigDecimal maxPrice,Boolean promotion,String sort,int page,int size,Integer materialId,Integer soleId) {
+        return filterProducts(keyword,categoryId,sizeId,minPrice,maxPrice,promotion,sort,page,size,materialId,soleId,null);
+    }
+    public Page<ProductDto> filterProducts(String keyword,Integer categoryId,Integer sizeId,
+            BigDecimal minPrice,BigDecimal maxPrice,Boolean promotion,String sort,int page,int size,Integer materialId,Integer soleId,Integer colorId) {
         if (size <= 0) size = pagination.getSize();
         if (page < 0) page = 0;
 
-        List<Product> allProducts = productRepository.findAll();
+        List<Product> allProducts = productRepository.findSellingMatchingAttributes(materialId,soleId,colorId);
         var activeIds=allProducts.stream().filter(p->ProductSalePolicy.isSelling(p)).map(Product::getId).toList();
         var allVariants=activeIds.isEmpty()?List.<ProductVariant>of():productVariantRepository.findByProduct_IdInAndStatusTrueAndProduct_StatusTrue(activeIds);
         var variantsByProduct=allVariants.stream().collect(Collectors.groupingBy(v->v.getProduct().getId()));
@@ -76,11 +80,13 @@ public class ProductFilterService {
                 if (!name.contains(kw) && !code.contains(kw)) continue;
             }
             if (categoryId != null && (p.getCategory() == null || !p.getCategory().getId().equals(categoryId))) continue;
-            if (soleId != null && (p.getSole()==null || !p.getSole().getId().equals(soleId))) continue;
+
 
             List<ProductVariant> variants = variantsByProduct.getOrDefault(p.getId(),List.of());
             if (variants.isEmpty()) continue;
 
+            if(soleId!=null) variants=variants.stream().filter(v->v.getSole().getId().equals(soleId)).toList();
+            if(colorId!=null) variants=variants.stream().filter(v->v.getColor().getId().equals(colorId)).toList();
             if (materialId != null) variants = variants.stream().filter(v -> v.getMaterial().getId().equals(materialId)).toList();
             if (variants.isEmpty()) continue;
             if (sizeId != null) {
@@ -103,6 +109,9 @@ public class ProductFilterService {
                 ProductDto.VariantDto vDto = new ProductDto.VariantDto();
                 vDto.setId(v.getId());
                 vDto.setMaterialId(v.getMaterial().getId()); vDto.setMaterialName(v.getMaterial().getName());
+            vDto.setColorName(v.getColor().getName()); vDto.setSoleName(v.getSole().getName());
+                vDto.setColorId(v.getColor().getId());vDto.setColorName(v.getColor().getName());vDto.setColorHexCode(v.getColor().getHexCode());
+                vDto.setSoleId(v.getSole().getId());vDto.setSoleName(v.getSole().getName());
                 vDto.setSizeId(v.getSize().getId());
                 vDto.setSizeValue(v.getSize() != null ? v.getSize().getSizeValue() : "");
                 vDto.setQuantity(q);

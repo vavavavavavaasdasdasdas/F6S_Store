@@ -75,6 +75,8 @@ public class OrderService {
             detail.setProductName(variant.getProduct().getName());
             detail.setSizeName(variant.getSize().getSizeValue());
             detail.setMaterialName(variant.getMaterial().getName());
+            detail.setColorName(variant.getColor().getName());
+            detail.setSoleName(variant.getSole().getName());
             detail.setPrice(price);
             detail.setQuantity(item.getQuantity());
             detail.setTotalPrice(price.multiply(BigDecimal.valueOf(item.getQuantity())));

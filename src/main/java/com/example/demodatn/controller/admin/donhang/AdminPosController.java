@@ -158,7 +158,7 @@ public class AdminPosController {
                 var item = cart.stream().filter(i->i.getVariantId().equals(variantId)).findFirst().orElse(null);
                 long totalQty = quantity + (item == null ? 0L : item.getQuantity());
                 if(totalQty > v.getQuantity()) throw new IllegalArgumentException("Số lượng vượt quá tồn kho.");
-                if(item == null) cart.add(new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),v.getMaterial().getName(),pricing.calculatePrice(v).getFinalPrice(),quantity));
+                if(item == null) cart.add(new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),v.getMaterial().getName(),v.getColor().getName(),v.getSole().getName(),pricing.calculatePrice(v).getFinalPrice(),quantity));
                 else item.setQuantity((int)totalQty);
                 session.removeAttribute("posCheckoutToken");
             } catch(IllegalArgumentException ex) { flash.addFlashAttribute("error",ex.getMessage()); }

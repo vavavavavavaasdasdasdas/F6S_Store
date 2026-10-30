@@ -38,6 +38,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Transactional
 class Phase3ComboFilterIntegrationTest {
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.ColorRepository phase5Colors;
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.SoleRepository phase5Soles;
+
 
     @Autowired WebApplicationContext context;
     @Autowired JdbcTemplate jdbc;
@@ -69,37 +72,37 @@ class Phase3ComboFilterIntegrationTest {
         String matName = "Da Lộn Mềm " + suffix;
         String sizeVal = "45" + suffix.substring(0, 2);
 
-        AdminProductForm pForm = new AdminProductForm();
+        AdminProductForm pForm = new AdminProductForm();pForm.setInitialColorId(phase5Colors.findAll().get(0).getId());pForm.setInitialSoleId(phase5Soles.findAll().get(0).getId());
         pForm.setCode("SP-P3-" + suffix);
         pForm.setName("Giày Thể Thao " + suffix);
         pForm.setNewCategoryName("  " + catName + "  ");
-        pForm.setNewSoleName("  " + soleName + "  ");
+        pForm.setNewInitialSoleName("  " + soleName + "  ");
         pForm.setNewInitialMaterialName("  " + matName + "  ");
         pForm.setStatus(false);
 
         var product = catalogService.saveProduct(pForm);
         assertNotNull(product.getCategory());
         assertEquals(catName, product.getCategory().getName());
-        assertNotNull(product.getSole());
-        assertEquals(soleName, product.getSole().getName());
+        assertNotNull(pForm.getInitialSoleId());
+        assertEquals(soleName, phase5Soles.findById(pForm.getInitialSoleId()).orElseThrow().getName());
         assertNotNull(pForm.getInitialMaterialId());
 
         // Deduplicate when typing without accents / different case
-        AdminProductForm pForm2 = new AdminProductForm();
+        AdminProductForm pForm2 = new AdminProductForm();pForm2.setInitialColorId(phase5Colors.findAll().get(0).getId());pForm2.setInitialSoleId(phase5Soles.findAll().get(0).getId());
         pForm2.setCode("SP-P3B-" + suffix);
         pForm2.setName("Giày Chạy Bộ " + suffix);
         pForm2.setNewCategoryName("thuong hieu pho " + suffix.toUpperCase());
-        pForm2.setNewSoleName("de cao su duc " + suffix.toUpperCase());
+        pForm2.setNewInitialSoleName("de cao su duc " + suffix.toUpperCase());
         pForm2.setNewInitialMaterialName("da lon mem " + suffix.toUpperCase());
         pForm2.setStatus(false);
 
         var product2 = catalogService.saveProduct(pForm2);
         assertEquals(product.getCategory().getId(), product2.getCategory().getId(), "Should reuse existing category accent-insensitively");
-        assertEquals(product.getSole().getId(), product2.getSole().getId(), "Should reuse existing sole accent-insensitively");
+        assertEquals(pForm.getInitialSoleId(), pForm2.getInitialSoleId(), "Should reuse existing sole accent-insensitively");
         assertEquals(pForm.getInitialMaterialId(), pForm2.getInitialMaterialId(), "Should reuse existing material accent-insensitively");
 
         // Creatable Size & Material on VariantForm
-        VariantForm vForm = new VariantForm();
+        VariantForm vForm = new VariantForm();vForm.setColorId(phase5Colors.findAll().get(0).getId());vForm.setSoleId(phase5Soles.findAll().get(0).getId());
         vForm.setProductId(product.getId());
         vForm.setNewSizeValue(" " + sizeVal + " ");
         vForm.setNewMaterialName("da lon mem " + suffix);
@@ -146,7 +149,7 @@ class Phase3ComboFilterIntegrationTest {
     @Test
     @WithMockUser(username = "staffuser", roles = "STAFF")
     void nonAdminCannotCreateNewLookupRecords() {
-        AdminProductForm pForm = new AdminProductForm();
+        AdminProductForm pForm = new AdminProductForm();pForm.setInitialColorId(phase5Colors.findAll().get(0).getId());pForm.setInitialSoleId(phase5Soles.findAll().get(0).getId());
         pForm.setCode("SP-STAFF-1");
         pForm.setName("Giày Staff");
         pForm.setNewCategoryName("Thương hiệu Trái Phép");
@@ -159,7 +162,7 @@ class Phase3ComboFilterIntegrationTest {
     @WithMockUser(username = "admin", roles = "ADMIN")
     void forgedForeignIdsAreRejected() throws Exception {
         // 1. Product form with forged categoryId
-        AdminProductForm pForm = new AdminProductForm();
+        AdminProductForm pForm = new AdminProductForm();pForm.setInitialColorId(phase5Colors.findAll().get(0).getId());pForm.setInitialSoleId(phase5Soles.findAll().get(0).getId());
         pForm.setCode("SP-FORGE-1");
         pForm.setName("Giày Giả Mạo");
         pForm.setCategoryId(999999);
@@ -170,7 +173,7 @@ class Phase3ComboFilterIntegrationTest {
         assertEquals("categoryId", ex1.getField());
 
         // 2. Variant form with forged sizeId and materialId
-        VariantForm vForm = new VariantForm();
+        VariantForm vForm = new VariantForm();vForm.setColorId(phase5Colors.findAll().get(0).getId());vForm.setSoleId(phase5Soles.findAll().get(0).getId());
         vForm.setProductId(999999);
         vForm.setSizeId(999999);
         vForm.setMaterialId(999999);

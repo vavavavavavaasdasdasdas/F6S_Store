@@ -1,0 +1,14 @@
+{
+  "database": "shopbangiay_kt_20261030_gd5",
+  "countsAndSchemaAndOldVariantsAndOrderDetailsMatchCheckpoint": true,
+  "runtimeSessions": [
+    {
+      "database_name": "shopbangiay_kt_20261030_gd5",
+      "host_process_id": 37908
+    }
+  ],
+  "started": [
+    "2026-10-30 12:07:19.252  INFO c.example.demodatn.DemoDatnApplication : Started DemoDatnApplication in 6.762 seconds (process running for 7.082)"
+  ],
+  "forbiddenDatabasesConnected": false
+}

@@ -15,8 +15,9 @@ BEGIN TRY
     WHERE t.schema_id=SCHEMA_ID(N'dbo') AND ty.name IN(N'varchar',N'char',N'text')
       AND c.name NOT IN (N'code',N'customer_code',N'employee_code',N'invoice_code',N'order_code',
           N'voucher_code',N'order_type',N'status',N'payment_method',N'payment_status',N'discount_type',
-          N'username',N'password',N'actor')
+          N'username',N'password',N'actor',N'so_cccd',N'ma_mau')
       AND NOT (t.name=N'roles' AND c.name=N'name')
+      -- 011/013: so_cccd và ma_mau là mã ASCII, giữ VARCHAR theo hợp đồng schema.
       -- Migration 009 quy định số điện thoại sổ địa chỉ là VARCHAR(20).
       AND NOT (t.name=N'dia_chi_nhan_hang' AND c.name=N'so_dien_thoai');
 

@@ -1,0 +1,282 @@
+{
+  "products": [
+    {
+      "id": 949,
+      "width": 1280,
+      "variants": [
+        {
+          "id": 598,
+          "product_id": 949,
+          "code": "SP006",
+          "size_value": "36",
+          "material_name": "Da thật",
+          "color_name": "Màu Ánh 1280",
+          "color_id": 12,
+          "sole_name": "Cao su",
+          "price": 125000.0,
+          "quantity": 9
+        },
+        {
+          "id": 599,
+          "product_id": 949,
+          "code": "SP006",
+          "size_value": "37",
+          "material_name": "Da thật",
+          "color_name": "Màu Ánh 1280",
+          "color_id": 12,
+          "sole_name": "Cao su",
+          "price": 125000.0,
+          "quantity": 9
+        },
+        {
+          "id": 600,
+          "product_id": 949,
+          "code": "SP006",
+          "size_value": "36",
+          "material_name": "Da thật",
+          "color_name": "Đỏ",
+          "color_id": 4,
+          "sole_name": "Cao su",
+          "price": 175000.0,
+          "quantity": 7
+        },
+        {
+          "id": 601,
+          "product_id": 949,
+          "code": "SP006",
+          "size_value": "36",
+          "material_name": "Da thật",
+          "color_name": "Đỏ",
+          "color_id": 4,
+          "sole_name": "EVA",
+          "price": 225000.0,
+          "quantity": 7
+        }
+      ],
+      "onlineOrderId": 674,
+      "registered": true,
+      "stockBeforeSales": [
+        {
+          "id": 598,
+          "quantity": 9
+        },
+        {
+          "id": 599,
+          "quantity": 9
+        },
+        {
+          "id": 600,
+          "quantity": 7
+        },
+        {
+          "id": 601,
+          "quantity": 7
+        }
+      ],
+      "posOrderId": 675,
+      "invoicePath": "/admin/invoices/288",
+      "printHeaders": [
+        "STT",
+        "Ảnh",
+        "Mã",
+        "Tên sản phẩm",
+        "Kích cỡ",
+        "Chất liệu",
+        "Màu sắc",
+        "Đế giày",
+        "SL",
+        "Đơn giá (đ)",
+        "Thành tiền (đ)"
+      ],
+      "onlineDetails": [
+        {
+          "product_variant_id": 598,
+          "ten_mau_sac": "Màu Ánh 1280",
+          "ten_de_giay": "Cao su",
+          "quantity": 1,
+          "price": 125000.0
+        },
+        {
+          "product_variant_id": 600,
+          "ten_mau_sac": "Đỏ",
+          "ten_de_giay": "Cao su",
+          "quantity": 1,
+          "price": 175000.0
+        }
+      ],
+      "posDetails": [
+        {
+          "product_variant_id": 598,
+          "ten_mau_sac": "Màu Ánh 1280",
+          "ten_de_giay": "Cao su",
+          "quantity": 1,
+          "price": 125000.0
+        },
+        {
+          "product_variant_id": 600,
+          "ten_mau_sac": "Đỏ",
+          "ten_de_giay": "Cao su",
+          "quantity": 1,
+          "price": 175000.0
+        }
+      ],
+      "stockAfterSales": [
+        {
+          "id": 598,
+          "quantity": 7
+        },
+        {
+          "id": 599,
+          "quantity": 9
+        },
+        {
+          "id": 600,
+          "quantity": 5
+        },
+        {
+          "id": 601,
+          "quantity": 7
+        }
+      ]
+    },
+    {
+      "id": 950,
+      "width": 375,
+      "variants": [
+        {
+          "id": 602,
+          "product_id": 950,
+          "code": "SP007",
+          "size_value": "36",
+          "material_name": "Da thật",
+          "color_name": "Màu Ánh 375",
+          "color_id": 13,
+          "sole_name": "Cao su",
+          "price": 125000.0,
+          "quantity": 9
+        },
+        {
+          "id": 603,
+          "product_id": 950,
+          "code": "SP007",
+          "size_value": "37",
+          "material_name": "Da thật",
+          "color_name": "Màu Ánh 375",
+          "color_id": 13,
+          "sole_name": "Cao su",
+          "price": 125000.0,
+          "quantity": 9
+        },
+        {
+          "id": 604,
+          "product_id": 950,
+          "code": "SP007",
+          "size_value": "36",
+          "material_name": "Da thật",
+          "color_name": "Đỏ",
+          "color_id": 4,
+          "sole_name": "Cao su",
+          "price": 175000.0,
+          "quantity": 7
+        },
+        {
+          "id": 605,
+          "product_id": 950,
+          "code": "SP007",
+          "size_value": "36",
+          "material_name": "Da thật",
+          "color_name": "Đỏ",
+          "color_id": 4,
+          "sole_name": "EVA",
+          "price": 225000.0,
+          "quantity": 7
+        }
+      ],
+      "stockBeforeSales": [
+        {
+          "id": 602,
+          "quantity": 9
+        },
+        {
+          "id": 603,
+          "quantity": 9
+        },
+        {
+          "id": 604,
+          "quantity": 7
+        },
+        {
+          "id": 605,
+          "quantity": 7
+        }
+      ],
+      "registered": true,
+      "onlineOrderId": 676,
+      "onlineDetails": [
+        {
+          "product_variant_id": 602,
+          "ten_mau_sac": "Màu Ánh 375",
+          "ten_de_giay": "Cao su",
+          "quantity": 1,
+          "price": 125000.0
+        },
+        {
+          "product_variant_id": 604,
+          "ten_mau_sac": "Đỏ",
+          "ten_de_giay": "Cao su",
+          "quantity": 1,
+          "price": 175000.0
+        }
+      ],
+      "posOrderId": 677,
+      "invoicePath": "/admin/invoices/290",
+      "printHeaders": [
+        "STT",
+        "Ảnh",
+        "Mã",
+        "Tên sản phẩm",
+        "Kích cỡ",
+        "Chất liệu",
+        "Màu sắc",
+        "Đế giày",
+        "SL",
+        "Đơn giá (đ)",
+        "Thành tiền (đ)"
+      ],
+      "posDetails": [
+        {
+          "product_variant_id": 602,
+          "ten_mau_sac": "Màu Ánh 375",
+          "ten_de_giay": "Cao su",
+          "quantity": 1,
+          "price": 125000.0
+        },
+        {
+          "product_variant_id": 604,
+          "ten_mau_sac": "Đỏ",
+          "ten_de_giay": "Cao su",
+          "quantity": 1,
+          "price": 175000.0
+        }
+      ],
+      "stockAfterSales": [
+        {
+          "id": 602,
+          "quantity": 7
+        },
+        {
+          "id": 603,
+          "quantity": 9
+        },
+        {
+          "id": 604,
+          "quantity": 5
+        },
+        {
+          "id": 605,
+          "quantity": 7
+        }
+      ]
+    }
+  ]
+}

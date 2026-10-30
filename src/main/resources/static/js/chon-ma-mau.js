@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{const p=document.querySelector('[data-color-picker]'),h=document.querySelector('#hexCode');if(!p||!h)return;p.addEventListener('input',()=>h.value=p.value.toUpperCase());h.addEventListener('input',()=>{if(/^#[0-9a-f]{6}$/i.test(h.value))p.value=h.value;});});

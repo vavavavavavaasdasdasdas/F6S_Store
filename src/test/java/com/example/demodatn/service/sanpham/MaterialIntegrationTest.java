@@ -31,6 +31,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest @Transactional @WithMockUser(username="admin",roles="ADMIN")
 class MaterialIntegrationTest {
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.ColorRepository phase5Colors;
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.SoleRepository phase5Soles;
+
     @Autowired MaterialRepository materials;
     @Autowired ProductRepository products;
     @Autowired ProductVariantRepository variants;
@@ -45,7 +48,7 @@ class MaterialIntegrationTest {
     @Autowired WebApplicationContext context;
     Material material(String name) { Material m=new Material();m.setName(name+UUID.randomUUID());return materials.saveAndFlush(m); }
     Product product() { Product p=new Product();p.setCode("MAT-"+UUID.randomUUID());p.setName("Giày kiểm thử chất liệu");return products.saveAndFlush(p); }
-    VariantForm form(Product p,Material m,int price,int quantity) {var f=new VariantForm();f.setProductId(p.getId());f.setSizeId(sizes.findAll().get(0).getId());f.setMaterialId(m.getId());f.setPrice(BigDecimal.valueOf(price));f.setQuantity(quantity);return f;}
+    VariantForm form(Product p,Material m,int price,int quantity) {var f=new VariantForm();f.setColorId(phase5Colors.findAll().get(0).getId());f.setSoleId(phase5Soles.findAll().get(0).getId());f.setProductId(p.getId());f.setSizeId(sizes.findAll().get(0).getId());f.setMaterialId(m.getId());f.setPrice(BigDecimal.valueOf(price));f.setQuantity(quantity);return f;}
     CartItemDto item(ProductVariant v) {return new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),BigDecimal.ONE,1);}
     @BeforeEach void guard(){assertTrue((Set.of("shopbangiay_kt","shop_verify","shopbangiay_thu").contains(jdbc.queryForObject("SELECT DB_NAME()",String.class)) || jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_")));}
     @Test void sameSizeDifferentMaterialsAreDistinctAndTripleDuplicateIsRejected(){

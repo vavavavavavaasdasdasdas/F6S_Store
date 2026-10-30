@@ -1,0 +1,82 @@
+{
+  "indexes": [
+    {
+      "name": "PK__product___3213E83F0C9B7F88",
+      "is_unique": true,
+      "column_name": "id",
+      "key_ordinal": 1
+    },
+    {
+      "name": "UX_variants_five_attributes",
+      "is_unique": true,
+      "column_name": "product_id",
+      "key_ordinal": 1
+    },
+    {
+      "name": "UX_variants_five_attributes",
+      "is_unique": true,
+      "column_name": "size_id",
+      "key_ordinal": 2
+    },
+    {
+      "name": "UX_variants_five_attributes",
+      "is_unique": true,
+      "column_name": "chat_lieu_id",
+      "key_ordinal": 3
+    },
+    {
+      "name": "UX_variants_five_attributes",
+      "is_unique": true,
+      "column_name": "mau_sac_id",
+      "key_ordinal": 4
+    },
+    {
+      "name": "UX_variants_five_attributes",
+      "is_unique": true,
+      "column_name": "de_giay_id",
+      "key_ordinal": 5
+    }
+  ],
+  "colorSchema": [
+    {
+      "name": "id",
+      "type": "int",
+      "max_length": 4
+    },
+    {
+      "name": "ten",
+      "type": "nvarchar",
+      "max_length": 200,
+      "collation_name": "Latin1_General_100_CI_AI"
+    },
+    {
+      "name": "ma_mau",
+      "type": "varchar",
+      "max_length": 7,
+      "collation_name": "SQL_Latin1_General_CP1_CI_AS"
+    },
+    {
+      "name": "trang_thai",
+      "type": "bit",
+      "max_length": 1
+    }
+  ],
+  "fiveTupleDuplicate": [
+    {
+      "error_number": 2601,
+      "message": "Cannot insert duplicate key row in object 'dbo.product_variants' with unique index 'UX_variants_five_attributes'. The duplicate key value is (1, 4, 8, 11, 8)."
+    }
+  ],
+  "accentDuplicate": [
+    {
+      "error_number": 2627,
+      "message": "Violation of UNIQUE KEY constraint 'UX_mau_sac_ten'. Cannot insert duplicate key in object 'dbo.mau_sac'. The duplicate key value is (MAU DA DOI 1280)."
+    }
+  ],
+  "invalidHex": [
+    {
+      "error_number": 547,
+      "message": "The INSERT statement conflicted with the CHECK constraint \"CK_mau_sac_ma\". The conflict occurred in database \"shopbangiay_kt_20261030_gd5\", table \"dbo.mau_sac\", column 'ma_mau'."
+    }
+  ]
+}

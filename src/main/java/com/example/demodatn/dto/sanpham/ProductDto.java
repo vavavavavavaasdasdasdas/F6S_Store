@@ -47,6 +47,11 @@ public class ProductDto {
         private Integer sizeId;
         private Integer materialId;
         private String materialName;
+        private Integer colorId;
+        private String colorName;
+        private String colorHexCode;
+        private Integer soleId;
+        private String soleName;
         private int quantity;
     }
 }

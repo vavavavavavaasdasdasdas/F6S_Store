@@ -31,6 +31,7 @@ BEGIN TRY
             WHERE ic.object_id=i.object_id AND ic.index_id=i.index_id AND ic.key_ordinal>0 AND c.name IN ('product_id','size_id'))=2;
     EXEC sp_executesql @drop;
     IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id=OBJECT_ID(N'dbo.product_variants') AND name='UX_product_variants_product_size_material')
+        AND NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id=OBJECT_ID(N'dbo.product_variants') AND name='UX_variants_five_attributes')
         EXEC sp_executesql N'CREATE UNIQUE INDEX UX_product_variants_product_size_material ON dbo.product_variants(product_id,size_id,chat_lieu_id);';
     IF COL_LENGTH('dbo.order_details','ten_chat_lieu') IS NULL
         ALTER TABLE dbo.order_details ADD ten_chat_lieu NVARCHAR(100) NULL;

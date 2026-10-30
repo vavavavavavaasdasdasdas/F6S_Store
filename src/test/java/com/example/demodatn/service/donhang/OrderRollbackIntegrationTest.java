@@ -31,6 +31,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 class OrderRollbackIntegrationTest {
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.ColorRepository phase5Colors;
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.SoleRepository phase5Soles;
+
     @Autowired ProductRepository products;
     @Autowired ProductVariantRepository variants;
     @Autowired SizeRepository sizes;
@@ -50,10 +53,10 @@ class OrderRollbackIntegrationTest {
         product = products.saveAndFlush(product);
         var sizeList = sizes.findAll();
         var first = new ProductVariant();
-        first.setProduct(product); first.setSize(sizeList.get(0)); first.setMaterial(materials.findAll().get(0)); first.setPrice(new BigDecimal("200000")); first.setQuantity(10); first.setStatus(true);
+        first.setProduct(product); first.setSize(sizeList.get(0)); first.setMaterial(materials.findAll().get(0));first.setColor(phase5Colors.findAll().get(0));first.setSole(phase5Soles.findAll().get(0)); first.setPrice(new BigDecimal("200000")); first.setQuantity(10); first.setStatus(true);
         first = variants.saveAndFlush(first);
         var second = new ProductVariant();
-        second.setProduct(product); second.setSize(sizeList.get(1)); second.setMaterial(materials.findAll().get(0)); second.setPrice(new BigDecimal("200000")); second.setQuantity(10); second.setStatus(true);
+        second.setProduct(product); second.setSize(sizeList.get(1)); second.setMaterial(materials.findAll().get(0));second.setColor(phase5Colors.findAll().get(0));second.setSole(phase5Soles.findAll().get(0)); second.setPrice(new BigDecimal("200000")); second.setQuantity(10); second.setStatus(true);
         second = variants.saveAndFlush(second);
         var voucher = new Voucher();
         voucher.setCode("P12-TX-" + UUID.randomUUID()); voucher.setName("Transaction fixture");

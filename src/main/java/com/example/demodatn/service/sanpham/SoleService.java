@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 public class SoleService {
     private final SoleRepository soles;
     private final ProductRepository products;
+    private final ProductVariantRepository variants;
 
     public Sole get(Integer id) {
         return soles.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy đế giày."));
@@ -34,8 +35,9 @@ public class SoleService {
     }
     @Transactional
     public String delete(Integer id) {
-        Sole sole=get(id);long count=products.countBySole_Id(id);
-        if(count>0)return "Không thể xóa đế giày đang được "+count+" sản phẩm sử dụng.";
+        Sole sole=get(id);long count=variants.soleUsage().stream().filter(r->((Number)r.get("soleId")).intValue()==id).mapToLong(r->((Number)r.get("usageCount")).longValue()).sum();
+        if(count>0)return "Không thể xóa đế giày đang được "+count+" biến thể sử dụng.";
+        if(products.countBySole_Id(id)>0)return "Không thể xóa đế giày còn được lưu làm gợi ý sản phẩm cũ.";
         soles.delete(sole);soles.flush();return "Đã xóa đế giày chưa được sử dụng.";
     }
 }

@@ -1,0 +1,3 @@
+<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org"><body>
+<td th:fragment="cell(names,extra)"><span class="badge bg-secondary me-1" th:each="name:${names}" th:text="${name}"></span><span class="badge bg-light text-dark" th:if="${extra>0}" th:text="'+'+${extra}"></span><span class="text-muted" th:if="${#lists.isEmpty(names)}">Chưa có biến thể đang bán</span></td>
+</body></html>

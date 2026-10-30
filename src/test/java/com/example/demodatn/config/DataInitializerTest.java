@@ -42,7 +42,15 @@ class DataInitializerTest {
         when(sizes.findAll()).thenAnswer(i -> new ArrayList<>(sizeRows));
         when(sizes.save(any())).thenAnswer(i -> { Size s=i.getArgument(0); sizeRows.add(s); return s; });
         when(passwords.encode("admin123")).thenReturn("hashed");
-        DataInitializer initializer = new DataInitializer(roles, users, employees, categories, sizes, materials, passwords);
+        var colors=mock(com.example.demodatn.repository.sanpham.ColorRepository.class);
+        var soles=mock(com.example.demodatn.repository.sanpham.SoleRepository.class);
+        var colorRows=new ArrayList<com.example.demodatn.entity.sanpham.Color>();
+        var soleRows=new ArrayList<com.example.demodatn.entity.sanpham.Sole>();
+        when(colors.findAll()).thenAnswer(i->new ArrayList<>(colorRows));
+        when(soles.findAll()).thenAnswer(i->new ArrayList<>(soleRows));
+        when(colors.save(any())).thenAnswer(i->{var c=(com.example.demodatn.entity.sanpham.Color)i.getArgument(0);colorRows.add(c);return c;});
+        when(soles.save(any())).thenAnswer(i->{var c=(com.example.demodatn.entity.sanpham.Sole)i.getArgument(0);soleRows.add(c);return c;});
+        DataInitializer initializer = new DataInitializer(roles, users, employees, categories, sizes, materials, colors, soles, passwords);
         initializer.run();
         initializer.run();
         assertEquals(Set.of("ROLE_ADMIN", "ROLE_USER"), roleRows.keySet());
@@ -50,6 +58,7 @@ class DataInitializerTest {
         assertEquals(3, categoryRows.size());
         assertEquals(3, sizeRows.size());
         assertEquals(8, materialRows.size());
+        assertEquals(1,colorRows.size());assertEquals(1,soleRows.size());
         verify(materials,times(8)).save(any());
         verify(employees, times(1)).save(any());
         verify(passwords, times(1)).encode("admin123");

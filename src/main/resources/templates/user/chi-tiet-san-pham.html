@@ -37,7 +37,7 @@
                 <h2 class="fw-bold mb-2" th:text="${product.name}">Tên sản phẩm</h2>
                 <div class="text-muted mb-3">Mã SP: <span th:text="${product.code}">SP001</span> | Thương hiệu: <span th:text="${product.category != null ? product.category.name : 'Chưa phân loại'}">Thể thao</span></div>
 
-                <p>Đế giày: <span th:text="${product.sole!=null ? product.sole.name : 'Chưa chọn'}"></span></p>
+
 
                 <!-- Display Price from the first variant by default -->
                 <div class="price-display mb-4" th:if="${!variants.isEmpty()}" th:with="firstPrice=${variantPrices.get(variants[0].id)}">
@@ -49,12 +49,12 @@
                 <form id="addToCartForm" novalidate th:action="@{/cart/add}" method="post">
                     <!-- Kích cỡ Selection (Buttons) -->
                     <div class="mb-4">
-                        <label class="form-label fw-bold d-block">Chọn kích cỡ và chất liệu:</label>
+                        <label class="form-label fw-bold d-block">Chọn thuộc tính biến thể:</label>
                         <div class="d-flex flex-wrap gap-2" id="size-container" data-material-picker>
                             <th:block th:each="v : ${variants}">
                                 <input type="radio" class="btn-check size-radio" name="variantId" th:id="'size-' + ${v.id}" th:value="${v.id}"
                                        th:disabled="${v.quantity <= 0}"
-                                       th:data-qty="${v.quantity}" th:data-size-id="${v.size.id}" th:data-size-name="${v.size.sizeValue}" th:data-material-id="${v.material.id}" th:data-material-name="${v.material.name}"
+                                       th:data-qty="${v.quantity}" th:data-size-id="${v.size.id}" th:data-size-name="${v.size.sizeValue}" th:data-material-id="${v.material.id}" th:data-material-name="${v.material.name}" th:data-color-id="${v.color.id}" th:data-color-name="${v.color.name}" th:data-color-hex="${v.color.hexCode}" th:data-sole-id="${v.sole.id}" th:data-sole-name="${v.sole.name}"
                                        th:data-finalprice="${variantPrices.get(v.id).finalPrice}"
                                        th:data-origprice="${variantPrices.get(v.id).originalPrice}"
                                        th:data-haspromo="${variantPrices.get(v.id).hasPromotion}"
@@ -107,7 +107,7 @@
                     </div>
                     <div class="tab-pane fade" id="info" role="tabpanel">
                         <ul>
-                            <li><strong>Thương hiệu:</strong> Đang cập nhật</li>
+                            <li><strong>Thương hiệu:</strong> <span th:text="${product.category.name}"></span></li>
                             <li><strong>Chất liệu:</strong> <span th:each="m,it:${productMaterials}" th:text="${m.name} + (${it.last} ? '' : ', ')"></span></li>
                         </ul>
                     </div>

@@ -20,6 +20,12 @@ public class CartItemDto {
     private String productName;
     private String size;
     private String materialName;
+    private String colorName;
+    private String soleName;
+
+    public CartItemDto(Integer productId,Integer variantId,String productName,String size,String materialName,BigDecimal price,Integer quantity) {
+        this.productId=productId;this.variantId=variantId;this.productName=productName;this.size=size;this.materialName=materialName;this.price=price;this.quantity=quantity;
+    }
 
     public CartItemDto(Integer productId, Integer variantId, String productName, String size, BigDecimal price, Integer quantity) {
         this(productId,variantId,productName,size,null,price,quantity);

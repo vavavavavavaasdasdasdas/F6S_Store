@@ -23,27 +23,35 @@ public class AdminVariantController {
     private final ProductRepository products;
     private final SizeRepository sizes;
     private final MaterialRepository materials;
+    private final com.example.demodatn.repository.sanpham.ColorRepository colors;
+    private final com.example.demodatn.repository.sanpham.SoleRepository soles;
     @GetMapping("/admin/variants")
     public String list(@RequestParam(required=false) Integer productId, @RequestParam(defaultValue="0") String page,
                        @RequestParam(required=false) Integer materialId, @RequestParam(required=false) Integer sizeId,
+                       @RequestParam(required=false) Integer colorId,@RequestParam(required=false) Integer soleId,
                        @RequestParam(required=false) Boolean status, @RequestParam(defaultValue="") String keyword, Model model) {
-        return listFor(productId,page,materialId,sizeId,status,keyword,model);
+        return listFor(productId,page,materialId,sizeId,colorId,soleId,status,keyword,model);
     }
     @GetMapping("/admin/products-crud/{productId}/variants")
     public String productVariants(@PathVariable Integer productId, @RequestParam(defaultValue="0") String page,
                                   @RequestParam(required=false) Integer materialId, @RequestParam(required=false) Integer sizeId,
-                                  @RequestParam(required=false) Boolean status, @RequestParam(defaultValue="") String keyword, Model model) {
-        return listFor(productId,page,materialId,sizeId,status,keyword,model);
+                                  @RequestParam(required=false) Integer colorId,@RequestParam(required=false) Integer soleId,
+                       @RequestParam(required=false) Boolean status, @RequestParam(defaultValue="") String keyword, Model model) {
+        return listFor(productId,page,materialId,sizeId,colorId,soleId,status,keyword,model);
     }
-    private String listFor(Integer productId, String page, Integer materialId, Integer sizeId, Boolean status, String keyword, Model model) {
-        var result=query.variantsPage(productId,"all",0,page,materialId,sizeId,status,keyword,null);
+    private String listFor(Integer productId, String page, Integer materialId, Integer sizeId,Integer colorId,Integer soleId, Boolean status, String keyword, Model model) {
+        var result=query.variantsPage(productId,"all",0,page,materialId,sizeId,status,keyword,null,colorId,soleId);
         model.addAttribute("variants",result.getContent()); model.addAttribute("dataPage",result);
+        model.addAttribute("colors",colors.findAll());model.addAttribute("colorId",colorId);
+        model.addAttribute("soles",soles.findAll());model.addAttribute("soleId",soleId);
         model.addAttribute("materials",materials.findAll()); model.addAttribute("materialId",materialId);
         model.addAttribute("sizes",sizes.findAll()); model.addAttribute("sizeId",sizeId);
         model.addAttribute("status",status); model.addAttribute("keyword",keyword);
         model.addAttribute("selectedProduct",productId==null?null:catalog.product(productId));
         model.addAttribute("products",products.findAll()); model.addAttribute("productId",productId);
         int activeFilterCount = 0;
+        if(colorId!=null) activeFilterCount++;
+        if(soleId!=null) activeFilterCount++;
         if (keyword != null && !keyword.trim().isEmpty()) activeFilterCount++;
         if (productId != null) activeFilterCount++;
         if (sizeId != null) activeFilterCount++;
@@ -61,6 +69,7 @@ public class AdminVariantController {
     public String edit(@PathVariable Integer id, Model model) {
         ProductVariant variant=catalog.variant(id); VariantForm form=new VariantForm();
         form.setId(id); form.setProductId(variant.getProduct().getId()); form.setSizeId(variant.getSize().getId()); form.setMaterialId(variant.getMaterial().getId());
+        form.setColorId(variant.getColor().getId());form.setSoleId(variant.getSole().getId());
         form.setPrice(variant.getPrice()); form.setQuantity(variant.getQuantity()); form.setExpectedQuantity(variant.getQuantity()); form.setStatus(variant.getStatus());
         model.addAttribute("variant",form); return form(model);
     }
@@ -72,7 +81,7 @@ public class AdminVariantController {
                 flash.addFlashAttribute("message","Đã lưu biến thể. Mọi thay đổi tồn kho đã được ghi lịch sử.");
                 return "redirect:/admin/products-crud/"+saved.getProduct().getId()+"/variants";
             } catch(CatalogValidationException ex) { result.rejectValue(ex.getField(),"invalid",ex.getMessage()); }
-              catch(DataIntegrityViolationException ex) { result.rejectValue("materialId","duplicate","Bộ ba sản phẩm, kích cỡ và chất liệu đã tồn tại hoặc dữ liệu vừa thay đổi."); }
+              catch(DataIntegrityViolationException ex) { result.rejectValue("materialId","duplicate","Bộ năm sản phẩm, kích cỡ, chất liệu, màu sắc và đế giày đã tồn tại hoặc dữ liệu vừa thay đổi."); }
         }
         return form(model);
     }
@@ -84,8 +93,13 @@ public class AdminVariantController {
     }
     private String form(Model model) {
         model.addAttribute("products",products.findAll()); model.addAttribute("sizes",sizes.findAll()); model.addAttribute("materials",materials.findByStatusTrueOrderByNameAscIdAsc());
+        model.addAttribute("colors",new java.util.ArrayList<>(colors.findByStatusTrueOrderByNameAscIdAsc()));
+        model.addAttribute("soles",new java.util.ArrayList<>(soles.findByStatusTrueOrderByNameAscIdAsc()));
         VariantForm current=(VariantForm)model.getAttribute("variant");
         if(current.getId()!=null) {
+            var existingVariant=catalog.variant(current.getId());
+            if(!Boolean.TRUE.equals(existingVariant.getColor().getStatus())) ((java.util.List<com.example.demodatn.entity.sanpham.Color>)model.getAttribute("colors")).add(existingVariant.getColor());
+            if(!Boolean.TRUE.equals(existingVariant.getSole().getStatus())) ((java.util.List<com.example.demodatn.entity.sanpham.Sole>)model.getAttribute("soles")).add(existingVariant.getSole());
             var existing=catalog.variant(current.getId()).getMaterial();
             if(!Boolean.TRUE.equals(existing.getStatus())) {
                 var options=new java.util.ArrayList<>(materials.findByStatusTrueOrderByNameAscIdAsc());

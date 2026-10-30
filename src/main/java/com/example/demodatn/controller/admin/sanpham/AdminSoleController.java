@@ -24,7 +24,7 @@ import java.util.List;
 @Controller @RequestMapping("/admin/soles") @RequiredArgsConstructor
 public class AdminSoleController {
     private final SoleRepository soles;
-    private final ProductRepository products;
+    private final ProductVariantRepository products;
     private final SoleService service;
     private final Pagination pagination;
 
@@ -47,7 +47,7 @@ public class AdminSoleController {
             }
             if (inUse != null) {
                 var sq = query.subquery(Integer.class);
-                var p = sq.from(Product.class);
+                var p = sq.from(com.example.demodatn.entity.sanpham.ProductVariant.class);
                 sq.select(cb.literal(1)).where(cb.equal(p.get("sole").get("id"), root.get("id")));
                 predicates.add(inUse ? cb.exists(sq) : cb.not(cb.exists(sq)));
             }

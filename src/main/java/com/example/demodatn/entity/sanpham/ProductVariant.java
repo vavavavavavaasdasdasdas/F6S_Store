@@ -25,6 +25,14 @@ public class ProductVariant {
     @JoinColumn(name = "chat_lieu_id", nullable = false)
     private Material material;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "mau_sac_id", nullable = false)
+    private Color color;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "de_giay_id", nullable = false)
+    private Sole sole;
+
     @Column(nullable = false)
     private BigDecimal price;
 

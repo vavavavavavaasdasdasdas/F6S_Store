@@ -26,7 +26,7 @@
                     <thead>
                         <tr><th scope="col" class="row-number">STT</th>
                             <th>Ảnh</th><th>Mã</th><th>Tên sản phẩm</th>
-                            <th>Kích cỡ</th><th>Chất liệu</th>
+                            <th>Kích cỡ</th><th>Chất liệu</th><th>Màu sắc</th><th>Đế giày</th>
                             <th>Số lượng</th>
                             <th>Đơn giá</th>
                             <th class="text-end">Thành tiền</th>
@@ -36,14 +36,14 @@
                         <tr th:each="detail, rowIndex : ${orderDetails}"><td class="row-number" th:text="${rowIndex.count}"></td>
                             <td><img class="product-thumbnail" th:with="resolvedImage=${@productImageUrl.source(detail.productVariant.product.displayImageUrl)}" th:src="${resolvedImage}" th:alt="${detail.productName}+' — ảnh chính'" width="56" height="56"></td><td th:text="${detail.productVariant.product.code}"></td><td><span th:text="${detail.productName != null ? detail.productName : detail.productVariant.product.name}"></span></td>
                             <td th:text="${detail.sizeName != null ? detail.sizeName : detail.productVariant.size.sizeValue}"></td>
-                            <td th:text="${detail.displayMaterialName}"></td><td th:text="${detail.quantity}"></td>
+                            <td th:text="${detail.displayMaterialName}"></td><td th:text="${detail.displayColorName}"></td><td th:text="${detail.displaySoleName}"></td><td th:text="${detail.quantity}"></td>
                             <td th:text="${@money.format(detail.price)} + ' đ'"></td>
                             <td class="text-end fw-bold" th:text="${@money.format(detail.totalPrice)} + ' đ'"></td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="8" class="text-end fw-bold">Tổng cộng:</td>
+                            <td colspan="10" class="text-end fw-bold">Tổng cộng:</td>
                             <td class="text-end fw-bold text-danger fs-5" th:text="${@money.format(order.finalAmount)} + ' đ'"></td>
                         </tr>
                     </tfoot>

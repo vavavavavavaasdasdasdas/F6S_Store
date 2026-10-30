@@ -1,14 +1,21 @@
 (() => {
  const dialog=document.querySelector('#pos-product-dialog');
  const select=document.querySelector('#pos-variant'),quantity=document.querySelector('#pos-quantity');let opener=null;
- const material=document.querySelector('#pos-material'),size=document.querySelector('#pos-size');let variantOptions=[];
- function resolve(){const matches=variantOptions.filter(o=>o.dataset.materialId===material.value);size.replaceChildren();const seen=new Set();matches.forEach(o=>{if(!seen.has(o.dataset.sizeId)){size.add(new Option(o.dataset.sizeName,o.dataset.sizeId));seen.add(o.dataset.sizeId);}});choose();}
- function choose(){const found=variantOptions.find(o=>o.dataset.materialId===material.value&&o.dataset.sizeId===size.value);select.replaceChildren(...(found?[found.cloneNode(true)]:[]));stock();}
- material.addEventListener('change',resolve);size.addEventListener('change',choose);
+ const variantFields=[['color','Màu sắc'],['material','Chất liệu'],['sole','Đế giày'],['size','Kích cỡ']].map(([key,name])=>({key,name,select:document.querySelector('#pos-'+key)}));let variantOptions=[];
+ function resolve(){
+   variantFields.forEach(({key,name,select:field},idx)=>{
+     const previous=field.value,candidates=variantOptions.filter(o=>variantFields.slice(0,idx).every(f=>!f.select.value||o.dataset[f.key+'Id']===f.select.value)),values=new Map();
+     candidates.forEach(o=>values.set(o.dataset[key+'Id'],o.dataset[key+'Name']));field.replaceChildren(new Option('Chọn '+name.toLowerCase(),''));
+     values.forEach((text,id)=>field.add(new Option(text,id)));if(values.has(previous))field.value=previous;else if(values.size===1)field.selectedIndex=1;
+     field.dispatchEvent(new CustomEvent('combo:sync'));
+   });
+   const found=variantOptions.find(o=>variantFields.every(f=>f.select.value&&o.dataset[f.key+'Id']===f.select.value));select.replaceChildren(...(found?[found.cloneNode(true)]:[]));stock();
+ }
+ variantFields.forEach(({select:field},idx)=>field.addEventListener('change',()=>{variantFields.slice(idx+1).forEach(f=>f.select.value='');resolve();}));
  function stock(){quantity.max=select.selectedOptions[0]?.dataset.stock||1;quantity.value=1;}
  document.querySelectorAll('[data-pos-product]').forEach(button=>button.addEventListener('click',()=>{
    opener=button;document.querySelector('#pos-product-title').textContent=button.dataset.productName;
-   variantOptions=[...document.querySelector('#pos-options-'+button.dataset.productId).content.cloneNode(true).querySelectorAll('option')];material.replaceChildren();const names=new Map();variantOptions.forEach(o=>names.set(o.dataset.materialId,o.dataset.materialName));names.forEach((name,id)=>material.add(new Option(name,id)));resolve();dialog.showModal();select.focus();
+   variantOptions=[...document.querySelector('#pos-options-'+button.dataset.productId).content.cloneNode(true).querySelectorAll('option')];variantFields.forEach(f=>f.select.replaceChildren());resolve();dialog.showModal();variantFields[0].select.focus();
  }));select.addEventListener('change',stock);dialog.querySelector('[data-pos-close]').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>{dialog.querySelector('form').dataset.dirty='false';opener?.focus();});
  const customer=document.querySelector('#customerId'),search=document.querySelector('#customerSearch');
  let searchSequence=0,searchTimer;const chosenLabel=document.querySelector('#pos-chosen-customer');

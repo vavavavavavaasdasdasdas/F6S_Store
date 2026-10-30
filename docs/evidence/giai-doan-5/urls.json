@@ -1,0 +1,3370 @@
+[
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/",
+    "status": 200,
+    "finalPath": "/",
+    "width": 1265,
+    "text": 1721,
+    "forms": [
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/products",
+    "status": 200,
+    "finalPath": "/products",
+    "width": 1265,
+    "text": 1391,
+    "forms": [
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/products?promotion=true",
+    "status": 200,
+    "finalPath": "/products?promotion=true",
+    "width": 1265,
+    "text": 1045,
+    "forms": [
+      {
+        "action": "/cart/add",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/products/950",
+    "status": 200,
+    "finalPath": "/products/950",
+    "width": 1265,
+    "text": 891,
+    "forms": [
+      {
+        "action": "/cart/add",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/category/1",
+    "status": 200,
+    "finalPath": "/category/1",
+    "width": 1265,
+    "text": 1233,
+    "forms": [
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/cart",
+    "status": 200,
+    "finalPath": "/cart",
+    "width": 1265,
+    "text": 401,
+    "forms": [],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/login",
+    "status": 200,
+    "finalPath": "/login",
+    "width": 1265,
+    "text": 385,
+    "forms": [
+      {
+        "action": "/login",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/register",
+    "status": 200,
+    "finalPath": "/register",
+    "width": 1265,
+    "text": 508,
+    "forms": [
+      {
+        "action": "/register",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/",
+    "status": 200,
+    "finalPath": "/",
+    "width": 360,
+    "text": 1676,
+    "forms": [
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/products",
+    "status": 200,
+    "finalPath": "/products",
+    "width": 360,
+    "text": 846,
+    "forms": [
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/products?promotion=true",
+    "status": 200,
+    "finalPath": "/products?promotion=true",
+    "width": 360,
+    "text": 478,
+    "forms": [
+      {
+        "action": "/cart/add",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/products/950",
+    "status": 200,
+    "finalPath": "/products/950",
+    "width": 360,
+    "text": 859,
+    "forms": [
+      {
+        "action": "/cart/add",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/category/1",
+    "status": 200,
+    "finalPath": "/category/1",
+    "width": 360,
+    "text": 666,
+    "forms": [
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      },
+      {
+        "action": "/cart/add",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/cart",
+    "status": 200,
+    "finalPath": "/cart",
+    "width": 360,
+    "text": 356,
+    "forms": [],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/login",
+    "status": 200,
+    "finalPath": "/login",
+    "width": 360,
+    "text": 340,
+    "forms": [
+      {
+        "action": "/login",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/register",
+    "status": 200,
+    "finalPath": "/register",
+    "width": 360,
+    "text": 463,
+    "forms": [
+      {
+        "action": "/register",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "user",
+    "viewport": 1280,
+    "path": "/profile",
+    "status": 200,
+    "finalPath": "/profile",
+    "width": 1265,
+    "text": 715,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/profile/update",
+        "csrf": true
+      },
+      {
+        "action": "/profile/change-password",
+        "csrf": true
+      },
+      {
+        "action": "/profile/addresses/save",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "user",
+    "viewport": 1280,
+    "path": "/cart",
+    "status": 200,
+    "finalPath": "/cart",
+    "width": 1265,
+    "text": 699,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "user-gio-hang-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Đơn giá",
+          "Giá gốc",
+          "Số lượng",
+          "Thành tiền",
+          "Thao tác"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "viewport": 1280,
+    "path": "/checkout",
+    "status": 200,
+    "finalPath": "/checkout",
+    "width": 1265,
+    "text": 993,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/checkout/place",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "user-thanh-toan-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Số lượng",
+          "Đơn giá",
+          "Giá gốc",
+          "Giảm (%)",
+          "Thành tiền"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "viewport": 1280,
+    "path": "/orders",
+    "status": 200,
+    "finalPath": "/orders",
+    "width": 1265,
+    "text": 595,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "user-don-hang-1",
+        "headers": [
+          "STT",
+          "Mã Đơn Hàng",
+          "Ngày đặt",
+          "Tổng tiền",
+          "Trạng thái",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "viewport": 1280,
+    "path": "/orders/676",
+    "status": 200,
+    "finalPath": "/orders/676",
+    "width": 1265,
+    "text": 848,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/orders/676/cancel",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "user-chi-tiet-don-hang-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Số lượng",
+          "Đơn giá",
+          "Thành tiền"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "viewport": 1280,
+    "path": "/orders/success/676",
+    "status": 200,
+    "finalPath": "/orders/success/676",
+    "width": 1265,
+    "text": 1101,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "user-dat-hang-thanh-cong-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Số lượng",
+          "Đơn giá",
+          "Thành tiền"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "viewport": 375,
+    "path": "/profile",
+    "status": 200,
+    "finalPath": "/profile",
+    "width": 360,
+    "text": 670,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/profile/update",
+        "csrf": true
+      },
+      {
+        "action": "/profile/change-password",
+        "csrf": true
+      },
+      {
+        "action": "/profile/addresses/save",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "user",
+    "viewport": 375,
+    "path": "/cart",
+    "status": 200,
+    "finalPath": "/cart",
+    "width": 360,
+    "text": 654,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "user-gio-hang-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Đơn giá",
+          "Giá gốc",
+          "Số lượng",
+          "Thành tiền",
+          "Thao tác"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "viewport": 375,
+    "path": "/checkout",
+    "status": 200,
+    "finalPath": "/checkout",
+    "width": 360,
+    "text": 948,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/checkout/place",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "user-thanh-toan-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Số lượng",
+          "Đơn giá",
+          "Giá gốc",
+          "Giảm (%)",
+          "Thành tiền"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "viewport": 375,
+    "path": "/orders",
+    "status": 200,
+    "finalPath": "/orders",
+    "width": 360,
+    "text": 550,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "user-don-hang-1",
+        "headers": [
+          "STT",
+          "Mã Đơn Hàng",
+          "Ngày đặt",
+          "Tổng tiền",
+          "Trạng thái",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "viewport": 375,
+    "path": "/orders/676",
+    "status": 200,
+    "finalPath": "/orders/676",
+    "width": 360,
+    "text": 803,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/orders/676/cancel",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "user-chi-tiet-don-hang-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Số lượng",
+          "Đơn giá",
+          "Thành tiền"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "viewport": 375,
+    "path": "/orders/success/676",
+    "status": 200,
+    "finalPath": "/orders/success/676",
+    "width": 360,
+    "text": 1056,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "user-dat-hang-thanh-cong-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Số lượng",
+          "Đơn giá",
+          "Thành tiền"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin",
+    "status": 200,
+    "finalPath": "/admin",
+    "width": 1265,
+    "text": 2574,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-bang-dieu-khien-1",
+        "headers": [
+          "STT",
+          "Ngày",
+          "Doanh thu (₫)"
+        ]
+      },
+      {
+        "key": "admin-bang-dieu-khien-2",
+        "headers": [
+          "STT",
+          "Trạng thái",
+          "Số đơn"
+        ]
+      },
+      {
+        "key": "admin-bang-dieu-khien-3",
+        "headers": [
+          "STT",
+          "Mã đơn",
+          "Ngày tạo",
+          "Khách hàng",
+          "Trạng thái",
+          "Tổng tiền"
+        ]
+      },
+      {
+        "key": "admin-bang-dieu-khien-4",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Số lượng"
+        ]
+      },
+      {
+        "key": "admin-bang-dieu-khien-5",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Tồn kho",
+          "Thao tác"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/customers",
+    "status": 200,
+    "finalPath": "/admin/customers",
+    "width": 1265,
+    "text": 2259,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-khach-hang-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Họ tên",
+          "CCCD",
+          "SĐT",
+          "Email",
+          "Địa chỉ",
+          "Tài khoản",
+          "Trạng thái",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/employees",
+    "status": 200,
+    "finalPath": "/admin/employees",
+    "width": 1265,
+    "text": 1477,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-nhan-vien-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Họ tên",
+          "CCCD",
+          "SĐT",
+          "Email",
+          "Địa chỉ",
+          "Tài khoản",
+          "Trạng thái",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/products-crud",
+    "status": 200,
+    "finalPath": "/admin/products-crud",
+    "width": 1265,
+    "text": 2907,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/950",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/950",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/949",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/949",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/948",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/948",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/947",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/947",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/834",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/834",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/833",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/833",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/24",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/24",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/1",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/1",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-san-pham-danh-sach-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Thương hiệu",
+          "Đế giày",
+          "Chất liệu",
+          "Màu sắc",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/products-crud/view/950",
+    "status": 200,
+    "finalPath": "/admin/products-crud/view/950",
+    "width": 1265,
+    "text": 874,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/950",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-san-pham-chi-tiet-1",
+        "headers": [
+          "STT",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/products-crud/edit/950",
+    "status": 200,
+    "finalPath": "/admin/products-crud/edit/950",
+    "width": 1265,
+    "text": 1101,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/save",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/variants",
+    "status": 200,
+    "finalPath": "/admin/variants",
+    "width": 1265,
+    "text": 3075,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/602",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/604",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/605",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/603",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/598",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/600",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/601",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/606",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/607",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/599",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/595",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/596",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-bien-the-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/variants/create",
+    "status": 200,
+    "finalPath": "/admin/variants/create",
+    "width": 1265,
+    "text": 1536,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/save",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/variants/edit/602",
+    "status": 200,
+    "finalPath": "/admin/variants/edit/602",
+    "width": 1265,
+    "text": 1550,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/save",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/colors",
+    "status": 200,
+    "finalPath": "/admin/colors",
+    "width": 1265,
+    "text": 1456,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/1",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/1",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/6",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/6",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/7",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/7",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/8",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/8",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/9",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/9",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/10",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/10",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/11",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/12",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Ô màu mẫu",
+          "Mã màu",
+          "Tên màu sắc",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/colors?page=1",
+    "status": 200,
+    "finalPath": "/admin/colors?page=1",
+    "width": 1265,
+    "text": 982,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/13",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/14",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/15",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Ô màu mẫu",
+          "Mã màu",
+          "Tên màu sắc",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/colors/create",
+    "status": 200,
+    "finalPath": "/admin/colors/create",
+    "width": 1265,
+    "text": 769,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/save",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/materials",
+    "status": 200,
+    "finalPath": "/admin/materials",
+    "width": 1265,
+    "text": 1158,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/1",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/delete/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/delete/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/delete/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/delete/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/6",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/delete/6",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/7",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/delete/7",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/8",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên chất liệu",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/categories",
+    "status": 200,
+    "finalPath": "/admin/categories",
+    "width": 1265,
+    "text": 970,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/categories/toggle-status/1",
+        "csrf": true
+      },
+      {
+        "action": "/admin/categories/toggle-status/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/categories/toggle-status/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/categories/toggle-status/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/categories/toggle-status/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/categories/toggle-status/6",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên thương hiệu",
+          "Trạng thái",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/soles",
+    "status": 200,
+    "finalPath": "/admin/soles",
+    "width": 1265,
+    "text": 1225,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/1",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/delete/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/delete/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/delete/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/6",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/delete/6",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/7",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/delete/7",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/8",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/9",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/10",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên đế giày",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/inventory",
+    "status": 200,
+    "finalPath": "/admin/inventory",
+    "width": 1265,
+    "text": 4402,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-ton-kho-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Tồn kho",
+          "Trạng thái biến thể",
+          "Hành động"
+        ]
+      },
+      {
+        "key": "admin-ton-kho-danh-sach-2",
+        "headers": [
+          "STT",
+          "Thời gian",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Trước",
+          "Thay đổi",
+          "Sau",
+          "Lý do",
+          "Người thực hiện"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/inventory/adjust/602",
+    "status": 200,
+    "finalPath": "/admin/inventory/adjust/602",
+    "width": 1265,
+    "text": 787,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/inventory/adjust",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/pos",
+    "status": 200,
+    "finalPath": "/admin/pos",
+    "width": 1265,
+    "text": 2059,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/pos/new",
+        "csrf": true
+      },
+      {
+        "action": "/admin/pos/holds",
+        "csrf": true
+      },
+      {
+        "action": "/admin/pos/checkout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/pos/add",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-ban-tai-quay-ban-tai-quay-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Số món",
+          "Tổng tiền",
+          "Hết hạn",
+          "Hành động"
+        ]
+      },
+      {
+        "key": "admin-ban-tai-quay-ban-tai-quay-2",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Đơn giá",
+          "Số lượng",
+          "Thành tiền",
+          "Hành động"
+        ]
+      },
+      {
+        "key": "admin-ban-tai-quay-khach-hang-1",
+        "headers": [
+          "STT",
+          "Họ tên",
+          "SĐT",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/orders/676",
+    "status": 200,
+    "finalPath": "/admin/orders/676",
+    "width": 1265,
+    "text": 1112,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/orders/676/confirm-payment",
+        "csrf": true
+      },
+      {
+        "action": "/admin/orders/676/status",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-don-hang-chi-tiet-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "SL",
+          "Đơn giá (đ)",
+          "Thành tiền (đ)"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/invoices",
+    "status": 200,
+    "finalPath": "/admin/invoices",
+    "width": 1265,
+    "text": 1707,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-hoa-don-danh-sach-1",
+        "headers": [
+          "STT",
+          "Hóa đơn",
+          "Đơn hàng",
+          "Ngày",
+          "Khách",
+          "Nhân viên",
+          "Tổng (đ)",
+          "Thanh toán"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/invoices/290",
+    "status": 200,
+    "finalPath": "/admin/invoices/290",
+    "width": 1265,
+    "text": 1009,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-hoa-don-chi-tiet-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "SL",
+          "Đơn giá (đ)",
+          "Thành tiền (đ)"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/statistics",
+    "status": 200,
+    "finalPath": "/admin/statistics",
+    "width": 1265,
+    "text": 1142,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-thong-ke-thong-ke-1",
+        "headers": [
+          "STT",
+          "Ngày",
+          "Số đơn",
+          "Doanh thu (đ)"
+        ]
+      },
+      {
+        "key": "admin-thong-ke-thong-ke-3",
+        "headers": [
+          "STT",
+          "Trạng thái",
+          "Số đơn"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/statistics/revenue",
+    "status": 200,
+    "finalPath": "/admin/statistics/revenue",
+    "width": 1265,
+    "text": 1142,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-thong-ke-thong-ke-1",
+        "headers": [
+          "STT",
+          "Ngày",
+          "Số đơn",
+          "Doanh thu (đ)"
+        ]
+      },
+      {
+        "key": "admin-thong-ke-thong-ke-3",
+        "headers": [
+          "STT",
+          "Trạng thái",
+          "Số đơn"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/statistics/best-sellers",
+    "status": 200,
+    "finalPath": "/admin/statistics/best-sellers",
+    "width": 1265,
+    "text": 1517,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-thong-ke-thong-ke-2",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "SL bán",
+          "Doanh thu (đ)"
+        ]
+      },
+      {
+        "key": "admin-thong-ke-thong-ke-2",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "SL bán",
+          "Doanh thu (đ)"
+        ]
+      },
+      {
+        "key": "admin-thong-ke-thong-ke-3",
+        "headers": [
+          "STT",
+          "Trạng thái",
+          "Số đơn"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin",
+    "status": 200,
+    "finalPath": "/admin",
+    "width": 360,
+    "text": 2266,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-bang-dieu-khien-1",
+        "headers": [
+          "STT",
+          "Ngày",
+          "Doanh thu (₫)"
+        ]
+      },
+      {
+        "key": "admin-bang-dieu-khien-2",
+        "headers": [
+          "STT",
+          "Trạng thái",
+          "Số đơn"
+        ]
+      },
+      {
+        "key": "admin-bang-dieu-khien-3",
+        "headers": [
+          "STT",
+          "Mã đơn",
+          "Ngày tạo",
+          "Khách hàng",
+          "Trạng thái",
+          "Tổng tiền"
+        ]
+      },
+      {
+        "key": "admin-bang-dieu-khien-4",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Số lượng"
+        ]
+      },
+      {
+        "key": "admin-bang-dieu-khien-5",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Tồn kho",
+          "Thao tác"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/customers",
+    "status": 200,
+    "finalPath": "/admin/customers",
+    "width": 360,
+    "text": 1963,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-khach-hang-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Họ tên",
+          "CCCD",
+          "SĐT",
+          "Email",
+          "Địa chỉ",
+          "Tài khoản",
+          "Trạng thái",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/employees",
+    "status": 200,
+    "finalPath": "/admin/employees",
+    "width": 360,
+    "text": 1181,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-nhan-vien-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Họ tên",
+          "CCCD",
+          "SĐT",
+          "Email",
+          "Địa chỉ",
+          "Tài khoản",
+          "Trạng thái",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/products-crud",
+    "status": 200,
+    "finalPath": "/admin/products-crud",
+    "width": 360,
+    "text": 2548,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/950",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/950",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/949",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/949",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/948",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/948",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/947",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/947",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/834",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/834",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/833",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/833",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/24",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/24",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/1",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/delete/1",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-san-pham-danh-sach-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Thương hiệu",
+          "Đế giày",
+          "Chất liệu",
+          "Màu sắc",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/products-crud/view/950",
+    "status": 200,
+    "finalPath": "/admin/products-crud/view/950",
+    "width": 360,
+    "text": 515,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/status/950",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-san-pham-chi-tiet-1",
+        "headers": [
+          "STT",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/products-crud/edit/950",
+    "status": 200,
+    "finalPath": "/admin/products-crud/edit/950",
+    "width": 360,
+    "text": 742,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/products-crud/save",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/variants",
+    "status": 200,
+    "finalPath": "/admin/variants",
+    "width": 360,
+    "text": 2716,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/602",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/604",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/605",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/603",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/598",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/600",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/601",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/606",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/607",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/599",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/595",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/status/596",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-bien-the-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Giá (₫)",
+          "Tồn kho",
+          "Trạng thái",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/variants/create",
+    "status": 200,
+    "finalPath": "/admin/variants/create",
+    "width": 360,
+    "text": 1177,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/save",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/variants/edit/602",
+    "status": 200,
+    "finalPath": "/admin/variants/edit/602",
+    "width": 360,
+    "text": 1191,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/variants/save",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/colors",
+    "status": 200,
+    "finalPath": "/admin/colors",
+    "width": 360,
+    "text": 1097,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/1",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/1",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/6",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/6",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/7",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/7",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/8",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/8",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/9",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/9",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/10",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/delete/10",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/11",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/12",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Ô màu mẫu",
+          "Mã màu",
+          "Tên màu sắc",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/colors?page=1",
+    "status": 200,
+    "finalPath": "/admin/colors?page=1",
+    "width": 360,
+    "text": 623,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/13",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/14",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/toggle-status/15",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Ô màu mẫu",
+          "Mã màu",
+          "Tên màu sắc",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/colors/create",
+    "status": 200,
+    "finalPath": "/admin/colors/create",
+    "width": 360,
+    "text": 410,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/colors/save",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/materials",
+    "status": 200,
+    "finalPath": "/admin/materials",
+    "width": 360,
+    "text": 799,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/1",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/delete/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/delete/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/delete/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/delete/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/6",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/delete/6",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/7",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/delete/7",
+        "csrf": true
+      },
+      {
+        "action": "/admin/materials/toggle-status/8",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên chất liệu",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/categories",
+    "status": 200,
+    "finalPath": "/admin/categories",
+    "width": 360,
+    "text": 611,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/categories/toggle-status/1",
+        "csrf": true
+      },
+      {
+        "action": "/admin/categories/toggle-status/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/categories/toggle-status/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/categories/toggle-status/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/categories/toggle-status/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/categories/toggle-status/6",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên thương hiệu",
+          "Trạng thái",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/soles",
+    "status": 200,
+    "finalPath": "/admin/soles",
+    "width": 360,
+    "text": 866,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/1",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/2",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/delete/3",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/delete/4",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/delete/5",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/6",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/delete/6",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/7",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/delete/7",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/8",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/9",
+        "csrf": true
+      },
+      {
+        "action": "/admin/soles/toggle-status/10",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-danh-muc-kich-co-danh-sach-1",
+        "headers": [
+          "STT",
+          "Tên đế giày",
+          "Trạng thái",
+          "Đang dùng",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/inventory",
+    "status": 200,
+    "finalPath": "/admin/inventory",
+    "width": 360,
+    "text": 4043,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-ton-kho-danh-sach-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Tồn kho",
+          "Trạng thái biến thể",
+          "Hành động"
+        ]
+      },
+      {
+        "key": "admin-ton-kho-danh-sach-2",
+        "headers": [
+          "STT",
+          "Thời gian",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Trước",
+          "Thay đổi",
+          "Sau",
+          "Lý do",
+          "Người thực hiện"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/inventory/adjust/602",
+    "status": 200,
+    "finalPath": "/admin/inventory/adjust/602",
+    "width": 360,
+    "text": 428,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/inventory/adjust",
+        "csrf": true
+      }
+    ],
+    "tables": []
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/pos",
+    "status": 200,
+    "finalPath": "/admin/pos",
+    "width": 360,
+    "text": 1763,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/pos/new",
+        "csrf": true
+      },
+      {
+        "action": "/admin/pos/holds",
+        "csrf": true
+      },
+      {
+        "action": "/admin/pos/checkout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/pos/add",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-ban-tai-quay-ban-tai-quay-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Số món",
+          "Tổng tiền",
+          "Hết hạn",
+          "Hành động"
+        ]
+      },
+      {
+        "key": "admin-ban-tai-quay-ban-tai-quay-2",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "Đơn giá",
+          "Số lượng",
+          "Thành tiền",
+          "Hành động"
+        ]
+      },
+      {
+        "key": "admin-ban-tai-quay-khach-hang-1",
+        "headers": [
+          "STT",
+          "Họ tên",
+          "SĐT",
+          "Hành động"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/orders/676",
+    "status": 200,
+    "finalPath": "/admin/orders/676",
+    "width": 360,
+    "text": 816,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/admin/orders/676/confirm-payment",
+        "csrf": true
+      },
+      {
+        "action": "/admin/orders/676/status",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-don-hang-chi-tiet-1",
+        "headers": [
+          "STT",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "SL",
+          "Đơn giá (đ)",
+          "Thành tiền (đ)"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/invoices",
+    "status": 200,
+    "finalPath": "/admin/invoices",
+    "width": 360,
+    "text": 1411,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-hoa-don-danh-sach-1",
+        "headers": [
+          "STT",
+          "Hóa đơn",
+          "Đơn hàng",
+          "Ngày",
+          "Khách",
+          "Nhân viên",
+          "Tổng (đ)",
+          "Thanh toán"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/invoices/290",
+    "status": 200,
+    "finalPath": "/admin/invoices/290",
+    "width": 360,
+    "text": 713,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-hoa-don-chi-tiet-1",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "Kích cỡ",
+          "Chất liệu",
+          "Màu sắc",
+          "Đế giày",
+          "SL",
+          "Đơn giá (đ)",
+          "Thành tiền (đ)"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/statistics",
+    "status": 200,
+    "finalPath": "/admin/statistics",
+    "width": 360,
+    "text": 846,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-thong-ke-thong-ke-1",
+        "headers": [
+          "STT",
+          "Ngày",
+          "Số đơn",
+          "Doanh thu (đ)"
+        ]
+      },
+      {
+        "key": "admin-thong-ke-thong-ke-3",
+        "headers": [
+          "STT",
+          "Trạng thái",
+          "Số đơn"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/statistics/revenue",
+    "status": 200,
+    "finalPath": "/admin/statistics/revenue",
+    "width": 360,
+    "text": 846,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-thong-ke-thong-ke-1",
+        "headers": [
+          "STT",
+          "Ngày",
+          "Số đơn",
+          "Doanh thu (đ)"
+        ]
+      },
+      {
+        "key": "admin-thong-ke-thong-ke-3",
+        "headers": [
+          "STT",
+          "Trạng thái",
+          "Số đơn"
+        ]
+      }
+    ]
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/statistics/best-sellers",
+    "status": 200,
+    "finalPath": "/admin/statistics/best-sellers",
+    "width": 360,
+    "text": 1221,
+    "forms": [
+      {
+        "action": "/logout",
+        "csrf": true
+      },
+      {
+        "action": "/logout",
+        "csrf": true
+      }
+    ],
+    "tables": [
+      {
+        "key": "admin-thong-ke-thong-ke-2",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "SL bán",
+          "Doanh thu (đ)"
+        ]
+      },
+      {
+        "key": "admin-thong-ke-thong-ke-2",
+        "headers": [
+          "STT",
+          "Ảnh",
+          "Mã",
+          "Tên sản phẩm",
+          "SL bán",
+          "Doanh thu (đ)"
+        ]
+      },
+      {
+        "key": "admin-thong-ke-thong-ke-3",
+        "headers": [
+          "STT",
+          "Trạng thái",
+          "Số đơn"
+        ]
+      }
+    ]
+  }
+]

@@ -44,7 +44,7 @@ class PaginationIntegrationTest {
             int staff=n==0?admin:insert("INSERT users(username,password,role_id,status) OUTPUT INSERTED.id VALUES(?,'not-used-by-mock-login',?,1)","pg-staff-"+run+"-"+n,adminRole);
             insert("INSERT employees(employee_code,full_name,phone,email,user_id,status) OUTPUT INSERTED.id VALUES(?,?,?,?,?,1)","PG-"+run+"-"+n,name,String.format("0922%06d",n),"staff"+run+n+"@example.test",staff);
             products.add(insert("INSERT products(code,name,category_id,status) OUTPUT INSERTED.id VALUES(?,?,?,1)","PG-"+run+"-"+n,name,categories.get(0)));
-            variants.add(insert("INSERT product_variants(product_id,size_id,chat_lieu_id,price,quantity,status) OUTPUT INSERTED.id VALUES(?,?,(SELECT TOP(1) id FROM chat_lieu ORDER BY id),100000,5,1)",products.get(n),sizes.get(0)));
+            variants.add(insert("INSERT product_variants(product_id,size_id,chat_lieu_id,mau_sac_id,de_giay_id,price,quantity,status) OUTPUT INSERTED.id VALUES(?,?,(SELECT TOP(1) id FROM chat_lieu ORDER BY id),(SELECT TOP(1) id FROM mau_sac ORDER BY id),(SELECT TOP(1) id FROM de_giay ORDER BY id),100000,5,1)",products.get(n),sizes.get(0)));
             jdbc.update("INSERT inventory_logs(variant_id,quantity_change,quantity_before,quantity_after,reason,actor,created_at) VALUES(?,5,0,5,'Pagination fixture','test',GETDATE())",variants.get(n));
             int p=insert("INSERT promotions(name,discount_type,discount_value,start_date,end_date,status) OUTPUT INSERTED.id VALUES(?,'PERCENT',10,'2000-01-01','2050-01-01',1)",name);if(n==0)promotion=p;
             jdbc.update("INSERT vouchers(code,name,discount_type,discount_value,min_order_value,start_date,end_date,is_public,used_count,status) VALUES(?,?,'PERCENT',10,0,'2000-01-01','2050-01-01',1,0,1)","PG-"+run+"-"+n,name);
@@ -82,7 +82,7 @@ class PaginationIntegrationTest {
     }
     @Test void productVariantSublistIsPagedAndLinksKeepFilters()throws Exception {
         jdbc.update("DELETE order_details");jdbc.update("DELETE inventory_logs");jdbc.update("DELETE product_variants");
-        for(int size:sizes)jdbc.update("INSERT product_variants(product_id,size_id,chat_lieu_id,price,quantity,status) VALUES(?,?,(SELECT TOP(1) id FROM chat_lieu ORDER BY id),100000,5,1)",products.get(0),size);
+        for(int size:sizes)jdbc.update("INSERT product_variants(product_id,size_id,chat_lieu_id,mau_sac_id,de_giay_id,price,quantity,status) VALUES(?,?,(SELECT TOP(1) id FROM chat_lieu ORDER BY id),(SELECT TOP(1) id FROM mau_sac ORDER BY id),(SELECT TOP(1) id FROM de_giay ORDER BY id),100000,5,1)",products.get(0),size);
         verify("/admin/products-crud/"+products.get(0)+"/variants","dataPage","page");
         verify("/admin/products-crud/view/"+products.get(0),"variantPage","page");
         String html=mvc.perform(get("/admin/products-crud").param("keyword","PG+").param("sort","name").param("status","true").with(user("admin").roles("ADMIN"))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();

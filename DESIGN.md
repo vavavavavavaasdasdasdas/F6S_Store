@@ -69,3 +69,7 @@ Danh sách chỉ hiện CCCD dạng ***1234, chi tiết Admin hiện đầy đ�
 Dùng fragment `trang-thai-ban` cho nút trạng thái sản phẩm/biến thể, cùng nút Bootstrap và hộp xác nhận `admin-confirm` hiện có. Gửi trạng thái đích qua POST có CSRF; xác nhận giải thích việc ẩn khỏi User/POS, chặn giỏ/hóa đơn chờ, giữ nguyên biến thể/tồn kho/lịch sử. Nút trong bảng nằm trong khung cuộn ngang hiện có, nhóm hành động trên trang xem được xuống dòng ở mobile. Cảnh báo dòng giỏ và hóa đơn chờ dùng cơ chế hiện có; điều kiện bán hiện tại thuộc ProductSalePolicy, không áp dụng lên dữ liệu báo cáo lịch sử.
 
 Ô Mã sản phẩm dùng input readonly cả tạo/sửa. Khi tạo không dự đoán số, chỉ có placeholder Tự động tạo khi lưu; server tạo khi lưu thành công bằng sequence. Khi sửa luôn hiển thị mã đã lưu, kể cả khi POST bị giả mạo hoặc form có lỗi. Không đổi mã cũ, route hay tên bảng.
+
+### Góp ý giảng viên — Giai đoạn 5
+
+Quyết định mới thay quy tắc đế giày cấp sản phẩm và bộ chọn hai thuộc tính trước đây: biến thể có kích cỡ, màu sắc, chất liệu, đế giày. `products.de_giay_id` chỉ là gợi ý cũ, không dùng hiển thị/lọc. Mọi select tiếp tục dùng `static/js/combo-box.js`; form tạo thuộc tính dùng chế độ creatable hiện có, field-error cạnh trường. CRUD màu dùng bảng/cuộn ngang, STT, PaginationAdvice, admin-confirm giống Chất liệu. Mẫu màu dùng `.color-swatch`, không thay token thương hiệu. Bộ chọn biến thể dùng dữ liệu ID bốn chiều, chỉ ghép tổ hợp có thật và còn hàng; giữ thông tin snapshot trong đơn, không đọc tên hiện tại cho hai thuộc tính mới của đơn cũ.

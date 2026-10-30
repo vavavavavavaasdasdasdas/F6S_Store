@@ -41,6 +41,7 @@ public class ProductController {
     private final ProductGalleryService gallery;
     private final com.example.demodatn.repository.sanpham.SoleRepository soleRepository;
 
+    private final com.example.demodatn.repository.sanpham.ColorRepository colors;
     @GetMapping({"/products", "/search"})
     public String list(
             @RequestParam(required = false) String keyword,
@@ -51,9 +52,10 @@ public class ProductController {
             @RequestParam(required = false) BigDecimal maxPrice,
             @RequestParam(required = false) Boolean promotion,
             @RequestParam(defaultValue = "newest") String sort,
-            @RequestParam(defaultValue = "0") String page, @RequestParam(required=false) Integer soleId, Model model) {
+            @RequestParam(defaultValue = "0") String page, @RequestParam(required=false) Integer soleId, @RequestParam(required=false) Integer colorId, Model model) {
         
-        Page<ProductDto> productPage = productFilterService.filterProducts(keyword, categoryId, sizeId, minPrice, maxPrice, promotion, sort, pagination.index(page), pagination.getSize(), materialId,soleId);
+        Page<ProductDto> productPage = productFilterService.filterProducts(keyword, categoryId, sizeId, minPrice, maxPrice, promotion, sort, pagination.index(page), pagination.getSize(), materialId,soleId,colorId);
+        model.addAttribute("colors",colors.findAll()); model.addAttribute("colorId",colorId);
         model.addAttribute("soles",soleRepository.findAll());model.addAttribute("soleId",soleId);
         
         model.addAttribute("productPage", productPage);
@@ -69,6 +71,7 @@ public class ProductController {
         model.addAttribute("promotion", promotion);
         model.addAttribute("sort", sort);
         int activeFilterCount = 0;
+        if(colorId!=null) activeFilterCount++;
         if (keyword != null && !keyword.trim().isEmpty()) activeFilterCount++;
         if (categoryId != null) activeFilterCount++;
         if (soleId != null) activeFilterCount++;
@@ -85,7 +88,7 @@ public class ProductController {
     @GetMapping("/category/{id}")
     public String categoryList(@PathVariable Integer id,@RequestParam(required=false) String keyword,@RequestParam(required=false) Integer sizeId,@RequestParam(required=false) Integer materialId,@RequestParam(required=false) BigDecimal minPrice,@RequestParam(required=false) BigDecimal maxPrice,@RequestParam(required=false) Boolean promotion,@RequestParam(defaultValue="newest") String sort,@RequestParam(defaultValue="0") String page,Model model,jakarta.servlet.http.HttpServletResponse response) {
         if(!categoryRepository.existsById(id)){response.setStatus(404);return "loi/404";}
-        return list(keyword,id,sizeId,materialId,minPrice,maxPrice,promotion,sort,page,null,model);
+        return list(keyword,id,sizeId,materialId,minPrice,maxPrice,promotion,sort,page,null,null,model);
     }
 
     @GetMapping("/products/{id}")

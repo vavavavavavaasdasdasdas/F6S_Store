@@ -34,6 +34,7 @@ public class AdminCatalogService {
     private final CategoryRepository categories;
     private final SizeRepository sizes;
     private final MaterialRepository materials;
+    private final com.example.demodatn.repository.sanpham.ColorRepository colors;
     private final com.example.demodatn.repository.sanpham.SoleRepository soles;
     private final OrderDetailRepository details;
     private final PromotionDetailRepository promotions;
@@ -122,6 +123,18 @@ public class AdminCatalogService {
         return sizes.saveAndFlush(created);
     }
 
+    @Transactional
+    public com.example.demodatn.entity.sanpham.Color resolveOrCreateColor(String raw,String field) {
+        requireAdminForCreation();
+        String name=VietnameseText.clean(raw);
+        if(name.isEmpty() || name.length()>100)throw new CatalogValidationException(field,"Tên màu sắc từ 1 đến 100 ký tự.");
+        for(var color:colors.findAll()) if(VietnameseText.sameFolded(color.getName(),name)) {
+            if(!Boolean.TRUE.equals(color.getStatus()))throw new CatalogValidationException(field,"Màu sắc đã tồn tại nhưng đang ẩn.");
+            return color;
+        }
+        var color=new com.example.demodatn.entity.sanpham.Color();color.setName(name);return colors.saveAndFlush(color);
+    }
+
     public Product product(Integer id) {
         return products.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy sản phẩm."));
     }
@@ -133,9 +146,10 @@ public class AdminCatalogService {
         if (form.getNewCategoryName() != null && !form.getNewCategoryName().isBlank()) {
             form.setCategoryId(resolveOrCreateCategory(form.getNewCategoryName(), "categoryId").getId());
         }
-        if (form.getNewSoleName() != null && !form.getNewSoleName().isBlank()) {
-            form.setSoleId(resolveOrCreateSole(form.getNewSoleName(), "soleId").getId());
-        }
+        if(form.getNewInitialColorName()!=null && !form.getNewInitialColorName().isBlank())
+            form.setInitialColorId(resolveOrCreateColor(form.getNewInitialColorName(),"initialColorId").getId());
+        if(form.getNewInitialSoleName()!=null && !form.getNewInitialSoleName().isBlank())
+            form.setInitialSoleId(resolveOrCreateSole(form.getNewInitialSoleName(),"initialSoleId").getId());
         if (form.getNewInitialMaterialName() != null && !form.getNewInitialMaterialName().isBlank()) {
             form.setInitialMaterialId(resolveOrCreateMaterial(form.getNewInitialMaterialName(), "initialMaterialId").getId());
         }
@@ -148,8 +162,14 @@ public class AdminCatalogService {
         }
         boolean initialize = form.getId() == null && form.getInitialSizeIds() != null && !form.getInitialSizeIds().isEmpty();
         Material initialMaterial = null;
+        com.example.demodatn.entity.sanpham.Color initialColor = null;
+        Sole initialSole = null;
         java.util.List<Size> initialSizes = new java.util.ArrayList<>();
         if (initialize) {
+            initialColor = colors.findById(form.getInitialColorId()==null?-1:form.getInitialColorId()).filter(c->Boolean.TRUE.equals(c.getStatus()))
+                .orElseThrow(()->new CatalogValidationException("initialColorId","Chọn màu sắc đang hiển thị."));
+            initialSole = soles.findById(form.getInitialSoleId()==null?-1:form.getInitialSoleId()).filter(c->Boolean.TRUE.equals(c.getStatus()))
+                .orElseThrow(()->new CatalogValidationException("initialSoleId","Chọn đế giày đang hiển thị."));
             if (form.getInitialMaterialId() == null)
                 throw new CatalogValidationException("initialMaterialId","Chọn chất liệu khi chọn kích cỡ ban đầu.");
             initialMaterial = materials.findById(form.getInitialMaterialId()).filter(m -> Boolean.TRUE.equals(m.getStatus()))
@@ -168,13 +188,6 @@ public class AdminCatalogService {
             throw new CatalogValidationException("categoryId","Chọn thương hiệu.");
         Category category = categories.findById(form.getCategoryId()).orElseThrow(() -> new CatalogValidationException("categoryId","Thương hiệu không tồn tại."));
         Product product = form.getId() == null ? new Product() : products.lockById(form.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        com.example.demodatn.entity.sanpham.Sole sole=null;
-        if(form.getSoleId()!=null) {
-            sole=soles.findById(form.getSoleId()).orElseThrow(()->new CatalogValidationException("soleId","Đế giày không tồn tại."));
-            if(!Boolean.TRUE.equals(sole.getStatus()) && (product.getSole()==null || !form.getSoleId().equals(product.getSole().getId())))
-                throw new CatalogValidationException("soleId","Chọn đế giày đang hiển thị.");
-        }
-        product.setSole(sole);
         if(form.getId()==null) product.setCode(codes.next());
         form.setCode(product.getCode());
         product.setName(form.getName().trim()); product.setDescription(form.getDescription());
@@ -184,7 +197,7 @@ public class AdminCatalogService {
         if (initialize) {
             for (Size size : initialSizes) {
                 ProductVariant variant = new ProductVariant();
-                variant.setProduct(product); variant.setSize(size); variant.setMaterial(initialMaterial);
+                variant.setProduct(product); variant.setSize(size); variant.setMaterial(initialMaterial); variant.setColor(initialColor); variant.setSole(initialSole);
                 variant.setPrice(form.getInitialPrice()); variant.setStatus(true);
                 variants.saveAndFlush(variant);
                 inventory.initialize(variant,form.getInitialQuantity());
@@ -226,6 +239,10 @@ public class AdminCatalogService {
         if (form.getNewMaterialName() != null && !form.getNewMaterialName().isBlank()) {
             form.setMaterialId(resolveOrCreateMaterial(form.getNewMaterialName(), "materialId").getId());
         }
+        if(form.getNewColorName()!=null && !form.getNewColorName().isBlank())
+            form.setColorId(resolveOrCreateColor(form.getNewColorName(),"colorId").getId());
+        if(form.getNewSoleName()!=null && !form.getNewSoleName().isBlank())
+            form.setSoleId(resolveOrCreateSole(form.getNewSoleName(),"soleId").getId());
         if (form.getProductId() == null)
             throw new CatalogValidationException("productId", "Chọn sản phẩm.");
         Product product = products.findById(form.getProductId()).orElseThrow(() -> new CatalogValidationException("productId", "Sản phẩm không tồn tại."));
@@ -238,8 +255,12 @@ public class AdminCatalogService {
         Material material = materials.findById(form.getMaterialId()).filter(m -> Boolean.TRUE.equals(m.getStatus())
                 || (current != null && current.getMaterial().getId().equals(m.getId())))
                 .orElseThrow(() -> new CatalogValidationException("materialId","Chọn chất liệu đang hiển thị."));
-        if (variants.existsByProduct_IdAndSize_IdAndMaterial_IdAndIdNot(product.getId(),size.getId(),material.getId(),form.getId()==null ? -1 : form.getId()))
-            throw new CatalogValidationException("materialId","Bộ ba sản phẩm, kích cỡ và chất liệu đã tồn tại.");
+        var color=colors.findById(form.getColorId()==null?-1:form.getColorId()).filter(c->Boolean.TRUE.equals(c.getStatus()) || (current!=null && current.getColor().getId().equals(c.getId())))
+            .orElseThrow(()->new CatalogValidationException("colorId","Chọn màu sắc đang hiển thị."));
+        var sole=soles.findById(form.getSoleId()==null?-1:form.getSoleId()).filter(c->Boolean.TRUE.equals(c.getStatus()) || (current!=null && current.getSole().getId().equals(c.getId())))
+            .orElseThrow(()->new CatalogValidationException("soleId","Chọn đế giày đang hiển thị."));
+        if (variants.existsByProduct_IdAndSize_IdAndMaterial_IdAndColor_IdAndSole_IdAndIdNot(product.getId(),size.getId(),material.getId(),color.getId(),sole.getId(),form.getId()==null ? -1 : form.getId()))
+            throw new CatalogValidationException("materialId","Bộ năm sản phẩm, kích cỡ, chất liệu, màu sắc và đế giày đã tồn tại.");
         ProductVariant variant = form.getId() == null ? new ProductVariant() : current;
         if (form.getId() != null && !variant.getProduct().getId().equals(product.getId()))
             throw new CatalogValidationException("productId","Không thể chuyển biến thể sang sản phẩm khác.");
@@ -248,7 +269,7 @@ public class AdminCatalogService {
             throw new CatalogValidationException("quantity","Tồn kho đã thay đổi. Tải lại trang trước khi lưu.");
         if (form.getId() != null && before != form.getQuantity() && (form.getReason()==null || form.getReason().isBlank()))
             throw new CatalogValidationException("reason","Nhập lý do khi thay đổi số lượng.");
-        variant.setProduct(product); variant.setSize(size); variant.setMaterial(material); variant.setPrice(form.getPrice()); variant.setStatus(form.getStatus());
+        variant.setProduct(product); variant.setSize(size); variant.setMaterial(material); variant.setColor(color); variant.setSole(sole); variant.setPrice(form.getPrice()); variant.setStatus(form.getStatus());
         variants.saveAndFlush(variant);
         inventory.change(variant, form.getQuantity(), form.getId() == null ? "Khởi tạo biến thể" : (form.getReason()==null || form.getReason().isBlank() ? "Lưu biến thể không đổi tồn" : form.getReason()));
         return variant;

@@ -23,6 +23,9 @@ import static org.hamcrest.Matchers.containsString;
 
 @SpringBootTest @Transactional @WithMockUser(username="admin",roles="ADMIN")
 class SoleIntegrationTest {
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.ColorRepository phase5Colors;
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.SoleRepository phase5Soles;
+
     @Autowired SoleService service;
     @Autowired SoleRepository soles;
     @Autowired ProductRepository products;
@@ -38,17 +41,14 @@ class SoleIntegrationTest {
 
     @BeforeEach void databaseGuard(){String name=jdbc.queryForObject("SELECT DB_NAME()",String.class);assertTrue(name.equals("shop_verify")||name.startsWith("shopbangiay_kt"));}
     private Sole sole(boolean active){var form=new LookupForm();form.setValue("Đế Nguyễn Huệ "+UUID.randomUUID());form.setStatus(active);return service.save(form);}
-    private AdminProductForm form(Integer soleId){var f=new AdminProductForm();f.setCode("SG1-"+UUID.randomUUID());f.setName("Giày thử đế Nguyễn Huệ");f.setCategoryId(categories.findAll().get(0).getId());f.setSoleId(soleId);f.setStatus(false);return f;}
+    private AdminProductForm form(Integer soleId){var f=new AdminProductForm();f.setInitialColorId(phase5Colors.findAll().get(0).getId());f.setInitialSoleId(phase5Soles.findAll().get(0).getId());f.setCode("SG1-"+UUID.randomUUID());f.setName("Giày thử đế Nguyễn Huệ");f.setCategoryId(categories.findAll().get(0).getId());f.setSoleId(soleId);f.setStatus(false);return f;}
 
-    @Test void productCanSetChangeClearOrRetainHiddenSoleButCannotAssignOtherHiddenSole(){
-        var first=sole(true);var second=sole(true);var hidden=sole(false);var f=form(first.getId());
-        var p=catalog.saveProduct(f);assertEquals(first.getId(),p.getSole().getId());
+    @Test void productFormIgnoresLegacySolePostsAndRetainsExistingHint(){
+        var first=sole(true);var second=sole(true);var f=form(first.getId());
+        var p=catalog.saveProduct(f);assertNull(p.getSole());
+        p.setSole(first);products.saveAndFlush(p);
         f.setId(p.getId());f.setSoleId(second.getId());catalog.saveProduct(f);
-        assertEquals(second.getId(),jdbc.queryForObject("SELECT de_giay_id FROM products WHERE id=?",Integer.class,p.getId()));
-        service.toggle(second.getId());catalog.saveProduct(f);assertEquals(second.getId(),p.getSole().getId());
-        long before=products.count();assertEquals("soleId",assertThrows(CatalogValidationException.class,()->catalog.saveProduct(form(second.getId()))).getField());assertEquals(before,products.count());
-        f.setSoleId(hidden.getId());assertThrows(CatalogValidationException.class,()->catalog.saveProduct(f));
-        f.setSoleId(null);catalog.saveProduct(f);assertNull(p.getSole());
+        assertEquals(first.getId(),jdbc.queryForObject("SELECT de_giay_id FROM products WHERE id=?",Integer.class,p.getId()));
     }
 
     @Test void unicodeCaseInsensitiveUniquenessIsEnforcedByServiceAndDatabase(){
@@ -63,9 +63,9 @@ class SoleIntegrationTest {
         var s=sole(true);var other=sole(true);
         for(int i=0;i<14;i++){
             var p=new Product();p.setCode("SG1-"+UUID.randomUUID());p.setName("Giày Nguyễn Huệ "+i);p.setCategory(categories.findAll().get(0));p.setSole(i==13?other:s);p.setImageUrl("/anh/anh-san-pham-thay-the.svg");products.saveAndFlush(p);
-            var v=new ProductVariant();v.setProduct(p);v.setSize(sizes.findAll().get(0));v.setMaterial(materials.findAll().get(0));v.setPrice(BigDecimal.valueOf(123000));v.setQuantity(3);variants.saveAndFlush(v);
+            var v=new ProductVariant();v.setProduct(p);v.setSize(sizes.findAll().get(0));v.setMaterial(materials.findAll().get(0));v.setColor(phase5Colors.findAll().get(0));v.setSole(i==13?other:s);v.setPrice(BigDecimal.valueOf(123000));v.setQuantity(3);variants.saveAndFlush(v);
         }
-        var admin=query.products("",null,null,"newest",0,null,s.getId());assertEquals(13,admin.getTotalElements());assertEquals(12,admin.getContent().size());assertTrue(admin.stream().allMatch(p->s.getName().equals(p.get("sole_name"))));
+        var admin=query.products("",null,null,"newest",0,null,s.getId());assertEquals(13,admin.getTotalElements());assertEquals(12,admin.getContent().size());assertTrue(admin.stream().allMatch(p->s.getName().equals(p.get("sole_names"))));
         var user=filters.filterProducts(null,null,null,null,null,null,"newest",0,12,null,s.getId());assertEquals(13,user.getTotalElements());assertEquals(12,user.getContent().size());
         assertEquals(1,filters.filterProducts(null,null,null,null,null,null,"newest",1,12,null,s.getId()).getNumberOfElements());
         assertTrue(service.delete(s.getId()).startsWith("Không"));assertTrue(soles.existsById(s.getId()));

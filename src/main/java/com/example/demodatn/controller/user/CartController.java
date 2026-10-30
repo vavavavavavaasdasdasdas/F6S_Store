@@ -52,6 +52,8 @@ public class CartController {
             ProductVariant variant = productService.getVariantById(dto.getVariantId());
             item.setProductCode(variant == null || variant.getProduct() == null ? null : variant.getProduct().getCode());
             item.setMaterialName(variant == null ? dto.getMaterialName() : variant.getMaterial().getName());
+            item.setColorName(variant==null?dto.getColorName():variant.getColor().getName());
+            item.setSoleName(variant==null?dto.getSoleName():variant.getSole().getName());
             if (!ProductSalePolicy.isSelling(variant)) {
                 item.setWarningMessage("Sản phẩm đã ngừng bán");
                 item.setPrice(dto.getPrice());
@@ -210,6 +212,7 @@ public class CartController {
                     variant.getId(),
                     variant.getProduct().getName(),
                     variant.getSize() != null ? variant.getSize().getSizeValue() : "",
+                    variant.getMaterial().getName(),variant.getColor().getName(),variant.getSole().getName(),
                     finalPrice,
                     quantity));
         }
@@ -236,6 +239,8 @@ public class CartController {
         private String imageUrl;
         private String size;
         private String materialName;
+        private String colorName;
+        private String soleName;
         private BigDecimal price;
         private BigDecimal originalPrice;
         private boolean hasPromotion;

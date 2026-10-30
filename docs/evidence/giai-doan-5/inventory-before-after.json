@@ -1,0 +1,32 @@
+{
+  "before": [
+    {
+      "id": 601,
+      "quantity": 7
+    }
+  ],
+  "after": [
+    {
+      "id": 601,
+      "quantity": 0
+    }
+  ],
+  "logs": [
+    {
+      "variant_id": 601,
+      "quantity_before": 0,
+      "quantity_change": 7,
+      "quantity_after": 7,
+      "reason": "Khởi tạo biến thể",
+      "actor": "admin"
+    },
+    {
+      "variant_id": 601,
+      "quantity_before": 7,
+      "quantity_change": -7,
+      "quantity_after": 0,
+      "reason": "Kiểm thử hết hàng tổ hợp màu/đế",
+      "actor": "admin"
+    }
+  ]
+}

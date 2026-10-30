@@ -8,6 +8,7 @@ public class LookupForm {
     @NotBlank(message="Không được để trống.")
     @jakarta.validation.constraints.Size(max=100,message="Tối đa 100 ký tự.")
     private String value;
+    private String hexCode;
     private Boolean status = true;
 }
 

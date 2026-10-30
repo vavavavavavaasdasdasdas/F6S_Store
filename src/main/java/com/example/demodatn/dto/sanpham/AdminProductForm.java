@@ -8,6 +8,10 @@ public class AdminProductForm {
     private Integer id;
     private Integer soleId;
     private String newSoleName;
+    private Integer initialColorId;
+    private String newInitialColorName;
+    private Integer initialSoleId;
+    private String newInitialSoleName;
     private Integer initialMaterialId;
     private String newInitialMaterialName;
     private String newInitialSizeValue;

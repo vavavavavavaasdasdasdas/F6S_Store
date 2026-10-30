@@ -1,0 +1,1352 @@
+{
+  "counts": {
+    "categories": 6,
+    "chat_lieu": 8,
+    "customers": 14,
+    "de_giay": 8,
+    "dia_chi_nhan_hang": 7,
+    "employees": 5,
+    "inventory_logs": 63,
+    "invoices": 28,
+    "order_details": 35,
+    "orders": 28,
+    "pos_held_items": 0,
+    "pos_held_orders": 0,
+    "product_images": 6,
+    "product_variants": 20,
+    "products": 10,
+    "promotion_details": 7,
+    "promotions": 5,
+    "roles": 2,
+    "sizes": 8,
+    "users": 12,
+    "vouchers": 15
+  },
+  "schema": [
+    {
+      "table_name": "categories",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "categories",
+      "column_name": "name",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": false
+    },
+    {
+      "table_name": "categories",
+      "column_name": "status",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": true
+    },
+    {
+      "table_name": "chat_lieu",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "chat_lieu",
+      "column_name": "ten",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": false
+    },
+    {
+      "table_name": "chat_lieu",
+      "column_name": "trang_thai",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": false
+    },
+    {
+      "table_name": "customers",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "customers",
+      "column_name": "customer_code",
+      "type": "varchar",
+      "max_length": 20,
+      "is_nullable": true
+    },
+    {
+      "table_name": "customers",
+      "column_name": "full_name",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": false
+    },
+    {
+      "table_name": "customers",
+      "column_name": "phone",
+      "type": "nvarchar",
+      "max_length": 40,
+      "is_nullable": true
+    },
+    {
+      "table_name": "customers",
+      "column_name": "email",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": true
+    },
+    {
+      "table_name": "customers",
+      "column_name": "address",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": true
+    },
+    {
+      "table_name": "customers",
+      "column_name": "created_at",
+      "type": "datetime",
+      "max_length": 8,
+      "is_nullable": true
+    },
+    {
+      "table_name": "customers",
+      "column_name": "status",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": true
+    },
+    {
+      "table_name": "customers",
+      "column_name": "user_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "customers",
+      "column_name": "so_cccd",
+      "type": "varchar",
+      "max_length": 12,
+      "is_nullable": true
+    },
+    {
+      "table_name": "customers",
+      "column_name": "ngay_sinh",
+      "type": "date",
+      "max_length": 3,
+      "is_nullable": true
+    },
+    {
+      "table_name": "customers",
+      "column_name": "gioi_tinh",
+      "type": "nvarchar",
+      "max_length": 20,
+      "is_nullable": true
+    },
+    {
+      "table_name": "de_giay",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "de_giay",
+      "column_name": "ten",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": false
+    },
+    {
+      "table_name": "de_giay",
+      "column_name": "trang_thai",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": false
+    },
+    {
+      "table_name": "dia_chi_nhan_hang",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "dia_chi_nhan_hang",
+      "column_name": "customer_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "dia_chi_nhan_hang",
+      "column_name": "ten_nguoi_nhan",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": false
+    },
+    {
+      "table_name": "dia_chi_nhan_hang",
+      "column_name": "so_dien_thoai",
+      "type": "varchar",
+      "max_length": 20,
+      "is_nullable": false
+    },
+    {
+      "table_name": "dia_chi_nhan_hang",
+      "column_name": "dia_chi",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": false
+    },
+    {
+      "table_name": "dia_chi_nhan_hang",
+      "column_name": "la_mac_dinh",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": false
+    },
+    {
+      "table_name": "dia_chi_nhan_hang",
+      "column_name": "thu_tu",
+      "type": "tinyint",
+      "max_length": 1,
+      "is_nullable": false
+    },
+    {
+      "table_name": "dia_chi_nhan_hang",
+      "column_name": "created_at",
+      "type": "datetime2",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "employees",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "employees",
+      "column_name": "employee_code",
+      "type": "varchar",
+      "max_length": 20,
+      "is_nullable": true
+    },
+    {
+      "table_name": "employees",
+      "column_name": "full_name",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": false
+    },
+    {
+      "table_name": "employees",
+      "column_name": "phone",
+      "type": "nvarchar",
+      "max_length": 40,
+      "is_nullable": true
+    },
+    {
+      "table_name": "employees",
+      "column_name": "email",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": true
+    },
+    {
+      "table_name": "employees",
+      "column_name": "address",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": true
+    },
+    {
+      "table_name": "employees",
+      "column_name": "position",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": true
+    },
+    {
+      "table_name": "employees",
+      "column_name": "user_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "employees",
+      "column_name": "status",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": true
+    },
+    {
+      "table_name": "employees",
+      "column_name": "so_cccd",
+      "type": "varchar",
+      "max_length": 12,
+      "is_nullable": true
+    },
+    {
+      "table_name": "employees",
+      "column_name": "ngay_sinh",
+      "type": "date",
+      "max_length": 3,
+      "is_nullable": true
+    },
+    {
+      "table_name": "employees",
+      "column_name": "gioi_tinh",
+      "type": "nvarchar",
+      "max_length": 20,
+      "is_nullable": true
+    },
+    {
+      "table_name": "inventory_logs",
+      "column_name": "id",
+      "type": "bigint",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "inventory_logs",
+      "column_name": "variant_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "inventory_logs",
+      "column_name": "quantity_change",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "inventory_logs",
+      "column_name": "quantity_before",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "inventory_logs",
+      "column_name": "quantity_after",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "inventory_logs",
+      "column_name": "reason",
+      "type": "nvarchar",
+      "max_length": 1000,
+      "is_nullable": false
+    },
+    {
+      "table_name": "inventory_logs",
+      "column_name": "actor",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": false
+    },
+    {
+      "table_name": "inventory_logs",
+      "column_name": "created_at",
+      "type": "datetime2",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "invoices",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "invoices",
+      "column_name": "order_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "invoices",
+      "column_name": "invoice_code",
+      "type": "varchar",
+      "max_length": 255,
+      "is_nullable": false
+    },
+    {
+      "table_name": "invoices",
+      "column_name": "issued_at",
+      "type": "datetime2",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "invoices",
+      "column_name": "customer_name",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": false
+    },
+    {
+      "table_name": "invoices",
+      "column_name": "customer_phone",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": true
+    },
+    {
+      "table_name": "invoices",
+      "column_name": "employee_name",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": true
+    },
+    {
+      "table_name": "invoices",
+      "column_name": "cash_received",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": true
+    },
+    {
+      "table_name": "invoices",
+      "column_name": "change_amount",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": true
+    },
+    {
+      "table_name": "order_details",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "order_details",
+      "column_name": "order_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "order_details",
+      "column_name": "product_variant_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "order_details",
+      "column_name": "price",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": false
+    },
+    {
+      "table_name": "order_details",
+      "column_name": "quantity",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "order_details",
+      "column_name": "total_price",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": false
+    },
+    {
+      "table_name": "order_details",
+      "column_name": "product_name",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": true
+    },
+    {
+      "table_name": "order_details",
+      "column_name": "size_name",
+      "type": "nvarchar",
+      "max_length": 100,
+      "is_nullable": true
+    },
+    {
+      "table_name": "order_details",
+      "column_name": "ten_chat_lieu",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "orders",
+      "column_name": "order_code",
+      "type": "varchar",
+      "max_length": 50,
+      "is_nullable": false
+    },
+    {
+      "table_name": "orders",
+      "column_name": "customer_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "employee_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "order_type",
+      "type": "varchar",
+      "max_length": 20,
+      "is_nullable": false
+    },
+    {
+      "table_name": "orders",
+      "column_name": "status",
+      "type": "varchar",
+      "max_length": 50,
+      "is_nullable": false
+    },
+    {
+      "table_name": "orders",
+      "column_name": "total_amount",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": false
+    },
+    {
+      "table_name": "orders",
+      "column_name": "discount_amount",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "final_amount",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": false
+    },
+    {
+      "table_name": "orders",
+      "column_name": "payment_method",
+      "type": "varchar",
+      "max_length": 50,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "shipping_address",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "phone_number",
+      "type": "nvarchar",
+      "max_length": 40,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "voucher_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "created_at",
+      "type": "datetime",
+      "max_length": 8,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "updated_at",
+      "type": "datetime",
+      "max_length": 8,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "receiver_name",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "email",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "payment_status",
+      "type": "varchar",
+      "max_length": 50,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "shipping_fee",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": true
+    },
+    {
+      "table_name": "orders",
+      "column_name": "da_tru_kho",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": false
+    },
+    {
+      "table_name": "pos_held_items",
+      "column_name": "id",
+      "type": "bigint",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "pos_held_items",
+      "column_name": "held_id",
+      "type": "bigint",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "pos_held_items",
+      "column_name": "variant_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "pos_held_items",
+      "column_name": "quantity",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "pos_held_orders",
+      "column_name": "id",
+      "type": "bigint",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "pos_held_orders",
+      "column_name": "code",
+      "type": "varchar",
+      "max_length": 40,
+      "is_nullable": false
+    },
+    {
+      "table_name": "pos_held_orders",
+      "column_name": "staff_user_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "pos_held_orders",
+      "column_name": "customer_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "pos_held_orders",
+      "column_name": "customer_label",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": true
+    },
+    {
+      "table_name": "pos_held_orders",
+      "column_name": "voucher_code",
+      "type": "nvarchar",
+      "max_length": 100,
+      "is_nullable": true
+    },
+    {
+      "table_name": "pos_held_orders",
+      "column_name": "payment_method",
+      "type": "varchar",
+      "max_length": 20,
+      "is_nullable": false
+    },
+    {
+      "table_name": "pos_held_orders",
+      "column_name": "note",
+      "type": "nvarchar",
+      "max_length": 1000,
+      "is_nullable": true
+    },
+    {
+      "table_name": "pos_held_orders",
+      "column_name": "created_at",
+      "type": "datetime2",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "pos_held_orders",
+      "column_name": "expires_at",
+      "type": "datetime2",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "product_images",
+      "column_name": "id",
+      "type": "bigint",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "product_images",
+      "column_name": "product_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "product_images",
+      "column_name": "duong_dan",
+      "type": "nvarchar",
+      "max_length": 4096,
+      "is_nullable": false
+    },
+    {
+      "table_name": "product_images",
+      "column_name": "thu_tu",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "product_images",
+      "column_name": "la_anh_chinh",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": false
+    },
+    {
+      "table_name": "product_variants",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "product_variants",
+      "column_name": "product_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "product_variants",
+      "column_name": "size_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "product_variants",
+      "column_name": "price",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": false
+    },
+    {
+      "table_name": "product_variants",
+      "column_name": "quantity",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "product_variants",
+      "column_name": "status",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": true
+    },
+    {
+      "table_name": "product_variants",
+      "column_name": "chat_lieu_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "products",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "products",
+      "column_name": "code",
+      "type": "varchar",
+      "max_length": 50,
+      "is_nullable": true
+    },
+    {
+      "table_name": "products",
+      "column_name": "name",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": false
+    },
+    {
+      "table_name": "products",
+      "column_name": "description",
+      "type": "nvarchar",
+      "max_length": -1,
+      "is_nullable": true
+    },
+    {
+      "table_name": "products",
+      "column_name": "category_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "products",
+      "column_name": "image_url",
+      "type": "nvarchar",
+      "max_length": 1000,
+      "is_nullable": true
+    },
+    {
+      "table_name": "products",
+      "column_name": "status",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": true
+    },
+    {
+      "table_name": "products",
+      "column_name": "de_giay_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "promotion_details",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "promotion_details",
+      "column_name": "promotion_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "promotion_details",
+      "column_name": "product_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "promotions",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "promotions",
+      "column_name": "name",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": false
+    },
+    {
+      "table_name": "promotions",
+      "column_name": "discount_type",
+      "type": "varchar",
+      "max_length": 20,
+      "is_nullable": false
+    },
+    {
+      "table_name": "promotions",
+      "column_name": "discount_value",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": false
+    },
+    {
+      "table_name": "promotions",
+      "column_name": "start_date",
+      "type": "datetime",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "promotions",
+      "column_name": "end_date",
+      "type": "datetime",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "promotions",
+      "column_name": "status",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": true
+    },
+    {
+      "table_name": "roles",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "roles",
+      "column_name": "name",
+      "type": "varchar",
+      "max_length": 50,
+      "is_nullable": false
+    },
+    {
+      "table_name": "sizes",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "sizes",
+      "column_name": "size_value",
+      "type": "nvarchar",
+      "max_length": 20,
+      "is_nullable": false
+    },
+    {
+      "table_name": "users",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "users",
+      "column_name": "username",
+      "type": "varchar",
+      "max_length": 50,
+      "is_nullable": false
+    },
+    {
+      "table_name": "users",
+      "column_name": "password",
+      "type": "varchar",
+      "max_length": 255,
+      "is_nullable": false
+    },
+    {
+      "table_name": "users",
+      "column_name": "role_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "users",
+      "column_name": "status",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": true
+    },
+    {
+      "table_name": "users",
+      "column_name": "full_name",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": true
+    },
+    {
+      "table_name": "users",
+      "column_name": "email",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": true
+    },
+    {
+      "table_name": "users",
+      "column_name": "phone",
+      "type": "nvarchar",
+      "max_length": 510,
+      "is_nullable": true
+    },
+    {
+      "table_name": "users",
+      "column_name": "created_at",
+      "type": "datetime2",
+      "max_length": 8,
+      "is_nullable": true
+    },
+    {
+      "table_name": "users",
+      "column_name": "must_change_password",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": false
+    },
+    {
+      "table_name": "users",
+      "column_name": "credential_mail_failed",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": false
+    },
+    {
+      "table_name": "users",
+      "column_name": "credential_mail_window",
+      "type": "datetime2",
+      "max_length": 8,
+      "is_nullable": true
+    },
+    {
+      "table_name": "users",
+      "column_name": "credential_mail_count",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "users",
+      "column_name": "credential_mail_pending_until",
+      "type": "datetime2",
+      "max_length": 8,
+      "is_nullable": true
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": false
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "code",
+      "type": "varchar",
+      "max_length": 50,
+      "is_nullable": false
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "name",
+      "type": "nvarchar",
+      "max_length": 200,
+      "is_nullable": false
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "discount_type",
+      "type": "varchar",
+      "max_length": 20,
+      "is_nullable": false
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "discount_value",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": false
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "min_order_value",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": true
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "max_discount",
+      "type": "decimal",
+      "max_length": 9,
+      "is_nullable": true
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "start_date",
+      "type": "datetime",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "end_date",
+      "type": "datetime",
+      "max_length": 8,
+      "is_nullable": false
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "usage_limit",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "used_count",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "is_public",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": true
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "customer_id",
+      "type": "int",
+      "max_length": 4,
+      "is_nullable": true
+    },
+    {
+      "table_name": "vouchers",
+      "column_name": "status",
+      "type": "bit",
+      "max_length": 1,
+      "is_nullable": true
+    }
+  ],
+  "variants": [
+    {
+      "id": 1,
+      "product_id": 1,
+      "size_id": 4,
+      "chat_lieu_id": 8,
+      "price": 2500000.0,
+      "quantity": 47,
+      "status": true
+    },
+    {
+      "id": 2,
+      "product_id": 1,
+      "size_id": 5,
+      "chat_lieu_id": 8,
+      "price": 2500000.0,
+      "quantity": 0,
+      "status": true
+    },
+    {
+      "id": 3,
+      "product_id": 2,
+      "size_id": 5,
+      "chat_lieu_id": 8,
+      "price": 3500000.0,
+      "quantity": 18,
+      "status": true
+    },
+    {
+      "id": 4,
+      "product_id": 2,
+      "size_id": 6,
+      "chat_lieu_id": 8,
+      "price": 3500000.0,
+      "quantity": 4,
+      "status": true
+    },
+    {
+      "id": 5,
+      "product_id": 3,
+      "size_id": 4,
+      "chat_lieu_id": 8,
+      "price": 1500000.0,
+      "quantity": 97,
+      "status": true
+    },
+    {
+      "id": 6,
+      "product_id": 3,
+      "size_id": 5,
+      "chat_lieu_id": 8,
+      "price": 1500000.0,
+      "quantity": 76,
+      "status": true
+    },
+    {
+      "id": 8,
+      "product_id": 4,
+      "size_id": 4,
+      "chat_lieu_id": 8,
+      "price": 2000000.0,
+      "quantity": 3,
+      "status": true
+    },
+    {
+      "id": 9,
+      "product_id": 5,
+      "size_id": 4,
+      "chat_lieu_id": 8,
+      "price": 3000000.0,
+      "quantity": 7,
+      "status": true
+    },
+    {
+      "id": 16,
+      "product_id": 24,
+      "size_id": 4,
+      "chat_lieu_id": 8,
+      "price": 175000.0,
+      "quantity": 15,
+      "status": true
+    },
+    {
+      "id": 17,
+      "product_id": 24,
+      "size_id": 5,
+      "chat_lieu_id": 8,
+      "price": 150000.0,
+      "quantity": 4,
+      "status": true
+    },
+    {
+      "id": 18,
+      "product_id": 24,
+      "size_id": 6,
+      "chat_lieu_id": 8,
+      "price": 150000.0,
+      "quantity": 0,
+      "status": true
+    },
+    {
+      "id": 503,
+      "product_id": 833,
+      "size_id": 1,
+      "chat_lieu_id": 8,
+      "price": 200000.0,
+      "quantity": 25,
+      "status": true
+    },
+    {
+      "id": 504,
+      "product_id": 833,
+      "size_id": 2,
+      "chat_lieu_id": 8,
+      "price": 250000.0,
+      "quantity": 20,
+      "status": true
+    },
+    {
+      "id": 505,
+      "product_id": 833,
+      "size_id": 3,
+      "chat_lieu_id": 8,
+      "price": 300000.0,
+      "quantity": 20,
+      "status": true
+    },
+    {
+      "id": 506,
+      "product_id": 834,
+      "size_id": 1,
+      "chat_lieu_id": 8,
+      "price": 200000.0,
+      "quantity": 21,
+      "status": true
+    },
+    {
+      "id": 507,
+      "product_id": 834,
+      "size_id": 2,
+      "chat_lieu_id": 8,
+      "price": 250000.0,
+      "quantity": 20,
+      "status": true
+    },
+    {
+      "id": 508,
+      "product_id": 834,
+      "size_id": 3,
+      "chat_lieu_id": 8,
+      "price": 300000.0,
+      "quantity": 20,
+      "status": true
+    },
+    {
+      "id": 595,
+      "product_id": 947,
+      "size_id": 1,
+      "chat_lieu_id": 8,
+      "price": 200000.0,
+      "quantity": 21,
+      "status": true
+    },
+    {
+      "id": 596,
+      "product_id": 947,
+      "size_id": 2,
+      "chat_lieu_id": 8,
+      "price": 250000.0,
+      "quantity": 18,
+      "status": true
+    },
+    {
+      "id": 597,
+      "product_id": 947,
+      "size_id": 3,
+      "chat_lieu_id": 8,
+      "price": 300000.0,
+      "quantity": 20,
+      "status": true
+    }
+  ],
+  "orderDetailsCount": 35,
+  "orderDetailsSha256": "8bc05989841f803923fb931daffe6da3f12886428d6daf74ae3f7fd5e7e42550"
+}

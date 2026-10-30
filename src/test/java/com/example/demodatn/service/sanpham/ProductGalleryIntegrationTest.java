@@ -16,6 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ProductGalleryIntegrationTest {
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.ColorRepository phase5Colors;
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.SoleRepository phase5Soles;
+
     @Autowired AdminCatalogService catalog;
     @Autowired ProductGalleryService gallery;
     @Autowired ProductImageRepository images;
@@ -26,7 +29,7 @@ class ProductGalleryIntegrationTest {
     @org.springframework.beans.factory.annotation.Value("${shop.upload-dir:uploads/products}") String uploadRoot;
 
     private AdminProductForm form(int count) throws Exception {
-        AdminProductForm f=new AdminProductForm();f.setCode("IMG-"+UUID.randomUUID());f.setName("Bộ ảnh kiểm thử");
+        AdminProductForm f=new AdminProductForm();f.setInitialColorId(phase5Colors.findAll().get(0).getId());f.setInitialSoleId(phase5Soles.findAll().get(0).getId());f.setCode("IMG-"+UUID.randomUUID());f.setName("Bộ ảnh kiểm thử");
         f.setStatus(true);f.setCategoryId(categories.findAll().get(0).getId());
         var bytes=new java.io.ByteArrayOutputStream();
         javax.imageio.ImageIO.write(new java.awt.image.BufferedImage(2,2,java.awt.image.BufferedImage.TYPE_INT_RGB),"png",bytes);

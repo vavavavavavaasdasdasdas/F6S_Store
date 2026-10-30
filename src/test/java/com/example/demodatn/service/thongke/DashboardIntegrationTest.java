@@ -46,7 +46,7 @@ class DashboardIntegrationTest {
     @Test
     void lowStockIncludesThresholdAndZeroButNotInactiveVariants() {
         Integer product = jdbc.queryForObject("INSERT INTO products(code,name,status) OUTPUT INSERTED.id VALUES(?,N'Sản phẩm kiểm thử tồn kho',1)", Integer.class, "DASH-" + UUID.randomUUID());
-        Integer id = jdbc.queryForObject("INSERT INTO product_variants(product_id,size_id,chat_lieu_id,price,quantity,status) OUTPUT INSERTED.id SELECT ?,MIN(s.id),MIN(m.id),100000,5,1 FROM sizes s CROSS JOIN chat_lieu m", Integer.class, product);
+        Integer id = jdbc.queryForObject("INSERT INTO product_variants(product_id,size_id,chat_lieu_id,mau_sac_id,de_giay_id,price,quantity,status) OUTPUT INSERTED.id SELECT ?,MIN(s.id),MIN(m.id),(SELECT MIN(id) FROM mau_sac),(SELECT MIN(id) FROM de_giay),100000,5,1 FROM sizes s CROSS JOIN chat_lieu m", Integer.class, product);
         assertNotNull(id);
         jdbc.update("UPDATE product_variants SET quantity=5,status=1 WHERE id=?", id);
         assertTrue(repository.lowStock(5).stream().anyMatch(row -> id.equals(row.get("id"))));

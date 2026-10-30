@@ -25,6 +25,9 @@ import static org.hamcrest.Matchers.*;
 @SpringBootTest
 @WithMockUser(username="admin",roles="ADMIN")
 class InitialMaterialIntegrationTest {
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.ColorRepository phase5Colors;
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.SoleRepository phase5Soles;
+
     @Autowired JdbcTemplate jdbc;
     @Autowired WebApplicationContext context;
     @Autowired AdminCatalogService catalog;
@@ -40,7 +43,7 @@ class InitialMaterialIntegrationTest {
         mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
     AdminProductForm form() {
-        var f=new AdminProductForm();f.setCode("INIT-"+UUID.randomUUID());f.setName("Giày thử khởi tạo");
+        var f=new AdminProductForm();f.setInitialColorId(phase5Colors.findAll().get(0).getId());f.setInitialSoleId(phase5Soles.findAll().get(0).getId());f.setCode("INIT-"+UUID.randomUUID());f.setName("Giày thử khởi tạo");
         f.setCategoryId(categories.findAll().get(0).getId());f.setStatus(false);
         f.setInitialSizeIds(sizes.findAll().stream().limit(2).map(Size::getId).toList());
         f.setInitialMaterialId(materials.findByStatusTrueOrderByNameAscIdAsc().get(0).getId());
@@ -51,7 +54,7 @@ class InitialMaterialIntegrationTest {
         var f=form();
         var saved=mvc.perform(multipart("/admin/products-crud/save").with(csrf()).param("code",f.getCode()).param("name",f.getName())
             .param("categoryId",f.getCategoryId().toString()).param("status","false")
-            .param("initialMaterialId",f.getInitialMaterialId().toString()).param("initialSizeIds",f.getInitialSizeIds().stream().map(Object::toString).toArray(String[]::new))
+            .param("initialColorId",phase5Colors.findAll().get(0).getId().toString()).param("initialSoleId",phase5Soles.findAll().get(0).getId().toString()).param("initialMaterialId",f.getInitialMaterialId().toString()).param("initialSizeIds",f.getInitialSizeIds().stream().map(Object::toString).toArray(String[]::new))
             .param("initialPrice","321000.50").param("initialQuantity","7")).andExpect(status().is3xxRedirection()).andReturn();
         int savedId=Integer.parseInt(saved.getResponse().getRedirectedUrl().replaceAll(".*/",""));
         var rows=jdbc.queryForList("SELECT v.price,v.quantity,v.chat_lieu_id,l.quantity_before,l.quantity_change,l.quantity_after,l.reason FROM product_variants v JOIN products p ON p.id=v.product_id JOIN inventory_logs l ON l.variant_id=v.id WHERE p.id=?",savedId);
@@ -104,7 +107,7 @@ class InitialMaterialIntegrationTest {
         var v=variants.findByProduct_Id(id).get(0);
         mvc.perform(get("/admin/variants/edit/"+v.getId())).andExpect(content().string(containsString(m.getName())));
         mvc.perform(post("/admin/variants/save").with(csrf()).param("id",v.getId().toString()).param("productId",""+id).param("sizeId",v.getSize().getId().toString())
-            .param("materialId",m.getId().toString()).param("price","321000.50").param("quantity","7").param("expectedQuantity","7").param("status","true"))
+            .param("colorId",v.getColor().getId().toString()).param("soleId",v.getSole().getId().toString()).param("materialId",m.getId().toString()).param("price","321000.50").param("quantity","7").param("expectedQuantity","7").param("status","true"))
             .andExpect(status().is3xxRedirection());
         assertTrue(catalog.deleteLookup("materials",m.getId()).startsWith("Không"));
     }
@@ -114,7 +117,7 @@ class InitialMaterialIntegrationTest {
         for(int n=0;n<4;n++) {
             var m=new Material();m.setName("Tóm tắt "+n+" "+UUID.randomUUID());materials.saveAndFlush(m);
             var v=new ProductVariant();v.setProduct(products.findById(id).orElseThrow());v.setSize(sizes.findAll().get(0));
-            v.setMaterial(m);v.setPrice(BigDecimal.TEN);v.setQuantity(1);v.setStatus(n<3);variants.saveAndFlush(v);
+            v.setMaterial(m);v.setColor(phase5Colors.findAll().get(0));v.setSole(phase5Soles.findAll().get(0));v.setPrice(BigDecimal.TEN);v.setQuantity(1);v.setStatus(n<3);variants.saveAndFlush(v);
         }
         var r=mvc.perform(get("/admin/products-crud").param("keyword",f.getCode())).andExpect(status().isOk()).andReturn();
         var page=(org.springframework.data.domain.Page<?>)r.getModelAndView().getModel().get("productPage");
@@ -140,10 +143,10 @@ class InitialMaterialIntegrationTest {
         mvc.perform(post("/admin/materials/toggle-status/1").with(csrf().useInvalidToken())).andExpect(status().isForbidden());System.out.println("SECURITY 4 hide invalid CSRF=403");
         mvc.perform(post("/admin/variants/save").with(csrf()).with(user("customer").roles("USER"))).andExpect(status().isForbidden());System.out.println("SECURITY 5 USER variant POST=403");
         var f=form();mvc.perform(multipart("/admin/products-crud/save").with(csrf()).param("code",f.getCode()).param("name",f.getName()).param("status","false").param("categoryId",f.getCategoryId().toString())
-            .param("initialSizeIds","-1").param("initialMaterialId",f.getInitialMaterialId().toString()).param("initialPrice","1").param("initialQuantity","1"))
+            .param("initialSizeIds","-1").param("initialColorId",phase5Colors.findAll().get(0).getId().toString()).param("initialSoleId",phase5Soles.findAll().get(0).getId().toString()).param("initialMaterialId",f.getInitialMaterialId().toString()).param("initialPrice","1").param("initialQuantity","1"))
             .andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("product","initialSizeIds"));System.out.println("SECURITY 6 forged size rejected HTTP=200 field error");
         f=form();mvc.perform(multipart("/admin/products-crud/save").with(csrf()).param("code",f.getCode()).param("name",f.getName()).param("status","false").param("categoryId",f.getCategoryId().toString())
-            .param("initialSizeIds",f.getInitialSizeIds().get(0).toString()).param("initialMaterialId",f.getInitialMaterialId().toString()).param("initialPrice","-1").param("initialQuantity","-1"))
+            .param("initialSizeIds",f.getInitialSizeIds().get(0).toString()).param("initialColorId",phase5Colors.findAll().get(0).getId().toString()).param("initialSoleId",phase5Soles.findAll().get(0).getId().toString()).param("initialMaterialId",f.getInitialMaterialId().toString()).param("initialPrice","-1").param("initialQuantity","-1"))
             .andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("product","initialPrice","initialQuantity"));System.out.println("SECURITY 7 negative price/stock rejected HTTP=200 field errors");
         mvc.perform(get("/admin/products-crud").param("keyword","%' OR 1=1--").param("sort","p.id;DROP TABLE products"))
             .andExpect(status().isOk()).andExpect(content().string(containsString("Không tìm thấy sản phẩm")));System.out.println("SECURITY 8 SQL injection filter/sort HTTP=200 zero products");

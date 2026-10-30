@@ -1,0 +1,212 @@
+[
+  {
+    "role": "guest",
+    "path": "/admin/colors",
+    "method": "GET",
+    "status": 302
+  },
+  {
+    "role": "guest",
+    "path": "/admin/variants",
+    "method": "GET",
+    "status": 302
+  },
+  {
+    "role": "guest",
+    "path": "/admin/products-crud",
+    "method": "GET",
+    "status": 302
+  },
+  {
+    "role": "guest",
+    "path": "/admin/inventory",
+    "method": "GET",
+    "status": 302
+  },
+  {
+    "role": "guest",
+    "path": "/admin/colors/save",
+    "method": "POST",
+    "csrf": "missing",
+    "status": 403
+  },
+  {
+    "role": "guest",
+    "path": "/admin/variants/save",
+    "method": "POST",
+    "csrf": "missing",
+    "status": 403
+  },
+  {
+    "role": "guest",
+    "path": "/admin/colors/save",
+    "method": "POST",
+    "csrf": "invalid",
+    "status": 403
+  },
+  {
+    "role": "guest",
+    "path": "/admin/variants/save",
+    "method": "POST",
+    "csrf": "invalid",
+    "status": 403
+  },
+  {
+    "role": "guest",
+    "path": "/admin/colors/save",
+    "method": "POST",
+    "csrf": "valid",
+    "status": 302
+  },
+  {
+    "role": "guest",
+    "path": "/admin/variants/save",
+    "method": "POST",
+    "csrf": "valid",
+    "status": 302
+  },
+  {
+    "role": "user",
+    "path": "/admin/colors",
+    "method": "GET",
+    "status": 403
+  },
+  {
+    "role": "user",
+    "path": "/admin/variants",
+    "method": "GET",
+    "status": 403
+  },
+  {
+    "role": "user",
+    "path": "/admin/products-crud",
+    "method": "GET",
+    "status": 403
+  },
+  {
+    "role": "user",
+    "path": "/admin/inventory",
+    "method": "GET",
+    "status": 403
+  },
+  {
+    "role": "user",
+    "path": "/admin/colors/save",
+    "method": "POST",
+    "csrf": "missing",
+    "status": 403
+  },
+  {
+    "role": "user",
+    "path": "/admin/variants/save",
+    "method": "POST",
+    "csrf": "missing",
+    "status": 403
+  },
+  {
+    "role": "user",
+    "path": "/admin/colors/save",
+    "method": "POST",
+    "csrf": "invalid",
+    "status": 403
+  },
+  {
+    "role": "user",
+    "path": "/admin/variants/save",
+    "method": "POST",
+    "csrf": "invalid",
+    "status": 403
+  },
+  {
+    "role": "user",
+    "path": "/admin/colors/save",
+    "method": "POST",
+    "csrf": "valid",
+    "status": 403
+  },
+  {
+    "role": "user",
+    "path": "/admin/variants/save",
+    "method": "POST",
+    "csrf": "valid",
+    "status": 403
+  },
+  {
+    "role": "user",
+    "path": "/orders/674",
+    "method": "GET",
+    "status": 403
+  },
+  {
+    "role": "user",
+    "path": "/orders/success/674",
+    "method": "GET",
+    "status": 403
+  },
+  {
+    "role": "admin",
+    "path": "/admin/colors",
+    "method": "GET",
+    "status": 200
+  },
+  {
+    "role": "admin",
+    "path": "/admin/variants",
+    "method": "GET",
+    "status": 200
+  },
+  {
+    "role": "admin",
+    "path": "/admin/products-crud",
+    "method": "GET",
+    "status": 200
+  },
+  {
+    "role": "admin",
+    "path": "/admin/inventory",
+    "method": "GET",
+    "status": 200
+  },
+  {
+    "role": "admin",
+    "path": "/admin/colors/save",
+    "method": "POST",
+    "csrf": "missing",
+    "status": 403
+  },
+  {
+    "role": "admin",
+    "path": "/admin/variants/save",
+    "method": "POST",
+    "csrf": "missing",
+    "status": 403
+  },
+  {
+    "role": "admin",
+    "path": "/admin/colors/save",
+    "method": "POST",
+    "csrf": "invalid",
+    "status": 403
+  },
+  {
+    "role": "admin",
+    "path": "/admin/variants/save",
+    "method": "POST",
+    "csrf": "invalid",
+    "status": 403
+  },
+  {
+    "role": "admin",
+    "path": "/admin/colors/save",
+    "method": "POST",
+    "csrf": "valid",
+    "status": 200
+  },
+  {
+    "role": "admin",
+    "path": "/admin/variants/save",
+    "method": "POST",
+    "csrf": "valid",
+    "status": 200
+  }
+]

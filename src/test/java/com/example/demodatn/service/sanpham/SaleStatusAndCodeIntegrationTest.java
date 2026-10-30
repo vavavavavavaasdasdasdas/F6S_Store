@@ -30,6 +30,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest @WithMockUser(username="admin",roles="ADMIN")
 class SaleStatusAndCodeIntegrationTest {
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.ColorRepository phase5Colors;
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.SoleRepository phase5Soles;
+
     @Autowired AdminCatalogService catalog; @Autowired ProductRepository products;
     @Autowired ProductVariantRepository variants; @Autowired CategoryRepository categories;
     @Autowired SizeRepository sizes; @Autowired MaterialRepository materials;
@@ -43,7 +46,7 @@ class SaleStatusAndCodeIntegrationTest {
         mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
     AdminProductForm form(boolean withVariants) {
-        var f=new AdminProductForm();f.setName("Giày bổ sung "+UUID.randomUUID());f.setCode("FORGED-CODE");f.setStatus(withVariants);f.setCategoryId(categories.findAll().get(0).getId());
+        var f=new AdminProductForm();f.setInitialColorId(phase5Colors.findAll().get(0).getId());f.setInitialSoleId(phase5Soles.findAll().get(0).getId());f.setName("Giày bổ sung "+UUID.randomUUID());f.setCode("FORGED-CODE");f.setStatus(withVariants);f.setCategoryId(categories.findAll().get(0).getId());
         if(withVariants){
             try {var bytes=new java.io.ByteArrayOutputStream();javax.imageio.ImageIO.write(new java.awt.image.BufferedImage(2,2,java.awt.image.BufferedImage.TYPE_INT_RGB),"png",bytes);f.setImage(new org.springframework.mock.web.MockMultipartFile("image","fixture.png","image/png",bytes.toByteArray()));}
             catch(java.io.IOException ex){throw new IllegalStateException(ex);}

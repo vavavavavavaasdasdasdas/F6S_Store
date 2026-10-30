@@ -33,6 +33,13 @@ public class OrderDetail {
     @Column(name = "ten_chat_lieu", columnDefinition = "nvarchar(100)")
     @org.hibernate.annotations.Nationalized private String materialName;
 
+    @Column(name="ten_mau_sac",columnDefinition="nvarchar(100)")
+    @org.hibernate.annotations.Nationalized private String colorName;
+    @Column(name="ten_de_giay",columnDefinition="nvarchar(100)")
+    @org.hibernate.annotations.Nationalized private String soleName;
+    public String getDisplayColorName() { return colorName == null || colorName.isBlank() ? "—" : colorName; }
+    public String getDisplaySoleName() { return soleName == null || soleName.isBlank() ? "—" : soleName; }
+
     public String getDisplayMaterialName() { return materialName == null || materialName.isBlank() ? "—" : materialName; }
 
     @Column(nullable = false)

@@ -44,7 +44,7 @@
                     <div class="d-flex flex-wrap gap-2 mb-2" data-material-picker>
                         <th:block th:each="v : ${p.variants}">
                             <input type="radio" class="btn-check" name="variantId"
-                                   th:id="|qa-${p.id}-${v.id}|" th:value="${v.id}" th:data-size-id="${v.sizeId}" th:data-size-name="${v.sizeValue}" th:data-material-id="${v.materialId}" th:data-material-name="${v.materialName}" th:disabled="${v.quantity <= 0}">
+                                   th:id="|qa-${p.id}-${v.id}|" th:value="${v.id}" th:data-size-id="${v.sizeId}" th:data-size-name="${v.sizeValue}" th:data-material-id="${v.materialId}" th:data-material-name="${v.materialName}" th:data-color-id="${v.colorId}" th:data-color-name="${v.colorName}" th:data-color-hex="${v.colorHexCode}" th:data-sole-id="${v.soleId}" th:data-sole-name="${v.soleName}" th:disabled="${v.quantity <= 0}">
                             <label class="btn btn-outline-dark btn-sm" th:for="|qa-${p.id}-${v.id}|"
                                    th:classappend="${v.quantity <= 0} ? 'opacity-50'" th:text="${v.sizeValue}+' · '+${v.materialName}">39</label>
                         </th:block>

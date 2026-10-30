@@ -29,12 +29,14 @@ public class AdminProductController {
     private final com.example.demodatn.util.Pagination pagination;
     @org.springframework.beans.factory.annotation.Value("${shop.upload-max-bytes:5242880}") private long maxBytes;
 
+    private final com.example.demodatn.repository.sanpham.ColorRepository colors;
     @GetMapping
     public String list(@RequestParam(defaultValue="") String keyword, @RequestParam(required=false) Integer categoryId,
                        @RequestParam(required=false) Integer materialId, @RequestParam(required=false) Boolean status, @RequestParam(defaultValue="newest") String sort,
-                       @RequestParam(defaultValue="0") String page, @RequestParam(required=false) Integer soleId,
+                       @RequestParam(defaultValue="0") String page, @RequestParam(required=false) Integer soleId, @RequestParam(required=false) Integer colorId,
                        @RequestParam(required=false) BigDecimal minPrice, @RequestParam(required=false) BigDecimal maxPrice, Model model) {
-        model.addAttribute("productPage",query.products(keyword,categoryId,status,sort,page,materialId,soleId,minPrice,maxPrice));
+        model.addAttribute("productPage",query.products(keyword,categoryId,status,sort,page,materialId,soleId,minPrice,maxPrice,colorId));
+        model.addAttribute("colors",colors.findAll()); model.addAttribute("colorId",colorId);
         model.addAttribute("soles",soles.findAll());model.addAttribute("soleId",soleId);
         model.addAttribute("categories",categories.findAll());
         model.addAttribute("materials",materials.findAll()); model.addAttribute("materialId",materialId);
@@ -42,6 +44,7 @@ public class AdminProductController {
         model.addAttribute("status",status); model.addAttribute("sort",sort);
         model.addAttribute("minPrice",minPrice); model.addAttribute("maxPrice",maxPrice);
         int activeFilterCount = 0;
+        if(colorId!=null) activeFilterCount++;
         if (keyword != null && !keyword.trim().isEmpty()) activeFilterCount++;
         if (categoryId != null) activeFilterCount++;
         if (soleId != null) activeFilterCount++;
@@ -108,11 +111,8 @@ public class AdminProductController {
         model.addAttribute("productImages", form.getId()==null ? java.util.List.of() : gallery.list(form.getId()));
         model.addAttribute("categories",categories.findAll());
         model.addAttribute("materials",materials.findByStatusTrueOrderByNameAscIdAsc());
+        model.addAttribute("colors",colors.findByStatusTrueOrderByNameAscIdAsc());
         var choices=new java.util.ArrayList<>(soles.findByStatusTrueOrderByNameAscIdAsc());
-        if(form.getId()!=null) {
-            var current=catalog.product(form.getId()).getSole();
-            if(current!=null&&!Boolean.TRUE.equals(current.getStatus()))choices.add(current);
-        }
         model.addAttribute("soles",choices);
         model.addAttribute("sizes",sizes.findAll());
         model.addAttribute("existingMaterials",form.getId()==null ? java.util.List.of() : variants.materialNames(form.getId()));

@@ -29,7 +29,7 @@ class StatisticsIntegrationTest {
     }
     private int variant() {
         int product=jdbc.queryForObject("INSERT INTO products(code,name,status) OUTPUT INSERTED.id VALUES(?,N'Sản phẩm kiểm thử thống kê',1)",Integer.class,"STAT-"+UUID.randomUUID());
-        return jdbc.queryForObject("INSERT INTO product_variants(product_id,size_id,chat_lieu_id,price,quantity,status) OUTPUT INSERTED.id SELECT ?,MIN(s.id),MIN(m.id),100000,5,1 FROM sizes s CROSS JOIN chat_lieu m",Integer.class,product);
+        return jdbc.queryForObject("INSERT INTO product_variants(product_id,size_id,chat_lieu_id,mau_sac_id,de_giay_id,price,quantity,status) OUTPUT INSERTED.id SELECT ?,MIN(s.id),MIN(m.id),(SELECT MIN(id) FROM mau_sac),(SELECT MIN(id) FROM de_giay),100000,5,1 FROM sizes s CROSS JOIN chat_lieu m",Integer.class,product);
     }
     @Test
     void metricsRankingsBoundariesChannelsAndStatusesUseSnapshotMoney() {

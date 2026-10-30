@@ -18,6 +18,7 @@ public class AdminPageAdvice {
         new NavItem("", "Thương hiệu", "/admin/categories", "categories"),
         new NavItem("", "Kích cỡ", "/admin/sizes", "sizes"),
         new NavItem("", "Đế giày", "/admin/soles", "soles"),
+        new NavItem("", "Màu sắc", "/admin/colors", "colors"),
         new NavItem("", "Chất liệu", "/admin/materials", "materials"),
         new NavItem("", "Tồn kho", "/admin/inventory", "inventory"),
         new NavItem("TÀI KHOẢN", "Khách hàng", "/admin/customers", "customers"),

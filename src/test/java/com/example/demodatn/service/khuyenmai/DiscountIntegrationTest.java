@@ -40,6 +40,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest @WithMockUser(roles="ADMIN")
 class DiscountIntegrationTest {
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.ColorRepository phase5Colors;
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.SoleRepository phase5Soles;
+
     @Autowired DiscountAdminService admin;
     @Autowired VoucherService vouchers;
     @Autowired VoucherRepository voucherRepo;
@@ -73,7 +76,7 @@ class DiscountIntegrationTest {
     }
     private ProductVariant variant() {
         var p=new Product();p.setCode("P8-"+UUID.randomUUID());p.setName("Kiểm thử Phase 8");p=products.saveAndFlush(p);
-        var v=new ProductVariant();v.setProduct(p);v.setSize(sizes.findAll().get(0));v.setMaterial(materials.findAll().get(0));v.setPrice(new BigDecimal("200000"));v.setQuantity(10);return variants.saveAndFlush(v);
+        var v=new ProductVariant();v.setProduct(p);v.setSize(sizes.findAll().get(0));v.setMaterial(materials.findAll().get(0));v.setColor(phase5Colors.findAll().get(0));v.setSole(phase5Soles.findAll().get(0));v.setPrice(new BigDecimal("200000"));v.setQuantity(10);return variants.saveAndFlush(v);
     }
     private CartItemDto item(ProductVariant v) { return new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),BigDecimal.ONE,1); }
     private CheckoutRequest request(String code) { var r=new CheckoutRequest();r.setReceiverName("Kiểm thử");r.setPhone("0987000000");r.setEmail("p8@example.invalid");r.setShippingAddress("Địa chỉ kiểm thử");r.setPaymentMethod("COD");r.setVoucherCode(code);return r; }

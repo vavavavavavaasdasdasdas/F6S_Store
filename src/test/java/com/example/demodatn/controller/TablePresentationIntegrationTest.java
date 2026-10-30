@@ -21,6 +21,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @SpringBootTest @Transactional @WithMockUser(username="admin",roles="ADMIN")
 class TablePresentationIntegrationTest {
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.ColorRepository phase5Colors;
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.SoleRepository phase5Soles;
+
     @Autowired WebApplicationContext context;
     @Autowired JdbcTemplate jdbc;
     @Autowired ProductRepository products;
@@ -37,7 +40,7 @@ class TablePresentationIntegrationTest {
         for(int i=0;i<14;i++) {
             var product=new Product();product.setCode(marker+"-"+i);product.setName("Giày bảng Nguyễn Huệ "+i);
             product.setCategory(categories.findAll().get(0));products.saveAndFlush(product);
-            var variant=new ProductVariant();variant.setProduct(product);variant.setMaterial(material);
+            var variant=new ProductVariant();variant.setProduct(product);variant.setMaterial(material);variant.setColor(phase5Colors.findAll().get(0));variant.setSole(phase5Soles.findAll().get(0));
             variant.setSize(sizes.findAll().get(0));variant.setPrice(BigDecimal.valueOf(123456));variant.setQuantity(7);variants.saveAndFlush(variant);
         }
         var mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();

@@ -178,11 +178,13 @@ a,button,label.btn{touch-action:manipulation}button,a.btn,label.btn,[data-bs-tog
  .data-table-scroll{overflow:visible!important;max-width:none}
  .data-table.invoice-table{width:100%;min-width:0;table-layout:fixed}
  .data-table.invoice-table th,.data-table.invoice-table td{white-space:normal;overflow-wrap:anywhere;padding:6px 3px}
- .data-table.invoice-table th:nth-child(1){width:5%}.data-table.invoice-table th:nth-child(2){width:8%}
- .data-table.invoice-table th:nth-child(3){width:10%}.data-table.invoice-table th:nth-child(4){width:22%}
- .data-table.invoice-table th:nth-child(5){width:6%}.data-table.invoice-table th:nth-child(6){width:12%}
- .data-table.invoice-table th:nth-child(7){width:6%}.data-table.invoice-table th:nth-child(8){width:15%}
- .data-table.invoice-table th:nth-child(9){width:16%}.data-table.invoice-table img{max-width:100%;height:auto}
+ .data-table.invoice-table th:nth-child(1){width:4%}.data-table.invoice-table th:nth-child(2){width:6%}
+ .data-table.invoice-table th:nth-child(3){width:8%}.data-table.invoice-table th:nth-child(4){width:17%}
+ .data-table.invoice-table th:nth-child(5){width:5%}.data-table.invoice-table th:nth-child(6){width:10%}
+ .data-table.invoice-table th:nth-child(7){width:10%}.data-table.invoice-table th:nth-child(8){width:9%}
+ .data-table.invoice-table th:nth-child(9){width:4%}.data-table.invoice-table th:nth-child(10){width:13%}
+ .data-table.invoice-table th:nth-child(11){width:14%}.data-table.invoice-table img{max-width:100%;height:auto}
+ .data-table.invoice-table td:nth-child(10),.data-table.invoice-table td:nth-child(11){white-space:nowrap}
 }
 
 
@@ -211,3 +213,5 @@ a,button,label.btn{touch-action:manipulation}button,a.btn,label.btn,[data-bs-tog
  .catalog-filters>*,.filter-bar>*,.sales-filters.filter-bar>*{min-width:0!important;max-width:100%!important;width:100%!important;flex:0 0 100%!important}
  .catalog-filters .filter-actions,.filter-bar .filter-bar-actions{width:100%}
 }
+
+.color-swatch{display:inline-block;width:1.1rem;height:1.1rem;border:1px solid #808080;border-radius:50%;vertical-align:middle;margin-right:.35rem;background:#eee;}

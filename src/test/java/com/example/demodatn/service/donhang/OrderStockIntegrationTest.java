@@ -25,6 +25,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest @WithMockUser(username="admin",roles="ADMIN")
 class OrderStockIntegrationTest {
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.ColorRepository phase5Colors;
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.SoleRepository phase5Soles;
+
     @Autowired OrderService orders;
     @Autowired OrderStatusService statuses;
     @Autowired OrderRepository repository;
@@ -41,7 +44,7 @@ class OrderStockIntegrationTest {
     <T>T tx(java.util.function.Supplier<T> operation){return new TransactionTemplate(manager).execute(s->operation.get());}
     @BeforeEach void fixture(){
         assertTrue((Set.of("shopbangiay_kt","shop_verify","shopbangiay_thu").contains(jdbc.queryForObject("SELECT DB_NAME()",String.class)) || jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_")));
-        tx(()->{var p=new Product();p.setCode("STOCK-"+UUID.randomUUID());p.setName("Kiểm thử luật kho");products.saveAndFlush(p);pid=p.getId();var v=new ProductVariant();v.setProduct(p);v.setSize(sizes.findAll().get(0));v.setMaterial(materials.findAll().get(0));v.setPrice(BigDecimal.valueOf(100000));v.setQuantity(5);variants.saveAndFlush(v);vid=v.getId();return null;});
+        tx(()->{var p=new Product();p.setCode("STOCK-"+UUID.randomUUID());p.setName("Kiểm thử luật kho");products.saveAndFlush(p);pid=p.getId();var v=new ProductVariant();v.setProduct(p);v.setSize(sizes.findAll().get(0));v.setMaterial(materials.findAll().get(0));v.setColor(phase5Colors.findAll().get(0));v.setSole(phase5Soles.findAll().get(0));v.setPrice(BigDecimal.valueOf(100000));v.setQuantity(5);variants.saveAndFlush(v);vid=v.getId();return null;});
     }
     @AfterEach void cleanup(){
         tx(()->{String ids="SELECT order_id FROM order_details WHERE product_variant_id="+vid;

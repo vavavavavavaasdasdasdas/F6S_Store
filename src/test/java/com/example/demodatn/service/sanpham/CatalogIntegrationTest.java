@@ -42,6 +42,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @WithMockUser(username="phase6-test",roles="ADMIN")
 class CatalogIntegrationTest {
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.ColorRepository phase5Colors;
+    @org.springframework.beans.factory.annotation.Autowired com.example.demodatn.repository.sanpham.SoleRepository phase5Soles;
+
     @Autowired AdminCatalogService catalog;
     @Autowired InventoryService inventory;
     @Autowired InventoryLogRepository logs;
@@ -61,7 +64,7 @@ class CatalogIntegrationTest {
     @TempDir Path temp;
 
     private AdminProductForm productForm(String code) {
-        AdminProductForm f=new AdminProductForm();
+        AdminProductForm f=new AdminProductForm();f.setInitialColorId(phase5Colors.findAll().get(0).getId());f.setInitialSoleId(phase5Soles.findAll().get(0).getId());
         f.setCode(code);f.setName("Kiểm thử Phase 6");f.setStatus(true);f.setCategoryId(categories.findAll().get(0).getId());
         try {
             var bytes=new java.io.ByteArrayOutputStream();
@@ -72,7 +75,7 @@ class CatalogIntegrationTest {
     }
     private Product product() { return catalog.saveProduct(productForm("T6-"+UUID.randomUUID())); }
     private VariantForm variantForm(Product p,int quantity) {
-        VariantForm f=new VariantForm();f.setProductId(p.getId());f.setSizeId(sizes.findAll().get(0).getId());f.setMaterialId(materials.findAll().get(0).getId());
+        VariantForm f=new VariantForm();f.setColorId(phase5Colors.findAll().get(0).getId());f.setSoleId(phase5Soles.findAll().get(0).getId());f.setProductId(p.getId());f.setSizeId(sizes.findAll().get(0).getId());f.setMaterialId(materials.findAll().get(0).getId());
         f.setPrice(new BigDecimal("150000"));f.setQuantity(quantity);return f;
     }
     private InventoryForm adjustment(ProductVariant v,String mode,int amount,String reason) {
