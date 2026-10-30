@@ -1,0 +1,216 @@
+[
+  {
+    "id": 949,
+    "width": 1280,
+    "before": [
+      {
+        "id": 598,
+        "size_id": 1,
+        "mau_sac_id": 4,
+        "chat_lieu_id": 1,
+        "de_giay_id": 2,
+        "price": 222000.0,
+        "quantity": 11,
+        "status": true
+      },
+      {
+        "id": 599,
+        "size_id": 2,
+        "mau_sac_id": 1,
+        "chat_lieu_id": 1,
+        "de_giay_id": 1,
+        "price": 180000.0,
+        "quantity": 8,
+        "status": true
+      },
+      {
+        "id": 600,
+        "size_id": 3,
+        "mau_sac_id": 1,
+        "chat_lieu_id": 1,
+        "de_giay_id": 1,
+        "price": 180000.0,
+        "quantity": 8,
+        "status": true
+      }
+    ],
+    "after": [
+      {
+        "id": 598,
+        "size_id": 1,
+        "mau_sac_id": 4,
+        "chat_lieu_id": 1,
+        "de_giay_id": 2,
+        "price": 222000.0,
+        "quantity": 11,
+        "status": true
+      },
+      {
+        "id": 599,
+        "size_id": 2,
+        "mau_sac_id": 1,
+        "chat_lieu_id": 1,
+        "de_giay_id": 1,
+        "price": 180000.0,
+        "quantity": 8,
+        "status": true
+      },
+      {
+        "id": 600,
+        "size_id": 3,
+        "mau_sac_id": 1,
+        "chat_lieu_id": 1,
+        "de_giay_id": 1,
+        "price": 180000.0,
+        "quantity": 8,
+        "status": true
+      }
+    ],
+    "logs": [
+      {
+        "variant_id": 598,
+        "quantity_before": 0,
+        "quantity_change": 8,
+        "quantity_after": 8,
+        "reason": "Khởi tạo",
+        "actor": "admin"
+      },
+      {
+        "variant_id": 599,
+        "quantity_before": 0,
+        "quantity_change": 8,
+        "quantity_after": 8,
+        "reason": "Khởi tạo",
+        "actor": "admin"
+      },
+      {
+        "variant_id": 600,
+        "quantity_before": 0,
+        "quantity_change": 8,
+        "quantity_after": 8,
+        "reason": "Khởi tạo",
+        "actor": "admin"
+      },
+      {
+        "variant_id": 598,
+        "quantity_before": 8,
+        "quantity_change": 3,
+        "quantity_after": 11,
+        "reason": "Chỉnh trên trang sản phẩm",
+        "actor": "admin"
+      }
+    ],
+    "actions": {
+      "deletedId": 600,
+      "soldDeleteStatus": 409,
+      "soldDeleteMessage": "Biến thể đã có trong đơn hoặc hóa đơn chờ. Hãy dùng Ngừng bán."
+    }
+  },
+  {
+    "id": 950,
+    "width": 375,
+    "before": [
+      {
+        "id": 601,
+        "size_id": 1,
+        "mau_sac_id": 1,
+        "chat_lieu_id": 1,
+        "de_giay_id": 1,
+        "price": 180000.0,
+        "quantity": 8,
+        "status": true
+      },
+      {
+        "id": 602,
+        "size_id": 2,
+        "mau_sac_id": 1,
+        "chat_lieu_id": 1,
+        "de_giay_id": 1,
+        "price": 180000.0,
+        "quantity": 8,
+        "status": true
+      },
+      {
+        "id": 603,
+        "size_id": 3,
+        "mau_sac_id": 1,
+        "chat_lieu_id": 1,
+        "de_giay_id": 1,
+        "price": 180000.0,
+        "quantity": 8,
+        "status": true
+      }
+    ],
+    "after": [
+      {
+        "id": 601,
+        "size_id": 1,
+        "mau_sac_id": 4,
+        "chat_lieu_id": 1,
+        "de_giay_id": 2,
+        "price": 222000.0,
+        "quantity": 11,
+        "status": true
+      },
+      {
+        "id": 602,
+        "size_id": 2,
+        "mau_sac_id": 1,
+        "chat_lieu_id": 1,
+        "de_giay_id": 1,
+        "price": 180000.0,
+        "quantity": 8,
+        "status": true
+      },
+      {
+        "id": 603,
+        "size_id": 3,
+        "mau_sac_id": 1,
+        "chat_lieu_id": 1,
+        "de_giay_id": 1,
+        "price": 180000.0,
+        "quantity": 8,
+        "status": true
+      }
+    ],
+    "logs": [
+      {
+        "variant_id": 601,
+        "quantity_before": 0,
+        "quantity_change": 8,
+        "quantity_after": 8,
+        "reason": "Khởi tạo",
+        "actor": "admin"
+      },
+      {
+        "variant_id": 602,
+        "quantity_before": 0,
+        "quantity_change": 8,
+        "quantity_after": 8,
+        "reason": "Khởi tạo",
+        "actor": "admin"
+      },
+      {
+        "variant_id": 603,
+        "quantity_before": 0,
+        "quantity_change": 8,
+        "quantity_after": 8,
+        "reason": "Khởi tạo",
+        "actor": "admin"
+      },
+      {
+        "variant_id": 601,
+        "quantity_before": 8,
+        "quantity_change": 3,
+        "quantity_after": 11,
+        "reason": "Chỉnh trên trang sản phẩm",
+        "actor": "admin"
+      }
+    ],
+    "actions": {
+      "deletedId": 603,
+      "soldDeleteStatus": 409,
+      "soldDeleteMessage": "Biến thể đã có trong đơn hoặc hóa đơn chờ. Hãy dùng Ngừng bán."
+    }
+  }
+]

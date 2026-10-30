@@ -85,7 +85,7 @@ public class AdminCatalogQuery {
         return variantsPage(productId,stock,threshold,page,materialId,sizeId,status,keyword,categoryId,null,null);
     }
     public Page<Map<String,Object>> variantsPage(Integer productId, String stock, int threshold, Object page, Integer materialId, Integer sizeId, Boolean status, String keyword, Integer categoryId,Integer colorId,Integer soleId) {
-        String sql = "SELECT v.id,v.product_id,v.size_id,v.chat_lieu_id,p.code,p.name,s.size_value,m.ten AS material_name,cl.ten AS color_name,cl.ma_mau AS color_hex,sole.ten AS sole_name,v.price,v.quantity,v.status FROM product_variants v JOIN products p ON p.id=v.product_id JOIN sizes s ON s.id=v.size_id JOIN chat_lieu m ON m.id=v.chat_lieu_id JOIN mau_sac cl ON cl.id=v.mau_sac_id JOIN de_giay sole ON sole.id=v.de_giay_id WHERE 1=1";
+        String sql = "SELECT v.id,v.product_id,v.size_id,v.chat_lieu_id,v.mau_sac_id,v.de_giay_id,p.code,p.name,s.size_value,m.ten AS material_name,cl.ten AS color_name,cl.ma_mau AS color_hex,sole.ten AS sole_name,v.price,v.quantity,v.status,CAST(CASE WHEN EXISTS(SELECT 1 FROM order_details od WHERE od.product_variant_id=v.id) OR EXISTS(SELECT 1 FROM pos_held_items hi WHERE hi.variant_id=v.id) THEN 0 ELSE 1 END AS bit) AS can_delete FROM product_variants v JOIN products p ON p.id=v.product_id JOIN sizes s ON s.id=v.size_id JOIN chat_lieu m ON m.id=v.chat_lieu_id JOIN mau_sac cl ON cl.id=v.mau_sac_id JOIN de_giay sole ON sole.id=v.de_giay_id WHERE 1=1";
         List<Object> args = new ArrayList<>();
         if (keyword != null && !keyword.isBlank()) {
             sql += " AND (p.code LIKE ? ESCAPE '!' OR p.name LIKE ? ESCAPE '!' OR s.size_value LIKE ? ESCAPE '!' OR m.ten LIKE ? ESCAPE '!')";

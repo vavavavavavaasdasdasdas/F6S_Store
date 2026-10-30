@@ -37,6 +37,7 @@ public class AdminCatalogService {
     private final com.example.demodatn.repository.sanpham.ColorRepository colors;
     private final com.example.demodatn.repository.sanpham.SoleRepository soles;
     private final OrderDetailRepository details;
+    private final com.example.demodatn.repository.donhang.PosHeldItemRepository heldItems;
     private final PromotionDetailRepository promotions;
     private final InventoryLogRepository inventoryLogs;
     private final InventoryService inventory;
@@ -233,6 +234,10 @@ public class AdminCatalogService {
     }
     @Transactional
     public ProductVariant saveVariant(VariantForm form) {
+        if(form.getPrice()==null || form.getPrice().signum()<=0 || form.getPrice().stripTrailingZeros().scale()>0 || form.getPrice().compareTo(new java.math.BigDecimal("9999999999999999"))>0)
+            throw new CatalogValidationException("price","Giá phải là số nguyên đồng lớn hơn 0, tối đa 16 chữ số.");
+        if(form.getQuantity()==null || form.getQuantity()<0)throw new CatalogValidationException("quantity","Tồn kho không được âm.");
+        if(form.getStatus()==null)throw new CatalogValidationException("status","Chọn trạng thái.");
         if (form.getNewSizeValue() != null && !form.getNewSizeValue().isBlank()) {
             form.setSizeId(resolveOrCreateSize(form.getNewSizeValue(), "sizeId").getId());
         }
@@ -266,13 +271,50 @@ public class AdminCatalogService {
             throw new CatalogValidationException("productId","Không thể chuyển biến thể sang sản phẩm khác.");
         int before = variant.getQuantity();
         if (form.getId() != null && !java.util.Objects.equals(form.getExpectedQuantity(),before))
-            throw new CatalogValidationException("quantity","Tồn kho đã thay đổi. Tải lại trang trước khi lưu.");
+            throw new CatalogValidationException("quantity","Tồn kho đã thay đổi, tải lại");
         if (form.getId() != null && before != form.getQuantity() && (form.getReason()==null || form.getReason().isBlank()))
             throw new CatalogValidationException("reason","Nhập lý do khi thay đổi số lượng.");
+        // adjust refreshes the locked entity; do it before writing price/attributes.
+        if(form.getId()!=null && before!=form.getQuantity()) {
+            var adjustment=new com.example.demodatn.dto.sanpham.InventoryForm();
+            adjustment.setVariantId(variant.getId());adjustment.setMode("SET");
+            adjustment.setExpectedQuantity(form.getExpectedQuantity());adjustment.setQuantity(form.getQuantity());adjustment.setReason(form.getReason());
+            inventory.adjust(adjustment);
+        }
         variant.setProduct(product); variant.setSize(size); variant.setMaterial(material); variant.setColor(color); variant.setSole(sole); variant.setPrice(form.getPrice()); variant.setStatus(form.getStatus());
         variants.saveAndFlush(variant);
-        inventory.change(variant, form.getQuantity(), form.getId() == null ? "Khởi tạo biến thể" : (form.getReason()==null || form.getReason().isBlank() ? "Lưu biến thể không đổi tồn" : form.getReason()));
+        if(form.getId()==null) inventory.initialize(variant,form.getQuantity());
         return variant;
+    }
+    @Transactional
+    public java.util.List<ProductVariant> createVariants(com.example.demodatn.dto.sanpham.VariantBatchForm batch) {
+        // Serialize batches for one product; the SQL unique index also protects single-row creation.
+        products.lockById(batch.getProductId()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if(batch.getSizeIds()==null || batch.getSizeIds().isEmpty() || batch.getSizeIds().size()>100)
+            throw new CatalogValidationException("sizeIds","Chọn từ 1 đến 100 kích cỡ.");
+        var saved=new java.util.ArrayList<ProductVariant>();
+        for(Integer sizeId:new java.util.LinkedHashSet<>(batch.getSizeIds())) {
+            var form=new VariantForm();form.setProductId(batch.getProductId());form.setSizeId(sizeId);
+            form.setColorId(batch.getColorId());form.setNewColorName(batch.getNewColorName());
+            form.setMaterialId(batch.getMaterialId());form.setNewMaterialName(batch.getNewMaterialName());
+            form.setSoleId(batch.getSoleId());form.setNewSoleName(batch.getNewSoleName());
+            form.setPrice(batch.getPrice());form.setQuantity(batch.getQuantity());form.setStatus(true);
+            try { saved.add(saveVariant(form)); }
+            catch(CatalogValidationException ex) {
+                if(ex.getMessage().startsWith("Bộ năm"))throw new CatalogValidationException("sizeIds","Có tổ hợp đã tồn tại. Không tạo biến thể nào; bỏ kích cỡ trùng rồi thử lại.");
+                throw ex;
+            }
+        }
+        return saved;
+    }
+    public boolean canDeleteVariant(Integer id) {return !details.existsByProductVariant_Id(id) && !heldItems.existsByVariant_Id(id);}
+    @Transactional
+    public void deleteVariant(Integer productId,Integer id) {
+        ProductVariant variant=inventory.lock(id);
+        if(!variant.getProduct().getId().equals(productId))throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if(details.existsByProductVariant_Id(id) || heldItems.existsByVariant_Id(id))
+            throw new CatalogValidationException("id","Biến thể đã có trong đơn hoặc hóa đơn chờ. Hãy dùng Ngừng bán.");
+        inventoryLogs.deleteByVariant_Id(id);inventoryLogs.flush();variants.delete(variant);variants.flush();
     }
     @Transactional
     public void saveLookup(String kind, LookupForm form) {

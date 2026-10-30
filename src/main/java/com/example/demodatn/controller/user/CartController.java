@@ -78,12 +78,13 @@ public class CartController {
                     item.setWarningMessage("Chỉ còn " + stock + " sản phẩm.");
                     hasWarning = true;
                 } else if (priceInfo.getFinalPrice().compareTo(dto.getPrice()) != 0) {
-                    // Update session price
+                    item.setPriceChanged(true);
+                    item.setWarningMessage("Giá sản phẩm đã thay đổi. Giá mới đã được cập nhật, vui lòng kiểm tra trước khi thanh toán.");
                     dto.setPrice(priceInfo.getFinalPrice());
                     session.setAttribute("cart", sessionCart);
                 }
 
-                if (item.getWarningMessage() == null) {
+                if (item.getWarningMessage() == null || item.isPriceChanged()) {
                     subTotal = subTotal.add(item.getPrice().multiply(new BigDecimal(item.getQuantity())));
                 }
             }
@@ -247,6 +248,7 @@ public class CartController {
         private Integer quantity;
         private Integer maxQuantity;
         private String warningMessage;
+        private boolean priceChanged;
 
         public BigDecimal getTotal() {
             if (price != null && quantity != null) {

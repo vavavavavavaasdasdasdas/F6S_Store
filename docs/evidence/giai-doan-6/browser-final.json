@@ -1,0 +1,4398 @@
+[
+  {
+    "id": "login-admin",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/login",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/login",
+        "method": "POST",
+        "status": 302
+      },
+      {
+        "url": "/admin",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/bang-dieu-khien.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "url": "http://localhost:18180/admin",
+      "title": "Bảng điều khiển | ShoeAdmin"
+    },
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 2222
+    }
+  },
+  {
+    "id": "create-and-bulk-three-sizes",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/products-crud/create",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-ly-anh-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/save",
+        "method": "POST",
+        "status": 302
+      },
+      {
+        "url": "/admin/products-crud/view/949",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/uploads/products/9a6d441f-c8b8-4688-8950-ec9115f206c6.png",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/949/variants/batch",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/view/949",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "id": 949,
+      "width": 1280
+    },
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 1357
+    }
+  },
+  {
+    "id": "inline-edit-save-cancel-and-duplicate-batch",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/products-crud/view/949",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/uploads/products/9a6d441f-c8b8-4688-8950-ec9115f206c6.png",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/949/variants/inline-save",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/949/variants/row/598?rowNumber=1",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/949/variants/batch",
+        "method": "POST",
+        "status": 400
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ],
+    "proof": {
+      "id": 598,
+      "ajaxSaved": true,
+      "cancelKeptPrice": true,
+      "duplicateRejected": true
+    },
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 1352
+    }
+  },
+  {
+    "id": "create-and-bulk-three-sizes",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/products-crud/create",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-ly-anh-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/save",
+        "method": "POST",
+        "status": 302
+      },
+      {
+        "url": "/admin/products-crud/view/950",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/uploads/products/e31c6305-2c60-4410-8513-5aaba38af35a.png",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/950/variants/batch",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/view/950",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "id": 950,
+      "width": 375
+    },
+    "quality": {
+      "scrollWidth": 360,
+      "viewport": 375,
+      "textLength": 997
+    }
+  },
+  {
+    "id": "inline-edit-save-cancel-and-duplicate-batch",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/products-crud/view/950",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/uploads/products/e31c6305-2c60-4410-8513-5aaba38af35a.png",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/950/variants/inline-save",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/950/variants/row/601?rowNumber=1",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/950/variants/batch",
+        "method": "POST",
+        "status": 400
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ],
+    "proof": {
+      "id": 601,
+      "ajaxSaved": true,
+      "cancelKeptPrice": true,
+      "duplicateRejected": true
+    },
+    "quality": {
+      "scrollWidth": 360,
+      "viewport": 375,
+      "textLength": 992
+    }
+  },
+  {
+    "id": "status-repeat-and-delete-unsold-sold",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/products-crud/view/949",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/uploads/products/9a6d441f-c8b8-4688-8950-ec9115f206c6.png",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/949/variants/600/status",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/949/variants/row/600?rowNumber=3",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/949/variants/600/status",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/949/variants/row/600?rowNumber=3",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/949/variants/600/delete",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/view/949",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/view/1",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "deletedId": 600,
+      "soldDeleteStatus": 409,
+      "soldDeleteMessage": "Biến thể đã có trong đơn hoặc hóa đơn chờ. Hãy dùng Ngừng bán."
+    },
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 1222
+    }
+  },
+  {
+    "id": "status-repeat-and-delete-unsold-sold",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/products-crud/view/950",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/uploads/products/e31c6305-2c60-4410-8513-5aaba38af35a.png",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/950/variants/603/status",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/950/variants/row/603?rowNumber=3",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/950/variants/603/status",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/950/variants/row/603?rowNumber=3",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/950/variants/603/delete",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/view/950",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/view/1",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "deletedId": 603,
+      "soldDeleteStatus": 409,
+      "soldDeleteMessage": "Biến thể đã có trong đơn hoặc hóa đơn chờ. Hãy dùng Ngừng bán."
+    },
+    "quality": {
+      "scrollWidth": 360,
+      "viewport": 375,
+      "textLength": 863
+    }
+  },
+  {
+    "id": "two-admin-sessions-conflict",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/products-crud/view/949",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/uploads/products/9a6d441f-c8b8-4688-8950-ec9115f206c6.png",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/949/variants/inline-save",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/949/variants/row/598?rowNumber=1",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "variantId": 598,
+      "before": 11,
+      "statuses": [
+        200,
+        409
+      ],
+      "conflict": "Tồn kho đã thay đổi, tải lại"
+    },
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 1229
+    }
+  },
+  {
+    "id": "final-admin-login",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/login",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/login",
+        "method": "POST",
+        "status": 302
+      },
+      {
+        "url": "/admin",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/bang-dieu-khien.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "login": true
+    },
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 2222
+    }
+  },
+  {
+    "id": "batch-fourteen-sizes-pagination",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/products-crud/view/949",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "status": 200,
+      "count": 14
+    },
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 1225
+    }
+  },
+  {
+    "id": "page-two-starts-thirteen-and-filters",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/products-crud/view/949?page=1&colorId=1&materialId=1&soleId=1&variantStatus=true",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "firstSTT": 13,
+      "rowCount": 2,
+      "href": "/admin/products-crud/view/949?colorId=1&materialId=1&soleId=1&variantStatus=true&page=0",
+      "metrics": {
+        "width": 1265,
+        "viewport": 1280
+      }
+    },
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 1346
+    }
+  },
+  {
+    "id": "page-two-starts-thirteen-and-filters",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/products-crud/view/949?page=1&colorId=1&materialId=1&soleId=1&variantStatus=true",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "firstSTT": 13,
+      "rowCount": 2,
+      "href": "/admin/products-crud/view/949?colorId=1&materialId=1&soleId=1&variantStatus=true&page=0",
+      "metrics": {
+        "width": 360,
+        "viewport": 375
+      }
+    },
+    "quality": {
+      "scrollWidth": 360,
+      "viewport": 375,
+      "textLength": 987
+    }
+  },
+  {
+    "id": "register-user-for-security",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/register",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/register",
+        "method": "POST",
+        "status": 302
+      },
+      {
+        "url": "/login",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/login",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/login",
+        "method": "POST",
+        "status": 302
+      },
+      {
+        "url": "/",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "registered": true
+    },
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 1407
+    }
+  },
+  {
+    "id": "cart-for-crawl",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/products/2",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/bo-anh-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chi-tiet-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "status": 200
+    },
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 717
+    }
+  },
+  {
+    "id": "crawl-guest",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/products",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/products/2",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chi-tiet-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/bo-anh-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/cart",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/gio-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/login",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "path": "/",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 1407
+      },
+      {
+        "path": "/products",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 1225
+      },
+      {
+        "path": "/products/2",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 717
+      },
+      {
+        "path": "/cart",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 401
+      },
+      {
+        "path": "/login",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 385
+      }
+    ],
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 385
+    }
+  },
+  {
+    "id": "crawl-guest",
+    "width": 375,
+    "role": "guest",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/products",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/products/2",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chi-tiet-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/bo-anh-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/cart",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/gio-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/login",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "path": "/",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 1362
+      },
+      {
+        "path": "/products",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 689
+      },
+      {
+        "path": "/products/2",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 685
+      },
+      {
+        "path": "/cart",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 356
+      },
+      {
+        "path": "/login",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 340
+      }
+    ],
+    "quality": {
+      "scrollWidth": 360,
+      "viewport": 375,
+      "textLength": 340
+    }
+  },
+  {
+    "id": "crawl-user",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/profile",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/dia-chi-nhan-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/orders",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/cart",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/gio-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/checkout",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/dia-chi-nhan-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/thanh-toan.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/xem-truoc-voucher.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "path": "/profile",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 715
+      },
+      {
+        "path": "/orders",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 578
+      },
+      {
+        "path": "/cart",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 666
+      },
+      {
+        "path": "/checkout",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 989
+      }
+    ],
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 989
+    }
+  },
+  {
+    "id": "crawl-user",
+    "width": 375,
+    "role": "user",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/profile",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/dia-chi-nhan-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/orders",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/cart",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/gio-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/checkout",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/dia-chi-nhan-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/xem-truoc-voucher.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/thanh-toan.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "path": "/profile",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 670
+      },
+      {
+        "path": "/orders",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 533
+      },
+      {
+        "path": "/cart",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 621
+      },
+      {
+        "path": "/checkout",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 944
+      }
+    ],
+    "quality": {
+      "scrollWidth": 360,
+      "viewport": 375,
+      "textLength": 944
+    }
+  },
+  {
+    "id": "crawl-admin",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/bang-dieu-khien.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/view/949",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/view/1",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/variants",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/colors",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/materials",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/soles",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/inventory",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/pos",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/xem-truoc-voucher.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/ban-tai-quay.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/customers",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/employees",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/invoices",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/statistics/revenue",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/thong-ke.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/statistics/best-sellers",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/thong-ke.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "path": "/admin",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 2222
+      },
+      {
+        "path": "/admin/products-crud",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 2601
+      },
+      {
+        "path": "/admin/products-crud/view/949",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 2008
+      },
+      {
+        "path": "/admin/products-crud/view/1",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 1376
+      },
+      {
+        "path": "/admin/variants",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 3116
+      },
+      {
+        "path": "/admin/colors",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 1364
+      },
+      {
+        "path": "/admin/materials",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 1158
+      },
+      {
+        "path": "/admin/soles",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 1127
+      },
+      {
+        "path": "/admin/inventory",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 4183
+      },
+      {
+        "path": "/admin/pos",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 2022
+      },
+      {
+        "path": "/admin/customers",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 2234
+      },
+      {
+        "path": "/admin/employees",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 1477
+      },
+      {
+        "path": "/admin/invoices",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 1689
+      },
+      {
+        "path": "/admin/statistics/revenue",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 1142
+      },
+      {
+        "path": "/admin/statistics/best-sellers",
+        "status": 200,
+        "width": 1265,
+        "viewport": 1280,
+        "text": 1347
+      }
+    ],
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 1347
+    }
+  },
+  {
+    "id": "crawl-admin",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/bang-dieu-khien.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/view/949",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/view/1",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/variants",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/colors",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/materials",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/soles",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/inventory",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/pos",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/xem-truoc-voucher.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/ban-tai-quay.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/customers",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/employees",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/invoices",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/statistics/revenue",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/thong-ke.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/statistics/best-sellers",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/thong-ke.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "path": "/admin",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 1914
+      },
+      {
+        "path": "/admin/products-crud",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 2242
+      },
+      {
+        "path": "/admin/products-crud/view/949",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 1649
+      },
+      {
+        "path": "/admin/products-crud/view/1",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 1017
+      },
+      {
+        "path": "/admin/variants",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 2757
+      },
+      {
+        "path": "/admin/colors",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 1005
+      },
+      {
+        "path": "/admin/materials",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 799
+      },
+      {
+        "path": "/admin/soles",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 768
+      },
+      {
+        "path": "/admin/inventory",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 3824
+      },
+      {
+        "path": "/admin/pos",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 1726
+      },
+      {
+        "path": "/admin/customers",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 1938
+      },
+      {
+        "path": "/admin/employees",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 1181
+      },
+      {
+        "path": "/admin/invoices",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 1393
+      },
+      {
+        "path": "/admin/statistics/revenue",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 846
+      },
+      {
+        "path": "/admin/statistics/best-sellers",
+        "status": 200,
+        "width": 360,
+        "viewport": 375,
+        "text": 1051
+      }
+    ],
+    "quality": {
+      "scrollWidth": 360,
+      "viewport": 375,
+      "textLength": 1051
+    }
+  },
+  {
+    "id": "security-guest",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/login",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "path": "/admin/products-crud/949/variants/inline-save",
+        "csrf": "missing",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/inline-save",
+        "csrf": "invalid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/inline-save",
+        "csrf": "valid",
+        "status": 302
+      },
+      {
+        "path": "/admin/products-crud/949/variants/batch",
+        "csrf": "missing",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/batch",
+        "csrf": "invalid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/batch",
+        "csrf": "valid",
+        "status": 302
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/delete",
+        "csrf": "missing",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/delete",
+        "csrf": "invalid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/delete",
+        "csrf": "valid",
+        "status": 302
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/status",
+        "csrf": "missing",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/status",
+        "csrf": "invalid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/status",
+        "csrf": "valid",
+        "status": 302
+      }
+    ],
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 385
+    }
+  },
+  {
+    "id": "security-user",
+    "width": 1280,
+    "role": "user",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/profile",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/dia-chi-nhan-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "path": "/admin/products-crud/949/variants/inline-save",
+        "csrf": "missing",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/inline-save",
+        "csrf": "invalid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/inline-save",
+        "csrf": "valid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/batch",
+        "csrf": "missing",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/batch",
+        "csrf": "invalid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/batch",
+        "csrf": "valid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/delete",
+        "csrf": "missing",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/delete",
+        "csrf": "invalid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/delete",
+        "csrf": "valid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/status",
+        "csrf": "missing",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/status",
+        "csrf": "invalid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/status",
+        "csrf": "valid",
+        "status": 403
+      }
+    ],
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 715
+    }
+  },
+  {
+    "id": "security-admin",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/products-crud/view/949",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "path": "/admin/products-crud/949/variants/inline-save",
+        "csrf": "missing",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/inline-save",
+        "csrf": "invalid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/inline-save",
+        "csrf": "valid",
+        "status": 400
+      },
+      {
+        "path": "/admin/products-crud/949/variants/batch",
+        "csrf": "missing",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/batch",
+        "csrf": "invalid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/batch",
+        "csrf": "valid",
+        "status": 400
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/delete",
+        "csrf": "missing",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/delete",
+        "csrf": "invalid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/delete",
+        "csrf": "valid",
+        "status": 404
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/status",
+        "csrf": "missing",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/status",
+        "csrf": "invalid",
+        "status": 403
+      },
+      {
+        "path": "/admin/products-crud/949/variants/1/status",
+        "csrf": "valid",
+        "status": 404
+      }
+    ],
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 2008
+    }
+  },
+  {
+    "id": "held-variant-cannot-delete",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/products-crud/view/949",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/pos",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/xem-truoc-voucher.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/ban-tai-quay.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud/view/949",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/quan-tri.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/quan-tri-danh-muc.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/sua-bien-the-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "deleteStatus": 409,
+      "buttonHidden": true
+    },
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 2126
+    }
+  },
+  {
+    "id": "open-cart-price-warning-and-row-final",
+    "width": 375,
+    "role": "guest",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/products/2",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/bo-anh-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chi-tiet-san-pham.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/cart",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/css/he-thong-thiet-ke.css",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/anh-san-pham-thay-the.svg",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/combo-box.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/chon-bien-the.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/them-nhanh.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/giao-dien-cua-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/js/gio-hang.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/anh/bieu-trung-quan-tri.svg",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "cartWarning": true,
+      "priceBefore": 3500000,
+      "priceAfter": 3501000
+    },
+    "quality": {
+      "scrollWidth": 360,
+      "viewport": 375,
+      "textLength": 715
+    }
+  }
+]

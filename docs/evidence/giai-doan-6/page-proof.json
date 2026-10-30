@@ -1,0 +1,317 @@
+{
+  "productId": 949,
+  "sizeIds": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+  ],
+  "variants": [
+    {
+      "id": 598,
+      "product_id": 949,
+      "size_id": 10,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 599,
+      "product_id": 949,
+      "size_id": 11,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 600,
+      "product_id": 949,
+      "size_id": 12,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 601,
+      "product_id": 949,
+      "size_id": 13,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 602,
+      "product_id": 949,
+      "size_id": 14,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 603,
+      "product_id": 949,
+      "size_id": 15,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 604,
+      "product_id": 949,
+      "size_id": 16,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 605,
+      "product_id": 949,
+      "size_id": 17,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 606,
+      "product_id": 949,
+      "size_id": 18,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 607,
+      "product_id": 949,
+      "size_id": 19,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 608,
+      "product_id": 949,
+      "size_id": 20,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 609,
+      "product_id": 949,
+      "size_id": 21,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 610,
+      "product_id": 949,
+      "size_id": 22,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    },
+    {
+      "id": 611,
+      "product_id": 949,
+      "size_id": 23,
+      "price": 100000.0,
+      "quantity": 5,
+      "status": true,
+      "chat_lieu_id": 1,
+      "mau_sac_id": 1,
+      "de_giay_id": 1
+    }
+  ],
+  "logs": [
+    {
+      "id": 833,
+      "variant_id": 598,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.3800595"
+    },
+    {
+      "id": 834,
+      "variant_id": 599,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.4292409"
+    },
+    {
+      "id": 835,
+      "variant_id": 600,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.4438015"
+    },
+    {
+      "id": 836,
+      "variant_id": 601,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.4584156"
+    },
+    {
+      "id": 837,
+      "variant_id": 602,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.4730086"
+    },
+    {
+      "id": 838,
+      "variant_id": 603,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.4858162"
+    },
+    {
+      "id": 839,
+      "variant_id": 604,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.5013602"
+    },
+    {
+      "id": 840,
+      "variant_id": 605,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.5161182"
+    },
+    {
+      "id": 841,
+      "variant_id": 606,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.5311450"
+    },
+    {
+      "id": 842,
+      "variant_id": 607,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.5422757"
+    },
+    {
+      "id": 843,
+      "variant_id": 608,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.5548628"
+    },
+    {
+      "id": 844,
+      "variant_id": 609,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.5678905"
+    },
+    {
+      "id": 845,
+      "variant_id": 610,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.5792603"
+    },
+    {
+      "id": 846,
+      "variant_id": 611,
+      "quantity_change": 5,
+      "quantity_before": 0,
+      "quantity_after": 5,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "created_at": "2026-10-30T12:36:52.5919233"
+    }
+  ]
+}

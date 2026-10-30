@@ -107,7 +107,7 @@ class InitialMaterialIntegrationTest {
         var v=variants.findByProduct_Id(id).get(0);
         mvc.perform(get("/admin/variants/edit/"+v.getId())).andExpect(content().string(containsString(m.getName())));
         mvc.perform(post("/admin/variants/save").with(csrf()).param("id",v.getId().toString()).param("productId",""+id).param("sizeId",v.getSize().getId().toString())
-            .param("colorId",v.getColor().getId().toString()).param("soleId",v.getSole().getId().toString()).param("materialId",m.getId().toString()).param("price","321000.50").param("quantity","7").param("expectedQuantity","7").param("status","true"))
+            .param("colorId",v.getColor().getId().toString()).param("soleId",v.getSole().getId().toString()).param("materialId",m.getId().toString()).param("price","321000").param("quantity","7").param("expectedQuantity","7").param("status","true"))
             .andExpect(status().is3xxRedirection());
         assertTrue(catalog.deleteLookup("materials",m.getId()).startsWith("Không"));
     }

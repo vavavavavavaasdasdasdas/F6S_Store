@@ -68,9 +68,18 @@ public class AdminProductController {
         model.addAttribute("product",form); return form(model);
     }
     @GetMapping("/view/{id}")
-    public String view(@PathVariable Integer id,@RequestParam(defaultValue="0") String page,Model model) {
+    public String view(@PathVariable Integer id,@RequestParam(defaultValue="0") String page,
+                       @RequestParam(required=false) Integer sizeId,@RequestParam(required=false) Integer colorId,
+                       @RequestParam(required=false) Integer materialId,@RequestParam(required=false) Integer soleId,
+                       @RequestParam(required=false) Boolean variantStatus,Model model) {
         model.addAttribute("product",catalog.product(id));
-        var result=query.variantsPage(id,"all",0,page);model.addAttribute("variants",result.getContent());model.addAttribute("variantPage",result); return "admin/san-pham/chi-tiet";
+        var result=query.variantsPage(id,"all",0,page,materialId,sizeId,variantStatus,null,null,colorId,soleId);
+        model.addAttribute("variants",result.getContent());model.addAttribute("variantPage",result);
+        model.addAttribute("sizes",sizes.findAll());model.addAttribute("colors",colors.findAll());
+        model.addAttribute("materials",materials.findAll());model.addAttribute("soles",soles.findAll());
+        model.addAttribute("sizeId",sizeId);model.addAttribute("colorId",colorId);model.addAttribute("materialId",materialId);
+        model.addAttribute("soleId",soleId);model.addAttribute("variantStatus",variantStatus);
+        return "admin/san-pham/chi-tiet";
     }
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("product") AdminProductForm product, BindingResult result, Model model, RedirectAttributes flash) {
@@ -86,7 +95,7 @@ public class AdminProductController {
         if (!result.hasErrors()) {
             try {
                 Product saved=catalog.saveProduct(product);
-                flash.addFlashAttribute("message","Đã lưu sản phẩm và các biến thể ban đầu (nếu có).");
+                flash.addFlashAttribute("message",product.getId()==null?"Đã tạo sản phẩm, bạn có thể chỉnh các biến thể bên dưới":"Đã lưu sản phẩm.");
                 return "redirect:/admin/products-crud/view/"+saved.getId();
             } catch(CatalogValidationException ex) { result.rejectValue(ex.getField(),"invalid",ex.getMessage()); }
               catch(DataIntegrityViolationException ex) { result.rejectValue("code","duplicate","Mã sản phẩm đã tồn tại hoặc dữ liệu liên quan vừa thay đổi."); }

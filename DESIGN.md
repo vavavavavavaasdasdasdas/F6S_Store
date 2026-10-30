@@ -73,3 +73,7 @@ Dùng fragment `trang-thai-ban` cho nút trạng thái sản phẩm/biến thể
 ### Góp ý giảng viên — Giai đoạn 5
 
 Quyết định mới thay quy tắc đế giày cấp sản phẩm và bộ chọn hai thuộc tính trước đây: biến thể có kích cỡ, màu sắc, chất liệu, đế giày. `products.de_giay_id` chỉ là gợi ý cũ, không dùng hiển thị/lọc. Mọi select tiếp tục dùng `static/js/combo-box.js`; form tạo thuộc tính dùng chế độ creatable hiện có, field-error cạnh trường. CRUD màu dùng bảng/cuộn ngang, STT, PaginationAdvice, admin-confirm giống Chất liệu. Mẫu màu dùng `.color-swatch`, không thay token thương hiệu. Bộ chọn biến thể dùng dữ liệu ID bốn chiều, chỉ ghép tổ hợp có thật và còn hàng; giữ thông tin snapshot trong đơn, không đọc tên hiện tại cho hai thuộc tính mới của đơn cũ.
+
+### Giai đoạn 6 — Sửa biến thể trên trang sản phẩm
+
+Bảng chín cột dùng khung cuộn/STT/phân trang12 hiện có. Dòng sửa dùng combo-box.js, lỗi cạnh ô, Lưu/Hủy và aria-busy; refresh riêng dòng, không xóa bản nháp dòng khác. Batch dialog dùng nhiều checkbox kích cỡ và cùng service saveVariant. adminConfirm mở dialog dùng chung từ quan-tri-danh-muc.js cho thao tác AJAX. Stock dùng expectedQuantity và InventoryService.adjust; xung đột giữ dữ liệu đang nhập và báo tải lại.

@@ -1,0 +1,50 @@
+12:27:48.138 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to System property 'spring.devtools.restart.enabled' being set to false
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-30 12:27:48.910  INFO c.example.demodatn.DemoDatnApplication : Starting DemoDatnApplication using Java 17.0.17 with PID 19112 (C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN\target\classes started by ADMIN in C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN)
+2026-10-30 12:27:48.916  INFO c.example.demodatn.DemoDatnApplication : No active profile set, falling back to 1 default profile: "default"
+2026-10-30 12:27:48.994  INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-10-30 12:27:50.727  INFO o.s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-30 12:27:51.086  INFO o.s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 326 ms. Found 22 JPA repository interfaces.
+2026-10-30 12:27:53.866  INFO o.s.boot.tomcat.TomcatWebServer : Tomcat initialized with port 18180 (http)
+2026-10-30 12:27:53.895  INFO o.apache.catalina.core.StandardService : Starting service [Tomcat]
+2026-10-30 12:27:53.896  INFO org.apache.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-30 12:27:54.076  INFO o.s.b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 5077 ms
+2026-10-30 12:27:54.861  INFO com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Starting...
+2026-10-30 12:27:55.498  INFO com.zaxxer.hikari.pool.HikariPool : HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 06cff221-d231-454a-8bd0-35ef7391eaa5
+2026-10-30 12:27:55.503  INFO com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Start completed.
+2026-10-30 12:27:55.993  INFO org.hibernate.orm.jpa : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-30 12:27:56.118  INFO org.hibernate.orm.core : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-10-30 12:27:56.982  INFO o.s.o.j.p.SpringPersistenceUnitInfo : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-30 12:27:57.128  WARN org.hibernate.orm.deprecation : HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-30 12:27:57.154  INFO org.hibernate.orm.connections.pooling : HHH10001005: Database info:
+	Database JDBC URL [jdbc:sqlserver://localhost:1433;concatNullYieldsNull=ON;quotedIdentifier=ON;connectRetryInterval=10;connectRetryCount=1;maxResultBuffer=-1;sendTemporalDataTypesAsStringForBulkCopy=true;delayLoadingLobs=true;useFmtOnly=false;vectorTypeSupport=v1;cacheBulkCopyMetadata=false;bulkCopyForBatchInsertAllowEncryptedValueModifications=false;bulkCopyForBatchInsertTableLock=false;bulkCopyForBatchInsertKeepNulls=false;bulkCopyForBatchInsertKeepIdentity=false;bulkCopyForBatchInsertFireTriggers=false;bulkCopyForBatchInsertCheckConstraints=false;bulkCopyForBatchInsertBatchSize=0;useBulkCopyForBatchInsert=false;cancelQueryTimeout=-1;sslProtocol=TLS;calcBigDecimalPrecision=false;useDefaultJaasConfig=false;jaasConfigurationName=SQLJDBCDriver;statementPoolingCacheSize=0;serverPreparedStatementDiscardThreshold=10;enablePrepareOnFirstPreparedStatementCall=false;fips=false;socketTimeout=0;authentication=NotSpecified;authenticationScheme=nativeAuthentication;xopenStates=false;datetimeParameterType=datetime2;sendTimeAsDatetime=true;replication=false;trustStoreType=JKS;trustServerCertificate=true;TransparentNetworkIPResolution=true;iPAddressPreference=IPv4First;serverNameAsACE=false;sendStringParametersAsUnicode=true;selectMethod=direct;responseBuffering=adaptive;queryTimeout=-1;packetSize=8000;multiSubnetFailover=false;loginTimeout=30;lockTimeout=-1;lastUpdateCount=true;useDefaultGSSCredential=false;prepareMethod=prepexec;encrypt=true;disableStatementPooling=true;databaseName=shopbangiay_kt_20261030_gd6;columnEncryptionSetting=Disabled;applicationName=Microsoft JDBC Driver for SQL Server;applicationIntent=readwrite;]
+	Database driver: Microsoft JDBC Driver 13.4 for SQL Server
+	Database dialect: SQLServerDialect
+	Database version: 17.0
+	Default catalog/schema: shopbangiay_kt_20261030_gd6/dbo
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 128
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-30 12:27:59.217  INFO org.hibernate.orm.core : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-30 12:27:59.731  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-30 12:27:59.881  INFO o.s.d.j.r.query.QueryEnhancerFactories : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-30 12:28:04.930  WARN o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-30 12:28:05.610  INFO o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-10-30 12:28:05.613  WARN o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-10-30 12:28:07.571  INFO o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 18180 (http) with context path '/'
+2026-10-30 12:28:07.607  INFO c.example.demodatn.DemoDatnApplication : Started DemoDatnApplication in 19.483 seconds (process running for 20.158)
+2026-10-30 12:28:59.054  INFO o.a.c.c.C.[Tomcat].[localhost].[/] : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-30 12:28:59.055  INFO o.s.web.servlet.DispatcherServlet : Initializing Servlet 'dispatcherServlet'
+2026-10-30 12:28:59.056  INFO o.s.web.servlet.DispatcherServlet : Completed initialization in 1 ms

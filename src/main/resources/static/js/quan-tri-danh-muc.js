@@ -13,6 +13,7 @@
    title.textContent=heading; description.textContent=message; accept.textContent=label;
    decision=action; trigger=source; dialog.showModal(); cancel.focus();
  }
+ window.adminConfirm=(heading,message,label='Xác nhận',source=null)=>new Promise(resolve=>{ask(heading,message,label,()=>resolve(true),source);dialog.addEventListener('close',()=>resolve(false),{once:true});});
  cancel.addEventListener('click',()=>dialog.close());
  accept.addEventListener('click',()=>{const action=decision;dialog.close();action?.();});
  dialog.addEventListener('close',()=>{trigger?.focus();decision=null;});
