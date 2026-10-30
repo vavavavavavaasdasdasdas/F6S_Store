@@ -1,0 +1,56 @@
+{
+  "orders": [
+    {
+      "id": 674,
+      "order_code": "DH000674",
+      "order_type": "POS",
+      "payment_reference": "F6SMATL7O",
+      "final_amount": 19950000.0,
+      "payment_status": "PAID",
+      "status": "CONFIRMED"
+    },
+    {
+      "id": 675,
+      "order_code": "DH000675",
+      "order_type": "POS",
+      "payment_reference": "F6SLTOHO6",
+      "final_amount": 19950000.0,
+      "payment_status": "PAID",
+      "status": "CONFIRMED"
+    },
+    {
+      "id": 676,
+      "order_code": "DH000676",
+      "order_type": "ONLINE",
+      "final_amount": 155000.0,
+      "payment_status": "UNPAID",
+      "status": "PENDING"
+    },
+    {
+      "id": 677,
+      "order_code": "DH000677",
+      "order_type": "ONLINE",
+      "final_amount": 155000.0,
+      "payment_status": "PAID",
+      "status": "PENDING"
+    },
+    {
+      "id": 678,
+      "order_code": "DH000678",
+      "order_type": "ONLINE",
+      "final_amount": 155000.0,
+      "payment_status": "UNPAID",
+      "status": "CANCELLED"
+    }
+  ],
+  "variants": [
+    {
+      "id": 598,
+      "quantity": 16
+    },
+    {
+      "id": 599,
+      "quantity": 18
+    }
+  ]
+}

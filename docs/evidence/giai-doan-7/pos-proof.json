@@ -1,0 +1,108 @@
+[
+  {
+    "initialCustomerRequests": 0,
+    "initialNamesInDom": 0,
+    "debounceRequests": 1,
+    "delay": 305,
+    "page2FirstSTT": 13,
+    "selectedAndCleared": true,
+    "emptyState": true
+  },
+  {
+    "orderId": 674,
+    "invoicePath": "/admin/invoices/287",
+    "first": {
+      "payload": "00020101021238530010A0000007270123000697043601091234567890208QRIBFTTA53037045408100000005802VN62130809F6SMATL7O63043038",
+      "bin": "970436",
+      "account": "123456789",
+      "amount": "10000000",
+      "reference": "F6SMATL7O",
+      "crc": "3038"
+    },
+    "doubled": {
+      "payload": "00020101021238530010A0000007270123000697043601091234567890208QRIBFTTA53037045408200000005802VN62130809F6SMATL7O63049967",
+      "bin": "970436",
+      "account": "123456789",
+      "amount": "20000000",
+      "reference": "F6SMATL7O",
+      "crc": "9967"
+    },
+    "discounted": {
+      "payload": "00020101021238530010A0000007270123000697043601091234567890208QRIBFTTA53037045408199500005802VN62130809F6SMATL7O63048276",
+      "bin": "970436",
+      "account": "123456789",
+      "amount": "19950000",
+      "reference": "F6SMATL7O",
+      "crc": "8276"
+    },
+    "removed": {
+      "payload": "00020101021238530010A0000007270123000697043601091234567890208QRIBFTTA53037045408200000005802VN62130809F6SMATL7O63049967",
+      "bin": "970436",
+      "account": "123456789",
+      "amount": "20000000",
+      "reference": "F6SMATL7O",
+      "crc": "9967"
+    },
+    "width": 1280,
+    "order": {
+      "id": 674,
+      "order_code": "DH000674",
+      "payment_reference": "F6SMATL7O",
+      "payment_status": "PAID",
+      "final_amount": 19950000.0
+    }
+  },
+  {
+    "initialCustomerRequests": 0,
+    "initialNamesInDom": 0,
+    "debounceRequests": 1,
+    "delay": 306,
+    "page2FirstSTT": 13,
+    "selectedAndCleared": true,
+    "emptyState": true
+  },
+  {
+    "orderId": 675,
+    "invoicePath": "/admin/invoices/288",
+    "first": {
+      "payload": "00020101021238530010A0000007270123000697043601091234567890208QRIBFTTA53037045408100000005802VN62130809F6SLTOHO66304ACB6",
+      "bin": "970436",
+      "account": "123456789",
+      "amount": "10000000",
+      "reference": "F6SLTOHO6",
+      "crc": "ACB6"
+    },
+    "doubled": {
+      "payload": "00020101021238530010A0000007270123000697043601091234567890208QRIBFTTA53037045408200000005802VN62130809F6SLTOHO6630405E9",
+      "bin": "970436",
+      "account": "123456789",
+      "amount": "20000000",
+      "reference": "F6SLTOHO6",
+      "crc": "05E9"
+    },
+    "discounted": {
+      "payload": "00020101021238530010A0000007270123000697043601091234567890208QRIBFTTA53037045408199500005802VN62130809F6SLTOHO663041EF8",
+      "bin": "970436",
+      "account": "123456789",
+      "amount": "19950000",
+      "reference": "F6SLTOHO6",
+      "crc": "1EF8"
+    },
+    "removed": {
+      "payload": "00020101021238530010A0000007270123000697043601091234567890208QRIBFTTA53037045408200000005802VN62130809F6SLTOHO6630405E9",
+      "bin": "970436",
+      "account": "123456789",
+      "amount": "20000000",
+      "reference": "F6SLTOHO6",
+      "crc": "05E9"
+    },
+    "width": 375,
+    "order": {
+      "id": 675,
+      "order_code": "DH000675",
+      "payment_reference": "F6SLTOHO6",
+      "payment_status": "PAID",
+      "final_amount": 19950000.0
+    }
+  }
+]

@@ -1,0 +1,354 @@
+[
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/",
+    "status": 200,
+    "width": 1265,
+    "text": 1555
+  },
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/products",
+    "status": 200,
+    "width": 1265,
+    "text": 1215
+  },
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/products/949",
+    "status": 200,
+    "width": 1265,
+    "text": 816
+  },
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/cart",
+    "status": 200,
+    "width": 1265,
+    "text": 401
+  },
+  {
+    "role": "guest",
+    "viewport": 1280,
+    "path": "/login",
+    "status": 200,
+    "width": 1265,
+    "text": 385
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/",
+    "status": 200,
+    "width": 360,
+    "text": 1510
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/products",
+    "status": 200,
+    "width": 360,
+    "text": 763
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/products/949",
+    "status": 200,
+    "width": 360,
+    "text": 784
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/cart",
+    "status": 200,
+    "width": 360,
+    "text": 356
+  },
+  {
+    "role": "guest",
+    "viewport": 375,
+    "path": "/login",
+    "status": 200,
+    "width": 360,
+    "text": 340
+  },
+  {
+    "role": "user",
+    "viewport": 1280,
+    "path": "/profile",
+    "status": 200,
+    "width": 1265,
+    "text": 715
+  },
+  {
+    "role": "user",
+    "viewport": 1280,
+    "path": "/orders",
+    "status": 200,
+    "width": 1265,
+    "text": 714
+  },
+  {
+    "role": "user",
+    "viewport": 1280,
+    "path": "/cart",
+    "status": 200,
+    "width": 1265,
+    "text": 401
+  },
+  {
+    "role": "user",
+    "viewport": 375,
+    "path": "/profile",
+    "status": 200,
+    "width": 360,
+    "text": 670
+  },
+  {
+    "role": "user",
+    "viewport": 375,
+    "path": "/orders",
+    "status": 200,
+    "width": 360,
+    "text": 669
+  },
+  {
+    "role": "user",
+    "viewport": 375,
+    "path": "/cart",
+    "status": 200,
+    "width": 360,
+    "text": 356
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin",
+    "status": 200,
+    "width": 1265,
+    "text": 2175
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/products-crud",
+    "status": 200,
+    "width": 1265,
+    "text": 2606
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/products-crud/view/949",
+    "status": 200,
+    "width": 1265,
+    "text": 1281
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/variants",
+    "status": 200,
+    "width": 1265,
+    "text": 2888
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/colors",
+    "status": 200,
+    "width": 1265,
+    "text": 1363
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/materials",
+    "status": 200,
+    "width": 1265,
+    "text": 1157
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/soles",
+    "status": 200,
+    "width": 1265,
+    "text": 1126
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/inventory",
+    "status": 200,
+    "width": 1265,
+    "text": 4078
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/pos",
+    "status": 200,
+    "width": 1265,
+    "text": 1536
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/customers",
+    "status": 200,
+    "width": 1265,
+    "text": 2156
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/employees",
+    "status": 200,
+    "width": 1265,
+    "text": 1477
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/invoices",
+    "status": 200,
+    "width": 1265,
+    "text": 1842
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/statistics/revenue",
+    "status": 200,
+    "width": 1265,
+    "text": 1145
+  },
+  {
+    "role": "admin",
+    "viewport": 1280,
+    "path": "/admin/statistics/best-sellers",
+    "status": 200,
+    "width": 1265,
+    "text": 1434
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin",
+    "status": 200,
+    "width": 360,
+    "text": 1867
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/products-crud",
+    "status": 200,
+    "width": 360,
+    "text": 2247
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/products-crud/view/949",
+    "status": 200,
+    "width": 360,
+    "text": 922
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/variants",
+    "status": 200,
+    "width": 360,
+    "text": 2529
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/colors",
+    "status": 200,
+    "width": 360,
+    "text": 1004
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/materials",
+    "status": 200,
+    "width": 360,
+    "text": 798
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/soles",
+    "status": 200,
+    "width": 360,
+    "text": 767
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/inventory",
+    "status": 200,
+    "width": 360,
+    "text": 3719
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/pos",
+    "status": 200,
+    "width": 360,
+    "text": 1240
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/customers",
+    "status": 200,
+    "width": 360,
+    "text": 1860
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/employees",
+    "status": 200,
+    "width": 360,
+    "text": 1181
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/invoices",
+    "status": 200,
+    "width": 360,
+    "text": 1546
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/statistics/revenue",
+    "status": 200,
+    "width": 360,
+    "text": 849
+  },
+  {
+    "role": "admin",
+    "viewport": 375,
+    "path": "/admin/statistics/best-sellers",
+    "status": 200,
+    "width": 360,
+    "text": 1138
+  }
+]

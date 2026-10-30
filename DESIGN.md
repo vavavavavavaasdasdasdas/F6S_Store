@@ -77,3 +77,7 @@ Quyết định mới thay quy tắc đế giày cấp sản phẩm và bộ ch�
 ### Giai đoạn 6 — Sửa biến thể trên trang sản phẩm
 
 Bảng chín cột dùng khung cuộn/STT/phân trang12 hiện có. Dòng sửa dùng combo-box.js, lỗi cạnh ô, Lưu/Hủy và aria-busy; refresh riêng dòng, không xóa bản nháp dòng khác. Batch dialog dùng nhiều checkbox kích cỡ và cùng service saveVariant. adminConfirm mở dialog dùng chung từ quan-tri-danh-muc.js cho thao tác AJAX. Stock dùng expectedQuantity và InventoryService.adjust; xung đột giữ dữ liệu đang nhập và báo tải lại.
+
+### Giai đoạn 7 — POS và QR chuyển khoản
+
+Tìm khách bắt đầu từ trạng thái Khách lẻ, danh sách chỉ xuất hiện sau truy vấn hai ký tự; debounce300ms, hủy truy vấn cũ, thẻ khách có Đổi khách/Bỏ chọn. Input có form owner bên ngoài không làm bẩn form thanh toán; liên kết AJAX đã xử lý không kích hoạt cảnh báo rời trang. QR dùng canvas có viền trắng trong panel hiện có, thông tin tài khoản/số tiền/nội dung tách riêng, responsive375px. Xác nhận nhận tiền bị xóa khi tổng thay đổi. Chưa cấu hình ngân hàng có thông báo, không hiện QR giả.

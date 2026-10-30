@@ -28,6 +28,7 @@ public class OrderService {
 
     private final InvoiceRepository invoices;
     private final OrderStatusService statuses;
+    private final com.example.demodatn.repository.donhang.OrderRepository orders;
 
     @Transactional(rollbackFor = Exception.class)
     public Order placeOrder(CheckoutRequest request, List<CartItemDto> cartItems, Customer customer, BigDecimal ignoredShippingFee) {
@@ -47,6 +48,11 @@ public class OrderService {
     @Transactional(rollbackFor = Exception.class)
     public Order createPosOrder(List<CartItemDto> items, Customer customer, Employee employee,
             String voucherCode, String paymentMethod, String address, BigDecimal cashReceived) {
+        return createPosOrder(items,customer,employee,voucherCode,paymentMethod,address,cashReceived,null);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public Order createPosOrder(List<CartItemDto> items, Customer customer, Employee employee,
+            String voucherCode, String paymentMethod, String address, BigDecimal cashReceived,String reference) {
         if (employee == null || !Boolean.TRUE.equals(employee.getStatus()) || employee.getUser() == null || !Boolean.TRUE.equals(employee.getUser().getStatus()))
             throw new IllegalArgumentException("Tài khoản chưa gắn với nhân viên đang hoạt động.");
         if (!java.util.Set.of("CASH", "TRANSFER").contains(paymentMethod))
@@ -57,6 +63,10 @@ public class OrderService {
         order.setCustomer(customer);
         order.setEmployee(employee);
         order.setOrderType("POS");
+        String ref=reference;
+        if(ref==null){do {ref=VietQrService.newReference();}while(orders.existsByPaymentReference(ref));}
+        if(!ref.matches("F6S[A-Z0-9]{6}") || orders.existsByPaymentReference(ref))throw new IllegalArgumentException("Mã đối soát đã được sử dụng. Tạo giỏ mới rồi thử lại.");
+        order.setPaymentReference(ref);
 
         order.setPaymentMethod(paymentMethod);
 

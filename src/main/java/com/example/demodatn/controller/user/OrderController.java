@@ -51,11 +51,11 @@ public class OrderController {
     @Value("${shop.shipping.free-threshold:500000}")
     private BigDecimal freeShippingThreshold;
     
-    @Value("${shop.bank.name:Vietcombank}")
+    @Value("${shop.bank.name:}")
     private String bankName;
-    @Value("${shop.bank.account:123456789}")
+    @Value("${shop.bank.account:}")
     private String bankAccount;
-    @Value("${shop.bank.owner:SHOP GIAY}")
+    @Value("${shop.bank.account-name:}")
     private String bankOwner;
 
     public OrderController(OrderService orderService, CustomerRepository customerRepository, VoucherService voucherService, OrderRepository orderRepository, PricingService pricingService) {

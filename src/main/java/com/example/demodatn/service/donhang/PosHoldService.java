@@ -119,7 +119,7 @@ public class PosHoldService {
             var price=pricing.priceForVariant(item.getVariantId()).getFinalPrice();
             if(price.compareTo(item.getPrice())!=0)throw new IllegalArgumentException("Giá đã thay đổi. Kiểm tra và xác nhận lại giá trước khi thanh toán.");
         }
-        var order=orders.createPosOrder(cart,customer,employee,request.getVoucherCode(),request.getPaymentMethod(),"Tại quầy",request.getCashReceived());
+        var order=orders.createPosOrder(cart,customer,employee,request.getVoucherCode(),request.getPaymentMethod(),"Tại quầy",request.getCashReceived(),request.getPaymentReference());
         holds.delete(hold);holds.flush();
         return order;
     }

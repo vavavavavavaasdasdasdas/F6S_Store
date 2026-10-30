@@ -1,0 +1,27 @@
+BẮT ĐẦU 004_anh_san_pham.sql
+ket_qua database_name                                                                                                                    image_count         
+------- -------------------------------------------------------------------------------------------------------------------------------- --------------------
+COMMIT  shopbangiay_kt_20261030_gd7                                                                                                                         6
+HOÀN TẤT 004_anh_san_pham.sql
+BẮT ĐẦU 005_chat_lieu.sql
+HOÀN TẤT 005_chat_lieu.sql
+BẮT ĐẦU 006_luat_ton_kho.sql
+HOÀN TẤT 006_luat_ton_kho.sql
+BẮT ĐẦU 007_tieng_viet_unicode.sql
+HOÀN TẤT 007_tieng_viet_unicode.sql
+BẮT ĐẦU 008_nvarchar_con_lai.sql
+converted_columns
+-----------------
+                0
+HOÀN TẤT 008_nvarchar_con_lai.sql
+BẮT ĐẦU 009_dia_chi_nhan_hang.sql
+HOÀN TẤT 009_dia_chi_nhan_hang.sql
+BẮT ĐẦU 010_de_giay.sql
+Hoàn tất 010_de_giay.sql
+HOÀN TẤT 010_de_giay.sql
+BẮT ĐẦU 011_can_cuoc_tai_khoan_email.sql
+HOÀN TẤT 011_can_cuoc_tai_khoan_email.sql
+BẮT ĐẦU 012_ma_san_pham_tu_sinh.sql
+HOÀN TẤT 012_ma_san_pham_tu_sinh.sql
+HOÀN TẤT 013_mau_sac_bien_the.sql
+HOÀN TẤT 014_tham_chieu_thanh_toan.sql

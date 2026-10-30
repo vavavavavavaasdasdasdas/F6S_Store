@@ -18,23 +18,28 @@
    variantOptions=[...document.querySelector('#pos-options-'+button.dataset.productId).content.cloneNode(true).querySelectorAll('option')];variantFields.forEach(f=>f.select.replaceChildren());resolve();dialog.showModal();variantFields[0].select.focus();
  }));select.addEventListener('change',stock);dialog.querySelector('[data-pos-close]').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>{dialog.querySelector('form').dataset.dirty='false';opener?.focus();});
  const customer=document.querySelector('#customerId'),search=document.querySelector('#customerSearch');
- let searchSequence=0,searchTimer;const chosenLabel=document.querySelector('#pos-chosen-customer');
- function label(){let text='';try{text=sessionStorage.getItem('pos-customer-label-'+customer.value)||'';}catch(_){}chosenLabel.textContent=customer.value?(text||'Khách hàng #'+customer.value):'Khách lẻ';}
+ let searchSequence=0,searchTimer,searchRequest=null;const chosenLabel=document.querySelector('#pos-chosen-customer'),customerHint=document.querySelector('#customerResult'),customerCard=document.querySelector('#pos-selected-customer'),searchBox=document.querySelector('[data-customer-search-box]');
+ function label(){let text='';try{text=sessionStorage.getItem('pos-customer-label-'+customer.value)||'';}catch(_){}chosenLabel.textContent=customer.value?(text||'Khách hàng #'+customer.value):'Khách lẻ';customerCard.hidden=!customer.value;document.querySelector('[data-customer-guest]').hidden=Boolean(customer.value);searchBox.hidden=Boolean(customer.value);}
+ function clearResults(){searchSequence++;searchRequest?.abort();const results=document.querySelector('#pos-customer-results');results.replaceChildren();results.hidden=true;customerHint.textContent='Nhập tên hoặc số điện thoại để tìm';}
  async function searchCustomers(page=0){
-   const sequence=++searchSequence,results=document.querySelector('#pos-customer-results');results.setAttribute('aria-busy','true');
-   document.querySelector('#customerResult').textContent='Đang tìm khách hàng…';
-   const params=new URLSearchParams({customerQuery:search.value,customerPage:page});
-   try{const response=await fetch('/admin/pos/customers?'+params,{headers:{'X-Requested-With':'XMLHttpRequest'}});if(!response.ok)throw new Error('Không tải được khách hàng. Bạn hãy thử lại.');const html=await response.text();if(sequence!==searchSequence)return;const fragment=new DOMParser().parseFromString(html,'text/html').querySelector('#pos-customer-results');if(!fragment)throw new Error('Không tải được khách hàng. Bạn hãy thử lại.');results.replaceWith(fragment);document.querySelector('#customerResult').textContent='';}
-   catch(error){if(sequence===searchSequence)document.querySelector('#customerResult').textContent=error.message;}
+   searchRequest?.abort();const sequence=++searchSequence,query=search.value.trim();
+   if(query.length<2){clearResults();return;}
+   searchRequest=new AbortController();const results=document.querySelector('#pos-customer-results');results.replaceChildren();results.hidden=false;results.setAttribute('aria-busy','true');customerHint.textContent='Đang tìm khách hàng…';
+   const params=new URLSearchParams({customerQuery:query,customerPage:page});
+   try{const response=await fetch('/admin/pos/customers?'+params,{headers:{'X-Requested-With':'XMLHttpRequest'},signal:searchRequest.signal});if(!response.ok)throw new Error('Không tải được khách hàng. Bạn hãy thử lại.');const html=await response.text();if(sequence!==searchSequence)return;const fragment=new DOMParser().parseFromString(html,'text/html').querySelector('#pos-customer-results');if(!fragment)throw new Error('Không tải được khách hàng. Bạn hãy thử lại.');results.replaceWith(fragment);customerHint.textContent='';}
+   catch(error){if(error.name!=='AbortError'&&sequence===searchSequence)customerHint.textContent=error.message;}
    finally{if(sequence===searchSequence)document.querySelector('#pos-customer-results').removeAttribute('aria-busy');}
  }
- search.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(()=>searchCustomers(),300);});
+ function scheduleSearch(event){if(event?.isComposing)return;clearTimeout(searchTimer);searchRequest?.abort();if(search.value.trim().length<2){clearResults();return;}searchTimer=setTimeout(()=>searchCustomers(),300);}
+ search.addEventListener('input',scheduleSearch);search.addEventListener('compositionend',scheduleSearch);
  document.querySelector('#pos-customer-query').addEventListener('submit',event=>{event.preventDefault();clearTimeout(searchTimer);searchCustomers();});
  document.addEventListener('click',event=>{
-   const option=event.target.closest('[data-customer-id]');if(option){customer.value=option.dataset.customerId;try{sessionStorage.setItem('pos-customer-label-'+customer.value,option.dataset.customerLabel);}catch(_){}chosenLabel.textContent=option.dataset.customerLabel;customer.dispatchEvent(new Event('change',{bubbles:true}));}
-   const link=event.target.closest('#pos-customer-results .shared-pagination a');if(link){event.preventDefault();searchCustomers(new URL(link.href).searchParams.get('customerPage')||0);}
+   const option=event.target.closest('[data-customer-id]');if(option){customer.value=option.dataset.customerId;try{sessionStorage.setItem('pos-customer-label-'+customer.value,option.dataset.customerLabel);}catch(_){}label();clearResults();customerHint.textContent='';customer.dispatchEvent(new Event('change',{bubbles:true}));}
+
  });
- document.querySelector('[data-customer-clear]').addEventListener('click',()=>{customer.value='';label();customer.dispatchEvent(new Event('change',{bubbles:true}));});
+ customer.parentElement.addEventListener('click',event=>{const link=event.target.closest('#pos-customer-results .shared-pagination a');if(link){event.preventDefault();searchCustomers(new URL(link.href).searchParams.get('customerPage')||0);}});
+ document.querySelector('[data-customer-change]').addEventListener('click',()=>{searchBox.hidden=false;search.value='';clearResults();search.focus();});
+ document.querySelector('[data-customer-clear]').addEventListener('click',()=>{customer.value='';label();search.value='';clearResults();customer.dispatchEvent(new Event('change',{bubbles:true}));});
  const form=document.querySelector('#pos-payment'),payment=document.querySelector('#paymentMethod'),cash=document.querySelector('#cashReceived'),total=form.querySelector('[data-total]'),pay=document.querySelector('#pos-pay');
  function change(){const isCash=payment.value==='CASH';document.querySelector('#cash-fields').hidden=!isCash;document.querySelector('#transfer-note').hidden=isCash;cash.required=isCash;cash.disabled=!isCash;cash.min=isCash?total.dataset.amount:0;document.querySelector('#cash-change').textContent=new Intl.NumberFormat('vi-VN').format(Math.max(0,Number(cash.value||0)-Number(total.dataset.amount)))+' đ';}
  payment.addEventListener('change',change);cash.addEventListener('input',change);form.addEventListener('voucherchange',change);change();

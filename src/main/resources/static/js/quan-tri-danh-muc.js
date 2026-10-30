@@ -66,8 +66,8 @@
    error(field,message);return !message;
  }
  forms.forEach(form=>{
-   form.addEventListener('input',event=>{if(form.method.toLowerCase()!=='get')form.dataset.dirty='true';if(event.target.getAttribute('aria-invalid')==='true')validate(event.target);});
-   form.addEventListener('change',()=>{if(form.method.toLowerCase()!=='get')form.dataset.dirty='true';});
+   form.addEventListener('input',event=>{if(event.target.form!==form)return;if(form.method.toLowerCase()!=='get')form.dataset.dirty='true';if(event.target.getAttribute('aria-invalid')==='true')validate(event.target);});
+   form.addEventListener('change',event=>{if(event.target.form!==form)return;if(form.method.toLowerCase()!=='get')form.dataset.dirty='true';});
    form.querySelectorAll('input:not([data-combo-input]),select,textarea').forEach(field=>{
      field.addEventListener('blur',()=>validate(field));
      const slot=document.getElementById(field.id+'-error');
@@ -122,7 +122,7 @@
  const dirty=()=>forms.some(f=>f.dataset.dirty==='true' && f.dataset.submitting!=='true');
  document.addEventListener('click',event=>{
    const link=event.target.closest('a[href]');
-   if(!link || !dirty() || event.ctrlKey || event.metaKey || link.target==='_blank' || link.getAttribute('href').startsWith('#'))return;
+   if(event.defaultPrevented || !link || !dirty() || event.ctrlKey || event.metaKey || link.target==='_blank' || link.getAttribute('href').startsWith('#'))return;
    event.preventDefault();
    ask('Rời trang chưa lưu?','Thông tin vừa nhập chưa được lưu. Rời trang sẽ bỏ các thay đổi này.','Rời trang',()=>{forms.forEach(f=>f.dataset.dirty='false');location.href=link.href;},link);
  });

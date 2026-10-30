@@ -23,6 +23,9 @@ public class Order {
     @Column(name = "order_code", unique = true, nullable = false)
     private String orderCode;
 
+    @org.hibernate.annotations.Nationalized
+    @Column(name="payment_reference",length=40) private String paymentReference;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;

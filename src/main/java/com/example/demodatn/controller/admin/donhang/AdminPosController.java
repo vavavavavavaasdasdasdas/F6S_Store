@@ -31,6 +31,7 @@ import java.util.*;
 public class AdminPosController {
     private final ProductVariantRepository variants;
     private final PricingService pricing;
+    private final com.example.demodatn.service.donhang.VietQrService vietQr;
     private final VoucherService vouchers;
     private final CustomerRepository customers;
     private final EmployeeRepository employees;
@@ -43,11 +44,11 @@ public class AdminPosController {
     private final SizeRepository sizes;
 
     @GetMapping("/customers")
-    public String customerSearch(@RequestParam(defaultValue="") String customerQuery,@RequestParam(defaultValue="0") String customerPage,Model model){model.addAttribute("customerPage",catalogQuery.customers(customerQuery,customerPage));return "admin/ban-tai-quay/khach-hang :: results";}
+    public String customerSearch(@RequestParam(defaultValue="") String customerQuery,@RequestParam(defaultValue="0") String customerPage,Model model){model.addAttribute("customerPage",catalogQuery.customers(customerQuery,customerPage));model.addAttribute("customerQuery",customerQuery.trim());return "admin/ban-tai-quay/khach-hang :: results";}
 
 
     private void clearCart(HttpSession session) {
-        for(String key:List.of("posCart","posCheckoutToken","posLoadedHold","posHeldRequest","posHoldReview"))session.removeAttribute(key);
+        for(String key:List.of("posCart","posCheckoutToken","posLoadedHold","posHeldRequest","posHoldReview","posPaymentReference"))session.removeAttribute(key);
     }
 
     @SuppressWarnings("unchecked")
@@ -142,7 +143,10 @@ public class AdminPosController {
                 model.addAttribute("posCheckoutRequest", request);
             }
             model.addAttribute("checkoutToken", session.getAttribute("posCheckoutToken"));
-            model.addAttribute("customerPage",catalogQuery.customers(customerQuery,customerPage));model.addAttribute("customerQuery",customerQuery);
+            model.addAttribute("customerPage",org.springframework.data.domain.Page.empty(org.springframework.data.domain.PageRequest.of(0,12)));
+            model.addAttribute("customerQuery","");
+            if(session.getAttribute("posPaymentReference")==null)session.setAttribute("posPaymentReference",com.example.demodatn.service.donhang.VietQrService.newReference());
+            model.addAttribute("paymentReference",session.getAttribute("posPaymentReference"));
         }
         return "admin/ban-tai-quay/ban-tai-quay";
     }
@@ -199,6 +203,38 @@ public class AdminPosController {
         }
     }
 
+    @PostMapping("/payment-qr") @ResponseBody
+    public com.example.demodatn.service.donhang.VietQrService.PaymentQr paymentQr(@ModelAttribute PosCheckoutRequest request,HttpSession session) {
+        synchronized(session) {
+            try {
+                var total=transferTotal(request,session);
+                if(session.getAttribute("posPaymentReference")==null)session.setAttribute("posPaymentReference",com.example.demodatn.service.donhang.VietQrService.newReference());
+                return vietQr.create(total,(String)session.getAttribute("posPaymentReference"));
+            } catch(IllegalArgumentException ex){return new com.example.demodatn.service.donhang.VietQrService.PaymentQr(false,ex.getMessage(),null,null,null,null,null,null);}
+        }
+    }
+    private BigDecimal transferTotal(PosCheckoutRequest request,HttpSession session) {
+        var cart=cart(session);if(cart.isEmpty())throw new IllegalArgumentException("Giỏ hàng trống.");
+        if(Boolean.TRUE.equals(session.getAttribute("posHoldReview")))throw new IllegalArgumentException("Xác nhận lại giá hóa đơn chờ trước khi chuyển khoản.");
+        var loaded=variants.findAllById(cart.stream().map(CartItemDto::getVariantId).toList());
+        var byId=loaded.stream().collect(java.util.stream.Collectors.toMap(v->v.getId(),v->v));
+        var priceMap=pricing.calculatePrices(loaded);BigDecimal subtotal=BigDecimal.ZERO;
+        for(var item:cart) {
+            var variant=byId.get(item.getVariantId());
+            if(!ProductSalePolicy.isSelling(variant) || item.getQuantity()==null || item.getQuantity()<=0 || variant.getQuantity()<item.getQuantity())throw new IllegalArgumentException("Sản phẩm đã ngừng bán hoặc không đủ tồn kho.");
+            var price=priceMap.get(variant.getId()).getFinalPrice();
+            if(session.getAttribute("posLoadedHold")!=null && price.compareTo(item.getPrice())!=0)throw new IllegalArgumentException("Giá đã thay đổi. Xác nhận lại hóa đơn chờ trước khi chuyển khoản.");
+            subtotal=subtotal.add(price.multiply(BigDecimal.valueOf(item.getQuantity())));
+        }
+        var customer=request.getCustomerId()==null?null:customers.findById(request.getCustomerId()).filter(c->Boolean.TRUE.equals(c.getStatus())).orElseThrow(()->new IllegalArgumentException("Khách hàng không còn hoạt động."));
+        if(request.getVoucherCode()!=null && !request.getVoucherCode().isBlank()) {
+            var result=vouchers.validateAndCalculate(request.getVoucherCode(),customer,subtotal);
+            if(!result.valid)throw new IllegalArgumentException(result.message);
+            subtotal=subtotal.subtract(result.discountAmount);
+        }
+        return subtotal;
+    }
+
     @PostMapping("/checkout")
     public String checkout(@Valid @ModelAttribute("posCheckoutRequest") PosCheckoutRequest request,BindingResult errors,
             HttpSession session,Principal principal,RedirectAttributes flash) {
@@ -212,9 +248,16 @@ public class AdminPosController {
                 var employee=employees.findByUser_Username(principal.getName()).orElseThrow(()->new IllegalArgumentException("Tài khoản chưa gắn với nhân viên."));
                 var customer=request.getCustomerId()==null ? null : customers.findById(request.getCustomerId()).orElseThrow(()->new IllegalArgumentException("Khách hàng không tồn tại."));
                 if(customer!=null && !Boolean.TRUE.equals(customer.getStatus())) throw new IllegalArgumentException("Khách hàng đã bị vô hiệu hóa.");
+                if("TRANSFER".equals(request.getPaymentMethod())) {
+                    if(!request.isTransferReceived())throw new IllegalArgumentException("Cần xác nhận đã nhận đủ số tiền chuyển khoản.");
+                    var expected=transferTotal(request,session);
+                    if(request.getTransferAmount()==null || expected.compareTo(request.getTransferAmount())!=0)
+                        throw new IllegalArgumentException("Tổng tiền đã thay đổi. Kiểm tra lại QR và xác nhận số tiền mới.");
+                }
+                request.setPaymentReference((String)session.getAttribute("posPaymentReference"));
                 Long heldId=(Long)session.getAttribute("posLoadedHold");
                 if(heldId!=null && Boolean.TRUE.equals(session.getAttribute("posHoldReview")))throw new IllegalArgumentException("Xác nhận giá đã tính lại trước khi thanh toán.");
-                var order=heldId==null ? orders.createPosOrder(cart(session),customer,employee,request.getVoucherCode(),request.getPaymentMethod(),"Tại quầy",request.getCashReceived())
+                var order=heldId==null ? orders.createPosOrder(cart(session),customer,employee,request.getVoucherCode(),request.getPaymentMethod(),"Tại quầy",request.getCashReceived(),request.getPaymentReference())
                         : holds.checkout(principal.getName(),heldId,cart(session),request);
                 clearCart(session);
                 return "redirect:/admin/pos/success/"+order.getId();

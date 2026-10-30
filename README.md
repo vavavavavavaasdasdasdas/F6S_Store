@@ -93,3 +93,11 @@ Sau khi sao lưu và dừng ứng dụng, chạy migration **012_ma_san_pham_tu_
 Biến thể được xác định bởi sản phẩm + kích cỡ + màu sắc + chất liệu + đế giày. Đế giày ở `products.de_giay_id` chỉ giữ gợi ý cũ; hiển thị và lọc lấy từ biến thể. Trang quản trị màu sắc: `/admin/colors`. Đơn mới chụp tên màu/đế; đơn cũ để trống hiển thị `—`.
 
 Trước khi chạy bản mã này cần migration `database/migrations/013_mau_sac_bien_the.sql` sau 012, hoặc bộ `chay_tat_ca.sql` đã cập nhật. Giữ `ddl-auto=validate`. Không tự chạy migration trên database thật; sao lưu và dùng lệnh trong [báo cáo Giai đoạn 5](docs/GIAI_DOAN_5_MAU_SAC_BIEN_THE.md). Báo cáo có SQL trước/sau, 160 test, Playwright hai viewport và hướng dẫn triển khai.
+
+## Giai đoạn 7: POS và QR chuyển khoản
+
+Chạy migration `014_tham_chieu_thanh_toan.sql` sau 013 trước khi khởi động. Cấu hình `SHOP_BANK_BIN` (6 số), `SHOP_BANK_ACCOUNT`, `SHOP_BANK_ACCOUNT_NAME`, `SHOP_BANK_NAME` qua môi trường; xem `application-example.properties`. Thiếu cấu hình thì hiện **Chưa cấu hình tài khoản nhận tiền**, không tạo QR. QR chỉ cung cấp thông tin chuyển tiền, không xác nhận thu tiền tự động. Nhân viên phải kiểm tra giao dịch và tích **Đã nhận đủ số tiền** trước khi thanh toán POS. Đơn trực tuyến chưa thanh toán hiện QR gồm phí giao hàng; QR ẩn sau khi đã trả tiền hoặc hủy.
+
+POS không nạp danh sách khách khi mở. Nhập ít nhất hai ký tự tên/SĐT để tìm, kết quả tối đa 12 dòng mỗi trang. Khách lẻ là mặc định. Thư viện QR cục bộ và giấy phép: [THU_VIEN_QR.md](docs/THU_VIEN_QR.md).
+
+Thử với ứng dụng ngân hàng thật (**NOT TESTED** trong kiểm thử tự động): cấu hình tài khoản do bạn kiểm soát, tạo đơn giá trị nhỏ, quét QR và đối chiếu ngân hàng, tài khoản, số tiền, nội dung trước khi chuyển. Chỉ xác nhận nhận tiền sau khi kiểm tra giao dịch thực tế. Không dùng thông tin ngân hàng giả trong bằng chứng tự động để chuyển tiền.

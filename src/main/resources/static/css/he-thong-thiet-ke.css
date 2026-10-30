@@ -215,3 +215,5 @@ a,button,label.btn{touch-action:manipulation}button,a.btn,label.btn,[data-bs-tog
 }
 
 .color-swatch{display:inline-block;width:1.1rem;height:1.1rem;border:1px solid #808080;border-radius:50%;vertical-align:middle;margin-right:.35rem;background:#eee;}
+
+.vietqr-panel{padding:1rem;border:1px solid var(--bs-border-color);border-radius:var(--bs-border-radius);background:#fff;max-width:100%;min-width:0}.vietqr-canvas{display:block;max-width:100%;height:auto;margin:.75rem auto;background:#fff}.vietqr-panel dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.35rem .75rem}.vietqr-panel dd{margin:0;overflow-wrap:anywhere}.vietqr-panel h3{font-size:1.15rem}

@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 @Data
 public class PosCheckoutRequest {
     private Integer customerId;
+    private boolean transferReceived;
+    private BigDecimal transferAmount;
+    private String paymentReference;
     @NotBlank(message = "Chọn phương thức thanh toán.")
     @Pattern(regexp = "CASH|TRANSFER", message = "Phương thức thanh toán không hợp lệ.")
     private String paymentMethod;

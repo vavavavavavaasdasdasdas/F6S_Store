@@ -22,7 +22,7 @@
             <div class="p-3 border rounded shadow-sm bg-white">
                 <h5>Sản phẩm đã mua</h5>
                 <form th:if="${canCancel}" th:action="@{/orders/{id}/cancel(id=${order.id})}" method="post" class="mb-3" data-cancel-order><button type="submit" class="btn btn-outline-danger" data-confirm data-confirm-title="Hủy đơn hàng" data-confirm-message="Bạn muốn hủy đơn hàng này? Hàng đã trừ sẽ được hoàn kho.">Hủy đơn hàng</button></form>
-                <div class="table-responsive" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="user-chi-tiet-don-hang-1" class="table mt-3 data-table">
+                <div class="table-responsive" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><th:block th:replace="~{fragments/vietqr :: payment(${order})}"></th:block><table data-table-key="user-chi-tiet-don-hang-1" class="table mt-3 data-table">
                     <thead>
                         <tr><th scope="col" class="row-number">STT</th>
                             <th>Ảnh</th><th>Mã</th><th>Tên sản phẩm</th>
