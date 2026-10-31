@@ -17,8 +17,8 @@ public class VoucherDto {
     @DecimalMin(value="0",inclusive=false,message="Giảm tối đa phải lớn hơn 0; để trống nếu không giới hạn.") @Digits(integer=16,fraction=2) private BigDecimal maxDiscount;
     @NotNull(message="Chọn thời điểm bắt đầu.") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE_TIME) private LocalDateTime startDate;
     @NotNull(message="Chọn thời điểm kết thúc.") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE_TIME) private LocalDateTime endDate;
-    @Min(value=1,message="Giới hạn lượt phải ít nhất 1; để trống nếu không giới hạn.") private Integer usageLimit;
-    @NotNull private Boolean isPublic=true;
+    private Integer usageLimit;
+    private Boolean isPublic=true;
     private Integer customerId;
     @NotNull private Boolean status=true;
 }

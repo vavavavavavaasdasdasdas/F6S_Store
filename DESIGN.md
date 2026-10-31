@@ -103,3 +103,8 @@ Giữ thiết kế hiện có. Menu Sản phẩm dùng details/summary hai nhóm
 ### Giai đoạn 10 — Sản phẩm và không gian biến thể
 
 Danh sách sản phẩm chỉ chứa thông tin cấp sản phẩm; thao tác Chi tiết biến thể tới trang riêng dùng cùng bảng AJAX, service, combo, xác nhận và khung cuộn. Trang xem không có bảng biến thể. Form tạo hai cột: thông tin sản phẩm/ảnh/kích cỡ/đế bên trái, thuộc tính còn lại/giá/tồn và số biến thể dự kiến bên phải; mobile xếp dọc. Tạo xong về danh sách có liên kết biến thể cho sản phẩm vừa tạo.
+
+
+### Giai đoạn 11 — Khuyến mãi
+
+Phiếu có form gọn, chỉ công khai, thông tin đã dùng tách riêng; danh sách chỉ icon Sửa. Công tắc là fragment chung có nhãn trạng thái chữ, vùng bấm 40px và focus rõ; gửi bất đồng bộ khóa tạm, lỗi trả về giá trị cũ. Chọn sản phẩm dùng cùng hình công tắc, lưu bản nháp theo đợt qua phân trang và Lưu thay đổi, có bật/tắt toàn trang. Không đổi phong cách chung.

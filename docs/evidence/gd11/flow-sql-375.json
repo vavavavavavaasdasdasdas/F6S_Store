@@ -1,0 +1,83 @@
+{
+  "ui": {
+    "voucherId": 150,
+    "promotionId": 79,
+    "selectedIds": [
+      2,
+      3,
+      948,
+      949,
+      950,
+      951,
+      952,
+      953,
+      954,
+      955,
+      956,
+      957,
+      4
+    ],
+    "deleteStatus": 405,
+    "voucherCode": "G11-375-2d6a02",
+    "promotionAmount": 15000
+  },
+  "voucher": [
+    {
+      "id": 150,
+      "code": "G11-375-2D6A02",
+      "is_public": true,
+      "used_count": 0,
+      "status": true
+    }
+  ],
+  "promotion": [
+    {
+      "id": 79,
+      "ma": "KM008",
+      "discount_type": "AMOUNT",
+      "discount_value": 15000.0,
+      "status": true
+    }
+  ],
+  "selected": [
+    {
+      "product_id": 2
+    },
+    {
+      "product_id": 3
+    },
+    {
+      "product_id": 4
+    },
+    {
+      "product_id": 948
+    },
+    {
+      "product_id": 949
+    },
+    {
+      "product_id": 950
+    },
+    {
+      "product_id": 951
+    },
+    {
+      "product_id": 952
+    },
+    {
+      "product_id": 953
+    },
+    {
+      "product_id": 954
+    },
+    {
+      "product_id": 955
+    },
+    {
+      "product_id": 956
+    },
+    {
+      "product_id": 957
+    }
+  ]
+}

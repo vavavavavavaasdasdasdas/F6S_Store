@@ -29,8 +29,19 @@ public class AdminVoucherController {
     private final VoucherRepository vouchers;
     private final CustomerRepository customers;
     private final DiscountAdminService discounts;
+    private final com.example.demodatn.service.khuyenmai.DiscountEffectivity effectivity;
     private final com.example.demodatn.util.Pagination pagination;
 
+    @InitBinder("voucher")
+    public void bind(org.springframework.web.bind.WebDataBinder binder) {
+        binder.setDisallowedFields("usageLimit","isPublic","customerId","usedCount");
+    }
+
+    @PostMapping("/status/{id}") @ResponseBody
+    public java.util.Map<String,Object> status(@PathVariable Integer id,@RequestParam boolean active){
+        var value=discounts.voucherStatus(id,active);
+        return java.util.Map.of("active",value.getStatus(),"stateLabel",effectivity.label(effectivity.voucherState(value)),"message","Đã cập nhật hoạt động.");
+    }
     @GetMapping
     public String list(@RequestParam(defaultValue="") String keyword,
                        @RequestParam(required=false) String discountType,
@@ -42,7 +53,7 @@ public class AdminVoucherController {
         String kw = keyword == null ? "" : keyword.trim();
         String type = (discountType != null && !discountType.isBlank()) ? discountType.trim() : null;
         String st = (state != null && !state.isBlank()) ? state.trim() : null;
-        LocalDateTime now = LocalDateTime.now();
+
 
         Specification<Voucher> spec = (root, cq, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -56,29 +67,7 @@ public class AdminVoucherController {
             if (type != null) {
                 predicates.add(cb.equal(root.get("discountType"), type));
             }
-            if (st != null) {
-                switch (st) {
-                    case "RUNNING" -> {
-                        predicates.add(cb.isTrue(root.get("status")));
-                        predicates.add(cb.lessThanOrEqualTo(root.get("startDate"), now));
-                        predicates.add(cb.greaterThanOrEqualTo(root.get("endDate"), now));
-                        predicates.add(cb.or(
-                                cb.isNull(root.get("usageLimit")),
-                                cb.lessThan(cb.coalesce(root.get("usedCount"), 0), root.get("usageLimit"))
-                        ));
-                    }
-                    case "UPCOMING" -> {
-                        predicates.add(cb.isTrue(root.get("status")));
-                        predicates.add(cb.greaterThan(root.get("startDate"), now));
-                    }
-                    case "EXPIRED" -> predicates.add(cb.lessThan(root.get("endDate"), now));
-                    case "DEPLETED" -> {
-                        predicates.add(cb.isNotNull(root.get("usageLimit")));
-                        predicates.add(cb.greaterThanOrEqualTo(cb.coalesce(root.get("usedCount"), 0), root.get("usageLimit")));
-                    }
-                    case "INACTIVE" -> predicates.add(cb.isFalse(root.get("status")));
-                }
-            }
+            predicates.add(effectivity.predicate(root,cb,st,true));
             if (from != null) {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("endDate"), from.atStartOfDay()));
             }
@@ -90,6 +79,7 @@ public class AdminVoucherController {
 
         var result=pagination.load(page,Sort.by("id").descending(),p -> vouchers.findAll(spec, p));
         model.addAttribute("vouchers",result.getContent());
+        model.addAttribute("discountEffectivity",effectivity);
         model.addAttribute("dataPage",result);
         model.addAttribute("keyword",keyword);
         model.addAttribute("discountType",type);
@@ -106,7 +96,7 @@ public class AdminVoucherController {
         return "admin/voucher/danh-sach";
     }
 
-    private String form(Model model) { model.addAttribute("customers",customers.findAll());return "admin/voucher/bieu-mau"; }
+    private String form(Model model) { return "admin/voucher/bieu-mau"; }
     @GetMapping("/create") public String create(Model model) { model.addAttribute("voucher",new VoucherDto());return form(model); }
     @GetMapping("/edit/{id}") public String edit(@PathVariable Integer id,Model model) {
         Voucher v=discounts.voucher(id);VoucherDto f=new VoucherDto();BeanUtils.copyProperties(v,f);

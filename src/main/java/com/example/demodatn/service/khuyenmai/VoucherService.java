@@ -16,7 +16,7 @@ import java.util.Locale;
 @Service @RequiredArgsConstructor
 public class VoucherService {
     private final VoucherRepository voucherRepository;
-    @Value("${shop.time-zone:Asia/Ho_Chi_Minh}") private String timeZone="Asia/Ho_Chi_Minh";
+    private final DiscountEffectivity effectivity;
 
     public static class VoucherResult {
         public boolean valid;
@@ -46,12 +46,10 @@ public class VoucherService {
     private VoucherResult calculate(Voucher voucher, Customer customer, BigDecimal subtotal) {
         if(subtotal==null || subtotal.signum()<0) return failure("Giá trị đơn hàng không hợp lệ.");
         if(voucher==null || !Boolean.TRUE.equals(voucher.getStatus())) return failure("Phiếu giảm giá không tồn tại hoặc đã bị khóa.");
-        LocalDateTime now=LocalDateTime.now(ZoneId.of(timeZone));
-        if(voucher.getStartDate()==null || voucher.getEndDate()==null || !voucher.getEndDate().isAfter(voucher.getStartDate())) return failure("Thời hạn phiếu giảm giá không hợp lệ.");
-        if(now.isBefore(voucher.getStartDate())) return failure("Phiếu giảm giá chưa tới ngày sử dụng.");
-        if(!now.isBefore(voucher.getEndDate())) return failure("Phiếu giảm giá đã hết hạn.");
-        if(voucher.getUsageLimit()!=null && (voucher.getUsedCount()==null ? 0 : voucher.getUsedCount())>=voucher.getUsageLimit()) return failure("Phiếu giảm giá đã hết lượt sử dụng.");
-        if(!Boolean.TRUE.equals(voucher.getIsPublic()) && (voucher.getCustomer()==null || customer==null || !voucher.getCustomer().getId().equals(customer.getId()))) return failure("Phiếu giảm giá không dành cho khách hàng này.");
+        String state=effectivity.voucherState(voucher);
+        if("UPCOMING".equals(state))return failure("Phiếu giảm giá chưa tới ngày sử dụng.");
+        if("EXPIRED".equals(state))return failure("Phiếu giảm giá đã hết hạn.");
+        if(!"RUNNING".equals(state))return failure("Thời hạn phiếu giảm giá không hợp lệ.");
         if(voucher.getMinOrderValue()!=null && subtotal.compareTo(voucher.getMinOrderValue())<0) return failure("Đơn hàng chưa đạt giá trị tối thiểu "+voucher.getMinOrderValue().toPlainString()+" đ.");
         BigDecimal value=voucher.getDiscountValue(),discount;
         if(value==null || value.signum()<=0) return failure("Giá trị giảm của phiếu giảm giá không hợp lệ.");

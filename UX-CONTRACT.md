@@ -69,3 +69,8 @@ Nút cột bảng dùng fragment chung, icon aria-hidden kèm nhãn chữ ẩn d
 Menu hai cấp thuộc quan-tri.js và native details/summary; nhóm đang xem luôn mở. Trang biến thể riêng /admin/products-crud/{id}/variants giữ combo-box.js làm chủ sở hữu mọi select, gồm select gõ tạo mới. Các nút data-batch-open/data-batch-close và data-row-* thuộc sua-bien-the-san-pham.js, không phải nút thiếu hành vi; chuyển trang chỉ thay vị trí bảng, không tạo bộ điều khiển thứ hai. Lỗi cạnh ô/busy/CSRF/khóa tồn tiếp tục dùng cơ chế đã có.
 
 Form ban đầu bố trí hai cột và dùng bien-the-ban-dau.js chỉ đếm lựa chọn; server xác nhận tổ hợp và transaction. Bộ ảnh vẫn do quan-ly-anh-san-pham.js quản lý. Liên kết bỏ qua nội dung chỉ hiển thị khi có focus, không che ô kích cỡ trong ảnh chụp trang dài.
+
+
+## Khuyến mãi (giai đoạn 11)
+
+quan-tri-giam-gia.js sở hữu data-discount-switch: POST CSRF, trạng thái bận, phản hồi lỗi và hoàn nguyên công tắc. Fragment cong-tac-khuyen-mai cung cấp markup chung; nhãn chữ phân biệt Sắp diễn ra/Đang chạy/Hết hạn/Tạm dừng. data-selection-all là hai nút có handler bật/tắt các dòng nhìn thấy; sessionStorage theo ID đợt giữ lựa chọn qua trang, chỉ xóa sau lưu thành công, lỗi lưu trữ yêu cầu lưu trước khi chuyển trang. Server xác nhận sản phẩm đang bán. Các select còn lại thuộc combo-box.js; validation form và guard dùng quan-tri-danh-muc.js. Phiếu không có hành động Xóa ở UI và endpoint luôn từ chối.

@@ -1,0 +1,6 @@
+018: chuyển phiếu giảm giá cũ thành công khai; giữ cột và bộ đếm lịch sử
+id          code                                               truoc sau customer_id
+----------- -------------------------------------------------- ----- --- -----------
+
+(0 rows affected)
+HOÀN TẤT 018_phieu_cong_khai.sql

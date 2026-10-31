@@ -199,8 +199,9 @@ class Phase3ComboFilterIntegrationTest {
                         .param("isPublic", "false")
                         .param("customerId", "999999")
                         .param("status", "true"))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeHasFieldErrors("voucher", "customerId"));
+                .andExpect(status().isFound());
+        assertEquals(true,jdbc.queryForObject("SELECT is_public FROM vouchers WHERE code='FORGEVOUCHER'",Boolean.class));
+        assertNull(jdbc.queryForObject("SELECT customer_id FROM vouchers WHERE code='FORGEVOUCHER'",Integer.class));
 
         // 4. POS add with forged variantId
         mvc.perform(post("/admin/pos/add")

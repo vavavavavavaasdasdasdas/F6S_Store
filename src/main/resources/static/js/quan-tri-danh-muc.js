@@ -52,7 +52,7 @@
    if(field.dataset.byteLimit && new TextEncoder().encode(field.value).length>Number(field.dataset.byteLimit))message='Mật khẩu vượt quá 72 byte UTF-8.';
    if(field.id==='endDate' && field.form.matches('[data-discount-form]')) {
      const start=field.form.querySelector('#startDate').value;
-     if(start && field.value && new Date(field.value)<=new Date(start))message='Kết thúc phải sau thời điểm bắt đầu.';
+     if(start && field.value && (field.form.dataset.discountForm==='voucher'?field.value.slice(0,10)<start.slice(0,10):new Date(field.value)<=new Date(start)))message='Kết thúc phải sau thời điểm bắt đầu.';
    }
    if(field.type==='file' && field.files[0]) {
      const f=field.files[0];

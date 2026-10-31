@@ -1,0 +1,38 @@
+{
+  "product": {
+    "id": 2,
+    "code": "SP002",
+    "status": true
+  },
+  "variantsBefore": [
+    {
+      "id": 3,
+      "quantity": 18,
+      "status": true
+    },
+    {
+      "id": 4,
+      "quantity": 4,
+      "status": true
+    }
+  ],
+  "variantsAfter": [
+    {
+      "id": 3,
+      "quantity": 18,
+      "status": true
+    },
+    {
+      "id": 4,
+      "quantity": 4,
+      "status": true
+    }
+  ],
+  "productAfter": [
+    {
+      "id": 2,
+      "code": "SP002",
+      "status": true
+    }
+  ]
+}

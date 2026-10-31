@@ -24,6 +24,9 @@ class PricingServiceTest {
     @Mock
     private PromotionDetailRepository promotionDetailRepository;
 
+    @org.mockito.Spy
+    private com.example.demodatn.service.khuyenmai.DiscountEffectivity effectivity=new com.example.demodatn.service.khuyenmai.DiscountEffectivity(java.time.Clock.system(java.time.ZoneId.of("Asia/Ho_Chi_Minh")));
+
     @InjectMocks
     private PricingService pricingService;
 

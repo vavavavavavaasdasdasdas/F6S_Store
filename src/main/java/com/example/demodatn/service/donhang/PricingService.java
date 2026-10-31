@@ -18,7 +18,7 @@ public class PricingService {
 
     private final PromotionDetailRepository promotionDetailRepository;
     private final com.example.demodatn.repository.sanpham.ProductVariantRepository variants;
-    @org.springframework.beans.factory.annotation.Value("${shop.time-zone:Asia/Ho_Chi_Minh}") private String timeZone="Asia/Ho_Chi_Minh";
+    private final com.example.demodatn.service.khuyenmai.DiscountEffectivity effectivity;
 
     public PriceInfo priceForVariant(Integer id) {
         return calculatePrice(variants.findById(id).orElseThrow(()->new IllegalArgumentException("Sản phẩm không tồn tại.")));
@@ -59,14 +59,11 @@ public class PricingService {
         int maxDiscountPercent = 0;
         boolean hasActivePromo = false;
         
-        LocalDateTime now = LocalDateTime.now(java.time.ZoneId.of(timeZone));
+
         
         for (PromotionDetail detail : details) {
             Promotion promo = detail.getPromotion();
-            if (promo != null && Boolean.TRUE.equals(promo.getStatus()) &&
-                promo.getStartDate()!=null && promo.getEndDate()!=null && promo.getDiscountValue()!=null &&
-                !promo.getStartDate().isAfter(now) && now.isBefore(promo.getEndDate())) {
-                
+            if (effectivity.active(promo) && promo.getDiscountValue()!=null && promo.getDiscountValue().signum()>0) {
                 BigDecimal discount = BigDecimal.ZERO;
                 int percent = 0;
                 
@@ -74,7 +71,7 @@ public class PricingService {
                     discount = originalPrice.multiply(promo.getDiscountValue()).divide(new BigDecimal(100), 0, RoundingMode.HALF_UP);
                     percent = promo.getDiscountValue().intValue();
                 } else if ("AMOUNT".equalsIgnoreCase(promo.getDiscountType())) {
-                    discount = promo.getDiscountValue();
+                    discount = promo.getDiscountValue().min(originalPrice.max(BigDecimal.ZERO));
                     if (originalPrice.compareTo(BigDecimal.ZERO) > 0) {
                         percent = discount.multiply(new BigDecimal(100)).divide(originalPrice, 0, RoundingMode.HALF_UP).intValue();
                     }

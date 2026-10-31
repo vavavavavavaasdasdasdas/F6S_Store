@@ -35,8 +35,14 @@ public class AdminPromotionController {
     private final ProductRepository products;
     private final CategoryRepository categories;
     private final DiscountAdminService discounts;
+    private final com.example.demodatn.service.khuyenmai.DiscountEffectivity effectivity;
     private final com.example.demodatn.util.Pagination pagination;
 
+    @PostMapping("/status/{id}") @ResponseBody
+    public java.util.Map<String,Object> status(@PathVariable Integer id,@RequestParam boolean active){
+        var value=discounts.promotionStatus(id,active);
+        return java.util.Map.of("active",value.getStatus(),"stateLabel",effectivity.label(effectivity.promotionState(value)),"message","Đã cập nhật hoạt động.");
+    }
     @GetMapping
     public String list(@RequestParam(defaultValue="") String keyword,
                        @RequestParam(required=false) String state,
@@ -46,28 +52,14 @@ public class AdminPromotionController {
                        Model model) {
         String kw = keyword == null ? "" : keyword.trim();
         String st = (state != null && !state.isBlank()) ? state.trim() : null;
-        LocalDateTime now = LocalDateTime.now();
+
 
         Specification<Promotion> spec = (root, cq, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (!kw.isEmpty()) {
                 predicates.add(cb.or(cb.like(cb.lower(root.get("name")), "%" + kw.toLowerCase(Locale.ROOT) + "%"),cb.like(cb.lower(root.get("code")),"%"+kw.toLowerCase(Locale.ROOT)+"%")));
             }
-            if (st != null) {
-                switch (st) {
-                    case "RUNNING" -> {
-                        predicates.add(cb.isTrue(root.get("status")));
-                        predicates.add(cb.lessThanOrEqualTo(root.get("startDate"), now));
-                        predicates.add(cb.greaterThanOrEqualTo(root.get("endDate"), now));
-                    }
-                    case "UPCOMING" -> {
-                        predicates.add(cb.isTrue(root.get("status")));
-                        predicates.add(cb.greaterThan(root.get("startDate"), now));
-                    }
-                    case "EXPIRED" -> predicates.add(cb.lessThan(root.get("endDate"), now));
-                    case "INACTIVE" -> predicates.add(cb.isFalse(root.get("status")));
-                }
-            }
+            predicates.add(effectivity.predicate(root,cb,st,false));
             if (from != null) {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("endDate"), from.atStartOfDay()));
             }
@@ -79,6 +71,7 @@ public class AdminPromotionController {
 
         var result=pagination.load(page,Sort.by("id").descending(),p -> promotions.findAll(spec, p));
         model.addAttribute("promotions",result.getContent());
+        model.addAttribute("discountEffectivity",effectivity);
         model.addAttribute("dataPage",result);
         model.addAttribute("keyword",keyword);
         model.addAttribute("state",st);
@@ -109,6 +102,7 @@ public class AdminPromotionController {
         model.addAttribute("promotion",discounts.promotion(id));
         Specification<Product> filter=(r,x,c)->{
             List<Predicate> predicates = new ArrayList<>();
+            predicates.add(c.isTrue(r.get("status")));
             predicates.add(c.or(c.like(c.lower(r.get("name")),like(q),'!'),c.like(c.lower(r.get("code")),like(q),'!')));
             if (categoryId != null) {
                 predicates.add(c.equal(r.get("category").get("id"), categoryId));
@@ -148,7 +142,7 @@ public class AdminPromotionController {
                          @RequestParam(required=false) Integer categoryId,
                          @RequestParam(required=false) Boolean applied,
                          RedirectAttributes flash) {
-        try { discounts.selectProductPage(id,visibleIds==null?List.of():visibleIds,productIds==null?List.of():productIds);flash.addFlashAttribute("message","Đã lưu sản phẩm áp dụng."); }
+        try { discounts.selectProductPage(id,visibleIds==null?List.of():visibleIds,productIds==null?List.of():productIds);flash.addFlashAttribute("message","Đã lưu sản phẩm áp dụng.");flash.addFlashAttribute("selectionSaved",true); }
         catch(IllegalArgumentException ex) { flash.addFlashAttribute("error",ex.getMessage()); }
         String redirect = "redirect:/admin/promotions/"+id+"/products?page="+java.net.URLEncoder.encode(page,java.nio.charset.StandardCharsets.UTF_8)+"&q="+java.net.URLEncoder.encode(q,java.nio.charset.StandardCharsets.UTF_8);
         if (categoryId != null) redirect += "&categoryId=" + categoryId;

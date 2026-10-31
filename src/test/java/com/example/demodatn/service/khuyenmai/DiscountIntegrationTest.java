@@ -86,11 +86,11 @@ class DiscountIntegrationTest {
     void voucherCasesHaveSpecificReasonsAndCorrectCapsWithoutConsuming() {
         var f=voucherForm();f.setMaxDiscount(new BigDecimal("30000"));var v=admin.saveVoucher(f);
         var result=vouchers.validateAndCalculate("  "+v.getCode().toLowerCase()+"  ",null,new BigDecimal("200000"));assertTrue(result.valid);money("30000",result.discountAmount);assertEquals(0,v.getUsedCount());
-        v.setEndDate(LocalDateTime.now().minusHours(1));v.setStartDate(LocalDateTime.now().minusDays(2));voucherRepo.flush();assertTrue(vouchers.validateAndCalculate(v.getCode(),null,new BigDecimal("200000")).message.contains("hết hạn"));
+        v.setEndDate(LocalDateTime.now().minusDays(1));v.setStartDate(LocalDateTime.now().minusDays(2));voucherRepo.flush();assertTrue(vouchers.validateAndCalculate(v.getCode(),null,new BigDecimal("200000")).message.contains("hết hạn"));
         v.setStartDate(LocalDateTime.now().plusHours(1));v.setEndDate(LocalDateTime.now().plusDays(2));voucherRepo.flush();assertTrue(vouchers.validateAndCalculate(v.getCode(),null,new BigDecimal("200000")).message.contains("chưa tới"));
         v.setStartDate(LocalDateTime.now().minusDays(1));v.setMinOrderValue(new BigDecimal("300000"));voucherRepo.flush();assertTrue(vouchers.validateAndCalculate(v.getCode(),null,new BigDecimal("200000")).message.contains("tối thiểu"));
-        v.setMinOrderValue(BigDecimal.ZERO);v.setUsedCount(5);voucherRepo.flush();assertTrue(vouchers.validateAndCalculate(v.getCode(),null,new BigDecimal("200000")).message.contains("hết lượt"));
-        v.setUsedCount(0);v.setIsPublic(false);v.setCustomer(customer());voucherRepo.flush();assertTrue(vouchers.validateAndCalculate(v.getCode(),null,new BigDecimal("200000")).message.contains("khách hàng"));assertTrue(vouchers.validateAndCalculate(v.getCode(),v.getCustomer(),new BigDecimal("200000")).valid);
+        v.setMinOrderValue(BigDecimal.ZERO);v.setUsedCount(5);voucherRepo.flush();assertTrue(vouchers.validateAndCalculate(v.getCode(),null,new BigDecimal("200000")).valid);
+        v.setUsedCount(0);v.setIsPublic(false);v.setCustomer(customer());voucherRepo.flush();assertTrue(vouchers.validateAndCalculate(v.getCode(),null,new BigDecimal("200000")).valid);assertTrue(vouchers.validateAndCalculate(v.getCode(),v.getCustomer(),new BigDecimal("200000")).valid);
         v.setIsPublic(true);v.setCustomer(null);v.setDiscountType("FIXED");v.setDiscountValue(new BigDecimal("500000"));voucherRepo.flush();money("200000",vouchers.validateAndCalculate(v.getCode(),null,new BigDecimal("200000")).discountAmount);
         money("200000.50",vouchers.validateAndCalculate(v.getCode(),null,new BigDecimal("200000.50")).discountAmount);
         v.setDiscountType("PERCENT");v.setDiscountValue(new BigDecimal("20"));v.setMaxDiscount(new BigDecimal("30000.50"));voucherRepo.flush();money("30000.50",vouchers.validateAndCalculate(v.getCode(),null,new BigDecimal("200000.50")).discountAmount);
@@ -100,9 +100,9 @@ class DiscountIntegrationTest {
     void adminValidatesCrossFieldsAndProtectsUsageCountOnEdit() {
         var f=voucherForm();var v=admin.saveVoucher(f);v.setUsedCount(2);voucherRepo.flush();
         var duplicate=voucherForm();duplicate.setCode(v.getCode().toLowerCase());assertEquals("code",assertThrows(DiscountValidationException.class,()->admin.saveVoucher(duplicate)).getField());
-        f.setId(v.getId());f.setUsageLimit(1);assertEquals("usageLimit",assertThrows(DiscountValidationException.class,()->admin.saveVoucher(f)).getField());f.setUsageLimit(3);admin.saveVoucher(f);assertEquals(2,v.getUsedCount());
-        f.setIsPublic(false);assertEquals("customerId",assertThrows(DiscountValidationException.class,()->admin.saveVoucher(f)).getField());f.setIsPublic(true);
-        f.setEndDate(f.getStartDate());assertEquals("endDate",assertThrows(DiscountValidationException.class,()->admin.saveVoucher(f)).getField());
+        f.setId(v.getId());f.setUsageLimit(1);admin.saveVoucher(f);assertEquals(2,v.getUsedCount());
+        f.setIsPublic(false);admin.saveVoucher(f);assertTrue(v.getIsPublic());assertNull(v.getCustomer());f.setIsPublic(true);
+        f.setEndDate(f.getStartDate().minusDays(1));assertEquals("endDate",assertThrows(DiscountValidationException.class,()->admin.saveVoucher(f)).getField());
         f.setEndDate(LocalDateTime.now().plusDays(1));f.setDiscountValue(new BigDecimal("101"));assertThrows(DiscountValidationException.class,()->admin.saveVoucher(f));
         f.setDiscountValue(BigDecimal.ZERO);assertFalse(validator.validate(f).isEmpty());
     }
@@ -122,7 +122,7 @@ class DiscountIntegrationTest {
         var a=variant();var f=voucherForm();f.setMaxDiscount(new BigDecimal("30000"));var v=admin.saveVoucher(f);
         var online=orders.placeOrder(request(v.getCode()),List.of(item(a)),customer(),BigDecimal.ZERO);money("30000",online.getDiscountAmount());money("225000",online.getFinalAmount());
         var pos=orders.createPosOrder(List.of(item(a)),null,employees.findByUser_Username("admin").orElseThrow(),v.getCode(),"CASH","Tại quầy",new BigDecimal("200000"));money("30000",pos.getDiscountAmount());money("170000",pos.getFinalAmount());assertEquals(2,v.getUsedCount());
-        assertTrue(admin.deleteVoucher(v.getId()).contains("giữ"));assertTrue(voucherRepo.existsById(v.getId()));assertFalse(v.getStatus());money("30000",online.getDiscountAmount());
+        assertEquals(org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED,assertThrows(org.springframework.web.server.ResponseStatusException.class,()->admin.deleteVoucher(v.getId())).getStatusCode());assertTrue(voucherRepo.existsById(v.getId()));assertTrue(v.getStatus());money("30000",online.getDiscountAmount());
     }
     @Test
     void failedStockAfterVoucherConsumptionRollsBackUsageAndOrder() {
@@ -133,15 +133,15 @@ class DiscountIntegrationTest {
         } finally { cleanup(ids[2],List.of(ids[0]),List.of(ids[1])); }
     }
     @Test
-    void twoConcurrentOrdersWithOneRemainingUseAllowExactlyOneCommit() throws Exception {
+    void retiredUsageLimitDoesNotBlockConcurrentOrdersAndCountIsAccurate() throws Exception {
         var tx=new TransactionTemplate(manager);Integer[] ids=tx.execute(s->{var a=variant();var b=variant();var f=voucherForm();f.setUsageLimit(1);var v=admin.saveVoucher(f);return new Integer[]{a.getId(),a.getProduct().getId(),b.getId(),b.getProduct().getId(),v.getId()};});
         var pool=Executors.newFixedThreadPool(2);var ready=new CountDownLatch(2);var start=new CountDownLatch(1);
         try {
             String code=voucherRepo.findById(ids[4]).orElseThrow().getCode();var futures=new ArrayList<Future<String>>();
             for(int id:List.of(ids[0],ids[2])) futures.add(pool.submit(()->{var a=variants.findById(id).orElseThrow();var i=item(a);ready.countDown();start.await();try { orders.placeOrder(request(code),List.of(i),null,BigDecimal.ZERO);return "success"; } catch(IllegalArgumentException ex) { return ex.getMessage(); }}));
             assertTrue(ready.await(10,TimeUnit.SECONDS));start.countDown();var results=List.of(futures.get(0).get(30,TimeUnit.SECONDS),futures.get(1).get(30,TimeUnit.SECONDS));
-            assertEquals(1,results.stream().filter("success"::equals).count());assertEquals(1,results.stream().filter(r->r.contains("hết lượt")).count());assertEquals(1,voucherRepo.findById(ids[4]).orElseThrow().getUsedCount());
-            assertEquals(1,jdbc.queryForObject("SELECT COUNT(*) FROM orders WHERE voucher_id=?",Integer.class,ids[4]));assertEquals(20,jdbc.queryForObject("SELECT SUM(quantity) FROM product_variants WHERE id IN (?,?)",Integer.class,ids[0],ids[2]));
+            assertEquals(2,results.stream().filter("success"::equals).count());assertEquals(2,voucherRepo.findById(ids[4]).orElseThrow().getUsedCount());
+            assertEquals(2,jdbc.queryForObject("SELECT COUNT(*) FROM orders WHERE voucher_id=?",Integer.class,ids[4]));assertEquals(20,jdbc.queryForObject("SELECT SUM(quantity) FROM product_variants WHERE id IN (?,?)",Integer.class,ids[0],ids[2]));
             
         } finally { start.countDown();pool.shutdownNow();cleanup(ids[4],List.of(ids[0],ids[2]),List.of(ids[1],ids[3])); }
     }

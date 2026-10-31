@@ -1,0 +1,10 @@
+[
+  {
+    "discount_type": "AMOUNT",
+    "n": 3
+  },
+  {
+    "discount_type": "PERCENT",
+    "n": 5
+  }
+]
