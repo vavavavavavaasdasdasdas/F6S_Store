@@ -1,0 +1,103 @@
+{
+  "before": [
+    {
+      "name": "categories_ma_seq",
+      "start_value": 7,
+      "current_value": 7,
+      "is_cycling": false
+    },
+    {
+      "name": "chat_lieu_ma_seq",
+      "start_value": 9,
+      "current_value": 9,
+      "is_cycling": false
+    },
+    {
+      "name": "de_giay_ma_seq",
+      "start_value": 9,
+      "current_value": 9,
+      "is_cycling": false
+    },
+    {
+      "name": "mau_sac_ma_seq",
+      "start_value": 12,
+      "current_value": 12,
+      "is_cycling": false
+    },
+    {
+      "name": "product_code_seq",
+      "start_value": 6,
+      "current_value": 6,
+      "is_cycling": false
+    },
+    {
+      "name": "product_variants_ma_seq",
+      "start_value": 21,
+      "current_value": 21,
+      "is_cycling": false
+    },
+    {
+      "name": "promotions_ma_seq",
+      "start_value": 6,
+      "current_value": 6,
+      "is_cycling": false
+    },
+    {
+      "name": "sizes_ma_seq",
+      "start_value": 9,
+      "current_value": 9,
+      "is_cycling": false
+    }
+  ],
+  "after": [
+    {
+      "name": "categories_ma_seq",
+      "start_value": 7,
+      "current_value": 7,
+      "is_cycling": false
+    },
+    {
+      "name": "chat_lieu_ma_seq",
+      "start_value": 9,
+      "current_value": 9,
+      "is_cycling": false
+    },
+    {
+      "name": "de_giay_ma_seq",
+      "start_value": 9,
+      "current_value": 9,
+      "is_cycling": false
+    },
+    {
+      "name": "mau_sac_ma_seq",
+      "start_value": 12,
+      "current_value": 12,
+      "is_cycling": false
+    },
+    {
+      "name": "product_code_seq",
+      "start_value": 6,
+      "current_value": 6,
+      "is_cycling": false
+    },
+    {
+      "name": "product_variants_ma_seq",
+      "start_value": 21,
+      "current_value": 21,
+      "is_cycling": false
+    },
+    {
+      "name": "promotions_ma_seq",
+      "start_value": 6,
+      "current_value": 6,
+      "is_cycling": false
+    },
+    {
+      "name": "sizes_ma_seq",
+      "start_value": 9,
+      "current_value": 9,
+      "is_cycling": false
+    }
+  ],
+  "equal": true
+}

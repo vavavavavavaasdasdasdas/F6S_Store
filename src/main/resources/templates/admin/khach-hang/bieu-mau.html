@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section class="catalog-page">
-<div class="admin-heading"><div><span class="eyebrow">QUẢN LÝ HỒ SƠ</span><h1 th:text="${customer.id==null ? 'Thêm khách hàng' : 'Sửa khách hàng'}"></h1><p class="admin-description">Trạng thái được quản lý riêng tại trang chi tiết và luôn cần xác nhận.</p></div></div>
+<div class="admin-heading"><div><h1 th:text="${customer.id==null ? 'Thêm khách hàng' : 'Sửa khách hàng'}"></h1></div></div>
 <form class="admin-panel catalog-form catalog-form-narrow" method="post" th:action="@{/admin/customers/save}" th:object="${customer}" novalidate data-admin-form>
 <input type="hidden" th:field="*{id}"><p class="form-message" role="alert" hidden></p><p class="field-error" role="alert" th:if="${#fields.hasGlobalErrors()}" th:each="e:${#fields.globalErrors()}" th:text="${e}"></p>
 <div class="catalog-field"><label for="customerCode">Mã khách hàng *</label><input class="form-control" id="customerCode" type="text" th:field="*{customerCode}" required maxlength="20" pattern="[A-Za-z0-9_\-]{1,20}" aria-describedby="customerCode-error"><p class="field-error" id="customerCode-error" aria-live="polite"><span th:if="${#fields.hasErrors('customerCode')}" th:errors="*{customerCode}"></span></p></div>

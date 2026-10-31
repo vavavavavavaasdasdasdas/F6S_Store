@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section class="catalog-page">
-<div class="admin-heading"><div><span class="eyebrow">QUẢN LÝ HỒ SƠ</span><h1>Khách hàng</h1><p class="admin-description">Tra cứu liên hệ, trạng thái tài khoản và lịch sử mua hàng.</p></div><a class="btn btn-primary" href="/admin/customers/create">Thêm khách hàng</a></div>
+<div class="admin-heading"><div><h1>Khách hàng</h1></div><a class="btn btn-primary" href="/admin/customers/create" data-add-icon>Thêm khách hàng</a></div>
 <div class="admin-panel">
 <form class="catalog-filters mb-3" method="get" novalidate action="/admin/customers">
 <div><label for="keyword">Từ khóa</label><div class="search-control"><input id="keyword" class="form-control" type="search" name="keyword" th:value="${keyword}" placeholder="Mã, tên, SĐT, email, tài khoản..." maxlength="100"><button type="button" class="search-clear" aria-label="Xóa tìm kiếm" data-clear-search>×</button></div></div>

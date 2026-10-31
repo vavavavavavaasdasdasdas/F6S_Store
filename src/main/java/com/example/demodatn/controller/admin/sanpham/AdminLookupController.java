@@ -74,7 +74,7 @@ public class AdminLookupController {
             Specification<Size> spec = (root, query, cb) -> {
                 List<Predicate> predicates = new ArrayList<>();
                 if (kw != null) {
-                    predicates.add(cb.like(cb.lower(root.get("sizeValue")), "%" + kw.toLowerCase() + "%"));
+                    predicates.add(cb.or(cb.like(cb.lower(root.get("sizeValue")), "%" + kw.toLowerCase() + "%"),cb.like(cb.lower(root.get("code")),"%"+kw.toLowerCase()+"%")));
                 }
                 if (status != null && !status) {
                     predicates.add(cb.disjunction());
@@ -92,7 +92,7 @@ public class AdminLookupController {
             Specification<Material> spec = (root, query, cb) -> {
                 List<Predicate> predicates = new ArrayList<>();
                 if (kw != null) {
-                    predicates.add(cb.like(cb.lower(root.get("name")), "%" + kw.toLowerCase() + "%"));
+                    predicates.add(cb.or(cb.like(cb.lower(root.get("name")), "%" + kw.toLowerCase() + "%"),cb.like(cb.lower(root.get("code")),"%"+kw.toLowerCase()+"%")));
                 }
                 if (status != null) {
                     predicates.add(cb.equal(root.get("status"), status));
@@ -110,7 +110,7 @@ public class AdminLookupController {
             Specification<Category> spec = (root, query, cb) -> {
                 List<Predicate> predicates = new ArrayList<>();
                 if (kw != null) {
-                    predicates.add(cb.like(cb.lower(root.get("name")), "%" + kw.toLowerCase() + "%"));
+                    predicates.add(cb.or(cb.like(cb.lower(root.get("name")), "%" + kw.toLowerCase() + "%"),cb.like(cb.lower(root.get("code")),"%"+kw.toLowerCase()+"%")));
                 }
                 if (status != null) {
                     predicates.add(cb.equal(root.get("status"), status));
@@ -142,6 +142,7 @@ public class AdminLookupController {
         String k = normalizeKind(kind);
         LookupForm form = new LookupForm();
         form.setId(id);
+        form.setCode("sizes".equals(k)?sizes.findById(id).orElseThrow().getCode():"materials".equals(k)?materials.findById(id).orElseThrow().getCode():categories.findById(id).orElseThrow().getCode());
         if ("sizes".equals(k)) {
             form.setValue(sizes.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getSizeValue());
         } else if ("materials".equals(k)) {

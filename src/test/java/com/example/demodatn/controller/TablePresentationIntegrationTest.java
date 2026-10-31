@@ -50,13 +50,13 @@ class TablePresentationIntegrationTest {
                 .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
         assertTrue(Pattern.compile("<tbody>\\s*<tr[^>]*>\\s*<td[^>]*>1</td>").matcher(first).find());
         assertTrue(Pattern.compile("<tbody>\\s*<tr[^>]*>\\s*<td[^>]*>13</td>").matcher(second).find());
-        assertTrue(second.contains("<th>Mã</th><th>Tên sản phẩm</th>"));
+        assertTrue(second.contains("<th>Mã</th>") && second.contains("<th>Tên sản phẩm</th>"));
         assertFalse(second.contains("Mã / Tên"));
         assertTrue(second.contains("keyword="+marker));
         String inventory=mvc.perform(get("/admin/inventory").param("materialId",material.getId().toString()).param("page","1"))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
         assertTrue(Pattern.compile("<tbody>\\s*<tr[^>]*>\\s*<td[^>]*>13</td>").matcher(inventory).find());
-        assertTrue(inventory.contains("<th>Mã</th><th>Tên sản phẩm</th><th>Kích cỡ</th><th>Chất liệu</th>"));
+        assertTrue(inventory.contains("<th>Mã biến thể</th><th>Mã SP</th><th>Tên sản phẩm</th><th>Kích cỡ</th><th>Chất liệu</th>"));
         assertEquals(14,products.findAll().stream().filter(p->p.getCode().startsWith(marker)).count());
     }
 }

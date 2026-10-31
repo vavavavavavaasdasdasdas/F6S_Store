@@ -1,0 +1,22 @@
+
+(0 rows affected)
+017: categories — ma TH, SEQUENCE không đặt lùi
+
+(0 rows affected)
+017: sizes — ma KC, SEQUENCE không đặt lùi
+
+(0 rows affected)
+017: chat_lieu — ma CL, SEQUENCE không đặt lùi
+
+(0 rows affected)
+017: mau_sac — ma MS, SEQUENCE không đặt lùi
+
+(0 rows affected)
+017: de_giay — ma DG, SEQUENCE không đặt lùi
+
+(0 rows affected)
+017: product_variants — ma BT, SEQUENCE không đặt lùi
+
+(0 rows affected)
+017: promotions — ma KM, SEQUENCE không đặt lùi
+HOÀN TẤT 017_khung_admin_ma_doi_tuong.sql

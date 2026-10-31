@@ -68,7 +68,7 @@ public class AdminVariantController {
     @GetMapping("/admin/variants/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
         ProductVariant variant=catalog.variant(id); VariantForm form=new VariantForm();
-        form.setId(id); form.setProductId(variant.getProduct().getId()); form.setSizeId(variant.getSize().getId()); form.setMaterialId(variant.getMaterial().getId());
+        form.setId(id); form.setCode(variant.getCode()); form.setProductId(variant.getProduct().getId()); form.setSizeId(variant.getSize().getId()); form.setMaterialId(variant.getMaterial().getId());
         form.setColorId(variant.getColor().getId());form.setSoleId(variant.getSole().getId());
         form.setPrice(variant.getPrice()); form.setQuantity(variant.getQuantity()); form.setExpectedQuantity(variant.getQuantity()); form.setStatus(variant.getStatus());
         model.addAttribute("variant",form); return form(model);

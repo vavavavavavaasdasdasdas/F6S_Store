@@ -1,0 +1,26 @@
+[
+  {
+    "file": "bootstrap-icons.css",
+    "source": "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css",
+    "bytes": 93734,
+    "sha256": "d8824f7067cdfea38afec7e9ffaf072125266824206d69ef1f112d72153a505e"
+  },
+  {
+    "file": "fonts/bootstrap-icons.woff2",
+    "source": "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/fonts/bootstrap-icons.woff2",
+    "bytes": 121340,
+    "sha256": "cfe45b981d1b91b173361a34cfce5f60893dbd1ac4af2c3ac11fc17552c5401f"
+  },
+  {
+    "file": "fonts/bootstrap-icons.woff",
+    "source": "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/fonts/bootstrap-icons.woff",
+    "bytes": 164360,
+    "sha256": "999550fafbfbc0e0474b3b5c945df287b079d2a23dc07dcc6240a7d2f18e081d"
+  },
+  {
+    "file": "LICENSE",
+    "source": "https://raw.githubusercontent.com/twbs/icons/v1.10.5/LICENSE",
+    "bytes": 1093,
+    "sha256": "0623348b57e817b6897c41b6065380b599d5befe2839d83270566c605e430441"
+  }
+]

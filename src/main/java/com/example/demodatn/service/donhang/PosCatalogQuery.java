@@ -36,8 +36,8 @@ public class PosCatalogQuery {
     }
     public Page<Map<String,Object>> customers(String q,Object page) {
         if(q==null || q.trim().length()<2)return Page.empty(PageRequest.of(0,12));
-        String from=" FROM customers WHERE status=1 AND (LOWER(full_name) LIKE ? ESCAPE '!' OR phone LIKE ? ESCAPE '!')";
-        return pagination.sql(jdbc,"SELECT id,full_name,phone"+from+" ORDER BY full_name,id","SELECT COUNT_BIG(*)"+from,List.of(like(q),like(q)),page);
+        String from=" FROM customers WHERE status=1 AND (LOWER(full_name) LIKE ? ESCAPE '!' OR phone LIKE ? ESCAPE '!' OR LOWER(customer_code) LIKE ? ESCAPE '!')";
+        return pagination.sql(jdbc,"SELECT id,customer_code,full_name,phone"+from+" ORDER BY full_name,id","SELECT COUNT_BIG(*)"+from,List.of(like(q),like(q),like(q)),page);
     }
     private String like(String q){return "%"+q.trim().toLowerCase(Locale.ROOT).replace("!","!!").replace("%","!%").replace("_","!_").replace("[","![")+"%";}
 }

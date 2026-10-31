@@ -93,3 +93,8 @@ Giữ hệ thống giao diện hiện có. `fragments/dia-chi-giao-hang.html` s�
 POS chọn chế độ bằng radio, tách form giao hàng và form tại quầy; QR đơn giao hàng xuất hiện sau khi có mã đơn thật. Phí/địa chỉ được chụp vào đơn; UI không quyết định số tiền. `nut-hanh-dong.js` trang trí cột Hành động/Thao tác và dòng thêm qua AJAX bằng cùng class/SVG chữ rõ, màu theo tác dụng, cao tối thiểu 36px. Không thay handler, form POST hay confirm. Bảng giữ khung cuộn ngang.
 
 Logo do chủ dự án cung cấp dùng object-fit:contain, favicon 32/180, bản in và MIME email inline; không thiết kế lại. Phần kiểm thử ghi riêng mock bản đồ và các mục cần thử thiết bị/dịch vụ thật.
+
+
+### Giai đoạn 9 — Khung quản trị
+
+Giữ thiết kế hiện có. Menu Sản phẩm dùng details/summary hai nhóm con, nhớ trạng thái, tự mở mục đang xem và hỗ trợ bàn phím. Icon hành động có một fragment dùng chung, nhãn ẩn cho screen reader, title tiếng Việt, focus rõ, 36px desktop/40px mobile. Không thay handler/CSRF/confirm. Sidebar logo contain, chữ thương hiệu không xuống dòng. Chỉ Dashboard giữ breadcrumb/eyebrow/mô tả. Bộ Bootstrap Icons 1.10.5 được lưu cục bộ, MIT.

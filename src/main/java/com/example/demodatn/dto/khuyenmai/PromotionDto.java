@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 @Data
 public class PromotionDto {
+    private String code;
     private Integer id;
     @NotBlank(message="Nhập tên đợt giảm giá.") @Size(max=100,message="Tên tối đa 100 ký tự.") private String name;
     @NotNull(message="Nhập phần trăm giảm.") @DecimalMin(value="1",message="Phần trăm từ 1 đến 100.") @DecimalMax(value="100",message="Phần trăm từ 1 đến 100.") @Digits(integer=3,fraction=2,message="Giá trị tối đa 2 chữ số thập phân.")

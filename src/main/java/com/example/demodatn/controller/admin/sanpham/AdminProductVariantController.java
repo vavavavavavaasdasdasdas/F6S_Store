@@ -68,6 +68,7 @@ public class AdminProductVariantController {
     }
     private Map<String,Object> row(ProductVariant v) {
         return Map.ofEntries(Map.entry("id",v.getId()),Map.entry("product_id",v.getProduct().getId()),
+            Map.entry("variant_code",v.getCode()),Map.entry("code",v.getProduct().getCode()),Map.entry("name",v.getProduct().getName()),
             Map.entry("size_id",v.getSize().getId()),Map.entry("size_value",v.getSize().getSizeValue()),
             Map.entry("mau_sac_id",v.getColor().getId()),Map.entry("color_name",v.getColor().getName()),
             Map.entry("chat_lieu_id",v.getMaterial().getId()),Map.entry("material_name",v.getMaterial().getName()),

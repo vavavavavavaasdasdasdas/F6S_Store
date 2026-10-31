@@ -33,7 +33,7 @@ public class ProductUploadExceptionAdvice {
         model.addAttribute("uploadMaxBytes", maxBytes);
         model.addAttribute("adminNav", AdminPageAdvice.NAV);
         model.addAttribute("adminActive", "products");
-        model.addAttribute("adminTitle", "Sản phẩm");
+        model.addAttribute("adminTitle", "Chi tiết sản phẩm");
         return "admin/san-pham/bieu-mau";
     }
 }

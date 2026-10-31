@@ -12,7 +12,7 @@
     <script th:src="@{/js/quan-tri.js}" defer></script>
     <script th:src="@{/js/quan-tri-danh-muc.js}" defer></script>
 <link rel="apple-touch-icon" href="/images/favicon-180.png">
-<script src="/js/nut-hanh-dong.js" defer></script></head>
+<th:block th:replace="~{fragments/nut-hanh-dong :: library}"></th:block><script src="/js/nut-hanh-dong.js" defer></script></head>
 <body class="admin-body">
 <dialog id="admin-confirm" class="catalog-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-description">
     <h2 id="confirm-title">Xác nhận thao tác</h2><p id="confirm-description"></p>
@@ -24,7 +24,7 @@
 <div class="admin-shell">
     <header th:replace="~{fragments/thanh-dau-quan-tri :: topbar}"></header>
     <main id="admin-content" class="admin-content" tabindex="-1">
-        <nav th:replace="~{fragments/duong-dan-quan-tri :: breadcrumb}"></nav>
+        <th:block th:if="${adminActive=='dashboard'}"><nav th:replace="~{fragments/duong-dan-quan-tri :: breadcrumb}"></nav></th:block>
         <div th:replace="~{fragments/thong-bao-quan-tri :: flash}"></div>
         <th:block th:replace="${content}"></th:block>
     </main>

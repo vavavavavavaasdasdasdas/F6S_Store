@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 @Data
 public class VariantForm {
+    private String code;
     private Integer id;
     @NotNull(message="Chọn sản phẩm.") private Integer productId;
     @NotNull(message="Chọn kích cỡ.") private Integer sizeId;

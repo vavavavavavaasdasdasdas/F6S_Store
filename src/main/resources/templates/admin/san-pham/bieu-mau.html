@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section class="catalog-page">
-<div class="admin-heading"><div><span class="eyebrow">THÔNG TIN SẢN PHẨM</span><h1 th:text="${product.id==null ? 'Thêm sản phẩm' : 'Sửa sản phẩm'}"></h1><p class="admin-description">Có thể tạo ngay biến thể theo kích cỡ và chất liệu khi thêm sản phẩm.</p></div></div>
+<div class="admin-heading"><div><h1 th:text="${product.id==null ? 'Thêm sản phẩm' : 'Sửa sản phẩm'}"></h1></div></div>
 <form class="admin-panel catalog-form" th:action="@{/admin/products-crud/save}" method="post" enctype="multipart/form-data" th:object="${product}" novalidate data-admin-form>
 <input type="hidden" th:field="*{id}"><p class="form-message" role="alert" hidden></p>
 <div class="catalog-form-grid"><div>

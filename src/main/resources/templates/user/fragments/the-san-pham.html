@@ -35,7 +35,7 @@
 
         <div class="mt-auto dropdown">
             <button class="btn btn-primary btn-sm w-100" type="button" data-bs-toggle="dropdown"
-                    data-bs-auto-close="outside" aria-expanded="false" th:disabled="${p.totalStock <= 0}">
+                    data-bs-auto-close="outside" aria-expanded="false" th:disabled="${p.totalStock <= 0}" data-add-icon>
                 Thêm nhanh
             </button>
             <div class="quick-add-menu dropdown-menu p-3 shadow">
@@ -50,7 +50,7 @@
                         </th:block>
                     </div>
                     <input type="hidden" name="quantity" value="1">
-                    <button type="submit" class="btn btn-dark btn-sm w-100">Thêm vào giỏ</button>
+                    <button type="submit" class="btn btn-dark btn-sm w-100" data-add-icon>Thêm vào giỏ</button>
                     <div class="quick-add-msg small mt-2 d-none"></div>
                 </form>
             </div>

@@ -4,14 +4,14 @@
 <section class="catalog-page">
     <div class="admin-heading">
         <div>
-            <span class="eyebrow">THIẾT LẬP HÀNG HÓA</span>
+
             <h1 th:text="${lookupTitle}"></h1>
-            <p class="admin-description" th:if="${kind == 'sizes'}">Quản lý kích cỡ giày. Chỉ cho phép xóa khi chưa có biến thể nào sử dụng.</p>
-            <p class="admin-description" th:if="${kind == 'categories'}">Quản lý thương hiệu sản phẩm. Hỗ trợ hiển thị hoặc ẩn thương hiệu linh hoạt.</p>
-            <p class="admin-description" th:if="${kind == 'soles'}">Quản lý đế giày của biến thể. Chỉ xóa khi chưa được biến thể sử dụng.</p>
-            <p class="admin-description" th:if="${kind == 'materials'}">Quản lý chất liệu sản phẩm. Hỗ trợ hiển thị hoặc ẩn chất liệu linh hoạt.</p>
+
+
+
+
         </div>
-        <a class="btn btn-primary" th:href="@{/admin/{kind}/create(kind=${kind})}" th:text="'Thêm ' + ${lookupTitle.toLowerCase()}"></a>
+        <a class="btn btn-primary" th:href="@{/admin/{kind}/create(kind=${kind})}" th:text="'Thêm ' + ${lookupTitle.toLowerCase()}" data-add-icon></a>
     </div>
 
     <div class="admin-panel">
@@ -50,7 +50,7 @@
         <div class="table-wrap" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0">
             <table data-table-key="admin-danh-muc-kich-co-danh-sach-1" class="admin-table data-table">
                 <thead>
-                    <tr><th scope="col" class="row-number">STT</th>
+                    <tr><th scope="col" class="row-number">STT</th><th>Mã</th>
                         <th th:text="${kind == 'sizes' ? 'Kích cỡ' : (kind == 'materials' ? 'Tên chất liệu' : (kind == 'soles' ? 'Tên đế giày' : 'Tên thương hiệu'))}"></th>
                         <th th:if="${kind != 'sizes'}" style="width: 160px;">Trạng thái</th>
                         <th th:if="${kind == 'materials' or kind == 'soles'}">Đang dùng</th>
@@ -58,7 +58,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="item, rowIndex : ${items}"><td class="row-number" th:text="${items.number * items.size + rowIndex.count}"></td>
+                    <tr th:each="item, rowIndex : ${items}"><td class="row-number" th:text="${items.number * items.size + rowIndex.count}"></td><td th:text="${item.code}"></td>
                         <td>
                             <strong th:text="${kind == 'sizes' ? item.sizeValue : item.name}"></strong>
                         </td>
@@ -91,7 +91,7 @@
                         </td>
                     </tr>
                     <tr th:if="${items.empty}">
-                        <td th:colspan="${kind == 'sizes' ? 3 : (kind == 'materials' or kind == 'soles' ? 5 : 4)}" class="catalog-empty text-center py-4">
+                        <td th:colspan="${kind == 'sizes' ? 4 : (kind == 'materials' or kind == 'soles' ? 6 : 5)}" class="catalog-empty text-center py-4">
                             Không tìm thấy dữ liệu phù hợp. Chọn nút <strong>Thêm</strong> để tạo bản ghi mới.
                         </td>
                     </tr>

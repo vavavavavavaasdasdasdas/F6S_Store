@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org"><body>
+<th:block th:fragment="menu">
+<p class="admin-nav-group">SẢN PHẨM</p>
+<details class="admin-nav-section" data-nav-section="products" th:open="${adminActive=='products' or adminActive=='categories'}"><summary>Sản phẩm</summary><div class="admin-nav-children"><a th:replace="~{fragments/menu-san-pham :: link('/admin/products-crud','products','Chi tiết sản phẩm')}"></a><a th:replace="~{fragments/menu-san-pham :: link('/admin/categories','categories','Thương hiệu')}"></a></div></details>
+<details class="admin-nav-section" data-nav-section="variants" th:open="${adminActive=='variants' or adminActive=='sizes' or adminActive=='soles' or adminActive=='materials' or adminActive=='colors'}"><summary>Biến thể</summary><div class="admin-nav-children"><a th:replace="~{fragments/menu-san-pham :: link('/admin/variants','variants','Danh sách biến thể')}"></a><a th:replace="~{fragments/menu-san-pham :: link('/admin/sizes','sizes','Kích cỡ')}"></a><a th:replace="~{fragments/menu-san-pham :: link('/admin/soles','soles','Đế giày')}"></a><a th:replace="~{fragments/menu-san-pham :: link('/admin/materials','materials','Chất liệu')}"></a><a th:replace="~{fragments/menu-san-pham :: link('/admin/colors','colors','Màu sắc')}"></a></div></details>
+<a th:replace="~{fragments/menu-san-pham :: link('/admin/inventory','inventory','Tồn kho')}"></a>
+</th:block>
+<a th:fragment="link(route,key,label)" th:href="${route}" th:classappend="${adminActive==key?'is-active':''}" th:attr="aria-current=${adminActive==key?'page':null}"><span class="nav-dot" aria-hidden="true"></span><span th:text="${label}"></span></a>
+</body></html>

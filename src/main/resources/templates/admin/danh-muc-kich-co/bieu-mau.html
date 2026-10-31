@@ -4,14 +4,14 @@
 <section class="catalog-page">
     <div class="admin-heading">
         <div>
-            <span class="eyebrow">THIẾT LẬP HÀNG HÓA</span>
+
             <h1 th:text="(${lookup.id == null} ? 'Thêm ' : 'Sửa ') + ${lookupTitle.toLowerCase()}"></h1>
-            <p class="admin-description" th:text="(${lookup.id == null} ? 'Tạo mới ' : 'Cập nhật thông tin ') + ${lookupTitle.toLowerCase()} + ' cho hệ thống.'"></p>
+
         </div>
     </div>
     <form class="admin-panel catalog-form catalog-form-narrow" method="post"
           th:action="@{/admin/{kind}/save(kind=${kind})}" th:object="${lookup}" novalidate data-admin-form>
-        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{id}"><div class="catalog-field"><label for="object-code">Mã</label><input id="object-code" class="form-control" readonly th:value="${lookup.code}" placeholder="Tự động tạo khi lưu"></div>
         <p class="form-message" role="alert" hidden></p>
 
         <div class="catalog-field">
@@ -38,7 +38,7 @@
         </div>
 
         <div class="catalog-form-actions mt-4" style="display:flex; gap:12px;">
-            <button type="submit" class="btn btn-primary" th:text="(${lookup.id == null} ? 'Thêm mới' : 'Cập nhật')"></button>
+            <button type="submit" class="btn btn-primary" th:text="(${lookup.id == null} ? 'Thêm mới' : 'Cập nhật')" data-add-icon></button>
             <a class="btn btn-outline-secondary" th:href="@{/admin/{kind}(kind=${kind})}">Quay lại danh sách</a>
         </div>
     </form>

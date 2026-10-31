@@ -10,6 +10,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Promotion {
+    @Column(name="ma",length=20,nullable=false,insertable=false,updatable=false)
+    @org.hibernate.annotations.Generated(event=org.hibernate.generator.EventType.INSERT)
+    private String code;
+
+    public Promotion(Integer id,String name,String discountType,BigDecimal discountValue,LocalDateTime startDate,LocalDateTime endDate,Boolean status){this.id=id;this.name=name;this.discountType=discountType;this.discountValue=discountValue;this.startDate=startDate;this.endDate=endDate;this.status=status;}
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

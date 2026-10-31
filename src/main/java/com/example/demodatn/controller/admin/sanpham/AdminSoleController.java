@@ -40,7 +40,7 @@ public class AdminSoleController {
         Specification<Sole> spec = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (kw != null) {
-                predicates.add(cb.like(cb.lower(root.get("name")), "%" + kw.toLowerCase() + "%"));
+                predicates.add(cb.or(cb.like(cb.lower(root.get("name")), "%" + kw.toLowerCase() + "%"),cb.like(cb.lower(root.get("code")),"%"+kw.toLowerCase()+"%")));
             }
             if (status != null) {
                 predicates.add(cb.equal(root.get("status"), status));
@@ -72,7 +72,7 @@ public class AdminSoleController {
         model.addAttribute("lookup",new LookupForm());return "admin/danh-muc-kich-co/bieu-mau";
     }
     @GetMapping("/edit/{id}") public String edit(@PathVariable Integer id,Model model) {
-        var sole=service.get(id);var form=new LookupForm();form.setId(id);form.setValue(sole.getName());form.setStatus(sole.getStatus());
+        var sole=service.get(id);var form=new LookupForm();form.setId(id);form.setCode(sole.getCode());form.setValue(sole.getName());form.setStatus(sole.getStatus());
         model.addAttribute("lookup",form);return "admin/danh-muc-kich-co/bieu-mau";
     }
     @PostMapping("/save") public String save(@Valid @ModelAttribute("lookup") LookupForm form,BindingResult errors,RedirectAttributes flash) {

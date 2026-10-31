@@ -1,8 +1,8 @@
 <!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body>
 <section class="admin-panel admin-placeholder">
-<span class="eyebrow">MODULE ĐANG PHÁT TRIỂN</span><h1 th:text="${adminTitle}"></h1>
+<h1 th:text="${adminTitle}"></h1>
 <p th:text="'Sẽ hoàn thiện ở phase ' + ${phase}"></p>
 <p class="text-muted">Chức năng này chưa được triển khai.</p>
-<a class="btn btn-primary" th:href="@{/admin/dashboard}">Quay lại Bảng điều khiển</a>
+<a class="btn btn-primary" th:href="@{/admin/dashboard}">Quay lại Dashboard</a>
 </section></body></html>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section>
 
-<div class="admin-heading"><div><span class="eyebrow">BÁN HÀNG</span><h1>Đơn hàng</h1><p class="admin-description">Theo dõi đơn trực tuyến và POS trong một danh sách.</p></div><a class="btn btn-primary" href="/admin/pos">Bán tại quầy</a></div><div class="admin-panel"><form class="catalog-filters mb-3" action="/admin/orders" method="get" novalidate>
+<div class="admin-heading"><div><h1>Đơn hàng</h1></div><a class="btn btn-primary" href="/admin/pos">Bán tại quầy</a></div><div class="admin-panel"><form class="catalog-filters mb-3" action="/admin/orders" method="get" novalidate>
 <div><label for="q">Mã đơn</label><input class="form-control" id="q" type="search" name="q" th:value="${q}" placeholder="Nhập mã đơn hàng"></div>
 <div><label for="customer">Tìm khách</label><input class="form-control" id="customer" type="search" name="customer" th:value="${customer}" placeholder="Tên, SĐT, mã khách"></div>
 <div><label for="order-customerId">Khách hàng</label><select class="form-select" id="order-customerId" name="customerId"><option value="">Tất cả khách hàng</option><option th:each="c:${customers}" th:value="${c.id}" th:selected="${customerId==c.id}" th:text="${c.fullName + (c.phone != null ? ' · ' + c.phone : '')}"></option></select></div>

@@ -51,7 +51,7 @@ public class AdminPromotionController {
         Specification<Promotion> spec = (root, cq, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (!kw.isEmpty()) {
-                predicates.add(cb.like(cb.lower(root.get("name")), "%" + kw.toLowerCase(Locale.ROOT) + "%"));
+                predicates.add(cb.or(cb.like(cb.lower(root.get("name")), "%" + kw.toLowerCase(Locale.ROOT) + "%"),cb.like(cb.lower(root.get("code")),"%"+kw.toLowerCase(Locale.ROOT)+"%")));
             }
             if (st != null) {
                 switch (st) {

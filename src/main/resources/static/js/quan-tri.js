@@ -21,7 +21,7 @@
         if (!document.body.classList.contains('menu-open')) return;
         if (event.key === 'Escape') { close(); toggle.focus(); }
         if (event.key === 'Tab') {
-            const controls = [...sidebar.querySelectorAll('a, button'), toggle];
+            const controls = [...sidebar.querySelectorAll('a, button, summary')].filter(el=>el.getClientRects().length).concat(toggle);
             const first = controls[0], last = controls[controls.length - 1];
             if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
             else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
@@ -31,3 +31,10 @@
     document.querySelectorAll('.flash-close').forEach(button => button.addEventListener('click', () => button.parentElement.remove()));
 })();
 
+
+document.querySelectorAll('[data-nav-section]').forEach(section=>{
+ const active=!!section.querySelector('[aria-current="page"]'),key='admin-menu:'+section.dataset.navSection,summary=section.querySelector('summary');
+ try{section.open=active||localStorage.getItem(key)==='open';}catch(_){section.open=active;}
+ const sync=()=>{summary.setAttribute('aria-expanded',String(section.open));try{localStorage.setItem(key,section.open?'open':'closed');}catch(_){}};
+ section.addEventListener('toggle',sync);summary.addEventListener('keydown',event=>{if(event.key==='ArrowRight'){section.open=true;event.preventDefault();}else if(event.key==='ArrowLeft'){section.open=false;event.preventDefault();}});sync();
+});

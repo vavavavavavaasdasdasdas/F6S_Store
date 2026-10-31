@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class LookupForm {
+    private String code;
     private Integer id;
     @NotBlank(message="Không được để trống.")
     @jakarta.validation.constraints.Size(max=100,message="Tối đa 100 ký tự.")
