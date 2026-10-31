@@ -31,28 +31,14 @@ public class AdminProductController {
 
     private final com.example.demodatn.repository.sanpham.ColorRepository colors;
     @GetMapping
-    public String list(@RequestParam(defaultValue="") String keyword, @RequestParam(required=false) Integer categoryId,
-                       @RequestParam(required=false) Integer materialId, @RequestParam(required=false) Boolean status, @RequestParam(defaultValue="newest") String sort,
-                       @RequestParam(defaultValue="0") String page, @RequestParam(required=false) Integer soleId, @RequestParam(required=false) Integer colorId,
-                       @RequestParam(required=false) BigDecimal minPrice, @RequestParam(required=false) BigDecimal maxPrice, Model model) {
-        model.addAttribute("productPage",query.products(keyword,categoryId,status,sort,page,materialId,soleId,minPrice,maxPrice,colorId));
-        model.addAttribute("colors",colors.findAll()); model.addAttribute("colorId",colorId);
-        model.addAttribute("soles",soles.findAll());model.addAttribute("soleId",soleId);
-        model.addAttribute("categories",categories.findAll());
-        model.addAttribute("materials",materials.findAll()); model.addAttribute("materialId",materialId);
-        model.addAttribute("keyword",keyword); model.addAttribute("categoryId",categoryId);
-        model.addAttribute("status",status); model.addAttribute("sort",sort);
-        model.addAttribute("minPrice",minPrice); model.addAttribute("maxPrice",maxPrice);
-        int activeFilterCount = 0;
-        if(colorId!=null) activeFilterCount++;
-        if (keyword != null && !keyword.trim().isEmpty()) activeFilterCount++;
-        if (categoryId != null) activeFilterCount++;
-        if (soleId != null) activeFilterCount++;
-        if (materialId != null) activeFilterCount++;
-        if (status != null) activeFilterCount++;
-        if (minPrice != null) activeFilterCount++;
-        if (maxPrice != null) activeFilterCount++;
-        model.addAttribute("activeFilterCount", activeFilterCount);
+    public String list(@RequestParam(defaultValue="") String keyword,@RequestParam(required=false) Integer categoryId,
+                       @RequestParam(required=false) Boolean status,@RequestParam(defaultValue="newest") String sort,
+                       @RequestParam(defaultValue="0") String page,Model model) {
+        if(!java.util.Set.of("newest","name","code").contains(sort))sort="newest";
+        model.addAttribute("productPage",query.products(keyword,categoryId,status,sort,page));
+        model.addAttribute("categories",categories.findAll());model.addAttribute("keyword",keyword);
+        model.addAttribute("categoryId",categoryId);model.addAttribute("status",status);model.addAttribute("sort",sort);
+        model.addAttribute("activeFilterCount",(keyword.isBlank()?0:1)+(categoryId==null?0:1)+(status==null?0:1));
         return "admin/san-pham/danh-sach";
     }
     @GetMapping("/create")
@@ -68,7 +54,16 @@ public class AdminProductController {
         model.addAttribute("product",form); return form(model);
     }
     @GetMapping("/view/{id}")
-    public String view(@PathVariable Integer id,@RequestParam(defaultValue="0") String page,
+    public String view(@PathVariable Integer id,Model model) {
+        model.addAttribute("product",catalog.product(id));
+        var all=query.variantsPage(id,"all",0,0);
+        model.addAttribute("variantCount",all.getTotalElements());
+        model.addAttribute("totalStock",query.productStock(id));
+        model.addAttribute("productImages",gallery.list(id));
+        return "admin/san-pham/chi-tiet";
+    }
+    @GetMapping("/{id}/variants")
+    public String productVariants(@PathVariable Integer id,@RequestParam(defaultValue="0") String page,
                        @RequestParam(required=false) Integer sizeId,@RequestParam(required=false) Integer colorId,
                        @RequestParam(required=false) Integer materialId,@RequestParam(required=false) Integer soleId,
                        @RequestParam(required=false) Boolean variantStatus,Model model) {
@@ -79,7 +74,8 @@ public class AdminProductController {
         model.addAttribute("materials",materials.findAll());model.addAttribute("soles",soles.findAll());
         model.addAttribute("sizeId",sizeId);model.addAttribute("colorId",colorId);model.addAttribute("materialId",materialId);
         model.addAttribute("soleId",soleId);model.addAttribute("variantStatus",variantStatus);
-        return "admin/san-pham/chi-tiet";
+        model.addAttribute("adminTitle","Chi tiết biến thể");
+        return "admin/san-pham/bien-the";
     }
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("product") AdminProductForm product, BindingResult result, Model model, RedirectAttributes flash) {
@@ -95,8 +91,9 @@ public class AdminProductController {
         if (!result.hasErrors()) {
             try {
                 Product saved=catalog.saveProduct(product);
-                flash.addFlashAttribute("message",product.getId()==null?"Đã tạo sản phẩm, bạn có thể chỉnh các biến thể bên dưới":"Đã lưu sản phẩm.");
-                return "redirect:/admin/products-crud/view/"+saved.getId();
+                flash.addFlashAttribute("message",product.getId()==null?"Đã tạo sản phẩm thành công.":"Đã lưu sản phẩm.");
+                if(product.getId()==null)flash.addFlashAttribute("createdProductId",saved.getId());
+                return product.getId()==null?"redirect:/admin/products-crud":"redirect:/admin/products-crud/view/"+saved.getId();
             } catch(CatalogValidationException ex) { result.rejectValue(ex.getField(),"invalid",ex.getMessage()); }
               catch(DataIntegrityViolationException ex) { result.rejectValue("code","duplicate","Mã sản phẩm đã tồn tại hoặc dữ liệu liên quan vừa thay đổi."); }
         }

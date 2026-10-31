@@ -98,3 +98,8 @@ Logo do chủ dự án cung cấp dùng object-fit:contain, favicon 32/180, bả
 ### Giai đoạn 9 — Khung quản trị
 
 Giữ thiết kế hiện có. Menu Sản phẩm dùng details/summary hai nhóm con, nhớ trạng thái, tự mở mục đang xem và hỗ trợ bàn phím. Icon hành động có một fragment dùng chung, nhãn ẩn cho screen reader, title tiếng Việt, focus rõ, 36px desktop/40px mobile. Không thay handler/CSRF/confirm. Sidebar logo contain, chữ thương hiệu không xuống dòng. Chỉ Dashboard giữ breadcrumb/eyebrow/mô tả. Bộ Bootstrap Icons 1.10.5 được lưu cục bộ, MIT.
+
+
+### Giai đoạn 10 — Sản phẩm và không gian biến thể
+
+Danh sách sản phẩm chỉ chứa thông tin cấp sản phẩm; thao tác Chi tiết biến thể tới trang riêng dùng cùng bảng AJAX, service, combo, xác nhận và khung cuộn. Trang xem không có bảng biến thể. Form tạo hai cột: thông tin sản phẩm/ảnh/kích cỡ/đế bên trái, thuộc tính còn lại/giá/tồn và số biến thể dự kiến bên phải; mobile xếp dọc. Tạo xong về danh sách có liên kết biến thể cho sản phẩm vừa tạo.

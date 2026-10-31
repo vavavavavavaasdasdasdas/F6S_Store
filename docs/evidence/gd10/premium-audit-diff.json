@@ -1,0 +1,45 @@
+{
+  "headCommit": "8af7aa2",
+  "head": {
+    "errors": 150,
+    "total": 150,
+    "unresolved": 47,
+    "violations": 103,
+    "warnings": 0
+  },
+  "current": {
+    "errors": 150,
+    "total": 150,
+    "unresolved": 47,
+    "violations": 103,
+    "warnings": 0
+  },
+  "new": [
+    [
+      "src/main/resources/templates/admin/san-pham/bien-the.html",
+      "ownership.native-select-undecided",
+      "Native select is used without an explicit ownership decision.",
+      1
+    ],
+    [
+      "src/main/resources/templates/admin/san-pham/bien-the.html",
+      "affordance.actionless-button",
+      "Enabled literal button has no detectable action or submit behavior.",
+      2
+    ]
+  ],
+  "removed": [
+    [
+      "src/main/resources/templates/admin/san-pham/chi-tiet.html",
+      "ownership.native-select-undecided",
+      "Native select is used without an explicit ownership decision.",
+      1
+    ],
+    [
+      "src/main/resources/templates/admin/san-pham/chi-tiet.html",
+      "affordance.actionless-button",
+      "Enabled literal button has no detectable action or submit behavior.",
+      2
+    ]
+  ]
+}

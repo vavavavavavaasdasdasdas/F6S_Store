@@ -97,7 +97,7 @@ class SaleStatusAndCodeIntegrationTest {
             List<Future<Integer>> futures=new ArrayList<>();
             for(int i=0;i<20;i++)futures.add(pool.submit(()->{start.await();var r=mvc.perform(post("/admin/products-crud/save").with(user("admin").roles("ADMIN")).with(csrf())
                 .param("name","Giày yêu cầu đồng thời "+UUID.randomUUID()).param("categoryId",String.valueOf(category)).param("status","false").param("code","SAME-FORGED-CODE"))
-                .andExpect(status().isFound()).andReturn().getResponse();return Integer.valueOf(r.getRedirectedUrl().replaceAll(".*/",""));}));
+                .andExpect(status().isFound()).andReturn();return (Integer)r.getFlashMap().get("createdProductId");}));
             start.countDown();Set<String> codes=new HashSet<>();for(var future:futures){String code=products.findById(future.get(45,TimeUnit.SECONDS)).orElseThrow().getCode();assertTrue(code.matches("SP[0-9]{3,}"));assertTrue(codes.add(code));}
             assertEquals(20,codes.size());
         } finally {pool.shutdownNow();}

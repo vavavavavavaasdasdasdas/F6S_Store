@@ -16,8 +16,8 @@ public class AdminProductForm {
     private String newInitialMaterialName;
     private String newInitialSizeValue;
     private java.util.List<Integer> initialSizeIds = new java.util.ArrayList<>();
-    @DecimalMin(value="0.01", message="Giá phải lớn hơn 0.")
-    @Digits(integer=16,fraction=2,message="Giá tối đa 16 chữ số và 2 số thập phân.")
+    @DecimalMin(value="1", message="Giá phải lớn hơn 0.")
+    @Digits(integer=16,fraction=0,message="Giá phải là số nguyên đồng, tối đa 16 chữ số.")
     private java.math.BigDecimal initialPrice;
     @Min(value=0,message="Tồn kho ban đầu không được âm.")
     private Integer initialQuantity = 0;

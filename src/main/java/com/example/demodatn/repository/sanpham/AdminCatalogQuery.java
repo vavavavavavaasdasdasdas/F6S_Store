@@ -29,7 +29,7 @@ public class AdminCatalogQuery {
         return products(keyword,category,status,sort,page,materialId,soleId,minPrice,maxPrice,null);
     }
     public Page<Map<String,Object>> products(String keyword,Integer category,Boolean status,String sort,Object page,Integer materialId,Integer soleId,BigDecimal minPrice,BigDecimal maxPrice,Integer colorId) {
-        String joinV = " LEFT JOIN (SELECT product_id,MIN(price) AS price,MAX(price) AS max_price,SUM(CAST(quantity AS bigint)) AS stock FROM product_variants GROUP BY product_id) v ON v.product_id=p.id";
+        String joinV = " LEFT JOIN (SELECT product_id,MIN(price) AS price,MAX(price) AS max_price,SUM(CAST(quantity AS bigint)) AS stock,COUNT_BIG(*) AS variant_count FROM product_variants GROUP BY product_id) v ON v.product_id=p.id";
         String where = " WHERE 1=1";
         List<Object> args = new ArrayList<>();
         if (keyword != null && !keyword.isBlank()) {
@@ -54,7 +54,7 @@ public class AdminCatalogQuery {
             case "price_asc" -> "v.price ASC,p.id DESC"; case "price_desc" -> "v.price DESC,p.id DESC";
             case "stock" -> "COALESCE(v.stock,0) ASC,p.id DESC"; default -> "p.id DESC";
         };
-        String sql = "SELECT p.*,c.name AS category_name,v.price,v.max_price,COALESCE(v.stock,0) AS stock FROM products p LEFT JOIN categories c ON c.id=p.category_id" + joinV + where + " ORDER BY " + order;
+        String sql = "SELECT p.*,c.name AS category_name,v.price,v.max_price,COALESCE(v.variant_count,0) AS variant_count,COALESCE(v.stock,0) AS stock FROM products p LEFT JOIN categories c ON c.id=p.category_id" + joinV + where + " ORDER BY " + order;
         Page<Map<String,Object>> result = pagination.sql(jdbc,sql,countSql,args,page);
         if (!result.isEmpty()) {
             var ids = result.getContent().stream().map(p -> p.get("id")).toList();
@@ -72,6 +72,9 @@ public class AdminCatalogQuery {
         return result;
     }
 
+    public Long productStock(Integer id) {
+        return jdbc.queryForObject("SELECT COALESCE(SUM(CAST(quantity AS bigint)),0) FROM product_variants WHERE product_id=?",Long.class,id);
+    }
     public List<Map<String,Object>> variants(Integer productId, String stock, int threshold) {
         return variantsPage(productId,stock,threshold,0).getContent();
     }

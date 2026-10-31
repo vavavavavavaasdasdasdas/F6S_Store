@@ -80,7 +80,7 @@
      if(form.dataset.submitting==='true'){event.preventDefault();return;}
      if(form.querySelector('[data-initial-variants]')) {
        const selected=Boolean(form.querySelector('[name=initialSizeIds]:checked')) || Boolean(form.querySelector('#newInitialSizeValue')?.value.trim());
-       ['initialMaterialId','initialPrice','initialQuantity'].forEach(name=>{if(form.elements[name])form.elements[name].required=selected;});
+       ['initialColorId','initialSoleId','initialMaterialId','initialPrice','initialQuantity'].forEach(name=>{if(form.elements[name])form.elements[name].required=selected;});
      }
      let valid=true;fields(form).forEach(f=>{if(!validate(f))valid=false;});
      if(!valid){event.preventDefault();focusField(fields(form).find(field=>field.getAttribute('aria-invalid')==='true'));return;}

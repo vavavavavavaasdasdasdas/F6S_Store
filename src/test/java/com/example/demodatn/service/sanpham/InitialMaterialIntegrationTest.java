@@ -47,7 +47,7 @@ class InitialMaterialIntegrationTest {
         f.setCategoryId(categories.findAll().get(0).getId());f.setStatus(false);
         f.setInitialSizeIds(sizes.findAll().stream().limit(2).map(Size::getId).toList());
         f.setInitialMaterialId(materials.findByStatusTrueOrderByNameAscIdAsc().get(0).getId());
-        f.setInitialPrice(new BigDecimal("321000.50"));f.setInitialQuantity(7);return f;
+        f.setInitialPrice(new BigDecimal("321000"));f.setInitialQuantity(7);return f;
     }
     @Test @org.springframework.transaction.annotation.Transactional
     void formPostCreatesTwoVariantsAndExactInitializationLogs() throws Exception {
@@ -55,8 +55,8 @@ class InitialMaterialIntegrationTest {
         var saved=mvc.perform(multipart("/admin/products-crud/save").with(csrf()).param("code",f.getCode()).param("name",f.getName())
             .param("categoryId",f.getCategoryId().toString()).param("status","false")
             .param("initialColorId",phase5Colors.findAll().get(0).getId().toString()).param("initialSoleId",phase5Soles.findAll().get(0).getId().toString()).param("initialMaterialId",f.getInitialMaterialId().toString()).param("initialSizeIds",f.getInitialSizeIds().stream().map(Object::toString).toArray(String[]::new))
-            .param("initialPrice","321000.50").param("initialQuantity","7")).andExpect(status().is3xxRedirection()).andReturn();
-        int savedId=Integer.parseInt(saved.getResponse().getRedirectedUrl().replaceAll(".*/",""));
+            .param("initialPrice","321000").param("initialQuantity","7")).andExpect(status().is3xxRedirection()).andReturn();
+        int savedId=(Integer)saved.getFlashMap().get("createdProductId");
         var rows=jdbc.queryForList("SELECT v.price,v.quantity,v.chat_lieu_id,l.quantity_before,l.quantity_change,l.quantity_after,l.reason FROM product_variants v JOIN products p ON p.id=v.product_id JOIN inventory_logs l ON l.variant_id=v.id WHERE p.id=?",savedId);
         assertEquals(2,rows.size());
         for(var r:rows) {assertEquals(0,new BigDecimal(r.get("price").toString()).compareTo(f.getInitialPrice()));assertEquals(7,r.get("quantity"));assertEquals(f.getInitialMaterialId(),r.get("chat_lieu_id"));assertEquals(0,r.get("quantity_before"));assertEquals(7,r.get("quantity_change"));assertEquals(7,r.get("quantity_after"));assertEquals("Khởi tạo",r.get("reason"));}
@@ -89,9 +89,9 @@ class InitialMaterialIntegrationTest {
     @Test @org.springframework.transaction.annotation.Transactional
     void materialColumnFiltersLabelsUsageAndPreselectionMatchDatabase() throws Exception {
         var f=form();int id=catalog.saveProduct(f).getId();String name=materials.findById(f.getInitialMaterialId()).orElseThrow().getName();
-        mvc.perform(get("/admin/products-crud").param("keyword",f.getCode()).param("materialId",f.getInitialMaterialId().toString()))
+        mvc.perform(get("/admin/variants").param("keyword",f.getCode()).param("materialId",f.getInitialMaterialId().toString()))
             .andExpect(status().isOk()).andExpect(content().string(containsString(name))).andExpect(content().string(containsString(f.getName())));
-        mvc.perform(get("/admin/products-crud/edit/"+id)).andExpect(status().isOk()).andExpect(content().string(containsString(name))).andExpect(content().string(containsString("Quản lý biến thể")));
+        mvc.perform(get("/admin/products-crud/edit/"+id)).andExpect(status().isOk()).andExpect(content().string(containsString(name))).andExpect(content().string(containsString("Chi tiết biến thể")));
         mvc.perform(get("/admin/materials")).andExpect(status().isOk()).andExpect(content().string(containsString("Đang dùng")));
         var r=mvc.perform(get("/admin/variants/create").param("productId",""+id)).andExpect(status().isOk()).andReturn();
         assertEquals(id,((com.example.demodatn.dto.sanpham.VariantForm)r.getModelAndView().getModel().get("variant")).getProductId());
@@ -112,7 +112,7 @@ class InitialMaterialIntegrationTest {
         assertTrue(catalog.deleteLookup("materials",m.getId()).startsWith("Không"));
     }
     @Test @org.springframework.transaction.annotation.Transactional
-    void summaryCapsThreeActiveMaterialsAndPaginationKeepsMaterialFilter() throws Exception {
+    void summaryRemainsAvailableAndVariantPageKeepsMaterialFilter() throws Exception {
         var f=form();int id=catalog.saveProduct(f).getId();
         for(int n=0;n<4;n++) {
             var m=new Material();m.setName("Tóm tắt "+n+" "+UUID.randomUUID());materials.saveAndFlush(m);
@@ -126,14 +126,14 @@ class InitialMaterialIntegrationTest {
         assertFalse(summary.contains("Tóm tắt 3"));
         String code="PAGEA-"+UUID.randomUUID().toString().substring(0,8);
         for(int n=0;n<14;n++){f=form();f.setCode(code+"-"+n);f.setName(code+" "+n);catalog.saveProduct(f);}
-        r=mvc.perform(get("/admin/products-crud").param("keyword",code).param("materialId",f.getInitialMaterialId().toString()))
+        r=mvc.perform(get("/admin/variants").param("keyword",code).param("materialId",f.getInitialMaterialId().toString()))
                 .andExpect(status().isOk()).andReturn();
         String markup=r.getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8);
         assertTrue(markup.contains("materialId="+f.getInitialMaterialId()));
         assertTrue(markup.contains("page=1"));
-        page=(org.springframework.data.domain.Page<?>)r.getModelAndView().getModel().get("productPage");
-        assertEquals(14,page.getTotalElements());
-        System.out.println("PHASE_A material summary="+summary+"; filter total=14; pagination materialId="+f.getInitialMaterialId()+" retained");
+        page=(org.springframework.data.domain.Page<?>)r.getModelAndView().getModel().get("dataPage");
+        assertEquals(28,page.getTotalElements());
+        System.out.println("PHASE_A material summary="+summary+"; variant filter total=28; pagination materialId="+f.getInitialMaterialId()+" retained");
     }
     @Test @org.springframework.transaction.annotation.Transactional
     void eightSecurityScenarios() throws Exception {

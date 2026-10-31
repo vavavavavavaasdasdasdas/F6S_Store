@@ -51,6 +51,13 @@ public class AdminCatalogService {
         }
     }
 
+    private <T> T createLookup(java.util.function.Supplier<T> save,String field) {
+        try { return save.get(); }
+        catch(org.springframework.dao.DataIntegrityViolationException ex) {
+            throw new CatalogValidationException(field,"Giá trị vừa được tạo hoặc đã tồn tại. Chọn lại trong danh sách rồi lưu.");
+        }
+    }
+
     @Transactional
     public Category resolveOrCreateCategory(String raw, String field) {
         requireAdminForCreation();
@@ -67,7 +74,7 @@ public class AdminCatalogService {
         Category created = new Category();
         created.setName(name);
         created.setStatus(true);
-        return categories.saveAndFlush(created);
+        return createLookup(()->categories.saveAndFlush(created),field);
     }
 
     @Transactional
@@ -86,7 +93,7 @@ public class AdminCatalogService {
         Sole created = new Sole();
         created.setName(name);
         created.setStatus(true);
-        return soles.saveAndFlush(created);
+        return createLookup(()->soles.saveAndFlush(created),field);
     }
 
     @Transactional
@@ -105,7 +112,7 @@ public class AdminCatalogService {
         Material created = new Material();
         created.setName(name);
         created.setStatus(true);
-        return materials.saveAndFlush(created);
+        return createLookup(()->materials.saveAndFlush(created),field);
     }
 
     @Transactional
@@ -121,7 +128,7 @@ public class AdminCatalogService {
         }
         Size created = new Size();
         created.setSizeValue(value);
-        return sizes.saveAndFlush(created);
+        return createLookup(()->sizes.saveAndFlush(created),field);
     }
 
     @Transactional
@@ -133,7 +140,7 @@ public class AdminCatalogService {
             if(!Boolean.TRUE.equals(color.getStatus()))throw new CatalogValidationException(field,"Màu sắc đã tồn tại nhưng đang ẩn.");
             return color;
         }
-        var color=new com.example.demodatn.entity.sanpham.Color();color.setName(name);return colors.saveAndFlush(color);
+        var color=new com.example.demodatn.entity.sanpham.Color();color.setName(name);return createLookup(()->colors.saveAndFlush(color),field);
     }
 
     public Product product(Integer id) {
@@ -158,7 +165,8 @@ public class AdminCatalogService {
             Size newSize = resolveOrCreateSize(form.getNewInitialSizeValue(), "initialSizeIds");
             var sizeIds = new java.util.ArrayList<>(form.getInitialSizeIds() == null ? java.util.List.of() : form.getInitialSizeIds());
             sizeIds.removeIf(id -> id != null && id <= 0);
-            if (!sizeIds.contains(newSize.getId())) sizeIds.add(newSize.getId());
+            if(sizeIds.contains(newSize.getId()))throw new CatalogValidationException("initialSizeIds","Kích cỡ đã được chọn. Không tạo biến thể trùng.");
+            sizeIds.add(newSize.getId());
             form.setInitialSizeIds(sizeIds);
         }
         boolean initialize = form.getId() == null && form.getInitialSizeIds() != null && !form.getInitialSizeIds().isEmpty();
@@ -175,12 +183,13 @@ public class AdminCatalogService {
                 throw new CatalogValidationException("initialMaterialId","Chọn chất liệu khi chọn kích cỡ ban đầu.");
             initialMaterial = materials.findById(form.getInitialMaterialId()).filter(m -> Boolean.TRUE.equals(m.getStatus()))
                     .orElseThrow(() -> new CatalogValidationException("initialMaterialId","Chọn chất liệu đang hiển thị."));
-            if (form.getInitialPrice() == null || form.getInitialPrice().signum() <= 0 || form.getInitialPrice().scale() > 2
+            if (form.getInitialPrice() == null || form.getInitialPrice().signum() <= 0 || form.getInitialPrice().stripTrailingZeros().scale() > 0
                     || form.getInitialPrice().precision() - form.getInitialPrice().scale() > 16)
-                throw new CatalogValidationException("initialPrice","Nhập giá lớn hơn 0, tối đa 16 chữ số và 2 số thập phân.");
+                throw new CatalogValidationException("initialPrice","Nhập giá nguyên đồng lớn hơn 0, tối đa 16 chữ số.");
             if (form.getInitialQuantity() == null || form.getInitialQuantity() < 0)
                 throw new CatalogValidationException("initialQuantity","Nhập tồn kho ban đầu từ 0 trở lên.");
-            for (Integer sizeId : new java.util.LinkedHashSet<>(form.getInitialSizeIds())) {
+            if(new java.util.HashSet<>(form.getInitialSizeIds()).size()!=form.getInitialSizeIds().size())throw new CatalogValidationException("initialSizeIds","Kích cỡ đã được chọn. Không tạo biến thể trùng.");
+            for (Integer sizeId : form.getInitialSizeIds()) {
                 if (sizeId == null) throw new CatalogValidationException("initialSizeIds","Kích cỡ không hợp lệ.");
                 initialSizes.add(sizes.findById(sizeId).orElseThrow(() -> new CatalogValidationException("initialSizeIds","Kích cỡ không tồn tại.")));
             }
@@ -197,11 +206,14 @@ public class AdminCatalogService {
         gallery.save(product,form);
         if (initialize) {
             for (Size size : initialSizes) {
-                ProductVariant variant = new ProductVariant();
-                variant.setProduct(product); variant.setSize(size); variant.setMaterial(initialMaterial); variant.setColor(initialColor); variant.setSole(initialSole);
-                variant.setPrice(form.getInitialPrice()); variant.setStatus(true);
-                variants.saveAndFlush(variant);
-                inventory.initialize(variant,form.getInitialQuantity());
+                var variantForm=new VariantForm();variantForm.setProductId(product.getId());variantForm.setSizeId(size.getId());
+                variantForm.setMaterialId(initialMaterial.getId());variantForm.setColorId(initialColor.getId());variantForm.setSoleId(initialSole.getId());
+                variantForm.setPrice(form.getInitialPrice());variantForm.setQuantity(form.getInitialQuantity());variantForm.setStatus(true);
+                try {saveVariant(variantForm);}
+                catch(CatalogValidationException ex) {
+                    String field=switch(ex.getField()) {case "price"->"initialPrice";case "quantity"->"initialQuantity";case "sizeId"->"initialSizeIds";case "colorId"->"initialColorId";case "soleId"->"initialSoleId";default->"initialMaterialId";};
+                    throw new CatalogValidationException(field,ex.getMessage());
+                }
             }
         }
         return products.saveAndFlush(product);
@@ -250,7 +262,7 @@ public class AdminCatalogService {
             form.setSoleId(resolveOrCreateSole(form.getNewSoleName(),"soleId").getId());
         if (form.getProductId() == null)
             throw new CatalogValidationException("productId", "Chọn sản phẩm.");
-        Product product = products.findById(form.getProductId()).orElseThrow(() -> new CatalogValidationException("productId", "Sản phẩm không tồn tại."));
+        Product product = products.lockById(form.getProductId()).orElseThrow(() -> new CatalogValidationException("productId", "Sản phẩm không tồn tại."));
         if (form.getSizeId() == null)
             throw new CatalogValidationException("sizeId", "Chọn kích cỡ.");
         Size size = sizes.findById(form.getSizeId()).orElseThrow(() -> new CatalogValidationException("sizeId","Kích cỡ không tồn tại."));
@@ -292,6 +304,7 @@ public class AdminCatalogService {
         products.lockById(batch.getProductId()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
         if(batch.getSizeIds()==null || batch.getSizeIds().isEmpty() || batch.getSizeIds().size()>100)
             throw new CatalogValidationException("sizeIds","Chọn từ 1 đến 100 kích cỡ.");
+        if(new java.util.HashSet<>(batch.getSizeIds()).size()!=batch.getSizeIds().size())throw new CatalogValidationException("sizeIds","Kích cỡ trùng trong yêu cầu. Không tạo biến thể nào.");
         var saved=new java.util.ArrayList<ProductVariant>();
         for(Integer sizeId:new java.util.LinkedHashSet<>(batch.getSizeIds())) {
             var form=new VariantForm();form.setProductId(batch.getProductId());form.setSizeId(sizeId);

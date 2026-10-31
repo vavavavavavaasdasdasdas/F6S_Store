@@ -61,4 +61,11 @@ GPS có trạng thái đang lấy, bị từ chối, chưa hỗ trợ, timeout. 
 
 Đơn giao hàng tại POS là ONLINE; không coi là đã thu tiền chỉ vì có QR. QR theo mã đơn sau khi tạo, rồi nhân viên xác nhận tiền theo luồng cũ. Tin nhắn chỉ sao chép clipboard, không tự gửi mạng xã hội. Clipboard không được cấp quyền thì hiện nội dung để chọn/copy tay. Sổ địa chỉ giữ cơ chế mặc định/xóa và ba địa chỉ.
 
-Nút cột bảng dùng class chung, icon aria-hidden kèm chữ, cao ≥36px, vẫn dùng confirm và CSRF. MutationObserver chỉ trang trí trình bày cho dòng AJAX; không thay endpoint/quyền/nghiệp vụ. In hóa đơn có logo và số liệu snapshot, ẩn điều hướng/map.
+Nút cột bảng dùng fragment chung, icon aria-hidden kèm nhãn chữ ẩn dành cho trình đọc màn hình, title/aria-label tiếng Việt, cao 36px desktop và 40px mobile, vẫn dùng confirm và CSRF. MutationObserver chỉ trang trí trình bày cho dòng AJAX; không thay endpoint/quyền/nghiệp vụ. In hóa đơn có logo và số liệu snapshot, ẩn điều hướng/map.
+
+
+## Không gian sản phẩm và biến thể (giai đoạn 9–10)
+
+Menu hai cấp thuộc quan-tri.js và native details/summary; nhóm đang xem luôn mở. Trang biến thể riêng /admin/products-crud/{id}/variants giữ combo-box.js làm chủ sở hữu mọi select, gồm select gõ tạo mới. Các nút data-batch-open/data-batch-close và data-row-* thuộc sua-bien-the-san-pham.js, không phải nút thiếu hành vi; chuyển trang chỉ thay vị trí bảng, không tạo bộ điều khiển thứ hai. Lỗi cạnh ô/busy/CSRF/khóa tồn tiếp tục dùng cơ chế đã có.
+
+Form ban đầu bố trí hai cột và dùng bien-the-ban-dau.js chỉ đếm lựa chọn; server xác nhận tổ hợp và transaction. Bộ ảnh vẫn do quan-ly-anh-san-pham.js quản lý. Liên kết bỏ qua nội dung chỉ hiển thị khi có focus, không che ô kích cỡ trong ảnh chụp trang dài.

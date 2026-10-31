@@ -32,13 +32,6 @@ public class AdminVariantController {
                        @RequestParam(required=false) Boolean status, @RequestParam(defaultValue="") String keyword, Model model) {
         return listFor(productId,page,materialId,sizeId,colorId,soleId,status,keyword,model);
     }
-    @GetMapping("/admin/products-crud/{productId}/variants")
-    public String productVariants(@PathVariable Integer productId, @RequestParam(defaultValue="0") String page,
-                                  @RequestParam(required=false) Integer materialId, @RequestParam(required=false) Integer sizeId,
-                                  @RequestParam(required=false) Integer colorId,@RequestParam(required=false) Integer soleId,
-                       @RequestParam(required=false) Boolean status, @RequestParam(defaultValue="") String keyword, Model model) {
-        return listFor(productId,page,materialId,sizeId,colorId,soleId,status,keyword,model);
-    }
     private String listFor(Integer productId, String page, Integer materialId, Integer sizeId,Integer colorId,Integer soleId, Boolean status, String keyword, Model model) {
         var result=query.variantsPage(productId,"all",0,page,materialId,sizeId,status,keyword,null,colorId,soleId);
         model.addAttribute("variants",result.getContent()); model.addAttribute("dataPage",result);

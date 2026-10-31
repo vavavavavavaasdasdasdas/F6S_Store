@@ -83,6 +83,7 @@
 .admin-placeholder h1 { margin:18px 0; }
 .admin-skip { position:fixed; left:260px; top:-80px; z-index:100; background:#fff; padding:12px; }
 .admin-skip:focus { top:8px; }
+.admin-skip:not(:focus) { clip-path:inset(50%); width:1px; height:1px; padding:0; overflow:hidden; }
 .flash-close { float:right; border:0; background:transparent; font-size:22px; line-height:1; }
 .admin-body .card:hover { transform:none; }
 .admin-body .container,.admin-body .container-fluid { max-width:100%; padding:0; }
