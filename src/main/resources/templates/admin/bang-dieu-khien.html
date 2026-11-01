@@ -9,19 +9,31 @@
 <div class="filter-bar-actions"><button type="submit" class="btn btn-primary">Lọc</button><a th:href="@{/admin/dashboard}" class="btn btn-outline-secondary">Xóa lọc</a><span class="filter-state-badge" th:if="${activeFilterCount != null and activeFilterCount > 0}" th:text="'Đang áp dụng ' + ${activeFilterCount} + ' bộ lọc'"></span></div>
 </form>
 <div class="metric-grid">
-<a class="metric-card" data-metric="todayRevenue" th:href="@{/admin/reports/revenue?period=today}">
+<a class="metric-card" data-metric="periodRevenue" th:href="@{/admin/statistics(from=${from},to=${to})}">
+<span class="metric-title">Doanh thu trong kỳ<span class="metric-icon" aria-hidden="true">↗</span></span>
+<strong class="metric-value" th:attr="data-value=${dashboard.periodRevenue}" th:text="${@money.format(dashboard.periodRevenue)} + ' ₫'"></strong>
+<span class="metric-note" th:text="${dashboard.hasCustomRange} ? 'Khoảng lọc tùy chọn' : (${dashboard.days} + ' ngày gần đây')"></span></a>
+<a class="metric-card" data-metric="cashRevenue" th:href="@{/admin/statistics(from=${from},to=${to})}">
+<span class="metric-title">Doanh thu tiền mặt<span class="metric-icon" aria-hidden="true">↗</span></span>
+<strong class="metric-value" th:attr="data-value=${dashboard.cashRevenue}" th:text="${@money.format(dashboard.cashRevenue)} + ' ₫'"></strong>
+<span class="metric-note">Tiền mặt & COD</span></a>
+<a class="metric-card" data-metric="transferRevenue" th:href="@{/admin/statistics(from=${from},to=${to})}">
+<span class="metric-title">Doanh thu chuyển khoản<span class="metric-icon" aria-hidden="true">↗</span></span>
+<strong class="metric-value" th:attr="data-value=${dashboard.transferRevenue}" th:text="${@money.format(dashboard.transferRevenue)} + ' ₫'"></strong>
+<span class="metric-note">Chuyển khoản ngân hàng</span></a>
+<a class="metric-card" data-metric="todayRevenue" th:href="@{/admin/statistics(from=${dashboard.today},to=${dashboard.today})}">
 <span class="metric-title">Doanh thu hôm nay<span class="metric-icon" aria-hidden="true">↗</span></span>
 <strong class="metric-value" th:attr="data-value=${dashboard.todayRevenue}" th:text="${@money.format(dashboard.todayRevenue)} + ' ₫'"></strong>
 <span class="metric-note">Đơn đã thanh toán · hôm nay</span></a>
-<a class="metric-card" data-metric="monthRevenue" th:href="@{/admin/reports/revenue?period=month}">
+<a class="metric-card" data-metric="monthRevenue" th:href="@{/admin/statistics(from=${#strings.substring(dashboard.today,0,8) + '01'},to=${dashboard.today})}">
 <span class="metric-title">Doanh thu tháng<span class="metric-icon" aria-hidden="true">↗</span></span>
 <strong class="metric-value" th:attr="data-value=${dashboard.monthRevenue}" th:text="${@money.format(dashboard.monthRevenue)} + ' ₫'"></strong>
 <span class="metric-note">Từ đầu tháng đến hôm nay</span></a>
 <a class="metric-card" data-metric="orders" th:href="@{/admin/invoices}">
 <span class="metric-title">Số đơn hàng<span class="metric-icon" aria-hidden="true">↗</span></span>
 <strong class="metric-value" th:attr="data-value=${dashboard.orders}" th:text="${@money.format(dashboard.orders)}"></strong>
-<span class="metric-note">Tất cả đơn hàng</span></a>
-<a class="metric-card" data-metric="pending" th:href="@{/admin/invoices?status=PENDING}">
+<span class="metric-note">Trong kỳ lọc</span></a>
+<a class="metric-card" data-metric="pending" th:href="@{/admin/invoices(status='PENDING')}">
 <span class="metric-title">Đơn chờ xử lý<span class="metric-icon" aria-hidden="true">↗</span></span>
 <strong class="metric-value" th:attr="data-value=${dashboard.pending}" th:text="${@money.format(dashboard.pending)}"></strong>
 <span class="metric-note">Cần xác nhận đơn hàng</span></a>
@@ -32,37 +44,63 @@
 <a class="metric-card" data-metric="customers" th:href="@{/admin/customers}">
 <span class="metric-title">Số khách hàng<span class="metric-icon" aria-hidden="true">↗</span></span>
 <strong class="metric-value" th:attr="data-value=${dashboard.customers}" th:text="${@money.format(dashboard.customers)}"></strong>
-<span class="metric-note">Hồ sơ khách hàng</span></a>
+<span class="metric-note">Hồ sơ tạo trong kỳ</span></a>
+</div>
+
+<div class="chart-grid">
+<article class="admin-panel"><div class="panel-heading"><div><h2>Top sản phẩm bán chạy</h2><p th:text="'Top 5 theo số lượng bán trong kỳ (' + ${dashboard.days} + ' ngày)'"></p></div></div>
+<div class="table-wrap" role="region" aria-label="Bảng top sản phẩm bán chạy, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bang-dieu-khien-best-sellers" class="admin-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Ảnh</th><th scope="col">Mã</th><th scope="col">Tên sản phẩm</th><th scope="col">Số lượng</th><th scope="col" class="money">Doanh thu</th></tr></thead><tbody>
+<tr th:each="row, rowIndex : ${dashboard.bestSellers}"><td class="row-number" th:text="${rowIndex.count}"></td><td><img class="catalog-thumb" width="44" height="44" loading="lazy" alt="" th:with="resolvedImage=${@productImageUrl.source(row.image_url)}" th:src="${resolvedImage}"></td><td th:text="${row.code}"></td><td><a th:href="@{/admin/products-crud/view/{id}(id=${row.id})}" th:text="${row.name}"></a></td><td th:text="${row.quantity}"></td><td class="money" th:text="${@money.format(row.revenue)} + ' ₫'"></td></tr>
+<tr th:if="${#lists.isEmpty(dashboard.bestSellers)}"><td colspan="6" class="chart-empty">Chưa có sản phẩm được thanh toán trong kỳ.</td></tr></tbody></table></div></article>
+
+<article class="admin-panel"><div class="panel-heading"><div><h2>Đơn hàng theo trạng thái</h2><p>Tất cả đơn hàng trong kỳ lọc</p></div></div>
+<div class="chart-box" th:if="${!#lists.isEmpty(dashboard.statuses)}"><canvas id="status-chart" role="img" aria-label="Số đơn theo trạng thái; xem số liệu bên dưới"></canvas></div><p class="chart-empty" th:if="${#lists.isEmpty(dashboard.statuses)}">Chưa có đơn hàng trong kỳ lọc.</p>
+<details class="mt-3"><summary class="text-muted small">Xem số liệu trạng thái</summary><div class="data-table-scroll" role="region" aria-label="Bảng dữ liệu trạng thái, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bang-dieu-khien-statuses" class="admin-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Trạng thái</th><th scope="col">Số đơn</th></tr></thead><tbody><tr th:each="row, rowIndex : ${dashboard.statuses}"><td class="row-number" th:text="${rowIndex.count}"></td><td th:text="${dashboard.statusLabels[row.status] ?: row.status}"></td><td th:text="${row.total}"></td></tr></tbody></table></div></details></article>
+</div>
+
+<article class="admin-panel"><div class="panel-heading"><div><h2>Khách hàng tiềm năng (Top khách hàng)</h2><p th:text="'Top 5 theo tổng chi tiêu trong kỳ lọc (' + ${#temporals.format(dashboard.from, 'dd/MM/yyyy')} + ' - ' + ${#temporals.format(dashboard.to, 'dd/MM/yyyy')} + ')'"></p></div><a class="panel-link" th:href="@{/admin/customers}">Xem tất cả khách hàng →</a></div>
+<div class="table-wrap" role="region" aria-label="Bảng khách hàng tiềm năng, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bang-dieu-khien-top-customers" class="admin-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Mã KH</th><th scope="col">Họ tên</th><th scope="col">Số đơn</th><th scope="col" class="money">Tổng chi tiêu</th><th scope="col">Hành động</th></tr></thead><tbody>
+<tr th:each="row, rowIndex : ${dashboard.topCustomers}"><td class="row-number" th:text="${rowIndex.count}"></td><td th:text="${row.code}"></td><td><a th:href="@{/admin/customers/detail/{id}(id=${row.id})}" th:text="${row.full_name}"></a></td><td th:text="${row.order_count}"></td><td class="money" th:text="${@money.format(row.total_spent)} + ' ₫'"></td><td><div class="catalog-actions"><a th:href="@{/admin/customers/detail/{id}(id=${row.id})}">Xem chi tiết</a></div></td></tr>
+<tr th:if="${#lists.isEmpty(dashboard.topCustomers)}"><td colspan="6" class="chart-empty">Chưa có dữ liệu khách hàng trong kỳ.</td></tr></tbody></table></div></article>
+
+<article class="admin-panel"><div class="panel-heading"><div><h2>Đánh giá sản phẩm</h2><p>Tổng quan đánh giá của khách hàng trong kỳ lọc</p></div><a class="panel-link" th:href="@{/admin/reviews}">Xem tất cả đánh giá →</a></div>
+<div class="metric-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 20px;">
+<div class="metric-card" data-metric="reviewAvgScore"><span class="metric-title">Điểm trung bình toàn cửa hàng</span><strong class="metric-value" th:text="${dashboard.reviewSummary.avgScore > 0 ? #numbers.formatDecimal(dashboard.reviewSummary.avgScore, 1, 1) + ' ★' : 'Chưa có'}"></strong><span class="metric-note">Đánh giá hiển thị trong kỳ</span></div>
+<div class="metric-card" data-metric="reviewTotalCount"><span class="metric-title">Tổng số đánh giá</span><strong class="metric-value" th:text="${dashboard.reviewSummary.totalReviews}"></strong><span class="metric-note">Lượt đánh giá trong kỳ</span></div>
 </div>
 <div class="chart-grid">
-<article class="admin-panel"><div class="panel-heading"><div><h2>Doanh thu theo ngày</h2><p>Đã thanh toán, loại đơn hủy và giao thất bại · Đơn vị: VNĐ</p></div>
-<div class="period-switch" aria-label="Khoảng thời gian"><a th:href="@{/admin/dashboard(days=7)}" th:classappend="${dashboard.days == 7} ? 'active'" th:attr="aria-current=${dashboard.days == 7 ? 'page' : null}">7 ngày</a><a th:href="@{/admin/dashboard(days=30)}" th:classappend="${dashboard.days == 30} ? 'active'" th:attr="aria-current=${dashboard.days == 30 ? 'page' : null}">30 ngày</a></div></div>
-<div class="chart-box"><canvas id="revenue-chart" role="img" aria-label="Doanh thu theo ngày; xem bảng dữ liệu bên dưới"></canvas></div>
-<details class="mt-3"><summary class="text-muted small">Xem số liệu doanh thu</summary><div class="table-wrap" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bang-dieu-khien-1" class="admin-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th>Ngày</th><th>Doanh thu (₫)</th></tr></thead><tbody><tr th:each="label, iter : ${dashboard.labels}"><td class="row-number" th:text="${iter.count}"></td><td th:text="${label}"></td><td th:text="${dashboard.values[iter.index]}"></td></tr></tbody></table></div></details></article>
-<article class="admin-panel"><div class="panel-heading"><div><h2>Đơn hàng theo trạng thái</h2><p>Tất cả đơn hàng trong hệ thống</p></div></div>
-<div class="chart-box" th:if="${!#lists.isEmpty(dashboard.statuses)}"><canvas id="status-chart" role="img" aria-label="Số đơn theo trạng thái; xem số liệu bên dưới"></canvas></div><p class="chart-empty" th:if="${#lists.isEmpty(dashboard.statuses)}">Chưa có đơn hàng.</p>
-<details class="mt-3"><summary class="text-muted small">Xem số liệu trạng thái</summary><div class="data-table-scroll" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bang-dieu-khien-2" class="admin-table data-table" ><thead><tr><th scope="col">STT</th><th scope="col">Trạng thái</th><th scope="col">Số đơn</th></tr></thead><tbody><tr th:each="row,rowIndex:${dashboard.statuses}"><td class="row-number" th:text="${rowIndex.count}"></td><td th:text="${statusLabels[row.status] ?: row.status}"></td><td th:text="${row.total}"></td></tr></tbody></table></div></details></article>
+<div>
+<h3>Top sản phẩm điểm cao (≥ 3 đánh giá)</h3>
+<div class="table-wrap" role="region" aria-label="Bảng top sản phẩm đánh giá cao, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bang-dieu-khien-top-rated" class="admin-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Ảnh</th><th scope="col">Mã</th><th scope="col">Tên sản phẩm</th><th scope="col">Số ĐG</th><th scope="col">Điểm TB</th></tr></thead><tbody>
+<tr th:each="row, rowIndex : ${dashboard.topRatedProducts}"><td class="row-number" th:text="${rowIndex.count}"></td><td><img class="catalog-thumb" width="44" height="44" loading="lazy" alt="" th:with="resolvedImage=${@productImageUrl.source(row.image_url)}" th:src="${resolvedImage}"></td><td th:text="${row.code}"></td><td><a th:href="@{/admin/products-crud/view/{id}(id=${row.id})}" th:text="${row.name}"></a></td><td th:text="${row.review_count}"></td><td><strong th:text="${#numbers.formatDecimal(row.avg_score, 1, 1)} + ' ★'"></strong></td></tr>
+<tr th:if="${#lists.isEmpty(dashboard.topRatedProducts)}"><td colspan="6" class="chart-empty">Chưa có sản phẩm nào đạt từ 3 đánh giá trở lên trong kỳ.</td></tr></tbody></table></div>
 </div>
-<div class="chart-grid">
-<article class="admin-panel"><div class="panel-heading"><div><h2>Đơn hàng gần đây</h2><p>10 đơn mới nhất · theo thời gian tạo</p></div><a class="panel-link" th:href="@{/admin/invoices}">Tất cả đơn hàng →</a></div>
-<div class="table-wrap" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bang-dieu-khien-3" class="admin-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th>Mã đơn</th><th>Ngày tạo</th><th>Khách hàng</th><th>Trạng thái</th><th class="money">Tổng tiền</th></tr></thead><tbody>
-<tr th:each="row, rowIndex : ${dashboard.recent}"><td class="row-number" th:text="${rowIndex.count}"></td><td><a th:href="@{/admin/invoices/order/{id}(id=${row.id})}" th:text="${row.order_code}"></a></td><td th:text="${#strings.substring(row.created_at.toString(),0,16)}"></td><td th:text="${row.customer}"></td><td><span class="status-pill" th:attr="data-status=${row.status}" th:text="${statusLabels[row.status] ?: row.status}"></span></td><td class="money" th:text="${@money.format(row.final_amount)} + ' ₫'"></td></tr>
-<tr th:if="${#lists.isEmpty(dashboard.recent)}"><td colspan="7" class="chart-empty">Chưa có đơn hàng.</td></tr></tbody></table></div></article>
-<article class="admin-panel"><div class="panel-heading"><div><h2>Top sản phẩm bán chạy</h2><p th:text="'Top 5 · ' + ${dashboard.days} + ' ngày · số lượng đã thanh toán'"></p></div></div>
-<div class="chart-box small" th:if="${!#lists.isEmpty(dashboard.bestSellers)}"><canvas id="products-chart" role="img" aria-label="Số lượng bán của top 5 sản phẩm; xem số liệu bên dưới"></canvas></div>
-<p class="chart-empty" th:if="${#lists.isEmpty(dashboard.bestSellers)}">Chưa có sản phẩm được thanh toán trong kỳ.</p>
-<details class="mt-3"><summary class="text-muted small">Xem số lượng bán</summary><div class="data-table-scroll" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bang-dieu-khien-4" class="admin-table data-table" ><thead><tr><th scope="col">STT</th><th scope="col">Mã</th><th scope="col">Tên sản phẩm</th><th scope="col">Số lượng</th></tr></thead><tbody><tr th:each="row,rowIndex:${dashboard.bestSellers}"><td class="row-number" th:text="${rowIndex.count}"></td><td th:text="${row.code}"></td><td th:text="${row.name}"></td><td th:text="${row.quantity}"></td></tr></tbody></table></div></details></article>
+<div>
+<h3>Đánh giá mới nhất</h3>
+<div class="table-wrap" role="region" aria-label="Bảng đánh giá mới nhất, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bang-dieu-khien-recent-reviews" class="admin-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Mã ĐG</th><th scope="col">Sản phẩm</th><th scope="col">Khách hàng</th><th scope="col">Số sao</th><th scope="col">Thời gian</th></tr></thead><tbody>
+<tr th:each="row, rowIndex : ${dashboard.recentReviews}"><td class="row-number" th:text="${rowIndex.count}"></td><td th:text="${row.ma}"></td><td th:text="${row.product_name}"></td><td th:text="${row.customer_name}"></td><td><span th:text="${row.so_sao} + ' ★'"></span></td><td th:text="${#strings.substring(row.created_at.toString(),0,16)}"></td></tr>
+<tr th:if="${#lists.isEmpty(dashboard.recentReviews)}"><td colspan="6" class="chart-empty">Chưa có đánh giá trong kỳ lọc.</td></tr></tbody></table></div>
 </div>
-<article class="admin-panel"><div class="panel-heading"><div><h2>Sản phẩm sắp hết hàng</h2><p th:text="'Biến thể đang bán có tồn kho ≤ ' + ${dashboard.threshold} + ' · bao gồm sản phẩm hết hàng'"></p></div><a class="panel-link" th:href="@{/admin/inventory}">Xem tồn kho →</a></div>
-<div class="table-wrap" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bang-dieu-khien-5" class="admin-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th>Mã</th><th>Tên sản phẩm</th><th>Kích cỡ</th><th>Chất liệu</th><th>Màu sắc</th><th>Đế giày</th><th>Tồn kho</th><th>Thao tác</th></tr></thead><tbody>
-<tr th:each="row, rowIndex : ${dashboard.lowStock}"><td class="row-number" th:text="${rowIndex.count}"></td><td th:text="${row.code}"></td><td th:text="${row.name}"></td><td th:text="${row.size_value}"></td><td th:text="${row.material_name}"></td><td th:text="${row.color_name}"></td><td th:text="${row.sole_name}"></td><td><span class="stock-count" th:text="${row.quantity}"></span></td><td><a th:href="@{/admin/inventory(variantId=${row.id})}">Kiểm tra tồn kho →</a></td></tr>
-<tr th:if="${#lists.isEmpty(dashboard.lowStock)}"><td colspan="9" class="chart-empty">Không có sản phẩm dưới ngưỡng cảnh báo.</td></tr>
+</div>
+</article>
+
+<article class="admin-panel"><div class="panel-heading"><div><h2>Sản phẩm yêu thích</h2><p th:text="'Tổng lượt yêu thích trong kỳ: ' + ${dashboard.favoriteSummary.totalFavorites} + ' lượt'"></p></div></div>
+<div class="table-wrap" role="region" aria-label="Bảng top sản phẩm yêu thích, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bang-dieu-khien-top-favorites" class="admin-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Ảnh</th><th scope="col">Mã</th><th scope="col">Tên sản phẩm</th><th scope="col">Lượt yêu thích</th></tr></thead><tbody>
+<tr th:each="row, rowIndex : ${dashboard.topFavoriteProducts}"><td class="row-number" th:text="${rowIndex.count}"></td><td><img class="catalog-thumb" width="44" height="44" loading="lazy" alt="" th:with="resolvedImage=${@productImageUrl.source(row.image_url)}" th:src="${resolvedImage}"></td><td th:text="${row.code}"></td><td><a th:href="@{/admin/products-crud/view/{id}(id=${row.id})}" th:text="${row.name}"></a></td><td><strong th:text="${row.favorite_count}"></strong></td></tr>
+<tr th:if="${#lists.isEmpty(dashboard.topFavoriteProducts)}"><td colspan="5" class="chart-empty">Chưa có lượt yêu thích trong kỳ.</td></tr></tbody></table></div></article>
+
+<article class="admin-panel"><div class="panel-heading"><div><h2>Sản phẩm sắp hết hàng</h2><p th:text="'Biến thể đang bán có tồn kho ≤ ' + ${dashboard.threshold} + ' và có biến động kho trong kỳ lọc'"></p></div><a class="panel-link" th:href="@{/admin/inventory}">Xem tồn kho →</a></div>
+<div class="table-wrap" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bang-dieu-khien-low-stock" class="admin-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Mã</th><th scope="col">Tên sản phẩm</th><th scope="col">Kích cỡ</th><th scope="col">Chất liệu</th><th scope="col">Màu sắc</th><th scope="col">Đế giày</th><th scope="col">Tồn kho</th><th scope="col">Thao tác</th></tr></thead><tbody>
+<tr th:each="row, rowIndex : ${dashboard.lowStock}"><td class="row-number" th:text="${rowIndex.count}"></td><td th:text="${row.code}"></td><td th:text="${row.name}"></td><td th:text="${row.size_value}"></td><td th:text="${row.material_name}"></td><td th:text="${row.color_name}"></td><td th:text="${row.sole_name}"></td><td><span class="stock-count" th:text="${row.quantity}"></span></td><td><div class="catalog-actions"><a th:href="@{/admin/inventory(variantId=${row.id})}">Kiểm tra tồn kho</a></div></td></tr>
+<tr th:if="${#lists.isEmpty(dashboard.lowStock)}"><td colspan="9" class="chart-empty">Không có sản phẩm dưới ngưỡng cảnh báo có biến động kho trong kỳ lọc.</td></tr>
 </tbody></table></div></article>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 <script th:inline="javascript">
 window.adminDashboard = {
- labels: /*[[${dashboard.labels}]]*/ [], values: /*[[${dashboard.values}]]*/ [],
- statusLabels: /*[[${dashboard.statusLabels}]]*/ {}, statuses: /*[[${dashboard.statuses}]]*/ [], products: /*[[${dashboard.bestSellers}]]*/ []
+ statusLabels: /*[[${dashboard.statusLabels}]]*/ {},
+ statuses: /*[[${dashboard.statuses}]]*/ []
 };
-</script><script th:src="@{/js/bang-dieu-khien.js}"></script>
+</script>
+<script th:src="@{/js/bang-dieu-khien.js}"></script>
 </section></body></html>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section>
 
-
 <div class="admin-page-heading"><div><h1>Thống kê cửa hàng</h1></div></div>
-<div class="admin-panel">
-<form class="sales-filters filter-bar" method="get" novalidate data-admin-form>
+
+<div class="admin-panel mb-4">
+<form class="sales-filters filter-bar" method="get" th:action="@{/admin/statistics}" novalidate data-admin-form role="search">
 <div><label for="from">Từ ngày</label><input class="form-control" type="date" id="from" name="from" th:value="${from}" required aria-describedby="from-error"><span id="from-error" class="field-error" data-error-for="from"></span></div>
 <div><label for="to">Đến ngày</label><input class="form-control" type="date" id="to" name="to" th:value="${to}" required aria-describedby="to-error"><span id="to-error" class="field-error" data-error-for="to"></span></div>
 <div><label for="channel">Kênh bán</label><select id="channel" name="channel" class="form-select" aria-describedby="channel-error"><option value="ALL" th:selected="${channel=='ALL'}">Tất cả</option><option value="ONLINE" th:selected="${channel=='ONLINE'}">Trực tuyến</option><option value="POS" th:selected="${channel=='POS'}">Tại quầy</option></select><span id="channel-error" class="field-error"></span></div>
@@ -12,16 +12,128 @@
 <div class="filter-bar-actions"><button class="btn btn-primary" type="submit">Lọc</button><a class="btn btn-outline-secondary" th:href="@{/admin/statistics}">Xóa lọc</a><span class="filter-state-badge" th:if="${activeFilterCount != null and activeFilterCount > 0}" th:text="'Đang áp dụng ' + ${activeFilterCount} + ' bộ lọc'"></span></div><p class="form-message" role="alert" hidden></p>
 </form>
 <p th:if="${filterError!=null}" th:text="${filterError}" class="alert alert-danger" role="alert"></p>
-<nav class="statistics-tabs" aria-label="Mục thống kê"><a th:href="@{/admin/statistics/revenue(from=${from},to=${to},channel=${channel},categoryId=${categoryId})}" th:classappend="${!productsTab} ? 'is-active'" th:attr="aria-current=${!productsTab?'page':null}">Doanh thu</a><a th:href="@{/admin/statistics/best-sellers(from=${from},to=${to},channel=${channel},categoryId=${categoryId})}" th:classappend="${productsTab} ? 'is-active'" th:attr="aria-current=${productsTab?'page':null}">Sản phẩm bán chạy</a></nav>
 </div>
+
 <th:block th:if="${stats!=null}">
-<div class="statistics-metrics"><article class="admin-panel"><p>Tổng doanh thu</p><strong id="stat-revenue" th:text="${@money.format(stats.revenue)}+' ₫'"></strong></article><article class="admin-panel"><p>Số đơn đủ điều kiện</p><strong id="stat-orders" th:text="${stats.orders}"></strong></article><article class="admin-panel"><p>Giá trị đơn trung bình</p><strong id="stat-average" th:text="${@money.format(stats.average)}+' ₫'"></strong></article></div>
-<div th:if="${stats.orders==0}" class="admin-panel sales-empty" role="status"><h2>Chưa có doanh thu trong khoảng đã chọn</h2><p>Không có đơn đã thanh toán và chưa hủy phù hợp. Hãy đổi khoảng ngày hoặc chọn tất cả kênh bán.</p></div>
-<th:block th:if="${!productsTab and stats.orders>0}"><div class="admin-panel"><h2>Doanh thu theo ngày</h2><div class="statistics-chart"><canvas id="statistics-revenue" role="img" aria-label="Doanh thu theo ngày; số liệu trong bảng bên dưới"></canvas></div><div class="table-wrap" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-thong-ke-thong-ke-1" class="admin-table data-table" id="daily-table"><caption class="visually-hidden">Doanh thu và số đơn theo ngày</caption><thead><tr><th scope="col" class="row-number">STT</th><th>Ngày</th><th>Số đơn</th><th class="money">Doanh thu (đ)</th></tr></thead><tbody><tr th:each="d, rowIndex :${stats.dailyPage.content}"><td class="row-number" th:text="${stats.dailyPage.number * stats.dailyPage.size + rowIndex.count}"></td><td th:text="${d.day}"></td><td th:text="${d.orders}"></td><td class="money" th:text="${@money.format(d.amount)}"></td></tr></tbody></table></div><nav th:replace="~{fragments/phan-trang :: phan-trang(${stats.dailyPage},'page')}"></nav></div></th:block>
-<th:block th:if="${productsTab and stats.orders>0}">
-<div class="statistics-rankings"><article class="admin-panel" th:each="rank:${ {'topQuantity','topRevenue'} }"><h2 th:text="${rank=='topQuantity'?'Bán chạy theo số lượng':'Bán chạy theo doanh thu'}"></h2><div class="table-wrap" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-thong-ke-thong-ke-2" class="admin-table data-table" th:id="${rank}"><thead><tr><th scope="col" class="row-number">STT</th><th>Mã</th><th>Ảnh</th><th>Tên sản phẩm</th><th>SL bán</th><th class="money">Doanh thu (đ)</th></tr></thead><tbody><tr th:each="p,it:${stats.get(rank)}"><td th:text="${stats.get(rank+'Page').number*stats.get(rank+'Page').size+it.count}"></td><td th:text="${p.code}"></td><td><img class="catalog-thumb" width="44" height="44" loading="lazy" alt="" th:with="resolvedImage=${@productImageUrl.source(p.image_url)}" th:src="${resolvedImage}"></td><td><a class="statistics-product" th:href="@{/admin/products-crud/view/{id}(id=${p.id})}"><span th:text="${p.name}"></span></a></td><td th:text="${p.quantity}"></td><td class="money" th:text="${@money.format(p.amount)}"></td></tr><tr th:if="${#lists.isEmpty(stats.get(rank))}"><td colspan="6">Không có dòng sản phẩm trong các đơn đủ điều kiện.</td></tr></tbody></table></div><nav th:replace="~{fragments/phan-trang :: phan-trang(${stats.get(rank+'Page')},${rank=='topQuantity'?'quantityPage':'revenuePage'})}"></nav></article></div></th:block>
-<article class="admin-panel"><h2>Đơn theo trạng thái</h2><div class="statistics-chart statistics-status" th:if="${!stats.statuses.empty}"><canvas id="statistics-status" role="img" aria-label="Đơn theo trạng thái; số liệu trong bảng bên dưới"></canvas></div><p class="sales-empty" th:if="${stats.statuses.empty}">Không có đơn hàng trong bộ lọc đã chọn.</p><div class="table-wrap" th:if="${!stats.statuses.empty}"><table data-table-key="admin-thong-ke-thong-ke-3" class="admin-table data-table" id="status-table"><thead><tr><th scope="col" class="row-number">STT</th><th>Trạng thái</th><th>Số đơn</th></tr></thead><tbody><tr th:each="s, rowIndex :${stats.statuses}"><td class="row-number" th:text="${rowIndex.count}"></td><td th:attr="data-status=${s.status}" th:text="${s.status}"></td><td th:text="${s.total}"></td></tr></tbody></table></div></article>
+<!-- Khối 2: Tóm tắt doanh thu -->
+<div class="metric-grid mb-4">
+<article class="metric-card"><span class="metric-title">Tổng doanh thu</span><strong id="stat-revenue" class="metric-value" th:text="${@money.format(stats.revenue)}+' ₫'"></strong><span class="metric-note">Đơn đã thanh toán</span></article>
+<article class="metric-card"><span class="metric-title">Số đơn đủ điều kiện</span><strong id="stat-orders" class="metric-value" th:text="${stats.orders}"></strong><span class="metric-note">Đơn thành công</span></article>
+<article class="metric-card"><span class="metric-title">Giá trị đơn trung bình</span><strong id="stat-average" class="metric-value" th:text="${@money.format(stats.average)}+' ₫'"></strong><span class="metric-note">Doanh thu / số đơn</span></article>
+<article class="metric-card"><span class="metric-title">Doanh thu tiền mặt</span><strong id="stat-cash" class="metric-value" th:text="${@money.format(stats.cashRevenue)}+' ₫'"></strong><span class="metric-note">Tiền mặt & COD</span></article>
+<article class="metric-card"><span class="metric-title">Doanh thu chuyển khoản</span><strong id="stat-transfer" class="metric-value" th:text="${@money.format(stats.transferRevenue)}+' ₫'"></strong><span class="metric-note">Chuyển khoản ngân hàng</span></article>
+</div>
+
+<div th:if="${stats.orders==0}" class="admin-panel sales-empty mb-4" role="status"><h2>Chưa có doanh thu trong khoảng đã chọn</h2><p>Không có đơn đã thanh toán và chưa hủy phù hợp. Hãy đổi khoảng ngày hoặc chọn tất cả kênh bán.</p></div>
+
+<!-- Khối 3: Doanh thu theo kênh (Online/POS) -->
+<article class="admin-panel mb-4">
+<div class="panel-heading"><div><h2>Doanh thu theo kênh</h2><p>Tỷ trọng doanh thu giữa trực tuyến (Online) và tại quầy (POS)</p></div></div>
+<div class="table-wrap" role="region" aria-label="Bảng doanh thu theo kênh" tabindex="0">
+<table data-table-key="admin-thong-ke-channels" class="admin-table data-table" id="channel-table">
+<thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Kênh bán</th><th scope="col">Số đơn</th><th scope="col" class="money">Doanh thu (₫)</th><th scope="col">Tỷ lệ (%)</th></tr></thead>
+<tbody>
+<tr th:each="ch, iter : ${stats.channels}">
+<td class="row-number" th:text="${iter.count}"></td>
+<td th:text="${ch.name}"></td>
+<td th:text="${ch.orders}"></td>
+<td class="money" th:text="${@money.format(ch.revenue)} + ' ₫'"></td>
+<td><strong th:text="${ch.ratio} + '%'"></strong></td>
+</tr>
+<tr th:if="${#lists.isEmpty(stats.channels)}"><td colspan="5" class="chart-empty">Không có dữ liệu kênh bán trong bộ lọc đã chọn.</td></tr>
+</tbody>
+</table>
+</div>
+</article>
+
+<!-- Khối 4: Đơn theo trạng thái -->
+<article class="admin-panel mb-4">
+<div class="panel-heading"><div><h2>Đơn theo trạng thái</h2><p>Phân bổ trạng thái của tất cả đơn hàng trong bộ lọc</p></div></div>
+<div class="statistics-chart statistics-status" th:if="${!stats.statuses.empty}"><canvas id="statistics-status" role="img" aria-label="Đơn theo trạng thái; số liệu trong bảng bên dưới"></canvas></div>
+<p class="sales-empty" th:if="${stats.statuses.empty}">Không có đơn hàng trong bộ lọc đã chọn.</p>
+<div class="table-wrap" th:if="${!stats.statuses.empty}" role="region" aria-label="Bảng dữ liệu trạng thái đơn hàng" tabindex="0">
+<table data-table-key="admin-thong-ke-statuses" class="admin-table data-table" id="status-table">
+<thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Trạng thái</th><th scope="col">Số đơn</th></tr></thead>
+<tbody>
+<tr th:each="s, rowIndex :${stats.statuses}"><td class="row-number" th:text="${rowIndex.count}"></td><td th:attr="data-status=${s.status}" th:text="${statusLabels != null ? (statusLabels[s.status] ?: s.status) : s.status}"></td><td th:text="${s.total}"></td></tr>
+</tbody>
+</table>
+</div>
+</article>
+
+<!-- Khối 5: Top sản phẩm theo số lượng -->
+<article class="admin-panel mb-4">
+<div class="panel-heading"><div><h2>Top sản phẩm theo số lượng</h2><p>Sản phẩm bán chạy nhất tính theo tổng số lượng bán trong kỳ</p></div></div>
+<div class="table-wrap" role="region" aria-label="Bảng top sản phẩm theo số lượng" tabindex="0">
+<table data-table-key="admin-thong-ke-top-quantity" class="admin-table data-table" id="topQuantity">
+<thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Mã</th><th scope="col">Ảnh</th><th scope="col">Tên sản phẩm</th><th scope="col">SL bán</th><th scope="col" class="money">Doanh thu (₫)</th></tr></thead>
+<tbody>
+<tr th:each="p, it : ${stats.topQuantity}">
+<td class="row-number" th:text="${stats.topQuantityPage.number * stats.topQuantityPage.size + it.count}"></td>
+<td th:text="${p.code}"></td>
+<td><img class="catalog-thumb" width="44" height="44" loading="lazy" alt="" th:with="resolvedImage=${@productImageUrl.source(p.image_url)}" th:src="${resolvedImage}"></td>
+<td><a class="statistics-product" th:href="@{/admin/products-crud/view/{id}(id=${p.id})}"><span th:text="${p.name}"></span></a></td>
+<td th:text="${p.quantity}"></td>
+<td class="money" th:text="${@money.format(p.amount)} + ' ₫'"></td>
+</tr>
+<tr th:if="${#lists.isEmpty(stats.topQuantity)}"><td colspan="6" class="chart-empty">Không có dòng sản phẩm trong các đơn đủ điều kiện.</td></tr>
+</tbody>
+</table>
+</div>
+<nav th:replace="~{fragments/phan-trang :: phan-trang(${stats.topQuantityPage}, 'quantityPage')}"></nav>
+</article>
+
+<!-- Khối 6: Top sản phẩm theo doanh thu -->
+<article class="admin-panel mb-4">
+<div class="panel-heading"><div><h2>Top sản phẩm theo doanh thu</h2><p>Sản phẩm mang lại doanh thu cao nhất trong kỳ</p></div></div>
+<div class="table-wrap" role="region" aria-label="Bảng top sản phẩm theo doanh thu" tabindex="0">
+<table data-table-key="admin-thong-ke-top-revenue" class="admin-table data-table" id="topRevenue">
+<thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Mã</th><th scope="col">Ảnh</th><th scope="col">Tên sản phẩm</th><th scope="col">SL bán</th><th scope="col" class="money">Doanh thu (₫)</th></tr></thead>
+<tbody>
+<tr th:each="p, it : ${stats.topRevenue}">
+<td class="row-number" th:text="${stats.topRevenuePage.number * stats.topRevenuePage.size + it.count}"></td>
+<td th:text="${p.code}"></td>
+<td><img class="catalog-thumb" width="44" height="44" loading="lazy" alt="" th:with="resolvedImage=${@productImageUrl.source(p.image_url)}" th:src="${resolvedImage}"></td>
+<td><a class="statistics-product" th:href="@{/admin/products-crud/view/{id}(id=${p.id})}"><span th:text="${p.name}"></span></a></td>
+<td th:text="${p.quantity}"></td>
+<td class="money" th:text="${@money.format(p.amount)} + ' ₫'"></td>
+</tr>
+<tr th:if="${#lists.isEmpty(stats.topRevenue)}"><td colspan="6" class="chart-empty">Không có dòng sản phẩm trong các đơn đủ điều kiện.</td></tr>
+</tbody>
+</table>
+</div>
+<nav th:replace="~{fragments/phan-trang :: phan-trang(${stats.topRevenuePage}, 'revenuePage')}"></nav>
+</article>
+
+<!-- Khối 7: Top khách hàng -->
+<article class="admin-panel mb-4">
+<div class="panel-heading"><div><h2>Top khách hàng</h2><p>Khách hàng có tổng chi tiêu cao nhất trong các đơn đủ điều kiện</p></div><a class="panel-link" th:href="@{/admin/customers}">Xem tất cả khách hàng →</a></div>
+<div class="table-wrap" role="region" aria-label="Bảng top khách hàng" tabindex="0">
+<table data-table-key="admin-thong-ke-top-customers" class="admin-table data-table" id="topCustomers">
+<thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Mã KH</th><th scope="col">Họ tên</th><th scope="col">Số đơn</th><th scope="col" class="money">Tổng chi tiêu (₫)</th><th scope="col">Hành động</th></tr></thead>
+<tbody>
+<tr th:each="c, it : ${stats.topCustomers}">
+<td class="row-number" th:text="${stats.topCustomersPage.number * stats.topCustomersPage.size + it.count}"></td>
+<td th:text="${c.code}"></td>
+<td><a th:href="@{/admin/customers/detail/{id}(id=${c.id})}" th:text="${c.full_name}"></a></td>
+<td th:text="${c.order_count}"></td>
+<td class="money" th:text="${@money.format(c.total_spent)} + ' ₫'"></td>
+<td><div class="catalog-actions"><a th:href="@{/admin/customers/detail/{id}(id=${c.id})}">Xem chi tiết</a></div></td>
+</tr>
+<tr th:if="${#lists.isEmpty(stats.topCustomers)}"><td colspan="6" class="chart-empty">Không có dữ liệu khách hàng trong bộ lọc đã chọn.</td></tr>
+</tbody>
+</table>
+</div>
+<nav th:replace="~{fragments/phan-trang :: phan-trang(${stats.topCustomersPage}, 'customerPage')}"></nav>
+</article>
+
 <p id="statistics-chart-error" class="alert alert-warning" role="status" hidden>Không tải được biểu đồ. Các bảng số liệu vẫn đầy đủ.</p>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
-<script th:inline="javascript">window.adminStatistics={daily:/*[[${stats.daily}]]*/[],statuses:/*[[${stats.statuses}]]*/[]};</script><script th:src="@{/js/thong-ke.js}"></script>
-</th:block></section></body></html>
+<script th:inline="javascript">
+window.adminStatistics = {
+ statuses: /*[[${stats.statuses}]]*/ []
+};
+</script>
+<script th:src="@{/js/thong-ke.js}"></script>
+</th:block>
+</section></body></html>

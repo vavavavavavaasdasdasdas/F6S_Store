@@ -117,3 +117,5 @@ Giai đoạn 13: Bán online và Quầy dùng cùng bố cục lưới/giỏ nh�
 
 
 Giai đoạn 14: dùng trái tim 40px có nhãn và trạng thái aria-pressed trên thẻ/chi tiết; sao màu vàng đậm, tên khách che, nhãn Đã mua hàng. Danh sách Đánh giá Admin giữ bảng STT/mã/cột riêng, chỉ Xem và công tắc Hiển thị dùng primitive chung. Yêu thích dùng thẻ sản phẩm hiện có; sản phẩm ngừng bán có thẻ tĩnh, không link chi tiết/thêm giỏ.
+
+Giai đoạn 15: Dashboard áp dụng bộ lọc ngày cho toàn bộ thẻ số và bảng, thêm thẻ Doanh thu tiền mặt (CASH/COD) và Doanh thu chuyển khoản (BANK_TRANSFER/TRANSFER), bỏ biểu đồ doanh thu theo ngày và đơn hàng gần đây; bổ sung Top 5 sản phẩm bán chạy, Top 5 khách hàng tiềm năng, khối Đánh giá sản phẩm, khối Sản phẩm yêu thích và lọc Sản phẩm sắp hết hàng theo biến động kho trong kỳ. Thống kê gộp thành một trang duy nhất /admin/statistics không tab với 7 khối theo thứ tự chuẩn, phân trang độc lập từng bảng và chuyển hướng 302 từ các URL cũ.

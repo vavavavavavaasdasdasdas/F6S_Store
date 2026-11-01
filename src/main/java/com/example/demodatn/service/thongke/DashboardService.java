@@ -34,25 +34,26 @@ public class DashboardService {
         LocalDate until = end.plusDays(1);
         long spanDays = Math.max(1, ChronoUnit.DAYS.between(from, end) + 1);
 
-        Map<String, Object> data = new LinkedHashMap<>(hasCustomRange ? repository.counts(from, until) : repository.counts());
+        Map<String, Object> data = new LinkedHashMap<>(repository.counts(from, until));
         data.put("todayRevenue", repository.revenue(today, today.plusDays(1)));
-        data.put("monthRevenue", hasCustomRange ? repository.revenue(from, until) : repository.revenue(today.withDayOfMonth(1), today.plusDays(1)));
+        data.put("monthRevenue", repository.revenue(today.withDayOfMonth(1), today.plusDays(1)));
         data.put("periodRevenue", repository.revenue(from, until));
-        Map<LocalDate, Object> amounts = new HashMap<>();
-        repository.daily(from, until).forEach(row -> amounts.put(LocalDate.parse(row.get("day").toString()), row.get("amount")));
-        List<String> labels = new ArrayList<>();
-        List<Object> values = new ArrayList<>();
-        for (LocalDate day = from; day.isBefore(until); day = day.plusDays(1)) {
-            labels.add(day.toString());
-            values.add(amounts.getOrDefault(day, 0));
-        }
-        data.put("labels", labels);
-        data.put("values", values);
-        data.put("statuses", hasCustomRange ? repository.statuses(from, until) : repository.statuses());
-        data.put("statusLabels",com.example.demodatn.service.donhang.OrderStatusService.LABELS);
+        data.put("cashRevenue", repository.cashRevenue(from, until));
+        data.put("transferRevenue", repository.transferRevenue(from, until));
+
+        data.put("statuses", repository.statuses(from, until));
+        data.put("statusLabels", com.example.demodatn.service.donhang.OrderStatusService.LABELS);
         data.put("bestSellers", repository.bestSellers(from, until));
-        data.put("recent", hasCustomRange ? repository.recent(from, until) : repository.recent());
-        data.put("lowStock", repository.lowStock(Math.max(0, threshold)));
+        data.put("topCustomers", repository.topCustomers(from, until));
+
+        data.put("reviewSummary", repository.reviewSummary(from, until));
+        data.put("topRatedProducts", repository.topRatedProducts(from, until));
+        data.put("recentReviews", repository.recentReviews(from, until));
+
+        data.put("favoriteSummary", repository.favoriteSummary(from, until));
+        data.put("topFavoriteProducts", repository.topFavoriteProducts(from, until));
+
+        data.put("lowStock", repository.lowStock(Math.max(0, threshold), from, until));
         data.put("threshold", Math.max(0, threshold));
         data.put("days", hasCustomRange ? spanDays : validDays);
         data.put("from", from);

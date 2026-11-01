@@ -27,7 +27,7 @@ class PaginationIntegrationTest {
     @BeforeEach void thirtyRowsPerType() {
         assertTrue((Set.of("shopbangiay_kt","shop_verify","shopbangiay_thu").contains(jdbc.queryForObject("SELECT DB_NAME()",String.class)) || jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_")),"Never run fixtures against the real DB");
         mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-        for(String table:List.of("pos_held_items","pos_held_orders","invoices","order_details","order_status_history","orders","inventory_logs","promotion_details","product_images","product_variants","products"))jdbc.update("DELETE FROM "+table);
+        for(String table:List.of("danh_gia","yeu_thich","pos_held_items","pos_held_orders","invoices","order_details","order_status_history","orders","inventory_logs","promotion_details","product_images","product_variants","products"))jdbc.update("DELETE FROM "+table);
         jdbc.update("UPDATE vouchers SET customer_id=NULL");
         for(String table:List.of("customers","employees","vouchers","promotions","categories","sizes"))jdbc.update("DELETE FROM "+table);
         int role=jdbc.queryForObject("SELECT id FROM roles WHERE name='ROLE_USER'",Integer.class);
@@ -78,7 +78,7 @@ class PaginationIntegrationTest {
         verify("/admin/inventory","historyPage","historyPage");
         verify("/admin/pos/customers?customerQuery=PG","customerPage","customerPage");
         String stats="/admin/statistics?from=2048-01-01&to=2048-01-30&channel=ONLINE";
-        verify(stats,"stats.dailyPage","page");String top=stats.replace("/admin/statistics?","/admin/statistics/best-sellers?");verify(top,"stats.topQuantityPage","quantityPage");verify(top,"stats.topRevenuePage","revenuePage");
+        verify(stats,"stats.topQuantityPage","quantityPage");verify(stats,"stats.topRevenuePage","revenuePage");
     }
     @Test void productVariantSublistIsPagedAndLinksKeepFilters()throws Exception {
         jdbc.update("DELETE order_details");jdbc.update("DELETE inventory_logs");jdbc.update("DELETE product_variants");

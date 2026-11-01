@@ -129,3 +129,5 @@ Giai đoạn 13: /admin/pos chỉ bán tại quầy, /admin/ban-online tạo đ�
 
 
 Giai đoạn 14: chạy migration 021 sau 020. Chỉ khách có đơn DELIVERED chứa sản phẩm được đánh giá; mỗi khách một đánh giá/sản phẩm, tối đa 5 lần gửi/sửa mỗi phút. Khách sửa/xóa của mình; Admin chỉ ẩn/hiện. Đánh giá ẩn không tính điểm. /favorites lưu sản phẩm yêu thích; sản phẩm ngừng bán vẫn hiện nhãn và không thêm giỏ. Dữ liệu wishlist tự dọn khi xóa sản phẩm/khách chưa giao dịch để giữ hành vi xóa trước đây. Xem docs/GIAI_DOAN_14_DANH_GIA_YEU_THICH.md.
+
+Giai đoạn 15: hoàn thiện Dashboard (/admin/dashboard) và gộp Thống kê thành một trang duy nhất (/admin/statistics). Mọi khối trên Dashboard tuân theo bộ lọc ngày; bổ sung doanh thu tiền mặt/chuyển khoản, top khách hàng, thống kê đánh giá, yêu thích và biến động tồn kho. Xem docs/GIAI_DOAN_15_DASHBOARD_THONG_KE.md.
