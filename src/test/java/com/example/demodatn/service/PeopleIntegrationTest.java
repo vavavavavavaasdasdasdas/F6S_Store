@@ -53,7 +53,7 @@ class PeopleIntegrationTest {
         String token=UUID.randomUUID().toString().substring(0,8);
         EmployeeDto f=new EmployeeDto();f.setEmployeeCode("P7-"+token);f.setFullName("Nhân viên kiểm thử");
         f.setEmail(token+"@example.invalid");f.setPhone("09"+String.format("%08d",Math.floorMod(token.hashCode(),100000000)));
-        f.setUsername("p7-"+token);f.setPassword("Phase7!Test");return f;
+        f.setPosition("Nhân viên");f.setUsername("p7-"+token);f.setPassword("Phase7!Test");return f;
     }
     private Customer customerWithAccount() {
         EmployeeDto f=employeeForm();
@@ -67,7 +67,7 @@ class PeopleIntegrationTest {
     @Test @Transactional
     void createEmployeeHashesPasswordAuthenticatesAndDisablesTogether() {
         var f=employeeForm();var e=people.saveEmployee(f);
-        assertNotNull(e.getUser());assertEquals("ROLE_ADMIN",e.getUser().getRole().getName());
+        assertNotNull(e.getUser());assertEquals("ROLE_EMPLOYEE",e.getUser().getRole().getName());
         assertNotEquals(f.getPassword(),e.getUser().getPassword());assertTrue(encoder.matches(f.getPassword(),e.getUser().getPassword()));
         assertTrue(authentication.authenticate(new UsernamePasswordAuthenticationToken(f.getUsername(),f.getPassword())).isAuthenticated());
         people.employeeStatus(e.getId(),false);

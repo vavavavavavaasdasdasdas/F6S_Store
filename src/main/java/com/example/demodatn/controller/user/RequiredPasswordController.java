@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class RequiredPasswordController {
     private final AdminAccountService accounts;
     private final UserDetailsServiceImpl users;
+    private final com.example.demodatn.security.AdminAccess access;
     @GetMapping("/account/change-required")
     public String page(Authentication auth,Model model) {
         if(!Boolean.TRUE.equals(accounts.user(auth.getName()).getMustChangePassword()))return "redirect:/";
@@ -39,6 +40,6 @@ public class RequiredPasswordController {
         SecurityContextHolder.setContext(context);request.changeSessionId();
         new HttpSessionSecurityContextRepository().saveContext(context,request,response);
         new HttpSessionRequestCache().removeRequest(request,response);
-        return fresh.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"))?"redirect:/admin":"redirect:/";
+        return "redirect:"+access.home(context.getAuthentication());
     }
 }

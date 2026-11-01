@@ -86,16 +86,30 @@ public class ShippingAddressService {
         selected.setDefaultAddress(true);addresses.saveAndFlush(selected);
         customer.setAddress(selected.getAddress());customers.saveAndFlush(customer);
     }
+    @Transactional(readOnly=true)
+    public ShippingAddress ownedForCustomer(Integer customerId,Integer id) {
+        return addresses.findByIdAndCustomer_Id(id,customerId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy địa chỉ."));
+    }
     @Transactional
-    public void makeDefault(String username,Integer id) {
-        Customer customer=owner(username,true);var rows=addresses.findByCustomer_IdOrderBySlotAsc(customer.getId());
+    public void makeDefaultForCustomer(Integer customerId,Integer id) {
+        makeDefault(customers.findForUpdate(customerId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND)),id);
+    }
+    @Transactional
+    public void deleteForCustomer(Integer customerId,Integer id) {
+        remove(customers.findForUpdate(customerId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND)),id);
+    }
+    @Transactional
+    public void makeDefault(String username,Integer id) {makeDefault(owner(username,true),id);}
+    private void makeDefault(Customer customer,Integer id) {
+        var rows=addresses.findByCustomer_IdOrderBySlotAsc(customer.getId());
         var selected=rows.stream().filter(a -> a.getId().equals(id)).findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy địa chỉ."));
         chooseDefault(customer,selected,rows);
     }
     @Transactional
-    public void delete(String username,Integer id) {
-        Customer customer=owner(username,true);var rows=addresses.findByCustomer_IdOrderBySlotAsc(customer.getId());
+    public void delete(String username,Integer id) {remove(owner(username,true),id);}
+    private void remove(Customer customer,Integer id) {
+        var rows=addresses.findByCustomer_IdOrderBySlotAsc(customer.getId());
         var selected=rows.stream().filter(a -> a.getId().equals(id)).findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy địa chỉ."));
         boolean wasDefault=selected.isDefaultAddress();rows.remove(selected);addresses.delete(selected);addresses.flush();

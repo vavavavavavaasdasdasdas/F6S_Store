@@ -1,0 +1,65 @@
+{
+  "ui": {
+    "invoiceId": 287,
+    "steps": [
+      "CONFIRMED",
+      "PREPARING",
+      "SHIPPING",
+      "DELIVERED"
+    ],
+    "repeatConfirmation": true,
+    "printLayout": true
+  },
+  "orderId": 674,
+  "stockBefore": {
+    "id": 3,
+    "product_id": 2,
+    "quantity": 18
+  },
+  "afterPlaced": [
+    {
+      "id": 3,
+      "quantity": 18
+    }
+  ],
+  "afterDelivered": [
+    {
+      "id": 3,
+      "quantity": 17
+    }
+  ],
+  "order": [
+    {
+      "id": 674,
+      "status": "DELIVERED",
+      "payment_status": "PAID",
+      "da_tru_kho": true,
+      "ngay_giao_thuc_te": "2026-11-01"
+    }
+  ],
+  "history": [
+    {
+      "status": "PENDING",
+      "actor": "gd12_crawl",
+      "note": "Đã tạo đơn hàng."
+    },
+    {
+      "status": "CONFIRMED",
+      "actor": "gd12_employee"
+    },
+    {
+      "status": "PREPARING",
+      "actor": "gd12_employee"
+    },
+    {
+      "status": "SHIPPING",
+      "actor": "gd12_employee",
+      "carrier": "Đơn vị vận chuyển thử",
+      "tracking_code": "G12-TRACK"
+    },
+    {
+      "status": "DELIVERED",
+      "actor": "gd12_employee"
+    }
+  ]
+}

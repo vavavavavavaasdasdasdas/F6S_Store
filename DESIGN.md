@@ -108,3 +108,6 @@ Danh sách sản phẩm chỉ chứa thông tin cấp sản phẩm; thao tác Ch
 ### Giai đoạn 11 — Khuyến mãi
 
 Phiếu có form gọn, chỉ công khai, thông tin đã dùng tách riêng; danh sách chỉ icon Sửa. Công tắc là fragment chung có nhãn trạng thái chữ, vùng bấm 40px và focus rõ; gửi bất đồng bộ khóa tạm, lỗi trả về giá trị cũ. Chọn sản phẩm dùng cùng hình công tắc, lưu bản nháp theo đợt qua phân trang và Lưu thay đổi, có bật/tắt toàn trang. Không đổi phong cách chung.
+
+
+Giai đoạn 12: menu lấy quyền từ AdminAccess; Nhân viên chỉ thấy nơi được phép. Hóa đơn tái sử dụng khối xử lý trạng thái của đơn. Sổ khách dùng icon chung, combo địa chỉ chung, cảnh báo đủ ba; nhân viên chỉ một ô địa chỉ.

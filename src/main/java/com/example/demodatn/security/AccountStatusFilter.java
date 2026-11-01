@@ -26,6 +26,10 @@ public class AccountStatusFilter extends OncePerRequestFilter {
                 response.sendRedirect(request.getContextPath()+"/login?disabled");
                 return;
             }
+            if(fresh!=null&&!new java.util.HashSet<>(auth.getAuthorities()).equals(new java.util.HashSet<>(fresh.getAuthorities()))) {
+                var updated=org.springframework.security.authentication.UsernamePasswordAuthenticationToken.authenticated(fresh,null,fresh.getAuthorities());
+                updated.setDetails(auth.getDetails());SecurityContextHolder.getContext().setAuthentication(updated);
+            }
             String path=request.getRequestURI().substring(request.getContextPath().length());
             boolean allowed=path.equals("/account/change-required") || path.equals("/logout") || path.equals("/error")
                 || request.getMethod().equals("GET") && (path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/anh/") || path.startsWith("/images/"));

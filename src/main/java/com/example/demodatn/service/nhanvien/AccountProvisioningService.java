@@ -25,6 +25,7 @@ import java.util.Locale;
 @Service @RequiredArgsConstructor
 public class AccountProvisioningService {
     private final PeopleService people;
+    private final com.example.demodatn.security.AdminAccess access;
     private final CustomerRepository customers;
     private final EmployeeRepository employees;
     private final UserRepository users;
@@ -94,6 +95,7 @@ public class AccountProvisioningService {
     public Outcome saveCustomer(CustomerDto form) {
         Issued issued=new TransactionTemplate(transactions).execute(s->{
             var previous=form.getId()==null?null:people.customer(form.getId());
+            if(previous!=null&&access.hasRole(org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication(),"ROLE_EMPLOYEE")&&!access.customerAccount(org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication(),previous.getUser()))throw new org.springframework.security.access.AccessDeniedException("Không được sửa tài khoản có quyền nhân sự qua hồ sơ khách hàng.");
             int uid=previous==null||previous.getUser()==null?-1:previous.getUser().getId();
             String email=PeopleService.email(form.getEmail());emailAvailable(email,form.getId()==null?-1:form.getId(),-1,uid);
             var customer=people.saveCustomer(form);
@@ -135,6 +137,7 @@ public class AccountProvisioningService {
             var c=customer?customers.findForUpdate(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND)):null;
             var e=customer?null:employees.findForUpdate(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
             User linked=customer?c.getUser():e.getUser();
+            if(customer&&access.hasRole(org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication(),"ROLE_EMPLOYEE")&&!access.customerAccount(org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication(),linked))throw new org.springframework.security.access.AccessDeniedException("Không được cấp lại tài khoản có quyền nhân sự qua hồ sơ khách hàng.");
             User user=linked==null?customerUser(null,PeopleService.email(c.getEmail())):users.lockById(linked.getId()).orElseThrow();
             if(!confirmed && (Boolean.FALSE.equals(user.getStatus()) || customer && !Boolean.TRUE.equals(c.getStatus()) || !customer && !Boolean.TRUE.equals(e.getStatus()) || linked!=null&&!Boolean.TRUE.equals(user.getMustChangePassword())))
                 throw new PeopleValidationException("email","Cần xác nhận đặt lại mật khẩu của tài khoản này.");

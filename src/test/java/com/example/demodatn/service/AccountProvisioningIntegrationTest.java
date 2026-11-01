@@ -112,13 +112,21 @@ class AccountProvisioningIntegrationTest {
         var sameDocument=form();sameDocument.setSoCccd(f.getSoCccd());assertThrows(PeopleValidationException.class,()->accounts.saveCustomer(sameDocument));
         assertEquals(before,users.count());assertEquals(count,SMTP.getReceivedMessages().length);
     }
-    @Test void employeeGeneratedCredentialsAndEditablePosition() throws Exception {
-        var seed=form();var f=new EmployeeDto();f.setEmployeeCode(seed.getCustomerCode());f.setFullName(seed.getFullName());f.setEmail(seed.getEmail());f.setPhone(seed.getPhone());
-        f.setNewPosition("Chuyên viên kiểm thử");f.setPassword("ForgedG4!Password");
-        var result=accounts.saveEmployee(f);assertTrue(result.sent());var e=employees.findById(result.personId()).orElseThrow();
-        var u=users.findById(e.getUser().getId()).orElseThrow();String temporary=password(received(f.getEmail()));
-        assertTrue(encoder.matches(temporary,u.getPassword()));assertFalse(encoder.matches(f.getPassword(),u.getPassword()));
-        assertTrue(u.getMustChangePassword());assertEquals("ROLE_ADMIN",u.getRole().getName());assertEquals("Chuyên viên kiểm thử",e.getPosition());
+    @Test void employeeGeneratedCredentialsRespectBothPositionsAndForcedPasswordGate() throws Exception {
+        for(String position:java.util.List.of("Nhân viên","Admin")) {
+            var seed=form();var f=new EmployeeDto();f.setEmployeeCode(seed.getCustomerCode());f.setFullName(seed.getFullName());f.setEmail(seed.getEmail());f.setPhone(seed.getPhone());f.setAddress("Một địa chỉ duy nhất");
+            f.setPosition(position);f.setPassword("ForgedG4!Password");
+            var result=accounts.saveEmployee(f);assertTrue(result.sent());var e=employees.findById(result.personId()).orElseThrow();
+            var u=users.findById(e.getUser().getId()).orElseThrow();var received=received(f.getEmail());String temporary=password(received);
+            assertTrue(encoder.matches(temporary,u.getPassword()));assertFalse(encoder.matches(f.getPassword(),u.getPassword()));
+            String role=position.equals("Admin")?"ROLE_ADMIN":"ROLE_EMPLOYEE";assertTrue(u.getMustChangePassword());assertEquals(role,u.getRole().getName());assertEquals(position,e.getPosition());
+            var principal=details.loadUserByUsername(u.getUsername());mvc.perform(get("/admin/pos").with(user(principal))).andExpect(redirectedUrl("/account/change-required"));
+            mvc.perform(post("/account/change-required").with(user(principal)).with(csrf()).param("currentPassword",temporary).param("newPassword","DaDoiMatKhau12").param("confirmPassword","DaDoiMatKhau12")).andExpect(status().isFound()).andExpect(redirectedUrl(position.equals("Admin")?"/admin":"/admin/pos"));
+            mvc.perform(get("/admin/pos").with(user(details.loadUserByUsername(u.getUsername())))).andExpect(status().isOk());
+            java.nio.file.Path directory=java.nio.file.Path.of("verify/gd12");java.nio.file.Files.createDirectories(directory);
+            java.nio.file.Files.writeString(directory.resolve("mail-"+(position.equals("Admin")?"admin":"employee")+".txt"),plainText(received).replace(temporary,"[mật khẩu tạm đã ẩn]"),java.nio.charset.StandardCharsets.UTF_8);
+            System.out.println("GD12 GreenMail position="+position+" role="+role+" committed=true first-login-forced=true after-change-pos=200 password-not-printed");
+        }
     }
     @Test void existingCustomerWithoutAccountCanReceiveCredentialsAndDisabledNeedsConfirmation() {
         var f=form();var c=new com.example.demodatn.entity.khachhang.Customer();c.setCustomerCode(f.getCustomerCode());c.setFullName(f.getFullName());c.setPhone(f.getPhone());c.setEmail(f.getEmail());c.setStatus(false);customers.saveAndFlush(c);

@@ -29,6 +29,9 @@ import java.util.Locale;
 public class AdminCustomerController {
     private final CustomerRepository repository;
     private final PeopleService people;
+    private final com.example.demodatn.security.AdminAccess access;
+    private final com.example.demodatn.service.khachhang.ShippingAddressService addressService;
+    private final com.example.demodatn.repository.donhang.InvoiceRepository invoices;
     private final com.example.demodatn.service.nhanvien.AccountProvisioningService accounts;
     private final com.example.demodatn.repository.khachhang.ShippingAddressRepository shippingAddresses;
     private final com.example.demodatn.repository.donhang.OrderRepository orders;
@@ -86,6 +89,9 @@ public class AdminCustomerController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id,Model model) {
         var item=people.customer(id);var form=new CustomerDto();BeanUtils.copyProperties(item,form);
+        var authentication=org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        if(!access.customerAccount(authentication,item.getUser()))throw new org.springframework.security.access.AccessDeniedException("Không được sửa tài khoản có quyền nhân sự qua hồ sơ khách hàng.");
+        if(!access.isAdmin(authentication)){form.setSoCccd(null);model.addAttribute("maskedDocument",item.getMaskedSoCccd());}
         form.setUsername(item.getUser()==null?null:item.getUser().getUsername());
         shippingAddresses.findByCustomer_IdOrderBySlotAsc(id).stream().filter(com.example.demodatn.entity.khachhang.ShippingAddress::isDefaultAddress).findFirst().ifPresent(a->{form.setProvinceId(a.getProvince()==null?null:a.getProvince().getId());form.setAddress(a.getAddress());form.setWardId(a.getWard()==null?null:a.getWard().getId());form.setStreetAddress(a.getDisplayStreetAddress());form.setLatitude(a.getLatitude());form.setLongitude(a.getLongitude());form.setCoordinateSource(a.getCoordinateSource());});
         model.addAttribute("customer",form);return "admin/khach-hang/bieu-mau";
@@ -93,10 +99,39 @@ public class AdminCustomerController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Integer id,@RequestParam(defaultValue="0") String page,Model model) {
         var item=people.customer(id);model.addAttribute("person",item);model.addAttribute("self",people.isSelf(item.getUser()));
-        model.addAttribute("orderPage",pagination.load(page,Sort.unsorted(),request->orders.findByCustomer_IdOrderByCreatedAtDescIdDesc(id,request)));
+        var orderPage=pagination.load(page,Sort.unsorted(),request->orders.findByCustomer_IdOrderByCreatedAtDescIdDesc(id,request));
+        model.addAttribute("orderPage",orderPage);
+        var invoiceIds=new java.util.HashMap<Integer,Integer>();
+        if(!orderPage.isEmpty())invoices.orderInvoiceIds(orderPage.getContent().stream().map(com.example.demodatn.entity.donhang.Order::getId).toList()).forEach(row->invoiceIds.put(((Number)row[0]).intValue(),((Number)row[1]).intValue()));
+        model.addAttribute("invoiceIds",invoiceIds);
         model.addAttribute("shippingAddresses",shippingAddresses.findByCustomer_IdOrderBySlotAsc(id));
         return "admin/khach-hang/chi-tiet";
     }
+    @GetMapping("/{customerId}/addresses/create")
+    public String createAddress(@PathVariable("customerId") Integer id,Model model,RedirectAttributes flash) {
+        var person=people.customer(id);
+        if(shippingAddresses.countByCustomer_Id(id)>=3){flash.addFlashAttribute("warning",com.example.demodatn.service.khachhang.ShippingAddressService.LIMIT_MESSAGE);return "redirect:/admin/customers/detail/"+id;}
+        var form=new com.example.demodatn.dto.khachhang.ShippingAddressForm();form.setReceiverName(person.getFullName());form.setPhone(person.getPhone());
+        model.addAttribute("addressForm",form);return addressForm(id,model);
+    }
+    @GetMapping("/{customerId}/addresses/{addressId}/edit")
+    public String editAddress(@PathVariable("customerId") Integer id,@PathVariable Integer addressId,Model model) {
+        var address=addressService.ownedForCustomer(id,addressId);var form=new com.example.demodatn.dto.khachhang.ShippingAddressForm();
+        form.setId(addressId);form.setReceiverName(address.getReceiverName());form.setPhone(address.getPhone());form.setAddress(address.getAddress());form.setStreetAddress(address.getDisplayStreetAddress());form.setProvinceId(address.getProvince()==null?null:address.getProvince().getId());form.setWardId(address.getWard()==null?null:address.getWard().getId());form.setLatitude(address.getLatitude());form.setLongitude(address.getLongitude());form.setCoordinateSource(address.getCoordinateSource());form.setMakeDefault(address.isDefaultAddress());
+        model.addAttribute("addressForm",form);return addressForm(id,model);
+    }
+    private String addressForm(Integer id,Model model){model.addAttribute("person",people.customer(id));return "admin/khach-hang/dia-chi";}
+    @PostMapping("/{customerId}/addresses/save")
+    public String saveAddress(@PathVariable("customerId") Integer id,@Valid @ModelAttribute("addressForm") com.example.demodatn.dto.khachhang.ShippingAddressForm form,BindingResult errors,Model model,RedirectAttributes flash) {
+        if(!errors.hasErrors())try{addressService.saveForCustomer(id,form);flash.addFlashAttribute("message","Đã lưu địa chỉ nhận hàng.");return "redirect:/admin/customers/detail/"+id;}
+        catch(PeopleValidationException ex){errors.rejectValue(ex.getField(),"invalid",ex.getMessage());}
+        catch(DataIntegrityViolationException ex){errors.rejectValue("address","changed","Địa chỉ vừa thay đổi hoặc đã đủ 3 địa chỉ. Tải lại rồi thử lại.");}
+        return addressForm(id,model);
+    }
+    @PostMapping("/{customerId}/addresses/{addressId}/default")
+    public String defaultAddress(@PathVariable("customerId") Integer id,@PathVariable Integer addressId,RedirectAttributes flash){addressService.makeDefaultForCustomer(id,addressId);flash.addFlashAttribute("message","Đã đặt địa chỉ mặc định.");return "redirect:/admin/customers/detail/"+id;}
+    @PostMapping("/{customerId}/addresses/{addressId}/delete")
+    public String deleteAddress(@PathVariable("customerId") Integer id,@PathVariable Integer addressId,RedirectAttributes flash){addressService.deleteForCustomer(id,addressId);flash.addFlashAttribute("message","Đã xóa địa chỉ. Địa chỉ mặc định đã được cập nhật nếu cần.");return "redirect:/admin/customers/detail/"+id;}
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("customer") CustomerDto form,BindingResult errors,Model model,RedirectAttributes flash) {
         if(!errors.hasErrors()) {

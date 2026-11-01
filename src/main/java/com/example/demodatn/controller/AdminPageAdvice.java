@@ -6,7 +6,9 @@ import org.springframework.ui.Model;
 import java.util.List;
 
 @ControllerAdvice(basePackages = "com.example.demodatn")
+@lombok.RequiredArgsConstructor
 public class AdminPageAdvice {
+    private final com.example.demodatn.security.AdminAccess access;
     public record NavItem(String group, String title, String route, String key) {}
     public static final List<NavItem> NAV = List.of(
         new NavItem("", "Dashboard", "/admin/dashboard", "dashboard"),
@@ -37,7 +39,10 @@ public class AdminPageAdvice {
         NavItem active = NAV.stream().filter(n -> path.equals(n.route()) || path.startsWith(n.route() + "/"))
                 .findFirst().orElse(NAV.get(0));
         model.addAttribute("statusLabels",com.example.demodatn.service.donhang.OrderStatusService.LABELS);
-        model.addAttribute("adminNav", NAV);
+        var authentication=org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        boolean full=access.isAdmin(authentication);
+        model.addAttribute("adminFullAccess",full);model.addAttribute("adminHome",access.home(authentication));
+        model.addAttribute("adminNav",NAV.stream().filter(n->access.allowed(authentication,"GET",n.route())).map(n->!full&&n.key().equals("account")?new NavItem("",n.title(),n.route(),n.key()):n).toList());
         model.addAttribute("adminActive", active.key());
         model.addAttribute("adminTitle", active.title());
     }

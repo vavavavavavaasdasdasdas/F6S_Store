@@ -35,9 +35,7 @@ public class AdminEmployeeController {
 
     @ModelAttribute("positions")
     public List<String> positions() {
-        var values=new java.util.ArrayList<>(java.util.List.of("Quản lý","Nhân viên bán hàng","Thu ngân","Thủ kho","Kế toán"));
-        for(String value:repository.distinctPositions())if(values.stream().noneMatch(v->com.example.demodatn.util.VietnameseText.sameFolded(v,value)))values.add(value);
-        return values;
+        return java.util.List.of("Admin","Nhân viên");
     }
 
     @GetMapping

@@ -1,0 +1,12 @@
+Xin chào Nguyễn Văn Ánh,
+
+Tài khoản của bạn đã sẵn sàng.
+Tên đăng nhập: e0e7b6d6
+Mật khẩu tạm: [mật khẩu tạm đã ẩn]
+Đăng nhập: http://localhost:18140/login
+
+Bạn phải đổi mật khẩu ngay sau lần đăng nhập đầu tiên. Không chia sẻ mật khẩu này.
+Nếu đây là thư gửi lại, mật khẩu tạm trước đó đã hết hiệu lực.
+
+Trân trọng,
+F6S Store

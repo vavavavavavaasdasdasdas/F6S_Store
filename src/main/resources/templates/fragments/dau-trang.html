@@ -50,13 +50,13 @@
                                 <a class="dropdown-item" th:href="@{/register}">Đăng ký</a>
                             </li>
                             <li sec:authorize="isAuthenticated()">
-                                <a class="dropdown-item" th:href="@{/profile}"><i class="bi bi-person"></i> Hồ sơ</a>
+                                <a class="dropdown-item" th:with="profileUrl=${@adminAccess.allowed(#authentication,'GET','/admin/account')?'/admin/account':'/profile'}" th:href="${profileUrl}"><i class="bi bi-person"></i> Hồ sơ</a>
                             </li>
                             <li sec:authorize="isAuthenticated()">
                                 <a class="dropdown-item" th:href="@{/orders}"><i class="bi bi-bag-check"></i> Đơn hàng</a>
                             </li>
-                            <li sec:authorize="hasRole('ADMIN')">
-                                <a class="dropdown-item text-danger" th:href="@{/admin}"><i class="bi bi-shield-lock"></i> Quản Trị</a>
+                            <li sec:authorize="hasAnyRole('ADMIN','EMPLOYEE')">
+                                <a class="dropdown-item text-danger" th:with="staffHome=${@adminAccess.home(#authentication)}" th:href="${staffHome}"><i class="bi bi-shield-lock"></i> Không gian cửa hàng</a>
                             </li>
                             <li sec:authorize="isAuthenticated()"><hr class="dropdown-divider"></li>
                             <li sec:authorize="isAuthenticated()">

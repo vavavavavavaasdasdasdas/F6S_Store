@@ -117,20 +117,20 @@ class Phase3ComboFilterIntegrationTest {
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    void creatableEmployeePositionTrimsAndDeduplicates() {
+    void employeePositionRestrictedToTwoValues() {
         String suffix = UUID.randomUUID().toString().substring(0, 6);
         EmployeeDto dto1 = new EmployeeDto();
         dto1.setEmployeeCode("NV-P3A-" + suffix);
         dto1.setFullName("Nguyễn Văn Test " + suffix);
         dto1.setPhone("0971" + String.format("%06d", Math.abs(suffix.hashCode()) % 1000000));
         dto1.setEmail("emp1_" + suffix + "@example.test");
-        dto1.setNewPosition("  Trưởng Ca Kho " + suffix + "  ");
+        dto1.setPosition("Nhân viên");
         dto1.setUsername("emp1_" + suffix);
         dto1.setPassword("Abcd@1234");
 
         peopleService.saveEmployee(dto1);
         String pos1 = jdbc.queryForObject("SELECT position FROM employees WHERE employee_code=?", String.class, "NV-P3A-" + suffix);
-        assertEquals("Trưởng Ca Kho " + suffix, pos1);
+        assertEquals("Nhân viên", pos1);
 
         EmployeeDto dto2 = new EmployeeDto();
         dto2.setEmployeeCode("NV-P3B-" + suffix);
@@ -141,9 +141,11 @@ class Phase3ComboFilterIntegrationTest {
         dto2.setUsername("emp2_" + suffix);
         dto2.setPassword("Abcd@1234");
 
+        assertThrows(com.example.demodatn.exception.PeopleValidationException.class,()->peopleService.saveEmployee(dto2));
+        dto2.setNewPosition(null);dto2.setPosition("Admin");
         peopleService.saveEmployee(dto2);
         String pos2 = jdbc.queryForObject("SELECT position FROM employees WHERE employee_code=?", String.class, "NV-P3B-" + suffix);
-        assertEquals("Trưởng Ca Kho " + suffix, pos2, "Should reuse existing position case/accent-insensitively");
+        assertEquals("Admin", pos2);
     }
 
     @Test

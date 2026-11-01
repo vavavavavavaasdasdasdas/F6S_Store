@@ -37,9 +37,10 @@ public class PeopleService {
     private final OrderRepository orders;
     private final VoucherRepository vouchers;
     private final PasswordEncoder encoder;
+    private final com.example.demodatn.security.AdminAccess access;
     private final com.example.demodatn.service.khachhang.ShippingAddressService addressService;
     private final com.example.demodatn.repository.nhanvien.AccountIssueRepository accountIssues;
-    @Value("${shop.employee-role:ROLE_ADMIN}") private String employeeRole;
+
 
     public Customer customer(Integer id) {
         return customers.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -53,7 +54,7 @@ public class PeopleService {
     }
     public static String email(String input) { return input.trim().toLowerCase(Locale.ROOT); }
     public boolean isSelf(User user) {
-        if(user==null)return false;
+        if(user==null || user.getId()==null)return false;
         var auth=SecurityContextHolder.getContext().getAuthentication();
         if(auth==null)return false;
         if(auth.getPrincipal() instanceof CustomUserDetails details) return user.getId().equals(details.getUserId());
@@ -85,6 +86,7 @@ public class PeopleService {
         if(customers.existsByPhoneAndIdNot(phone(form.getPhone()),id))throw new PeopleValidationException("phone","Số điện thoại đã tồn tại.");
         Customer c=form.getId()==null ? new Customer() : customers.findForUpdate(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
         String document=form.getSoCccd()==null||form.getSoCccd().isBlank()?null:form.getSoCccd().trim();
+        if(c.getId()!=null && document==null && access.hasRole(SecurityContextHolder.getContext().getAuthentication(),"ROLE_EMPLOYEE"))document=c.getSoCccd();
         if(document!=null && !document.matches("[0-9]{12}"))
             throw new PeopleValidationException("soCccd","Số căn cước phải gồm đúng 12 chữ số.");
         if(document!=null && accountIssues.documentUsed("customers",document,id))
@@ -102,22 +104,12 @@ public class PeopleService {
         return customers.saveAndFlush(c);
     }
     public String resolvePosition(String raw) {
-        String cleaned = VietnameseText.clean(raw);
-        if (cleaned.isEmpty()) return null;
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getAuthorities().stream().noneMatch(a -> "ROLE_ADMIN".equals(a.getAuthority()))) {
-            throw new AccessDeniedException("Chỉ quản trị viên mới được tạo hoặc gán chức vụ.");
-        }
-        if (cleaned.length() > 100) {
-            throw new PeopleValidationException("position", "Chức vụ tối đa 100 ký tự.");
-        }
-        for (String existing : employees.distinctPositions()) {
-            if (VietnameseText.sameFolded(existing, cleaned)) {
-                return existing.trim();
-            }
-        }
-        return cleaned;
+        if(!java.util.Set.of("Admin","Nhân viên").contains(raw==null?"":raw))throw new PeopleValidationException("position","Chỉ chọn Admin hoặc Nhân viên.");
+        var auth=SecurityContextHolder.getContext().getAuthentication();
+        if(auth!=null&&auth.getAuthorities().stream().noneMatch(a->"ROLE_ADMIN".equals(a.getAuthority())))throw new AccessDeniedException("Chỉ quản trị viên được gán chức vụ.");
+        return raw;
     }
+
     @Transactional
     public Employee saveEmployee(EmployeeDto form) { return persistEmployee(form,null,false); }
     @Transactional
@@ -127,7 +119,8 @@ public class PeopleService {
         if(employees.existsByEmployeeCodeIgnoreCaseAndIdNot(form.getEmployeeCode().trim(),id))throw new PeopleValidationException("employeeCode","Mã nhân viên đã tồn tại.");
         if(employees.existsByEmailIgnoreCaseAndIdNot(email(form.getEmail()),id))throw new PeopleValidationException("email","Thư điện tử đã tồn tại.");
         if(employees.existsByPhoneAndIdNot(phone(form.getPhone()),id))throw new PeopleValidationException("phone","Số điện thoại đã tồn tại.");
-        String rawPos = (form.getNewPosition() != null && !form.getNewPosition().isBlank()) ? form.getNewPosition() : form.getPosition();
+        if(form.getNewPosition()!=null&&!form.getNewPosition().isBlank())throw new PeopleValidationException("position","Chỉ chọn Admin hoặc Nhân viên; không tạo chức vụ mới.");
+        String rawPos=form.getPosition();
         String resolvedPosition = resolvePosition(rawPos);
         Employee e=form.getId()==null ? new Employee() : employees.findForUpdate(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
         User u=e.getUser()==null ? new User() : e.getUser();
@@ -141,11 +134,12 @@ public class PeopleService {
                 throw new PeopleValidationException("password",PasswordPolicy.MESSAGE);
             u.setPassword(encoder.encode(password));
         }
-        if(u.getId()==null) {
-            Role role=roles.findByName(employeeRole);
-            if(role==null || "ROLE_USER".equals(employeeRole))throw new IllegalStateException("Cấu hình role nhân viên không hợp lệ.");
-            u.setRole(role);u.setStatus(true);
-        }
+        String roleName="Admin".equals(resolvedPosition)?"ROLE_ADMIN":"ROLE_EMPLOYEE";
+        Role role=roles.findByName(roleName);
+        if(role==null)throw new PeopleValidationException("position","Thiếu vai trò. Cần chạy migration 019.");
+        if(isSelf(u)&&u.getRole()!=null&&"ROLE_ADMIN".equals(u.getRole().getName())&&!"ROLE_ADMIN".equals(roleName))throw new PeopleValidationException("position","Không thể tự đổi chức vụ làm mất quyền quản trị.");
+        if(u.getId()==null)u.setStatus(true);
+        u.setRole(role);
         u.setUsername(username);
         e.setUser(users.saveAndFlush(u));
         String document=form.getSoCccd()==null||form.getSoCccd().isBlank()?null:form.getSoCccd().trim();

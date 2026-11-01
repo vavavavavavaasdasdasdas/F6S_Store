@@ -74,3 +74,6 @@ Form ban đầu bố trí hai cột và dùng bien-the-ban-dau.js chỉ đếm l
 ## Khuyến mãi (giai đoạn 11)
 
 quan-tri-giam-gia.js sở hữu data-discount-switch: POST CSRF, trạng thái bận, phản hồi lỗi và hoàn nguyên công tắc. Fragment cong-tac-khuyen-mai cung cấp markup chung; nhãn chữ phân biệt Sắp diễn ra/Đang chạy/Hết hạn/Tạm dừng. data-selection-all là hai nút có handler bật/tắt các dòng nhìn thấy; sessionStorage theo ID đợt giữ lựa chọn qua trang, chỉ xóa sau lưu thành công, lỗi lưu trữ yêu cầu lưu trước khi chuyển trang. Server xác nhận sản phẩm đang bán. Các select còn lại thuộc combo-box.js; validation form và guard dùng quan-tri-danh-muc.js. Phiếu không có hành động Xóa ở UI và endpoint luôn từ chối.
+
+
+Giai đoạn 12: AdminAccess sở hữu quyền route/menu; ShippingAddressService sở hữu khóa và mặc định sổ khách. Fragment xu-ly-don-hang và theo-doi-don-hang.js dùng chung trên đơn/hóa đơn. nut-hanh-dong.js sở hữu icon bảng và data-icon-action (gửi lại tài khoản), giữ confirm/CSRF và 36px desktop/40px mobile.

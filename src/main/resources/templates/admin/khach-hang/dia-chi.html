@@ -1,0 +1,10 @@
+<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section class="catalog-page">
+<div class="admin-heading"><div><h1 th:text="${addressForm.id==null?'Thêm địa chỉ nhận hàng':'Sửa địa chỉ nhận hàng'}"></h1><h2 th:text="${person.fullName}"></h2></div></div>
+<form class="admin-panel catalog-form catalog-form-narrow" method="post" th:action="@{/admin/customers/{id}/addresses/save(id=${person.id})}" th:object="${addressForm}" data-admin-form novalidate>
+<input type="hidden" th:field="*{id}"><p class="form-message" role="alert" hidden></p><p class="field-error" role="alert" th:errors="*{address}"></p>
+<div class="catalog-field"><label for="address-receiver">Người nhận *</label><input class="form-control" id="address-receiver" th:field="*{receiverName}" required maxlength="100" aria-describedby="address-receiver-error"><p class="field-error" id="address-receiver-error" th:errors="*{receiverName}"></p></div>
+<div class="catalog-field"><label for="address-phone">Số điện thoại *</label><input class="form-control" id="address-phone" type="tel" th:field="*{phone}" required pattern="(?:0[0-9]{9}|\+84[0-9]{9})" maxlength="20" aria-describedby="address-phone-error"><p class="field-error" id="address-phone-error" th:errors="*{phone}"></p></div>
+<fieldset th:replace="~{fragments/dia-chi-giao-hang :: address('admin-address','streetAddress','USER',false)}"></fieldset>
+<label class="form-check"><input class="form-check-input" type="checkbox" th:field="*{makeDefault}"> Đặt làm mặc định</label>
+<div class="catalog-form-actions"><button type="submit" class="btn btn-primary">Lưu địa chỉ</button><a class="btn btn-outline-secondary" th:href="@{/admin/customers/detail/{id}(id=${person.id})}">Quay lại khách hàng</a></div>
+</form></section></body></html>

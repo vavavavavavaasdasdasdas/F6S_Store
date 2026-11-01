@@ -17,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
+    private final AdminAccess access;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -34,7 +35,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/admin/**").access((authentication,ctx)->new org.springframework.security.authorization.AuthorizationDecision(access.allowed(authentication.get(),ctx.getRequest().getMethod(),ctx.getRequest().getRequestURI().substring(ctx.getRequest().getContextPath().length()))))
                 .requestMatchers("/orders/**", "/checkout/**", "/profile", "/profile/**").authenticated()
                 .requestMatchers("/", "/products/**", "/category/**", "/search", "/cart/**", "/login", "/register", "/policy", "/css/**", "/js/**", "/images/**", "/anh/**", "/uploads/products/**", "/error").permitAll()
                 .anyRequest().authenticated()
@@ -52,14 +53,9 @@ public class SecurityConfig {
                     org.springframework.security.web.savedrequest.SavedRequest savedRequest =
                         new org.springframework.security.web.savedrequest.HttpSessionRequestCache().getRequest(request, response);
                     
-                    boolean isAdmin = authentication.getAuthorities().stream()
-                            .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-                            
-                    if (isAdmin) {
-                        response.sendRedirect("/admin");
-                        return;
+                    if(access.hasRole(authentication,"ROLE_ADMIN")||access.hasRole(authentication,"ROLE_EMPLOYEE")) {
+                        response.sendRedirect(access.home(authentication));return;
                     }
-                    
                     if (savedRequest != null) {
                         response.sendRedirect(savedRequest.getRedirectUrl());
                     } else {

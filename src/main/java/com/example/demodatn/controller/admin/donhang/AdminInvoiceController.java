@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class AdminInvoiceController {
     private final InvoiceRepository invoices;
+    private final com.example.demodatn.service.donhang.OrderStatusService orderStatus;
     @org.springframework.beans.factory.annotation.Value("${shop.name:SHOP GIÀY}") private String shopName;
     @org.springframework.beans.factory.annotation.Value("${shop.address:}") private String shopAddress;
     @org.springframework.beans.factory.annotation.Value("${shop.phone:}") private String shopPhone;
@@ -55,8 +56,28 @@ public class AdminInvoiceController {
 
     @GetMapping("/{id}")
     public String detail(@PathVariable Integer id,Model model) {
-        model.addAttribute("invoice",invoices.findById(id).orElseThrow(()->new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND)));
+        var invoice=invoice(id);model.addAttribute("invoice",invoice);model.addAttribute("order",invoice.getOrder());model.addAttribute("allowedStatuses",orderStatus.allowedStatuses(invoice.getOrder()));
         model.addAttribute("shopName",shopName);model.addAttribute("shopAddress",shopAddress);model.addAttribute("shopPhone",shopPhone);
         return "admin/hoa-don/chi-tiet";
+    }
+    private Invoice invoice(Integer id){return invoices.findById(id).orElseThrow(()->new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));}
+    @PostMapping("/{id}/status")
+    public String status(@PathVariable Integer id,@RequestParam String status,@RequestParam(required=false) String reason,@RequestParam(required=false) String carrier,@RequestParam(required=false) String trackingCode,org.springframework.web.servlet.mvc.support.RedirectAttributes flash){
+        try{orderStatus.transition(invoice(id).getOrder().getId(),status,reason,carrier,trackingCode);flash.addFlashAttribute("message","Đã cập nhật trạng thái đơn hàng.");}
+        catch(IllegalArgumentException ex){flash.addFlashAttribute("error",ex.getMessage());}
+        return "redirect:/admin/invoices/"+id;
+    }
+    @PostMapping("/{id}/confirm-payment")
+    public String payment(@PathVariable Integer id,org.springframework.web.servlet.mvc.support.RedirectAttributes flash){
+        try{orderStatus.confirmPayment(invoice(id).getOrder().getId());flash.addFlashAttribute("message","Đã xác nhận nhận chuyển khoản.");}
+        catch(IllegalArgumentException ex){flash.addFlashAttribute("error",ex.getMessage());}
+        return "redirect:/admin/invoices/"+id;
+    }
+    @PostMapping("/{id}/province")
+    public String province(@PathVariable Integer id,@RequestParam(defaultValue="") String provinceId,org.springframework.web.servlet.mvc.support.RedirectAttributes flash){
+        try{orderStatus.updateProvince(invoice(id).getOrder().getId(),Integer.valueOf(provinceId));flash.addFlashAttribute("message","Đã cập nhật tỉnh/thành và ghi lịch sử.");}
+        catch(NumberFormatException ex){flash.addFlashAttribute("error","Vui lòng chọn Tỉnh/Thành phố hợp lệ.");}
+        catch(IllegalArgumentException ex){flash.addFlashAttribute("error",ex.getMessage());}
+        return "redirect:/admin/invoices/"+id;
     }
 }

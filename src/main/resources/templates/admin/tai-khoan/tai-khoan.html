@@ -5,7 +5,7 @@
 <dt class="col-sm-4">Họ tên</dt><dd class="col-sm-8" th:text="${accountProfile.fullName ?: 'Chưa cập nhật'}"></dd>
 <dt class="col-sm-4">Thư điện tử</dt><dd class="col-sm-8" th:text="${accountProfile.email ?: 'Chưa cập nhật'}"></dd>
 <dt class="col-sm-4">Số điện thoại</dt><dd class="col-sm-8" th:text="${accountProfile.phone ?: 'Chưa cập nhật'}"></dd>
-<dt class="col-sm-4">Vai trò</dt><dd class="col-sm-8" th:text="${account.role == null ? 'Chưa có vai trò' : (account.role.name=='ROLE_ADMIN'?'Quản trị viên':account.role.name=='ROLE_USER'?'Khách hàng':'Quyền khác')}"></dd>
+<dt class="col-sm-4">Vai trò</dt><dd class="col-sm-8" th:text="${account.role == null ? 'Chưa có vai trò' : (account.role.name=='ROLE_ADMIN'?'Quản trị viên':account.role.name=='ROLE_EMPLOYEE'?'Nhân viên':account.role.name=='ROLE_USER'?'Khách hàng':'Quyền khác')}"></dd>
 <dt class="col-sm-4">Trạng thái</dt><dd class="col-sm-8" th:text="${account.status == true ? 'Đang hoạt động' : 'Đã vô hiệu hóa'}"></dd>
 <dt class="col-sm-4">Ngày tạo</dt><dd class="col-sm-8" th:text="${account.createdAt != null ? #temporals.format(account.createdAt,'dd/MM/yyyy HH:mm') : 'Chưa có dữ liệu'}"></dd></dl></div>
 <div class="row g-4 mt-1"><div class="col-lg-6"><div class="admin-panel"><div class="panel-heading"><h2>Sửa thông tin</h2></div>
