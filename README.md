@@ -123,3 +123,6 @@ Theo quyết định chủ dự án, **chỉ đơn mới có `shipping_policy_ve
 Tại POS, chọn **Đơn giao hàng (online)**, nhập người nhận/SĐT, nguồn đơn, địa chỉ và COD hoặc chuyển khoản. SĐT có sẵn được dùng lại, SĐT mới chỉ tạo khách vãng lai, không tạo tài khoản. Đơn thuộc kênh ONLINE và dùng nguyên luồng trạng thái/kho hiện có. Với chuyển khoản, tạo đơn trước để có mã đơn thật, rồi dùng QR đúng tổng tiền ở chi tiết đơn; việc tạo QR không tự xác nhận đã nhận tiền. Nhân viên có nút sao chép nội dung xác nhận để tự gửi khách.
 
 Leaflet cục bộ, nguồn dữ liệu, giấy phép, giới hạn Nominatim và điểm kho: [NGUON_DIA_CHI_BAN_DO.md](docs/NGUON_DIA_CHI_BAN_DO.md). Biến môi trường xem `application-example.properties`: `SHOP_GEOCODING_ENABLED`, `SHOP_GEOCODER_URL`, `SHOP_GEOCODER_USER_AGENT`, `SHOP_MAP_TILE_URL`, timeout/cache/rate. Test tự động phải tắt geocoding hoặc trỏ stub localhost và mock tile. Không ghi bí mật SMTP/ngân hàng vào repo.
+
+
+Giai đoạn 13: /admin/pos chỉ bán tại quầy, /admin/ban-online tạo đơn giao hàng cho khách vãng lai hoặc khách đã lưu. Hai giỏ và hạn mức 5 hóa đơn chờ mỗi loại độc lập theo nhân viên. Tạo đơn online chuyển tới Hóa đơn để xử lý; QR chuyển khoản có số tiền và mã đơn sau khi tạo, không tự xác nhận thu tiền. Các URL quản trị đơn cũ chuyển hướng sang Hóa đơn. Chạy migration 020 sau 019; xem docs/GIAI_DOAN_13_HOA_DON_BAN_ONLINE.md.

@@ -1,0 +1,43 @@
+{
+  "beforeStock": [
+    {
+      "quantity": 15
+    }
+  ],
+  "afterStock": [
+    {
+      "quantity": 15
+    }
+  ],
+  "counts": [
+    {
+      "order_type": "ONLINE",
+      "n": 5
+    },
+    {
+      "order_type": "POS",
+      "n": 5
+    }
+  ],
+  "firstOnlineHold": {
+    "id": 5,
+    "order_type": "ONLINE",
+    "delivery_data": "{\"confirmNow\": false, \"coordinateSource\": \"\", \"customerId\": 100, \"latitude\": null, \"longitude\": null, \"note\": \"Giao buổi chiều — Đà Nẵng\", \"orderSource\": \"INSTAGRAM\", \"paymentMethod\": \"COD\", \"phone\": \"0968120031\", \"provinceId\": 1, \"receiverName\": \"Nguyễn Văn Ánh\", \"streetAddress\": \"Số 12, đường Nguyễn Huệ\", \"voucherCode\": \"\", \"wardId\": 1}"
+  },
+  "snapshot": {
+    "confirmNow": false,
+    "coordinateSource": "",
+    "customerId": 100,
+    "latitude": null,
+    "longitude": null,
+    "note": "Giao buổi chiều — Đà Nẵng",
+    "orderSource": "INSTAGRAM",
+    "paymentMethod": "COD",
+    "phone": "0968120031",
+    "provinceId": 1,
+    "receiverName": "Nguyễn Văn Ánh",
+    "streetAddress": "Số 12, đường Nguyễn Huệ",
+    "voucherCode": "",
+    "wardId": 1
+  }
+}

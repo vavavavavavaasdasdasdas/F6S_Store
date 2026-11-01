@@ -11,4 +11,6 @@ public class PosOnlineOrderForm extends DeliveryAddressForm {
     @NotBlank(message="Chọn phương thức thanh toán.") @Pattern(regexp="COD|BANK_TRANSFER",message="Chọn COD hoặc Chuyển khoản.") private String paymentMethod="COD";
     @Size(max=50,message="Mã phiếu giảm giá tối đa 50 ký tự.") private String voucherCode;
     private String checkoutToken;
+    private Integer customerId;
+    private boolean confirmNow;
 }

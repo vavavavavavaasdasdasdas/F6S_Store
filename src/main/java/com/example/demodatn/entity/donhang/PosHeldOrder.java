@@ -12,6 +12,8 @@ import java.util.List;
 @Getter @Setter
 public class PosHeldOrder {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id;
+    @Column(name="order_type",nullable=false,length=10) private String orderType="POS";
+    @org.hibernate.annotations.Nationalized @Column(name="delivery_data",columnDefinition="nvarchar(max)") private String deliveryData;
     @Column(nullable=false,unique=true,length=40) private String code;
     @ManyToOne(optional=false) @JoinColumn(name="staff_user_id",nullable=false) private User staffUser;
     @ManyToOne @JoinColumn(name="customer_id") private Customer customer;

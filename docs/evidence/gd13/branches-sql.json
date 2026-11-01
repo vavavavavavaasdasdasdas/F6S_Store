@@ -1,0 +1,274 @@
+[
+  {
+    "method": "COD",
+    "before": [
+      {
+        "id": 3,
+        "quantity": 15
+      }
+    ],
+    "created": {
+      "invoiceId": 291,
+      "qr": null
+    },
+    "snapshots": [
+      {
+        "step": "placed",
+        "stock": [
+          {
+            "id": 3,
+            "quantity": 15
+          }
+        ],
+        "order": [
+          {
+            "id": 678,
+            "status": "PENDING",
+            "payment_method": "COD",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false,
+            "final_amount": 3030000.0,
+            "shipping_fee": 55000.0
+          }
+        ]
+      },
+      {
+        "step": "CONFIRMED",
+        "stock": [
+          {
+            "id": 3,
+            "quantity": 14
+          }
+        ],
+        "order": [
+          {
+            "id": 678,
+            "status": "CONFIRMED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true
+          }
+        ]
+      },
+      {
+        "step": "CANCELLED",
+        "stock": [
+          {
+            "id": 3,
+            "quantity": 15
+          }
+        ],
+        "order": [
+          {
+            "id": 678,
+            "status": "CANCELLED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false
+          }
+        ]
+      }
+    ],
+    "history": [
+      {
+        "status": "PENDING",
+        "note": "Đã tạo đơn hàng."
+      },
+      {
+        "status": "CONFIRMED"
+      },
+      {
+        "status": "CANCELLED",
+        "note": "Khách xác nhận không nhận hàng — dữ liệu thử"
+      }
+    ]
+  },
+  {
+    "method": "COD",
+    "before": [
+      {
+        "id": 3,
+        "quantity": 15
+      }
+    ],
+    "created": {
+      "invoiceId": 292,
+      "qr": null
+    },
+    "snapshots": [
+      {
+        "step": "placed",
+        "stock": [
+          {
+            "id": 3,
+            "quantity": 15
+          }
+        ],
+        "order": [
+          {
+            "id": 679,
+            "status": "PENDING",
+            "payment_method": "COD",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false,
+            "final_amount": 3030000.0,
+            "shipping_fee": 55000.0
+          }
+        ]
+      },
+      {
+        "step": "CONFIRMED",
+        "stock": [
+          {
+            "id": 3,
+            "quantity": 14
+          }
+        ],
+        "order": [
+          {
+            "id": 679,
+            "status": "CONFIRMED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true
+          }
+        ]
+      },
+      {
+        "step": "PREPARING",
+        "stock": [
+          {
+            "id": 3,
+            "quantity": 14
+          }
+        ],
+        "order": [
+          {
+            "id": 679,
+            "status": "PREPARING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true
+          }
+        ]
+      },
+      {
+        "step": "SHIPPING",
+        "stock": [
+          {
+            "id": 3,
+            "quantity": 14
+          }
+        ],
+        "order": [
+          {
+            "id": 679,
+            "status": "SHIPPING",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true
+          }
+        ]
+      },
+      {
+        "step": "DELIVERY_FAILED",
+        "stock": [
+          {
+            "id": 3,
+            "quantity": 15
+          }
+        ],
+        "order": [
+          {
+            "id": 679,
+            "status": "DELIVERY_FAILED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false
+          }
+        ]
+      }
+    ],
+    "history": [
+      {
+        "status": "PENDING",
+        "note": "Đã tạo đơn hàng."
+      },
+      {
+        "status": "CONFIRMED"
+      },
+      {
+        "status": "PREPARING"
+      },
+      {
+        "status": "SHIPPING",
+        "carrier": "Vận chuyển thử",
+        "tracking_code": "G13-FAIL"
+      },
+      {
+        "status": "DELIVERY_FAILED",
+        "note": "Khách xác nhận không nhận hàng — dữ liệu thử"
+      }
+    ]
+  },
+  {
+    "method": "BANK_TRANSFER",
+    "before": [
+      {
+        "id": 3,
+        "quantity": 15
+      }
+    ],
+    "created": {
+      "invoiceId": 293,
+      "qr": {
+        "payload": "00020101021238530010A0000007270123000697042201091234567890208QRIBFTTA5303704540730300005802VN62120808DH00068063049FE2",
+        "decoded": "00020101021238530010A0000007270123000697042201091234567890208QRIBFTTA5303704540730300005802VN62120808DH00068063049FE2",
+        "width": 270
+      }
+    },
+    "snapshots": [
+      {
+        "step": "placed",
+        "stock": [
+          {
+            "id": 3,
+            "quantity": 14
+          }
+        ],
+        "order": [
+          {
+            "id": 680,
+            "status": "PENDING",
+            "payment_method": "BANK_TRANSFER",
+            "payment_status": "UNPAID",
+            "da_tru_kho": true,
+            "final_amount": 3030000.0,
+            "shipping_fee": 55000.0
+          }
+        ]
+      },
+      {
+        "step": "CANCELLED",
+        "stock": [
+          {
+            "id": 3,
+            "quantity": 15
+          }
+        ],
+        "order": [
+          {
+            "id": 680,
+            "status": "CANCELLED",
+            "payment_status": "UNPAID",
+            "da_tru_kho": false
+          }
+        ]
+      }
+    ],
+    "history": [
+      {
+        "status": "PENDING",
+        "note": "Đã tạo đơn hàng."
+      },
+      {
+        "status": "CANCELLED",
+        "note": "Khách xác nhận không nhận hàng — dữ liệu thử"
+      }
+    ]
+  }
+]

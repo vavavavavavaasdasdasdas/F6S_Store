@@ -47,6 +47,7 @@
   }
   async function refreshQuote(){
    clearTimeout(timer);quoteRequest?.abort();const current=++revision;quoteRequest=new AbortController();busy(true);
+   if(!province.value||!ward.value||!street.value.trim()){text(root,'[data-delivery-note]','Chọn đầy đủ tỉnh/thành, phường/xã và số nhà, tên đường để tính phí.');busy(false);return;}
    const data=new URLSearchParams(new FormData(form));data.set('scope',root.dataset.scope);data.set('voucherCode',appliedVoucher);
    try{const result=await jsonPost('/shipping/quote',data,quoteRequest.signal);if(current!==revision)return;const q=result.shipping;
     text(form,'[data-delivery-fee]',q.freeShip?'Miễn phí vận chuyển':money(q.shippingFee));text(root,'[data-delivery-distance]',q.distanceKm==null?'Chưa xác định':new Intl.NumberFormat('vi-VN').format(q.distanceKm)+' km (đường chim bay)');text(root,'[data-delivery-note]',q.note);text(root,'[data-delivery-hint]',q.hint);

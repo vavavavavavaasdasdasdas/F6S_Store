@@ -1,0 +1,62 @@
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.791 s -- in com.example.demodatn.config.DataInitializerTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.360 s -- in com.example.demodatn.config.SchemaCheckTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 23.48 s -- in com.example.demodatn.controller.AdminFrameIntegrationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.28 s -- in com.example.demodatn.controller.PaginationIntegrationTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.963 s -- in com.example.demodatn.controller.PasswordPolicyIntegrationTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.690 s -- in com.example.demodatn.controller.Phase3ComboFilterIntegrationTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.494 s -- in com.example.demodatn.controller.RouteErrorIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.329 s -- in com.example.demodatn.controller.TablePresentationIntegrationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.376 s -- in com.example.demodatn.controller.user.UserUiIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.043 s -- in com.example.demodatn.DemoDatnApplicationTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.054 s -- in com.example.demodatn.entity.UnicodePersistenceIntegrationTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.258 s -- in com.example.demodatn.security.EmployeeAccessIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.132 s -- in com.example.demodatn.security.StandaloneAccountTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.048 s -- in com.example.demodatn.service.AccountCredentialPrivacyTest
+GD16 MAIL GreenMail: Vietnamese plain text=true; multipart=true; inline logo Content-ID=f6s-logo; no password printed
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.821 s -- in com.example.demodatn.service.AccountProvisioningIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.example.demodatn.service.donhang.BankTransferDeadlineTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.783 s -- in com.example.demodatn.service.donhang.DeliveryIntegrationTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.107 s -- in com.example.demodatn.service.donhang.DeliveryServiceTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.972 s -- in com.example.demodatn.service.donhang.GeocodingServiceTest
+GD13 compatibility GET=302 POST=307; redirect does not mutate stock; invoice action stock=17
+GD13 security 8: 302 403 200 403 403 403 403 200
+GD13 holds POS=5 ONLINE=5; sixth each rejected; delivery Unicode preserved; cross-type=404; stock unchanged=18
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.651 s -- in com.example.demodatn.service.donhang.InvoiceOnlineWorkspaceIntegrationTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.862 s -- in com.example.demodatn.service.donhang.OrderRollbackIntegrationTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.170 s -- in com.example.demodatn.service.donhang.OrderStockIntegrationTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.693 s -- in com.example.demodatn.service.donhang.PosHoldServiceTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.886 s -- in com.example.demodatn.service.donhang.PosInvoiceIntegrationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.005 s -- in com.example.demodatn.service.donhang.PosQrIntegrationTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.419 s -- in com.example.demodatn.service.donhang.PricingServiceTest
+GD16 FEE boundaries=[[0, 25000], [14.9, 25000], [15, 25000], [29.99, 25000], [30, 25000], [30.01, 35000], [49.99, 35000], [50, 35000], [50.01, 55000], [500, 55000]] missing coordinates=55000
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.351 s -- in com.example.demodatn.service.donhang.ShippingFeeTest
+GD16 COD before=18 confirmed=17 cancelled=18 customer reused=true user count unchanged=18
+GD16 revenue policy new=goods only; NULL historical=final_amount; shipping=25000.00 total=3000000.00
+GD16 SECURITY groups=8 statuses=302,403,403,403,403,403,403,400; authenticated config/wards=200
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.487 s -- in com.example.demodatn.service.donhang.ShippingOnlineIntegrationTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in com.example.demodatn.service.donhang.VietQrServiceTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.363 s -- in com.example.demodatn.service.khachhang.AdminAddressBookIntegrationTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.910 s -- in com.example.demodatn.service.khachhang.ShippingAddressIntegrationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.162 s -- in com.example.demodatn.service.khuyenmai.DiscountEffectivityTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.612 s -- in com.example.demodatn.service.khuyenmai.DiscountIntegrationTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.213 s -- in com.example.demodatn.service.khuyenmai.DiscountWorkflowIntegrationTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.301 s -- in com.example.demodatn.service.nhanvien.AdminAccountServiceTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.648 s -- in com.example.demodatn.service.PeopleIntegrationTest
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.790 s -- in com.example.demodatn.service.sanpham.CatalogIntegrationTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.555 s -- in com.example.demodatn.service.sanpham.ColorVariantIntegrationTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.477 s -- in com.example.demodatn.service.sanpham.EditableVariantIntegrationTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.255 s -- in com.example.demodatn.service.sanpham.InitialMaterialIntegrationTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.958 s -- in com.example.demodatn.service.sanpham.MaterialIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.243 s -- in com.example.demodatn.service.sanpham.ObjectCodeIntegrationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.399 s -- in com.example.demodatn.service.sanpham.ProductGalleryIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in com.example.demodatn.service.sanpham.ProductImageUrlServiceTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.383 s -- in com.example.demodatn.service.sanpham.ProductWorkspaceIntegrationTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.712 s -- in com.example.demodatn.service.sanpham.SaleStatusAndCodeIntegrationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.544 s -- in com.example.demodatn.service.sanpham.SoleIntegrationTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.165 s -- in com.example.demodatn.service.thongke.DashboardIntegrationTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.329 s -- in com.example.demodatn.service.thongke.StatisticsIntegrationTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.example.demodatn.util.PaginationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.example.demodatn.util.PasswordPolicyTest
+[INFO] Tests run: 234, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] Total time:  01:55 min

@@ -13,6 +13,7 @@ public class AdminAccess {
         if(isAdmin(auth))return true;
         if(!hasRole(auth,"ROLE_EMPLOYEE"))return false;
         if("POST".equals(method)&&path.equals("/admin/accounts/username-suggestion"))return true;
+        if(("GET".equals(method)||"POST".equals(method))&&under(path,com.example.demodatn.controller.admin.donhang.AdminOrderController.LEGACY_PATH))return true;
         if(under(path,"/admin/pos")||under(path,"/admin/ban-online")||under(path,"/admin/invoices")||under(path,"/admin/account"))return true;
         if("GET".equals(method)&&path.equals("/admin/inventory"))return true;
         if(under(path,"/admin/customers")){

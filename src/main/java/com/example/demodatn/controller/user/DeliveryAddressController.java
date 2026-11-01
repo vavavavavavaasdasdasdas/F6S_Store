@@ -29,7 +29,7 @@ public class DeliveryAddressController {
         if(pos){var auth=SecurityContextHolder.getContext().getAuthentication();if(!access.allowed(auth,"GET","/admin/pos"))throw new org.springframework.security.access.AccessDeniedException("Không có quyền dùng POS.");}
         else if(!"USER".equals(scope))return ResponseEntity.badRequest().body(Map.of("message","Ngữ cảnh giao hàng không hợp lệ."));
         synchronized(session){try{
-            @SuppressWarnings("unchecked") var cart=(List<CartItemDto>)session.getAttribute(pos?"posCart":"cart");if(cart==null)cart=List.of();
+            @SuppressWarnings("unchecked") var cart=(List<CartItemDto>)session.getAttribute(pos?"online-posCart":"cart");if(cart==null)cart=List.of();
             var customer=pos?online.byPhone(phone).stream().findFirst().orElse(null):customers.findByUser_Username(principal.getName()).orElse(null);
             var result=preview.preview(cart,address,customer,voucherCode,true,request.getRemoteAddr());
             if(!pos){var saved=new DeliveryAddressForm();org.springframework.beans.BeanUtils.copyProperties(address,saved);session.setAttribute("shippingDestination",saved);}

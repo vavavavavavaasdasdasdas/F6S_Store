@@ -68,7 +68,7 @@ class MaterialIntegrationTest {
         m.setName("Tên mới "+UUID.randomUUID());materials.flush();
         assertEquals(original,jdbc.queryForObject("SELECT ten_chat_lieu FROM order_details WHERE order_id=? AND product_variant_id=?",String.class,o.getId(),a.getId()));
         var mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-        for(String url:List.of("/admin/orders/"+o.getId(),"/admin/invoices/"+invoices.findByOrder_Id(o.getId()).orElseThrow().getId()))mvc.perform(get(url)).andExpect(status().isOk()).andExpect(content().string(org.hamcrest.Matchers.containsString(original)));
+        for(String url:List.of("/admin/invoices/"+invoices.findByOrder_Id(o.getId()).orElseThrow().getId()))mvc.perform(get(url)).andExpect(status().isOk()).andExpect(content().string(org.hamcrest.Matchers.containsString(original)));
     }
     @Test void inactiveMaterialIsNotSelectableAndMissingMaterialIsRejected() throws Exception {
         var p=product();var inactive=material("Chất liệu ngừng hoạt động ");inactive.setStatus(false);materials.flush();

@@ -77,3 +77,6 @@ quan-tri-giam-gia.js sở hữu data-discount-switch: POST CSRF, trạng thái b
 
 
 Giai đoạn 12: AdminAccess sở hữu quyền route/menu; ShippingAddressService sở hữu khóa và mặc định sổ khách. Fragment xu-ly-don-hang và theo-doi-don-hang.js dùng chung trên đơn/hóa đơn. nut-hanh-dong.js sở hữu icon bảng và data-icon-action (gửi lại tài khoản), giữ confirm/CSRF và 36px desktop/40px mobile.
+
+
+Giai đoạn 13: AdminPosController dùng hai base route, key giỏ/draft theo loại; PosHoldService khóa user, hạn mức 5 mỗi loại, snapshot giao hàng không chứa checkoutToken. ShippingFeeService/PricingService/PosOnlineOrderService/OrderStatusService dùng chung. Khách chọn từ tìm kiếm 300ms; don-online-pos.js sở hữu chọn sổ và điền địa chỉ qua delivery:select-address của module chung. in-hoa-don.js sở hữu data-copy-confirmation (Clipboard API, lỗi chọn văn bản và hướng dẫn Ctrl+C) và data-print-invoice. Textarea readonly của tin nhắn dùng resize-none. Legacy AdminOrderController chỉ chuyển hướng, POST 307 giữ body/CSRF; server kiểm tra quyền lại ở endpoint hóa đơn.

@@ -43,7 +43,7 @@ class ShippingOnlineIntegrationTest {
         var customer=o.getCustomer().getId();f.setPhone("+84"+f.getPhone().substring(1));var second=online.create("admin",f,cart(1));assertEquals(customer,second.getCustomer().getId());assertEquals(users,jdbc.queryForObject("SELECT COUNT(*) FROM users",Integer.class));
         statuses.updateStatus(o.getId(),"CONFIRMED");statuses.updateStatus(o.getId(),"CONFIRMED");assertEquals(before-1,stock());statuses.updateStatus(o.getId(),"CANCELLED");statuses.updateStatus(o.getId(),"CANCELLED");assertEquals(before,stock());
         String text=confirmation.text(second);assertTrue(text.contains(f.getReceiverName())&&text.contains("Phí")&&text.contains("Tổng")&&text.contains("Nguyễn Huệ"));
-        mvc.perform(get("/admin/orders/"+second.getId())).andExpect(status().isOk()).andExpect(content().string(containsString("&lt;script&gt;")));
+        mvc.perform(get("/admin/invoices/"+jdbc.queryForObject("SELECT id FROM invoices WHERE order_id=?",Integer.class,second.getId()))).andExpect(status().isOk()).andExpect(content().string(containsString("&lt;script&gt;")));
         System.out.println("GD16 COD before="+before+" confirmed="+(before-1)+" cancelled="+stock()+" customer reused=true user count unchanged="+users);
     }
     @Test void bankTransferAndSnapshotAndNewRevenueExcludeOnlyNewShipping(){
@@ -55,7 +55,7 @@ class ShippingOnlineIntegrationTest {
         System.out.println("GD16 revenue policy new=goods only; NULL historical=final_amount; shipping="+o.getShippingFee()+" total="+o.getFinalAmount());
     }
     @Test void quoteIgnoresForgedFeeAndDistanceAndRejectsMismatchedWard() throws Exception {
-        var f=form("COD");var session=new MockHttpSession();session.setAttribute("posCart",cart(1));
+        var f=form("COD");var session=new MockHttpSession();session.setAttribute("online-posCart",cart(1));
         mvc.perform(post("/shipping/quote").session(session).with(csrf()).param("scope","POS_ONLINE").param("provinceId",province.toString()).param("wardId",ward.toString()).param("streetAddress",f.getStreetAddress()).param("latitude",f.getLatitude().toString()).param("longitude",f.getLongitude().toString()).param("coordinateSource","GHIM_TAY").param("shipping_fee","0").param("distance_km","99999"))
             .andExpect(status().isOk()).andExpect(jsonPath("$.shippingFee").value(25000)).andExpect(jsonPath("$.shipping.distanceKm").value(0));
         Integer other=jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh WHERE id<>?",Integer.class,province);f.setProvinceId(other);assertThrows(IllegalArgumentException.class,()->shipping.validateAddress(f));

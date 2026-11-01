@@ -1,0 +1,35 @@
+{
+  "bookBefore": [
+    {
+      "id": 8,
+      "dia_chi": "Số 12, đường Nguyễn Huệ",
+      "ten_nguoi_nhan": "Nguyễn Văn Ánh",
+      "so_dien_thoai": "0968120031"
+    }
+  ],
+  "bookAfter": [
+    {
+      "id": 8,
+      "dia_chi": "Số 12, đường Nguyễn Huệ",
+      "ten_nguoi_nhan": "Nguyễn Văn Ánh",
+      "so_dien_thoai": "0968120031"
+    }
+  ],
+  "heldSnapshot": {
+    "checkoutToken": null,
+    "confirmNow": false,
+    "coordinateSource": "",
+    "customerId": 100,
+    "latitude": null,
+    "longitude": null,
+    "note": "Giao buổi chiều — Đà Nẵng",
+    "orderSource": "INSTAGRAM",
+    "paymentMethod": "COD",
+    "phone": "0968120031",
+    "provinceId": 1,
+    "receiverName": "Người nhận thay thế",
+    "streetAddress": "Địa chỉ tạm cho đơn này — Đà Nẵng",
+    "voucherCode": "",
+    "wardId": 1
+  }
+}

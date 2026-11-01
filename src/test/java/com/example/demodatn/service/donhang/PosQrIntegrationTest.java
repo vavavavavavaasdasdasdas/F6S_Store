@@ -55,7 +55,7 @@ class PosQrIntegrationTest {
         var row=jdbc.queryForMap("SELECT payment_reference,final_amount,payment_status FROM orders WHERE payment_reference='F6SABC123'");assertEquals("PAID",row.get("payment_status"));assertEquals(0,new BigDecimal(row.get("final_amount").toString()).compareTo(BigDecimal.valueOf(10000000)));System.out.println("GD7 exact receipt "+row);
     }
     @Test void invoiceChannelHasOwnColumnAndEightSecurityGroups()throws Exception{
-        mvc.perform(get("/admin/invoices")).andExpect(status().isOk()).andExpect(content().string(containsString("<th>Đơn hàng</th><th>Kênh bán</th>")));
+        mvc.perform(get("/admin/invoices")).andExpect(status().isOk()).andExpect(content().string(containsString("<th>Khách</th><th>Kênh bán</th><th>Nguồn đơn</th>")));
         mvc.perform(get("/admin/pos/customers").with(anonymous())).andExpect(status().is3xxRedirection());
         mvc.perform(get("/admin/pos/customers").with(user("ordinary").roles("USER"))).andExpect(status().isForbidden());
         mvc.perform(get("/admin/pos/customers").param("customerQuery","kh")).andExpect(status().isOk());

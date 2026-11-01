@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
 public interface PosHeldOrderRepository extends JpaRepository<PosHeldOrder,Long> {
+    long countByStaffUser_IdAndOrderTypeAndExpiresAtAfter(Integer staffId,String orderType,LocalDateTime now);
     long countByStaffUser_IdAndExpiresAtAfter(Integer staffId,LocalDateTime now);
     List<PosHeldOrder> findByStaffUser_UsernameAndExpiresAtAfterOrderByCreatedAtAsc(String username,LocalDateTime now);
     @Lock(LockModeType.PESSIMISTIC_WRITE)

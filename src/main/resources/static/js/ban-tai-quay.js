@@ -1,4 +1,5 @@
 (() => {
+ const base=document.querySelector('[data-pos-base]')?.dataset.posBase||'/admin/pos';
  const dialog=document.querySelector('#pos-product-dialog');
  const select=document.querySelector('#pos-variant'),quantity=document.querySelector('#pos-quantity');let opener=null;
  const variantFields=[['color','Màu sắc'],['material','Chất liệu'],['sole','Đế giày'],['size','Kích cỡ']].map(([key,name])=>({key,name,select:document.querySelector('#pos-'+key)}));let variantOptions=[];
@@ -19,14 +20,14 @@
  }));select.addEventListener('change',stock);dialog.querySelector('[data-pos-close]').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>{dialog.querySelector('form').dataset.dirty='false';opener?.focus();});
  const customer=document.querySelector('#customerId'),search=document.querySelector('#customerSearch');
  let searchSequence=0,searchTimer,searchRequest=null;const chosenLabel=document.querySelector('#pos-chosen-customer'),customerHint=document.querySelector('#customerResult'),customerCard=document.querySelector('#pos-selected-customer'),searchBox=document.querySelector('[data-customer-search-box]');
- function label(){let text='';try{text=sessionStorage.getItem('pos-customer-label-'+customer.value)||'';}catch(_){}chosenLabel.textContent=customer.value?(text||'Khách hàng #'+customer.value):'Khách lẻ';customerCard.hidden=!customer.value;document.querySelector('[data-customer-guest]').hidden=Boolean(customer.value);searchBox.hidden=Boolean(customer.value);}
+ function label(){let text='';try{text=sessionStorage.getItem('pos-customer-label-'+customer.value)||'';}catch(_){}chosenLabel.textContent=customer.value?(text||'Khách hàng #'+customer.value):'Khách lẻ';customerCard.hidden=!customer.value;document.querySelector('[data-customer-guest]').hidden=Boolean(customer.value);searchBox.hidden=Boolean(customer.value);if(customer.value)customerHint.textContent='';}
  function clearResults(){searchSequence++;searchRequest?.abort();const results=document.querySelector('#pos-customer-results');results.replaceChildren();results.hidden=true;customerHint.textContent='Nhập tên hoặc số điện thoại để tìm';}
  async function searchCustomers(page=0){
    searchRequest?.abort();const sequence=++searchSequence,query=search.value.trim();
    if(query.length<2){clearResults();return;}
    searchRequest=new AbortController();const results=document.querySelector('#pos-customer-results');results.replaceChildren();results.hidden=false;results.setAttribute('aria-busy','true');customerHint.textContent='Đang tìm khách hàng…';
    const params=new URLSearchParams({customerQuery:query,customerPage:page});
-   try{const response=await fetch('/admin/pos/customers?'+params,{headers:{'X-Requested-With':'XMLHttpRequest'},signal:searchRequest.signal});if(!response.ok)throw new Error('Không tải được khách hàng. Bạn hãy thử lại.');const html=await response.text();if(sequence!==searchSequence)return;const fragment=new DOMParser().parseFromString(html,'text/html').querySelector('#pos-customer-results');if(!fragment)throw new Error('Không tải được khách hàng. Bạn hãy thử lại.');results.replaceWith(fragment);customerHint.textContent='';}
+   try{const response=await fetch(base+'/customers?'+params,{headers:{'X-Requested-With':'XMLHttpRequest'},signal:searchRequest.signal});if(!response.ok)throw new Error('Không tải được khách hàng. Bạn hãy thử lại.');const html=await response.text();if(sequence!==searchSequence)return;const fragment=new DOMParser().parseFromString(html,'text/html').querySelector('#pos-customer-results');if(!fragment)throw new Error('Không tải được khách hàng. Bạn hãy thử lại.');results.replaceWith(fragment);customerHint.textContent='';}
    catch(error){if(error.name!=='AbortError'&&sequence===searchSequence)customerHint.textContent=error.message;}
    finally{if(sequence===searchSequence)document.querySelector('#pos-customer-results').removeAttribute('aria-busy');}
  }
@@ -40,15 +41,15 @@
  customer.parentElement.addEventListener('click',event=>{const link=event.target.closest('#pos-customer-results .shared-pagination a');if(link){event.preventDefault();searchCustomers(new URL(link.href).searchParams.get('customerPage')||0);}});
  document.querySelector('[data-customer-change]').addEventListener('click',()=>{searchBox.hidden=false;search.value='';clearResults();search.focus();});
  document.querySelector('[data-customer-clear]').addEventListener('click',()=>{customer.value='';label();search.value='';clearResults();customer.dispatchEvent(new Event('change',{bubbles:true}));});
- const form=document.querySelector('#pos-payment'),payment=document.querySelector('#paymentMethod'),cash=document.querySelector('#cashReceived'),total=form.querySelector('[data-total]'),pay=document.querySelector('#pos-pay');
- function change(){const isCash=payment.value==='CASH';document.querySelector('#cash-fields').hidden=!isCash;document.querySelector('#transfer-note').hidden=isCash;cash.required=isCash;cash.disabled=!isCash;cash.min=isCash?total.dataset.amount:0;document.querySelector('#cash-change').textContent=new Intl.NumberFormat('vi-VN').format(Math.max(0,Number(cash.value||0)-Number(total.dataset.amount)))+' đ';}
- payment.addEventListener('change',change);cash.addEventListener('input',change);form.addEventListener('voucherchange',change);change();
+ const form=document.querySelector('#pos-payment')||document.querySelector('#pos-online-order'),payment=form.querySelector('[name=paymentMethod]'),cash=document.querySelector('#cashReceived'),total=form.querySelector('[data-total]'),pay=document.querySelector('#pos-pay')||document.querySelector('#pos-create-online');
+ function change(){if(!cash)return;const isCash=payment.value==='CASH';document.querySelector('#cash-fields').hidden=!isCash;document.querySelector('#transfer-note').hidden=isCash;cash.required=isCash;cash.disabled=!isCash;cash.min=isCash?total.dataset.amount:0;document.querySelector('#cash-change').textContent=new Intl.NumberFormat('vi-VN').format(Math.max(0,Number(cash.value||0)-Number(total.dataset.amount)))+' đ';}
+ payment.addEventListener('change',change);cash?.addEventListener('input',change);form.addEventListener('voucherchange',change);change();
  const heldBar=document.querySelector('#pos-held-bar');
- const draftKey='pos-checkout-draft',fields=[customer,payment,cash,form.querySelector('[name=voucherCode]'),form.querySelector('[name=note]')];
+ const draftKey=base+'-checkout-draft',fields=[customer,...form.querySelectorAll('[name]:not([name=_csrf]):not([name=checkoutToken]):not([type=checkbox])')];
  try {
    if(pay.dataset.cartEmpty==='true') sessionStorage.removeItem(draftKey);
    else if(!heldBar.dataset.loaded && !document.querySelector('.admin-flash .alert')) {
-     const draft=JSON.parse(sessionStorage.getItem(draftKey)||'{}');fields.forEach(field=>{if(draft[field.name]!=null)field.value=draft[field.name];});change();
+     const draft=JSON.parse(sessionStorage.getItem(draftKey)||'{}');fields.forEach(field=>{if(draft[field.name]!=null){field.value=draft[field.name];field.dispatchEvent(new CustomEvent('combo:sync'));}});if(form.querySelector('[data-delivery-address]')&&draft.provinceId)form.querySelector('[data-delivery-address]').dispatchEvent(new CustomEvent('delivery:select-address',{detail:draft}));customer.dispatchEvent(new Event('customer:restored'));change();
      if(form.querySelector('[name=voucherCode]').value.trim())form.querySelector('[data-apply-voucher]').click();
    }
  } catch(_) { /* Draft storage is optional; session cart remains authoritative. */ }
@@ -56,7 +57,7 @@
  label();
  function saveDraft(){try{sessionStorage.setItem(draftKey,JSON.stringify(Object.fromEntries(fields.map(f=>[f.name,f.value]))));}catch(_){} }
  function copyDraft(target) {
-   [customer,payment,form.querySelector('[name=voucherCode]'),form.querySelector('[name=note]')].forEach(field=>{
+   [customer,...form.querySelectorAll('[name]:not([name=_csrf]):not([name=checkoutToken])')].filter(f=>f.type!=='checkbox'||f.checked).forEach(field=>{
      let hidden=target.querySelector('[name="'+field.name+'"]');
      if(!hidden){hidden=document.createElement('input');hidden.type='hidden';hidden.name=field.name;target.append(hidden);}
      hidden.value=field.value;

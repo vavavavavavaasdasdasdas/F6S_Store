@@ -229,7 +229,7 @@ class Phase3ComboFilterIntegrationTest {
                 "/admin/employees?q=admin&status=true&from=2020-01-01&to=2030-12-31",
                 "/admin/vouchers?q=GIAM&discountType=PERCENT&state=RUNNING&from=2020-01-01&to=2030-12-31",
                 "/admin/promotions?q=Sale&state=RUNNING&from=2020-01-01&to=2030-12-31",
-                "/admin/orders?q=ORD&type=ONLINE&status=PENDING&paymentStatus=UNPAID&paymentMethod=COD&from=2020-01-01&to=2030-12-31",
+                "/admin/invoices?q=ORD&type=ONLINE&status=PENDING&paymentStatus=UNPAID&paymentMethod=COD&from=2020-01-01&to=2030-12-31",
                 "/admin/invoices?q=INV&channel=POS&from=2020-01-01&to=2030-12-31",
                 "/admin/pos?q=Giày",
                 "/admin/statistics/revenue?from=2025-01-01&to=2026-12-31&channel=ONLINE",

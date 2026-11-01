@@ -23,7 +23,7 @@ class PosHoldServiceTest {
     private final ProductVariantRepository variants=mock(ProductVariantRepository.class);
     private final PricingService pricing=mock(PricingService.class);
     private final OrderService orders=mock(OrderService.class);
-    private final PosHoldService service=new PosHoldService(holds,users,mock(EmployeeRepository.class),mock(CustomerRepository.class),variants,pricing,orders,mock(PosOnlineOrderService.class),clock);
+    private final PosHoldService service=new PosHoldService(holds,users,mock(EmployeeRepository.class),mock(CustomerRepository.class),variants,pricing,orders,mock(PosOnlineOrderService.class),clock,new tools.jackson.databind.ObjectMapper());
 
     @Test void endOfDayAt2350ExpiresAtNextMidnight() {
         assertEquals(LocalDateTime.parse("2026-10-09T00:00"),PosHoldService.expiry(clock,"END_OF_DAY"));
@@ -43,7 +43,7 @@ class PosHoldServiceTest {
     private PosCheckoutRequest request(){var r=new PosCheckoutRequest();r.setPaymentMethod("CASH");return r;}
     private void setupSave(long count) {
         var user=new User();user.setId(7);when(users.lockByUsername("staff")).thenReturn(Optional.of(user));
-        when(holds.countByStaffUser_IdAndExpiresAtAfter(7,service.now())).thenReturn(count);
+        when(holds.countByStaffUser_IdAndOrderTypeAndExpiresAtAfter(7,"POS",service.now())).thenReturn(count);
         when(variants.findById(2)).thenReturn(Optional.of(new ProductVariant()));
         when(holds.saveAndFlush(any())).thenAnswer(inv->{PosHeldOrder h=inv.getArgument(0);h.setId(1L);return h;});
     }
@@ -56,7 +56,7 @@ class PosHoldServiceTest {
     }
     @Test void expiredHoldsDoNotCountAgainstFive() {
         setupSave(3);service.save("staff",cart(),request(),null);
-        verify(holds).countByStaffUser_IdAndExpiresAtAfter(7,service.now());
+        verify(holds).countByStaffUser_IdAndOrderTypeAndExpiresAtAfter(7,"POS",service.now());
     }
     @Test void expiredOrderIsNotReturnedEvenAtExactExpiryInstant() {
         var h=new PosHeldOrder();h.setExpiresAt(service.now());

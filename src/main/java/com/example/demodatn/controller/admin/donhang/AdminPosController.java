@@ -26,14 +26,20 @@ import java.security.Principal;
 import java.util.*;
 
 @Controller
-@RequestMapping("/admin/pos")
+@RequestMapping({"/admin/pos","/admin/ban-online"})
 @RequiredArgsConstructor
 public class AdminPosController {
+    private final jakarta.servlet.http.HttpServletRequest http;
+    private String mode(){return http.getRequestURI().startsWith(http.getContextPath()+"/admin/ban-online")?"ONLINE":"POS";}
+    private String base(){return "ONLINE".equals(mode())?"/admin/ban-online":"/admin/pos";}
+    private String key(String value){return "ONLINE".equals(mode())?"online-"+value:value;}
+    @ModelAttribute public void workspace(Model model){model.addAttribute("posBase",base());model.addAttribute("onlineMode","ONLINE".equals(mode()));}
     private final ProductVariantRepository variants;
     private final PricingService pricing;
     private final com.example.demodatn.service.donhang.VietQrService vietQr;
     private final VoucherService vouchers;
     private final CustomerRepository customers;
+    private final com.example.demodatn.repository.khachhang.ShippingAddressRepository addressBook;
     private final EmployeeRepository employees;
     private final OrderService orders;
     private final com.example.demodatn.service.donhang.PosOnlineOrderService onlineOrders;
@@ -49,21 +55,27 @@ public class AdminPosController {
     public String customerSearch(@RequestParam(defaultValue="") String customerQuery,@RequestParam(defaultValue="0") String customerPage,Model model){model.addAttribute("customerPage",catalogQuery.customers(customerQuery,customerPage));model.addAttribute("customerQuery",customerQuery.trim());return "admin/ban-tai-quay/khach-hang :: results";}
 
 
+    @GetMapping("/customers/{id}/addresses") @ResponseBody
+    public Object customerAddresses(@PathVariable Integer id){
+        var c=customers.findById(id).filter(x->Boolean.TRUE.equals(x.getStatus())).orElseThrow(()->new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));
+        return java.util.Map.of("name",c.getFullName(),"phone",java.util.Objects.toString(c.getPhone(),""),"addresses",addressBook.findByCustomer_IdOrderBySlotAsc(id).stream().map(a->{var m=new java.util.LinkedHashMap<String,Object>();m.put("id",a.getId());m.put("label",a.getFullAddress());m.put("defaultAddress",a.isDefaultAddress());m.put("receiverName",a.getReceiverName());m.put("phone",a.getPhone());m.put("provinceId",a.getProvince()==null?null:a.getProvince().getId());m.put("wardId",a.getWard()==null?null:a.getWard().getId());m.put("streetAddress",a.getDisplayStreetAddress());m.put("latitude",a.getLatitude());m.put("longitude",a.getLongitude());m.put("coordinateSource",a.getCoordinateSource());return m;}).toList());
+    }
+
     private void clearCart(HttpSession session) {
-        for(String key:List.of("posCart","posCheckoutToken","posLoadedHold","posHeldRequest","posHoldReview","posPaymentReference"))session.removeAttribute(key);
+        for(String key:List.of("posCart","posCheckoutToken","posLoadedHold","posHeldRequest","posHoldReview","posPaymentReference","posOnlineRequest"))session.removeAttribute(key(key));
     }
 
     @SuppressWarnings("unchecked")
     private Map<Integer,BigDecimal> prices(HttpSession session) {
-        var snapshots=(Map<Long,Map<Integer,BigDecimal>>)session.getAttribute("posHoldPrices");
-        if(snapshots==null){snapshots=new HashMap<>();session.setAttribute("posHoldPrices",snapshots);}
-        return snapshots.computeIfAbsent((Long)session.getAttribute("posLoadedHold"),id->new HashMap<>());
+        var snapshots=(Map<Long,Map<Integer,BigDecimal>>)session.getAttribute(key("posHoldPrices"));
+        if(snapshots==null){snapshots=new HashMap<>();session.setAttribute(key("posHoldPrices"),snapshots);}
+        return snapshots.computeIfAbsent((Long)session.getAttribute(key("posLoadedHold")),id->new HashMap<>());
     }
 
     @SuppressWarnings("unchecked")
     private List<CartItemDto> cart(HttpSession session) {
-        var cart = (List<CartItemDto>) session.getAttribute("posCart");
-        if (cart == null) { cart = new ArrayList<>(); session.setAttribute("posCart", cart); }
+        var cart = (List<CartItemDto>) session.getAttribute(key("posCart"));
+        if (cart == null) { cart = new ArrayList<>(); session.setAttribute(key("posCart"), cart); }
         return cart;
     }
 
@@ -107,10 +119,10 @@ public class AdminPosController {
             model.addAttribute("productCodes",productCodes);
             boolean valid = true;
             var lineWarnings=new HashMap<Integer,String>();
-            Long loadedId=(Long)session.getAttribute("posLoadedHold");
+            Long loadedId=(Long)session.getAttribute(key("posLoadedHold"));
             if(loadedId!=null) {
                 // Revalidate expiry/ownership on every displayed held basket as well as checkout.
-                try {holds.open(principal.getName(),loadedId);} catch(org.springframework.web.server.ResponseStatusException ex) {
+                try {holds.open(principal.getName(),loadedId,mode());} catch(org.springframework.web.server.ResponseStatusException ex) {
                     clearCart(session);cart=cart(session);model.addAttribute("posCart",cart);
                     model.addAttribute("error","Hóa đơn chờ đã hết hạn hoặc không còn tồn tại.");loadedId=null;
                 }
@@ -124,33 +136,33 @@ public class AdminPosController {
                     else {
                         var current=pricing.calculatePrice(v).getFinalPrice();
                         var previous=baseline.get(item.getVariantId());
-                        if(previous!=null && previous.compareTo(current)!=0){session.setAttribute("posHoldReview",true);lineWarnings.put(item.getVariantId(),"Giá đã thay đổi. Xác nhận giá mới trước khi thanh toán.");}
+                        if(previous!=null && previous.compareTo(current)!=0){session.setAttribute(key("posHoldReview"),true);lineWarnings.put(item.getVariantId(),"Giá đã thay đổi. Xác nhận giá mới trước khi thanh toán.");}
                         item.setPrice(current);
                         if(v.getQuantity()<item.getQuantity())lineWarnings.put(item.getVariantId(),v.getQuantity()==0 ? "Hết hàng. Xóa dòng hoặc chờ nhập hàng." : "Không đủ tồn kho. Giảm số lượng và lưu lại.");
                     }
                 }
             }
             try { pricing.refreshCart(cart); } catch (IllegalArgumentException ex) { valid=false; model.addAttribute("error",ex.getMessage()); }
-            if(Boolean.TRUE.equals(session.getAttribute("posHoldReview")))valid=false;
+            if(Boolean.TRUE.equals(session.getAttribute(key("posHoldReview"))))valid=false;
             model.addAttribute("lineWarnings",lineWarnings);
-            model.addAttribute("holdNeedsReview",Boolean.TRUE.equals(session.getAttribute("posHoldReview")));
+            model.addAttribute("holdNeedsReview",Boolean.TRUE.equals(session.getAttribute(key("posHoldReview"))));
             model.addAttribute("loadedHoldId",loadedId);
-            model.addAttribute("heldOrders",holds.list(principal.getName()));
+            model.addAttribute("heldOrders",holds.list(principal.getName(),mode()));
             model.addAttribute("cartValid", valid);
             model.addAttribute("total", cart.stream().map(CartItemDto::getTotalPrice).reduce(BigDecimal.ZERO,BigDecimal::add));
-            if(session.getAttribute("posCheckoutToken")==null) session.setAttribute("posCheckoutToken", UUID.randomUUID().toString());
+            if(session.getAttribute(key("posCheckoutToken"))==null) session.setAttribute(key("posCheckoutToken"), UUID.randomUUID().toString());
             if(!model.containsAttribute("posCheckoutRequest")) {
-                var request = (PosCheckoutRequest)session.getAttribute("posHeldRequest");
+                var request = (PosCheckoutRequest)session.getAttribute(key("posHeldRequest"));
                 if(request==null){request=new PosCheckoutRequest();request.setPaymentMethod("CASH");}
                 model.addAttribute("posCheckoutRequest", request);
             }
-            model.addAttribute("checkoutToken", session.getAttribute("posCheckoutToken"));
+            model.addAttribute("checkoutToken", session.getAttribute(key("posCheckoutToken")));
             model.addAttribute("customerPage",org.springframework.data.domain.Page.empty(org.springframework.data.domain.PageRequest.of(0,12)));
             model.addAttribute("customerQuery","");
-            if(session.getAttribute("posPaymentReference")==null)session.setAttribute("posPaymentReference",com.example.demodatn.service.donhang.VietQrService.newReference());
-            model.addAttribute("paymentReference",session.getAttribute("posPaymentReference"));
+            if(session.getAttribute(key("posPaymentReference"))==null)session.setAttribute(key("posPaymentReference"),com.example.demodatn.service.donhang.VietQrService.newReference());
+            model.addAttribute("paymentReference",session.getAttribute(key("posPaymentReference")));
         }
-        if(!model.containsAttribute("posOnlineRequest"))model.addAttribute("posOnlineRequest",new com.example.demodatn.dto.donhang.PosOnlineOrderForm());
+        if(!model.containsAttribute("posOnlineRequest"))model.addAttribute("posOnlineRequest",(session.getAttribute(key("posOnlineRequest")) instanceof com.example.demodatn.dto.donhang.PosOnlineOrderForm saved?saved:new com.example.demodatn.dto.donhang.PosOnlineOrderForm()));
         model.addAttribute("orderSources",com.example.demodatn.entity.donhang.Order.SOURCE_LABELS);
         return "admin/ban-tai-quay/ban-tai-quay";
     }
@@ -168,10 +180,10 @@ public class AdminPosController {
                 if(totalQty > v.getQuantity()) throw new IllegalArgumentException("Số lượng vượt quá tồn kho.");
                 if(item == null) cart.add(new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),v.getMaterial().getName(),v.getColor().getName(),v.getSole().getName(),pricing.calculatePrice(v).getFinalPrice(),quantity));
                 else item.setQuantity((int)totalQty);
-                session.removeAttribute("posCheckoutToken");
+                session.removeAttribute(key("posCheckoutToken"));
             } catch(IllegalArgumentException ex) { flash.addFlashAttribute("error",ex.getMessage()); }
         }
-        return "redirect:/admin/pos";
+        return "redirect:"+base();
     }
 
     @PostMapping("/quantity")
@@ -182,16 +194,16 @@ public class AdminPosController {
                 if(quantity<=0 || quantity>v.getQuantity()) throw new IllegalArgumentException("Số lượng phải từ 1 đến tồn kho hiện tại.");
                 cart(session).stream().filter(i->i.getVariantId().equals(variantId)).findFirst()
                         .orElseThrow(()->new IllegalArgumentException("Dòng không còn trong giỏ.")).setQuantity(quantity);
-                session.removeAttribute("posCheckoutToken");
+                session.removeAttribute(key("posCheckoutToken"));
             } catch(IllegalArgumentException ex) { flash.addFlashAttribute("error",ex.getMessage()); }
         }
-        return "redirect:/admin/pos";
+        return "redirect:"+base();
     }
 
     @PostMapping("/remove")
     public String remove(@RequestParam Integer variantId,HttpSession session) {
-        synchronized(session) { cart(session).removeIf(i->i.getVariantId().equals(variantId)); session.removeAttribute("posCheckoutToken"); }
-        return "redirect:/admin/pos";
+        synchronized(session) { cart(session).removeIf(i->i.getVariantId().equals(variantId)); session.removeAttribute(key("posCheckoutToken")); }
+        return "redirect:"+base();
     }
 
     @PostMapping("/validate-voucher") @ResponseBody
@@ -212,14 +224,14 @@ public class AdminPosController {
         synchronized(session) {
             try {
                 var total=transferTotal(request,session);
-                if(session.getAttribute("posPaymentReference")==null)session.setAttribute("posPaymentReference",com.example.demodatn.service.donhang.VietQrService.newReference());
-                return vietQr.create(total,(String)session.getAttribute("posPaymentReference"));
+                if(session.getAttribute(key("posPaymentReference"))==null)session.setAttribute(key("posPaymentReference"),com.example.demodatn.service.donhang.VietQrService.newReference());
+                return vietQr.create(total,(String)session.getAttribute(key("posPaymentReference")));
             } catch(IllegalArgumentException ex){return new com.example.demodatn.service.donhang.VietQrService.PaymentQr(false,ex.getMessage(),null,null,null,null,null,null);}
         }
     }
     private BigDecimal transferTotal(PosCheckoutRequest request,HttpSession session) {
         var cart=cart(session);if(cart.isEmpty())throw new IllegalArgumentException("Giỏ hàng trống.");
-        if(Boolean.TRUE.equals(session.getAttribute("posHoldReview")))throw new IllegalArgumentException("Xác nhận lại giá hóa đơn chờ trước khi chuyển khoản.");
+        if(Boolean.TRUE.equals(session.getAttribute(key("posHoldReview"))))throw new IllegalArgumentException("Xác nhận lại giá hóa đơn chờ trước khi chuyển khoản.");
         var loaded=variants.findAllById(cart.stream().map(CartItemDto::getVariantId).toList());
         var byId=loaded.stream().collect(java.util.stream.Collectors.toMap(v->v.getId(),v->v));
         var priceMap=pricing.calculatePrices(loaded);BigDecimal subtotal=BigDecimal.ZERO;
@@ -227,7 +239,7 @@ public class AdminPosController {
             var variant=byId.get(item.getVariantId());
             if(!ProductSalePolicy.isSelling(variant) || item.getQuantity()==null || item.getQuantity()<=0 || variant.getQuantity()<item.getQuantity())throw new IllegalArgumentException("Sản phẩm đã ngừng bán hoặc không đủ tồn kho.");
             var price=priceMap.get(variant.getId()).getFinalPrice();
-            if(session.getAttribute("posLoadedHold")!=null && price.compareTo(item.getPrice())!=0)throw new IllegalArgumentException("Giá đã thay đổi. Xác nhận lại hóa đơn chờ trước khi chuyển khoản.");
+            if(session.getAttribute(key("posLoadedHold"))!=null && price.compareTo(item.getPrice())!=0)throw new IllegalArgumentException("Giá đã thay đổi. Xác nhận lại hóa đơn chờ trước khi chuyển khoản.");
             subtotal=subtotal.add(price.multiply(BigDecimal.valueOf(item.getQuantity())));
         }
         var customer=request.getCustomerId()==null?null:customers.findById(request.getCustomerId()).filter(c->Boolean.TRUE.equals(c.getStatus())).orElseThrow(()->new IllegalArgumentException("Khách hàng không còn hoạt động."));
@@ -242,11 +254,12 @@ public class AdminPosController {
     @PostMapping("/checkout")
     public String checkout(@Valid @ModelAttribute("posCheckoutRequest") PosCheckoutRequest request,BindingResult errors,
             HttpSession session,Principal principal,RedirectAttributes flash) {
+        if("ONLINE".equals(mode()))throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
         // A session cart is serialized so repeated checkout cannot sell the same basket twice.
         synchronized(session) {
             try {
                 if(errors.hasErrors()) throw new IllegalArgumentException("Kiểm tra phương thức thanh toán và tiền khách đưa.");
-                if(request.getCheckoutToken()==null || !request.getCheckoutToken().equals(session.getAttribute("posCheckoutToken")))
+                if(request.getCheckoutToken()==null || !request.getCheckoutToken().equals(session.getAttribute(key("posCheckoutToken"))))
                     throw new IllegalArgumentException("Phiên thanh toán đã thay đổi. Kiểm tra giỏ rồi thanh toán lại.");
                 if(cart(session).isEmpty()) throw new IllegalArgumentException("Giỏ hàng trống.");
                 var employee=employees.findByUser_Username(principal.getName()).orElseThrow(()->new IllegalArgumentException("Tài khoản chưa gắn với nhân viên."));
@@ -258,66 +271,67 @@ public class AdminPosController {
                     if(request.getTransferAmount()==null || expected.compareTo(request.getTransferAmount())!=0)
                         throw new IllegalArgumentException("Tổng tiền đã thay đổi. Kiểm tra lại QR và xác nhận số tiền mới.");
                 }
-                request.setPaymentReference((String)session.getAttribute("posPaymentReference"));
-                Long heldId=(Long)session.getAttribute("posLoadedHold");
-                if(heldId!=null && Boolean.TRUE.equals(session.getAttribute("posHoldReview")))throw new IllegalArgumentException("Xác nhận giá đã tính lại trước khi thanh toán.");
+                request.setPaymentReference((String)session.getAttribute(key("posPaymentReference")));
+                Long heldId=(Long)session.getAttribute(key("posLoadedHold"));
+                if(heldId!=null && Boolean.TRUE.equals(session.getAttribute(key("posHoldReview"))))throw new IllegalArgumentException("Xác nhận giá đã tính lại trước khi thanh toán.");
                 var order=heldId==null ? orders.createPosOrder(cart(session),customer,employee,request.getVoucherCode(),request.getPaymentMethod(),"Tại quầy",request.getCashReceived(),request.getPaymentReference())
                         : holds.checkout(principal.getName(),heldId,cart(session),request);
                 clearCart(session);
-                return "redirect:/admin/pos/success/"+order.getId();
+                return "redirect:"+base()+"/success/"+order.getId();
             } catch(org.springframework.web.server.ResponseStatusException ex) {throw ex;}
             catch(IllegalArgumentException ex) { flash.addFlashAttribute("error",ex.getMessage()); }
             catch(Exception ex) { flash.addFlashAttribute("error","Không thể tạo đơn. Giỏ được giữ lại; kiểm tra tồn kho và thử lại."); }
             flash.addFlashAttribute("posCheckoutRequest",request);
             if(errors.hasErrors())flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX+"posCheckoutRequest",errors);
-            return "redirect:/admin/pos";
+            return "redirect:"+base();
         }
     }
 
     @PostMapping("/online-orders")
     public String onlineOrder(@Valid @ModelAttribute("posOnlineRequest") com.example.demodatn.dto.donhang.PosOnlineOrderForm form,BindingResult errors,HttpSession session,Principal principal,RedirectAttributes flash){
+        if(!"ONLINE".equals(mode()))return "redirect:/admin/ban-online";
         synchronized(session){try{
             if(errors.hasErrors())throw new IllegalArgumentException("Kiểm tra thông tin người nhận và địa chỉ giao hàng.");
-            if(form.getCheckoutToken()==null || !form.getCheckoutToken().equals(session.getAttribute("posCheckoutToken")))throw new IllegalArgumentException("Phiên thanh toán đã thay đổi. Kiểm tra giỏ rồi tạo đơn lại.");
+            if(form.getCheckoutToken()==null || !form.getCheckoutToken().equals(session.getAttribute(key("posCheckoutToken"))))throw new IllegalArgumentException("Phiên thanh toán đã thay đổi. Kiểm tra giỏ rồi tạo đơn lại.");
             if(cart(session).isEmpty())throw new IllegalArgumentException("Giỏ hàng trống.");
-            if(Boolean.TRUE.equals(session.getAttribute("posHoldReview")))throw new IllegalArgumentException("Xác nhận lại giá hóa đơn chờ trước khi tạo đơn.");
-            shipping.prepare(form,principal.getName());Long heldId=(Long)session.getAttribute("posLoadedHold");
+            if(Boolean.TRUE.equals(session.getAttribute(key("posHoldReview"))))throw new IllegalArgumentException("Xác nhận lại giá hóa đơn chờ trước khi tạo đơn.");
+            shipping.prepare(form,principal.getName());Long heldId=(Long)session.getAttribute(key("posLoadedHold"));
             var order=heldId==null?onlineOrders.create(principal.getName(),form,cart(session)):holds.checkoutOnline(principal.getName(),heldId,cart(session),form);
-            clearCart(session);flash.addFlashAttribute("message","Đã tạo đơn giao hàng online. Đơn đang chờ xác nhận.");return "redirect:/admin/orders/"+order.getId();
+            clearCart(session);flash.addFlashAttribute("message","Đã tạo đơn giao hàng online. Đơn đang chờ xác nhận.");return "redirect:/admin/invoices/"+invoices.findByOrder_Id(order.getId()).orElseThrow().getId();
         }catch(IllegalArgumentException ex){flash.addFlashAttribute("error",ex.getMessage());}
         catch(org.springframework.web.server.ResponseStatusException ex){throw ex;}
         catch(Exception ex){flash.addFlashAttribute("error","Không thể tạo đơn. Giỏ được giữ lại; kiểm tra tồn kho và thử lại.");}
-        flash.addFlashAttribute("posOnlineRequest",form);flash.addFlashAttribute("deliveryMode",true);if(errors.hasErrors())flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX+"posOnlineRequest",errors);return "redirect:/admin/pos";}
+        flash.addFlashAttribute("posOnlineRequest",form);flash.addFlashAttribute("deliveryMode",true);if(errors.hasErrors())flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX+"posOnlineRequest",errors);return "redirect:"+base();}
     }
 
     @PostMapping("/holds")
-    public String hold(@ModelAttribute PosCheckoutRequest request,HttpSession session,Principal principal,RedirectAttributes flash) {
+    public String hold(@ModelAttribute PosCheckoutRequest request,@ModelAttribute com.example.demodatn.dto.donhang.PosOnlineOrderForm online,HttpSession session,Principal principal,RedirectAttributes flash) {
         synchronized(session) {
             try {
-                Long id=holds.save(principal.getName(),cart(session),request,(Long)session.getAttribute("posLoadedHold"));
-                session.setAttribute("posLoadedHold",id);var baseline=prices(session);baseline.clear();
+                Long id=holds.save(principal.getName(),cart(session),request,(Long)session.getAttribute(key("posLoadedHold")),mode(),"ONLINE".equals(mode())?online:null);
+                session.setAttribute(key("posLoadedHold"),id);var baseline=prices(session);baseline.clear();
                 cart(session).forEach(i->baseline.put(i.getVariantId(),i.getPrice()));
                 clearCart(session);flash.addFlashAttribute("success","Đã lưu hóa đơn chờ. Giỏ hiện tại đã trống.");
             } catch(IllegalArgumentException ex) {flash.addFlashAttribute("error",ex.getMessage());}
         }
-        return "redirect:/admin/pos";
+        return "redirect:"+base();
     }
 
     @PostMapping("/holds/{id}/open")
     public String openHold(@PathVariable Long id,@RequestParam(defaultValue="CANCEL") String action,
-            @ModelAttribute PosCheckoutRequest request,HttpSession session,Principal principal,RedirectAttributes flash) {
+            @ModelAttribute PosCheckoutRequest request,@ModelAttribute com.example.demodatn.dto.donhang.PosOnlineOrderForm online,HttpSession session,Principal principal,RedirectAttributes flash) {
         synchronized(session) {
             if(!cart(session).isEmpty() && !Set.of("SAVE","DISCARD").contains(action)) {
-                flash.addFlashAttribute("error","Chọn lưu hoặc bỏ giỏ hiện tại trước khi mở hóa đơn chờ.");return "redirect:/admin/pos";
+                flash.addFlashAttribute("error","Chọn lưu hoặc bỏ giỏ hiện tại trước khi mở hóa đơn chờ.");return "redirect:"+base();
             }
             try {
-                var loaded=holds.switchTo(principal.getName(),id,cart(session),request,(Long)session.getAttribute("posLoadedHold"),"SAVE".equals(action));
-                clearCart(session);session.setAttribute("posCart",loaded.cart());session.setAttribute("posLoadedHold",id);
-                session.setAttribute("posHeldRequest",loaded.request());
+                var loaded=holds.switchTo(principal.getName(),id,cart(session),request,(Long)session.getAttribute(key("posLoadedHold")),"SAVE".equals(action),mode(),"ONLINE".equals(mode())?online:null);
+                clearCart(session);session.setAttribute(key("posCart"),loaded.cart());session.setAttribute(key("posLoadedHold"),id);
+                session.setAttribute(key("posHeldRequest"),loaded.request());session.setAttribute(key("posOnlineRequest"),loaded.online());
                 var baseline=prices(session);
                 // Prices are never persisted in a held order. A browser/session snapshot can identify a change;
                 // after restart the old price is unknown, so require explicit review of recalculated prices.
-                if(baseline.isEmpty()) {loaded.cart().forEach(i->baseline.put(i.getVariantId(),i.getPrice()));session.setAttribute("posHoldReview",true);}
+                if(baseline.isEmpty()) {loaded.cart().forEach(i->baseline.put(i.getVariantId(),i.getPrice()));session.setAttribute(key("posHoldReview"),true);}
                 var checkout=loaded.request();
                 if(checkout.getCustomerId()!=null && customers.findById(checkout.getCustomerId()).filter(c->Boolean.TRUE.equals(c.getStatus())).isEmpty()) {
                     checkout.setCustomerId(null);flash.addFlashAttribute("error","Khách đã bị vô hiệu hóa. Chuyển về Khách lẻ.");
@@ -331,30 +345,30 @@ public class AdminPosController {
                 flash.addFlashAttribute("success","Đã mở "+loaded.code()+". Giá và tồn kho đã được tính lại.");
             } catch(IllegalArgumentException ex) {flash.addFlashAttribute("error",ex.getMessage());}
         }
-        return "redirect:/admin/pos";
+        return "redirect:"+base();
     }
 
     @PostMapping("/holds/{id}/delete")
     public String deleteHold(@PathVariable Long id,HttpSession session,Principal principal,RedirectAttributes flash) {
-        synchronized(session){holds.delete(principal.getName(),id);if(id.equals(session.getAttribute("posLoadedHold")))clearCart(session);}
-        flash.addFlashAttribute("success","Đã xóa hóa đơn chờ.");return "redirect:/admin/pos";
+        synchronized(session){holds.delete(principal.getName(),id,mode());if(id.equals(session.getAttribute(key("posLoadedHold"))))clearCart(session);}
+        flash.addFlashAttribute("success","Đã xóa hóa đơn chờ.");return "redirect:"+base();
     }
 
     @PostMapping("/holds/review")
     public String review(HttpSession session,Principal principal,RedirectAttributes flash) {
         synchronized(session) {
-            Long id=(Long)session.getAttribute("posLoadedHold");
+            Long id=(Long)session.getAttribute(key("posLoadedHold"));
             if(id==null)throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
-            holds.open(principal.getName(),id);
+            holds.open(principal.getName(),id,mode());
             try {pricing.refreshCart(cart(session));var baseline=prices(session);baseline.clear();cart(session).forEach(i->baseline.put(i.getVariantId(),i.getPrice()));
-                session.removeAttribute("posHoldReview");flash.addFlashAttribute("success","Đã xác nhận giá và tồn kho hiện tại.");
+                session.removeAttribute(key("posHoldReview"));flash.addFlashAttribute("success","Đã xác nhận giá và tồn kho hiện tại.");
             } catch(IllegalArgumentException ex){flash.addFlashAttribute("error",ex.getMessage());}
         }
-        return "redirect:/admin/pos";
+        return "redirect:"+base();
     }
 
     @PostMapping("/new")
-    public String newOrder(HttpSession session) {synchronized(session){clearCart(session);}return "redirect:/admin/pos";}
+    public String newOrder(HttpSession session) {synchronized(session){clearCart(session);}return "redirect:"+base();}
 
     @GetMapping("/success/{id}")
     public String success(@PathVariable Integer id,Model model) {

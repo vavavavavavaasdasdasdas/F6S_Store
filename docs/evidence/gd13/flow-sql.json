@@ -1,0 +1,152 @@
+[
+  {
+    "width": 1280,
+    "ui": {
+      "invoiceId": 289,
+      "counterOnly": true,
+      "onlineOnly": true,
+      "noInitialCustomerRequest": true
+    },
+    "before": [
+      {
+        "id": 3,
+        "quantity": 17
+      }
+    ],
+    "placed": [
+      {
+        "id": 3,
+        "quantity": 17
+      }
+    ],
+    "order": {
+      "id": 676,
+      "status": "PENDING",
+      "order_type": "ONLINE",
+      "order_source": "FACEBOOK",
+      "receiver_name": "Nguyễn Văn Ánh",
+      "phone_number": "0968131280",
+      "shipping_address": "Số 12, đường Nguyễn Huệ",
+      "final_amount": 3030000.0,
+      "shipping_fee": 55000.0,
+      "da_tru_kho": false
+    },
+    "delivered": [
+      {
+        "id": 3,
+        "quantity": 16
+      }
+    ],
+    "history": [
+      {
+        "status": "PENDING",
+        "actor": "gd13_employee",
+        "note": "Đã tạo đơn hàng."
+      },
+      {
+        "status": "CONFIRMED",
+        "actor": "gd13_employee"
+      },
+      {
+        "status": "PREPARING",
+        "actor": "gd13_employee"
+      },
+      {
+        "status": "SHIPPING",
+        "actor": "gd13_employee",
+        "carrier": "Vận chuyển thử",
+        "tracking_code": "G13-TRACK"
+      },
+      {
+        "status": "DELIVERED",
+        "actor": "gd13_employee"
+      }
+    ],
+    "workflow": {
+      "steps": [
+        "CONFIRMED",
+        "PREPARING",
+        "SHIPPING",
+        "DELIVERED"
+      ],
+      "print": true,
+      "scroll": 1265,
+      "width": 1280
+    }
+  },
+  {
+    "width": 375,
+    "ui": {
+      "invoiceId": 290,
+      "counterOnly": true,
+      "onlineOnly": true,
+      "noInitialCustomerRequest": true
+    },
+    "before": [
+      {
+        "id": 3,
+        "quantity": 16
+      }
+    ],
+    "placed": [
+      {
+        "id": 3,
+        "quantity": 16
+      }
+    ],
+    "order": {
+      "id": 677,
+      "status": "PENDING",
+      "order_type": "ONLINE",
+      "order_source": "FACEBOOK",
+      "receiver_name": "Nguyễn Văn Ánh",
+      "phone_number": "0968130375",
+      "shipping_address": "Số 12, đường Nguyễn Huệ",
+      "final_amount": 3030000.0,
+      "shipping_fee": 55000.0,
+      "da_tru_kho": false
+    },
+    "delivered": [
+      {
+        "id": 3,
+        "quantity": 15
+      }
+    ],
+    "history": [
+      {
+        "status": "PENDING",
+        "actor": "gd13_employee",
+        "note": "Đã tạo đơn hàng."
+      },
+      {
+        "status": "CONFIRMED",
+        "actor": "gd13_employee"
+      },
+      {
+        "status": "PREPARING",
+        "actor": "gd13_employee"
+      },
+      {
+        "status": "SHIPPING",
+        "actor": "gd13_employee",
+        "carrier": "Vận chuyển thử",
+        "tracking_code": "G13-TRACK"
+      },
+      {
+        "status": "DELIVERED",
+        "actor": "gd13_employee"
+      }
+    ],
+    "workflow": {
+      "steps": [
+        "CONFIRMED",
+        "PREPARING",
+        "SHIPPING",
+        "DELIVERED"
+      ],
+      "print": true,
+      "scroll": 360,
+      "width": 375
+    }
+  }
+]

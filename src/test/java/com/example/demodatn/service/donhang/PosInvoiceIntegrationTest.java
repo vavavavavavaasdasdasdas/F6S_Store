@@ -103,7 +103,7 @@ class PosInvoiceIntegrationTest {
     void detailRendersAllowedStatusesInvoiceLinkAndExactFractionalAmounts() throws Exception {
         var v=variant();v.setPrice(new BigDecimal("150000.25"));variants.flush();var o=sale(v,"CASH",new BigDecimal("400000"));
         var mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-        mvc.perform(get("/admin/orders/"+o.getId())).andExpect(status().isOk())
+        mvc.perform(get("/admin/invoices/"+invoices.findByOrder_Id(o.getId()).orElseThrow().getId())).andExpect(status().isOk())
             .andExpect(content().string(org.hamcrest.Matchers.containsString("Đang chuẩn bị")))
             .andExpect(content().string(org.hamcrest.Matchers.containsString("300.000,5")))
             .andExpect(content().string(org.hamcrest.Matchers.containsString("/admin/invoices/")));

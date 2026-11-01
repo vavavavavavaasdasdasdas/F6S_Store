@@ -111,3 +111,6 @@ Phiếu có form gọn, chỉ công khai, thông tin đã dùng tách riêng; da
 
 
 Giai đoạn 12: menu lấy quyền từ AdminAccess; Nhân viên chỉ thấy nơi được phép. Hóa đơn tái sử dụng khối xử lý trạng thái của đơn. Sổ khách dùng icon chung, combo địa chỉ chung, cảnh báo đủ ba; nhân viên chỉ một ô địa chỉ.
+
+
+Giai đoạn 13: Bán online và Quầy dùng cùng bố cục lưới/giỏ nhưng mỗi trang chỉ hiện form của loại đó, giỏ và hóa đơn chờ độc lập. Hóa đơn là nơi xử lý đơn, cột Kênh bán/Nguồn đơn riêng; hành động Xem/xử lý và In dùng icon chung. Giữ token, màu và kiểu bảng hiện có.

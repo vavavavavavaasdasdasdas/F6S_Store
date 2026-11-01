@@ -1,0 +1,28 @@
+{
+  "before": [
+    {
+      "id": 289,
+      "order_id": 676,
+      "invoice_code": "HD000676"
+    }
+  ],
+  "missingBeforeMigration": [
+    {
+      "id": 676
+    }
+  ],
+  "afterFirst": [
+    {
+      "id": 294,
+      "order_id": 676,
+      "invoice_code": "HD-BU-676"
+    }
+  ],
+  "afterSecond": [
+    {
+      "id": 294,
+      "order_id": 676,
+      "invoice_code": "HD-BU-676"
+    }
+  ]
+}

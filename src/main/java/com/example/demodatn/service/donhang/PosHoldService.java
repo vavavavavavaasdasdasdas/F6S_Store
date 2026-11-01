@@ -31,6 +31,7 @@ public class PosHoldService {
     private final OrderService orders;
     private final PosOnlineOrderService onlineOrders;
     private final Clock clock;
+    private final tools.jackson.databind.ObjectMapper mapper;
     @Value("${shop.pos.hold.expiry-mode:END_OF_DAY}") private String expiryMode="END_OF_DAY";
 
     public LocalDateTime now(){return LocalDateTime.now(clock);}
@@ -44,9 +45,11 @@ public class PosHoldService {
     }
 
     @Transactional(readOnly=true)
-    public List<HoldSummary> list(String username) {
+    public List<HoldSummary> list(String username){return list(username,"POS");}
+    @Transactional(readOnly=true)
+    public List<HoldSummary> list(String username,String mode) {
         return holds.findByStaffUser_UsernameAndExpiresAtAfterOrderByCreatedAtAsc(username,now()).stream()
-                .filter(h->h.getExpiresAt().isAfter(now())).map(h->new HoldSummary(h.getId(),h.getCode(),
+                .filter(h->mode.equals(h.getOrderType())&&h.getExpiresAt().isAfter(now())).map(h->new HoldSummary(h.getId(),h.getCode(),
                     h.getItems().stream().mapToInt(PosHeldItem::getQuantity).sum(),
                     h.getItems().stream().map(i->pricing.calculatePrice(i.getVariant()).getFinalPrice().multiply(BigDecimal.valueOf(i.getQuantity()))).reduce(BigDecimal.ZERO,BigDecimal::add),
                     h.getExpiresAt().atZone(clock.getZone()).toInstant().toEpochMilli(),
@@ -55,30 +58,37 @@ public class PosHoldService {
                     h.getItems().stream().map(i -> i.getVariant().getSole().getName()).distinct().sorted().collect(java.util.stream.Collectors.joining(", ")))).toList();
     }
     public record HoldSummary(Long id,String code,int itemCount,BigDecimal subtotal,long expiresEpoch,String materialNames,String colorNames,String soleNames) {}
-    public record Loaded(Long id,String code,List<CartItemDto> cart,PosCheckoutRequest request) {}
+    public record Loaded(Long id,String code,List<CartItemDto> cart,PosCheckoutRequest request,com.example.demodatn.dto.donhang.PosOnlineOrderForm online) {}
 
     private PosHeldOrder locked(String username,Long id) {
         return holds.lockActive(id,username,now()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Hóa đơn chờ không tồn tại hoặc đã hết hạn."));
     }
 
+    private PosHeldOrder locked(String username,Long id,String mode){var h=locked(username,id);if(!mode.equals(h.getOrderType()))throw new ResponseStatusException(HttpStatus.NOT_FOUND);return h;}
+
     @Transactional
-    public Long save(String username,List<CartItemDto> cart,PosCheckoutRequest request,Long currentId) {
+    public Long save(String username,List<CartItemDto> cart,PosCheckoutRequest request,Long currentId){return save(username,cart,request,currentId,"POS",null);}
+    @Transactional
+    public Long save(String username,List<CartItemDto> cart,PosCheckoutRequest request,Long currentId,String mode,com.example.demodatn.dto.donhang.PosOnlineOrderForm online) {
+        if(!Set.of("POS","ONLINE").contains(mode))throw new IllegalArgumentException("Loại hóa đơn chờ không hợp lệ.");
         var user=users.lockByUsername(username).orElseThrow();
         if(cart.isEmpty())throw new IllegalArgumentException("Giỏ hàng trống, không thể lưu chờ.");
-        if(!Set.of("CASH","TRANSFER").contains(Objects.toString(request.getPaymentMethod(),"")))
+        if(!("ONLINE".equals(mode)?Set.of("COD","BANK_TRANSFER"):Set.of("CASH","TRANSFER")).contains(Objects.toString(request.getPaymentMethod(),"")))
             throw new IllegalArgumentException("Chọn Tiền mặt hoặc Chuyển khoản.");
-        if(request.getNote()!=null && request.getNote().length()>500)throw new IllegalArgumentException("Ghi chú tối đa 500 ký tự.");
+        if(!"ONLINE".equals(mode)&&request.getNote()!=null && request.getNote().length()>500)throw new IllegalArgumentException("Ghi chú tối đa 500 ký tự.");
         if(request.getVoucherCode()!=null && request.getVoucherCode().length()>50)throw new IllegalArgumentException("Mã phiếu giảm giá tối đa 50 ký tự.");
         PosHeldOrder hold;
         if(currentId==null) {
-            if(holds.countByStaffUser_IdAndExpiresAtAfter(user.getId(),now())>=5)throw new IllegalArgumentException(LIMIT_MESSAGE);
+            if(holds.countByStaffUser_IdAndOrderTypeAndExpiresAtAfter(user.getId(),mode,now())>=5)throw new IllegalArgumentException(LIMIT_MESSAGE);
             hold=new PosHeldOrder();hold.setStaffUser(user);hold.setCode("HC-"+UUID.randomUUID().toString().substring(0,8).toUpperCase(Locale.ROOT));
             hold.setCreatedAt(now());hold.setExpiresAt(expiry(clock,expiryMode));
-        } else hold=locked(username,currentId);
+        } else hold=locked(username,currentId,mode);
+        hold.setOrderType(mode);
+        try{var snapshot=new com.example.demodatn.dto.donhang.PosOnlineOrderForm();if(online!=null)org.springframework.beans.BeanUtils.copyProperties(online,snapshot);snapshot.setCheckoutToken(null);hold.setDeliveryData(online==null?null:mapper.writeValueAsString(snapshot));}catch(tools.jackson.core.JacksonException ex){throw new IllegalArgumentException("Không thể lưu thông tin giao hàng.");}
         var customer=request.getCustomerId()==null ? null : customers.findById(request.getCustomerId()).orElseThrow(()->new IllegalArgumentException("Khách hàng không tồn tại."));
         if(customer!=null && !Boolean.TRUE.equals(customer.getStatus()))throw new IllegalArgumentException("Khách hàng đã bị vô hiệu hóa.");
         hold.setCustomer(customer);hold.setCustomerLabel(customer==null ? "Khách lẻ" : customer.getFullName());
-        hold.setVoucherCode(request.getVoucherCode());hold.setPaymentMethod(request.getPaymentMethod());hold.setNote(request.getNote());
+        hold.setVoucherCode(request.getVoucherCode());hold.setPaymentMethod(request.getPaymentMethod());hold.setNote("ONLINE".equals(mode)?null:request.getNote());
         hold.getItems().clear();
         if(hold.getId()!=null)holds.flush();
         for(var line:cart) {
@@ -91,28 +101,36 @@ public class PosHoldService {
     }
 
     @Transactional
-    public Loaded open(String username,Long id) {
-        var h=locked(username,id);var request=new PosCheckoutRequest();
+    public Loaded open(String username,Long id){return open(username,id,"POS");}
+    @Transactional
+    public Loaded open(String username,Long id,String mode) {
+        var h=locked(username,id,mode);var request=new PosCheckoutRequest();
         request.setCustomerId(h.getCustomer()==null ? null : h.getCustomer().getId());
         request.setVoucherCode(h.getVoucherCode());request.setPaymentMethod(h.getPaymentMethod());request.setNote(h.getNote());
         var cart=h.getItems().stream().map(i->{var v=i.getVariant();return new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),v.getMaterial().getName(),v.getColor().getName(),v.getSole().getName(),pricing.calculatePrice(v).getFinalPrice(),i.getQuantity());}).toList();
-        return new Loaded(h.getId(),h.getCode(),new ArrayList<>(cart),request);
+        com.example.demodatn.dto.donhang.PosOnlineOrderForm online=null;
+        if(h.getDeliveryData()!=null)try{online=mapper.readValue(h.getDeliveryData(),com.example.demodatn.dto.donhang.PosOnlineOrderForm.class);}catch(tools.jackson.core.JacksonException ex){throw new IllegalArgumentException("Không đọc được địa chỉ hóa đơn chờ.");}
+        return new Loaded(h.getId(),h.getCode(),new ArrayList<>(cart),request,online);
     }
 
     @Transactional
-    public Loaded switchTo(String username,Long id,List<CartItemDto> current,PosCheckoutRequest request,Long currentId,boolean saveCurrent) {
+    public Loaded switchTo(String username,Long id,List<CartItemDto> current,PosCheckoutRequest request,Long currentId,boolean saveCurrent){return switchTo(username,id,current,request,currentId,saveCurrent,"POS",null);}
+    @Transactional
+    public Loaded switchTo(String username,Long id,List<CartItemDto> current,PosCheckoutRequest request,Long currentId,boolean saveCurrent,String mode,com.example.demodatn.dto.donhang.PosOnlineOrderForm online) {
         users.lockByUsername(username).orElseThrow();
-        locked(username,id);
-        if(saveCurrent && !current.isEmpty())save(username,current,request,currentId);
-        return open(username,id);
+        locked(username,id,mode);
+        if(saveCurrent && !current.isEmpty())save(username,current,request,currentId,mode,online);
+        return open(username,id,mode);
     }
 
     @Transactional
-    public void delete(String username,Long id) {holds.delete(locked(username,id));}
+    public void delete(String username,Long id){delete(username,id,"POS");}
+    @Transactional
+    public void delete(String username,Long id,String mode){holds.delete(locked(username,id,mode));}
 
     @Transactional(rollbackFor=Exception.class)
     public Order checkout(String username,Long id,List<CartItemDto> cart,PosCheckoutRequest request) {
-        var hold=locked(username,id);
+        var hold=locked(username,id,"POS");
         var employee=employees.findByUser_Username(username).orElseThrow(()->new IllegalArgumentException("Tài khoản chưa gắn với nhân viên."));
         var customer=request.getCustomerId()==null ? null : customers.findById(request.getCustomerId()).orElseThrow(()->new IllegalArgumentException("Khách hàng không tồn tại."));
         if(cart.isEmpty())throw new IllegalArgumentException("Giỏ hàng trống.");
@@ -127,7 +145,7 @@ public class PosHoldService {
 
     @Transactional(rollbackFor=Exception.class)
     public Order checkoutOnline(String username,Long id,List<CartItemDto> cart,com.example.demodatn.dto.donhang.PosOnlineOrderForm form){
-        var hold=locked(username,id);
+        var hold=locked(username,id,"ONLINE");
         for(var item:cart)if(pricing.priceForVariant(item.getVariantId()).getFinalPrice().compareTo(item.getPrice())!=0)throw new IllegalArgumentException("Giá đã thay đổi. Kiểm tra và xác nhận lại giá trước khi tạo đơn.");
         var order=onlineOrders.create(username,form,cart);holds.delete(hold);holds.flush();return order;
     }

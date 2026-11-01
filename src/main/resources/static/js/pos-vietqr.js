@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         pending=new AbortController();loading=true;lock();message.textContent='Đang tạo mã QR…';
         const discountRow=form.querySelector('[data-discount-row]');
         const data=new URLSearchParams({_csrf:form.querySelector('[name=_csrf]').value,voucherCode:discountRow.hidden?'':form.querySelector('[name=voucherCode]').value});
-        if(form.querySelector('[name=customerId]').value)data.set('customerId',form.querySelector('[name=customerId]').value);
+        if(form.elements.customerId.value)data.set('customerId',form.elements.customerId.value);
         try{
             const response=await fetch('/admin/pos/payment-qr',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data,signal:pending.signal});
             if(!response.ok)throw Error('Không tạo được QR. Kiểm tra phiên đăng nhập rồi thử lại.');

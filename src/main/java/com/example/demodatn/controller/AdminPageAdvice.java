@@ -13,7 +13,7 @@ public class AdminPageAdvice {
     public static final List<NavItem> NAV = List.of(
         new NavItem("", "Dashboard", "/admin/dashboard", "dashboard"),
         new NavItem("BÁN HÀNG", "Bán hàng tại quầy", "/admin/pos", "pos"),
-        new NavItem("", "Đơn hàng", "/admin/orders", "orders"),
+        new NavItem("", "Bán online", "/admin/ban-online", "ban-online"),
         new NavItem("", "Hóa đơn", "/admin/invoices", "invoices"),
         new NavItem("SẢN PHẨM", "Chi tiết sản phẩm", "/admin/products-crud", "products"),
         new NavItem("", "Biến thể", "/admin/variants", "variants"),
