@@ -1,0 +1,44 @@
+{
+  "headCommit": "b14d335",
+  "head": {
+    "errors": 150,
+    "total": 150,
+    "unresolved": 45,
+    "violations": 105,
+    "warnings": 0
+  },
+  "current": {
+    "errors": 154,
+    "total": 154,
+    "unresolved": 49,
+    "violations": 105,
+    "warnings": 0
+  },
+  "new": [
+    [
+      "src/main/resources/templates/admin/danh-gia/danh-sach.html",
+      "ownership.native-date-undecided",
+      "Native date/time input is used without an explicit ownership decision.",
+      1
+    ],
+    [
+      "src/main/resources/templates/admin/danh-gia/danh-sach.html",
+      "ownership.native-select-undecided",
+      "Native select is used without an explicit ownership decision.",
+      1
+    ],
+    [
+      "src/main/resources/templates/user/danh-gia-bieu-mau.html",
+      "ownership.native-select-undecided",
+      "Native select is used without an explicit ownership decision.",
+      1
+    ],
+    [
+      "src/main/resources/templates/user/yeu-thich.html",
+      "ownership.native-select-undecided",
+      "Native select is used without an explicit ownership decision.",
+      1
+    ]
+  ],
+  "removed": []
+}

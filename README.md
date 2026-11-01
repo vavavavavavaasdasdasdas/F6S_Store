@@ -126,3 +126,6 @@ Leaflet cục bộ, nguồn dữ liệu, giấy phép, giới hạn Nominatim v�
 
 
 Giai đoạn 13: /admin/pos chỉ bán tại quầy, /admin/ban-online tạo đơn giao hàng cho khách vãng lai hoặc khách đã lưu. Hai giỏ và hạn mức 5 hóa đơn chờ mỗi loại độc lập theo nhân viên. Tạo đơn online chuyển tới Hóa đơn để xử lý; QR chuyển khoản có số tiền và mã đơn sau khi tạo, không tự xác nhận thu tiền. Các URL quản trị đơn cũ chuyển hướng sang Hóa đơn. Chạy migration 020 sau 019; xem docs/GIAI_DOAN_13_HOA_DON_BAN_ONLINE.md.
+
+
+Giai đoạn 14: chạy migration 021 sau 020. Chỉ khách có đơn DELIVERED chứa sản phẩm được đánh giá; mỗi khách một đánh giá/sản phẩm, tối đa 5 lần gửi/sửa mỗi phút. Khách sửa/xóa của mình; Admin chỉ ẩn/hiện. Đánh giá ẩn không tính điểm. /favorites lưu sản phẩm yêu thích; sản phẩm ngừng bán vẫn hiện nhãn và không thêm giỏ. Dữ liệu wishlist tự dọn khi xóa sản phẩm/khách chưa giao dịch để giữ hành vi xóa trước đây. Xem docs/GIAI_DOAN_14_DANH_GIA_YEU_THICH.md.

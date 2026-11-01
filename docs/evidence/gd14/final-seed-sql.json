@@ -1,0 +1,21 @@
+{
+  "productId": 2,
+  "orderId": 675,
+  "invoiceId": 288,
+  "reviewId": 1,
+  "review": [
+    {
+      "id": 1,
+      "ma": "DG0001",
+      "so_sao": 5,
+      "noi_dung": "Đánh giá phục vụ crawl — Nguyễn Huệ",
+      "hien_thi": true
+    }
+  ],
+  "favorite": [
+    {
+      "customer_id": 100,
+      "product_id": 2
+    }
+  ]
+}

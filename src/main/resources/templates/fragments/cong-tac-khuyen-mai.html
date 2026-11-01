@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org"><body>
-<form th:fragment="switch(kind,id,active,label)" method="post" th:action="@{/admin/{kind}/status/{id}(kind=${kind},id=${id})}" data-discount-switch novalidate>
-<label class="discount-switch" th:for="${kind}+'-status-'+${id}"><input type="checkbox" role="switch" name="active" th:id="${kind}+'-status-'+${id}" th:checked="${active}" aria-label="Hoạt động"><span aria-hidden="true" class="discount-switch-track"></span><span class="visually-hidden">Hoạt động</span></label>
+<th:block th:fragment="switch(kind,id,active,label)"><th:block th:replace="~{fragments/cong-tac-khuyen-mai :: switch-field(${kind},${id},${active},${label},'Hoạt động')}"></th:block></th:block>
+<form th:fragment="switch-field(kind,id,active,label,fieldLabel)" method="post" th:action="@{/admin/{kind}/status/{id}(kind=${kind},id=${id})}" data-discount-switch novalidate>
+<label class="discount-switch" th:for="${kind}+'-status-'+${id}"><input type="checkbox" role="switch" name="active" th:id="${kind}+'-status-'+${id}" th:checked="${active}" th:aria-label="${fieldLabel}"><span aria-hidden="true" class="discount-switch-track"></span><span class="visually-hidden" th:text="${fieldLabel}"></span></label>
 <span data-effectivity-label th:text="${label}"></span><span data-switch-error role="alert" class="field-error"></span>
 </form></body></html>

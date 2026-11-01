@@ -1,0 +1,116 @@
+{
+  "product": {
+    "id": 3,
+    "product_id": 2,
+    "quantity": 18
+  },
+  "customerId": 100,
+  "orderId": 674,
+  "invoiceId": 287,
+  "reviewId": 1,
+  "snapshots": [
+    {
+      "step": "created 5 stars",
+      "review": [
+        {
+          "id": 1,
+          "ma": "DG0001",
+          "product_id": 2,
+          "customer_id": 100,
+          "order_id": 674,
+          "so_sao": 5,
+          "noi_dung": "Giày rất êm — Nguyễn Huệ <script>window.__g14xss=1</script>",
+          "hien_thi": true
+        }
+      ],
+      "summary": [
+        {
+          "n": 1,
+          "average": 5.0
+        }
+      ]
+    },
+    {
+      "step": "edited 4 stars Unicode",
+      "review": [
+        {
+          "id": 1,
+          "ma": "DG0001",
+          "product_id": 2,
+          "customer_id": 100,
+          "order_id": 674,
+          "so_sao": 4,
+          "noi_dung": "Số 12, đường Nguyễn Huệ, Đà Nẵng",
+          "hien_thi": true
+        }
+      ],
+      "summary": [
+        {
+          "n": 1,
+          "average": 4.0
+        }
+      ]
+    },
+    {
+      "step": "admin hidden",
+      "review": [
+        {
+          "id": 1,
+          "ma": "DG0001",
+          "product_id": 2,
+          "customer_id": 100,
+          "order_id": 674,
+          "so_sao": 4,
+          "noi_dung": "Số 12, đường Nguyễn Huệ, Đà Nẵng",
+          "hien_thi": false
+        }
+      ],
+      "summary": [
+        {
+          "n": 0
+        }
+      ]
+    },
+    {
+      "step": "hidden edit stays hidden",
+      "review": [
+        {
+          "id": 1,
+          "ma": "DG0001",
+          "product_id": 2,
+          "customer_id": 100,
+          "order_id": 674,
+          "so_sao": 3,
+          "noi_dung": "Số 12, đường Nguyễn Huệ, Đà Nẵng",
+          "hien_thi": false
+        }
+      ],
+      "summary": [
+        {
+          "n": 0
+        }
+      ]
+    },
+    {
+      "step": "shown 3 stars",
+      "review": [
+        {
+          "id": 1,
+          "ma": "DG0001",
+          "product_id": 2,
+          "customer_id": 100,
+          "order_id": 674,
+          "so_sao": 3,
+          "noi_dung": "Số 12, đường Nguyễn Huệ, Đà Nẵng",
+          "hien_thi": true
+        }
+      ],
+      "summary": [
+        {
+          "n": 1,
+          "average": 3.0
+        }
+      ]
+    }
+  ]
+}

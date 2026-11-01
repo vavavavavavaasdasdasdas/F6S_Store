@@ -29,7 +29,7 @@
                             <th>Kích cỡ</th><th>Chất liệu</th><th>Màu sắc</th><th>Đế giày</th>
                             <th>Số lượng</th>
                             <th>Đơn giá</th>
-                            <th class="text-end">Thành tiền</th>
+                            <th class="text-end">Thành tiền</th><th th:if="${order.status=='DELIVERED'}">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,12 +37,12 @@
                             <td th:text="${detail.sizeName != null ? detail.sizeName : detail.productVariant.size.sizeValue}"></td>
                             <td th:text="${detail.displayMaterialName}"></td><td th:text="${detail.displayColorName}"></td><td th:text="${detail.displaySoleName}"></td><td th:text="${detail.quantity}"></td>
                             <td th:text="${@money.format(detail.price)} + ' đ'"></td>
-                            <td class="text-end fw-bold" th:text="${@money.format(detail.totalPrice)} + ' đ'"></td>
+                            <td class="text-end fw-bold" th:text="${@money.format(detail.totalPrice)} + ' đ'"></td><td th:if="${order.status=='DELIVERED'}" class="table-actions"><a class="btn btn-outline-primary" th:href="@{/reviews/products/{id}(id=${detail.productVariant.product.id},orderId=${order.id})}">Đánh giá</a></td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="10" class="text-end fw-bold">Tổng cộng:</td>
+                            <td th:colspan="${order.status=='DELIVERED'?11:10}" class="text-end fw-bold">Tổng cộng:</td>
                             <td class="text-end fw-bold text-danger fs-5" th:text="${@money.format(order.finalAmount)} + ' đ'"></td>
                         </tr>
                     </tfoot>

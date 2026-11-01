@@ -34,7 +34,7 @@
 
             <!-- Product Info -->
             <div class="col-md-6">
-                <h2 class="fw-bold mb-2" th:text="${product.name}">Tên sản phẩm</h2>
+                <div class="d-flex align-items-start justify-content-between gap-2"><h2 class="fw-bold mb-2" th:text="${product.name}">Tên sản phẩm</h2><th:block th:replace="~{fragments/yeu-thich-danh-gia :: heart(${product.id})}"></th:block></div><th:block th:replace="~{fragments/yeu-thich-danh-gia :: score(${product.id})}"></th:block>
                 <div class="text-muted mb-3">Mã SP: <span th:text="${product.code}">SP001</span> | Thương hiệu: <span th:text="${product.category != null ? product.category.name : 'Chưa phân loại'}">Thể thao</span></div>
 
 
@@ -126,7 +126,7 @@
                         <img th:with="resolvedImage=${@productImageUrl.source(rp.imageUrl)}" th:src="${resolvedImage}" class="card-img-top" alt="Hình ảnh">
                     </a>
                     <div class="card-body d-flex flex-column">
-                        <h6 class="card-title text-truncate">
+                        <div class="d-flex justify-content-end"><th:block th:replace="~{fragments/yeu-thich-danh-gia :: heart(${rp.id})}"></th:block></div><th:block th:replace="~{fragments/yeu-thich-danh-gia :: score(${rp.id})}"></th:block><h6 class="card-title text-truncate">
                             <a th:href="@{/products/{id}(id=${rp.id})}" class="text-decoration-none text-dark" th:text="${rp.name}">Tên SP</a>
                         </h6>
                         <div class="mt-auto" th:with="rpVariants=${@productService.getVariantsByProductId(rp.id)}">
@@ -146,6 +146,7 @@
             </div>
         </div>
 
+        <th:block th:replace="~{user/fragments/danh-gia :: reviews}"></th:block>
         <script src="/js/chi-tiet-san-pham.js" defer></script>
         <script src="/js/bo-anh-san-pham.js" defer></script>
     </div>

@@ -13,7 +13,7 @@
             >
     </a>
 
-    <div class="card-body d-flex flex-column">
+    <div class="card-body d-flex flex-column"><div class="d-flex justify-content-end"><th:block th:replace="~{fragments/yeu-thich-danh-gia :: heart(${p.id})}"></th:block></div><th:block th:replace="~{fragments/yeu-thich-danh-gia :: score(${p.id})}"></th:block>
         <small class="text-muted" th:if="${p.categoryName != null}" th:text="${p.categoryName}">Brand</small>
         <h6 class="card-title text-truncate mb-1">
             <a th:href="@{/products/{id}(id=${p.id})}" class="text-decoration-none text-dark" th:text="${p.name}">Tên SP</a>

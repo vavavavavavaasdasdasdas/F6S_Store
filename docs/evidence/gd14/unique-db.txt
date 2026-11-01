@@ -1,0 +1,1 @@
+2627 Violation of UNIQUE KEY constraint 'uq_danh_gia_customer_product'. Cannot insert duplicate key in object 'dbo.danh_gia'. The duplicate key value is (100, 2).

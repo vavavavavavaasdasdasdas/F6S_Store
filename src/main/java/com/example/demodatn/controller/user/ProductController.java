@@ -33,6 +33,8 @@ public class ProductController {
     private final com.example.demodatn.util.Pagination pagination;
 
     private final ProductService productService;
+    private final com.example.demodatn.repository.sanpham.ProductReviewRepository reviews;
+    private final com.example.demodatn.service.sanpham.ProductFeedbackService feedback;
     private final PricingService pricingService;
     private final ProductFilterService productFilterService;
     private final CategoryRepository categoryRepository;
@@ -92,7 +94,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public String detail(@PathVariable Integer id, Model model, jakarta.servlet.http.HttpServletResponse response) {
+    public String detail(@PathVariable Integer id,@RequestParam(defaultValue="0") String reviewPage,java.security.Principal principal,Model model,jakarta.servlet.http.HttpServletResponse response) {
         Product product = productService.getProductById(id);
         if (!ProductSalePolicy.isSelling(product)) {
             response.setStatus(404);
@@ -111,6 +113,8 @@ public class ProductController {
             .limit(4)
             .collect(Collectors.toList());
             
+        model.addAttribute("reviews",pagination.load(reviewPage,org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Order.desc("createdAt"),org.springframework.data.domain.Sort.Order.desc("id")),request->reviews.findByProduct_IdAndVisibleTrue(id,request)));
+        model.addAttribute("ratingDistribution",feedback.distribution(id));model.addAttribute("canReview",principal!=null&&feedback.canReview(principal.getName(),id));model.addAttribute("ownReview",principal==null?null:feedback.ownReview(principal.getName(),id));
         model.addAttribute("product", product);
         model.addAttribute("productImages", gallery.list(id));
         model.addAttribute("variants", variants);

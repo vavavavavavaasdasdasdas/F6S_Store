@@ -54,6 +54,7 @@
                             </li>
                             <li sec:authorize="isAuthenticated()">
                                 <a class="dropdown-item" th:href="@{/orders}"><i class="bi bi-bag-check"></i> Đơn hàng</a>
+                                <a class="dropdown-item" href="/favorites"><i class="bi bi-heart"></i> Sản phẩm yêu thích</a>
                             </li>
                             <li sec:authorize="hasAnyRole('ADMIN','EMPLOYEE')">
                                 <a class="dropdown-item text-danger" th:with="staffHome=${@adminAccess.home(#authentication)}" th:href="${staffHome}"><i class="bi bi-shield-lock"></i> Không gian cửa hàng</a>

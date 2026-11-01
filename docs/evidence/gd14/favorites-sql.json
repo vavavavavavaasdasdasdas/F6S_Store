@@ -1,0 +1,44 @@
+{
+  "productId": 2,
+  "customerId": 100,
+  "toggles": [
+    {
+      "width": 1280,
+      "before": [
+        {
+          "n": 0
+        }
+      ],
+      "liked": [
+        {
+          "customer_id": 100,
+          "product_id": 2
+        }
+      ],
+      "after": [
+        {
+          "n": 0
+        }
+      ]
+    },
+    {
+      "width": 375,
+      "before": [
+        {
+          "n": 0
+        }
+      ],
+      "liked": [
+        {
+          "customer_id": 100,
+          "product_id": 2
+        }
+      ],
+      "after": [
+        {
+          "n": 0
+        }
+      ]
+    }
+  ]
+}

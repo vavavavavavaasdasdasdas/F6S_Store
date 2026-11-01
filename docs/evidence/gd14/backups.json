@@ -1,0 +1,127 @@
+[
+  {
+    "database_name": "shopbangiay_kt_20261101_gd13",
+    "backup_finish_date": "2026-11-01T21:07:19",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261101_gd13_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261101_gd13",
+    "backup_finish_date": "2026-11-01T20:58:59",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261101_gd13_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261031_gd12",
+    "backup_finish_date": "2026-10-31T23:41:56",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261031_gd12_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261031_gd11",
+    "backup_finish_date": "2026-10-31T23:11:37",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261031_gd11_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261031_gd10",
+    "backup_finish_date": "2026-10-31T22:51:11",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261031_gd10_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261031_gd9",
+    "backup_finish_date": "2026-10-31T22:00:10",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261031_gd9_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261030_gd16",
+    "backup_finish_date": "2026-10-30T21:48:04",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261030_gd16_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261030_gd8",
+    "backup_finish_date": "2026-10-30T17:02:44",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261030_gd8_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261030_gd8",
+    "backup_finish_date": "2026-10-30T16:44:10",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261030_gd8_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261030_gd8",
+    "backup_finish_date": "2026-10-30T13:22:54",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261030_gd8_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261030_gd7",
+    "backup_finish_date": "2026-10-30T12:56:10",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261030_gd7_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261030_gd6",
+    "backup_finish_date": "2026-10-30T12:27:46",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261030_gd6_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261030_gd5",
+    "backup_finish_date": "2026-10-30T11:36:50",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261030_gd5_schema.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261029_bs012",
+    "backup_finish_date": "2026-10-29T09:50:28",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261029_bs012_schema_320bf15ccac94757a193b70351c6a99f.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261029_gd4",
+    "backup_finish_date": "2026-10-29T09:03:10",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261029_gd4_schema_cb9adbb157e24a3281de3630c664062b.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261028_gd2",
+    "backup_finish_date": "2026-10-28T23:25:36",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_gd3_checkpoint.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261028_gd2",
+    "backup_finish_date": "2026-10-28T21:57:27",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261028_gd2_schema_16e6aa575bf04de99c5d3e5e1f29b32c.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261028_gd1",
+    "backup_finish_date": "2026-10-28T21:13:49",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261028_gd1_schema_09b5bb4324a54044b550601f364c0335.bak"
+  },
+  {
+    "database_name": "shopbangiay_kt_20261025",
+    "backup_finish_date": "2026-10-25T16:41:23",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261025_schema_112fa55c6327405f9b5d5bee27add03f.bak"
+  },
+  {
+    "database_name": "shop_verify",
+    "backup_finish_date": "2026-10-23T22:39:01",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shop_verify_before_cleanup_20261023.bak"
+  },
+  {
+    "database_name": "shopbangiay",
+    "backup_finish_date": "2026-10-23T21:59:54",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_release_20261023.bak"
+  },
+  {
+    "database_name": "shop_verify",
+    "backup_finish_date": "2026-10-23T20:24:39",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shop_verify_acceptance_369091f3c9bd4af08598623195bc7f92.bak"
+  },
+  {
+    "database_name": "shop_verify",
+    "backup_finish_date": "2026-10-23T16:55:50",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shop_verify_packages_f5f5e1468b954142a64b2bdb68e08afe.bak"
+  },
+  {
+    "database_name": "shop_verify",
+    "backup_finish_date": "2026-10-23T16:53:06",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shop_verify_packages_bde693ea64de4174b7c770cd582177b8.bak"
+  },
+  {
+    "database_name": "shop_verify",
+    "backup_finish_date": "2026-10-09T10:37:20",
+    "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shop_verify_before_003_7815FB4A-C797-48E6-9A0F-D87A3729E85C.bak"
+  }
+]

@@ -114,3 +114,6 @@ Giai đoạn 12: menu lấy quyền từ AdminAccess; Nhân viên chỉ thấy n
 
 
 Giai đoạn 13: Bán online và Quầy dùng cùng bố cục lưới/giỏ nhưng mỗi trang chỉ hiện form của loại đó, giỏ và hóa đơn chờ độc lập. Hóa đơn là nơi xử lý đơn, cột Kênh bán/Nguồn đơn riêng; hành động Xem/xử lý và In dùng icon chung. Giữ token, màu và kiểu bảng hiện có.
+
+
+Giai đoạn 14: dùng trái tim 40px có nhãn và trạng thái aria-pressed trên thẻ/chi tiết; sao màu vàng đậm, tên khách che, nhãn Đã mua hàng. Danh sách Đánh giá Admin giữ bảng STT/mã/cột riêng, chỉ Xem và công tắc Hiển thị dùng primitive chung. Yêu thích dùng thẻ sản phẩm hiện có; sản phẩm ngừng bán có thẻ tĩnh, không link chi tiết/thêm giỏ.

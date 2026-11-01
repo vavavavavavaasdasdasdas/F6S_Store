@@ -1,0 +1,4 @@
+<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org"><body>
+<button th:fragment="heart(productId)" type="button" class="btn btn-outline-danger favorite-button" data-favorite-toggle th:data-product-id="${productId}" th:aria-pressed="${favoriteIds.contains(productId)}" th:aria-label="${favoriteIds.contains(productId)?'Bỏ yêu thích':'Thêm vào yêu thích'}" th:title="${favoriteIds.contains(productId)?'Bỏ yêu thích':'Thêm vào yêu thích'}" th:data-authenticated="${feedbackSignedIn}" onclick="void(0)"><i aria-hidden="true" class="bi" th:classappend="${favoriteIds.contains(productId)?'bi-heart-fill':'bi-heart'}"></i></button>
+<th:block th:fragment="score(productId)" th:with="score=${reviewSummaries.get(productId)}"><p th:if="${score!=null and score.count>0}" class="product-review-score small"><span aria-hidden="true">★</span> <span th:text="${#numbers.formatDecimal(score.average,1,1)}+' / 5 ('+${score.count}+' đánh giá)'"></span></p></th:block>
+</body></html>

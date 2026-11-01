@@ -1,0 +1,7 @@
+<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org"><body><section th:fragment="reviews" id="reviews" class="admin-panel my-4" aria-labelledby="review-heading">
+<h2 id="review-heading">Đánh giá sản phẩm</h2><th:block th:replace="~{fragments/yeu-thich-danh-gia :: score(${product.id})}"></th:block><p th:if="${reviews.totalElements==0}">Chưa có đánh giá nào.</p>
+<ul class="list-unstyled" aria-label="Phân bố số sao"><li th:each="entry:${ratingDistribution}"><span th:text="${entry.key}+' sao'"></span>: <strong th:text="${entry.value}"></strong></li></ul>
+<a class="btn btn-outline-primary mb-3" th:if="${canReview}" th:href="@{/reviews/products/{id}(id=${product.id})}" th:text="${ownReview==null?'Đánh giá sản phẩm':'Sửa đánh giá của tôi'}"></a>
+<article th:each="r:${reviews.content}" class="border-top py-3 review-entry"><div class="d-flex gap-2 flex-wrap"><strong th:text="${r.maskedCustomerName}"></strong><span th:text="${r.stars}+' / 5 sao'"></span><span class="badge bg-success">Đã mua hàng</span><time th:text="${#temporals.format(r.createdAt,'dd/MM/yyyy')}"></time></div><p class="review-body mt-2" th:text="${r.content}"></p></article>
+<nav th:replace="~{fragments/phan-trang :: phan-trang(${reviews},'reviewPage')}"></nav>
+</section></body></html>

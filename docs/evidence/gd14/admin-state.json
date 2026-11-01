@@ -1,0 +1,29 @@
+{
+  "cookies": [
+    {
+      "name": "JSESSIONID",
+      "value": "31B9A83CD54412AC7173B18CF3A6F072",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:18314",
+      "localStorage": [
+        {
+          "name": "admin-menu:variants",
+          "value": "closed"
+        },
+        {
+          "name": "admin-menu:products",
+          "value": "open"
+        }
+      ]
+    }
+  ]
+}

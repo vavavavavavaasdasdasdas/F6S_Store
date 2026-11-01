@@ -30,6 +30,8 @@ public class Customer {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private Boolean status = true;
+    @Column(name="danh_gia_cua_so",insertable=false,updatable=false) private LocalDateTime reviewWindow;
+    @Column(name="danh_gia_so_lan",nullable=false,insertable=false,updatable=false) private Integer reviewCount=0;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

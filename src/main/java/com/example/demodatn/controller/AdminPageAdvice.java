@@ -23,6 +23,7 @@ public class AdminPageAdvice {
         new NavItem("", "Màu sắc", "/admin/colors", "colors"),
         new NavItem("", "Chất liệu", "/admin/materials", "materials"),
         new NavItem("", "Tồn kho", "/admin/inventory", "inventory"),
+        new NavItem("", "Đánh giá", "/admin/reviews", "reviews"),
         new NavItem("TÀI KHOẢN", "Khách hàng", "/admin/customers", "customers"),
         new NavItem("", "Nhân viên", "/admin/employees", "employees"),
         new NavItem("KHUYẾN MÃI", "Phiếu giảm giá", "/admin/vouchers", "vouchers"),
