@@ -1,6 +1,5 @@
 package com.example.demodatn.service;
 import com.example.demodatn.util.PasswordPolicy;
-import com.example.demodatn.util.VietnameseText;
 import com.example.demodatn.dto.khachhang.CustomerDto;
 import com.example.demodatn.dto.nhanvien.EmployeeDto;
 import com.example.demodatn.entity.khachhang.Customer;
@@ -16,7 +15,6 @@ import com.example.demodatn.repository.nhanvien.RoleRepository;
 import com.example.demodatn.repository.nhanvien.UserRepository;
 import com.example.demodatn.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,7 +38,6 @@ public class PeopleService {
     private final com.example.demodatn.security.AdminAccess access;
     private final com.example.demodatn.service.khachhang.ShippingAddressService addressService;
     private final com.example.demodatn.repository.nhanvien.AccountIssueRepository accountIssues;
-
 
     public Customer customer(Integer id) {
         return customers.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -84,6 +81,8 @@ public class PeopleService {
         if(customers.existsByCustomerCodeIgnoreCaseAndIdNot(form.getCustomerCode().trim(),id))throw new PeopleValidationException("customerCode","Mã khách hàng đã tồn tại.");
         if(customers.existsByEmailIgnoreCaseAndIdNot(email(form.getEmail()),id))throw new PeopleValidationException("email","Thư điện tử đã tồn tại.");
         if(customers.existsByPhoneAndIdNot(phone(form.getPhone()),id))throw new PeopleValidationException("phone","Số điện thoại đã tồn tại.");
+        var blocks=form.resolvedAddresses();
+        if(blocks.size()>3)throw new PeopleValidationException("address",com.example.demodatn.service.khachhang.ShippingAddressService.LIMIT_MESSAGE);
         Customer c=form.getId()==null ? new Customer() : customers.findForUpdate(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
         String document=form.getSoCccd()==null||form.getSoCccd().isBlank()?null:form.getSoCccd().trim();
         if(c.getId()!=null && document==null && access.hasRole(SecurityContextHolder.getContext().getAuthentication(),"ROLE_EMPLOYEE"))document=c.getSoCccd();
@@ -94,13 +93,8 @@ public class PeopleService {
         c.setSoCccd(document);c.setNgaySinh(form.getNgaySinh());c.setGioiTinh(form.getGioiTinh()==null||form.getGioiTinh().isBlank()?null:form.getGioiTinh());
         c.setCustomerCode(form.getCustomerCode().trim());c.setFullName(form.getFullName().trim());
         c.setPhone(phone(form.getPhone()));c.setEmail(email(form.getEmail()));
-        // Customer editing uses the same address service and keeps other saved addresses intact.
         customers.saveAndFlush(c);
-        var address=new com.example.demodatn.dto.khachhang.ShippingAddressForm();
-        shippingAddresses.findByCustomer_IdOrderBySlotAsc(c.getId()).stream().filter(com.example.demodatn.entity.khachhang.ShippingAddress::isDefaultAddress).findFirst().ifPresent(a->address.setId(a.getId()));
-        address.setReceiverName(c.getFullName());address.setPhone(c.getPhone());address.setAddress(form.getStreetAddress());address.setProvinceId(form.getProvinceId());address.setWardId(form.getWardId());address.setStreetAddress(form.getStreetAddress());address.setLatitude(form.getLatitude());address.setLongitude(form.getLongitude());address.setCoordinateSource(form.getCoordinateSource());address.setMakeDefault(true);
-        addressService.saveForCustomer(c.getId(),address);
-        // Status changes have a separate confirmed POST and cannot be smuggled through this form.
+        addressService.syncCustomerAddresses(c.getId(),blocks,form.getDefaultAddressIndex(),form.hasAddressBlocks());
         return customers.saveAndFlush(c);
     }
     public String resolvePosition(String raw) {

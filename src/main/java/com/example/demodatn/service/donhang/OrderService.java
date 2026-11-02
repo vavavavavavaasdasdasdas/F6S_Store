@@ -27,7 +27,6 @@ public class OrderService {
 
     private final InvoiceRepository invoices;
     private final OrderStatusService statuses;
-    private final DeliveryService delivery;
     private final com.example.demodatn.repository.donhang.OrderRepository orders;
 
     @Transactional(rollbackFor = Exception.class)

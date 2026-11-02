@@ -37,7 +37,7 @@ class EmployeeAccessIntegrationTest {
  }
  @Test void matrixAndMenuUseSamePolicyAndInventoryIsReadOnly()throws Exception{
   for(String path:List.of("/admin/pos","/admin/invoices","/admin/customers","/admin/customers/create","/admin/inventory","/admin/account"))mvc.perform(get(path).with(user(username).roles("EMPLOYEE"))).andExpect(status().isOk());
-  for(String path:List.of("/admin","/admin/dashboard","/admin/products-crud","/admin/variants","/admin/categories","/admin/sizes","/admin/soles","/admin/materials","/admin/colors","/admin/employees","/admin/vouchers","/admin/promotions","/admin/shipping-times")){
+  for(String path:List.of("/admin","/admin/dashboard","/admin/products-crud","/admin/variants","/admin/categories","/admin/sizes","/admin/soles","/admin/materials","/admin/colors","/admin/employees","/admin/vouchers","/admin/promotions","/admin/shipping-config")){
    mvc.perform(get(path).with(user(username).roles("EMPLOYEE"))).andExpect(status().isForbidden());mvc.perform(get(path).with(user("admin").roles("ADMIN"))).andExpect(status().isOk());
   }
   mvc.perform(get("/admin/statistics").with(user(username).roles("EMPLOYEE"))).andExpect(status().isForbidden());mvc.perform(get("/admin/statistics").with(user("admin").roles("ADMIN"))).andExpect(status().isFound()).andExpect(redirectedUrl("/admin/dashboard"));

@@ -85,7 +85,13 @@ public class AdminCustomerController {
         return "admin/khach-hang/danh-sach";
     }
     @GetMapping("/create")
-    public String create(Model model) { model.addAttribute("customer",new CustomerDto());return "admin/khach-hang/bieu-mau"; }
+    public String create(Model model) {
+        var dto = new CustomerDto();
+        dto.getAddresses().add(new CustomerDto.AddressBlock());
+        dto.setDefaultAddressIndex(0);
+        model.addAttribute("customer", dto);
+        return "admin/khach-hang/bieu-mau";
+    }
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id,Model model) {
         var item=people.customer(id);var form=new CustomerDto();BeanUtils.copyProperties(item,form);
@@ -93,7 +99,35 @@ public class AdminCustomerController {
         if(!access.customerAccount(authentication,item.getUser()))throw new org.springframework.security.access.AccessDeniedException("Không được sửa tài khoản có quyền nhân sự qua hồ sơ khách hàng.");
         if(!access.isAdmin(authentication)){form.setSoCccd(null);model.addAttribute("maskedDocument",item.getMaskedSoCccd());}
         form.setUsername(item.getUser()==null?null:item.getUser().getUsername());
-        shippingAddresses.findByCustomer_IdOrderBySlotAsc(id).stream().filter(com.example.demodatn.entity.khachhang.ShippingAddress::isDefaultAddress).findFirst().ifPresent(a->{form.setProvinceId(a.getProvince()==null?null:a.getProvince().getId());form.setAddress(a.getAddress());form.setWardId(a.getWard()==null?null:a.getWard().getId());form.setStreetAddress(a.getDisplayStreetAddress());form.setLatitude(a.getLatitude());form.setLongitude(a.getLongitude());form.setCoordinateSource(a.getCoordinateSource());});
+        var savedAddresses = shippingAddresses.findByCustomer_IdOrderBySlotAsc(id);
+        int defaultIdx = 0;
+        for (int i = 0; i < savedAddresses.size(); i++) {
+            var a = savedAddresses.get(i);
+            var block = new CustomerDto.AddressBlock();
+            block.setId(a.getId());
+            block.setProvinceId(a.getProvince() == null ? null : a.getProvince().getId());
+            block.setWardId(a.getWard() == null ? null : a.getWard().getId());
+            block.setStreetAddress(a.getDisplayStreetAddress());
+            block.setLatitude(a.getLatitude());
+            block.setLongitude(a.getLongitude());
+            block.setCoordinateSource(a.getCoordinateSource());
+            form.getAddresses().add(block);
+            if (a.isDefaultAddress()) {
+                defaultIdx = i;
+                form.setProvinceId(block.getProvinceId());
+                form.setWardId(block.getWardId());
+                form.setStreetAddress(block.getStreetAddress());
+                form.setLatitude(block.getLatitude());
+                form.setLongitude(block.getLongitude());
+                form.setCoordinateSource(block.getCoordinateSource());
+            }
+        }
+        if (form.getAddresses().isEmpty()) {
+            var block = new CustomerDto.AddressBlock();
+            block.setStreetAddress(item.getAddress());
+            form.getAddresses().add(block);
+        }
+        form.setDefaultAddressIndex(defaultIdx);
         model.addAttribute("customer",form);return "admin/khach-hang/bieu-mau";
     }
     @GetMapping("/detail/{id}")
@@ -134,12 +168,37 @@ public class AdminCustomerController {
     public String deleteAddress(@PathVariable("customerId") Integer id,@PathVariable Integer addressId,RedirectAttributes flash){addressService.deleteForCustomer(id,addressId);flash.addFlashAttribute("message","Đã xóa địa chỉ. Địa chỉ mặc định đã được cập nhật nếu cần.");return "redirect:/admin/customers/detail/"+id;}
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("customer") CustomerDto form,BindingResult errors,Model model,RedirectAttributes flash) {
+        if (!form.hasAddressBlocks()) {
+            var block = new CustomerDto.AddressBlock();
+            block.setProvinceId(form.getProvinceId());
+            block.setWardId(form.getWardId());
+            block.setStreetAddress(form.getStreetAddress());
+            block.setLatitude(form.getLatitude());
+            block.setLongitude(form.getLongitude());
+            block.setCoordinateSource(form.getCoordinateSource());
+            form.getAddresses().add(block);
+            if (!errors.hasFieldErrors("provinceId") && block.getProvinceId() == null) {
+                errors.rejectValue("addresses[0].provinceId", "NotNull", "Vui lòng chọn Tỉnh/Thành phố.");
+            }
+            if (!errors.hasFieldErrors("wardId") && block.getWardId() == null) {
+                errors.rejectValue("addresses[0].wardId", "NotNull", "Vui lòng chọn Phường/Xã.");
+            }
+            if (!errors.hasFieldErrors("streetAddress") && (block.getStreetAddress() == null || block.getStreetAddress().isBlank())) {
+                errors.rejectValue("addresses[0].streetAddress", "NotBlank", "Vui lòng nhập số nhà, tên đường.");
+            }
+        }
+        if (form.getAddresses().size() > 3) {
+            errors.rejectValue("address", "limit", com.example.demodatn.service.khachhang.ShippingAddressService.LIMIT_MESSAGE);
+        }
         if(!errors.hasErrors()) {
             try {
                 var saved=accounts.saveCustomer(form);flash.addFlashAttribute(saved.issued()&&!saved.sent()?"warning":"message",saved.message());
                 return "redirect:/admin/customers/detail/"+saved.personId();
             } catch(PeopleValidationException ex) { errors.rejectValue(ex.getField(),"invalid",ex.getMessage()); }
             catch(DataIntegrityViolationException ex) { errors.reject("duplicate","Dữ liệu mã/thư điện tử/SĐT/căn cước/tài khoản vừa được sử dụng. Kiểm tra lại trước khi lưu."); }
+        }
+        if (form.getAddresses().isEmpty()) {
+            form.getAddresses().add(new CustomerDto.AddressBlock());
         }
         return "admin/khach-hang/bieu-mau";
     }

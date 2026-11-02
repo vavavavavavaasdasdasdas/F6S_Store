@@ -46,10 +46,9 @@ public class AccountProvisioningService {
         Issued(int personId,User user,String password){this.personId=personId;userId=user.getId();hash=user.getPassword();this.password=password;email=user.getEmail();name=user.getFullName();username=user.getUsername();}
     }
     public static String temporaryPassword() {
-        String upper="ABCDEFGHJKLMNPQRSTUVWXYZ",lower="abcdefghijkmnopqrstuvwxyz",digits="23456789",symbols="!@#$%_-",pool=upper+lower+digits+symbols;
-        char[] value=new char[12];String[] groups={upper,lower,digits,symbols};
-        for(int i=0;i<4;i++)value[i]=groups[i].charAt(RANDOM.nextInt(groups[i].length()));
-        for(int i=4;i<value.length;i++)value[i]=pool.charAt(RANDOM.nextInt(pool.length()));
+        String upper="ABCDEFGHJKLMNPQRSTUVWXYZ",lower="abcdefghijkmnopqrstuvwxyz",digits="23456789",pool=upper+lower+digits;
+        char[] value=new char[8];
+        value[0]=upper.charAt(RANDOM.nextInt(upper.length()));value[1]=lower.charAt(RANDOM.nextInt(lower.length()));value[2]=digits.charAt(RANDOM.nextInt(digits.length()));for(int i=3;i<8;i++)value[i]=pool.charAt(RANDOM.nextInt(pool.length()));
         for(int i=value.length-1;i>0;i--){int j=RANDOM.nextInt(i+1);char c=value[i];value[i]=value[j];value[j]=c;}
         return new String(value);
     }

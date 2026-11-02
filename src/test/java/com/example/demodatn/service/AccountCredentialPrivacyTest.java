@@ -11,7 +11,7 @@ class AccountCredentialPrivacyTest {
         var generated=new java.util.HashSet<String>();
         for(int i=0;i<1000;i++) {
             String secret=AccountProvisioningService.temporaryPassword();
-            assertTrue(secret.length()==12&&PasswordPolicy.isValid(secret),"Generated credential violates the shared policy");
+            assertTrue(secret.length()==8&&secret.matches("^[A-Za-z0-9]{8}$")&&PasswordPolicy.isValid(secret),"Generated credential violates the shared policy");
             assertTrue(generated.add(secret),"Repeated generated credential");
         }
     }

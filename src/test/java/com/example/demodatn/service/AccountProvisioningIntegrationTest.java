@@ -77,7 +77,7 @@ class AccountProvisioningIntegrationTest {
         assertTrue(wire.toString(java.nio.charset.StandardCharsets.UTF_8).contains("Content-ID: <f6s-logo>"));
         assertTrue(body.contains("Xin chào Nguyễn Văn Ánh")&&body.contains("http://localhost:18140/login")&&body.contains(u.getUsername()));
         System.out.println("GD16 MAIL GreenMail: Vietnamese plain text=true; multipart=true; inline logo Content-ID=f6s-logo; no password printed");
-        assertTrue(temporary.length()==12&&PasswordPolicy.isValid(temporary));assertTrue(encoder.matches(temporary,u.getPassword()));
+        assertTrue(temporary.length()==8&&temporary.matches("^[A-Za-z0-9]{8}$")&&PasswordPolicy.isValid(temporary));assertTrue(encoder.matches(temporary,u.getPassword()));
         assertTrue(u.getMustChangePassword());assertFalse(u.getCredentialMailFailed());assertEquals("ROLE_USER",u.getRole().getName());
         var principal=details.loadUserByUsername(u.getUsername());
         mvc.perform(get("/profile").with(user(principal))).andExpect(status().isFound()).andExpect(redirectedUrl("/account/change-required"));

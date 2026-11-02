@@ -106,8 +106,6 @@ public class OrderStatusService {
         if(!"SHIPPING".equals(status) && (carrier!=null || trackingCode!=null))throw new IllegalArgumentException("Chỉ nhập vận đơn khi giao cho đơn vị vận chuyển.");
         if("CONFIRMED".equals(status)) {
             inventory.truKhoChoDon(order);
-            String note=delivery.snapshotEstimate(order,clock.instant());
-            if(note!=null)reason=reason==null?note:reason+" "+note;
         }
         if(Set.of("CANCELLED","DELIVERY_FAILED").contains(status))inventory.hoanKhoChoDon(order);
         if("DELIVERED".equals(status)){order.setPaymentStatus("PAID");order.setDeliveredOn(clock.instant().atZone(DeliveryService.SHOP_ZONE).toLocalDate());}
@@ -134,7 +132,6 @@ public class OrderStatusService {
         String before=order.getProvinceName()==null?"chưa xác định":order.getProvinceName();
         order.setProvince(province);order.setProvinceName(province.getName());
         String note="Đổi tỉnh/thành từ "+before+" sang "+province.getName()+".";
-        if(!"PENDING".equals(order.getStatus())){String late=delivery.snapshotEstimate(order,clock.instant());if(late!=null)note+=" "+late;}
         order.setUpdatedAt(LocalDateTime.ofInstant(clock.instant(),DeliveryService.SHOP_ZONE));record(order,note,null,null);
     }
 

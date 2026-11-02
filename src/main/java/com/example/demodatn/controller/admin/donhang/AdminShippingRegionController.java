@@ -1,31 +1,53 @@
 package com.example.demodatn.controller.admin.donhang;
-import com.example.demodatn.repository.donhang.ShippingRegionRepository;
-import com.example.demodatn.service.donhang.DeliveryService;
-import com.example.demodatn.util.Pagination;
+import com.example.demodatn.dto.donhang.ShippingSettingsForm;
+import com.example.demodatn.service.donhang.ShippingFeeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.data.domain.*;
-@Controller @RequestMapping("/admin/shipping-times") @RequiredArgsConstructor
+
+@Controller
+@RequiredArgsConstructor
 public class AdminShippingRegionController {
- private final com.example.demodatn.service.donhang.ShippingFeeService shipping;
- private final ShippingRegionRepository regions;private final DeliveryService delivery;private final Pagination pagination;
- @ModelAttribute("shippingSettings") public com.example.demodatn.dto.donhang.ShippingSettingsForm settings(){var f=new com.example.demodatn.dto.donhang.ShippingSettingsForm();org.springframework.beans.BeanUtils.copyProperties(shipping.settings(),f);return f;}
- @PostMapping("/settings") public String settings(@jakarta.validation.Valid @ModelAttribute("shippingSettings") com.example.demodatn.dto.donhang.ShippingSettingsForm form,org.springframework.validation.BindingResult errors,Model model,RedirectAttributes flash){
-  if(!errors.hasErrors())try{shipping.update(form);flash.addFlashAttribute("message","Đã cập nhật kho và các nấc phí. Đơn cũ giữ phí đã lưu.");return "redirect:/admin/shipping-times";}
-  catch(com.example.demodatn.exception.PeopleValidationException ex){errors.rejectValue(ex.getField(),"invalid",ex.getMessage());}
-  return list("","0",model);
- }
- @GetMapping public String list(@RequestParam(defaultValue="") String region,@RequestParam(defaultValue="0") String page,Model model){
-  var rows=regions.findAll(Sort.by("code")).stream().filter(r->region.isBlank() || r.getCode().equals(region)).toList();
-  var request=pagination.request(page,rows.size(),Sort.by("code"));int start=(int)request.getOffset();
-  model.addAttribute("regionPage",new PageImpl<>(rows.subList(start,Math.min(start+request.getPageSize(),rows.size())),request,rows.size()));model.addAttribute("region",region);model.addAttribute("regions",regions.findAll(Sort.by("code")));return "admin/giao-hang/thoi-gian";
- }
- private int days(String raw){try{return Integer.parseInt(raw);}catch(NumberFormatException ex){throw new IllegalArgumentException("Số ngày phải là số nguyên từ 1 đến 30.");}}
- @PostMapping("/{code}") public String save(@PathVariable String code,@RequestParam(defaultValue="") String minDays,@RequestParam(defaultValue="") String maxDays,RedirectAttributes flash){
-  try{delivery.updateRegion(code,days(minDays),days(maxDays));flash.addFlashAttribute("message","Đã cập nhật thời gian giao hàng. Đơn đã xác nhận giữ dự kiến đã lưu.");}
-  catch(IllegalArgumentException ex){flash.addFlashAttribute("error",ex.getMessage());}return "redirect:/admin/shipping-times";
- }
+    private final ShippingFeeService shipping;
+
+    @ModelAttribute("shippingSettings")
+    public ShippingSettingsForm settingsForm() {
+        var form = new ShippingSettingsForm();
+        BeanUtils.copyProperties(shipping.settings(), form);
+        return form;
+    }
+
+    @GetMapping("/admin/shipping-config")
+    public String config(Model model) {
+        return "admin/giao-hang/cau-hinh";
+    }
+
+    @PostMapping({"/admin/shipping-config", "/admin/shipping-config/settings"})
+    public String settings(@Valid @ModelAttribute("shippingSettings") ShippingSettingsForm form,
+                           BindingResult errors,
+                           Model model,
+                           RedirectAttributes flash) {
+        if (!errors.hasErrors()) {
+            try {
+                shipping.update(form);
+                flash.addFlashAttribute("message", "Đã cập nhật kho và các nấc phí. Đơn cũ giữ phí đã lưu.");
+                return "redirect:/admin/shipping-config";
+            } catch (com.example.demodatn.exception.PeopleValidationException ex) {
+                errors.rejectValue(ex.getField(), "invalid", ex.getMessage());
+            } catch (IllegalArgumentException ex) {
+                errors.rejectValue("secondLimitKm", "order", ex.getMessage());
+            }
+        }
+        return "admin/giao-hang/cau-hinh";
+    }
+
+    @GetMapping({"/admin/shipping-times", "/admin/shipping-times/**"})
+    public String legacyRedirect() {
+        return "redirect:/admin/shipping-config";
+    }
 }
