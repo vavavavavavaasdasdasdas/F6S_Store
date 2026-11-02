@@ -232,14 +232,17 @@ class Phase3ComboFilterIntegrationTest {
                 "/admin/invoices?q=ORD&type=ONLINE&status=PENDING&paymentStatus=UNPAID&paymentMethod=COD&from=2020-01-01&to=2030-12-31",
                 "/admin/invoices?q=INV&channel=POS&from=2020-01-01&to=2030-12-31",
                 "/admin/pos?q=Giày",
-                "/admin/statistics?from=2025-01-01&to=2026-12-31&channel=ONLINE",
-                "/admin/statistics?from=2025-01-01&to=2026-12-31&channel=POS",
+                "/admin/dashboard?from=2025-01-01&to=2026-12-31&channel=ONLINE",
+                "/admin/dashboard?from=2025-01-01&to=2026-12-31&channel=POS",
                 "/admin/dashboard?from=2025-01-01&to=2026-12-31&days=30"
         };
         for (String url : adminUrls) {
             mvc.perform(get(url).with(user("admin").roles("ADMIN")))
                     .andExpect(status().isOk());
         }
+        mvc.perform(get("/admin/statistics?from=2025-01-01&to=2026-12-31&channel=ONLINE").with(user("admin").roles("ADMIN")))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/admin/dashboard?from=2025-01-01&to=2026-12-31&channel=ONLINE"));
 
         mvc.perform(get("/products?keyword=Giày&minPrice=100000&maxPrice=2000000&sort=price_asc"))
                 .andExpect(status().isOk());

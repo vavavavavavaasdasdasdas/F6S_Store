@@ -28,7 +28,6 @@ public class AdminPageAdvice {
         new NavItem("", "Nhân viên", "/admin/employees", "employees"),
         new NavItem("KHUYẾN MÃI", "Phiếu giảm giá", "/admin/vouchers", "vouchers"),
         new NavItem("", "Đợt giảm giá", "/admin/promotions", "promotions"),
-        new NavItem("THỐNG KÊ", "Thống kê", "/admin/statistics", "statistics"),
         new NavItem("HỆ THỐNG", "Thời gian giao hàng", "/admin/shipping-times", "shipping-times"),
         new NavItem("", "Hồ sơ của tôi", "/admin/account", "account")
     );

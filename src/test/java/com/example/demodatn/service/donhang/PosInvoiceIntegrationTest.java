@@ -115,21 +115,21 @@ class PosInvoiceIntegrationTest {
     @Test
     void invoiceAndStatisticsRoutesRenderRealPagesWithoutPlaceholderCollision() throws Exception {
         var mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-        for(String route:List.of("/admin/invoices","/admin/statistics")) {
+        for(String route:List.of("/admin/invoices","/admin/dashboard")) {
             mvc.perform(get(route)).andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("Sẽ hoàn thiện"))));
         }
-        for(String oldRoute:List.of("/admin/reports/revenue","/admin/reports/best-sellers")) {
-            mvc.perform(get(oldRoute)).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/admin/statistics"));
+        for(String oldRoute:List.of("/admin/statistics","/admin/statistics/revenue","/admin/statistics/best-sellers","/admin/reports/revenue","/admin/reports/best-sellers")) {
+            mvc.perform(get(oldRoute)).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/admin/dashboard"));
         }
     }
     @Test
     void revenueCardsOpenMatchingTodayAndMonthRanges() throws Exception {
         var today=java.time.LocalDate.now(java.time.ZoneId.of("Asia/Ho_Chi_Minh"));
         var mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-        mvc.perform(get("/admin/statistics").param("period","today")).andExpect(status().isOk())
+        mvc.perform(get("/admin/dashboard").param("period","today")).andExpect(status().isOk())
             .andExpect(model().attribute("from",today)).andExpect(model().attribute("to",today));
-        mvc.perform(get("/admin/statistics").param("period","month")).andExpect(status().isOk())
+        mvc.perform(get("/admin/dashboard").param("period","month")).andExpect(status().isOk())
             .andExpect(model().attribute("from",today.withDayOfMonth(1))).andExpect(model().attribute("to",today));
     }
 }

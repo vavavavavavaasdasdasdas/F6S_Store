@@ -1,6 +1,8 @@
 package com.example.demodatn.controller.admin.donhang;
 import com.example.demodatn.entity.donhang.Invoice;
 import com.example.demodatn.repository.donhang.InvoiceRepository;
+import com.example.demodatn.repository.khachhang.CustomerRepository;
+import jakarta.persistence.criteria.JoinType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -9,12 +11,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import java.time.LocalDate;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/admin/invoices")
 @RequiredArgsConstructor
 public class AdminInvoiceController {
     private final InvoiceRepository invoices;
+    private final CustomerRepository customers;
+    private final com.example.demodatn.repository.donhang.ProvinceRepository provinces;
     private final com.example.demodatn.service.donhang.OrderConfirmationService confirmations;
     private final com.example.demodatn.service.donhang.OrderStatusService orderStatus;
     @org.springframework.beans.factory.annotation.Value("${shop.name:SHOP GIÀY}") private String shopName;
@@ -39,12 +44,27 @@ public class AdminInvoiceController {
         Specification<Invoice> filter=(root,query,cb)->cb.conjunction();
         String ch = (channel != null && !channel.isBlank()) ? channel.trim() : null;
         if(!q.isBlank()) {
-            String code=q.trim().toUpperCase(java.util.Locale.ROOT);
+            String code=q.trim().toUpperCase(Locale.ROOT);
             String pattern="%"+code.replace("!","!!").replace("%","!%").replace("_","!_")+"%";
             filter=filter.and((r,x,c)->c.or(c.like(c.upper(r.get("invoiceCode")),pattern,'!'),c.like(c.upper(r.get("order").get("orderCode")),pattern,'!')));
         }
-        if(!customer.isBlank()){String pattern="%"+customer.trim().toLowerCase(java.util.Locale.ROOT)+"%";filter=filter.and((r,x,c)->c.or(c.like(c.lower(r.get("customerName")),pattern),c.like(c.coalesce(r.get("customerPhone"),""),pattern)));}
-        if(customerId!=null)filter=filter.and((r,x,c)->c.equal(r.get("order").get("customer").get("id"),customerId));
+        if(!customer.isBlank()){
+            String pattern="%"+customer.trim().toLowerCase(Locale.ROOT)+"%";
+            filter=filter.and((r,x,c)->{
+                var ord = r.join("order", JoinType.LEFT);
+                var custJoin = ord.join("customer", JoinType.LEFT);
+                return c.or(
+                    c.like(c.lower(c.coalesce(r.get("customerName"),"")),pattern),
+                    c.like(c.lower(c.coalesce(r.get("customerPhone"),"")),pattern),
+                    c.like(c.lower(c.coalesce(ord.get("receiverName"),"")),pattern),
+                    c.like(c.lower(c.coalesce(ord.get("phoneNumber"),"")),pattern),
+                    c.like(c.lower(c.coalesce(custJoin.get("fullName"),"")),pattern),
+                    c.like(c.lower(c.coalesce(custJoin.get("phone"),"")),pattern),
+                    c.like(c.lower(c.coalesce(custJoin.get("customerCode"),"")),pattern)
+                );
+            });
+        }
+        if(customerId!=null)filter=filter.and((r,x,c)->c.equal(r.join("order",JoinType.LEFT).join("customer",JoinType.LEFT).get("id"),customerId));
         for(var entry:java.util.Map.of("orderSource",source,"status",status,"paymentStatus",paymentStatus,"paymentMethod",paymentMethod).entrySet())if(!entry.getValue().isBlank())filter=filter.and((r,x,c)->c.equal(r.get("order").get(entry.getKey()),entry.getValue()));
         if(ch != null) filter=filter.and((r,x,c)->c.equal(r.get("order").get("orderType"), ch));
         if(from!=null) filter=filter.and((r,x,c)->c.greaterThanOrEqualTo(r.get("issuedAt"),from.atStartOfDay()));
@@ -52,6 +72,7 @@ public class AdminInvoiceController {
         if(from!=null && to!=null && to.isBefore(from)) model.addAttribute("error","Ngày kết thúc phải từ ngày bắt đầu.");
         final var selection=filter;
         model.addAttribute("invoices",pagination.load(page,Sort.by(Sort.Order.desc("issuedAt"),Sort.Order.desc("id")),request->invoices.findAll(selection,request)));
+        model.addAttribute("customers",customers.findAll());
         model.addAttribute("q",q);model.addAttribute("customer",customer);model.addAttribute("customerId",customerId);model.addAttribute("source",source);model.addAttribute("status",status);model.addAttribute("paymentStatus",paymentStatus);model.addAttribute("paymentMethod",paymentMethod);model.addAttribute("orderSources",com.example.demodatn.entity.donhang.Order.SOURCE_LABELS);
         model.addAttribute("from",from);
         model.addAttribute("to",to);
@@ -69,16 +90,17 @@ public class AdminInvoiceController {
 
     @GetMapping("/order/{orderId}")
     public String byOrder(@PathVariable Integer orderId){return "redirect:/admin/invoices/"+invoices.findByOrder_Id(orderId).orElseThrow(()->new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND)).getId();}
-    @GetMapping("/{id}")
+    @GetMapping({"/{id}","/detail/{id}"})
     public String detail(@PathVariable Integer id,Model model) {
         var invoice=invoice(id);model.addAttribute("invoice",invoice);model.addAttribute("order",invoice.getOrder());model.addAttribute("allowedStatuses",orderStatus.allowedStatuses(invoice.getOrder()));
+        model.addAttribute("provinces",provinces.findAllByOrderByNameAsc());
         model.addAttribute("confirmationMessage",confirmations.text(invoice.getOrder()));model.addAttribute("shopName",shopName);model.addAttribute("shopAddress",shopAddress);model.addAttribute("shopPhone",shopPhone);
         return "admin/hoa-don/chi-tiet";
     }
     private Invoice invoice(Integer id){return invoices.findById(id).orElseThrow(()->new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));}
-    @PostMapping("/{id}/status")
+    @PostMapping({"/{id}/status","/update-status/{id}"})
     public String status(@PathVariable Integer id,@RequestParam String status,@RequestParam(required=false) String reason,@RequestParam(required=false) String carrier,@RequestParam(required=false) String trackingCode,org.springframework.web.servlet.mvc.support.RedirectAttributes flash){
-        try{orderStatus.transition(invoice(id).getOrder().getId(),status,reason,carrier,trackingCode);flash.addFlashAttribute("message","Đã cập nhật trạng thái đơn hàng.");}
+        try{orderStatus.transition(invoice(id).getOrder().getId(),status,reason,carrier,trackingCode);flash.addFlashAttribute("message","Đã cập nhật trạng thái đơn hàng. Đơn hủy hoặc giao thất bại được hoàn kho và ghi lịch sử.");}
         catch(IllegalArgumentException ex){flash.addFlashAttribute("error",ex.getMessage());}
         return "redirect:/admin/invoices/"+id;
     }

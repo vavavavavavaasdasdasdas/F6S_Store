@@ -42,7 +42,7 @@ class RouteErrorIntegrationTest {
 
     @Test void productImagesRenderThroughThymeleafRestrictedUrlAttributes() throws Exception {
         MockMvc mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-        for(String path:List.of("/","/products","/admin/products-crud","/admin/statistics?from=2026-01-01&to=2026-12-31"))
+        for(String path:List.of("/","/products","/admin/products-crud","/admin/dashboard?from=2026-01-01&to=2026-12-31"))
             mvc.perform(get(path).with(user("admin").roles("ADMIN"))).andExpect(status().isOk());
     }
 

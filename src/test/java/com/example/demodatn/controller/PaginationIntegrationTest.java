@@ -77,7 +77,7 @@ class PaginationIntegrationTest {
         for(var entry:Map.ofEntries(Map.entry("/admin/products-crud","productPage"),Map.entry("/admin/variants","dataPage"),Map.entry("/admin/categories","items"),Map.entry("/admin/sizes","items"),Map.entry("/admin/inventory","dataPage"),Map.entry("/admin/customers","peoplePage"),Map.entry("/admin/employees","peoplePage"),Map.entry("/admin/vouchers","dataPage"),Map.entry("/admin/promotions","dataPage"),Map.entry("/admin/invoices","invoices"),Map.entry("/products","productPage"),Map.entry("/search?promotion=true","productPage"),Map.entry("/category/"+categories.get(0),"productPage"),Map.entry("/orders","orderPage"),Map.entry("/admin/customers/detail/"+customer,"orderPage"),Map.entry("/admin/promotions/"+promotion+"/products","productPage"),Map.entry("/admin/pos","productPage")).entrySet())verify(entry.getKey(),entry.getValue(),"page");
         verify("/admin/inventory","historyPage","historyPage");
         verify("/admin/pos/customers?customerQuery=PG","customerPage","customerPage");
-        String stats="/admin/statistics?from=2048-01-01&to=2048-01-30&channel=ONLINE";
+        String stats="/admin/dashboard?from=2048-01-01&to=2048-01-30&channel=ONLINE";
         verify(stats,"stats.topQuantityPage","quantityPage");verify(stats,"stats.topRevenuePage","revenuePage");
     }
     @Test void productVariantSublistIsPagedAndLinksKeepFilters()throws Exception {

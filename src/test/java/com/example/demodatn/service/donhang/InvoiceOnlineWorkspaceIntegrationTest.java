@@ -60,10 +60,11 @@ class InvoiceOnlineWorkspaceIntegrationTest {
   System.out.println("GD13 holds POS=5 ONLINE=5; sixth each rejected; delivery Unicode preserved; cross-type=404; stock unchanged="+quantity());
  }
  @Test void confirmNowAndInvoiceFiltersUseSharedOrderWorkflow()throws Exception{
-  var f=form();f.setConfirmNow(true);var o=online.create("admin",f,cart());em.flush();assertEquals("CONFIRMED",o.getStatus());assertEquals(stock-1,quantity());
+  var f=form();f.setConfirmNow(true);f.setNote("Giao giờ hành chính");var o=online.create("admin",f,cart());em.flush();assertEquals("CONFIRMED",o.getStatus());assertEquals(stock-1,quantity());
   var i=invoices.findByOrder_Id(o.getId()).orElseThrow();
   mvc.perform(get("/admin/invoices").param("q",o.getOrderCode()).param("channel","ONLINE").param("source","ZALO").param("status","CONFIRMED").param("paymentMethod","COD").param("customer",f.getReceiverName())).andExpect(status().isOk()).andExpect(content().string(containsString(i.getInvoiceCode())));
   mvc.perform(get("/admin/invoices").param("q",o.getOrderCode()).param("source","FACEBOOK")).andExpect(status().isOk()).andExpect(content().string(not(containsString(i.getInvoiceCode()))));
+  mvc.perform(get("/admin/invoices/"+i.getId())).andExpect(status().isOk()).andExpect(content().string(containsString("Giao giờ hành chính"))).andExpect(content().string(containsString("Đã trừ kho")));
   assertEquals(2,jdbc.queryForObject("SELECT COUNT(*) FROM order_status_history WHERE order_id=?",Integer.class,o.getId()));
  }
  @Test void eightSecurityCasesForOnlineAndInvoice()throws Exception{
