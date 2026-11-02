@@ -18,4 +18,7 @@ public class Size {
 
     @Column(name = "size_value", nullable = false, unique = true)
     @org.hibernate.annotations.Nationalized private String sizeValue;
+
+    @Column(name = "trang_thai", nullable = false)
+    private Boolean status = true;
 }

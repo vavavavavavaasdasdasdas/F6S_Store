@@ -46,13 +46,15 @@ public class ShippingFeeService {
         else if(ward!=null){var found=ward.getLatitude()!=null && ward.getLongitude()!=null?Optional.of(GeocodingService.point(ward.getLatitude(),ward.getLongitude())):allowGeocoding?geocoding.wardCenter(ward,client):Optional.<GeocodingService.Point>empty();if(found.isPresent()){point=found.get();source="TAM_PHUONG_XA";}}
         BigDecimal distance=point==null?null:haversine(s.getOriginLatitude(),s.getOriginLongitude(),point.latitude(),point.longitude());boolean free=quantity>=s.getFreeQuantity();
         String address=ward==null || form.getStreetAddress()==null || form.getStreetAddress().isBlank()?null:form.getStreetAddress().trim()+", "+ward.getName()+", "+ward.getProvince().getName();
-        return new Quote(free?BigDecimal.ZERO:tier(s,distance),distance,point==null?null:point.latitude(),point==null?null:point.longitude(),source,free,free?"Miễn phí vận chuyển":distance==null?"Phí tạm tính, shop sẽ xác nhận lại":"Phí tính theo khoảng cách đường chim bay",free?"":quantity>0?"Mua thêm "+(s.getFreeQuantity()-quantity)+" sản phẩm để được freeship":"Thêm sản phẩm để tính phí vận chuyển",address,ward==null?null:ward.getProvince().getAdministrativeCode(),ward==null?null:ward.getCode(),ward==null?null:ward.getName());
+        return new Quote(BigDecimal.ZERO,distance,point==null?null:point.latitude(),point==null?null:point.longitude(),source,false,"Phí vận chuyển do đơn vị vận chuyển tính và thu riêng","",address,ward==null?null:ward.getProvince().getAdministrativeCode(),ward==null?null:ward.getCode(),ward==null?null:ward.getName());
     }
     public void apply(Order order,DeliveryAddressForm form,int quantity){
-        var ward=validateAddress(form);var q=quote(form,quantity,false,"order");
+        var ward=validateAddress(form);
+        String fullAddress=form.getStreetAddress().trim()+", "+ward.getName()+", "+ward.getProvince().getName();
         order.setProvince(ward.getProvince());order.setProvinceName(ward.getProvince().getName());order.setWard(ward);order.setStreetAddress(form.getStreetAddress().trim());
-        order.setShippingAddress(form.getStreetAddress().trim());order.setDeliveryAddressSnapshot(q.fullAddress());order.setDeliveryProvinceCode(q.provinceCode());order.setDeliveryWardCode(q.wardCode());order.setDeliveryWardName(q.wardName());
-        order.setLatitude(q.latitude());order.setLongitude(q.longitude());order.setCoordinateSource(q.coordinateSource());order.setDistanceKm(q.distanceKm());order.setShippingFee(q.shippingFee());order.setFreeShip(q.freeShip());order.setShippingNote(q.note());order.setShippingPolicyVersion(1);
+        order.setShippingAddress(form.getStreetAddress().trim());order.setDeliveryAddressSnapshot(fullAddress);order.setDeliveryProvinceCode(ward.getProvince().getAdministrativeCode());order.setDeliveryWardCode(ward.getCode());order.setDeliveryWardName(ward.getName());
+        order.setLatitude(form.getLatitude());order.setLongitude(form.getLongitude());order.setCoordinateSource(form.getCoordinateSource());
+        order.setDistanceKm(null);order.setShippingFee(BigDecimal.ZERO);order.setFreeShip(false);order.setShippingNote("Phí vận chuyển do đơn vị vận chuyển tính và thu riêng");order.setShippingPolicyVersion(1);
     }
     @Transactional public void update(ShippingSettingsForm form){
         var errors=validator.validate(form);if(!errors.isEmpty()){var e=errors.iterator().next();throw new PeopleValidationException(e.getPropertyPath().toString(),"Kiểm tra giá trị cấu hình vận chuyển.");}

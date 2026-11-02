@@ -2,4 +2,8 @@
 <aside th:fragment="sidebar" id="admin-sidebar" class="admin-sidebar" aria-label="Điều hướng quản trị">
 <a class="admin-brand" th:href="${adminHome}"><img class="shop-logo" src="/images/logo.jpg" alt="Biểu trưng F6S Store"><span>F6S_Store<small>QUẢN TRỊ CỬA HÀNG</small></span></a>
 <nav class="admin-nav"><th:block th:each="item:${adminNav}"><th:block th:if="${item.key()=='products'}"><th:block th:replace="~{fragments/menu-san-pham :: menu}"></th:block></th:block><th:block th:if="${item.key()=='inventory' and !adminFullAccess}"><a th:replace="~{fragments/menu-san-pham :: link(${item.route()},${item.key()},${item.title()})}"></a></th:block><th:block th:unless="${#lists.contains({'products','variants','categories','sizes','soles','materials','colors','inventory'},item.key())}"><p th:if="${!#strings.isEmpty(item.group())}" class="admin-nav-group" th:text="${item.group()}"></p><a th:replace="~{fragments/menu-san-pham :: link(${item.route()},${item.key()},${item.title()})}"></a></th:block></th:block></nav>
-<form class="admin-logout" th:action="@{/logout}" method="post"><button type="submit">↪ Đăng xuất</button></form></aside></body></html>
+<div class="admin-sidebar-footer">
+    <a class="admin-sidebar-profile" th:href="@{/admin/account}" th:classappend="${adminActive=='account' ? ' is-active' : ''}">👤 Hồ sơ của tôi</a>
+    <form class="admin-logout" th:action="@{/logout}" method="post"><button type="submit">↪ Đăng xuất</button></form>
+</div>
+</aside></body></html>

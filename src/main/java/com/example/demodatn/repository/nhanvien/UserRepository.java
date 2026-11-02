@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByUsername(String username);
+    long countByRole_NameAndStatusTrue(String roleName);
     boolean existsByUsernameIgnoreCaseAndIdNot(String username,Integer id);
     @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
     @org.springframework.data.jpa.repository.Query("select u from User u where u.username=:username")

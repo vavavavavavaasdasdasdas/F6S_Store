@@ -57,7 +57,7 @@ class DeliveryIntegrationTest {
   var session=new org.springframework.mock.web.MockHttpSession();var detail=o.getOrderDetails().get(0);session.setAttribute("cart",new ArrayList<>(List.of(new CartItemDto(detail.getProductVariant().getProduct().getId(),detail.getProductVariant().getId(),detail.getProductName(),detail.getSizeName(),detail.getPrice(),1))));
   var invalid=mvc.perform(post("/checkout/place").with(user(owner).roles("USER")).with(csrf()).session(session).param("provinceId","abc").param("receiverName","Nguyễn Văn Mẫu").param("phone","0968123456").param("email","giao@example.test").param("streetAddress","Số 12").param("paymentMethod","COD")).andExpect(redirectedUrl("/checkout")).andReturn();
   mvc.perform(get("/checkout").with(user(owner).roles("USER")).session(session).flashAttrs(invalid.getFlashMap())).andExpect(status().isOk()).andExpect(content().string(containsString("Vui lòng chọn Tỉnh/Thành phố hợp lệ trong danh sách.")));
-  mvc.perform(post("/admin/shipping-config/settings").with(csrf()).param("originAddress","Kho").param("originLatitude","999").param("originLongitude","105").param("firstLimitKm","10").param("secondLimitKm","20").param("firstFee","20000").param("secondFee","30000").param("fallbackFee","40000").param("freeQuantity","2")).andExpect(status().isOk()).andExpect(content().string(containsString("Giá trị vượt giới hạn cho phép.")));
+  mvc.perform(get("/admin/shipping-config/settings")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/admin/dashboard"));
   mvc.perform(post("/admin/invoices/"+jdbc.queryForObject("SELECT id FROM invoices WHERE order_id=?",Integer.class,o.getId())+"/province").with(csrf()).param("provinceId","abc")).andExpect(status().is3xxRedirection()).andExpect(flash().attribute("error","Vui lòng chọn Tỉnh/Thành phố hợp lệ trong danh sách."));
  }
  @Test void customerInvoiceOwnershipAndEightSecurityScenarios()throws Exception{
@@ -66,9 +66,9 @@ class DeliveryIntegrationTest {
   mvc.perform(get("/orders/"+o.getId()+"/hoa-don").with(user("another").roles("USER"))).andExpect(status().isForbidden());
   mvc.perform(get("/orders/"+o.getId()+"/hoa-don").with(anonymous())).andExpect(status().is3xxRedirection());
   mvc.perform(get("/admin/shipping-config").with(user("another").roles("USER"))).andExpect(status().isForbidden());
-  mvc.perform(get("/admin/shipping-config")).andExpect(status().isOk());
-  mvc.perform(get("/admin/shipping-times")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/admin/shipping-config"));
-  for(String path:new String[]{"/admin/invoices/"+jdbc.queryForObject("SELECT id FROM invoices WHERE order_id=?",Integer.class,o.getId())+"/status","/admin/invoices/"+jdbc.queryForObject("SELECT id FROM invoices WHERE order_id=?",Integer.class,o.getId())+"/province","/admin/shipping-config/settings"}){
+  mvc.perform(get("/admin/shipping-config")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/admin/dashboard"));
+  mvc.perform(get("/admin/shipping-times")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/admin/dashboard"));
+  for(String path:new String[]{"/admin/invoices/"+jdbc.queryForObject("SELECT id FROM invoices WHERE order_id=?",Integer.class,o.getId())+"/status","/admin/invoices/"+jdbc.queryForObject("SELECT id FROM invoices WHERE order_id=?",Integer.class,o.getId())+"/province"}){
    mvc.perform(post(path)).andExpect(status().isForbidden());
    mvc.perform(post(path).with(csrf().useInvalidToken())).andExpect(status().isForbidden());
    mvc.perform(post(path).with(user("another").roles("USER")).with(csrf())).andExpect(status().isForbidden());

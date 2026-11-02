@@ -78,11 +78,30 @@ public class AdminVariantController {
         }
         return form(model);
     }
-    @PostMapping("/admin/variants/status/{id}")
-    public String status(@PathVariable Integer id,@RequestParam boolean selling,RedirectAttributes flash) {
+    @PostMapping({"/admin/variants/status/{id}", "/admin/variants/toggle-status/{id}"})
+    public Object status(@PathVariable Integer id,@RequestParam boolean selling,
+                         jakarta.servlet.http.HttpServletRequest request,RedirectAttributes flash) {
         Integer productId=catalog.variantStatus(id,selling);
-        flash.addFlashAttribute("message",selling?"Đã bán lại biến thể. Tồn kho được giữ nguyên.":"Đã ngừng bán biến thể. Tồn kho và lịch sử được giữ nguyên.");
+        String msg = selling?"Đã bán lại biến thể. Tồn kho được giữ nguyên.":"Đã ngừng bán biến thể. Tồn kho và lịch sử được giữ nguyên.";
+        String xhr = request.getHeader("X-Requested-With");
+        String accept = request.getHeader("Accept");
+        if ("XMLHttpRequest".equalsIgnoreCase(xhr) || (accept != null && accept.contains("application/json"))) {
+            return org.springframework.http.ResponseEntity.ok(java.util.Map.of(
+                    "id", id,
+                    "selling", selling,
+                    "active", selling,
+                    "stateLabel", selling ? "Đang bán" : "Ngừng bán",
+                    "message", msg
+            ));
+        }
+        flash.addFlashAttribute("message", msg);
         return "redirect:/admin/products-crud/view/"+productId;
+    }
+    @PostMapping("/admin/variants/delete/{id}")
+    public void delete(@PathVariable Integer id) {
+        throw new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED,
+                "Chức năng xóa đã chuyển thành tắt hoạt động.");
     }
     private String form(Model model) {
         model.addAttribute("products",products.findAll()); model.addAttribute("sizes",sizes.findAll()); model.addAttribute("materials",materials.findByStatusTrueOrderByNameAscIdAsc());

@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "ma": "KC001",
+    "size_value": "36",
+    "trang_thai": true
+  },
+  {
+    "id": 2,
+    "ma": "KC002",
+    "size_value": "37",
+    "trang_thai": true
+  },
+  {
+    "id": 3,
+    "ma": "KC003",
+    "size_value": "38",
+    "trang_thai": true
+  },
+  {
+    "id": 4,
+    "ma": "KC004",
+    "size_value": "39",
+    "trang_thai": true
+  },
+  {
+    "id": 5,
+    "ma": "KC005",
+    "size_value": "40",
+    "trang_thai": true
+  },
+  {
+    "id": 6,
+    "ma": "KC006",
+    "size_value": "41",
+    "trang_thai": true
+  },
+  {
+    "id": 7,
+    "ma": "KC007",
+    "size_value": "42",
+    "trang_thai": true
+  },
+  {
+    "id": 8,
+    "ma": "KC008",
+    "size_value": "43",
+    "trang_thai": true
+  }
+]

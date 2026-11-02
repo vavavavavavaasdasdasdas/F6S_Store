@@ -108,5 +108,5 @@ public class AdminVoucherController {
         catch(DataIntegrityViolationException ex) { errors.rejectValue("code","duplicate","Mã phiếu giảm giá đã tồn tại hoặc dữ liệu đã thay đổi. Kiểm tra rồi lưu lại."); }
         return form(model);
     }
-    @PostMapping("/delete/{id}") public String delete(@PathVariable Integer id,RedirectAttributes flash) { flash.addFlashAttribute("message",discounts.deleteVoucher(id));return "redirect:/admin/vouchers"; }
+    @PostMapping("/delete/{id}") public void delete(@PathVariable Integer id) { throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED,"Chức năng xóa đã chuyển thành tắt hoạt động."); }
 }

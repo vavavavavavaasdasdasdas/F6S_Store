@@ -349,7 +349,10 @@ public class AdminCatalogService {
             if (sizes.existsBySizeValueIgnoreCaseAndIdNot(value, form.getId() == null ? -1 : form.getId()))
                 throw new CatalogValidationException("value", "Kích cỡ kích cỡ đã tồn tại.");
             Size size = form.getId() == null ? new Size() : sizes.findById(form.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            size.setSizeValue(value); sizes.saveAndFlush(size);
+            size.setSizeValue(value);
+            if (form.getId() == null) size.setStatus(form.getStatus() != null ? form.getStatus() : true);
+            else if (form.getStatus() != null) size.setStatus(form.getStatus());
+            sizes.saveAndFlush(size);
         } else if ("materials".equals(kind)) {
             if (value.length() > 100) throw new CatalogValidationException("value", "Tên chất liệu tối đa 100 ký tự.");
             if (materials.existsByNameIgnoreCaseAndIdNot(value, form.getId() == null ? -1 : form.getId()))

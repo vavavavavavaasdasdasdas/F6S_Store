@@ -85,9 +85,9 @@ public class AdminSoleController {
     @PostMapping("/toggle-status/{id}") public String toggle(@PathVariable Integer id,RedirectAttributes flash) {
         service.toggle(id);flash.addFlashAttribute("message","Đã đổi trạng thái hiển thị của đế giày.");return "redirect:/admin/soles";
     }
-    @PostMapping("/delete/{id}") public String delete(@PathVariable Integer id,RedirectAttributes flash) {
-        try{String message=service.delete(id);flash.addFlashAttribute(message.startsWith("Không")?"error":"message",message);}
-        catch(DataIntegrityViolationException ex){flash.addFlashAttribute("error","Không thể xóa đế giày vì sản phẩm vừa tham chiếu đến dữ liệu này.");}
-        return "redirect:/admin/soles";
+    @PostMapping("/delete/{id}") public void delete(@PathVariable Integer id) {
+        throw new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED,
+                "Chức năng xóa đã chuyển thành tắt hoạt động.");
     }
 }

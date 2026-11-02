@@ -77,8 +77,8 @@ public class AdminLookupController {
                 if (kw != null) {
                     predicates.add(cb.or(cb.like(cb.lower(root.get("sizeValue")), "%" + kw.toLowerCase() + "%"),cb.like(cb.lower(root.get("code")),"%"+kw.toLowerCase()+"%")));
                 }
-                if (status != null && !status) {
-                    predicates.add(cb.disjunction());
+                if (status != null) {
+                    predicates.add(cb.equal(root.get("status"), status));
                 }
                 if (inUse != null) {
                     var sq = query.subquery(Integer.class);
@@ -145,7 +145,9 @@ public class AdminLookupController {
         form.setId(id);
         form.setCode("sizes".equals(k)?sizes.findById(id).orElseThrow().getCode():"materials".equals(k)?materials.findById(id).orElseThrow().getCode():categories.findById(id).orElseThrow().getCode());
         if ("sizes".equals(k)) {
-            form.setValue(sizes.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getSizeValue());
+            Size size = sizes.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            form.setValue(size.getSizeValue());
+            form.setStatus(size.getStatus());
         } else if ("materials".equals(k)) {
             Material material = materials.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             form.setValue(material.getName());
@@ -191,7 +193,22 @@ public class AdminLookupController {
         String xhr = request.getHeader("X-Requested-With");
         String accept = request.getHeader("Accept");
         boolean ajax = "XMLHttpRequest".equalsIgnoreCase(xhr) || (accept != null && accept.contains("application/json"));
-        if ("categories".equals(k)) {
+        if ("sizes".equals(k)) {
+            Size size = sizes.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            boolean nextStatus = active != null ? active : !Boolean.TRUE.equals(size.getStatus());
+            size.setStatus(nextStatus);
+            sizes.saveAndFlush(size);
+            String msg = "Đã chuyển kích cỡ '" + size.getSizeValue() + "' sang trạng thái: " + (nextStatus ? "Hiển thị" : "Ẩn") + ".";
+            if (ajax) {
+                return ResponseEntity.ok(java.util.Map.of(
+                        "id", id,
+                        "active", nextStatus,
+                        "stateLabel", nextStatus ? "Đang hiển thị" : "Đang ẩn",
+                        "message", msg
+                ));
+            }
+            flash.addFlashAttribute("message", msg);
+        } else if ("categories".equals(k)) {
             Category category = categories.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             boolean nextStatus = active != null ? active : !Boolean.TRUE.equals(category.getStatus());
             category.setStatus(nextStatus);
@@ -231,17 +248,7 @@ public class AdminLookupController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable String kind, @PathVariable Integer id, RedirectAttributes flash) {
-        String k = normalizeKind(kind);
-        if ("categories".equals(k)) {
-            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Không được xóa thương hiệu. Hãy dùng công tắc Hiển thị/Ẩn.");
-        }
-        try {
-            String message = catalog.deleteLookup(k, id);
-            flash.addFlashAttribute(message.startsWith("Không") ? "error" : "message", message);
-        } catch (DataIntegrityViolationException ex) {
-            flash.addFlashAttribute("error", "Không thể xóa vì dữ liệu đang được tham chiếu.");
-        }
-        return "redirect:/admin/" + k;
+    public void delete(@PathVariable String kind, @PathVariable Integer id) {
+        throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Chức năng xóa đã chuyển thành tắt hoạt động.");
     }
 }

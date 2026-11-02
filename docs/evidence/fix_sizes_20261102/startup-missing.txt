@@ -1,0 +1,2 @@
+2026-11-02 21:08:45.813 ERROR com.example.demodatn.config.SchemaCheck : SCHEMA_CHECK: Thiếu cột dbo.sizes.trang_thai — 022_kich_co_trang_thai.sql
+Caused by: java.lang.IllegalStateException: Schema chưa đầy đủ: Thiếu cột dbo.sizes.trang_thai — 022_kich_co_trang_thai.sql. Chạy database/migrations/chay_tat_ca.sql trên đúng database trước khi khởi động.

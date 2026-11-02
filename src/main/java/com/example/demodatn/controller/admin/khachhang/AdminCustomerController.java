@@ -44,6 +44,7 @@ public class AdminCustomerController {
                        @RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                        @RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
                        @RequestParam(defaultValue="0") String page,
+                       java.security.Principal principal,
                        Model model) {
         String query=keyword==null?"":keyword.trim();
         Specification<Customer> spec = (root, cq, cb) -> {
@@ -82,6 +83,7 @@ public class AdminCustomerController {
         if (from != null) activeFilterCount++;
         if (to != null) activeFilterCount++;
         model.addAttribute("activeFilterCount", activeFilterCount);
+        model.addAttribute("currentUsername", principal != null ? principal.getName() : "");
         return "admin/khach-hang/danh-sach";
     }
     @GetMapping("/create")
@@ -203,17 +205,38 @@ public class AdminCustomerController {
         return "admin/khach-hang/bieu-mau";
     }
     @PostMapping("/status/{id}")
-    public String status(@PathVariable Integer id,@RequestParam boolean enabled,RedirectAttributes flash) {
-        try { people.customerStatus(id,enabled);flash.addFlashAttribute("message",enabled?"Đã kích hoạt. Tài khoản chỉ hoạt động khi mọi hồ sơ liên kết đều hoạt động.":"Đã vô hiệu hóa hồ sơ và tài khoản liên kết. Lịch sử vẫn được giữ nguyên."); }
-        catch(IllegalArgumentException ex) { flash.addFlashAttribute("error",ex.getMessage()); }
+    public Object status(@PathVariable Integer id,@RequestParam boolean enabled,
+                         jakarta.servlet.http.HttpServletRequest request,RedirectAttributes flash) {
+        try {
+            people.customerStatus(id,enabled);
+            String msg = enabled ? "Đã kích hoạt. Tài khoản chỉ hoạt động khi mọi hồ sơ liên kết đều hoạt động." : "Đã vô hiệu hóa hồ sơ và tài khoản liên kết. Lịch sử vẫn được giữ nguyên.";
+            String xhr = request.getHeader("X-Requested-With");
+            String accept = request.getHeader("Accept");
+            if ("XMLHttpRequest".equalsIgnoreCase(xhr) || (accept != null && accept.contains("application/json"))) {
+                return org.springframework.http.ResponseEntity.ok(java.util.Map.of(
+                        "id", id,
+                        "enabled", enabled,
+                        "active", enabled,
+                        "stateLabel", enabled ? "Đang hoạt động" : "Đã tắt",
+                        "message", msg
+                ));
+            }
+            flash.addFlashAttribute("message", msg);
+        } catch(IllegalArgumentException ex) {
+            String xhr = request.getHeader("X-Requested-With");
+            String accept = request.getHeader("Accept");
+            if ("XMLHttpRequest".equalsIgnoreCase(xhr) || (accept != null && accept.contains("application/json"))) {
+                return org.springframework.http.ResponseEntity.badRequest().body(java.util.Map.of("message", ex.getMessage()));
+            }
+            flash.addFlashAttribute("error", ex.getMessage());
+        }
         return "redirect:/admin/customers/detail/"+id;
     }
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id,RedirectAttributes flash) {
-        try { flash.addFlashAttribute("message",people.deleteCustomer(id)); }
-        catch(IllegalArgumentException ex) { flash.addFlashAttribute("error",ex.getMessage()); }
-        catch(DataIntegrityViolationException ex) { flash.addFlashAttribute("error","Dữ liệu vừa phát sinh tham chiếu. Không xóa; hãy vô hiệu hóa hồ sơ."); }
-        return "redirect:/admin/customers";
+    public void delete(@PathVariable Integer id) {
+        throw new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED,
+                "Chức năng xóa đã chuyển thành tắt hoạt động.");
     }
     @PostMapping("/{id}/send-account")
     public String sendAccount(@PathVariable Integer id,@RequestParam(defaultValue="false") boolean confirmed,RedirectAttributes flash) {

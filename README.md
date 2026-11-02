@@ -131,3 +131,23 @@ Giai đoạn 13: /admin/pos chỉ bán tại quầy, /admin/ban-online tạo đ�
 Giai đoạn 14: chạy migration 021 sau 020. Chỉ khách có đơn DELIVERED chứa sản phẩm được đánh giá; mỗi khách một đánh giá/sản phẩm, tối đa 5 lần gửi/sửa mỗi phút. Khách sửa/xóa của mình; Admin chỉ ẩn/hiện. Đánh giá ẩn không tính điểm. /favorites lưu sản phẩm yêu thích; sản phẩm ngừng bán vẫn hiện nhãn và không thêm giỏ. Dữ liệu wishlist tự dọn khi xóa sản phẩm/khách chưa giao dịch để giữ hành vi xóa trước đây. Xem docs/GIAI_DOAN_14_DANH_GIA_YEU_THICH.md.
 
 Giai đoạn 15: hoàn thiện Dashboard (/admin/dashboard) và gộp Thống kê thành một trang duy nhất (/admin/statistics). Mọi khối trên Dashboard tuân theo bộ lọc ngày; bổ sung doanh thu tiền mặt/chuyển khoản, top khách hàng, thống kê đánh giá, yêu thích và biến động tồn kho. Xem docs/GIAI_DOAN_15_DASHBOARD_THONG_KE.md.
+
+
+### Lỗi khởi động thiếu `sizes.trang_thai`
+
+Entity `Size` cần `trang_thai BIT NOT NULL`. Nếu log báo thiếu cột này, sao lưu database đang dùng rồi áp dụng riêng `database/migrations/022_kich_co_trang_thai.sql`. Script bổ sung cột với giá trị mặc định 1 cho dữ liệu cũ, chạy lại không đổi trạng thái đã lưu. `SchemaCheck` chỉ kiểm tra và báo lỗi; ứng dụng không tự đổi schema.
+
+Tạo một file vận hành riêng chứa hai dòng sau (đường dẫn tương đối tính từ thư mục gốc project):
+
+```sql
+EXEC sys.sp_set_session_context @key=N'shop.allow-production-migration', @value=1;
+:r database/migrations/022_kich_co_trang_thai.sql
+```
+
+Chạy bằng tài khoản có quyền sửa schema, thay các tham số thực tế:
+
+```powershell
+sqlcmd -S <SERVER> -E -d <TEN_DB_DANG_DUNG> -b -f 65001 -i <FILE_VAN_HANH.sql>
+```
+
+Cờ session chỉ cho phép DB sản xuất có tên chính xác trong guard; các tên DB khác vẫn bị từ chối. Sau đó khởi động lại với `spring.jpa.hibernate.ddl-auto=validate`. Lệnh trên là hướng dẫn thao tác thủ công, chưa được chạy trên database thật.

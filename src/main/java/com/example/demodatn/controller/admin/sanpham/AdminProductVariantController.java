@@ -55,9 +55,10 @@ public class AdminProductVariantController {
     }
     @PostMapping("/{id}/delete") @ResponseBody
     public ResponseEntity<?> delete(@PathVariable Integer productId,@PathVariable Integer id) {
-        try {catalog.deleteVariant(productId,id);return ResponseEntity.ok(Map.of("message","Đã xóa biến thể chưa có đơn hoặc hóa đơn chờ."));}
-        catch(CatalogValidationException ex){return bad(ex.getField(),ex.getMessage(),409);}
-        catch(DataIntegrityViolationException ex){return bad("id","Biến thể vừa có dữ liệu liên quan. Hãy dùng Ngừng bán.",409);}
+        owned(productId, id);
+        throw new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED,
+                "Chức năng xóa đã chuyển thành tắt hoạt động.");
     }
     @GetMapping("/row/{id}")
     public String row(@PathVariable Integer productId,@PathVariable Integer id,@RequestParam(defaultValue="1") int rowNumber,Model model) {

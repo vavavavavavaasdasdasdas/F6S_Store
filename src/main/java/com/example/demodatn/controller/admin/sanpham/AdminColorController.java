@@ -82,12 +82,28 @@ public class AdminColorController {
           catch(DataIntegrityViolationException ex){errors.rejectValue("value","duplicate","Tên màu sắc đã tồn tại hoặc dữ liệu vừa thay đổi.");}
         return "admin/mau-sac/bieu-mau";
     }
-    @PostMapping("/toggle-status/{id}") public String toggle(@PathVariable Integer id,RedirectAttributes flash) {
-        service.toggle(id);flash.addFlashAttribute("message","Đã đổi trạng thái hiển thị của màu sắc.");return "redirect:/admin/colors";
-    }
-    @PostMapping("/delete/{id}") public String delete(@PathVariable Integer id,RedirectAttributes flash) {
-        try{String message=service.delete(id);flash.addFlashAttribute(message.startsWith("Không")?"error":"message",message);}
-        catch(DataIntegrityViolationException ex){flash.addFlashAttribute("error","Không thể xóa màu sắc vì biến thể vừa tham chiếu đến dữ liệu này.");}
+    @PostMapping("/toggle-status/{id}") public Object toggle(@PathVariable Integer id,
+            jakarta.servlet.http.HttpServletRequest request,RedirectAttributes flash) {
+        service.toggle(id);
+        var color = service.get(id);
+        boolean nextStatus = Boolean.TRUE.equals(color.getStatus());
+        String msg = "Đã chuyển màu sắc '" + color.getName() + "' sang trạng thái: " + (nextStatus ? "Hiển thị" : "Ẩn") + ".";
+        String xhr = request.getHeader("X-Requested-With");
+        String accept = request.getHeader("Accept");
+        if ("XMLHttpRequest".equalsIgnoreCase(xhr) || (accept != null && accept.contains("application/json"))) {
+            return org.springframework.http.ResponseEntity.ok(java.util.Map.of(
+                    "id", id,
+                    "active", nextStatus,
+                    "stateLabel", nextStatus ? "Đang hiển thị" : "Đang ẩn",
+                    "message", msg
+            ));
+        }
+        flash.addFlashAttribute("message", msg);
         return "redirect:/admin/colors";
+    }
+    @PostMapping("/delete/{id}") public void delete(@PathVariable Integer id) {
+        throw new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED,
+                "Chức năng xóa đã chuyển thành tắt hoạt động.");
     }
 }

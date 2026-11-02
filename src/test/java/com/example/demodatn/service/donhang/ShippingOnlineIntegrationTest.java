@@ -47,7 +47,7 @@ class ShippingOnlineIntegrationTest {
         System.out.println("GD16 COD before="+before+" confirmed="+(before-1)+" cancelled="+stock()+" customer reused=true user count unchanged="+users);
     }
     @Test void bankTransferAndSnapshotAndNewRevenueExcludeOnlyNewShipping(){
-        var f=form("BANK_TRANSFER");var o=online.create("admin",f,cart(1));assertEquals(stock-1,stock());assertEquals(0,new BigDecimal("25000").compareTo(o.getShippingFee()));assertEquals(o.getTotalAmount().add(o.getShippingFee()),o.getFinalAmount());
+        var f=form("BANK_TRANSFER");var o=online.create("admin",f,cart(1));assertEquals(stock-1,stock());assertEquals(0,BigDecimal.ZERO.compareTo(o.getShippingFee()));assertEquals(o.getTotalAmount().add(o.getShippingFee()),o.getFinalAmount());
         String snapshot=o.getShippingAddress();jdbc.update("UPDATE phuong_xa SET ten=N'Đổi tên sau khi đặt' WHERE id=?",ward);assertEquals(snapshot,o.getShippingAddress());
         assertEquals(0,o.getTotalAmount().compareTo(jdbc.queryForObject("SELECT "+RevenueCondition.AMOUNT+" FROM orders o WHERE id=?",BigDecimal.class,o.getId())));
         jdbc.update("UPDATE orders SET shipping_policy_version=NULL WHERE id=?",o.getId());assertEquals(0,o.getFinalAmount().compareTo(jdbc.queryForObject("SELECT "+RevenueCondition.AMOUNT+" FROM orders o WHERE id=?",BigDecimal.class,o.getId())));
@@ -57,10 +57,10 @@ class ShippingOnlineIntegrationTest {
     @Test void quoteIgnoresForgedFeeAndDistanceAndRejectsMismatchedWard() throws Exception {
         var f=form("COD");var session=new MockHttpSession();session.setAttribute("online-posCart",cart(1));
         mvc.perform(post("/shipping/quote").session(session).with(csrf()).param("scope","POS_ONLINE").param("provinceId",province.toString()).param("wardId",ward.toString()).param("streetAddress",f.getStreetAddress()).param("latitude",f.getLatitude().toString()).param("longitude",f.getLongitude().toString()).param("coordinateSource","GHIM_TAY").param("shipping_fee","0").param("distance_km","99999"))
-            .andExpect(status().isOk()).andExpect(jsonPath("$.shippingFee").value(25000)).andExpect(jsonPath("$.shipping.distanceKm").value(0));
+            .andExpect(status().isOk()).andExpect(jsonPath("$.shippingFee").value(0)).andExpect(jsonPath("$.shipping.distanceKm").value(0));
         Integer other=jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh WHERE id<>?",Integer.class,province);f.setProvinceId(other);assertThrows(IllegalArgumentException.class,()->shipping.validateAddress(f));
         f.setProvinceId(province);f.setCoordinateSource("TAM_PHUONG_XA");f.setLatitude(BigDecimal.ZERO);f.setLongitude(BigDecimal.ZERO);jdbc.update("UPDATE phuong_xa SET latitude=NULL,longitude=NULL WHERE id=?",ward);
-        assertEquals(0,new BigDecimal("55000").compareTo(shipping.quote(f,1,false,"test").shippingFee()));
+        assertEquals(0,BigDecimal.ZERO.compareTo(shipping.quote(f,1,false,"test").shippingFee()));
     }
     @Test void eightSecurityGroupsAndAuthenticatedReadRoutes() throws Exception {
         mvc.perform(get("/shipping/config").with(anonymous())).andExpect(status().is3xxRedirection());

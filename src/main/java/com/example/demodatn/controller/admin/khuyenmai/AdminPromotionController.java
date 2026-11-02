@@ -150,5 +150,5 @@ public class AdminPromotionController {
         return redirect;
     }
     private String like(String q){return "%"+q.trim().toLowerCase(java.util.Locale.ROOT).replace("!","!!").replace("%","!%").replace("_","!_").replace("[","![")+"%";}
-    @PostMapping("/delete/{id}") public String delete(@PathVariable Integer id,RedirectAttributes flash) { discounts.deletePromotion(id);flash.addFlashAttribute("message","Đã xóa đợt giảm giá; giá đơn đã đặt được giữ nguyên.");return "redirect:/admin/promotions"; }
+    @PostMapping("/delete/{id}") public void delete(@PathVariable Integer id) { throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED,"Chức năng xóa đã chuyển thành tắt hoạt động."); }
 }

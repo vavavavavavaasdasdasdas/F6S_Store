@@ -1,0 +1,588 @@
+[
+  {
+    "id": "login-admin",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/login",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/login",
+        "method": "POST",
+        "status": 302
+      },
+      {
+        "url": "/admin",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": {
+      "url": "http://localhost:18422/admin",
+      "title": "Dashboard | F6S Store"
+    },
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 3064
+    },
+    "message": ""
+  },
+  {
+    "id": "startup-routes-guest",
+    "width": 1280,
+    "role": "guest",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/products",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/products/2",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/cart",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/login",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "url": "/",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 1423,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/products",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 1149,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/products/2",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 804,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/cart",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 456,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/login",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 385,
+        "missingCsrf": 0
+      }
+    ],
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 385
+    },
+    "message": ""
+  },
+  {
+    "id": "startup-routes-admin",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/dashboard",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/variants",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/inventory",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/invoices",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/customers",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/employees",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/vouchers",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/promotions",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/account",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/sizes",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "url": "/admin/dashboard",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 3064,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/products-crud",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 1433,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/variants",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 2724,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/inventory",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 4060,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/invoices",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 2973,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/customers",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 2326,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/employees",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 1343,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/vouchers",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 2028,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/promotions",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 1264,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/account",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 783,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/sizes",
+        "status": 200,
+        "scroll": 1265,
+        "width": 1280,
+        "text": 964,
+        "missingCsrf": 0
+      }
+    ],
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 964
+    },
+    "message": ""
+  },
+  {
+    "id": "startup-routes-guest",
+    "width": 375,
+    "role": "guest",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/products",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/products/2",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/cart",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/login",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "url": "/",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 1378,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/products",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 697,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/products/2",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 772,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/cart",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 411,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/login",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 340,
+        "missingCsrf": 0
+      }
+    ],
+    "quality": {
+      "scrollWidth": 360,
+      "viewport": 375,
+      "textLength": 340
+    },
+    "message": ""
+  },
+  {
+    "id": "startup-routes-admin",
+    "width": 375,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/dashboard",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/products-crud",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/variants",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/inventory",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/invoices",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/customers",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/employees",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/vouchers",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/promotions",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/account",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "url": "/admin/sizes",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "url": "/admin/dashboard",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 2750,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/products-crud",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 1145,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/variants",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 2383,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/inventory",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 3719,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/invoices",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 2632,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/customers",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 1985,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/employees",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 1002,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/vouchers",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 1687,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/promotions",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 923,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/account",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 442,
+        "missingCsrf": 0
+      },
+      {
+        "url": "/admin/sizes",
+        "status": 200,
+        "scroll": 360,
+        "width": 375,
+        "text": 623,
+        "missingCsrf": 0
+      }
+    ],
+    "quality": {
+      "scrollWidth": 360,
+      "viewport": 375,
+      "textLength": 623
+    },
+    "message": ""
+  },
+  {
+    "id": "eight-csrf-scenarios",
+    "width": 1280,
+    "role": "admin",
+    "result": "PASS",
+    "requests": [
+      {
+        "url": "/admin/sizes",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "proof": [
+      {
+        "url": "/admin/sizes/save",
+        "token": "missing",
+        "status": 403
+      },
+      {
+        "url": "/admin/sizes/save",
+        "token": "invalid",
+        "status": 403
+      },
+      {
+        "url": "/admin/products-crud/save",
+        "token": "missing",
+        "status": 403
+      },
+      {
+        "url": "/admin/products-crud/save",
+        "token": "invalid",
+        "status": 403
+      },
+      {
+        "url": "/admin/variants/save",
+        "token": "missing",
+        "status": 403
+      },
+      {
+        "url": "/admin/variants/save",
+        "token": "invalid",
+        "status": 403
+      },
+      {
+        "url": "/admin/inventory/adjust",
+        "token": "missing",
+        "status": 403
+      },
+      {
+        "url": "/admin/inventory/adjust",
+        "token": "invalid",
+        "status": 403
+      }
+    ],
+    "quality": {
+      "scrollWidth": 1265,
+      "viewport": 1280,
+      "textLength": 964
+    },
+    "message": ""
+  }
+]

@@ -37,7 +37,7 @@ public class SchemaCheck implements BeanPostProcessor {
             if (!missing.isEmpty()) {
                 missing.forEach(item -> log.error("SCHEMA_CHECK: {}", item));
                 throw new IllegalStateException("Schema chưa đầy đủ: " + String.join("; ", missing)
-                        + ". Chạy database/migrations/chay_tat_ca.sql trên đúng database trước khi khởi động.");
+                        + ". Áp dụng script được liệt kê trên đúng database trước khi khởi động.");
             }
         } catch (SQLException | ClassNotFoundException error) {
             log.error("SCHEMA_CHECK: Không đọc được metadata schema; không thay đổi database.", error);
@@ -79,6 +79,7 @@ public class SchemaCheck implements BeanPostProcessor {
     }
 
     private static String migration(String table, String column) {
+        if(table.equals("sizes") && column.equals("trang_thai"))return "022_kich_co_trang_thai.sql";
         if(java.util.Set.of("danh_gia","yeu_thich").contains(table)||column.startsWith("danh_gia_"))return "021_danh_gia_yeu_thich.sql";
         if(table.equals("pos_held_orders")&&java.util.Set.of("order_type","delivery_data").contains(column))return "020_hoa_don_ban_online.sql";
         if(column.equals("ma") && java.util.Set.of("categories","sizes","chat_lieu","mau_sac","de_giay","product_variants","promotions").contains(table))return "017_khung_admin_ma_doi_tuong.sql";

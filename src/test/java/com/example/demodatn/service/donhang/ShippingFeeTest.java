@@ -42,11 +42,11 @@ class ShippingFeeTest {
         try(var validation=Validation.buildDefaultValidatorFactory()){
             var service=new ShippingFeeService(repo,directory,geocoder,validation.getValidator());
             var f=new DeliveryAddressForm();f.setProvinceId(1);f.setWardId(2);f.setStreetAddress("Số 12, đường Nguyễn Huệ");f.setLatitude(n("21.03801"));f.setLongitude(n("105.7469"));f.setCoordinateSource("GPS");
-            var q=service.quote(f,1,false,"test");assertEquals(n("25000"),q.shippingFee());assertEquals(n("0.00"),q.distanceKm());assertEquals("GPS",q.coordinateSource());assertTrue(q.hint().contains("1 sản phẩm"));
-            q=service.quote(f,2,false,"test");assertTrue(q.freeShip());assertEquals(0,q.shippingFee().signum());
+            var q=service.quote(f,1,false,"test");assertEquals(java.math.BigDecimal.ZERO,q.shippingFee());assertEquals(n("0.00"),q.distanceKm());assertEquals("GPS",q.coordinateSource());assertTrue(q.note().contains("đơn vị vận chuyển"));
+            q=service.quote(f,2,false,"test");assertEquals(0,q.shippingFee().signum());
             var item=new CartItemDto();item.setQuantity(2);assertEquals(2,ShippingFeeService.quantity(List.of(item)));item.setQuantity(1);assertEquals(2,ShippingFeeService.quantity(List.of(item,item)));
-            f.setLatitude(null);f.setLongitude(null);f.setCoordinateSource(null);q=service.quote(f,1,false,"test");assertEquals("TAM_PHUONG_XA",q.coordinateSource());assertEquals(n("55000"),q.shippingFee());
-            w.setLatitude(null);w.setLongitude(null);q=service.quote(f,1,false,"test");assertNull(q.distanceKm());assertTrue(q.note().contains("tạm tính"));assertEquals(n("55000"),q.shippingFee());verifyNoInteractions(geocoder);
+            f.setLatitude(null);f.setLongitude(null);f.setCoordinateSource(null);q=service.quote(f,1,false,"test");assertEquals("TAM_PHUONG_XA",q.coordinateSource());assertEquals(java.math.BigDecimal.ZERO,q.shippingFee());
+            w.setLatitude(null);w.setLongitude(null);q=service.quote(f,1,false,"test");assertNull(q.distanceKm());assertTrue(q.note().contains("đơn vị vận chuyển"));assertEquals(java.math.BigDecimal.ZERO,q.shippingFee());verifyNoInteractions(geocoder);
         }
     }
 }

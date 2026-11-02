@@ -120,7 +120,7 @@ class DiscountIntegrationTest {
     @Test @Transactional
     void checkoutAndPosConsumeSamePercentageFormulaAndReferencedDeleteLocksVoucher() {
         var a=variant();var f=voucherForm();f.setMaxDiscount(new BigDecimal("30000"));var v=admin.saveVoucher(f);
-        var online=orders.placeOrder(request(v.getCode()),List.of(item(a)),customer(),BigDecimal.ZERO);money("30000",online.getDiscountAmount());money("225000",online.getFinalAmount());
+        var online=orders.placeOrder(request(v.getCode()),List.of(item(a)),customer(),BigDecimal.ZERO);money("30000",online.getDiscountAmount());money("170000",online.getFinalAmount());
         var pos=orders.createPosOrder(List.of(item(a)),null,employees.findByUser_Username("admin").orElseThrow(),v.getCode(),"CASH","Tại quầy",new BigDecimal("200000"));money("30000",pos.getDiscountAmount());money("170000",pos.getFinalAmount());assertEquals(2,v.getUsedCount());
         assertEquals(org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED,assertThrows(org.springframework.web.server.ResponseStatusException.class,()->admin.deleteVoucher(v.getId())).getStatusCode());assertTrue(voucherRepo.existsById(v.getId()));assertTrue(v.getStatus());money("30000",online.getDiscountAmount());
     }

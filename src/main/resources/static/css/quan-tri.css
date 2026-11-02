@@ -28,7 +28,13 @@
 .admin-nav-submenu a.is-active .nav-dot { background:var(--bs-primary); border-color:var(--bs-primary); border-radius:50%; }
 .nav-dot-parent { width:6px; height:6px; border:1px solid #9ba1aa; border-radius:50%; background:transparent; flex:none; }
 .admin-nav-parent.has-active-child .nav-dot-parent { background:var(--bs-primary); border-color:var(--bs-primary); }
-.admin-logout { border-top:1px solid #eee; margin-top:18px; padding-top:10px; }
+.admin-sidebar-footer { border-top:1px solid #eee; margin-top:18px; padding-top:10px; }
+.admin-sidebar-profile { display:flex; align-items:center; gap:8px; padding:10px 12px; color:#535c67; font-weight:500; border-radius:8px; text-decoration:none; width:100%; margin-bottom:4px; }
+.admin-sidebar-profile:hover { background:#f5f6f8; color:#20262e; }
+.admin-sidebar-profile.is-active { background:rgba(var(--bs-primary-rgb),.10); color:#ab3b0f; font-weight:700; }
+.admin-menu-toggle-fixed { display:none; }
+tr.row-muted { opacity:0.55; }
+.admin-logout { border-top:1px solid #eee; margin-top:6px; padding-top:10px; }
 .admin-logout button { border:0; background:transparent; padding:10px 12px; color:#535c67; text-align:left; width:100%; border-radius:8px; }
 .admin-logout button:hover { background:#fff0ea; }
 .admin-shell { margin-left:244px; min-width:0; }
@@ -95,6 +101,8 @@
  .admin-body.menu-open .admin-sidebar { transform:translateX(0); visibility:visible; }
  .admin-shell { margin-left:0; }
  #admin-menu-toggle { display:block; }
+ .admin-menu-toggle-fixed { position:fixed; top:12px; left:12px; z-index:40; display:grid; place-items:center; width:40px; height:40px; border-radius:8px; border:1px solid #ddd; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.08); font-size:22px; cursor:pointer; }
+ .admin-body.not-dashboard .admin-content { padding-top:60px; }
  .admin-topbar { padding:0 24px; height:68px; }
  .admin-content { padding:24px; }
  .admin-skip { left:15px; }

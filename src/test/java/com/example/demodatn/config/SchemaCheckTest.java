@@ -8,6 +8,14 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SchemaCheckTest {
+    @Test void missingSizeStatusNamesTheIncrementalMigration() {
+        var required = SchemaCheck.requiredColumns(List.of(com.example.demodatn.entity.sanpham.Size.class));
+        var actual = new TreeSet<>(required.get("sizes"));
+        actual.remove("trang_thai");
+        assertEquals(List.of("Thiếu cột dbo.sizes.trang_thai — 022_kich_co_trang_thai.sql"),
+                SchemaCheck.missing(required, Map.of("sizes", actual)));
+        assertTrue(SchemaCheck.missing(required, required).isEmpty());
+    }
     @Test void missingTableNamesItsMigrationAndMissingColumnsAreAllReported() {
         var required = SchemaCheck.requiredColumns(List.of(ShippingAddress.class));
         assertEquals(Set.of("id","customer_id","ten_nguoi_nhan","so_dien_thoai","dia_chi","la_mac_dinh","thu_tu","created_at","tinh_thanh_id","phuong_xa_id","so_nha_duong","latitude","longitude","nguon_toa_do"), required.get("dia_chi_nhan_hang"));

@@ -59,6 +59,10 @@ public class PeopleService {
     }
     private void protectSelf(User user) {
         if(isSelf(user))throw new IllegalArgumentException("Không thể vô hiệu hóa hoặc xóa chính tài khoản đang đăng nhập.");
+        if(user != null && user.getRole() != null && "ROLE_ADMIN".equals(user.getRole().getName())) {
+            long activeAdmins = users.countByRole_NameAndStatusTrue("ROLE_ADMIN");
+            if(activeAdmins <= 1) throw new IllegalArgumentException("Hệ thống phải có ít nhất 1 quản trị viên (Admin) đang hoạt động.");
+        }
     }
     private void syncAccount(User user) {
         if(user==null)return;
