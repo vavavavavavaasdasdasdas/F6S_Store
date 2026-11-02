@@ -17,6 +17,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -182,27 +183,59 @@ public class AdminLookupController {
     }
 
     @PostMapping("/toggle-status/{id}")
-    public String toggleStatus(@PathVariable String kind, @PathVariable Integer id, RedirectAttributes flash) {
+    public Object toggleStatus(@PathVariable String kind, @PathVariable Integer id,
+                               @RequestParam(required = false) Boolean active,
+                               jakarta.servlet.http.HttpServletRequest request,
+                               RedirectAttributes flash) {
         String k = normalizeKind(kind);
+        String xhr = request.getHeader("X-Requested-With");
+        String accept = request.getHeader("Accept");
+        boolean ajax = "XMLHttpRequest".equalsIgnoreCase(xhr) || (accept != null && accept.contains("application/json"));
         if ("categories".equals(k)) {
             Category category = categories.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            boolean nextStatus = !Boolean.TRUE.equals(category.getStatus());
+            boolean nextStatus = active != null ? active : !Boolean.TRUE.equals(category.getStatus());
             category.setStatus(nextStatus);
             categories.saveAndFlush(category);
-            flash.addFlashAttribute("message", "Đã chuyển thương hiệu '" + category.getName() + "' sang trạng thái: " + (nextStatus ? "Hiển thị" : "Ẩn") + ".");
+            String msg = "Đã chuyển thương hiệu '" + category.getName() + "' sang trạng thái: " + (nextStatus ? "Hiển thị" : "Ẩn") + ".";
+            if (ajax) {
+                return ResponseEntity.ok(java.util.Map.of(
+                        "id", id,
+                        "active", nextStatus,
+                        "stateLabel", nextStatus ? "Đang hiển thị" : "Đang ẩn",
+                        "message", msg
+                ));
+            }
+            flash.addFlashAttribute("message", msg);
         } else if ("materials".equals(k)) {
             Material material = materials.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            boolean nextStatus = !Boolean.TRUE.equals(material.getStatus());
+            boolean nextStatus = active != null ? active : !Boolean.TRUE.equals(material.getStatus());
             material.setStatus(nextStatus);
             materials.saveAndFlush(material);
-            flash.addFlashAttribute("message", "Đã chuyển chất liệu '" + material.getName() + "' sang trạng thái: " + (nextStatus ? "Hiển thị" : "Ẩn") + ".");
+            String msg = "Đã chuyển chất liệu '" + material.getName() + "' sang trạng thái: " + (nextStatus ? "Hiển thị" : "Ẩn") + ".";
+            if (ajax) {
+                return ResponseEntity.ok(java.util.Map.of(
+                        "id", id,
+                        "active", nextStatus,
+                        "stateLabel", nextStatus ? "Đang hiển thị" : "Đang ẩn",
+                        "message", msg
+                ));
+            }
+            flash.addFlashAttribute("message", msg);
         }
         return "redirect:/admin/" + k;
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
+    public void rejectDeleteMethod(@PathVariable String kind, @PathVariable Integer id) {
+        throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Phương thức xóa không được hỗ trợ.");
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable String kind, @PathVariable Integer id, RedirectAttributes flash) {
         String k = normalizeKind(kind);
+        if ("categories".equals(k)) {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Không được xóa thương hiệu. Hãy dùng công tắc Hiển thị/Ẩn.");
+        }
         try {
             String message = catalog.deleteLookup(k, id);
             flash.addFlashAttribute(message.startsWith("Không") ? "error" : "message", message);

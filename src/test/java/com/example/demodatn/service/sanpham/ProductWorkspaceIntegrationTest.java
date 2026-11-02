@@ -41,11 +41,32 @@ class ProductWorkspaceIntegrationTest {
  }
  @Test void dedicatedWorkspaceHasTwelveSeparateColumnsAndViewHasNoTable()throws Exception{
   var view=mvc.perform(get("/admin/products-crud/view/"+productId).with(user("admin").roles("ADMIN"))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8);
-  assertFalse(view.contains("data-product-variants"));assertTrue(view.contains("Chi tiết biến thể"));
-  var detail=mvc.perform(get("/admin/products-crud/"+productId+"/variants").with(user("admin").roles("ADMIN"))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8);
-  assertTrue(detail.contains("<th>Mã SP</th><th>Tên SP</th><th>Mã biến thể</th>"));
+  assertTrue(view.contains("data-product-variants"));assertTrue(view.contains("<th>Mã SP</th><th>Tên SP</th><th>Mã biến thể</th>"));
+  mvc.perform(get("/admin/products-crud/"+productId+"/variants").with(user("admin").roles("ADMIN"))).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/admin/products-crud/view/"+productId));
   var list=mvc.perform(get("/admin/products-crud").with(user("admin").roles("ADMIN"))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8);
   assertTrue(list.contains("<th>Số biến thể</th>"));assertFalse(list.contains("name=\"materialId\""));
+  assertTrue(list.contains("Xem chi tiết"));assertFalse(list.contains("Chi tiết biến thể"));
+  mvc.perform(post("/admin/products-crud/delete/"+productId).with(user("admin").roles("ADMIN")).with(csrf())).andExpect(status().isMethodNotAllowed());
+  mvc.perform(delete("/admin/products-crud/delete/"+productId).with(user("admin").roles("ADMIN")).with(csrf())).andExpect(status().isMethodNotAllowed());
+  mvc.perform(get("/admin/products-crud/delete/"+productId).with(user("admin").roles("ADMIN"))).andExpect(status().isMethodNotAllowed());
+  int catId=first("categories");
+  mvc.perform(post("/admin/categories/delete/"+catId).with(user("admin").roles("ADMIN")).with(csrf())).andExpect(status().isMethodNotAllowed());
+  mvc.perform(delete("/admin/categories/delete/"+catId).with(user("admin").roles("ADMIN")).with(csrf())).andExpect(status().isMethodNotAllowed());
+  mvc.perform(get("/admin/categories/delete/"+catId).with(user("admin").roles("ADMIN"))).andExpect(status().isMethodNotAllowed());
+  // Forged product create POSTs: array of multiple values, unknown ID, custom string
+  String mat1=""+first("chat_lieu"), sole1=""+first("de_giay");
+  mvc.perform(multipart("/admin/products-crud/save").with(user("admin").roles("ADMIN")).with(csrf())
+   .param("name","SP Forge Multi").param("categoryId",""+catId).param("status","false")
+   .param("initialMaterialId",mat1,"999999").param("initialSoleId",sole1,"999999"))
+   .andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("product","initialMaterialId","initialSoleId"));
+  mvc.perform(multipart("/admin/products-crud/save").with(user("admin").roles("ADMIN")).with(csrf())
+   .param("name","SP Forge Unknown").param("categoryId",""+catId).param("status","false")
+   .param("initialMaterialId","999999").param("initialSoleId","999999"))
+   .andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("product","initialMaterialId","initialSoleId"));
+  mvc.perform(multipart("/admin/products-crud/save").with(user("admin").roles("ADMIN")).with(csrf())
+   .param("name","SP Forge Custom").param("categoryId",""+catId).param("status","false")
+   .param("newInitialMaterialName","Chat lieu tu go").param("newInitialSoleName","De giay tu go"))
+   .andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("product","initialMaterialId","initialSoleId"));
  }
  @Test void repeatedSizeInBatchRejectedWithoutPartialRows()throws Exception{
   String id=""+first("sizes");mvc.perform(batch(id,id)).andExpect(status().isBadRequest());

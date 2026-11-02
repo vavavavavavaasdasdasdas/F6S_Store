@@ -80,7 +80,8 @@
      if(form.dataset.submitting==='true'){event.preventDefault();return;}
      if(form.querySelector('[data-initial-variants]')) {
        const selected=Boolean(form.querySelector('[name=initialSizeIds]:checked')) || Boolean(form.querySelector('#newInitialSizeValue')?.value.trim());
-       ['initialColorId','initialSoleId','initialMaterialId','initialPrice','initialQuantity'].forEach(name=>{if(form.elements[name])form.elements[name].required=selected;});
+       ['initialColorId','initialPrice','initialQuantity'].forEach(name=>{if(form.elements[name])form.elements[name].required=selected;});
+       ['initialSoleId','initialMaterialId'].forEach(name=>{if(form.elements[name])form.elements[name].required=true;});
      }
      let valid=true;fields(form).forEach(f=>{if(!validate(f))valid=false;});
      if(!valid){event.preventDefault();focusField(fields(form).find(field=>field.getAttribute('aria-invalid')==='true'));return;}
@@ -101,6 +102,81 @@
      busy(button.form);button.form.requestSubmit();
    },button);
  }));
+ document.querySelectorAll('[data-catalog-switch]').forEach(form=>{
+   const input=form.querySelector('input[role="switch"]');
+   const label=form.querySelector('label.discount-switch');
+   const textSlot=form.querySelector('[data-switch-text]');
+   const hidden=form.querySelector('input[name="selling"],input[name="active"]');
+   if(!input)return;
+   input.addEventListener('change',async()=>{
+     if(form.dataset.submitting==='true'){input.checked=!input.checked;return;}
+     const next=input.checked;
+     form.dataset.submitting='true';
+     input.disabled=true;
+     if(!next){
+       input.checked=true;
+       const ok=await window.adminConfirm(
+         form.dataset.confirmTitle||'Xác nhận tắt?',
+         form.dataset.confirmOff||'Bạn có chắc chắn muốn thay đổi trạng thái?',
+         'Xác nhận',
+         input
+       );
+       if(!ok){
+         delete form.dataset.submitting;
+         input.disabled=false;
+         input.checked=true;
+         return;
+       }
+       input.checked=false;
+     }
+     if(hidden)hidden.value=String(next);
+     const banner=document.querySelector('[data-switch-banner]');
+     try{
+       const response=await fetch(form.action,{
+         method:'POST',
+         body:new FormData(form),
+         headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}
+       });
+       const data=response.headers.get('content-type')?.includes('application/json')?await response.json():null;
+       if(!response.ok || !data)throw new Error(data?.message||'Không thể cập nhật trạng thái.');
+       const state=Boolean(data.active??data.selling);
+       input.checked=state;
+       if(hidden)hidden.value=String(state);
+       if(textSlot&&data.stateLabel)textSlot.textContent=data.stateLabel;
+       if(label){
+         label.title=form.dataset.catalogSwitch==='product'
+           ?(state?'Đang bán — bấm để ngừng bán':'Ngừng bán — bấm để bán lại')
+           :(state?'Đang hiển thị — bấm để ẩn':'Đang ẩn — bấm để hiển thị');
+       }
+       const scope=form.closest('tr')||form.closest('.catalog-page')||document;
+       const badge=scope.querySelector('[data-status-badge]');
+       if(badge&&data.stateLabel){
+         badge.textContent=data.stateLabel;
+         if(form.dataset.catalogSwitch==='category'){
+           badge.className=state
+             ?'badge bg-success-subtle text-success border border-success-subtle px-2 py-1'
+             :'badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1';
+         }
+       }
+       if(banner){
+         banner.textContent=data.message||'Đã cập nhật trạng thái.';
+         banner.className='alert alert-success py-2 px-3 mb-3';
+         banner.hidden=false;
+       }
+     }catch(err){
+       input.checked=!next;
+       if(hidden)hidden.value=String(!next);
+       if(banner){
+         banner.textContent=err.message||'Không thể cập nhật trạng thái.';
+         banner.className='alert alert-danger py-2 px-3 mb-3';
+         banner.hidden=false;
+       }
+     }finally{
+       delete form.dataset.submitting;
+       input.disabled=false;
+     }
+   });
+ });
  document.querySelectorAll('[data-clear-search]').forEach(button=>{
    const field=button.parentElement.querySelector('input');
    const update=()=>button.hidden=!field.value;

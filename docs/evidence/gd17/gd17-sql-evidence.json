@@ -1,0 +1,171 @@
+{
+  "A1_product_toggle": {
+    "before": {
+      "product": {
+        "id": 2,
+        "code": "SP002",
+        "status": true
+      },
+      "variants": [
+        {
+          "id": 3,
+          "status": true,
+          "quantity": 18
+        },
+        {
+          "id": 4,
+          "status": true,
+          "quantity": 4
+        }
+      ]
+    },
+    "afterOff": {
+      "product": {
+        "id": 2,
+        "code": "SP002",
+        "status": false
+      },
+      "variants": [
+        {
+          "id": 3,
+          "status": true,
+          "quantity": 18
+        },
+        {
+          "id": 4,
+          "status": true,
+          "quantity": 4
+        }
+      ]
+    },
+    "afterOn": {
+      "id": 2,
+      "code": "SP002",
+      "status": true
+    },
+    "proofOff": {
+      "confirmText": "Sản phẩm Adidas Ultraboost sẽ ẩn khỏi cửa hàng và POS. Giỏ hàng, hóa đơn chờ có sản phẩm này sẽ bị chặn thanh toán. Trạng thái từng biến thể, tồn kho và lịch sử được giữ nguyên.",
+      "offJson": {
+        "active": false,
+        "message": "Đã ngừng bán sản phẩm. Tồn kho, biến thể và lịch sử được giữ nguyên.",
+        "id": 2,
+        "selling": false,
+        "stateLabel": "Ngừng bán"
+      },
+      "msgOff": "Đã ngừng bán sản phẩm. Tồn kho, biến thể và lịch sử được giữ nguyên."
+    },
+    "proofOn": {
+      "postCount": 1,
+      "msgOn": "Đã bán lại sản phẩm. Trạng thái từng biến thể được giữ nguyên.",
+      "deleteStatuses": {
+        "GET": 405,
+        "POST": 405,
+        "DELETE": 405
+      }
+    }
+  },
+  "B1_category_toggle": {
+    "before": {
+      "id": 1,
+      "code": "TH001",
+      "name": "Nike",
+      "status": true
+    },
+    "afterOff": {
+      "id": 1,
+      "code": "TH001",
+      "name": "Nike",
+      "status": false
+    },
+    "afterOn": {
+      "id": 1,
+      "code": "TH001",
+      "name": "Nike",
+      "status": true
+    },
+    "proofOff": {
+      "confirmText": "Thương hiệu Nike sẽ chuyển sang trạng thái Ẩn và không thể chọn khi tạo sản phẩm mới. Sản phẩm và đơn hàng cũ vẫn giữ nguyên thương hiệu.",
+      "offJson": {
+        "id": 1,
+        "stateLabel": "Đang ẩn",
+        "active": false,
+        "message": "Đã chuyển thương hiệu 'Nike' sang trạng thái: Ẩn."
+      },
+      "badgeAfterOff": "Đang ẩn"
+    },
+    "proofOn": {
+      "deleteStatuses": {
+        "catPost": 405,
+        "catGet": 405,
+        "dmPost": 405
+      }
+    }
+  },
+  "C_created_product": {
+    "product": {
+      "id": 949,
+      "code": "SP006",
+      "name": "Giày Chạy Bộ GĐ17 Mới",
+      "category_id": 1,
+      "status": true
+    },
+    "variants": [
+      {
+        "id": 598,
+        "code": "BT0021",
+        "size_id": 1,
+        "mau_sac_id": 1,
+        "chat_lieu_id": 1,
+        "de_giay_id": 1,
+        "price": 680000.0,
+        "quantity": 7,
+        "status": true
+      },
+      {
+        "id": 599,
+        "code": "BT0022",
+        "size_id": 2,
+        "mau_sac_id": 1,
+        "chat_lieu_id": 1,
+        "de_giay_id": 1,
+        "price": 680000.0,
+        "quantity": 7,
+        "status": true
+      }
+    ],
+    "proof": {
+      "previewText": "Sẽ tạo 2 biến thể",
+      "btnText": "Xem chi tiết",
+      "btnHref": "/admin/products-crud/view/949"
+    }
+  },
+  "A3_variant_ops": {
+    "before": {
+      "id": 598,
+      "code": "BT0021",
+      "size_id": 1,
+      "mau_sac_id": 1,
+      "chat_lieu_id": 1,
+      "de_giay_id": 1,
+      "price": 680000.0,
+      "quantity": 7,
+      "status": true
+    },
+    "after": {
+      "id": 598,
+      "price": 720000.0,
+      "quantity": 12,
+      "status": false
+    },
+    "inventoryLog": {
+      "quantity_change": 5,
+      "quantity_before": 7,
+      "quantity_after": 12,
+      "reason": "Nhập bổ sung tại trang Xem chi tiết GĐ17",
+      "actor": "admin"
+    },
+    "proof": {
+      "totalStockAfterEdit": "19"
+    }
+  }
+}

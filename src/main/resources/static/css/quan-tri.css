@@ -139,6 +139,8 @@ html { scrollbar-color:var(--admin-scroll-thumb) var(--admin-scroll-track); scro
 .catalog-pagination>div { display:flex; gap:8px; }
 .catalog-empty { text-align:center; padding:48px 16px!important; white-space:normal; color:#68717d; }
 .catalog-form-grid { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:36px; }
+.catalog-product-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px 24px; align-items:start; }
+.catalog-span-full { grid-column:1 / -1; }
 .catalog-field { margin-bottom:13px; }.field-error { color:#b12d3a; font-size:12px; min-height:18px; margin:5px 0 0; }
 .field-error:empty { display:block!important; }.field-help { color:#68717d; font-size:12px; line-height:1.6; }
 .catalog-field [aria-invalid=true] { border-color:#b12d3a; }
@@ -153,7 +155,7 @@ html { scrollbar-color:var(--admin-scroll-thumb) var(--admin-scroll-track); scro
 .admin-body a,.admin-body button,.admin-body select,.admin-body summary { cursor:pointer; }
 .admin-body button:disabled { cursor:wait; opacity:.65; }.admin-body button:active { filter:brightness(.95); }
 .catalog-form textarea { resize:none; }.form-message { color:#b12d3a; padding:12px; background:#fff0f1; border-radius:8px; }
-@media(max-width:850px) { .catalog-form-grid { grid-template-columns:1fr; gap:20px; }.catalog-image-panel { order:-1; }.catalog-preview { max-width:240px; }.catalog-detail { grid-template-columns:1fr; }.catalog-filters>div { min-width:180px; } }
+@media(max-width:850px) { .catalog-form-grid,.catalog-product-grid { grid-template-columns:1fr; gap:20px; }.catalog-preview { max-width:240px; }.catalog-detail { grid-template-columns:1fr; }.catalog-filters>div { min-width:180px; } }
 @media(max-width:480px) { .catalog-filters>div { min-width:100%; }.catalog-form-actions .btn { flex:1; }.catalog-image-panel { padding:16px; } }
 .people-contact { display:block; overflow-wrap:anywhere; white-space:normal; }
 .people-details { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin:0; }

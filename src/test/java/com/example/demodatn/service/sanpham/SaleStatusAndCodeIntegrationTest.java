@@ -92,11 +92,14 @@ class SaleStatusAndCodeIntegrationTest {
         catalog.variantStatus(v.getId(),true);assertTrue(v.getStatus());assertEquals(stock,v.getQuantity());assertTrue(p.getStatus());
     }
     @Test void twentyConcurrentPostRequestsAllocateDistinctCodes() throws Exception {
-        int category=categories.findAll().get(0).getId();var pool=Executors.newFixedThreadPool(20);var start=new CountDownLatch(1);
+        int category=categories.findAll().get(0).getId();
+        int material=materials.findByStatusTrueOrderByNameAscIdAsc().get(0).getId();
+        int sole=phase5Soles.findByStatusTrueOrderByNameAscIdAsc().get(0).getId();
+        var pool=Executors.newFixedThreadPool(20);var start=new CountDownLatch(1);
         try {
             List<Future<Integer>> futures=new ArrayList<>();
             for(int i=0;i<20;i++)futures.add(pool.submit(()->{start.await();var r=mvc.perform(post("/admin/products-crud/save").with(user("admin").roles("ADMIN")).with(csrf())
-                .param("name","Giày yêu cầu đồng thời "+UUID.randomUUID()).param("categoryId",String.valueOf(category)).param("status","false").param("code","SAME-FORGED-CODE"))
+                .param("name","Giày yêu cầu đồng thời "+UUID.randomUUID()).param("categoryId",String.valueOf(category)).param("initialMaterialId",String.valueOf(material)).param("initialSoleId",String.valueOf(sole)).param("status","false").param("code","SAME-FORGED-CODE"))
                 .andExpect(status().isFound()).andReturn();return (Integer)r.getFlashMap().get("createdProductId");}));
             start.countDown();Set<String> codes=new HashSet<>();for(var future:futures){String code=products.findById(future.get(45,TimeUnit.SECONDS)).orElseThrow().getCode();assertTrue(code.matches("SP[0-9]{3,}"));assertTrue(codes.add(code));}
             assertEquals(20,codes.size());

@@ -77,42 +77,43 @@ class Phase3ComboFilterIntegrationTest {
         pForm.setName("Giày Thể Thao " + suffix);
         pForm.setNewCategoryName("  " + catName + "  ");
         pForm.setNewInitialSoleName("  " + soleName + "  ");
-        pForm.setNewInitialMaterialName("  " + matName + "  ");
         pForm.setStatus(false);
+        assertEquals("initialSoleId", assertThrows(CatalogValidationException.class, () -> catalogService.saveProduct(pForm)).getField());
+        pForm.setNewInitialSoleName(null);
+        pForm.setNewInitialMaterialName("  " + matName + "  ");
+        assertEquals("initialMaterialId", assertThrows(CatalogValidationException.class, () -> catalogService.saveProduct(pForm)).getField());
+        pForm.setNewInitialMaterialName(null);
+        pForm.setInitialMaterialId(materials.findByStatusTrueOrderByNameAscIdAsc().get(0).getId());
 
         var product = catalogService.saveProduct(pForm);
         assertNotNull(product.getCategory());
         assertEquals(catName, product.getCategory().getName());
-        assertNotNull(pForm.getInitialSoleId());
-        assertEquals(soleName, phase5Soles.findById(pForm.getInitialSoleId()).orElseThrow().getName());
-        assertNotNull(pForm.getInitialMaterialId());
 
         // Deduplicate when typing without accents / different case
         AdminProductForm pForm2 = new AdminProductForm();pForm2.setInitialColorId(phase5Colors.findAll().get(0).getId());pForm2.setInitialSoleId(phase5Soles.findAll().get(0).getId());
         pForm2.setCode("SP-P3B-" + suffix);
         pForm2.setName("Giày Chạy Bộ " + suffix);
         pForm2.setNewCategoryName("thuong hieu pho " + suffix.toUpperCase());
-        pForm2.setNewInitialSoleName("de cao su duc " + suffix.toUpperCase());
-        pForm2.setNewInitialMaterialName("da lon mem " + suffix.toUpperCase());
+        pForm2.setInitialMaterialId(pForm.getInitialMaterialId());
         pForm2.setStatus(false);
 
         var product2 = catalogService.saveProduct(pForm2);
         assertEquals(product.getCategory().getId(), product2.getCategory().getId(), "Should reuse existing category accent-insensitively");
-        assertEquals(pForm.getInitialSoleId(), pForm2.getInitialSoleId(), "Should reuse existing sole accent-insensitively");
-        assertEquals(pForm.getInitialMaterialId(), pForm2.getInitialMaterialId(), "Should reuse existing material accent-insensitively");
 
-        // Creatable Size & Material on VariantForm
-        VariantForm vForm = new VariantForm();vForm.setColorId(phase5Colors.findAll().get(0).getId());vForm.setSoleId(phase5Soles.findAll().get(0).getId());
+        // Creatable Size, Material & Sole on VariantForm
+        VariantForm vForm = new VariantForm();vForm.setColorId(phase5Colors.findAll().get(0).getId());
         vForm.setProductId(product.getId());
         vForm.setNewSizeValue(" " + sizeVal + " ");
-        vForm.setNewMaterialName("da lon mem " + suffix);
+        vForm.setNewMaterialName("  " + matName + "  ");
+        vForm.setNewSoleName("  " + soleName + "  ");
         vForm.setPrice(new BigDecimal("450000"));
         vForm.setQuantity(10);
         vForm.setStatus(true);
 
         var variant = catalogService.saveVariant(vForm);
         assertEquals(sizeVal, variant.getSize().getSizeValue());
-        assertEquals(pForm.getInitialMaterialId(), variant.getMaterial().getId());
+        assertEquals(matName, variant.getMaterial().getName());
+        assertEquals(soleName, variant.getSole().getName());
     }
 
     @Test

@@ -5,4 +5,24 @@
  th:text="${selling==true ? 'Ngừng bán' : 'Bán lại'}"
  th:attr="data-confirm-title=${selling==true ? 'Ngừng bán?' : 'Bán lại?'},data-confirm-message=${kind=='product' ? (selling==true ? 'Sản phẩm sẽ ẩn khỏi cửa hàng và POS. Giỏ hàng, hóa đơn chờ có sản phẩm này sẽ bị chặn thanh toán. Trạng thái biến thể, tồn kho và lịch sử được giữ nguyên.' : 'Sản phẩm được bán lại với đúng trạng thái từng biến thể trước đó. Tồn kho và lịch sử được giữ nguyên.') : (selling==true ? 'Biến thể này không thể thêm vào giỏ hoặc thanh toán. Tồn kho và lịch sử được giữ nguyên.' : 'Biến thể được bán lại khi sản phẩm đang bán. Tồn kho và lịch sử được giữ nguyên.')}"></button>
 </form>
+
+<form th:fragment="productSwitch(id,selling,name)" method="post" th:action="@{/admin/products-crud/status/{id}(id=${id})}" class="d-inline-flex align-items-center" data-catalog-switch="product"
+ th:attr="data-confirm-title='Ngừng bán sản phẩm?',data-confirm-off=${'Sản phẩm ' + name + ' sẽ ẩn khỏi cửa hàng và POS. Giỏ hàng, hóa đơn chờ có sản phẩm này sẽ bị chặn thanh toán. Trạng thái từng biến thể, tồn kho và lịch sử được giữ nguyên.'}">
+<input type="hidden" name="selling" th:value="${selling==true}">
+<label class="discount-switch" th:title="${selling==true ? 'Đang bán — bấm để ngừng bán' : 'Ngừng bán — bấm để bán lại'}">
+<input type="checkbox" role="switch" th:checked="${selling==true}" th:attr="aria-label=${'Trạng thái bán ' + name}">
+<span class="discount-switch-track" aria-hidden="true"></span>
+<span class="visually-hidden" data-switch-text th:text="${selling==true ? 'Đang bán' : 'Ngừng bán'}"></span>
+</label>
+</form>
+
+<form th:fragment="categorySwitch(id,active,name)" method="post" th:action="@{/admin/categories/toggle-status/{id}(id=${id})}" class="d-inline-flex align-items-center" data-catalog-switch="category"
+ th:attr="data-confirm-title='Ẩn thương hiệu?',data-confirm-off=${'Thương hiệu ' + name + ' sẽ chuyển sang trạng thái Ẩn và không thể chọn khi tạo sản phẩm mới. Sản phẩm và đơn hàng cũ vẫn giữ nguyên thương hiệu.'}">
+<input type="hidden" name="active" th:value="${active==true}">
+<label class="discount-switch" th:title="${active==true ? 'Đang hiển thị — bấm để ẩn' : 'Đang ẩn — bấm để hiển thị'}">
+<input type="checkbox" role="switch" th:checked="${active==true}" th:attr="aria-label=${'Trạng thái hiển thị ' + name}">
+<span class="discount-switch-track" aria-hidden="true"></span>
+<span class="visually-hidden" data-switch-text th:text="${active==true ? 'Đang hiển thị' : 'Đang ẩn'}"></span>
+</label>
+</form>
 </body></html>

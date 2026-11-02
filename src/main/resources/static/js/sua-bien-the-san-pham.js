@@ -22,6 +22,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if(!response.ok){const error=new Error(json.message);error.fields=json.errors||{};throw error;}
         return json;
     }
+    async function syncSummaryFromPage(doc) {
+        if(!doc) {
+            const r=await fetch(location.href);
+            if(r.ok)doc=new DOMParser().parseFromString(await r.text(),'text/html');
+        }
+        if(!doc)return;
+        const nextCount=doc.querySelector('[data-product-variant-count]');
+        const nextStock=doc.querySelector('[data-product-total-stock]');
+        const curCount=document.querySelector('[data-product-variant-count]');
+        const curStock=document.querySelector('[data-product-total-stock]');
+        if(curCount&&nextCount)curCount.textContent=nextCount.textContent;
+        if(curStock&&nextStock)curStock.textContent=nextStock.textContent;
+    }
     async function refreshRow(row,id) {
         const number=row.querySelector('.row-number').textContent;
         const response=await fetch(`${base}/row/${id}?rowNumber=${encodeURIComponent(number)}`);
@@ -30,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const replacement=doc.querySelector('[data-variant-row]');
         if(!replacement)throw Error('Không tải được dòng biến thể. Tải lại trang.');
         row.replaceWith(replacement);
+        await syncSummaryFromPage(null);
     }
     async function refreshResults() {
         const response=await fetch(location.href);
@@ -37,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const doc=new DOMParser().parseFromString(await response.text(),'text/html'),results=doc.querySelector('[data-variant-results]');
         if(!results)throw Error('Không tải được bảng biến thể.');
         panel.querySelector('[data-variant-results]').replaceWith(results);
+        await syncSummaryFromPage(doc);
     }
     function editing(row,active) {
         row.dataset.editing=String(active);

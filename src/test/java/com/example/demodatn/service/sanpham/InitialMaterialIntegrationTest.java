@@ -66,7 +66,7 @@ class InitialMaterialIntegrationTest {
     void missingMaterialAndPriceShowErrorsBesideBothFieldsWithoutCreatingProduct() throws Exception {
         var f=form();long beforeProducts=products.count();mvc.perform(multipart("/admin/products-crud/save").with(csrf()).param("code",f.getCode()).param("name",f.getName())
             .param("categoryId",f.getCategoryId().toString()).param("status","false").param("initialSizeIds",f.getInitialSizeIds().get(0).toString()))
-            .andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("product","initialMaterialId","initialPrice"))
+            .andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("product","initialMaterialId","initialSoleId","initialPrice"))
             .andExpect(content().string(containsString("Chọn chất liệu khi chọn kích cỡ ban đầu.")));
         assertEquals(beforeProducts,products.count());
     }
@@ -91,7 +91,8 @@ class InitialMaterialIntegrationTest {
         var f=form();int id=catalog.saveProduct(f).getId();String name=materials.findById(f.getInitialMaterialId()).orElseThrow().getName();
         mvc.perform(get("/admin/variants").param("keyword",f.getCode()).param("materialId",f.getInitialMaterialId().toString()))
             .andExpect(status().isOk()).andExpect(content().string(containsString(name))).andExpect(content().string(containsString(f.getName())));
-        mvc.perform(get("/admin/products-crud/edit/"+id)).andExpect(status().isOk()).andExpect(content().string(containsString(name))).andExpect(content().string(containsString("Chi tiết biến thể")));
+        mvc.perform(get("/admin/products-crud/view/"+id)).andExpect(status().isOk()).andExpect(content().string(containsString(name))).andExpect(content().string(containsString("Danh sách biến thể của sản phẩm")));
+        mvc.perform(get("/admin/products-crud/edit/"+id)).andExpect(status().isOk()).andExpect(content().string(not(containsString("Chi tiết biến thể"))));
         mvc.perform(get("/admin/materials")).andExpect(status().isOk()).andExpect(content().string(containsString("Đang dùng")));
         var r=mvc.perform(get("/admin/variants/create").param("productId",""+id)).andExpect(status().isOk()).andReturn();
         assertEquals(id,((com.example.demodatn.dto.sanpham.VariantForm)r.getModelAndView().getModel().get("variant")).getProductId());

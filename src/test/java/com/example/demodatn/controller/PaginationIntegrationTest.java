@@ -83,14 +83,18 @@ class PaginationIntegrationTest {
     @Test void productVariantSublistIsPagedAndLinksKeepFilters()throws Exception {
         jdbc.update("DELETE order_details");jdbc.update("DELETE inventory_logs");jdbc.update("DELETE product_variants");
         for(int size:sizes)jdbc.update("INSERT product_variants(product_id,size_id,chat_lieu_id,mau_sac_id,de_giay_id,price,quantity,status) VALUES(?,?,(SELECT TOP(1) id FROM chat_lieu ORDER BY id),(SELECT TOP(1) id FROM mau_sac ORDER BY id),(SELECT TOP(1) id FROM de_giay ORDER BY id),100000,5,1)",products.get(0),size);
-        verify("/admin/products-crud/"+products.get(0)+"/variants","variantPage","page");
+        mvc.perform(get("/admin/products-crud/"+products.get(0)+"/variants").param("page","1").with(user("admin").roles("ADMIN")))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/admin/products-crud/view/"+products.get(0)+"?page=1"));
+        verify("/admin/products-crud/view/"+products.get(0),"variantPage","page");
         String html=mvc.perform(get("/admin/products-crud").param("keyword","PG+").param("sort","name").param("status","true").with(user("admin").roles("ADMIN"))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
         assertTrue(html.contains("keyword=PG%2B"));assertTrue(html.contains("sort=name"));assertTrue(html.contains("status=true"));
     }
     @Test void exactTwelveHidesPagerAndDeletingLastRowClampsToPreviousPage()throws Exception {
         for(int n=25;n<30;n++)jdbc.update("DELETE categories WHERE id=?",categories.get(n));
         assertEquals(1,page(getPage("/admin/categories","page","2"),"items").getNumberOfElements());
-        mvc.perform(post("/admin/categories/delete/"+categories.get(24)).header("Referer","http://localhost/admin/categories?page=2").with(user("admin").roles("ADMIN")).with(csrf())).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/admin/categories?page=2"));
+        mvc.perform(post("/admin/categories/delete/"+categories.get(24)).header("Referer","http://localhost/admin/categories?page=2").with(user("admin").roles("ADMIN")).with(csrf())).andExpect(status().isMethodNotAllowed());
+        jdbc.update("DELETE categories WHERE id=?",categories.get(24));
         assertEquals(1,page(getPage("/admin/categories","page","2"),"items").getNumber());
         for(int n=12;n<24;n++)jdbc.update("DELETE categories WHERE id=?",categories.get(n));
         String html=getPage("/admin/categories","page","0").getResponse().getContentAsString();

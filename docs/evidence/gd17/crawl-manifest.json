@@ -1,0 +1,22 @@
+[
+  {
+    "role": "admin",
+    "exhausted": true,
+    "count": 467
+  },
+  {
+    "role": "employee",
+    "exhausted": true,
+    "count": 205
+  },
+  {
+    "role": "user",
+    "exhausted": true,
+    "count": 23
+  },
+  {
+    "role": "guest",
+    "exhausted": true,
+    "count": 21
+  }
+]

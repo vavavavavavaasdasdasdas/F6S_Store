@@ -156,10 +156,19 @@ public class AdminCatalogService {
         }
         if(form.getNewInitialColorName()!=null && !form.getNewInitialColorName().isBlank())
             form.setInitialColorId(resolveOrCreateColor(form.getNewInitialColorName(),"initialColorId").getId());
-        if(form.getNewInitialSoleName()!=null && !form.getNewInitialSoleName().isBlank())
-            form.setInitialSoleId(resolveOrCreateSole(form.getNewInitialSoleName(),"initialSoleId").getId());
+        if((form.getNewInitialSoleName()!=null && !form.getNewInitialSoleName().isBlank())
+                || (form.getNewSoleName()!=null && !form.getNewSoleName().isBlank()))
+            throw new CatalogValidationException("initialSoleId","Không cho phép gõ tạo mới đế giày trên biểu mẫu sản phẩm. Chỉ chọn từ danh sách đang hoạt động.");
         if (form.getNewInitialMaterialName() != null && !form.getNewInitialMaterialName().isBlank()) {
-            form.setInitialMaterialId(resolveOrCreateMaterial(form.getNewInitialMaterialName(), "initialMaterialId").getId());
+            throw new CatalogValidationException("initialMaterialId", "Không cho phép gõ tạo mới chất liệu trên biểu mẫu sản phẩm. Chỉ chọn từ danh sách đang hoạt động.");
+        }
+        if (form.getId() == null && form.getInitialMaterialId() != null) {
+            materials.findById(form.getInitialMaterialId()).filter(m -> Boolean.TRUE.equals(m.getStatus()))
+                    .orElseThrow(() -> new CatalogValidationException("initialMaterialId", "Chọn chất liệu đang hiển thị."));
+        }
+        if (form.getId() == null && form.getInitialSoleId() != null) {
+            soles.findById(form.getInitialSoleId()).filter(s -> Boolean.TRUE.equals(s.getStatus()))
+                    .orElseThrow(() -> new CatalogValidationException("initialSoleId", "Chọn đế giày đang hiển thị."));
         }
         if (form.getNewInitialSizeValue() != null && !form.getNewInitialSizeValue().isBlank()) {
             Size newSize = resolveOrCreateSize(form.getNewInitialSizeValue(), "initialSizeIds");
@@ -286,7 +295,6 @@ public class AdminCatalogService {
             throw new CatalogValidationException("quantity","Tồn kho đã thay đổi, tải lại");
         if (form.getId() != null && before != form.getQuantity() && (form.getReason()==null || form.getReason().isBlank()))
             throw new CatalogValidationException("reason","Nhập lý do khi thay đổi số lượng.");
-        // adjust refreshes the locked entity; do it before writing price/attributes.
         if(form.getId()!=null && before!=form.getQuantity()) {
             var adjustment=new com.example.demodatn.dto.sanpham.InventoryForm();
             adjustment.setVariantId(variant.getId());adjustment.setMode("SET");
@@ -300,7 +308,6 @@ public class AdminCatalogService {
     }
     @Transactional
     public java.util.List<ProductVariant> createVariants(com.example.demodatn.dto.sanpham.VariantBatchForm batch) {
-        // Serialize batches for one product; the SQL unique index also protects single-row creation.
         products.lockById(batch.getProductId()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
         if(batch.getSizeIds()==null || batch.getSizeIds().isEmpty() || batch.getSizeIds().size()>100)
             throw new CatalogValidationException("sizeIds","Chọn từ 1 đến 100 kích cỡ.");

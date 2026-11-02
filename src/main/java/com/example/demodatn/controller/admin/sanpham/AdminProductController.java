@@ -9,12 +9,14 @@ import com.example.demodatn.service.sanpham.ProductGalleryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import java.math.BigDecimal;
 
 @Controller @RequestMapping("/admin/products-crud") @RequiredArgsConstructor
 public class AdminProductController {
@@ -28,8 +30,8 @@ public class AdminProductController {
     private final com.example.demodatn.repository.sanpham.ProductVariantRepository variants;
     private final com.example.demodatn.util.Pagination pagination;
     @org.springframework.beans.factory.annotation.Value("${shop.upload-max-bytes:5242880}") private long maxBytes;
-
     private final com.example.demodatn.repository.sanpham.ColorRepository colors;
+
     @GetMapping
     public String list(@RequestParam(defaultValue="") String keyword,@RequestParam(required=false) Integer categoryId,
                        @RequestParam(required=false) Boolean status,@RequestParam(defaultValue="newest") String sort,
@@ -54,39 +56,82 @@ public class AdminProductController {
         model.addAttribute("product",form); return form(model);
     }
     @GetMapping("/view/{id}")
-    public String view(@PathVariable Integer id,Model model) {
+    public String view(@PathVariable Integer id,@RequestParam(defaultValue="0") String page,
+                       @RequestParam(required=false) Integer sizeId,@RequestParam(required=false) Integer colorId,
+                       @RequestParam(required=false) Integer materialId,@RequestParam(required=false) Integer soleId,
+                       @RequestParam(required=false) Boolean variantStatus,Model model) {
         model.addAttribute("product",catalog.product(id));
         var all=query.variantsPage(id,"all",0,0);
         model.addAttribute("variantCount",all.getTotalElements());
         model.addAttribute("totalStock",query.productStock(id));
         model.addAttribute("productImages",gallery.list(id));
-        return "admin/san-pham/chi-tiet";
-    }
-    @GetMapping("/{id}/variants")
-    public String productVariants(@PathVariable Integer id,@RequestParam(defaultValue="0") String page,
-                       @RequestParam(required=false) Integer sizeId,@RequestParam(required=false) Integer colorId,
-                       @RequestParam(required=false) Integer materialId,@RequestParam(required=false) Integer soleId,
-                       @RequestParam(required=false) Boolean variantStatus,Model model) {
-        model.addAttribute("product",catalog.product(id));
         var result=query.variantsPage(id,"all",0,page,materialId,sizeId,variantStatus,null,null,colorId,soleId);
         model.addAttribute("variants",result.getContent());model.addAttribute("variantPage",result);
         model.addAttribute("sizes",sizes.findAll());model.addAttribute("colors",colors.findAll());
         model.addAttribute("materials",materials.findAll());model.addAttribute("soles",soles.findAll());
         model.addAttribute("sizeId",sizeId);model.addAttribute("colorId",colorId);model.addAttribute("materialId",materialId);
         model.addAttribute("soleId",soleId);model.addAttribute("variantStatus",variantStatus);
-        model.addAttribute("adminTitle","Chi tiết biến thể");
-        return "admin/san-pham/bien-the";
+        return "admin/san-pham/chi-tiet";
+    }
+    @GetMapping("/{id}/variants")
+    public String productVariants(@PathVariable Integer id, jakarta.servlet.http.HttpServletRequest request) {
+        String qs = request.getQueryString();
+        if (qs != null && !qs.isBlank()) {
+            return "redirect:/admin/products-crud/view/" + id + "?" + qs;
+        }
+        var builder = org.springframework.web.util.UriComponentsBuilder.fromPath("/admin/products-crud/view/" + id);
+        request.getParameterMap().forEach((k, values) -> {
+            if (!"_csrf".equals(k) && values != null) {
+                for (String v : values) {
+                    builder.queryParam(k, v);
+                }
+            }
+        });
+        return "redirect:" + builder.build().encode().toUriString();
     }
     @PostMapping("/save")
-    public String save(@Valid @ModelAttribute("product") AdminProductForm product, BindingResult result, Model model, RedirectAttributes flash) {
+    public String save(@Valid @ModelAttribute("product") AdminProductForm product, BindingResult result,
+                       jakarta.servlet.http.HttpServletRequest request, Model model, RedirectAttributes flash) {
         boolean hasInitialSizes = (product.getInitialSizeIds()!=null && !product.getInitialSizeIds().isEmpty())
                 || (product.getNewInitialSizeValue()!=null && !product.getNewInitialSizeValue().isBlank());
-        if (product.getId()==null && hasInitialSizes) {
-            boolean hasMaterial = product.getInitialMaterialId()!=null
-                    || (product.getNewInitialMaterialName()!=null && !product.getNewInitialMaterialName().isBlank());
-            if (!hasMaterial) result.rejectValue("initialMaterialId","required","Chọn chất liệu khi chọn kích cỡ ban đầu.");
-            if (product.getInitialPrice()==null) result.rejectValue("initialPrice","required","Nhập giá khi chọn kích cỡ ban đầu.");
-            if (product.getInitialQuantity()==null) result.rejectValue("initialQuantity","required","Nhập tồn kho ban đầu từ 0 trở lên.");
+        if (product.getId()==null) {
+            String[] rawMat = request.getParameterValues("initialMaterialId");
+            String[] rawSole = request.getParameterValues("initialSoleId");
+            if (rawMat != null && (rawMat.length > 1 || (rawMat.length == 1 && rawMat[0] != null && rawMat[0].contains(",")))) {
+                if (!result.hasFieldErrors("initialMaterialId")) {
+                    result.rejectValue("initialMaterialId", "multiple", "Chỉ được chọn đúng 1 chất liệu đang hoạt động trong danh sách.");
+                }
+            } else if (product.getNewInitialMaterialName() != null && !product.getNewInitialMaterialName().isBlank()) {
+                if (!result.hasFieldErrors("initialMaterialId")) {
+                    result.rejectValue("initialMaterialId", "creatable", "Không cho phép gõ tạo mới chất liệu trên biểu mẫu sản phẩm.");
+                }
+            } else if (!result.hasFieldErrors("initialMaterialId")) {
+                if (product.getInitialMaterialId() == null) {
+                    result.rejectValue("initialMaterialId", "required", "Chọn chất liệu khi chọn kích cỡ ban đầu. Vui lòng chọn đúng 1 chất liệu đang hoạt động.");
+                } else if (materials.findById(product.getInitialMaterialId()).filter(m -> Boolean.TRUE.equals(m.getStatus())).isEmpty()) {
+                    result.rejectValue("initialMaterialId", "invalid", "Chất liệu không tồn tại hoặc đang ẩn.");
+                }
+            }
+            if (rawSole != null && (rawSole.length > 1 || (rawSole.length == 1 && rawSole[0] != null && rawSole[0].contains(",")))) {
+                if (!result.hasFieldErrors("initialSoleId")) {
+                    result.rejectValue("initialSoleId", "multiple", "Chỉ được chọn đúng 1 đế giày đang hoạt động trong danh sách.");
+                }
+            } else if ((product.getNewInitialSoleName() != null && !product.getNewInitialSoleName().isBlank())
+                    || (product.getNewSoleName() != null && !product.getNewSoleName().isBlank())) {
+                if (!result.hasFieldErrors("initialSoleId")) {
+                    result.rejectValue("initialSoleId", "creatable", "Không cho phép gõ tạo mới đế giày trên biểu mẫu sản phẩm.");
+                }
+            } else if (!result.hasFieldErrors("initialSoleId")) {
+                if (product.getInitialSoleId() == null) {
+                    result.rejectValue("initialSoleId", "required", "Vui lòng chọn đúng 1 đế giày đang hoạt động.");
+                } else if (soles.findById(product.getInitialSoleId()).filter(s -> Boolean.TRUE.equals(s.getStatus())).isEmpty()) {
+                    result.rejectValue("initialSoleId", "invalid", "Đế giày không tồn tại hoặc đang ẩn.");
+                }
+            }
+            if (hasInitialSizes) {
+                if (product.getInitialPrice()==null) result.rejectValue("initialPrice","required","Nhập giá khi chọn kích cỡ ban đầu.");
+                if (product.getInitialQuantity()==null) result.rejectValue("initialQuantity","required","Nhập tồn kho ban đầu từ 0 trở lên.");
+            }
         }
         if (!result.hasErrors()) {
             try {
@@ -101,16 +146,31 @@ public class AdminProductController {
         return form(model);
     }
     @PostMapping("/status/{id}")
-    public String status(@PathVariable Integer id,@RequestParam boolean selling,RedirectAttributes flash) {
+    public Object status(@PathVariable Integer id,@RequestParam boolean selling,
+                         jakarta.servlet.http.HttpServletRequest request,RedirectAttributes flash) {
         catalog.productStatus(id,selling);
-        flash.addFlashAttribute("message",selling?"Đã bán lại sản phẩm. Trạng thái từng biến thể được giữ nguyên.":"Đã ngừng bán sản phẩm. Tồn kho, biến thể và lịch sử được giữ nguyên.");
+        String msg = selling
+                ? "Đã bán lại sản phẩm. Trạng thái từng biến thể được giữ nguyên."
+                : "Đã ngừng bán sản phẩm. Tồn kho, biến thể và lịch sử được giữ nguyên.";
+        String xhr = request.getHeader("X-Requested-With");
+        String accept = request.getHeader("Accept");
+        if ("XMLHttpRequest".equalsIgnoreCase(xhr) || (accept != null && accept.contains("application/json"))) {
+            return ResponseEntity.ok(java.util.Map.of(
+                    "id", id,
+                    "selling", selling,
+                    "active", selling,
+                    "stateLabel", selling ? "Đang bán" : "Ngừng bán",
+                    "message", msg
+            ));
+        }
+        flash.addFlashAttribute("message",msg);
         return "redirect:/admin/products-crud/view/"+id;
     }
-    @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id, RedirectAttributes flash) {
-        try { flash.addFlashAttribute("message",catalog.deleteProduct(id)); }
-        catch(DataIntegrityViolationException ex) { flash.addFlashAttribute("error","Không thể xóa: sản phẩm vừa phát sinh dữ liệu liên quan."); }
-        return "redirect:/admin/products-crud";
+    @RequestMapping(value = "/delete/{id}", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
+    public void delete(@PathVariable Integer id) {
+        throw new ResponseStatusException(
+                HttpStatus.METHOD_NOT_ALLOWED,
+                "Không được xóa sản phẩm. Hãy dùng công tắc bật/tắt trạng thái bán.");
     }
     private String form(Model model) {
         AdminProductForm form=(AdminProductForm)model.getAttribute("product");

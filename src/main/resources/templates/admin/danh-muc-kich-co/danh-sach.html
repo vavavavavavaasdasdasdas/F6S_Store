@@ -4,17 +4,13 @@
 <section class="catalog-page">
     <div class="admin-heading">
         <div>
-
             <h1 th:text="${lookupTitle}"></h1>
-
-
-
-
         </div>
         <a class="btn btn-primary" th:href="@{/admin/{kind}/create(kind=${kind})}" th:text="'Thêm ' + ${lookupTitle.toLowerCase()}" data-add-icon></a>
     </div>
 
     <div class="admin-panel">
+        <p role="status" aria-live="polite" data-switch-banner hidden></p>
         <form class="catalog-filters mb-3" method="get" th:action="@{/admin/{kind}(kind=${kind})}" novalidate>
             <div>
                 <label for="keyword" th:text="'Từ khóa ' + ${lookupTitle.toLowerCase()}"></label>
@@ -58,33 +54,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="item, rowIndex : ${items}"><td class="row-number" th:text="${items.number * items.size + rowIndex.count}"></td><td th:text="${item.code}"></td>
+                    <tr th:each="item, rowIndex : ${items}" th:attr="data-lookup-row=${item.id}"><td class="row-number" th:text="${items.number * items.size + rowIndex.count}"></td><td th:text="${item.code}"></td>
                         <td>
                             <strong th:text="${kind == 'sizes' ? item.sizeValue : item.name}"></strong>
                         </td>
-                        <td th:if="${kind != 'sizes'}">
-                            <span th:if="${item.status == true}" class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Đang hiển thị</span>
-                            <span th:unless="${item.status == true}" class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1">Đang ẩn</span>
+                        <td th:if="${kind != 'sizes'}" data-status-cell>
+                            <span data-status-badge th:class="${item.status == true ? 'badge bg-success-subtle text-success border border-success-subtle px-2 py-1' : 'badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1'}"
+                                  th:text="${item.status == true ? 'Đang hiển thị' : 'Đang ẩn'}"></span>
                         </td>
                         <td th:if="${kind == 'soles'}"><a th:href="@{/admin/variants(soleId=${item.id})}" th:text="${soleUsage[item.id] ?: 0} + ' biến thể'"></a></td>
                         <td th:if="${kind == 'materials'}"><a th:href="@{/admin/variants(materialId=${item.id})}" th:text="${materialUsage[item.id] ?: 0} + ' biến thể'"></a></td>
                         <td>
                             <div class="catalog-actions" style="display:flex; align-items:center; gap:8px;">
                                 <a class="btn btn-sm btn-outline-primary" th:href="@{/admin/{kind}/edit/{id}(kind=${kind}, id=${item.id})}">Sửa</a>
-                                <!-- Thương hiệu và Chất liệu: chuyển đổi trạng thái ẩn/hiện thay vì xóa cứng -->
-                                <th:block th:if="${kind != 'sizes'}">
+                                <!-- Thương hiệu: công tắc Hiển thị / Ẩn -->
+                                <th:block th:if="${kind == 'categories'}">
+                                    <div th:replace="~{fragments/trang-thai-ban :: categorySwitch(${item.id},${item.status},${item.name})}"></div>
+                                </th:block>
+                                <!-- Chất liệu / Đế giày: nút Ẩn / Hiện -->
+                                <th:block th:if="${kind != 'sizes' and kind != 'categories'}">
                                     <form th:if="${item.status == true}" th:action="@{/admin/{kind}/toggle-status/{id}(kind=${kind}, id=${item.id})}" method="post" novalidate style="display:inline;">
-                                        <button class="btn btn-sm btn-outline-warning" type="button" data-confirm data-confirm-title="Ẩn mục này?" th:attr="data-confirm-message=${kind == 'materials' ? 'Chất liệu có ' + (materialUsage[item.id] ?: 0) + ' biến thể đang dùng. Sau khi ẩn, không thể chọn cho biến thể mới; biến thể và đơn cũ vẫn hiển thị bình thường.' : (kind == 'soles' ? 'Đế giày có ' + (soleUsage[item.id] ?: 0) + ' biến thể đang dùng. Sau khi ẩn, sản phẩm cũ vẫn giữ tên; không chọn được cho biến thể mới.' : 'Bạn có muốn chuyển thương hiệu sang trạng thái ẩn?')}">Ẩn</button>
+                                        <button class="btn btn-sm btn-outline-warning" type="button" data-confirm data-confirm-title="Ẩn mục này?" th:attr="data-confirm-message=${kind == 'materials' ? 'Chất liệu có ' + (materialUsage[item.id] ?: 0) + ' biến thể đang dùng. Sau khi ẩn, không thể chọn cho biến thể mới; biến thể và đơn cũ vẫn hiển thị bình thường.' : 'Đế giày có ' + (soleUsage[item.id] ?: 0) + ' biến thể đang dùng. Sau khi ẩn, sản phẩm cũ vẫn giữ tên; không chọn được cho biến thể mới.'}">Ẩn</button>
                                     </form>
                                     <form th:unless="${item.status == true}" th:action="@{/admin/{kind}/toggle-status/{id}(kind=${kind}, id=${item.id})}" method="post" novalidate style="display:inline;">
                                         <button class="btn btn-sm btn-outline-success" type="submit">Hiện</button>
                                     </form>
                                 </th:block>
-                                <!-- Kích cỡ: cho phép xóa khi chưa có variant nào dùng -->
+                                <!-- Kích cỡ / Chất liệu chưa dùng: cho phép xóa khi chưa có variant nào dùng -->
                                 <th:block th:if="${kind == 'sizes' or (kind == 'soles' and (soleUsage[item.id] == null or soleUsage[item.id] == 0)) or (kind == 'materials' and (materialUsage[item.id] == null or materialUsage[item.id] == 0))}">
                                     <form th:action="@{/admin/{kind}/delete/{id}(kind=${kind}, id=${item.id})}" method="post" novalidate style="display:inline;" data-delete-form>
                                         <button class="btn btn-sm btn-outline-danger" type="button" data-delete
-                                                th:attr="data-object=${kind == 'sizes' ? item.sizeValue : item.name},data-consequence=${kind == 'soles' ? 'Chỉ xóa được khi chưa có biến thể nào sử dụng. Thao tác không thể hoàn tác.' : 'Chỉ xóa được khi chưa có biến thể nào sử dụng. Thao tác không thể hoàn tác.'}">Xóa</button>
+                                                th:attr="data-object=${kind == 'sizes' ? item.sizeValue : item.name},data-consequence='Chỉ xóa được khi chưa có biến thể nào sử dụng. Thao tác không thể hoàn tác.'">Xóa</button>
                                     </form>
                                 </th:block>
                             </div>

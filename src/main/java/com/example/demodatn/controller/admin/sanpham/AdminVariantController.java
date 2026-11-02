@@ -72,7 +72,7 @@ public class AdminVariantController {
             try {
                 ProductVariant saved=catalog.saveVariant(form);
                 flash.addFlashAttribute("message","Đã lưu biến thể. Mọi thay đổi tồn kho đã được ghi lịch sử.");
-                return "redirect:/admin/products-crud/"+saved.getProduct().getId()+"/variants";
+                return "redirect:/admin/products-crud/view/"+saved.getProduct().getId();
             } catch(CatalogValidationException ex) { result.rejectValue(ex.getField(),"invalid",ex.getMessage()); }
               catch(DataIntegrityViolationException ex) { result.rejectValue("materialId","duplicate","Bộ năm sản phẩm, kích cỡ, chất liệu, màu sắc và đế giày đã tồn tại hoặc dữ liệu vừa thay đổi."); }
         }
@@ -82,7 +82,7 @@ public class AdminVariantController {
     public String status(@PathVariable Integer id,@RequestParam boolean selling,RedirectAttributes flash) {
         Integer productId=catalog.variantStatus(id,selling);
         flash.addFlashAttribute("message",selling?"Đã bán lại biến thể. Tồn kho được giữ nguyên.":"Đã ngừng bán biến thể. Tồn kho và lịch sử được giữ nguyên.");
-        return "redirect:/admin/products-crud/"+productId+"/variants";
+        return "redirect:/admin/products-crud/view/"+productId;
     }
     private String form(Model model) {
         model.addAttribute("products",products.findAll()); model.addAttribute("sizes",sizes.findAll()); model.addAttribute("materials",materials.findByStatusTrueOrderByNameAscIdAsc());
