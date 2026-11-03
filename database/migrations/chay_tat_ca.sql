@@ -1004,3 +1004,60 @@ THROW;
 END CATCH;
 
 GO
+
+-- 023_thanh_toan_ket_hop_pos.sql: Thêm cột tiền mặt, tiền chuyển khoản, ghi chú thanh toán cho đơn hàng và dọn hóa đơn chờ online
+IF DB_NAME() NOT IN (N'shopbangiay_kt',N'shop_verify',N'shop_fresh')
+ AND DB_NAME() NOT LIKE N'shopbangiay[_]kt[_]%'
+ AND NOT (DB_NAME()=N'shopbangiay' AND COALESCE(TRY_CONVERT(INT,SESSION_CONTEXT(N'shop.allow-production-migration')),0)=1)
+ THROW 51000,N'Database không được phép chạy migration.',1;
+SET XACT_ABORT ON;
+BEGIN TRY
+BEGIN TRANSACTION;
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('dbo.orders') AND name = 'tien_mat')
+BEGIN
+    ALTER TABLE dbo.orders ADD tien_mat BIGINT NOT NULL CONSTRAINT df_orders_tien_mat DEFAULT 0;
+END;
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('dbo.orders') AND name = 'tien_chuyen_khoan')
+BEGIN
+    ALTER TABLE dbo.orders ADD tien_chuyen_khoan BIGINT NOT NULL CONSTRAINT df_orders_tien_chuyen_khoan DEFAULT 0;
+END;
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('dbo.orders') AND name = 'ghi_chu_thanh_toan')
+BEGIN
+    ALTER TABLE dbo.orders ADD ghi_chu_thanh_toan NVARCHAR(500) NULL;
+END;
+
+UPDATE dbo.orders
+SET tien_mat = CASE 
+        WHEN payment_status = 'PAID' AND payment_method IN ('CASH', 'COD') THEN CAST(ROUND(final_amount, 0) AS BIGINT)
+        ELSE 0
+    END,
+    tien_chuyen_khoan = CASE 
+        WHEN payment_status = 'PAID' AND payment_method IN ('TRANSFER', 'BANK_TRANSFER') THEN CAST(ROUND(final_amount, 0) AS BIGINT)
+        ELSE 0
+    END
+WHERE tien_mat = 0 AND tien_chuyen_khoan = 0;
+
+DELETE FROM dbo.pos_held_orders WHERE order_type = 'ONLINE';
+
+IF EXISTS (SELECT 1 FROM sys.check_constraints WHERE name = 'ck_pos_hold_type_payment')
+BEGIN
+    ALTER TABLE dbo.pos_held_orders DROP CONSTRAINT ck_pos_hold_type_payment;
+END;
+
+ALTER TABLE dbo.pos_held_orders ADD CONSTRAINT ck_pos_hold_type_payment CHECK (
+    ([order_type]='POS' AND ([payment_method]='TRANSFER' OR [payment_method]='CASH' OR [payment_method]='COMBINED'))
+    OR ([order_type]='ONLINE' AND ([payment_method]='BANK_TRANSFER' OR [payment_method]='COD'))
+);
+
+COMMIT;
+PRINT N'HOÀN TẤT 023_thanh_toan_ket_hop_pos.sql';
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT>0 ROLLBACK;
+THROW;
+END CATCH;
+
+GO
