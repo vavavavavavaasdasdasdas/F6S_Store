@@ -51,6 +51,28 @@ public class OrderStatusService {
             default -> List.of();
         };
     }
+
+    public String nextLinearStatus(Order order) {
+        if (!"ONLINE".equals(order.getOrderType())) return null;
+        return switch (order.getStatus()) {
+            case "PENDING" -> "CONFIRMED";
+            case "CONFIRMED" -> "PREPARING";
+            case "PREPARING" -> "SHIPPING";
+            case "SHIPPING" -> (bankTransfer(order) && !"PAID".equals(order.getPaymentStatus())) ? null : "DELIVERED";
+            default -> null;
+        };
+    }
+
+    public String nextLinearStatusLabel(String nextStatus) {
+        if (nextStatus == null) return null;
+        return switch (nextStatus) {
+            case "CONFIRMED" -> "Xác nhận đơn";
+            case "PREPARING" -> "Chuẩn bị hàng";
+            case "SHIPPING" -> "Giao hàng";
+            case "DELIVERED" -> "Hoàn tất";
+            default -> LABELS.getOrDefault(nextStatus, nextStatus);
+        };
+    }
     public static boolean bankTransfer(Order order) {
         return "TRANSFER".equals(order.getPaymentMethod()) || "BANK_TRANSFER".equals(order.getPaymentMethod());
     }

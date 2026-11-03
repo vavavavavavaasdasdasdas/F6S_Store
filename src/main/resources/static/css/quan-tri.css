@@ -392,3 +392,30 @@ html { scrollbar-color:var(--admin-scroll-thumb) var(--admin-scroll-track); scro
   gap: 8px;
   transition: opacity 0.3s ease;
 }
+
+/* Giai đoạn 22: Quản lý hóa đơn */
+.status-tabs-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+.status-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  gap: 8px;
+}
+.status-tabs .btn {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.invoice-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+

@@ -1,3 +1,486 @@
-<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section>
-<div class="admin-heading invoice-actions"><h1>Chi tiết hóa đơn</h1><div><button type="button" class="btn btn-primary" data-print-invoice>In hóa đơn</button> <a class="btn btn-outline-secondary" href="/admin/invoices">Danh sách</a></div></div><article class="invoice-paper" th:with="o=${invoice.order}"><header class="invoice-header"><img class="shop-logo shop-logo-invoice" src="/images/logo.jpg" alt="Biểu trưng F6S Store"><div><h2 th:text="${shopName}"></h2><p th:if="${!#strings.isEmpty(shopAddress)}" th:text="${shopAddress}"></p><p th:if="${!#strings.isEmpty(shopPhone)}" th:text="'SĐT: '+${shopPhone}"></p></div><div><h2>HÓA ĐƠN BÁN HÀNG</h2><strong th:text="${invoice.invoiceCode}"></strong><p th:text="${#temporals.format(invoice.issuedAt,'dd/MM/yyyy HH:mm')}"></p></div></header><th:block th:replace="~{fragments/giao-hang :: provinceInfo(${o},true)}"></th:block><th:block th:replace="~{fragments/phi-giao-hang :: summary(${o})}"></th:block><p th:if="${o.orderType=='ONLINE'}">Người nhận: <span th:text="${o.receiverName}"></span> · SĐT: <span th:text="${o.phoneNumber}"></span></p><p th:if="${o.orderType=='ONLINE'}">Địa chỉ: <span th:text="${o.shippingAddress}"></span></p><p th:if="${o.salesNote!=null and !#strings.isEmpty(o.salesNote)}">Ghi chú: <span th:text="${o.salesNote}"></span></p><div class="invoice-meta"><p>Đơn hàng: <span th:text="${o.orderCode}"></span><br>Kênh bán: <strong th:text="${o.orderType=='POS'?'Tại quầy':'Trực tuyến'}"></strong><br>Nguồn đơn: <span th:text="${o.sourceLabel ?: '—'}"></span></p><p>Khách: <strong th:text="${invoice.customerName}"></strong><br><span th:if="${invoice.customerPhone!=null}" th:text="'SĐT: '+${invoice.customerPhone}"></span><br>Nhân viên: <span th:text="${invoice.employeeName=='Đơn online'?'Đơn trực tuyến':invoice.employeeName}"></span></p></div><div class="data-table-scroll" role="region" aria-label="Chi tiết hóa đơn, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-hoa-don-chi-tiet-1" class="invoice-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th>Mã</th><th>Ảnh</th><th>Tên sản phẩm</th><th>Kích cỡ</th><th>Chất liệu</th><th>Màu sắc</th><th>Đế giày</th><th>SL</th><th class="money">Đơn giá (đ)</th><th class="money">Thành tiền (đ)</th></tr></thead><tbody><tr th:each="d, rowIndex :${o.orderDetails}"><td class="row-number" th:text="${rowIndex.count}"></td><td th:text="${d.productVariant.product.code}"></td><td><img class="product-thumbnail" th:with="resolvedImage=${@productImageUrl.source(d.productVariant.product.displayImageUrl)}" th:src="${resolvedImage}" th:alt="${d.productName}+' — ảnh chính'" width="56" height="56"></td><td><span th:text="${d.productName!=null?d.productName:d.productVariant.product.name}"></span></td><td th:text="${d.sizeName!=null?d.sizeName:d.productVariant.size.sizeValue}"></td><td th:text="${d.displayMaterialName}"></td><td th:text="${d.displayColorName}"></td><td th:text="${d.displaySoleName}"></td><td th:text="${d.quantity}"></td><td class="money" th:text="${@money.format(d.price)}"></td><td class="money" th:text="${@money.format(d.totalPrice)}"></td></tr></tbody></table></div><dl class="invoice-totals"><dt>Tạm tính</dt><dd th:text="${@money.format(o.totalAmount)}+' đ'"></dd><dt>Giảm giá</dt><dd th:text="${@money.format(o.discountAmount)}+' đ'"></dd><th:block th:if="${o.shippingFee != null and o.shippingFee > 0}"><dt>Phí giao hàng</dt><dd th:text="${@money.format(o.shippingFee)}+' đ'"></dd></th:block><dt>TỔNG THANH TOÁN</dt><dd><strong th:text="${@money.format(o.finalAmount)}+' đ'"></strong></dd><dt>Phương thức</dt><dd th:text="${o.paymentMethod=='TRANSFER' || o.paymentMethod=='BANK_TRANSFER'?'Chuyển khoản':o.paymentMethod=='COD'?'Thanh toán khi nhận hàng':'Tiền mặt'}"></dd><dt>Thanh toán</dt><dd th:text="${o.status=='CANCELLED'?'Đơn đã hủy':o.paymentStatus=='PAID'?'Đã thanh toán':'Chưa thanh toán'}"></dd><dt th:if="${invoice.cashReceived!=null}">Khách đưa</dt><dd th:if="${invoice.cashReceived!=null}" th:text="${@money.format(invoice.cashReceived)}+' đ'"></dd><dt th:if="${invoice.changeAmount!=null}">Tiền thừa</dt><dd th:if="${invoice.changeAmount!=null}" th:text="${@money.format(invoice.changeAmount)}+' đ'"></dd></dl><p th:if="${o.orderType=='ONLINE' and (o.shippingFee == null or o.shippingFee == 0)}" class="small text-muted my-2">Phí vận chuyển do đơn vị vận chuyển tính và thu riêng.</p><p th:if="${o.paymentReference!=null}">Mã đối soát: <strong th:text="${o.paymentReference}"></strong></p><footer class="invoice-thanks">Cảm ơn quý khách!</footer></article><script src="/js/in-hoa-don.js" defer></script>
-<div class="invoice-actions"><div class="admin-panel" th:if="${order.orderType=='ONLINE'}"><h2>Tin nhắn xác nhận</h2><textarea id="order-confirmation-text" class="form-control resize-none" readonly rows="6" th:text="${confirmationMessage}"></textarea><button type="button" class="btn btn-outline-primary mt-2" data-copy-confirmation>Sao chép tin nhắn xác nhận</button><p data-copy-confirmation-status role="status"></p></div><th:block th:replace="~{fragments/han-chuyen-khoan :: deadline(${order},true)}"></th:block><th:block th:replace="~{fragments/vietqr :: payment(${order})}"></th:block><th:block th:replace="~{fragments/giao-hang :: tracking(${order})}"></th:block><th:block th:replace="~{fragments/xu-ly-don-hang :: panel(${order},${allowedStatuses},${'/admin/invoices/'+invoice.id})}"></th:block><th:block th:replace="~{fragments/xu-ly-don-hang :: province(${order},${allowedStatuses},${'/admin/invoices/'+invoice.id})}"></th:block><th:block th:replace="~{fragments/xu-ly-don-hang :: dialog(${order},${allowedStatuses},${'/admin/invoices/'+invoice.id})}"></th:block></div></section></body></html>
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}">
+<body>
+<section th:with="o=${order}">
+    <!-- Tiêu đề và nút hành động -->
+    <div class="admin-heading invoice-actions">
+        <div>
+            <h1>Chi tiết hóa đơn</h1>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+            <button type="button" class="btn btn-primary" data-print-invoice>In hóa đơn</button>
+            <a class="btn btn-outline-secondary" href="/admin/invoices">Danh sách</a>
+        </div>
+    </div>
+
+    <!-- Thông báo Flash message nếu có -->
+    <div th:if="${message}" class="alert alert-success" role="alert" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
+
+    <!-- Khối 2 cột: Thông tin hóa đơn/đơn & Khách hàng/người nhận -->
+    <div class="invoice-detail-grid">
+        <!-- Cột 1: Thông tin hóa đơn & Đơn hàng -->
+        <div class="admin-panel">
+            <div class="panel-heading mb-3">
+                <h2 class="h5 mb-0">Thông tin hóa đơn & Đơn hàng</h2>
+                <span class="badge" th:classappend="${o.daTruKho ? 'bg-success' : 'bg-secondary'}" th:text="${o.daTruKho ? 'Đã trừ kho' : 'Chưa trừ kho'}"></span>
+            </div>
+            <dl class="row mb-0">
+                <dt class="col-sm-5 text-muted">Mã hóa đơn:</dt>
+                <dd class="col-sm-7"><strong th:text="${invoice.invoiceCode}"></strong></dd>
+
+                <dt class="col-sm-5 text-muted">Mã đơn hàng:</dt>
+                <dd class="col-sm-7"><strong th:text="${o.orderCode}"></strong></dd>
+
+                <dt class="col-sm-5 text-muted">Ngày tạo:</dt>
+                <dd class="col-sm-7" th:text="${#temporals.format(invoice.issuedAt, 'dd/MM/yyyy HH:mm')}"></dd>
+
+                <dt class="col-sm-5 text-muted">Kênh bán:</dt>
+                <dd class="col-sm-7">
+                    <span class="badge" th:classappend="${o.orderType == 'POS' ? 'bg-secondary' : 'bg-info text-dark'}" th:text="${o.orderType == 'POS' ? 'Bán tại quầy (POS)' : 'Trực tuyến (Online)'}"></span>
+                </dd>
+
+                <dt class="col-sm-5 text-muted">Nhân viên bán:</dt>
+                <dd class="col-sm-7" th:text="${o.employee != null ? o.employee.fullName : (invoice.employeeName ?: 'Đơn trực tuyến')}"></dd>
+
+                <dt class="col-sm-5 text-muted">Trạng thái:</dt>
+                <dd class="col-sm-7">
+                    <span class="status-pill" th:data-status="${o.status}" th:text="${statusLabels[o.status] ?: o.status}"></span>
+                </dd>
+
+                <dt class="col-sm-5 text-muted">Thanh toán:</dt>
+                <dd class="col-sm-7">
+                    <span class="badge" th:classappend="${o.paymentStatus == 'PAID' ? 'bg-success' : 'bg-warning text-dark'}" th:text="${o.paymentStatus == 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán'}"></span>
+                </dd>
+
+                <dt class="col-sm-5 text-muted">Ghi chú bán hàng:</dt>
+                <dd class="col-sm-7" th:text="${o.salesNote ?: '—'}"></dd>
+
+                <dt class="col-sm-5 text-muted">Ghi chú thanh toán:</dt>
+                <dd class="col-sm-7" th:text="${o.paymentNote ?: '—'}"></dd>
+
+                <dt th:if="${o.paymentReference != null}" class="col-sm-5 text-muted">Mã đối soát:</dt>
+                <dd th:if="${o.paymentReference != null}" class="col-sm-7"><strong th:text="${o.paymentReference}"></strong></dd>
+            </dl>
+        </div>
+
+        <!-- Cột 2: Khách hàng & Người nhận -->
+        <div class="admin-panel">
+            <div class="panel-heading mb-3">
+                <h2 class="h5 mb-0">Khách hàng & Người nhận</h2>
+            </div>
+            <dl class="row mb-0">
+                <dt class="col-sm-5 text-muted">Tên khách hàng:</dt>
+                <dd class="col-sm-7"><strong th:text="${invoice.customerName}"></strong></dd>
+
+                <dt class="col-sm-5 text-muted">SĐT khách hàng:</dt>
+                <dd class="col-sm-7" th:text="${invoice.customerPhone ?: (o.phoneNumber ?: '—')}"></dd>
+
+                <dt class="col-sm-5 text-muted">Email:</dt>
+                <dd class="col-sm-7" th:text="${o.email ?: (o.customer != null ? o.customer.email : '—')}"></dd>
+
+                <!-- Thông tin người nhận nếu là đơn trực tuyến -->
+                <th:block th:if="${o.orderType == 'ONLINE'}">
+                    <dt class="col-sm-5 text-muted">Người nhận hàng:</dt>
+                    <dd class="col-sm-7" th:text="${o.receiverName ?: invoice.customerName}"></dd>
+
+                    <dt class="col-sm-5 text-muted">SĐT người nhận:</dt>
+                    <dd class="col-sm-7" th:text="${o.phoneNumber ?: invoice.customerPhone}"></dd>
+
+                    <dt class="col-sm-5 text-muted">Địa chỉ nhận:</dt>
+                    <dd class="col-sm-7" th:text="${o.shippingAddress ?: '—'}"></dd>
+
+                    <dt class="col-sm-5 text-muted">Tỉnh/Thành phố:</dt>
+                    <dd class="col-sm-7">
+                        <strong th:text="${o.provinceName ?: 'Chưa xác định'}"></strong>
+                    </dd>
+                </th:block>
+            </dl>
+
+            <!-- Cho phép sửa tỉnh/thành trước khi giao (chỉ đơn Online PENDING, CONFIRMED, PREPARING) -->
+            <div th:if="${o.orderType == 'ONLINE' and (o.status == 'PENDING' or o.status == 'CONFIRMED' or o.status == 'PREPARING')}" class="mt-3 pt-3 border-top" id="order-province">
+                <form method="post" th:action="@{/admin/invoices/{id}/province(id=${invoice.id})}" novalidate data-admin-form>
+                    <label for="order-province-select" class="form-label small fw-bold">Sửa Tỉnh/Thành phố giao hàng:</label>
+                    <div class="input-group">
+                        <select id="order-province-select" name="provinceId" required class="form-select form-select-sm" aria-label="Chọn Tỉnh/Thành phố">
+                            <option value="">-- Chọn Tỉnh/Thành phố --</option>
+                            <option th:each="p : ${provinces}" th:value="${p.id}" th:selected="${o.province != null and p.id == o.province.id}" th:text="${p.name}"></option>
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- KHỐI ĐƠN TRỰC TUYẾN: TIẾN TRÌNH & XỬ LÝ (KHÔNG HIỆN CHO POS) -->
+    <th:block th:if="${o.orderType == 'ONLINE'}">
+        <!-- 1. Timeline tiến trình các bước -->
+        <section class="admin-panel order-tracking mb-3" aria-label="Tiến trình giao hàng trực tuyến">
+            <div class="panel-heading">
+                <h2 class="h5 mb-0">Tiến trình đơn hàng trực tuyến</h2>
+            </div>
+            <div class="order-progress-scroll mt-2" role="region" aria-label="Tiến trình đơn hàng, cuộn ngang để xem" tabindex="0">
+                <ol class="order-progress">
+                    <li th:each="step : ${@orderTrackingService.steps(o)}"
+                        th:classappend="${step.current ? 'is-current' : step.at != null ? 'is-done' : ''}"
+                        th:attr="aria-current=${step.current ? 'step' : null}">
+                        <strong th:text="${step.label}"></strong>
+                        <time th:if="${step.at != null}" th:text="${#temporals.format(step.at, 'HH:mm dd/MM/yyyy')}"></time>
+                        <span th:if="${step.actor != null}" th:text="${step.actor}"></span>
+                        <span th:if="${step.at == null}" class="text-muted">Chưa thực hiện</span>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Cảnh báo nếu đã hủy hoặc giao thất bại -->
+            <div th:if="${o.status == 'CANCELLED'}" class="alert alert-danger mt-3 mb-0" role="alert">
+                <strong>Đơn hàng đã hủy.</strong> Hàng đã được hoàn kho tự động và ghi lịch sử xử lý.
+            </div>
+            <div th:if="${o.status == 'DELIVERY_FAILED'}" class="alert alert-warning mt-3 mb-0" role="alert">
+                <strong>Giao hàng thất bại.</strong> Hàng đã được hoàn kho tự động và ghi lịch sử xử lý.
+            </div>
+        </section>
+
+        <!-- 2. Thao tác xử lý đơn trực tuyến -->
+        <section class="admin-panel mb-3" aria-label="Thao tác xử lý đơn hàng trực tuyến">
+            <div class="panel-heading mb-3">
+                <h2 class="h5 mb-0">Xử lý đơn hàng</h2>
+            </div>
+
+            <!-- Nút xác nhận nhận chuyển khoản nếu chưa thanh toán -->
+            <form th:if="${o.status != 'CANCELLED' and o.status != 'DELIVERY_FAILED' and o.paymentStatus != 'PAID' and (o.paymentMethod == 'TRANSFER' or o.paymentMethod == 'BANK_TRANSFER' or o.paymentMethod == 'COMBINED')}"
+                  th:action="@{/admin/invoices/{id}/confirm-payment(id=${invoice.id})}"
+                  method="post" class="mb-3" novalidate>
+                <button type="button" class="btn btn-success" data-confirm
+                        data-confirm-title="Xác nhận thanh toán"
+                        data-confirm-message="Đã nhận đủ tiền chuyển khoản của đơn hàng này?">
+                    Xác nhận đã nhận chuyển khoản
+                </button>
+            </form>
+
+            <!-- Dải nút chuyển bước hợp lệ -->
+            <div th:if="${!allowedStatuses.empty}" class="d-flex gap-2 flex-wrap align-items-center">
+                <!-- Nút bước tiếp theo chuẩn -->
+                <button th:if="${nextLinearStatus != null}"
+                        type="button" class="btn btn-primary"
+                        th:data-transition="${nextLinearStatus}"
+                        th:text="'Chuyển bước tiếp theo: ' + ${nextLinearStatusLabel}">
+                </button>
+
+                <!-- Nút Hủy đơn nếu được phép -->
+                <button th:if="${allowedStatuses.contains('CANCELLED')}"
+                        type="button" class="btn btn-outline-danger"
+                        data-transition="CANCELLED">
+                    Hủy đơn
+                </button>
+
+                <!-- Nút Giao hàng thất bại nếu được phép -->
+                <button th:if="${allowedStatuses.contains('DELIVERY_FAILED')}"
+                        type="button" class="btn btn-outline-danger"
+                        data-transition="DELIVERY_FAILED">
+                    Giao hàng thất bại
+                </button>
+            </div>
+            <p th:if="${allowedStatuses.empty}" class="text-muted mb-0">Đơn hàng đã kết thúc xử lý.</p>
+
+            <!-- Thông tin vận chuyển hiện tại -->
+            <div th:if="${latestCarrier != '' or latestTrackingCode != ''}" class="mt-3 pt-3 border-top">
+                <p class="mb-1" th:if="${latestCarrier != ''}">Đơn vị vận chuyển: <strong th:text="${latestCarrier}"></strong></p>
+                <p class="mb-0" th:if="${latestTrackingCode != ''}">Mã vận đơn: <strong th:text="${latestTrackingCode}"></strong></p>
+            </div>
+        </section>
+
+        <!-- 3. Mã VietQR khi đơn online chưa thanh toán chuyển khoản -->
+        <th:block th:if="${o.paymentStatus != 'PAID' and (o.paymentMethod == 'TRANSFER' or o.paymentMethod == 'BANK_TRANSFER' or o.paymentMethod == 'COMBINED')}">
+            <th:block th:replace="~{fragments/vietqr :: payment(${o})}"></th:block>
+        </th:block>
+
+        <!-- 4. Lịch sử thay đổi trạng thái chi tiết -->
+        <section class="admin-panel mb-3" aria-label="Lịch sử thay đổi trạng thái">
+            <div class="panel-heading mb-3">
+                <h2 class="h5 mb-0">Lịch sử thay đổi trạng thái</h2>
+            </div>
+            <div class="table-wrap" role="region" aria-label="Bảng lịch sử trạng thái" tabindex="0">
+                <table class="admin-table data-table">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="row-number">STT</th>
+                        <th>Thời gian</th>
+                        <th>Trạng thái</th>
+                        <th>Người thực hiện</th>
+                        <th>Ghi chú / Lý do</th>
+                        <th>Đơn vị VC</th>
+                        <th>Mã vận đơn</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="entry, rowIndex : ${@orderTrackingService.history(o)}">
+                        <td class="row-number" th:text="${rowIndex.count}"></td>
+                        <td th:text="${#temporals.format(entry.changedAt, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td>
+                            <span class="status-pill" th:data-status="${entry.status}" th:text="${statusLabels[entry.status] ?: entry.status}"></span>
+                        </td>
+                        <td th:text="${entry.actor}"></td>
+                        <td th:text="${entry.note ?: '—'}"></td>
+                        <td th:text="${entry.carrier ?: '—'}"></td>
+                        <td th:text="${entry.trackingCode ?: '—'}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </th:block>
+
+    <!-- KHỐI ĐƠN TẠI QUẦY (POS ONLY) -->
+    <th:block th:if="${o.orderType == 'POS'}">
+        <div th:if="${!allowedStatuses.empty}" class="admin-panel mb-3">
+            <div class="panel-heading mb-3">
+                <h2 class="h5 mb-0">Cập nhật trạng thái đơn tại quầy</h2>
+            </div>
+            <form th:action="@{/admin/invoices/{id}/status(id=${invoice.id})}" method="post" novalidate>
+                <div class="input-group" style="max-width:400px;">
+                    <select id="nextStatus" name="status" class="form-select">
+                        <option th:each="s : ${allowedStatuses}" th:value="${s}" th:text="${statusLabels.get(s)}"></option>
+                    </select>
+                    <button type="button" class="btn btn-primary" data-confirm
+                            data-confirm-title="Cập nhật trạng thái đơn"
+                            data-confirm-message="Hủy đơn sẽ hoàn hàng nếu đơn đã trừ kho. Tiếp tục?">
+                        Cập nhật
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div th:if="${o.paymentStatus != 'PAID' and (o.paymentMethod == 'TRANSFER' or o.paymentMethod == 'COMBINED')}" class="admin-panel mb-3">
+            <div class="panel-heading mb-3">
+                <h2 class="h5 mb-0">Xử lý thanh toán tại quầy</h2>
+            </div>
+            <form th:action="@{/admin/invoices/{id}/confirm-payment(id=${invoice.id})}" method="post" novalidate>
+                <button type="button" class="btn btn-success" data-confirm
+                        data-confirm-title="Xác nhận thanh toán"
+                        data-confirm-message="Đã nhận đủ tiền chuyển khoản của đơn hàng này?">
+                    Xác nhận đã nhận chuyển khoản
+                </button>
+            </form>
+        </div>
+    </th:block>
+
+    <!-- Bảng danh sách sản phẩm trong đơn -->
+    <section class="admin-panel mb-3" aria-label="Sản phẩm trong hóa đơn">
+        <div class="panel-heading mb-3">
+            <h2 class="h5 mb-0">Sản phẩm trong hóa đơn</h2>
+        </div>
+        <div class="table-wrap" role="region" aria-label="Bảng sản phẩm, cuộn ngang để xem đủ cột" tabindex="0">
+            <table data-table-key="admin-hoa-don-chi-tiet-1" class="admin-table data-table">
+                <thead>
+                <tr>
+                    <th scope="col" class="row-number">STT</th>
+                    <th>Mã SP</th>
+                    <th>Ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Kích cỡ</th>
+                    <th>Màu sắc</th>
+                    <th>Chất liệu</th>
+                    <th>Đế giày</th>
+                    <th>Số lượng</th>
+                    <th class="money">Đơn giá (đ)</th>
+                    <th class="money">Thành tiền (đ)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="d, rowIndex : ${o.orderDetails}">
+                    <td class="row-number" th:text="${rowIndex.count}"></td>
+                    <td th:text="${d.productVariant.product.code}"></td>
+                    <td>
+                        <img class="product-thumbnail"
+                             th:with="resolvedImage=${@productImageUrl.source(d.productVariant.product.displayImageUrl)}"
+                             th:src="${resolvedImage}"
+                             th:alt="${d.productName ?: d.productVariant.product.name} + ' — ảnh chính'"
+                             width="48" height="48" style="object-fit:cover; border-radius:4px;">
+                    </td>
+                    <td>
+                        <strong th:text="${d.productName ?: d.productVariant.product.name}"></strong>
+                    </td>
+                    <td th:text="${d.sizeName ?: d.productVariant.size.sizeValue}"></td>
+                    <td th:text="${d.displayColorName}"></td>
+                    <td th:text="${d.displayMaterialName}"></td>
+                    <td th:text="${d.displaySoleName}"></td>
+                    <td th:text="${d.quantity}"></td>
+                    <td class="money" th:text="${@money.format(d.price)}"></td>
+                    <td class="money" th:text="${@money.format(d.totalPrice)}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Khối tổng tiền và dòng tiền -->
+    <section class="admin-panel mb-3" aria-label="Tổng tiền và thanh toán">
+        <div class="panel-heading mb-3">
+            <h2 class="h5 mb-0">Tổng kết tiền & Thanh toán</h2>
+        </div>
+        <dl class="invoice-totals">
+            <dt>Tạm tính</dt>
+            <dd th:text="${@money.format(o.totalAmount)} + ' đ'"></dd>
+
+            <dt>Giảm giá</dt>
+            <dd th:text="${@money.format(o.discountAmount)} + ' đ'"></dd>
+
+            <dt>Phiếu giảm giá (Voucher)</dt>
+            <dd th:text="${o.voucher != null ? o.voucher.code + ' (' + o.voucher.name + ')' : 'Không áp dụng'}"></dd>
+
+            <dt>TỔNG THANH TOÁN</dt>
+            <dd><strong class="fs-5 text-primary" th:text="${@money.format(o.finalAmount)} + ' đ'"></strong></dd>
+
+            <dt>Phương thức</dt>
+            <dd th:text="${o.paymentMethod == 'CASH' ? 'Tiền mặt' : (o.paymentMethod == 'COD' ? 'Thanh toán khi nhận hàng (COD)' : (o.paymentMethod == 'COMBINED' ? 'Kết hợp (Tiền mặt + Chuyển khoản)' : 'Chuyển khoản'))}"></dd>
+
+            <dt>Trạng thái thanh toán</dt>
+            <dd th:text="${o.status == 'CANCELLED' ? 'Đơn đã hủy' : (o.paymentStatus == 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán')}"></dd>
+
+            <!-- Dòng tiền mặt & chuyển khoản nếu có -->
+            <th:block th:if="${o.cashAmount != null and o.cashAmount > 0}">
+                <dt>Tiền mặt</dt>
+                <dd th:text="${@money.format(o.cashAmount)} + ' đ'"></dd>
+            </th:block>
+
+            <th:block th:if="${o.transferAmount != null and o.transferAmount > 0}">
+                <dt>Tiền chuyển khoản</dt>
+                <dd th:text="${@money.format(o.transferAmount)} + ' đ'"></dd>
+            </th:block>
+
+            <th:block th:if="${invoice.cashReceived != null}">
+                <dt>Khách đưa (Tiền mặt)</dt>
+                <dd th:text="${@money.format(invoice.cashReceived)} + ' đ'"></dd>
+            </th:block>
+
+            <th:block th:if="${invoice.changeAmount != null}">
+                <dt>Tiền thừa trả khách</dt>
+                <dd th:text="${@money.format(invoice.changeAmount)} + ' đ'"></dd>
+            </th:block>
+        </dl>
+
+        <p th:if="${o.orderType == 'ONLINE'}" class="small text-muted my-2">
+            * Phí vận chuyển do đơn vị vận chuyển tính và thu riêng.
+        </p>
+    </section>
+
+    <!-- BẢN IN HÓA ĐƠN CHUYÊN DỤNG (Cho window.print() / In hóa đơn) -->
+    <article class="invoice-paper d-none d-print-block" aria-label="Bản in hóa đơn">
+        <header class="invoice-header">
+            <img class="shop-logo shop-logo-invoice" src="/images/logo.jpg" alt="Biểu trưng F6S Store">
+            <div>
+                <h2 th:text="${shopName}"></h2>
+                <p th:if="${!#strings.isEmpty(shopAddress)}" th:text="${shopAddress}"></p>
+                <p th:if="${!#strings.isEmpty(shopPhone)}" th:text="'SĐT: ' + ${shopPhone}"></p>
+            </div>
+            <div>
+                <h2>HÓA ĐƠN BÁN HÀNG</h2>
+                <strong th:text="${invoice.invoiceCode}"></strong>
+                <p th:text="${#temporals.format(invoice.issuedAt, 'dd/MM/yyyy HH:mm')}"></p>
+            </div>
+        </header>
+
+        <p th:if="${o.orderType == 'ONLINE'}">
+            Người nhận: <span th:text="${o.receiverName}"></span> · SĐT: <span th:text="${o.phoneNumber}"></span>
+        </p>
+        <p th:if="${o.orderType == 'ONLINE'}">
+            Địa chỉ: <span th:text="${o.shippingAddress}"></span>
+        </p>
+
+        <div class="invoice-meta">
+            <p>
+                Đơn hàng: <span th:text="${o.orderCode}"></span><br>
+                Kênh bán: <strong th:text="${o.orderType == 'POS' ? 'Tại quầy' : 'Trực tuyến'}"></strong>
+            </p>
+            <p>
+                Khách: <strong th:text="${invoice.customerName}"></strong><br>
+                <span th:if="${invoice.customerPhone != null}" th:text="'SĐT: ' + ${invoice.customerPhone} + '<br>'"></span>
+                Nhân viên: <span th:text="${o.employee != null ? o.employee.fullName : (invoice.employeeName ?: 'Đơn trực tuyến')}"></span>
+            </p>
+        </div>
+
+        <table class="invoice-table data-table">
+            <thead>
+            <tr>
+                <th scope="col" class="row-number">STT</th>
+                <th>Mã SP</th>
+                <th>Tên sản phẩm</th>
+                <th>Kích cỡ</th>
+                <th>Màu sắc</th>
+                <th>Chất liệu</th>
+                <th>Đế giày</th>
+                <th>SL</th>
+                <th class="money">Đơn giá (đ)</th>
+                <th class="money">Thành tiền (đ)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="d, rowIndex : ${o.orderDetails}">
+                <td class="row-number" th:text="${rowIndex.count}"></td>
+                <td th:text="${d.productVariant.product.code}"></td>
+                <td th:text="${d.productName ?: d.productVariant.product.name}"></td>
+                <td th:text="${d.sizeName ?: d.productVariant.size.sizeValue}"></td>
+                <td th:text="${d.displayColorName}"></td>
+                <td th:text="${d.displayMaterialName}"></td>
+                <td th:text="${d.displaySoleName}"></td>
+                <td th:text="${d.quantity}"></td>
+                <td class="money" th:text="${@money.format(d.price)}"></td>
+                <td class="money" th:text="${@money.format(d.totalPrice)}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <dl class="invoice-totals">
+            <dt>Tạm tính</dt>
+            <dd th:text="${@money.format(o.totalAmount)} + ' đ'"></dd>
+            <dt>Giảm giá</dt>
+            <dd th:text="${@money.format(o.discountAmount)} + ' đ'"></dd>
+            <dt>TỔNG THANH TOÁN</dt>
+            <dd><strong th:text="${@money.format(o.finalAmount)} + ' đ'"></strong></dd>
+            <dt>Phương thức</dt>
+            <dd th:text="${o.paymentMethod == 'CASH' ? 'Tiền mặt' : (o.paymentMethod == 'COD' ? 'Thanh toán khi nhận hàng' : (o.paymentMethod == 'COMBINED' ? 'Kết hợp' : 'Chuyển khoản'))}"></dd>
+            <dt>Thanh toán</dt>
+            <dd th:text="${o.status == 'CANCELLED' ? 'Đơn đã hủy' : (o.paymentStatus == 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán')}"></dd>
+            <dt th:if="${invoice.cashReceived != null}">Khách đưa</dt>
+            <dd th:if="${invoice.cashReceived != null}" th:text="${@money.format(invoice.cashReceived)} + ' đ'"></dd>
+            <dt th:if="${invoice.changeAmount != null}">Tiền thừa</dt>
+            <dd th:if="${invoice.changeAmount != null}" th:text="${@money.format(invoice.changeAmount)} + ' đ'"></dd>
+        </dl>
+        <p th:if="${o.orderType == 'ONLINE'}" class="small text-muted my-2">Phí vận chuyển do đơn vị vận chuyển tính và thu riêng.</p>
+        <footer class="invoice-thanks">Cảm ơn quý khách!</footer>
+    </article>
+
+    <!-- Modal dialog xử lý chuyển trạng thái -->
+    <dialog id="order-transition-dialog" class="admin-dialog" aria-labelledby="order-transition-title">
+        <form novalidate data-admin-form method="post" th:action="@{/admin/invoices/{id}/status(id=${invoice.id})}">
+            <h3 id="order-transition-title" data-transition-title>Xử lý đơn hàng</h3>
+            <p>Thao tác sẽ được ghi vào lịch sử xử lý. Hủy đơn hoặc giao hàng thất bại sẽ hoàn lại tồn kho.</p>
+            <input type="hidden" name="status">
+            <div data-shipping-fields hidden>
+                <label for="order-carrier" class="form-label">Đơn vị vận chuyển (tùy chọn)</label>
+                <input class="form-control" id="order-carrier" name="carrier" maxlength="100" th:value="${latestCarrier}" aria-describedby="order-carrier-error">
+                <p class="field-error" id="order-carrier-error" aria-live="polite"></p>
+
+                <label for="order-tracking" class="form-label mt-2">Mã vận đơn (tùy chọn)</label>
+                <input class="form-control" id="order-tracking" name="trackingCode" maxlength="100" th:value="${latestTrackingCode}" aria-describedby="order-tracking-error">
+                <p class="field-error" id="order-tracking-error" aria-live="polite"></p>
+            </div>
+            <div data-reason-field hidden>
+                <label for="order-reason" class="form-label">Lý do *</label>
+                <textarea class="form-control resize-none" rows="3" aria-describedby="order-reason-error" id="order-reason" name="reason" maxlength="900" placeholder="Nhập lý do hủy hoặc lý do giao hàng thất bại"></textarea>
+                <p class="field-error" id="order-reason-error" aria-live="polite"></p>
+            </div>
+            <p class="form-message" role="alert" hidden></p>
+            <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-primary">Xác nhận</button>
+                <button type="button" class="btn btn-outline-secondary" data-close-transition>Quay lại</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="/js/in-hoa-don.js" defer></script>
+    <script src="/js/theo-doi-don-hang.js" defer></script>
+</section>
+</body>
+</html>

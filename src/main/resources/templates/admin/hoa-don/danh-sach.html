@@ -1,15 +1,151 @@
-<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section>
-<div class="admin-heading"><div><h1>Hóa đơn</h1></div><div class="d-flex gap-2 flex-wrap"><a class="btn btn-primary" href="/admin/pos">Bán hàng tại quầy</a></div></div><div class="admin-panel"><form class="catalog-filters mb-3" action="/admin/invoices" method="get" novalidate>
-<div><label for="q">Mã hóa đơn / mã đơn</label><input class="form-control" id="q" name="q" th:value="${q}" type="search" placeholder="Nhập mã hóa đơn hoặc mã đơn"></div>
-<div><label for="invoice-customer">Tìm khách</label><input id="invoice-customer" class="form-control" name="customer" th:value="${customer}" placeholder="Tên, SĐT, mã khách"></div>
-<div><label for="invoice-customerId">Khách hàng</label><select class="form-select" id="invoice-customerId" name="customerId"><option value="">Tất cả khách hàng</option><option th:each="c:${customers}" th:value="${c.id}" th:selected="${customerId==c.id}" th:text="${c.fullName + (c.phone != null ? ' · ' + c.phone : '')}"></option></select></div>
-<div><label for="invoice-channel">Kênh bán</label><select class="form-select" id="invoice-channel" name="channel"><option value="">Tất cả kênh</option><option value="ONLINE" th:selected="${channel=='ONLINE'}">Trực tuyến</option><option value="POS" th:selected="${channel=='POS'}">Tại quầy</option></select></div>
-<div><label for="invoice-source">Nguồn đơn</label><select id="invoice-source" name="source" class="form-select"><option value="">Tất cả nguồn</option><option th:each="s:${orderSources}" th:value="${s.key}" th:text="${s.value}" th:selected="${source==s.key}"></option></select></div>
-<div><label for="invoice-status">Trạng thái</label><select id="invoice-status" name="status" class="form-select"><option value="">Tất cả trạng thái</option><option th:each="s:${statusLabels}" th:value="${s.key}" th:text="${s.value}" th:selected="${status==s.key}"></option></select></div>
-<div><label for="invoice-paid">Thanh toán</label><select id="invoice-paid" name="paymentStatus" class="form-select"><option value="">Tất cả</option><option value="PAID" th:selected="${paymentStatus=='PAID'}">Đã thanh toán</option><option value="UNPAID" th:selected="${paymentStatus=='UNPAID'}">Chưa thanh toán</option></select></div>
-<div><label for="invoice-method">Phương thức</label><select id="invoice-method" name="paymentMethod" class="form-select"><option value="">Tất cả</option><option value="CASH" th:selected="${paymentMethod=='CASH'}">Tiền mặt tại quầy</option><option value="COD" th:selected="${paymentMethod=='COD'}">Thanh toán khi nhận hàng</option><option value="TRANSFER" th:selected="${paymentMethod=='TRANSFER'}">Chuyển khoản tại quầy</option><option value="BANK_TRANSFER" th:selected="${paymentMethod=='BANK_TRANSFER'}">Chuyển khoản trực tuyến</option><option value="COMBINED" th:selected="${paymentMethod=='COMBINED'}">Kết hợp (Tiền mặt + Chuyển khoản)</option></select></div>
-<div><label for="from">Từ ngày</label><input class="form-control" id="from" type="date" name="from" th:value="${from}"></div>
-<div><label for="to">Đến ngày</label><input class="form-control" id="to" type="date" name="to" th:value="${to}"></div>
-<div class="filter-actions"><button class="btn btn-primary" type="submit">Lọc</button><a class="btn btn-outline-secondary" href="/admin/invoices">Xóa lọc</a><span class="filter-status-badge" data-filter-count th:text="${activeFilterCount > 0 ? 'Đang lọc: ' + activeFilterCount + ' bộ lọc' : 'Chưa áp dụng bộ lọc'}"></span></div>
-</form><div class="table-wrap" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-hoa-don-danh-sach-1" class="admin-table data-table"><thead><tr><th>STT</th><th>Mã hóa đơn</th><th>Mã đơn</th><th>Ngày</th><th>Khách</th><th>Kênh bán</th><th>Nguồn đơn</th><th>Trạng thái</th><th>Thanh toán</th><th>Phương thức</th><th>Tổng (đ)</th><th>Hành động</th></tr></thead><tbody><tr th:each="i,rowIndex:${invoices.content}"><td class="row-number" th:text="${invoices.number*invoices.size+rowIndex.count}"></td><td><a th:href="@{/admin/invoices/{id}(id=${i.id})}" th:text="${i.invoiceCode}"></a></td><td><a th:href="@{/admin/invoices/{id}(id=${i.id})}" th:text="${i.order.orderCode}"></a></td><td th:text="${#temporals.format(i.issuedAt,'dd/MM/yyyy HH:mm')}"></td><td th:text="${i.customerName}"></td><td th:text="${i.order.orderType=='POS'?'Tại quầy':'Trực tuyến'}"></td><td th:text="${i.order.sourceLabel ?: '—'}"></td><td><span class="status-pill" th:data-status="${i.order.status}" th:text="${statusLabels[i.order.status] ?: i.order.status}"></span></td><td th:text="${i.order.paymentStatus=='PAID'?'Đã thanh toán':'Chưa thanh toán'}"></td><td th:text="${i.order.paymentMethod=='CASH'?'Tiền mặt':i.order.paymentMethod=='COD'?'Thanh toán khi nhận hàng':'Chuyển khoản'}"></td><td class="money" th:text="${@money.format(i.order.finalAmount)}"></td><td class="table-actions"><a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/invoices/{id}(id=${i.id})}">Xem / xử lý</a><a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/invoices/{id}(id=${i.id},print=true)}">In</a></td></tr><tr th:if="${invoices.empty}"><td colspan="12" class="sales-empty">Không có hóa đơn phù hợp.</td></tr></tbody></table></div></div>
-<nav th:replace="~{fragments/phan-trang :: phan-trang(${invoices},'page')}"></nav></section></body></html>
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}">
+<body>
+<section>
+    <div class="admin-heading">
+        <div>
+            <h1>Quản lý hóa đơn</h1>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-primary" href="/admin/pos">+ Bán hàng tại quầy</a>
+        </div>
+    </div>
+
+    <!-- Dải tab trạng thái cuộn ngang -->
+    <div class="status-tabs-container mb-3" role="region" aria-label="Dải tab lọc theo trạng thái đơn hàng" tabindex="0">
+        <div class="status-tabs" role="tablist">
+            <a th:each="tab : ${statusTabs}"
+               th:href="@{/admin/invoices(q=${q}, channel=${channel}, paymentStatus=${paymentStatus}, paymentMethod=${paymentMethod}, from=${from}, to=${to}, status=${tab.key != '' ? tab.key : null})}"
+               class="btn btn-sm"
+               th:classappend="${(tab.key == '' and (status == null or status == '')) or (tab.key == status) ? 'btn-primary' : 'btn-outline-secondary'}"
+               role="tab"
+               th:attr="aria-selected=${(tab.key == '' and (status == null or status == '')) or (tab.key == status)}">
+                <span th:text="${tab.label}">Tất cả</span>
+                <span class="badge ms-1"
+                      th:classappend="${(tab.key == '' and (status == null or status == '')) or (tab.key == status) ? 'bg-light text-dark' : 'bg-secondary'}"
+                      th:text="${tab.count}">0</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="admin-panel">
+        <form class="catalog-filters mb-3" action="/admin/invoices" method="get" novalidate>
+            <input th:if="${status != null and !status.isBlank()}" type="hidden" name="status" th:value="${status}">
+            <div>
+                <label for="invoice-q">Từ khóa</label>
+                <input class="form-control" id="invoice-q" name="q" th:value="${q}" type="search" placeholder="Mã HĐ, mã đơn, tên/SĐT khách">
+            </div>
+            <div>
+                <label for="invoice-channel">Kênh bán</label>
+                <select class="form-select" id="invoice-channel" name="channel">
+                    <option value="">Tất cả kênh</option>
+                    <option value="POS" th:selected="${channel=='POS'}">Tại quầy</option>
+                    <option value="ONLINE" th:selected="${channel=='ONLINE'}">Trực tuyến</option>
+                </select>
+            </div>
+            <div>
+                <label for="invoice-paid">Thanh toán</label>
+                <select id="invoice-paid" name="paymentStatus" class="form-select">
+                    <option value="">Tất cả thanh toán</option>
+                    <option value="PAID" th:selected="${paymentStatus=='PAID'}">Đã thanh toán</option>
+                    <option value="UNPAID" th:selected="${paymentStatus=='UNPAID'}">Chưa thanh toán</option>
+                </select>
+            </div>
+            <div>
+                <label for="invoice-method">Phương thức</label>
+                <select id="invoice-method" name="paymentMethod" class="form-select">
+                    <option value="">Tất cả phương thức</option>
+                    <option value="CASH" th:selected="${paymentMethod=='CASH'}">Tiền mặt</option>
+                    <option value="COD" th:selected="${paymentMethod=='COD'}">Thanh toán khi nhận hàng (COD)</option>
+                    <option value="TRANSFER" th:selected="${paymentMethod=='TRANSFER'}">Chuyển khoản</option>
+                    <option value="COMBINED" th:selected="${paymentMethod=='COMBINED'}">Kết hợp</option>
+                </select>
+            </div>
+            <div>
+                <label for="from">Từ ngày</label>
+                <input class="form-control" id="from" type="date" name="from" th:value="${from}">
+            </div>
+            <div>
+                <label for="to">Đến ngày</label>
+                <input class="form-control" id="to" type="date" name="to" th:value="${to}">
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-primary" type="submit">Lọc</button>
+                <a class="btn btn-outline-secondary" href="/admin/invoices">Xóa lọc</a>
+                <span class="filter-status-badge" data-filter-count th:text="${activeFilterCount > 0 ? 'Đang lọc: ' + activeFilterCount + ' bộ lọc' : 'Chưa áp dụng bộ lọc'}"></span>
+            </div>
+        </form>
+
+        <div class="table-wrap" role="region" aria-label="Bảng dữ liệu hóa đơn, cuộn ngang để xem đủ cột" tabindex="0">
+            <table data-table-key="admin-hoa-don-danh-sach-1" class="admin-table data-table">
+                <thead>
+                <tr>
+                    <th scope="col" class="row-number">STT</th>
+                    <th>Mã hóa đơn</th>
+                    <th>Mã đơn</th>
+                    <th>Ngày</th>
+                    <th>Khách</th>
+                    <th>Kênh bán</th>
+                    <th>Trạng thái</th>
+                    <th>Thanh toán</th>
+                    <th>Phương thức</th>
+                    <th class="money">Tổng tiền (đ)</th>
+                    <th>Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="i, rowIndex : ${invoices.content}">
+                    <td class="row-number" th:text="${invoices.number * invoices.size + rowIndex.count}"></td>
+                    <td>
+                        <a th:href="@{/admin/invoices/{id}(id=${i.id})}" th:text="${i.invoiceCode}"></a>
+                    </td>
+                    <td>
+                        <a th:href="@{/admin/invoices/{id}(id=${i.id})}" th:text="${i.order.orderCode}"></a>
+                    </td>
+                    <td th:text="${#temporals.format(i.issuedAt, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${i.customerName}"></td>
+                    <td>
+                        <span class="badge" th:classappend="${i.order.orderType == 'POS' ? 'bg-secondary' : 'bg-info text-dark'}" th:text="${i.order.orderType == 'POS' ? 'Tại quầy' : 'Trực tuyến'}"></span>
+                    </td>
+                    <td>
+                        <span class="status-pill" th:data-status="${i.order.status}" th:text="${statusLabels[i.order.status] ?: i.order.status}"></span>
+                    </td>
+                    <td>
+                        <span class="badge" th:classappend="${i.order.paymentStatus == 'PAID' ? 'bg-success' : 'bg-warning text-dark'}" th:text="${i.order.paymentStatus == 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán'}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${i.order.paymentMethod == 'CASH' ? 'Tiền mặt' : (i.order.paymentMethod == 'COD' ? 'COD' : (i.order.paymentMethod == 'COMBINED' ? 'Kết hợp' : 'Chuyển khoản'))}"></span>
+                    </td>
+                    <td class="money" th:text="${@money.format(i.order.finalAmount)}"></td>
+                    <td class="table-actions">
+                        <div class="d-flex gap-1 align-items-center flex-wrap">
+                            <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/invoices/{id}(id=${i.id})}" title="Xem và xử lý chi tiết">Xem / xử lý</a>
+                            <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/invoices/{id}(id=${i.id},print=true)}" title="In hóa đơn">In</a>
+                            <!-- Nút chuyển bước tiếp theo cho đơn trực tuyến nếu có bước hợp lệ -->
+                            <th:block th:if="${i.order.orderType == 'ONLINE' and @orderStatusService.nextLinearStatus(i.order) != null}"
+                                      th:with="nextStep=${@orderStatusService.nextLinearStatus(i.order)}, nextStepLabel=${@orderStatusService.nextLinearStatusLabel(nextStep)}">
+                                <form method="post" th:action="@{/admin/invoices/{id}/status(id=${i.id})}" class="d-inline" novalidate>
+                                    <input type="hidden" name="status" th:value="${nextStep}">
+                                    <input type="hidden" name="returnTo" th:value="${currentUrl}">
+                                    <button type="button" class="btn btn-sm btn-outline-primary"
+                                            data-confirm
+                                            th:data-confirm-title="'Chuyển bước tiếp theo: ' + ${i.order.orderCode}"
+                                            th:data-confirm-message="'Xác nhận chuyển đơn ' + ${i.order.orderCode} + ' sang bước: ' + ${nextStepLabel} + '?'"
+                                            th:text="${nextStepLabel}">
+                                    </button>
+                                </form>
+                            </th:block>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${invoices.empty}">
+                    <td colspan="11" class="sales-empty">Không có hóa đơn phù hợp.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <nav th:replace="~{fragments/phan-trang :: phan-trang(${invoices},'page')}"></nav>
+</section>
+</body>
+</html>
