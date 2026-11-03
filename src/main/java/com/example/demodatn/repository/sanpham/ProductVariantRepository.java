@@ -2,7 +2,7 @@ package com.example.demodatn.repository.sanpham;
 import com.example.demodatn.entity.sanpham.ProductVariant;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProductVariantRepository extends JpaRepository<ProductVariant, Integer> {
+public interface ProductVariantRepository extends JpaRepository<ProductVariant, Integer>, org.springframework.data.jpa.repository.JpaSpecificationExecutor<ProductVariant> {
     @org.springframework.data.jpa.repository.EntityGraph(attributePaths={"product","product.category","size","material","color","sole"})
     java.util.List<ProductVariant> findByProduct_IdInAndStatusTrueAndProduct_StatusTrue(java.util.Collection<Integer> ids);
     boolean existsByProduct_IdAndSize_IdAndMaterial_IdAndIdNot(Integer productId, Integer sizeId, Integer materialId, Integer id);
@@ -26,4 +26,5 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
     @org.springframework.data.jpa.repository.Query("select v from ProductVariant v where v.id=:id")
     java.util.Optional<ProductVariant> findForUpdate(@org.springframework.data.repository.query.Param("id") Integer id);
     java.util.List<ProductVariant> findByProduct_Id(Integer productId);
+    java.util.Optional<ProductVariant> findByCodeIgnoreCase(String code);
 }

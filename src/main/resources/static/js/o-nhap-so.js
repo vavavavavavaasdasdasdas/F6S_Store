@@ -21,6 +21,7 @@
     );
 
     inputs.forEach(input => {
+      if (input.id === 'cashReceived' || input.id === 'combinedCash') return;
       if (input.dataset.numInitialized === 'true') return;
       input.dataset.numInitialized = 'true';
 

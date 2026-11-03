@@ -40,12 +40,12 @@ public class StatisticsService {
         result.put("average", count == 0 ? BigDecimal.ZERO : revenue.divide(BigDecimal.valueOf(count), 2, RoundingMode.HALF_UP));
 
         BigDecimal cashRevenue = jdbc.queryForObject(
-                "SELECT COALESCE(SUM(" + RevenueCondition.AMOUNT + "),0) FROM orders o WHERE" + ELIGIBLE + " AND o.payment_method IN ('CASH','COD')",
+                "SELECT COALESCE(SUM(o.tien_mat),0) FROM orders o WHERE" + ELIGIBLE,
                 BigDecimal.class, args);
         result.put("cashRevenue", cashRevenue);
 
         BigDecimal transferRevenue = jdbc.queryForObject(
-                "SELECT COALESCE(SUM(" + RevenueCondition.AMOUNT + "),0) FROM orders o WHERE" + ELIGIBLE + " AND o.payment_method IN ('BANK_TRANSFER','TRANSFER')",
+                "SELECT COALESCE(SUM(o.tien_chuyen_khoan),0) FROM orders o WHERE" + ELIGIBLE,
                 BigDecimal.class, args);
         result.put("transferRevenue", transferRevenue);
 

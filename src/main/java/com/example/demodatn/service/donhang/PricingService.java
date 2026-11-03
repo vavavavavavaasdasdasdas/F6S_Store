@@ -31,6 +31,7 @@ public class PricingService {
             if(!ProductSalePolicy.isSelling(variant) || item.getQuantity()==null || item.getQuantity()<=0 || variant.getQuantity()<item.getQuantity()) throw new IllegalArgumentException("Sản phẩm đã ngừng bán hoặc không đủ tồn kho: "+variant.getProduct().getName());
             item.setMaterialName(variant.getMaterial().getName());
             item.setColorName(variant.getColor().getName()); item.setSoleName(variant.getSole().getName());
+            item.setProductCode(variant.getProduct().getCode()); item.setVariantCode(variant.getMa());
             item.setPrice(calculatePrice(variant).getFinalPrice());
             total=total.add(item.getTotalPrice());
         }

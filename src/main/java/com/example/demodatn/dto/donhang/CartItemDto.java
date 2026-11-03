@@ -18,10 +18,24 @@ public class CartItemDto {
     private Integer variantId;
 
     private String productName;
+    private String productCode;
+    private String variantCode;
     private String size;
     private String materialName;
     private String colorName;
     private String soleName;
+
+    public CartItemDto(Integer productId, Integer variantId, String productName, String size, String materialName, String colorName, String soleName, BigDecimal price, Integer quantity) {
+        this.productId = productId;
+        this.variantId = variantId;
+        this.productName = productName;
+        this.size = size;
+        this.materialName = materialName;
+        this.colorName = colorName;
+        this.soleName = soleName;
+        this.price = price;
+        this.quantity = quantity;
+    }
 
     public CartItemDto(Integer productId,Integer variantId,String productName,String size,String materialName,BigDecimal price,Integer quantity) {
         this.productId=productId;this.variantId=variantId;this.productName=productName;this.size=size;this.materialName=materialName;this.price=price;this.quantity=quantity;

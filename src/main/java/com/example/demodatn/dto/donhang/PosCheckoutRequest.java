@@ -11,7 +11,7 @@ public class PosCheckoutRequest {
     private BigDecimal transferAmount;
     private String paymentReference;
     @NotBlank(message = "Chọn phương thức thanh toán.")
-    @Pattern(regexp = "CASH|TRANSFER", message = "Phương thức thanh toán không hợp lệ.")
+    @Pattern(regexp = "CASH|TRANSFER|COMBINED", message = "Phương thức thanh toán không hợp lệ.")
     private String paymentMethod;
     private String voucherCode;
     @DecimalMin(value = "0", message = "Tiền khách đưa không được âm.")

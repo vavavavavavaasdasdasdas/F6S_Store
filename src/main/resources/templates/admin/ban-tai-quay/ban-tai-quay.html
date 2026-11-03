@@ -1,48 +1,514 @@
-<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section th:data-pos-base="${posBase}" th:data-online-mode="${onlineMode}">
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}">
+<body>
+<section class="pos-v2-container">
+    <div class="admin-heading mb-3 d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="h3 fw-bold mb-0">Bán hàng tại quầy</h1>
+        </div>
+        <div class="d-flex gap-2">
+            <a class="btn btn-outline-secondary" href="/admin/invoices">Hóa đơn</a>
+        </div>
+    </div>
 
-<div class="admin-heading"><div><img class="shop-logo" src="/images/logo.jpg" alt="Biểu trưng F6S Store"><h1 th:text="${onlineMode?'Bán online':'Bán hàng tại quầy'}"></h1></div><a class="btn btn-outline-secondary" href="/admin/invoices">Hóa đơn</a></div>
-<form id="pos-customer-query" th:action="${posBase+'/customers'}" method="get"></form><div class="pos-layout">
-<div class="admin-panel pos-catalog">
-<form th:action="${posBase}" method="get" class="sales-filters filter-bar" role="search" novalidate><div><label for="productSearch">Tên hoặc mã sản phẩm</label><input class="form-control" id="productSearch" name="q" th:value="${q}" type="search" placeholder="Tìm sản phẩm…"></div><div><label for="category">Thương hiệu</label><select class="form-select" id="category" name="category"><option value="">Tất cả thương hiệu</option><option th:each="c:${categories}" th:value="${c.id}" th:text="${c.name}" th:selected="${category==c.id}"></option></select></div><div><label for="posFilterMaterial">Chất liệu</label><select class="form-select" id="posFilterMaterial" name="materialId"><option value="">Tất cả chất liệu</option><option th:each="m:${materials}" th:value="${m.id}" th:text="${m.name}" th:selected="${materialId==m.id}"></option></select></div><div><label for="posFilterSize">Kích cỡ</label><select class="form-select" id="posFilterSize" name="sizeId"><option value="">Tất cả kích cỡ</option><option th:each="s:${sizes}" th:value="${s.id}" th:text="${s.sizeValue}" th:selected="${sizeId==s.id}"></option></select></div><div class="filter-bar-actions"><button class="btn btn-primary" type="submit">Lọc</button><a th:href="${posBase}" class="btn btn-outline-secondary">Xóa lọc</a><span class="filter-state-badge" th:if="${activeFilterCount != null and activeFilterCount > 0}" th:text="'Đang áp dụng ' + ${activeFilterCount} + ' bộ lọc'"></span></div></form>
-<p th:if="${products.empty}" class="sales-empty">Không có sản phẩm phù hợp. Thử tên hoặc thương hiệu khác.</p>
-<div class="pos-grid"><article th:each="p:${products}" class="pos-product"><img class="catalog-thumb" th:with="resolvedImage=${@productImageUrl.source(p.imageUrl)}" th:src="${resolvedImage}" alt="" loading="lazy"><small th:text="${p.code}"></small><h2 th:text="${p.name}"></h2><strong th:text="'Từ '+${@money.format(productPrices[p.id])}+' đ'"></strong><button type="button" class="btn btn-outline-primary" data-pos-product th:data-product-id="${p.id}" th:data-product-name="${p.name}" th:disabled="${variants.?[product.id == #vars.p.id].empty}">Chọn kích cỡ</button>
-<template th:id="'pos-options-'+${p.id}"><option th:each="v:${variants}" th:if="${v.product.id==p.id}" th:value="${v.id}" th:data-stock="${v.quantity}" th:data-material-id="${v.material.id}" th:data-material-name="${v.material.name}" th:data-color-id="${v.color.id}" th:data-color-name="${v.color.name}" th:data-color-hex="${v.color.hexCode}" th:data-sole-id="${v.sole.id}" th:data-sole-name="${v.sole.name}" th:data-size-id="${v.size.id}" th:data-size-name="${v.size.sizeValue}" th:text="'Kích cỡ '+${v.size.sizeValue}+' · '+${v.material.name}+' · '+${@money.format(variantPrices.get(v.id).finalPrice)}+' đ · còn '+${v.quantity}"></option></template><span class="sales-muted" th:if="${variants.?[product.id == #vars.p.id].empty}">Hết hàng</span>
-</article></div><nav th:replace="~{fragments/phan-trang :: phan-trang(${productPage},'page')}"></nav></div>
-<aside class="admin-panel pos-basket" aria-label="Giỏ bán hàng"><div class="panel-heading"><h2>Hóa đơn chờ</h2><span id="pos-hold-counter" th:text="'Chờ: '+${heldOrders.size()}+'/5'"></span></div>
-<div class="d-flex flex-wrap gap-2 mb-3" id="pos-held-bar" th:data-count="${heldOrders.size()}" th:data-loaded="${loadedHoldId}">
-<span class="badge text-bg-primary align-self-center" th:text="${loadedHoldId == null ? 'Đơn đang bán' : 'Đang bán hóa đơn chờ'}"></span>
-<div class="data-table-scroll" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-ban-tai-quay-ban-tai-quay-1" class="admin-table data-table" ><thead><tr><th scope="col">STT</th><th scope="col">Mã</th><th scope="col">Chất liệu</th><th>Màu sắc</th><th>Đế giày</th><th scope="col">Số món</th><th scope="col">Tổng tiền</th><th scope="col">Hết hạn</th><th scope="col">Hành động</th></tr></thead><tbody><tr th:each="h,rowIndex:${heldOrders}" th:data-held-id="${h.id}"><td class="row-number" th:text="${rowIndex.count}"></td><td><form th:action="${posBase+'/holds/'+h.id+'/open'}" method="post" data-held-open novalidate>
-<input type="hidden" name="action" value="DISCARD"><button class="btn btn-sm" th:classappend="${loadedHoldId == h.id ? 'btn-primary' : 'btn-outline-primary'}" type="submit" th:text="${h.code}"></button>
+    <!-- Hidden form for creating a new hold tab or switching tabs -->
+    <form id="pos-new-tab-form" th:action="@{/admin/pos/holds/new-tab}" method="post" style="display:none;">
+        <input type="hidden" name="customerId" id="new-tab-customer-id">
+        <input type="hidden" name="voucherCode" id="new-tab-voucher-code">
+        <input type="hidden" name="paymentMethod" id="new-tab-payment-method" value="CASH">
+        <input type="hidden" name="note" id="new-tab-note">
+    </form>
 
-</form></td><td th:text="${h.materialNames}"></td><td th:text="${h.colorNames}"></td><td th:text="${h.soleNames}"></td><td th:text="${h.itemCount}"></td><td th:text="${@money.format(h.subtotal)+' đ'}"></td><td><span data-hold-countdown th:data-expires="${h.expiresEpoch}"></span></td><td><form th:action="${posBase+'/holds/'+h.id+'/delete'}" method="post" novalidate><button type="button" class="btn btn-sm btn-outline-danger" data-delete th:data-object="${h.code}" data-consequence="Xóa giỏ chờ này. Thao tác không thay đổi tồn kho.">Xóa</button></form></td></tr></tbody></table></div></div>
-<div class="d-flex gap-2 flex-wrap mb-3"><button class="btn btn-outline-primary" type="submit" form="pos-hold-save" th:disabled="${posCart.empty}">LƯU CHỜ</button><form th:action="${posBase+'/new'}" method="post" novalidate><button type="button" class="btn btn-outline-secondary" data-confirm data-confirm-title="Bắt đầu đơn mới?" data-confirm-message="Giỏ đang bán sẽ bị bỏ. Hóa đơn đã lưu chờ vẫn được giữ.">ĐƠN MỚI</button></form></div>
-<form id="pos-hold-save" th:action="${posBase+'/holds'}" method="post" data-admin-form novalidate><p class="form-message" role="alert" hidden></p></form>
-<div th:if="${holdNeedsReview}" class="alert alert-warning" role="status">Kiểm tra giá vừa tính lại trước khi thanh toán.<form th:action="${posBase+'/holds/review'}" method="post" novalidate><button class="btn btn-outline-primary" type="submit">Xác nhận giá hiện tại</button></form></div>
-<div class="panel-heading"><h2 th:text="${onlineMode?'Giỏ bán online':'Giỏ tại quầy'}"></h2><span th:text="${posCart.size()}+' dòng'"></span></div>
-<p th:if="${posCart.empty}" class="sales-empty">Giỏ đang trống. Chọn sản phẩm để bắt đầu.</p>
-<div class="data-table-scroll" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-ban-tai-quay-ban-tai-quay-2" class="admin-table data-table" ><thead><tr><th scope="col">STT</th><th scope="col">Mã</th><th scope="col">Tên sản phẩm</th><th scope="col">Kích cỡ</th><th scope="col">Chất liệu</th><th>Màu sắc</th><th>Đế giày</th><th scope="col">Đơn giá</th><th scope="col">Số lượng</th><th scope="col">Thành tiền</th><th scope="col">Hành động</th></tr></thead><tbody><tr class="pos-line" th:each="i,rowIndex:${posCart}"><td class="row-number" th:text="${rowIndex.count}"></td><td th:text="${productCodes[i.variantId] ?: '—'}"></td><td><strong th:text="${i.productName}"></strong><p class="text-warning-emphasis" th:if="${lineWarnings.containsKey(i.variantId)}" th:text="${lineWarnings.get(i.variantId)}" role="alert"></p></td><td th:text="${i.size}"></td><td th:text="${i.materialName}"></td><td th:text="${i.colorName}"></td><td th:text="${i.soleName}"></td><td th:text="${@money.format(i.price)+' đ'}"></td><td class="pos-line-actions"><form th:action="${posBase+'/quantity'}" method="post" data-admin-form novalidate><input type="hidden" name="variantId" th:value="${i.variantId}"><label class="visually-hidden" th:for="'qty-'+${i.variantId}" th:text="'Số lượng '+${i.productName}"></label><input class="form-control" th:id="'qty-'+${i.variantId}" type="number" name="quantity" min="1" required th:value="${i.quantity}"><p class="field-error" th:id="'qty-'+${i.variantId}+'-error'"></p><p class="form-message" role="alert" hidden></p><button type="submit" class="btn btn-sm btn-outline-secondary">Lưu SL</button></form></td><td th:text="${@money.format(i.totalPrice)+' đ'}"></td><td><form th:action="${posBase+'/remove'}" method="post" novalidate><input type="hidden" name="variantId" th:value="${i.variantId}"><button class="btn btn-sm btn-outline-danger" type="submit" th:aria-label="'Xóa '+${i.productName}">Xóa</button></form></td></tr></tbody></table></div>
-<div class="sales-field"><div data-customer-search-box><label for="customerSearch">Tìm khách</label><div class="input-group"><input class="form-control" type="search" id="customerSearch" name="customerQuery" form="pos-customer-query" placeholder="Nhập tên hoặc số điện thoại"><button type="submit" class="btn btn-outline-primary" form="pos-customer-query">Tìm</button></div></div><p class="sales-muted" id="customerResult" aria-live="polite">Nhập tên hoặc số điện thoại để tìm</p><input type="hidden" id="customerId" name="customerId" th:value="${onlineMode?posOnlineRequest.customerId:posCheckoutRequest.customerId}" th:form="${onlineMode?'pos-online-order':'pos-payment'}"><p data-customer-guest>Khách lẻ</p><div id="pos-selected-customer" hidden><strong id="pos-chosen-customer">Khách lẻ</strong><div class="d-flex gap-2"><button type="button" class="btn btn-sm btn-outline-primary" data-customer-change>Đổi khách</button><button type="button" class="btn btn-sm btn-outline-secondary" data-customer-clear>Bỏ chọn</button></div></div><div th:replace="~{admin/ban-tai-quay/khach-hang :: results}"></div></div>
-<form th:if="${!onlineMode}" id="pos-payment" data-admin-form novalidate th:action="${posBase+'/checkout'}" th:object="${posCheckoutRequest}" method="post" th:data-voucher-preview="${posBase+'/validate-voucher'}" data-shipping="0">
-<p class="form-message" role="alert" hidden></p><input type="hidden" name="checkoutToken" th:value="${checkoutToken}">
-<div class="sales-field"><label for="posVoucher">Mã phiếu giảm giá</label><div class="input-group"><input class="form-control" id="posVoucher" th:field="*{voucherCode}" maxlength="50"><button class="btn btn-outline-primary" type="button" data-apply-voucher th:disabled="${posCart.empty}">Áp dụng</button></div><p data-voucher-message role="status"></p></div>
-<div class="sales-field"><label for="posNote">Ghi chú hóa đơn chờ</label><textarea id="posNote" class="form-control" th:field="*{note}" maxlength="500" rows="2" aria-describedby="posNote-error"></textarea><p id="posNote-error" class="field-error"></p></div>
-<div class="pos-totals"><p>Tạm tính <strong data-subtotal th:data-subtotal="${total}" th:text="${@money.format(total)}+' đ'"></strong></p><p data-discount-row hidden>Giảm giá <strong data-discount></strong></p><p class="pos-grand-total">TỔNG <strong data-total th:data-amount="${total}" th:text="${@money.format(total)}+' đ'"></strong></p></div>
-<div class="sales-field"><label for="paymentMethod">Phương thức thanh toán</label><select class="form-select" th:field="*{paymentMethod}" required aria-describedby="paymentMethod-error"><option value="CASH">Tiền mặt</option><option value="TRANSFER">Chuyển khoản</option></select><p id="paymentMethod-error" class="field-error"></p></div>
-<div class="sales-field" id="cash-fields"><label for="cashReceived">Khách đưa (đ)</label><input class="form-control" type="number" th:field="*{cashReceived}" min="0" step="0.01" inputmode="decimal" aria-describedby="cashReceived-error"><p id="cashReceived-error" class="text-danger" role="alert"></p><p>Tiền thừa: <strong id="cash-change">0 đ</strong></p></div><p id="transfer-note" class="sales-muted" hidden>Xác nhận đã nhận đủ tiền trước khi thanh toán chuyển khoản.</p>
-<section id="pos-transfer-panel" class="vietqr-panel" hidden><h3>Chuyển khoản</h3><p id="pos-qr-message" role="status" aria-live="polite"></p><canvas id="pos-qr" class="vietqr-canvas" aria-label="Mã QR chuyển khoản tại quầy" hidden></canvas><dl id="pos-bank-details" hidden><dt>Số tiền</dt><dd data-qr-amount></dd><dt>Ngân hàng</dt><dd data-qr-bank></dd><dt>Chủ tài khoản</dt><dd data-qr-owner></dd><dt>Số tài khoản</dt><dd data-qr-account></dd><dt>Nội dung</dt><dd data-qr-reference></dd></dl><input type="hidden" name="transferAmount" id="transferAmount"><label class="form-check"><input class="form-check-input" type="checkbox" name="transferReceived" id="transferReceived" value="true"><span class="form-check-label">Đã nhận đủ số tiền</span></label><p class="sales-muted">QR chỉ chứa thông tin chuyển tiền. Chỉ xác nhận sau khi kiểm tra tiền đã vào tài khoản.</p></section>
-<button type="submit" id="pos-pay" th:data-cart-empty="${posCart.empty}" class="btn btn-primary btn-lg w-100" th:disabled="${posCart.empty || !cartValid}">THANH TOÁN</button><p class="sales-muted">Giá và tồn kho được kiểm tra lại khi thanh toán.</p>
-</form><form th:if="${onlineMode}" id="pos-online-order" class="admin-panel" method="post" th:action="${posBase+'/online-orders'}" th:object="${posOnlineRequest}" data-admin-form novalidate><h2>Thông tin giao hàng</h2><p class="small">Không cần tài khoản khách. COD giữ tồn tới khi xác nhận; chuyển khoản theo quy tắc đơn online.</p><input type="hidden" name="checkoutToken" th:value="${checkoutToken}"><p class="form-message" role="alert" hidden></p>
-<div class="sales-field"><label for="online-receiver">Họ tên người nhận *</label><input id="online-receiver" class="form-control" th:field="*{receiverName}" maxlength="100" required aria-describedby="online-receiver-error"><p class="field-error" id="online-receiver-error" th:errors="*{receiverName}"></p></div>
-<div class="sales-field"><label for="online-phone">Số điện thoại *</label><input id="online-phone" class="form-control" type="tel" th:field="*{phone}" required pattern="(?:0[0-9]{9}|[+]84[0-9]{9})" aria-describedby="online-phone-error"><p class="field-error" id="online-phone-error" th:errors="*{phone}"></p></div>
-<div class="sales-field"><label for="online-order-source">Nguồn đơn *</label><select id="online-order-source" class="form-select" th:field="*{orderSource}" required aria-describedby="online-order-source-error"><option value="">Chọn nguồn đơn</option><option th:each="source:${orderSources}" th:value="${source.key}" th:text="${source.value}"></option></select><p class="field-error" id="online-order-source-error" th:errors="*{orderSource}"></p></div>
-<div class="sales-field" id="online-address-book-box" hidden><label for="online-address-book">Giao tới</label><select id="online-address-book" class="form-select"><option value="">Nhập địa chỉ khác cho đơn này</option></select><p class="sales-muted">Sửa tạm cho đơn này không đổi sổ địa chỉ.</p></div>
-<div th:replace="~{fragments/dia-chi-giao-hang :: address('online','online-street','POS_ONLINE',true)}"></div>
-<div class="sales-field"><label for="online-note">Ghi chú</label><textarea id="online-note" class="form-control resize-none" th:field="*{note}" maxlength="1000" rows="3" aria-describedby="online-note-error"></textarea><p class="field-error" id="online-note-error" th:errors="*{note}"></p></div>
-<div class="sales-field"><label for="online-voucher">Mã phiếu giảm giá</label><div class="input-group"><input id="online-voucher" class="form-control" th:field="*{voucherCode}" maxlength="50"><button type="button" class="btn btn-outline-primary" data-apply-voucher>Áp dụng</button></div><p data-voucher-message role="status"></p></div>
-<div class="pos-totals"><p>Tiền hàng <strong data-subtotal th:data-subtotal="${total}" th:text="${@money.format(total)}+' đ'"></strong></p><p data-discount-row hidden>Giảm giá <strong data-discount></strong></p><p class="pos-grand-total">TỔNG <strong id="pos-online-total" data-total th:text="${@money.format(total)}+' đ'"></strong></p></div>
-<div class="sales-field"><label for="online-payment">Phương thức thanh toán *</label><select id="online-payment" class="form-select" th:field="*{paymentMethod}" required><option value="COD">Thanh toán khi nhận hàng (COD)</option><option value="BANK_TRANSFER">Chuyển khoản ngân hàng</option></select><p class="field-error" th:errors="*{paymentMethod}"></p><p class="sales-muted" data-online-bank-note hidden>QR đúng tổng tiền và mã đơn sẽ hiện sau khi tạo đơn. Đơn chờ xác nhận nhận tiền.</p></div>
-<label class="form-check mb-3"><input type="checkbox" class="form-check-input" th:field="*{confirmNow}"><span class="form-check-label">Xác nhận đơn ngay (trừ kho theo quy tắc đơn online)</span></label><button type="submit" th:data-cart-empty="${posCart.empty}" id="pos-create-online" data-delivery-submit class="btn btn-primary btn-lg w-100" th:disabled="${posCart.empty || !cartValid}">Tạo đơn giao hàng</button></form><script src="/js/don-online-pos.js" defer></script></aside></div>
-<dialog id="pos-hold-switch" class="catalog-dialog" aria-labelledby="pos-hold-switch-title"><h2 id="pos-hold-switch-title">Lưu giỏ hiện tại vào hóa đơn chờ?</h2><p>Chọn lưu chờ trước khi mở đơn khác, hoặc bỏ giỏ đang bán.</p><p id="pos-hold-limit" class="text-danger" hidden>Đã đủ 5 hóa đơn chờ. Hãy thanh toán hoặc xóa bớt một hóa đơn.</p><div class="catalog-form-actions"><button type="button" class="btn btn-outline-secondary" data-hold-cancel autofocus>Hủy</button><button type="button" class="btn btn-outline-danger" data-hold-discard>Bỏ giỏ hiện tại</button><button type="button" class="btn btn-primary" data-hold-save>Lưu chờ và mở</button></div></dialog>
-<dialog id="pos-product-dialog" class="catalog-dialog" aria-labelledby="pos-product-title"><h2 id="pos-product-title">Chọn kích cỡ</h2><form th:action="${posBase+'/add'}" method="post" data-admin-form novalidate><div class="sales-field"><label for="pos-color">Màu sắc</label><select class="form-select mb-2" id="pos-color" required></select><label for="pos-sole">Đế giày</label><select class="form-select mb-2" id="pos-sole" required></select><label for="pos-material">Chất liệu</label><select class="form-select mb-2" id="pos-material" required></select><label for="pos-size">Kích cỡ còn hàng</label><select class="form-select mb-2" id="pos-size" required></select><label for="pos-variant">Biến thể, giá và tồn kho</label><select class="form-select" id="pos-variant" name="variantId" required></select></div><div class="sales-field"><label for="pos-quantity">Số lượng</label><input class="form-control" id="pos-quantity" type="number" name="quantity" min="1" value="1" required></div><p class="field-error" id="pos-quantity-error"></p><p class="field-error" id="pos-variant-error"></p><p class="form-message" role="alert" hidden></p><div class="catalog-form-actions"><button type="button" class="btn btn-outline-secondary" data-pos-close>Hủy</button><button type="submit" class="btn btn-primary" data-add-icon>Thêm vào giỏ</button></div></form></dialog>
-<script src="/js/xem-truoc-voucher.js" defer></script><script src="/js/vendor/qrcodegen-1.8.0.js" defer></script><script src="/js/vietqr.js" defer></script><script src="/js/pos-vietqr.js" defer></script><script src="/js/ban-tai-quay.js" defer></script>
-</section></body></html>
+    <div class="pos-v2-grid">
+        <!-- CỘT TRÁI (KHOẢNG 2/3): HÓA ĐƠN CHỜ & GIỎ HÀNG -->
+        <div class="pos-v2-main">
+            <!-- 1. KHỐI HÓA ĐƠN CHỜ -->
+            <div class="pos-card pos-card-held">
+                <div class="pos-card-header d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <h2 class="h5 fw-bold mb-0">Hóa đơn chờ</h2>
+                        <span class="badge bg-secondary-subtle text-dark border" id="pos-hold-counter"
+                              th:text="${heldOrders.size() + '/5 hóa đơn'}">0/5 hóa đơn</span>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-outline-primary fw-medium" id="btn-add-hold-tab"
+                                th:disabled="${heldOrders.size() >= 5 and loadedHoldId == null}">
+                            + Thêm hóa đơn chờ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pos-held-tabs" id="pos-held-bar" th:data-count="${heldOrders.size()}" th:data-loaded="${loadedHoldId}">
+                    <!-- Tab cho giỏ hiện tại nếu chưa lưu thành hóa đơn chờ -->
+                    <div class="pos-tab-item" th:classappend="${loadedHoldId == null ? 'is-active is-current' : ''}" id="tab-current-order">
+                        <div class="pos-tab-info">
+                            <span class="fw-bold">Hóa đơn hiện tại</span>
+                            <span class="text-muted small d-block" th:text="${posCart.size() + ' món · ' + @money.format(total) + ' đ'}"></span>
+                        </div>
+                    </div>
+
+                    <!-- Tabs cho từng hóa đơn chờ đã lưu -->
+                    <div th:each="h, iter : ${heldOrders}" class="pos-tab-item"
+                         th:classappend="${loadedHoldId == h.id ? 'is-active' : ''}"
+                         th:data-held-id="${h.id}">
+                        <div class="pos-tab-info flex-grow-1" data-open-hold th:data-hold-id="${h.id}" role="button" tabindex="0">
+                            <div class="d-flex align-items-center gap-1">
+                                <span class="badge bg-dark-subtle text-dark-emphasis rounded-pill" th:text="'#' + ${iter.count}">#1</span>
+                                <span class="fw-bold" th:text="${h.code}">HDC-001</span>
+                            </div>
+                            <div class="text-muted small" th:text="${h.itemCount + ' món · ' + @money.format(h.subtotal) + ' đ'}"></div>
+                            <div class="small text-danger-emphasis" data-hold-countdown th:data-expires="${h.expiresEpoch}"></div>
+                        </div>
+                        <form th:action="@{'/admin/pos/holds/' + ${h.id} + '/delete'}" method="post" class="d-inline" novalidate>
+                            <button type="button" class="pos-tab-close" data-delete-hold
+                                    th:data-object="${h.code}"
+                                    data-consequence="Hóa đơn chờ này sẽ bị xóa khỏi danh sách. Thao tác không thay đổi tồn kho."
+                                    title="Xóa hóa đơn chờ">&times;</button>
+                        </form>
+                    </div>
+
+                    <div th:if="${heldOrders.empty and loadedHoldId != null}" class="pos-empty-tabs small text-muted py-2">
+                        Chưa có hóa đơn chờ nào khác.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. KHỐI GIỎ HÀNG -->
+            <div class="pos-card pos-card-cart">
+                <div class="pos-card-header d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <h2 class="h5 fw-bold mb-0">Giỏ hàng</h2>
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle" id="pos-cart-badge"
+                              th:text="${posCart.size() + ' sản phẩm'}">0 sản phẩm</span>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-dark btn-sm d-flex align-items-center gap-1" id="btn-open-scanner">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0z"/>
+                            </svg>
+                            Quét mã
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm d-flex align-items-center gap-1" id="btn-open-products-modal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                            </svg>
+                            + Chọn sản phẩm
+                        </button>
+                    </div>
+                </div>
+
+                <div th:if="${holdNeedsReview}" class="alert alert-warning d-flex justify-content-between align-items-center my-2 p-2">
+                    <span class="small">Giá và tồn kho đã thay đổi. Vui lòng xác nhận giá mới trước khi thanh toán.</span>
+                    <form th:action="@{/admin/pos/holds/review}" method="post" class="m-0">
+                        <button type="submit" class="btn btn-sm btn-outline-warning text-dark fw-bold">Xác nhận giá</button>
+                    </form>
+                </div>
+
+                <div class="data-table-scroll pos-cart-table-wrap" tabindex="0">
+                    <table class="table admin-table data-table pos-cart-table" data-table-key="pos-cart-table">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 45px;">STT</th>
+                                <th scope="col">Mã SP</th>
+                                <th scope="col">Mã biến thể</th>
+                                <th scope="col">Tên sản phẩm</th>
+                                <th scope="col">Màu sắc</th>
+                                <th scope="col">Chất liệu</th>
+                                <th scope="col">Đế giày</th>
+                                <th scope="col">Kích cỡ</th>
+                                <th scope="col" style="width: 80px;">Số lượng</th>
+                                <th scope="col" class="text-end">Đơn giá</th>
+                                <th scope="col" class="text-end">Thành tiền</th>
+                                <th scope="col" class="text-center" style="width: 50px;">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${posCart.empty}">
+                                <td colspan="12" class="text-center py-5 text-muted pos-empty-cart">
+                                    Giỏ hàng trống.
+                                </td>
+                            </tr>
+                            <tr th:each="i, iter : ${posCart}" class="pos-line-item" th:data-variant-id="${i.variantId}">
+                                <td class="row-number text-center" th:text="${iter.count}">1</td>
+                                <td th:text="${i.productCode ?: '—'}">SP001</td>
+                                <td th:text="${i.variantCode ?: '—'}">BT001</td>
+                                <td>
+                                    <strong th:text="${i.productName}">Giày Sneaker</strong>
+                                    <div class="text-warning-emphasis small" th:if="${lineWarnings.containsKey(i.variantId)}"
+                                         th:text="${lineWarnings.get(i.variantId)}" role="alert"></div>
+                                </td>
+                                <td th:text="${i.colorName ?: '—'}">Trắng</td>
+                                <td th:text="${i.materialName ?: '—'}">Da</td>
+                                <td th:text="${i.soleName ?: '—'}">Cao su</td>
+                                <td class="text-center">
+                                    <span class="badge bg-light text-dark border px-2 py-1" th:text="${i.size}">40</span>
+                                </td>
+                                <td>
+                                    <input type="number" min="1" class="form-control form-control-sm pos-qty-input"
+                                           th:value="${i.quantity}" th:data-variant-id="${i.variantId}"
+                                           aria-label="Số lượng sản phẩm">
+                                </td>
+                                <td class="text-end" th:text="${@money.format(i.price) + ' đ'}">500.000 đ</td>
+                                <td class="text-end fw-bold" th:text="${@money.format(i.totalPrice) + ' đ'}">500.000 đ</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-sm btn-outline-danger pos-btn-remove p-1"
+                                            th:data-variant-id="${i.variantId}" title="Xóa khỏi giỏ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- CỘT PHẢI (KHOẢNG 1/3): THẺ KHÁCH HÀNG & THẺ THÔNG TIN ĐƠN HÀNG -->
+        <div class="pos-v2-sidebar">
+            <!-- 3. THẺ KHÁCH HÀNG -->
+            <div class="pos-card pos-card-customer">
+                <div class="pos-card-header d-flex justify-content-between align-items-center">
+                    <h2 class="h5 fw-bold mb-0">Khách hàng</h2>
+                    <span class="small text-muted" id="customer-mode-label">Khách lẻ</span>
+                </div>
+
+                <div class="pos-customer-search-wrap mb-2">
+                    <div class="input-group">
+                        <input type="search" class="form-control" id="customerSearch"
+                               placeholder="Nhập tên hoặc số điện thoại khách hàng" autocomplete="off">
+                        <button type="button" class="btn btn-outline-primary" id="btn-open-quick-customer" title="Thêm khách hàng nhanh">
+                            +
+                        </button>
+                    </div>
+                    <div id="pos-customer-dropdown" class="pos-customer-dropdown" hidden></div>
+                </div>
+
+                <div id="pos-selected-customer-box">
+                    <div id="pos-guest-display" class="p-2 rounded bg-light border text-muted small" th:hidden="${posCheckoutRequest.customerId != null}">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <strong class="text-dark">Khách lẻ</strong>
+                                <span class="d-block small text-muted">Không lưu thông tin tài khoản</span>
+                            </div>
+                            <span class="badge bg-secondary">Mặc định</span>
+                        </div>
+                    </div>
+
+                    <div id="pos-customer-display" class="p-2 rounded bg-primary-subtle border border-primary-subtle" th:hidden="${posCheckoutRequest.customerId == null}">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <strong class="text-primary d-block" id="display-customer-name">Khách hàng</strong>
+                                <span class="small text-dark d-block" id="display-customer-phone">0987654321</span>
+                                <span class="badge bg-primary text-white" id="display-customer-code">KH-001</span>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" id="btn-clear-customer">
+                                Đổi / Bỏ chọn
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. THẺ THÔNG TIN ĐƠN HÀNG -->
+            <div class="pos-card pos-card-payment">
+                <div class="pos-card-header">
+                    <h2 class="h5 fw-bold mb-0">Thông tin đơn hàng</h2>
+                </div>
+
+                <form id="pos-payment" th:action="@{/admin/pos/checkout}" th:object="${posCheckoutRequest}" method="post" novalidate>
+                    <input type="hidden" name="checkoutToken" th:value="${checkoutToken}">
+                    <input type="hidden" name="customerId" id="customerId" th:field="*{customerId}">
+                    <input type="hidden" name="transferAmount" id="transferAmount">
+
+                    <!-- Tóm tắt số tiền -->
+                    <div class="pos-summary mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-muted" th:text="'Tổng tiền hàng (' + ${posCart.size()} + ' sản phẩm):'">Tổng tiền hàng:</span>
+                            <strong data-subtotal th:data-subtotal="${total != null ? total.longValue() : 0}" th:text="${@money.format(total) + ' đ'}">0 đ</strong>
+                        </div>
+
+                        <!-- Mã giảm giá -->
+                        <div class="sales-field mb-2">
+                            <label for="posVoucher" class="small fw-semibold text-muted">Mã giảm giá</label>
+                            <div class="input-group input-group-sm">
+                                <input class="form-control" id="posVoucher" th:field="*{voucherCode}" placeholder="Nhập mã voucher..." maxlength="50">
+                                <button class="btn btn-outline-primary" type="button" id="btn-apply-voucher" th:disabled="${posCart.empty}">
+                                    Áp dụng
+                                </button>
+                            </div>
+                            <p id="pos-voucher-message" class="small mb-1" role="status"></p>
+                        </div>
+
+                        <!-- Dòng giảm giá -->
+                        <div id="pos-discount-row" class="d-flex justify-content-between text-success mb-2" hidden>
+                            <span>Giảm giá:</span>
+                            <strong id="pos-discount-display">-0 đ</strong>
+                        </div>
+
+                        <!-- Tổng thanh toán nổi bật -->
+                        <div class="d-flex justify-content-between align-items-baseline pt-2 border-top">
+                            <span class="fw-bold">Tổng thanh toán:</span>
+                            <strong class="fs-4 text-primary" id="pos-final-total" data-total th:data-amount="${total != null ? total.longValue() : 0}"
+                                    th:text="${@money.format(total) + ' đ'}">0 đ</strong>
+                        </div>
+                    </div>
+
+                    <!-- Hình thức thanh toán: 3 nút chọn (Tiền mặt | Chuyển khoản | Kết hợp) -->
+                    <div class="pos-payment-methods mb-3">
+                        <label class="form-label small fw-bold text-muted d-block">Hình thức thanh toán</label>
+                        <div class="btn-group w-100" role="group" aria-label="Phương thức thanh toán">
+                            <input type="radio" class="btn-check" name="paymentMethod" id="method-cash" value="CASH" th:checked="${posCheckoutRequest.paymentMethod == null or posCheckoutRequest.paymentMethod == 'CASH'}">
+                            <label class="btn btn-outline-primary py-2" for="method-cash">Tiền mặt</label>
+
+                            <input type="radio" class="btn-check" name="paymentMethod" id="method-transfer" value="TRANSFER" th:checked="${posCheckoutRequest.paymentMethod == 'TRANSFER'}">
+                            <label class="btn btn-outline-primary py-2" for="method-transfer">Chuyển khoản</label>
+
+                            <input type="radio" class="btn-check" name="paymentMethod" id="method-combined" value="COMBINED" th:checked="${posCheckoutRequest.paymentMethod == 'COMBINED'}">
+                            <label class="btn btn-outline-primary py-2" for="method-combined">Kết hợp</label>
+                        </div>
+                    </div>
+
+                    <!-- KHỐI 1: TIỀN MẶT -->
+                    <div id="panel-cash" class="mb-3" th:hidden="${posCheckoutRequest.paymentMethod != null and posCheckoutRequest.paymentMethod != 'CASH'}">
+                        <label for="cashReceived" class="form-label small fw-semibold">Khách thanh toán (đ)</label>
+                        <input type="text" class="form-control" id="cashReceived" name="cashReceived"
+                               inputmode="numeric" placeholder="Nhập số tiền khách đưa..."
+                               th:value="${posCheckoutRequest.cashReceived != null ? @money.format(posCheckoutRequest.cashReceived) : ''}">
+                        <p id="cash-warning" class="small text-danger mt-1 mb-0" hidden>Số tiền khách đưa chưa đủ.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2 p-2 bg-light rounded border">
+                            <span class="small text-muted">Tiền thừa trả khách:</span>
+                            <strong class="fs-6 text-success" id="cash-change">0 đ</strong>
+                        </div>
+                    </div>
+
+                    <!-- KHỐI 2: CHUYỂN KHOẢN -->
+                    <div id="panel-transfer" class="vietqr-panel mb-3" th:hidden="${posCheckoutRequest.paymentMethod != 'TRANSFER'}">
+                        <div class="text-center p-2 bg-light rounded border">
+                            <p id="transfer-qr-message" class="small text-muted mb-2">Đang tải mã QR thanh toán…</p>
+                            <canvas id="pos-qr-transfer" class="vietqr-canvas border rounded bg-white p-2" aria-label="Mã VietQR chuyển khoản"></canvas>
+                            <dl id="pos-transfer-details" class="small text-start mt-2 mb-0" hidden>
+                                <div class="d-flex justify-content-between"><dt>Ngân hàng:</dt><dd data-qr-bank class="mb-0 fw-semibold"></dd></div>
+                                <div class="d-flex justify-content-between"><dt>Số TK:</dt><dd data-qr-account class="mb-0 fw-semibold"></dd></div>
+                                <div class="d-flex justify-content-between"><dt>Chủ TK:</dt><dd data-qr-owner class="mb-0 fw-semibold"></dd></div>
+                                <div class="d-flex justify-content-between"><dt>Số tiền:</dt><dd data-qr-amount class="mb-0 text-danger fw-bold"></dd></div>
+                                <div class="d-flex justify-content-between"><dt>Nội dung:</dt><dd data-qr-reference class="mb-0 text-primary fw-bold"></dd></div>
+                            </dl>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" name="transferReceived" id="transferReceivedSingle" value="true">
+                            <label class="form-check-label small fw-semibold" for="transferReceivedSingle">
+                                Đã nhận đủ tiền chuyển khoản
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- KHỐI 3: KẾT HỢP -->
+                    <div id="panel-combined" class="mb-3" th:hidden="${posCheckoutRequest.paymentMethod != 'COMBINED'}">
+                        <div class="row g-2 mb-2">
+                            <div class="col-6">
+                                <label for="combinedCash" class="form-label small fw-semibold">Tiền mặt (đ)</label>
+                                <input type="text" class="form-control" id="combinedCash" inputmode="numeric" placeholder="Số tiền mặt...">
+                            </div>
+                            <div class="col-6">
+                                <label for="combinedTransfer" class="form-label small fw-semibold">Chuyển khoản (đ)</label>
+                                <input type="text" class="form-control bg-light" id="combinedTransfer" readonly placeholder="Tự tính còn lại">
+                            </div>
+                        </div>
+                        <p id="combined-warning" class="small text-danger mb-2" hidden>Cả 2 số tiền phải > 0 và tổng bằng đúng tổng thanh toán.</p>
+
+                        <div class="text-center p-2 bg-light rounded border" id="combined-qr-wrap" hidden>
+                            <p id="combined-qr-message" class="small text-muted mb-2">Mã QR cho phần Chuyển khoản</p>
+                            <canvas id="pos-qr-combined" class="vietqr-canvas border rounded bg-white p-2" aria-label="Mã VietQR chuyển khoản phần kết hợp"></canvas>
+                            <dl id="pos-combined-details" class="small text-start mt-2 mb-0" hidden>
+                                <div class="d-flex justify-content-between"><dt>Số tiền CK:</dt><dd data-qr-amount class="mb-0 text-danger fw-bold"></dd></div>
+                                <div class="d-flex justify-content-between"><dt>Nội dung CK:</dt><dd data-qr-reference class="mb-0 text-primary fw-bold"></dd></div>
+                            </dl>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" name="transferReceived" id="transferReceivedCombined" value="true">
+                            <label class="form-check-label small fw-semibold" for="transferReceivedCombined">
+                                Đã nhận đủ tiền chuyển khoản
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Ghi chú thanh toán -->
+                    <div class="sales-field mb-3">
+                        <label for="posNote" class="small fw-semibold text-muted">Ghi chú thanh toán</label>
+                        <textarea id="posNote" class="form-control form-control-sm" th:field="*{note}" rows="2" maxlength="500" placeholder="Ghi chú đơn hàng nếu có..."></textarea>
+                    </div>
+
+                    <!-- Hai nút chân thẻ: Hủy hóa đơn & Thanh toán -->
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-danger w-50" id="btn-cancel-cart">
+                            Hủy hóa đơn
+                        </button>
+                        <button type="submit" class="btn btn-primary w-50 fw-bold" id="btn-pos-checkout"
+                                th:disabled="${posCart.empty || !cartValid}">
+                            THANH TOÁN
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- HỘP THOẠI 1: DANH SÁCH SẢN PHẨM (THEO ẢNH MẪU mau_modal_san_pham.jpg) -->
+    <dialog id="pos-product-modal" class="catalog-dialog pos-modal-dialog" aria-labelledby="pos-product-modal-title">
+        <div class="d-flex justify-content-between align-items-center pb-2 mb-3 border-bottom">
+            <h2 id="pos-product-modal-title" class="h5 fw-bold mb-0">Danh sách sản phẩm</h2>
+            <button type="button" class="btn-close" id="btn-close-products-modal" aria-label="Đóng"></button>
+        </div>
+
+        <!-- Bộ lọc sản phẩm phía trên -->
+        <form id="pos-modal-filter-form" class="row g-2 align-items-end mb-3" onsubmit="return false;">
+            <div class="col-md-3">
+                <label for="modal-search" class="form-label small fw-semibold">Tìm kiếm</label>
+                <input type="search" class="form-control form-control-sm" id="modal-search" placeholder="Tên / mã SP / mã biến thể">
+            </div>
+            <div class="col-md-2 col-6">
+                <label for="modal-category" class="form-label small fw-semibold">Danh mục</label>
+                <select class="form-select form-select-sm" id="modal-category">
+                    <option value="">Tất cả</option>
+                    <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+                </select>
+            </div>
+            <div class="col-md-2 col-6">
+                <label for="modal-color" class="form-label small fw-semibold">Màu sắc</label>
+                <select class="form-select form-select-sm" id="modal-color">
+                    <option value="">Tất cả</option>
+                    <option th:each="c : ${colors}" th:value="${c.id}" th:text="${c.name}"></option>
+                </select>
+            </div>
+            <div class="col-md-2 col-6">
+                <label for="modal-material" class="form-label small fw-semibold">Chất liệu</label>
+                <select class="form-select form-select-sm" id="modal-material">
+                    <option value="">Tất cả</option>
+                    <option th:each="m : ${materials}" th:value="${m.id}" th:text="${m.name}"></option>
+                </select>
+            </div>
+            <div class="col-md-1 col-6">
+                <label for="modal-sole" class="form-label small fw-semibold">Đế giày</label>
+                <select class="form-select form-select-sm" id="modal-sole">
+                    <option value="">Tất cả</option>
+                    <option th:each="s : ${soles}" th:value="${s.id}" th:text="${s.name}"></option>
+                </select>
+            </div>
+            <div class="col-md-1 col-6">
+                <label for="modal-size" class="form-label small fw-semibold">Kích cỡ</label>
+                <select class="form-select form-select-sm" id="modal-size">
+                    <option value="">Tất cả</option>
+                    <option th:each="s : ${sizes}" th:value="${s.id}" th:text="${s.sizeValue}"></option>
+                </select>
+            </div>
+            <div class="col-md-2 col-6">
+                <label for="modal-price" class="form-label small fw-semibold">Khoảng giá</label>
+                <select class="form-select form-select-sm" id="modal-price">
+                    <option value="">Tất cả mức giá</option>
+                    <option value="UNDER_500">Dưới 500.000 đ</option>
+                    <option value="500_1000">500.000 - 1.000.000 đ</option>
+                    <option value="1000_2000">1.000.000 - 2.000.000 đ</option>
+                    <option value="OVER_2000">Trên 2.000.000 đ</option>
+                </select>
+            </div>
+            <div class="col-md-2 col-6 d-flex gap-1">
+                <button type="button" class="btn btn-sm btn-primary flex-grow-1" id="btn-modal-filter">Tìm kiếm</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" id="btn-modal-reset">Đặt lại</button>
+            </div>
+        </form>
+
+        <!-- Container chứa bảng sản phẩm và phân trang tải qua AJAX -->
+        <div id="pos-modal-products-container" class="position-relative">
+            <div class="text-center py-5 text-muted">Đang tải sản phẩm…</div>
+        </div>
+
+        <div class="catalog-form-actions mt-3 pt-2 border-top">
+            <button type="button" class="btn btn-secondary" id="btn-modal-close-footer">Đóng</button>
+        </div>
+    </dialog>
+
+    <!-- HỘP THOẠI 2: QUÉT MÃ (CAMERA VÀ ĐẦU ĐỌC BÀN PHÍM) -->
+    <dialog id="pos-scanner-modal" class="catalog-dialog" aria-labelledby="pos-scanner-modal-title" style="max-width: 500px;">
+        <div class="d-flex justify-content-between align-items-center pb-2 mb-3 border-bottom">
+            <h2 id="pos-scanner-modal-title" class="h5 fw-bold mb-0">Quét mã sản phẩm</h2>
+            <button type="button" class="btn-close" id="btn-close-scanner-modal" aria-label="Đóng"></button>
+        </div>
+
+        <div class="scanner-body">
+            <!-- Camera viewfinder -->
+            <div class="camera-container text-center mb-3 position-relative rounded bg-dark overflow-hidden" style="min-height: 240px;">
+                <video id="scanner-video" playsinline style="width: 100%; max-height: 260px; object-fit: cover;" hidden></video>
+                <canvas id="scanner-canvas" hidden></canvas>
+                <div id="camera-placeholder" class="py-5 text-white">
+                    <p class="small mb-2">Bấm bên dưới để bật camera quét QR / mã vạch</p>
+                    <button type="button" class="btn btn-sm btn-outline-light" id="btn-toggle-camera">Bật Camera</button>
+                </div>
+            </div>
+
+            <!-- Ô nhập mã vạch kiểu bàn phím (đầu đọc mã vạch quét mã + Enter) -->
+            <div class="mb-3">
+                <label for="scanner-manual-code" class="form-label small fw-semibold">
+                    Đầu đọc mã vạch hoặc nhập mã tay (nhấn Enter để thêm):
+                </label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="scanner-manual-code" placeholder="Mã biến thể / Mã SP..." autocomplete="off">
+                    <button class="btn btn-primary" type="button" id="btn-submit-scan">Thêm</button>
+                </div>
+            </div>
+
+            <div id="scanner-feedback" class="alert alert-info small py-2" role="status">
+                Sẵn sàng quét mã. Hỗ trợ quét biến thể hoặc mã sản phẩm duy nhất 1 biến thể.
+            </div>
+        </div>
+
+        <div class="catalog-form-actions mt-3 pt-2 border-top">
+            <button type="button" class="btn btn-secondary" id="btn-close-scanner-footer">Đóng</button>
+        </div>
+    </dialog>
+
+    <!-- HỘP THOẠI 3: THÊM KHÁCH HÀNG NHANH -->
+    <dialog id="pos-quick-customer-modal" class="catalog-dialog" aria-labelledby="pos-quick-customer-title" style="max-width: 450px;">
+        <div class="d-flex justify-content-between align-items-center pb-2 mb-3 border-bottom">
+            <h2 id="pos-quick-customer-title" class="h5 fw-bold mb-0">Thêm khách hàng nhanh</h2>
+            <button type="button" class="btn-close" id="btn-close-quick-customer-modal" aria-label="Đóng"></button>
+        </div>
+
+        <form id="pos-quick-customer-form" onsubmit="return false;">
+            <div class="mb-3">
+                <label for="quick-customer-name" class="form-label small fw-semibold">Họ và tên *</label>
+                <input type="text" class="form-control" id="quick-customer-name" required placeholder="Ví dụ: Nguyễn Văn A">
+            </div>
+            <div class="mb-3">
+                <label for="quick-customer-phone" class="form-label small fw-semibold">Số điện thoại *</label>
+                <input type="tel" class="form-control" id="quick-customer-phone" required pattern="(?:0[0-9]{9}|[+]84[0-9]{9})" placeholder="Ví dụ: 0987654321">
+            </div>
+            <div class="mb-3">
+                <label for="quick-customer-email" class="form-label small fw-semibold">Email (tùy chọn)</label>
+                <input type="email" class="form-control" id="quick-customer-email" placeholder="Ví dụ: khachhang@gmail.com">
+                <span class="small text-muted d-block mt-1">Nếu có email, hệ thống sẽ tự động tạo tài khoản và gửi thông tin đăng nhập.</span>
+            </div>
+
+            <div id="quick-customer-alert" class="alert alert-danger small py-2" hidden></div>
+
+            <div class="catalog-form-actions mt-3 pt-2 border-top">
+                <button type="button" class="btn btn-outline-secondary" id="btn-cancel-quick-customer">Hủy</button>
+                <button type="button" class="btn btn-primary fw-medium" id="btn-submit-quick-customer">Lưu & Chọn khách</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Toast thông báo nhỏ góc dưới -->
+    <div id="pos-toast" class="pos-toast" style="display:none;" role="alert" aria-live="polite">
+        <span id="pos-toast-message">Đã thêm vào giỏ</span>
+    </div>
+
+    <script src="/js/vendor/jsQR-1.4.0.js" defer></script>
+    <script src="/js/vendor/qrcodegen-1.8.0.js" defer></script>
+    <script src="/js/vietqr.js" defer></script>
+    <script src="/js/ban-tai-quay.js" defer></script>
+</section>
+</body>
+</html>

@@ -44,4 +44,5 @@ public class ProductVariant {
     private Integer quantity = 0;
 
     private Boolean status = true;
+    public String getMa() { return code; }
 }

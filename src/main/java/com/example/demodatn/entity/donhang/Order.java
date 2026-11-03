@@ -55,6 +55,16 @@ public class Order {
     @Column(name = "final_amount", nullable = false) // Total after discount + shipping
     private BigDecimal finalAmount;
 
+    @Column(name = "tien_mat")
+    private Long cashAmount = 0L;
+
+    @Column(name = "tien_chuyen_khoan")
+    private Long transferAmount = 0L;
+
+    @org.hibernate.annotations.Nationalized
+    @Column(name = "ghi_chu_thanh_toan", length = 500)
+    private String paymentNote;
+
     @Column(name = "payment_method") // COD, BANK_TRANSFER
     private String paymentMethod;
 

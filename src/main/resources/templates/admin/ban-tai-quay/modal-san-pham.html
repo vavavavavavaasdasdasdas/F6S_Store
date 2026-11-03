@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="modalTableAndPagination" id="pos-modal-content">
+    <div class="data-table-scroll pos-modal-table-wrap">
+        <table class="admin-table data-table pos-modal-table" data-table-key="pos-modal-products">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 50px;">STT</th>
+                    <th scope="col" style="width: 60px;">Ảnh</th>
+                    <th scope="col">Tên sản phẩm & Mã</th>
+                    <th scope="col">Giá bán</th>
+                    <th scope="col" style="width: 90px;">Tồn kho</th>
+                    <th scope="col" style="width: 80px;">Kích cỡ</th>
+                    <th scope="col">Màu sắc</th>
+                    <th scope="col" style="width: 100px;">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${isEmpty}">
+                    <td colspan="8" class="text-center py-4 text-muted">Không có sản phẩm nào phù hợp với bộ lọc hiện tại.</td>
+                </tr>
+                <tr th:each="v,iter : ${variants}" class="pos-modal-row" th:data-variant-id="${v.id}">
+                    <td class="row-number" th:text="${currentPage * 12 + iter.count}">1</td>
+                    <td>
+                        <img class="pos-modal-thumb rounded border"
+                             th:src="${v.imageUrl}"
+                             alt="Ảnh sản phẩm" loading="lazy">
+                    </td>
+                    <td>
+                        <div class="fw-bold" th:text="${v.productName}">Tên sản phẩm</div>
+                        <div class="small text-muted" th:text="${v.productCode + ' · ' + v.variantCode}">SP001 · BT001</div>
+                    </td>
+                    <td>
+                        <div th:if="${v.hasPromotion}">
+                            <del class="small text-muted d-block" th:text="${v.originalPriceFormatted}">500.000 đ</del>
+                            <span class="text-danger fw-bold" th:text="${v.finalPriceFormatted}">400.000 đ</span>
+                            <span class="badge bg-danger ms-1" th:text="'-' + ${v.discountPercentage} + '%'">-20%</span>
+                        </div>
+                        <div th:unless="${v.hasPromotion}">
+                            <span class="fw-bold text-dark" th:text="${v.finalPriceFormatted}">500.000 đ</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span th:class="${v.quantity <= 5 ? 'badge bg-warning text-dark' : 'badge bg-light text-dark border'}"
+                              th:text="${v.quantity}">10</span>
+                    </td>
+                    <td>
+                        <span class="badge bg-secondary-subtle text-dark border px-2 py-1" th:text="${v.sizeValue}">40</span>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="pos-color-dot" th:style="'background-color:' + ${v.colorHex}"></span>
+                            <span th:text="${v.colorName}">Trắng</span>
+                        </div>
+                    </td>
+                    <td>
+                        <button th:if="${v.quantity > 0}" type="button"
+                                class="btn btn-sm btn-primary pos-btn-add-variant w-100"
+                                th:data-variant-id="${v.id}"
+                                th:data-variant-name="${v.productName + ' (' + v.sizeValue + ' - ' + v.colorName + ')'}">
+                            + Thêm
+                        </button>
+                        <button th:unless="${v.quantity > 0}" type="button"
+                                class="btn btn-sm btn-secondary w-100" disabled>
+                            Hết hàng
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Phân trang modal gọn 12 sản phẩm/trang -->
+    <div class="d-flex justify-content-between align-items-center pt-3 px-2 border-top" th:if="${totalPages > 1}">
+        <span class="small text-muted" th:text="'Trang ' + (${currentPage} + 1) + ' / ' + ${totalPages} + ' (Tổng ' + ${totalElements} + ' biến thể)'">
+            Trang 1 / 5 (Tổng 56 biến thể)
+        </span>
+        <div class="btn-group btn-group-sm">
+            <button type="button" class="btn btn-outline-secondary pos-modal-page-btn"
+                    th:disabled="${isFirst}"
+                    th:data-page="${currentPage - 1}">
+                &laquo; Trước
+            </button>
+            <button type="button" class="btn btn-outline-secondary pos-modal-page-btn"
+                    th:disabled="${isLast}"
+                    th:data-page="${currentPage + 1}">
+                Sau &raquo;
+            </button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

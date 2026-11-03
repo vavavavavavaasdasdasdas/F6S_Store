@@ -73,8 +73,8 @@ public class PosHoldService {
         if(!Set.of("POS","ONLINE").contains(mode))throw new IllegalArgumentException("Loại hóa đơn chờ không hợp lệ.");
         var user=users.lockByUsername(username).orElseThrow();
         if(cart.isEmpty())throw new IllegalArgumentException("Giỏ hàng trống, không thể lưu chờ.");
-        if(!("ONLINE".equals(mode)?Set.of("COD","BANK_TRANSFER"):Set.of("CASH","TRANSFER")).contains(Objects.toString(request.getPaymentMethod(),"")))
-            throw new IllegalArgumentException("Chọn Tiền mặt hoặc Chuyển khoản.");
+        if(!("ONLINE".equals(mode)?Set.of("COD","BANK_TRANSFER"):Set.of("CASH","TRANSFER","COMBINED")).contains(Objects.toString(request.getPaymentMethod(),"")))
+            throw new IllegalArgumentException("Chọn Tiền mặt, Chuyển khoản hoặc Kết hợp.");
         if(!"ONLINE".equals(mode)&&request.getNote()!=null && request.getNote().length()>500)throw new IllegalArgumentException("Ghi chú tối đa 500 ký tự.");
         if(request.getVoucherCode()!=null && request.getVoucherCode().length()>50)throw new IllegalArgumentException("Mã phiếu giảm giá tối đa 50 ký tự.");
         PosHeldOrder hold;
@@ -138,7 +138,7 @@ public class PosHoldService {
             var price=pricing.priceForVariant(item.getVariantId()).getFinalPrice();
             if(price.compareTo(item.getPrice())!=0)throw new IllegalArgumentException("Giá đã thay đổi. Kiểm tra và xác nhận lại giá trước khi thanh toán.");
         }
-        var order=orders.createPosOrder(cart,customer,employee,request.getVoucherCode(),request.getPaymentMethod(),"Tại quầy",request.getCashReceived(),request.getPaymentReference());
+        var order=orders.createPosOrder(cart,customer,employee,request.getVoucherCode(),request.getPaymentMethod(),"Tại quầy",request.getCashReceived(),request.getTransferAmount(),request.getPaymentReference(),request.getNote());
         holds.delete(hold);holds.flush();
         return order;
     }

@@ -49,7 +49,7 @@ public class PeopleService {
         String value=input.trim();
         return value.startsWith("+84") ? "0"+value.substring(3) : value;
     }
-    public static String email(String input) { return input.trim().toLowerCase(Locale.ROOT); }
+    public static String email(String input) { return input == null ? null : input.trim().toLowerCase(Locale.ROOT); }
     public boolean isSelf(User user) {
         if(user==null || user.getId()==null)return false;
         var auth=SecurityContextHolder.getContext().getAuthentication();
@@ -83,7 +83,8 @@ public class PeopleService {
     public Customer saveCustomer(CustomerDto form) {
         int id=form.getId()==null ? -1 : form.getId();
         if(customers.existsByCustomerCodeIgnoreCaseAndIdNot(form.getCustomerCode().trim(),id))throw new PeopleValidationException("customerCode","Mã khách hàng đã tồn tại.");
-        if(customers.existsByEmailIgnoreCaseAndIdNot(email(form.getEmail()),id))throw new PeopleValidationException("email","Thư điện tử đã tồn tại.");
+        String normEmail = (form.getEmail() == null || form.getEmail().isBlank()) ? null : email(form.getEmail());
+        if(normEmail != null && customers.existsByEmailIgnoreCaseAndIdNot(normEmail,id))throw new PeopleValidationException("email","Thư điện tử đã tồn tại.");
         if(customers.existsByPhoneAndIdNot(phone(form.getPhone()),id))throw new PeopleValidationException("phone","Số điện thoại đã tồn tại.");
         var blocks=form.resolvedAddresses();
         if(blocks.size()>3)throw new PeopleValidationException("address",com.example.demodatn.service.khachhang.ShippingAddressService.LIMIT_MESSAGE);
@@ -96,7 +97,7 @@ public class PeopleService {
             throw new PeopleValidationException("soCccd","Số căn cước đã tồn tại.");
         c.setSoCccd(document);c.setNgaySinh(form.getNgaySinh());c.setGioiTinh(form.getGioiTinh()==null||form.getGioiTinh().isBlank()?null:form.getGioiTinh());
         c.setCustomerCode(form.getCustomerCode().trim());c.setFullName(form.getFullName().trim());
-        c.setPhone(phone(form.getPhone()));c.setEmail(email(form.getEmail()));
+        c.setPhone(phone(form.getPhone()));c.setEmail(normEmail);
         customers.saveAndFlush(c);
         addressService.syncCustomerAddresses(c.getId(),blocks,form.getDefaultAddressIndex(),form.hasAddressBlocks());
         return customers.saveAndFlush(c);

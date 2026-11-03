@@ -15,4 +15,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, org.
     boolean existsByCodeIgnoreCaseAndIdNot(String code, Integer id);
     boolean existsByCategory_Id(Integer categoryId);
     java.util.List<Product> findByStatusTrue();
+    java.util.Optional<Product> findByCodeIgnoreCase(String code);
 }

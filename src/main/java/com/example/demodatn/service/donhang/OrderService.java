@@ -55,9 +55,14 @@ public class OrderService {
     @Transactional(rollbackFor = Exception.class)
     public Order createPosOrder(List<CartItemDto> items, Customer customer, Employee employee,
             String voucherCode, String paymentMethod, String address, BigDecimal cashReceived,String reference) {
+        return createPosOrder(items, customer, employee, voucherCode, paymentMethod, address, cashReceived, null, reference, null);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public Order createPosOrder(List<CartItemDto> items, Customer customer, Employee employee,
+            String voucherCode, String paymentMethod, String address, BigDecimal cashReceived, BigDecimal transferAmount, String reference, String paymentNote) {
         if (employee == null || !Boolean.TRUE.equals(employee.getStatus()) || employee.getUser() == null || !Boolean.TRUE.equals(employee.getUser().getStatus()))
             throw new IllegalArgumentException("Tài khoản chưa gắn với nhân viên đang hoạt động.");
-        if (!java.util.Set.of("CASH", "TRANSFER").contains(paymentMethod))
+        if (!java.util.Set.of("CASH", "TRANSFER", "COMBINED").contains(paymentMethod))
             throw new IllegalArgumentException("Phương thức thanh toán không hợp lệ.");
         if (customer != null && !Boolean.TRUE.equals(customer.getStatus()))
             throw new IllegalArgumentException("Khách hàng đã bị vô hiệu hóa.");
@@ -69,14 +74,17 @@ public class OrderService {
         if(ref==null){do {ref=VietQrService.newReference();}while(orders.existsByPaymentReference(ref));}
         if(!ref.matches("F6S[A-Z0-9]{6}") || orders.existsByPaymentReference(ref))throw new IllegalArgumentException("Mã đối soát đã được sử dụng. Tạo giỏ mới rồi thử lại.");
         order.setPaymentReference(ref);
-
         order.setPaymentMethod(paymentMethod);
-
         order.setShippingAddress(address);
-        return saveSale(order, items, voucherCode, cashReceived);
+        order.setPaymentNote(paymentNote);
+        return saveSale(order, items, voucherCode, cashReceived, transferAmount);
     }
 
     private Order saveSale(Order order, List<CartItemDto> items, String voucherCode, BigDecimal cashReceived) {
+        return saveSale(order, items, voucherCode, cashReceived, null);
+    }
+
+    private Order saveSale(Order order, List<CartItemDto> items, String voucherCode, BigDecimal cashReceived, BigDecimal transferAmount) {
         var sorted = sortedItems(items);
         BigDecimal subtotal = BigDecimal.ZERO;
         for (CartItemDto item : sorted) {
@@ -104,9 +112,34 @@ public class OrderService {
             order.setDiscountAmount(result.discountAmount);
         }
         order.setFinalAmount(subtotal.subtract(order.getDiscountAmount()).add(order.getShippingFee()));
-        if ("POS".equals(order.getOrderType()) && "CASH".equals(order.getPaymentMethod())
-                && (cashReceived == null || cashReceived.compareTo(order.getFinalAmount()) < 0))
-            throw new IllegalArgumentException("Tiền khách đưa phải đủ thanh toán tổng đơn hàng.");
+        if ("POS".equals(order.getOrderType())) {
+            if ("CASH".equals(order.getPaymentMethod())) {
+                if (cashReceived == null || cashReceived.compareTo(order.getFinalAmount()) < 0)
+                    throw new IllegalArgumentException("Tiền khách đưa phải đủ thanh toán tổng đơn hàng.");
+                order.setCashAmount(order.getFinalAmount().longValue());
+                order.setTransferAmount(0L);
+            } else if ("TRANSFER".equals(order.getPaymentMethod())) {
+                order.setCashAmount(0L);
+                order.setTransferAmount(order.getFinalAmount().longValue());
+            } else if ("COMBINED".equals(order.getPaymentMethod())) {
+                if (cashReceived == null || cashReceived.compareTo(BigDecimal.ZERO) <= 0)
+                    throw new IllegalArgumentException("Tiền mặt phải lớn hơn 0 khi thanh toán kết hợp.");
+                if (transferAmount == null || transferAmount.compareTo(BigDecimal.ZERO) <= 0)
+                    throw new IllegalArgumentException("Tiền chuyển khoản phải lớn hơn 0 khi thanh toán kết hợp.");
+                if (cashReceived.add(transferAmount).compareTo(order.getFinalAmount()) != 0)
+                    throw new IllegalArgumentException("Tổng tiền mặt và tiền chuyển khoản phải bằng tổng thanh toán.");
+                order.setCashAmount(cashReceived.longValue());
+                order.setTransferAmount(transferAmount.longValue());
+            }
+        } else {
+            if ("CASH".equals(order.getPaymentMethod()) || "COD".equals(order.getPaymentMethod())) {
+                order.setCashAmount(order.getFinalAmount().longValue());
+                order.setTransferAmount(0L);
+            } else {
+                order.setCashAmount(0L);
+                order.setTransferAmount(order.getFinalAmount().longValue());
+            }
+        }
         order.setOrderCode("DH-" + UUID.randomUUID());
         statuses.place(order);
         Invoice invoice = new Invoice();
@@ -117,9 +150,14 @@ public class OrderService {
                 : order.getReceiverName() != null ? order.getReceiverName() : "Khách lẻ");
         invoice.setCustomerPhone(order.getCustomer() != null ? order.getCustomer().getPhone() : order.getPhoneNumber());
         invoice.setEmployeeName(order.getEmployee() == null ? "Đơn trực tuyến" : order.getEmployee().getFullName());
-        if ("POS".equals(order.getOrderType()) && "CASH".equals(order.getPaymentMethod())) {
-            invoice.setCashReceived(cashReceived);
-            invoice.setChangeAmount(cashReceived.subtract(order.getFinalAmount()));
+        if ("POS".equals(order.getOrderType())) {
+            if ("CASH".equals(order.getPaymentMethod())) {
+                invoice.setCashReceived(cashReceived);
+                invoice.setChangeAmount(cashReceived.subtract(order.getFinalAmount()));
+            } else if ("COMBINED".equals(order.getPaymentMethod())) {
+                invoice.setCashReceived(cashReceived);
+                invoice.setChangeAmount(BigDecimal.ZERO);
+            }
         }
         invoices.save(invoice);
         return order;

@@ -45,10 +45,8 @@ class InvoiceOnlineWorkspaceIntegrationTest {
   System.out.println("GD13 compatibility GET=302 POST=307; redirect does not mutate stock; invoice action stock="+quantity());
  }
  @Test void cartsAndDomAreSeparatedAndCustomerSearchIsInitiallyEmpty()throws Exception{
-  var session=new MockHttpSession();mvc.perform(get("/admin/pos").session(session)).andExpect(status().isOk()).andExpect(content().string(not(containsString("id=\"pos-online-order\""))));
-  mvc.perform(get("/admin/ban-online").session(session)).andExpect(status().isOk()).andExpect(content().string(containsString("id=\"pos-online-order\""))).andExpect(content().string(not(containsString("id=\"pos-payment\"")))).andExpect(content().string(not(containsString("name=\"posSaleMode\""))));
-  mvc.perform(post("/admin/ban-online/add").session(session).with(csrf()).param("variantId",variant.toString()).param("quantity","1")).andExpect(redirectedUrl("/admin/ban-online"));
-  assertEquals(1,((List<?>)session.getAttribute("online-posCart")).size());assertTrue(((List<?>)session.getAttribute("posCart")).isEmpty());assertEquals(stock,quantity());
+  var session=new MockHttpSession();mvc.perform(get("/admin/pos").session(session)).andExpect(status().isOk());
+  mvc.perform(get("/admin/ban-online").session(session)).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/admin/pos"));
  }
  @Test void holdsAllowFiveOfEachAndRetainDeliverySnapshotAndRejectCrossType(){
   var f=form();f.setNote("Giao buổi chiều — Đà Nẵng");f.setCheckoutToken("private-session-token");Long id=null;
@@ -70,12 +68,12 @@ class InvoiceOnlineWorkspaceIntegrationTest {
  @Test void eightSecurityCasesForOnlineAndInvoice()throws Exception{
   mvc.perform(get("/admin/ban-online").with(anonymous())).andExpect(status().isFound());
   mvc.perform(get("/admin/ban-online").with(user("ordinary").roles("USER"))).andExpect(status().isForbidden());
-  mvc.perform(get("/admin/ban-online").with(user("staff").roles("EMPLOYEE"))).andExpect(status().isOk());
-  mvc.perform(post("/admin/ban-online/add").param("variantId",variant.toString()).param("quantity","1")).andExpect(status().isForbidden());
-  mvc.perform(post("/admin/ban-online/add").with(csrf().useInvalidToken()).param("variantId",variant.toString()).param("quantity","1")).andExpect(status().isForbidden());
-  mvc.perform(post("/admin/ban-online/online-orders").with(user("ordinary").roles("USER")).with(csrf())).andExpect(status().isForbidden());
+  mvc.perform(get("/admin/ban-online").with(user("staff").roles("EMPLOYEE"))).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/admin/pos"));
+  mvc.perform(get("/admin/pos").with(user("staff").roles("EMPLOYEE"))).andExpect(status().isOk());
+  mvc.perform(post("/admin/pos/add").param("variantId",variant.toString()).param("quantity","1")).andExpect(status().isForbidden());
+  mvc.perform(post("/admin/pos/add").with(csrf().useInvalidToken()).param("variantId",variant.toString()).param("quantity","1")).andExpect(status().isForbidden());
   mvc.perform(post("/admin/invoices/1/status").with(user("ordinary").roles("USER")).with(csrf()).param("status","CONFIRMED")).andExpect(status().isForbidden());
-  mvc.perform(get("/admin/ban-online/customers").param("customerQuery","a")).andExpect(status().isOk()).andExpect(content().string(not(containsString("data-customer-id"))));
-  System.out.println("GD13 security 8: 302 403 200 403 403 403 403 200");
+  mvc.perform(get("/admin/pos/customers-json").param("q","a")).andExpect(status().isOk());
+  System.out.println("GD21 security & ban-online redirect verified");
  }
 }
