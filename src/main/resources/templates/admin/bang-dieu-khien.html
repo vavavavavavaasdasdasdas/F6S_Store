@@ -5,14 +5,21 @@
 
 <div class="admin-panel dashboard-sticky-filter mb-4">
 <form class="sales-filters filter-bar" method="get" th:action="@{/admin/dashboard}" novalidate data-admin-form role="search">
-<div><label for="from">Từ ngày</label><input class="form-control" type="date" id="from" name="from" th:value="${from}" aria-describedby="from-error"><span id="from-error" class="field-error" data-error-for="from"></span></div>
-<div><label for="to">Đến ngày</label><input class="form-control" type="date" id="to" name="to" th:value="${to}" aria-describedby="to-error"><span id="to-error" class="field-error" data-error-for="to"></span></div>
-<div><label for="dash-days">Khoảng nhanh</label><select class="form-select" id="dash-days" name="days"><option value="" th:selected="${dashboard.selectedDays == 0}">Tùy chọn theo ngày</option><option value="7" th:selected="${dashboard.selectedDays == 7}">7 ngày gần đây</option><option value="30" th:selected="${dashboard.selectedDays == 30}">1 tháng (30 ngày)</option></select></div>
-<div><label for="channel">Kênh bán</label><select id="channel" name="channel" class="form-select" aria-describedby="channel-error"><option value="ALL" th:selected="${channel=='ALL'}">Tất cả</option><option value="ONLINE" th:selected="${channel=='ONLINE'}">Trực tuyến (Online)</option><option value="POS" th:selected="${channel=='POS'}">Tại quầy (POS)</option></select><span id="channel-error" class="field-error"></span></div>
+<div><label for="from">Từ ngày</label><input class="form-control" type="date" id="from" name="from" th:value="${from}" aria-describedby="from-error"></div>
+<div><label for="to">Đến ngày</label><input class="form-control" type="date" id="to" name="to" th:value="${to}" aria-describedby="to-error"></div>
+<div><label for="dash-days">Khoảng nhanh</label><select class="form-select" id="dash-days" name="period">
+    <option value="custom" th:selected="${period == 'custom' or (!isDefaultRange and period != 'today' and period != '7' and period != '30' and period != 'month' and period != 'last-month' and days != 7 and days != 30)}">Tùy chọn</option>
+    <option value="today" th:selected="${period == 'today'}">Hôm nay</option>
+    <option value="7" th:selected="${(days == 7 or isDefaultRange or period == '7') and period != 'custom' and period != 'today' and period != '30' and period != 'month' and period != 'last-month'}">7 ngày gần đây</option>
+    <option value="30" th:selected="${period == '30' or (days == 30 and period != 'custom')}">30 ngày gần đây</option>
+    <option value="month" th:selected="${period == 'month'}">Tháng này</option>
+    <option value="last-month" th:selected="${period == 'last-month'}">Tháng trước</option>
+</select></div>
+<div><label for="channel">Kênh bán</label><select id="channel" name="channel" class="form-select" aria-describedby="channel-error"><option value="ALL" th:selected="${channel=='ALL'}">Tất cả</option><option value="ONLINE" th:selected="${channel=='ONLINE'}">Trực tuyến (Online)</option><option value="POS" th:selected="${channel=='POS'}">Tại quầy (POS)</option></select></div>
 <div><label for="categoryId">Thương hiệu</label><select id="categoryId" name="categoryId" class="form-select"><option value="">Tất cả thương hiệu</option><option th:each="c:${categories}" th:value="${c.id}" th:text="${c.name}" th:selected="${categoryId==c.id}"></option></select></div>
 <div class="filter-bar-actions"><button type="submit" class="btn btn-primary">Lọc</button><a th:href="@{/admin/dashboard}" class="btn btn-outline-secondary">Xóa lọc</a><span class="filter-state-badge" th:if="${activeFilterCount != null and activeFilterCount > 0}" th:text="'Đang áp dụng ' + ${activeFilterCount} + ' bộ lọc'"></span></div><p class="form-message" role="alert" hidden></p>
 </form>
-<p th:if="${filterError!=null}" th:text="${filterError}" class="alert alert-danger mt-2 mb-0" role="alert"></p>
+<p th:if="${filterError!=null}" th:text="${filterError}" class="alert alert-danger mt-2 mb-0" id="filter-error-banner" role="alert"></p>
 </div>
 
 <th:block th:if="${filterError==null}">

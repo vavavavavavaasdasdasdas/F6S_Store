@@ -50,6 +50,8 @@ public class AdminPosController {
     private final com.example.demodatn.repository.sanpham.CategoryRepository categories;
     private final MaterialRepository materials;
     private final SizeRepository sizes;
+    private final com.example.demodatn.service.nhanvien.AccountProvisioningService accounts;
+    private final com.example.demodatn.service.PeopleService people;
 
     @GetMapping("/customers")
     public String customerSearch(@RequestParam(defaultValue="") String customerQuery,@RequestParam(defaultValue="0") String customerPage,Model model){model.addAttribute("customerPage",catalogQuery.customers(customerQuery,customerPage));model.addAttribute("customerQuery",customerQuery.trim());return "admin/ban-tai-quay/khach-hang :: results";}
@@ -59,6 +61,60 @@ public class AdminPosController {
     public Object customerAddresses(@PathVariable Integer id){
         var c=customers.findById(id).filter(x->Boolean.TRUE.equals(x.getStatus())).orElseThrow(()->new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));
         return java.util.Map.of("name",c.getFullName(),"phone",java.util.Objects.toString(c.getPhone(),""),"addresses",addressBook.findByCustomer_IdOrderBySlotAsc(id).stream().map(a->{var m=new java.util.LinkedHashMap<String,Object>();m.put("id",a.getId());m.put("label",a.getFullAddress());m.put("defaultAddress",a.isDefaultAddress());m.put("receiverName",a.getReceiverName());m.put("phone",a.getPhone());m.put("provinceId",a.getProvince()==null?null:a.getProvince().getId());m.put("wardId",a.getWard()==null?null:a.getWard().getId());m.put("streetAddress",a.getDisplayStreetAddress());m.put("latitude",a.getLatitude());m.put("longitude",a.getLongitude());m.put("coordinateSource",a.getCoordinateSource());return m;}).toList());
+    }
+
+    @PostMapping("/customers/quick-create")
+    @ResponseBody
+    public org.springframework.http.ResponseEntity<?> quickCreateCustomer(
+            @RequestParam String fullName,
+            @RequestParam String phone,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) Integer provinceId,
+            @RequestParam(required = false) Integer wardId,
+            @RequestParam(required = false) String streetAddress) {
+        try {
+            com.example.demodatn.dto.khachhang.CustomerDto form = new com.example.demodatn.dto.khachhang.CustomerDto();
+            form.setFullName(fullName != null ? fullName.trim() : "");
+            form.setPhone(phone != null ? phone.trim() : "");
+            form.setEmail(email != null && !email.isBlank() ? email.trim() : null);
+            String code = "KH-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase(Locale.ROOT);
+            form.setCustomerCode(code);
+            form.setProvinceId(provinceId != null ? provinceId : 1);
+            form.setWardId(wardId != null ? wardId : 1);
+            form.setStreetAddress(streetAddress != null && !streetAddress.isBlank() ? streetAddress.trim() : "Tại quầy");
+            form.setAddress(form.getStreetAddress());
+
+            if (form.getEmail() != null && !form.getEmail().isBlank()) {
+                var outcome = accounts.saveCustomer(form);
+                var c = customers.findById(outcome.personId()).orElseThrow();
+                return org.springframework.http.ResponseEntity.ok(Map.of(
+                        "id", c.getId(),
+                        "customerCode", c.getCustomerCode(),
+                        "fullName", c.getFullName(),
+                        "phone", c.getPhone(),
+                        "email", c.getEmail() != null ? c.getEmail() : "",
+                        "accountIssued", outcome.issued(),
+                        "accountSent", outcome.sent(),
+                        "message", outcome.message()
+                ));
+            } else {
+                var c = people.saveCustomer(form);
+                return org.springframework.http.ResponseEntity.ok(Map.of(
+                        "id", c.getId(),
+                        "customerCode", c.getCustomerCode(),
+                        "fullName", c.getFullName(),
+                        "phone", c.getPhone(),
+                        "email", "",
+                        "accountIssued", false,
+                        "accountSent", false,
+                        "message", "Đã lưu thông tin khách hàng."
+                ));
+            }
+        } catch (com.example.demodatn.exception.PeopleValidationException ex) {
+            return org.springframework.http.ResponseEntity.badRequest().body(Map.of("message", ex.getMessage()));
+        } catch (Exception ex) {
+            return org.springframework.http.ResponseEntity.badRequest().body(Map.of("message", "Lỗi tạo khách hàng: " + ex.getMessage()));
+        }
     }
 
     private void clearCart(HttpSession session) {

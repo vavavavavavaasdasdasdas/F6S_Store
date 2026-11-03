@@ -58,6 +58,10 @@ public class DashboardService {
             from = end;
         } else if ("month".equalsIgnoreCase(period)) {
             from = end.withDayOfMonth(1);
+        } else if ("last-month".equalsIgnoreCase(period)) {
+            LocalDate lastMonth = today.minusMonths(1);
+            from = lastMonth.withDayOfMonth(1);
+            end = lastMonth.withDayOfMonth(lastMonth.lengthOfMonth());
         } else {
             from = end.minusDays(validDays - 1);
         }

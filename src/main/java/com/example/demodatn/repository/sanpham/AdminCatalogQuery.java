@@ -28,8 +28,14 @@ public class AdminCatalogQuery {
     public Page<Map<String,Object>> products(String keyword,Integer category,Boolean status,String sort,Object page,Integer materialId,Integer soleId,BigDecimal minPrice,BigDecimal maxPrice) {
         return products(keyword,category,status,sort,page,materialId,soleId,minPrice,maxPrice,null);
     }
+    public Page<Map<String,Object>> productsWithStock(String keyword, Integer category, Boolean status, String sort, Object page, String stockStatus, int threshold) {
+        return products(keyword,category,status,sort,page,null,null,null,null,null,stockStatus,threshold);
+    }
     public Page<Map<String,Object>> products(String keyword,Integer category,Boolean status,String sort,Object page,Integer materialId,Integer soleId,BigDecimal minPrice,BigDecimal maxPrice,Integer colorId) {
-        String joinV = " LEFT JOIN (SELECT product_id,MIN(price) AS price,MAX(price) AS max_price,SUM(CAST(quantity AS bigint)) AS stock,COUNT_BIG(*) AS variant_count FROM product_variants GROUP BY product_id) v ON v.product_id=p.id";
+        return products(keyword,category,status,sort,page,materialId,soleId,minPrice,maxPrice,colorId,null,10);
+    }
+    public Page<Map<String,Object>> products(String keyword,Integer category,Boolean status,String sort,Object page,Integer materialId,Integer soleId,BigDecimal minPrice,BigDecimal maxPrice,Integer colorId,String stockStatus,int threshold) {
+        String joinV = " LEFT JOIN (SELECT product_id,MIN(price) AS price,MAX(price) AS max_price,SUM(CASE WHEN status=1 THEN CAST(quantity AS bigint) ELSE 0 END) AS stock,COUNT_BIG(*) AS variant_count FROM product_variants GROUP BY product_id) v ON v.product_id=p.id";
         String where = " WHERE 1=1";
         List<Object> args = new ArrayList<>();
         if (keyword != null && !keyword.isBlank()) {
@@ -48,6 +54,17 @@ public class AdminCatalogQuery {
         }
         if (minPrice != null) { where += " AND v.price >= ?"; args.add(minPrice); }
         if (maxPrice != null) { where += " AND v.price <= ?"; args.add(maxPrice); }
+        if (stockStatus != null && !stockStatus.isBlank() && !"ALL".equalsIgnoreCase(stockStatus)) {
+            if ("IN_STOCK".equalsIgnoreCase(stockStatus)) {
+                where += " AND COALESCE(v.stock,0) > ?";
+                args.add(threshold);
+            } else if ("LOW_STOCK".equalsIgnoreCase(stockStatus)) {
+                where += " AND COALESCE(v.stock,0) > 0 AND COALESCE(v.stock,0) <= ?";
+                args.add(threshold);
+            } else if ("OUT_OF_STOCK".equalsIgnoreCase(stockStatus)) {
+                where += " AND COALESCE(v.stock,0) = 0";
+            }
+        }
         String countSql = "SELECT COUNT_BIG(*) FROM products p" + joinV + where;
         String order = switch(sort == null ? "newest" : sort) {
             case "name" -> "p.name ASC,p.id DESC"; case "code" -> "p.code ASC,p.id DESC";
@@ -73,7 +90,7 @@ public class AdminCatalogQuery {
     }
 
     public Long productStock(Integer id) {
-        return jdbc.queryForObject("SELECT COALESCE(SUM(CAST(quantity AS bigint)),0) FROM product_variants WHERE product_id=?",Long.class,id);
+        return jdbc.queryForObject("SELECT COALESCE(SUM(CASE WHEN status=1 THEN CAST(quantity AS bigint) ELSE 0 END),0) FROM product_variants WHERE product_id=?",Long.class,id);
     }
     public List<Map<String,Object>> variants(Integer productId, String stock, int threshold) {
         return variantsPage(productId,stock,threshold,0).getContent();

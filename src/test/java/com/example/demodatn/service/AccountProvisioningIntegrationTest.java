@@ -106,7 +106,7 @@ class AccountProvisioningIntegrationTest {
         assertEquals(last,users.findById(u.getId()).orElseThrow().getPassword());
     }
     @Test void duplicateEmailAndIdentityRollbackWithoutAnotherMail() {
-        var f=form();f.setSoCccd("001234567890");var first=accounts.saveCustomer(f);assertTrue(first.sent());
+        var f=form();String cccd=String.format("09%010d",Math.abs(UUID.randomUUID().hashCode()));f.setSoCccd(cccd);var first=accounts.saveCustomer(f);assertTrue(first.sent());
         int count=SMTP.getReceivedMessages().length;long before=users.count();
         var sameEmail=form();sameEmail.setEmail(f.getEmail());assertThrows(PeopleValidationException.class,()->accounts.saveCustomer(sameEmail));
         var sameDocument=form();sameDocument.setSoCccd(f.getSoCccd());assertThrows(PeopleValidationException.class,()->accounts.saveCustomer(sameDocument));

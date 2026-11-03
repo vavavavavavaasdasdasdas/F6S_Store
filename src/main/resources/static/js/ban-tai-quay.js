@@ -104,6 +104,24 @@
    });
  }
  countdown();setInterval(countdown,30000);
+  const lineDebounce = {};
+  document.querySelectorAll('.pos-line-actions form').forEach(qtyForm => {
+    const qtyInput = qtyForm.querySelector('input[name=quantity]');
+    if (!qtyInput) return;
+    qtyInput.addEventListener('input', () => {
+      const vid = qtyForm.querySelector('input[name=variantId]')?.value || 'default';
+      clearTimeout(lineDebounce[vid]);
+      lineDebounce[vid] = setTimeout(() => {
+        const val = Number(qtyInput.value);
+        if (val >= 1) {
+          saveDraft();
+          form.dataset.dirty = 'false';
+          qtyForm.dataset.dirty = 'false';
+          qtyForm.submit();
+        }
+      }, 400);
+    });
+  });
  form.addEventListener('input',saveDraft);form.addEventListener('change',saveDraft);
  form.addEventListener('submit',event=>{
    const unsaved=document.querySelector('.pos-line form[data-dirty=true]');

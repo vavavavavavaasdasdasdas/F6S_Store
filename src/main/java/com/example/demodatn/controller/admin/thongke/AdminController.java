@@ -41,17 +41,33 @@ public class AdminController {
                             Model model) {
         LocalDate today = LocalDate.now(ZoneId.of(timeZone));
         String ch = (channel == null || channel.isBlank()) ? "ALL" : channel.trim();
-        int validDays = (days != null && days == 30) ? 30 : 7;
-        LocalDate rawEnd = to != null ? to : today;
+        LocalDate defaultFrom = today.minusDays(6);
+        LocalDate defaultTo = today;
+
         LocalDate rawStart;
-        if (from != null) {
-            rawStart = from;
-        } else if ("today".equalsIgnoreCase(period)) {
-            rawStart = rawEnd;
+        LocalDate rawEnd;
+        if ("today".equalsIgnoreCase(period)) {
+            rawStart = today;
+            rawEnd = today;
         } else if ("month".equalsIgnoreCase(period)) {
-            rawStart = rawEnd.withDayOfMonth(1);
+            rawStart = today.withDayOfMonth(1);
+            rawEnd = today;
+        } else if ("last-month".equalsIgnoreCase(period)) {
+            LocalDate lastMonth = today.minusMonths(1);
+            rawStart = lastMonth.withDayOfMonth(1);
+            rawEnd = lastMonth.withDayOfMonth(lastMonth.lengthOfMonth());
+        } else if ("7".equalsIgnoreCase(period)) {
+            rawStart = today.minusDays(6);
+            rawEnd = today;
+        } else if ("30".equalsIgnoreCase(period) || (days != null && days == 30 && from == null && to == null)) {
+            rawStart = today.minusDays(29);
+            rawEnd = today;
+        } else if (from != null || to != null) {
+            rawStart = from != null ? from : defaultFrom;
+            rawEnd = to != null ? to : defaultTo;
         } else {
-            rawStart = rawEnd.minusDays(validDays - 1);
+            rawStart = defaultFrom;
+            rawEnd = defaultTo;
         }
 
         String error = rawEnd.isBefore(rawStart) ? "Ngày kết thúc phải từ ngày bắt đầu." :
@@ -60,7 +76,7 @@ public class AdminController {
         model.addAttribute("filterError", error);
 
         var dash = dashboardService.load(
-                days, period, from, to, ch, categoryId,
+                days, period, rawStart, rawEnd, ch, categoryId,
                 channelPage != null ? channelPage : page,
                 statusPage != null ? statusPage : page,
                 quantityPage != null ? quantityPage : page,
@@ -77,14 +93,20 @@ public class AdminController {
         }
         model.addAttribute("from", rawStart);
         model.addAttribute("to", rawEnd);
+        model.addAttribute("period", period);
+        model.addAttribute("days", days);
         model.addAttribute("channel", ch);
         model.addAttribute("categories", categories.findAll());
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("timeZone", timeZone);
 
-        int activeFilterCount = 1; // Date range filter is always active
+        // Active filter counter: ONLY count filters that DIFFER from default
+        int activeFilterCount = 0;
+        boolean isDefaultRange = rawStart.equals(defaultFrom) && rawEnd.equals(defaultTo);
+        if (!isDefaultRange) activeFilterCount++;
         if (!"ALL".equals(ch)) activeFilterCount++;
         if (categoryId != null) activeFilterCount++;
+        model.addAttribute("isDefaultRange", isDefaultRange);
         model.addAttribute("activeFilterCount", activeFilterCount);
         return "admin/bang-dieu-khien";
     }

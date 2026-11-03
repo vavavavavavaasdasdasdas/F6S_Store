@@ -31,16 +31,20 @@ public class AdminProductController {
     private final com.example.demodatn.util.Pagination pagination;
     @org.springframework.beans.factory.annotation.Value("${shop.upload-max-bytes:5242880}") private long maxBytes;
     private final com.example.demodatn.repository.sanpham.ColorRepository colors;
+    @org.springframework.beans.factory.annotation.Value("${shop.low-stock-threshold:10}") private int lowStockThreshold;
 
     @GetMapping
     public String list(@RequestParam(defaultValue="") String keyword,@RequestParam(required=false) Integer categoryId,
-                       @RequestParam(required=false) Boolean status,@RequestParam(defaultValue="newest") String sort,
+                       @RequestParam(required=false) Boolean status,@RequestParam(required=false) String stockStatus,
+                       @RequestParam(defaultValue="newest") String sort,
                        @RequestParam(defaultValue="0") String page,Model model) {
         if(!java.util.Set.of("newest","name","code").contains(sort))sort="newest";
-        model.addAttribute("productPage",query.products(keyword,categoryId,status,sort,page));
+        model.addAttribute("productPage",query.productsWithStock(keyword,categoryId,status,sort,page,stockStatus,lowStockThreshold));
         model.addAttribute("categories",categories.findAll());model.addAttribute("keyword",keyword);
-        model.addAttribute("categoryId",categoryId);model.addAttribute("status",status);model.addAttribute("sort",sort);
-        model.addAttribute("activeFilterCount",(keyword.isBlank()?0:1)+(categoryId==null?0:1)+(status==null?0:1));
+        model.addAttribute("categoryId",categoryId);model.addAttribute("status",status);model.addAttribute("stockStatus",stockStatus);
+        model.addAttribute("sort",sort);model.addAttribute("lowStockThreshold",lowStockThreshold);
+        boolean hasStockFilter = stockStatus != null && !stockStatus.isBlank() && !"ALL".equalsIgnoreCase(stockStatus);
+        model.addAttribute("activeFilterCount",(keyword.isBlank()?0:1)+(categoryId==null?0:1)+(status==null?0:1)+(hasStockFilter?1:0));
         return "admin/san-pham/danh-sach";
     }
     @GetMapping("/create")

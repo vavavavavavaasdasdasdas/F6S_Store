@@ -44,7 +44,7 @@ class ProductWorkspaceIntegrationTest {
   assertTrue(view.contains("data-product-variants"));assertTrue(view.contains("<th>Mã SP</th><th>Tên SP</th><th>Mã biến thể</th>"));
   mvc.perform(get("/admin/products-crud/"+productId+"/variants").with(user("admin").roles("ADMIN"))).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/admin/products-crud/view/"+productId));
   var list=mvc.perform(get("/admin/products-crud").with(user("admin").roles("ADMIN"))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8);
-  assertTrue(list.contains("<th>Số biến thể</th>"));assertFalse(list.contains("name=\"materialId\""));
+  assertTrue(list.contains("<th>Tồn kho</th>"));assertFalse(list.contains("name=\"materialId\""));
   assertTrue(list.contains("Xem chi tiết"));assertFalse(list.contains("Chi tiết biến thể"));
   mvc.perform(post("/admin/products-crud/delete/"+productId).with(user("admin").roles("ADMIN")).with(csrf())).andExpect(status().isMethodNotAllowed());
   mvc.perform(delete("/admin/products-crud/delete/"+productId).with(user("admin").roles("ADMIN")).with(csrf())).andExpect(status().isMethodNotAllowed());

@@ -205,13 +205,19 @@ a,button,label.btn{touch-action:manipulation}button,a.btn,label.btn,[data-bs-tog
 .combo-option-create{font-weight:600;color:#a13a0d;border-top:1px dashed rgba(24,22,21,.12)}
 .combo-empty{padding:.55rem .75rem;color:#b02a37;font-size:.875rem;font-weight:500}
 .combo-error{margin:.25rem 0 0;font-size:.8125rem;color:#b02a37;font-weight:500}
-.filter-status-badge,.filter-state-badge{display:inline-flex;align-items:center;gap:.35rem;padding:.25rem .65rem;border-radius:999px;font-size:.8125rem;font-weight:600;background:#fdf3eb;color:#a13a0d;border:1px solid #f1d2bd;white-space:nowrap}
-.catalog-filters,.filter-bar,.sales-filters.filter-bar{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.75rem;align-items:end;width:100%;max-width:100%}
-.catalog-filters .filter-actions,.filter-bar .filter-bar-actions,.sales-filters .filter-bar-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
+.catalog-filters,.filter-bar,.sales-filters{display:flex!important;flex-wrap:wrap!important;align-items:flex-end!important;gap:.75rem!important;width:100%!important;max-width:100%!important;margin-bottom:1.25rem!important}
+.catalog-filters>div,.filter-bar>div,.sales-filters>div{flex:1 1 170px!important;min-width:150px!important;margin:0!important}
+.catalog-filters label,.filter-bar label,.sales-filters label{display:block!important;font-size:.875rem!important;font-weight:600!important;margin-bottom:.375rem!important;height:20px!important;line-height:20px!important;white-space:nowrap!important}
+.catalog-filters .form-control,.catalog-filters .form-select,.filter-bar .form-control,.filter-bar .form-select,.sales-filters .form-control,.sales-filters .form-select,.catalog-filters .combo-input,.filter-bar .combo-input,.sales-filters .combo-input{height:44px!important;min-height:44px!important;max-height:44px!important;box-sizing:border-box!important;font-size:.9375rem!important;line-height:42px!important;padding-top:0!important;padding-bottom:0!important;border-radius:6px!important;margin:0!important}
+.catalog-filters .filter-actions,.filter-bar .filter-bar-actions,.sales-filters .filter-bar-actions{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:.5rem!important;flex:0 0 auto!important;min-width:0!important;height:44px!important;margin:0!important;padding:0!important}
+.catalog-filters .btn,.filter-bar .btn,.sales-filters .btn,.filter-bar-actions .btn,.filter-actions .btn{height:44px!important;min-height:44px!important;max-height:44px!important;line-height:42px!important;padding:0 1.125rem!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important;border-radius:6px!important;margin:0!important}
+.filter-status-badge,.filter-state-badge{height:44px!important;min-height:44px!important;max-height:44px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:.35rem!important;padding:0 .85rem!important;border-radius:6px!important;font-size:.8125rem!important;font-weight:600!important;background:#fdf3eb!important;color:#a13a0d!important;border:1px solid #f1d2bd!important;white-space:nowrap!important;box-sizing:border-box!important;line-height:1!important;margin:0!important}
+.filter-bar .field-error:empty,.sales-filters .field-error:empty,.catalog-filters .field-error:empty,.field-error:empty,.combo-error:empty{display:none!important;margin:0!important;min-height:0!important;height:0!important;padding:0!important}
+
 @media(max-width:576px){
- .catalog-filters,.filter-bar,.sales-filters.filter-bar{display:grid!important;grid-template-columns:1fr!important}
- .catalog-filters>*,.filter-bar>*,.sales-filters.filter-bar>*{min-width:0!important;max-width:100%!important;width:100%!important;flex:0 0 100%!important}
- .catalog-filters .filter-actions,.filter-bar .filter-bar-actions{width:100%}
+ .catalog-filters,.filter-bar,.sales-filters{flex-direction:column!important;align-items:stretch!important}
+ .catalog-filters>div,.filter-bar>div,.sales-filters>div,.catalog-filters .filter-actions,.filter-bar .filter-bar-actions,.sales-filters .filter-bar-actions{width:100%!important;min-width:100%!important;flex:1 1 100%!important}
+ .catalog-filters .filter-actions .btn,.filter-bar .filter-bar-actions .btn,.sales-filters .filter-bar-actions .btn{flex:1!important}
 }
 
 .color-swatch{display:inline-block;width:1.1rem;height:1.1rem;border:1px solid #808080;border-radius:50%;vertical-align:middle;margin-right:.35rem;background:#eee;}

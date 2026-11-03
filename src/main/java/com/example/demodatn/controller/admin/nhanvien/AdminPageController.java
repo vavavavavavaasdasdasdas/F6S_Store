@@ -1,6 +1,7 @@
 package com.example.demodatn.controller.admin.nhanvien;
 import com.example.demodatn.dto.nhanvien.AccountPasswordForm;
 import com.example.demodatn.dto.nhanvien.AccountProfileForm;
+import com.example.demodatn.service.nhanvien.AccountMailService;
 import com.example.demodatn.service.nhanvien.AdminAccountService;
 import java.security.Principal;
 import jakarta.validation.Valid;
@@ -15,10 +16,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class AdminPageController {
     private final AdminAccountService accounts;
+    private final AccountMailService mailService;
+
     private void populate(Principal principal, Model model) {
         var account=accounts.user(principal.getName());
         model.addAttribute("account",account);
         model.addAttribute("accountProfile",accounts.profile(account));
+        model.addAttribute("mailConfigured", mailService.isConfigured());
+        model.addAttribute("mailHost", mailService.getResolvedHost());
+        model.addAttribute("mailPort", mailService.getResolvedPort());
+        model.addAttribute("mailFrom", mailService.getResolvedFrom());
         if(!model.containsAttribute("profileForm"))model.addAttribute("profileForm",accounts.profile(account));
         if(!model.containsAttribute("passwordForm"))model.addAttribute("passwordForm",new AccountPasswordForm());
     }
@@ -39,5 +46,24 @@ public class AdminPageController {
         if(!errors.hasErrors())accounts.password(principal.getName(),form,errors);
         if(errors.hasErrors()) {populate(principal,model);return "admin/tai-khoan/tai-khoan";}
         flash.addFlashAttribute("success","Đổi mật khẩu thành công.");return "redirect:/admin/account";
+    }
+    @PostMapping("/admin/account/test-email")
+    public String testEmail(Principal principal, RedirectAttributes flash) {
+        if(principal==null) return "redirect:/login";
+        var user=accounts.user(principal.getName());
+        if(user==null || user.getRole()==null || !"ROLE_ADMIN".equals(user.getRole().getName())) {
+            throw new org.springframework.security.access.AccessDeniedException("Chỉ quản trị viên mới được gửi email thử.");
+        }
+        var profile=accounts.profile(user);
+        String recipientEmail = profile != null && profile.getEmail() != null && !profile.getEmail().isBlank()
+                ? profile.getEmail().trim()
+                : user.getEmail();
+        var result = mailService.sendTestMail(recipientEmail);
+        if(result.success()) {
+            flash.addFlashAttribute("success", result.message());
+        } else {
+            flash.addFlashAttribute("error", result.message());
+        }
+        return "redirect:/admin/account";
     }
 }
