@@ -197,7 +197,7 @@ public class ChatbotToolService {
     // 5. Chính sách và hướng dẫn (từ chatbot_faq)
     @Transactional(readOnly = true)
     public String getPolicyOrFaq(String query) {
-        List<ChatbotFaq> list = faqRepository.findByHienThiTrue();
+        List<ChatbotFaq> list = faqRepository.findByHienThiTrueAndDoiTuong("KHACH");
         if (list.isEmpty()) {
             return "Bạn có thể tham khảo chi tiết tại trang Chính sách của cửa hàng.";
         }

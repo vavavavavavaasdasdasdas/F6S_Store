@@ -41,6 +41,10 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .exceptionHandling(ex -> ex
+                .defaultAuthenticationEntryPointFor(
+                    new org.springframework.security.web.authentication.Http403ForbiddenEntryPoint(),
+                    request -> request.getRequestURI().startsWith("/admin/chatbot")
+                )
                 .accessDeniedHandler((request, response, accessDeniedException) -> {
                     response.sendError(jakarta.servlet.http.HttpServletResponse.SC_FORBIDDEN);
                 })

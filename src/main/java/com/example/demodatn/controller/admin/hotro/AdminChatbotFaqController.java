@@ -25,16 +25,19 @@ public class AdminChatbotFaqController {
     @GetMapping
     public String list(@RequestParam(defaultValue = "") String keyword,
                        @RequestParam(required = false) Boolean hienThi,
+                       @RequestParam(defaultValue = "") String doiTuong,
                        @RequestParam(defaultValue = "0") int page,
                        @RequestParam(defaultValue = "10") int size,
                        Model model) {
         Page<ChatbotFaq> pageResult = faqRepository.searchFaq(
-                keyword, hienThi, PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "ma"))
+                keyword, hienThi, (doiTuong != null && !doiTuong.isBlank()) ? doiTuong : null,
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "ma"))
         );
 
         model.addAttribute("pageResult", pageResult);
         model.addAttribute("keyword", keyword);
         model.addAttribute("hienThi", hienThi);
+        model.addAttribute("doiTuong", doiTuong);
         return "admin/chatbot-faq/danh-sach";
     }
 

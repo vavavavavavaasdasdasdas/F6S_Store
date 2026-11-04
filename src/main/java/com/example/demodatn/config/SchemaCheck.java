@@ -79,6 +79,7 @@ public class SchemaCheck implements BeanPostProcessor {
     }
 
     private static String migration(String table, String column) {
+        if(java.util.Set.of("admin_chat_audit", "admin_chat_hoi_thoai", "admin_chat_tin_nhan").contains(table) || (table.equals("chatbot_faq") && column.equals("doi_tuong"))) return "026_tro_ly_admin.sql";
         if(java.util.Set.of("chatbot_faq", "phieu_ho_tro", "chat_hoi_thoai", "chat_tin_nhan").contains(table)) return "025_chatbot_va_phieu_ho_tro.sql";
         if("order_mail_log".equals(table) || (table.equals("pos_held_orders") && java.util.Set.of("la_giao_hang", "thong_tin_giao_hang").contains(column))) return "024_pos_giao_hang_va_order_mail_log.sql";
         if(table.equals("orders") && java.util.Set.of("tien_mat","tien_chuyen_khoan","ghi_chu_thanh_toan").contains(column)) return "023_thanh_toan_ket_hop_pos.sql";

@@ -10,10 +10,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/he-thong-thiet-ke.css}">
     <link rel="stylesheet" th:href="@{/css/quan-tri.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-chatbot.css}">
     <script th:src="@{/js/combo-box.js}" defer></script>
     <script th:src="@{/js/quan-tri.js}" defer></script>
     <script th:src="@{/js/quan-tri-danh-muc.js}" defer></script>
     <script th:src="@{/js/o-nhap-so.js}" defer></script>
+    <script th:src="@{/js/admin-chatbot.js}" defer></script>
 <link rel="apple-touch-icon" href="/images/favicon-180.png">
 <th:block th:replace="~{fragments/nut-hanh-dong :: library}"></th:block><script src="/js/nut-hanh-dong.js" defer></script></head>
 <body class="admin-body" th:classappend="${adminActive=='dashboard' ? ' is-dashboard' : ' not-dashboard'}">
@@ -35,5 +37,6 @@
     </main>
     <footer class="admin-footer">F6S · Không gian quản trị</footer>
 </div>
+<th:block th:replace="~{fragments/admin-chatbot :: widget}"></th:block>
 </body>
 </html>

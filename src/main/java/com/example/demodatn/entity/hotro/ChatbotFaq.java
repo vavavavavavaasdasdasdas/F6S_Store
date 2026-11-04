@@ -35,4 +35,7 @@ public class ChatbotFaq {
 
     @Column(name = "hien_thi", nullable = false)
     private Boolean hienThi = true;
+
+    @Column(name = "doi_tuong", nullable = false, length = 20)
+    private String doiTuong = "KHACH";
 }

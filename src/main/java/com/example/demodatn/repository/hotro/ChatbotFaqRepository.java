@@ -18,14 +18,18 @@ public interface ChatbotFaqRepository extends JpaRepository<ChatbotFaq, Integer>
 
     List<ChatbotFaq> findByHienThiTrue();
 
+    List<ChatbotFaq> findByHienThiTrueAndDoiTuong(String doiTuong);
+
     @Query("SELECT f FROM ChatbotFaq f WHERE " +
            "(:keyword IS NULL OR :keyword = '' OR " +
            "LOWER(f.cauHoi) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
            "LOWER(f.tuKhoa) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
            "LOWER(f.ma) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND " +
-           "(:hienThi IS NULL OR f.hienThi = :hienThi)")
+           "(:hienThi IS NULL OR f.hienThi = :hienThi) AND " +
+           "(:doiTuong IS NULL OR :doiTuong = '' OR f.doiTuong = :doiTuong)")
     Page<ChatbotFaq> searchFaq(@Param("keyword") String keyword,
                                @Param("hienThi") Boolean hienThi,
+                               @Param("doiTuong") String doiTuong,
                                Pageable pageable);
 
     @Query("SELECT MAX(CAST(SUBSTRING(f.ma, 3, LEN(f.ma) - 2) AS int)) FROM ChatbotFaq f WHERE f.ma LIKE 'KB%'")
