@@ -73,8 +73,11 @@ public class PosHoldService {
         if(!Set.of("POS","ONLINE").contains(mode))throw new IllegalArgumentException("Loại hóa đơn chờ không hợp lệ.");
         var user=users.lockByUsername(username).orElseThrow();
         if(cart.isEmpty())throw new IllegalArgumentException("Giỏ hàng trống, không thể lưu chờ.");
-        if(!("ONLINE".equals(mode)?Set.of("COD","BANK_TRANSFER"):Set.of("CASH","TRANSFER","COMBINED")).contains(Objects.toString(request.getPaymentMethod(),"")))
-            throw new IllegalArgumentException("Chọn Tiền mặt, Chuyển khoản hoặc Kết hợp.");
+        Set<String> validMethods = (request.isDelivery() || "ONLINE".equals(mode))
+                ? Set.of("COD","BANK_TRANSFER","TRANSFER","CASH")
+                : Set.of("CASH","TRANSFER","COMBINED");
+        if(!validMethods.contains(Objects.toString(request.getPaymentMethod(),"")))
+            throw new IllegalArgumentException(request.isDelivery() ? "Chọn COD hoặc Chuyển khoản." : "Chọn Tiền mặt, Chuyển khoản hoặc Kết hợp.");
         if(!"ONLINE".equals(mode)&&request.getNote()!=null && request.getNote().length()>500)throw new IllegalArgumentException("Ghi chú tối đa 500 ký tự.");
         if(request.getVoucherCode()!=null && request.getVoucherCode().length()>50)throw new IllegalArgumentException("Mã phiếu giảm giá tối đa 50 ký tự.");
         PosHeldOrder hold;
@@ -84,6 +87,27 @@ public class PosHoldService {
             hold.setCreatedAt(now());hold.setExpiresAt(expiry(clock,expiryMode));
         } else hold=locked(username,currentId,mode);
         hold.setOrderType(mode);
+        hold.setLaGiaoHang(request.isDelivery());
+        if (request.isDelivery()) {
+            Map<String, Object> deliveryMap = new HashMap<>();
+            deliveryMap.put("receiverName", request.getReceiverName());
+            deliveryMap.put("receiverPhone", request.getReceiverPhone());
+            deliveryMap.put("receiverEmail", request.getReceiverEmail());
+            deliveryMap.put("provinceId", request.getProvinceId());
+            deliveryMap.put("wardId", request.getWardId());
+            deliveryMap.put("streetAddress", request.getStreetAddress());
+            deliveryMap.put("latitude", request.getLatitude());
+            deliveryMap.put("longitude", request.getLongitude());
+            deliveryMap.put("coordinateSource", request.getCoordinateSource());
+            deliveryMap.put("confirmNow", request.isConfirmNow());
+            try {
+                hold.setThongTinGiaoHang(mapper.writeValueAsString(deliveryMap));
+            } catch (tools.jackson.core.JacksonException ex) {
+                // ignore
+            }
+        } else {
+            hold.setThongTinGiaoHang(null);
+        }
         try{var snapshot=new com.example.demodatn.dto.donhang.PosOnlineOrderForm();if(online!=null)org.springframework.beans.BeanUtils.copyProperties(online,snapshot);snapshot.setCheckoutToken(null);hold.setDeliveryData(online==null?null:mapper.writeValueAsString(snapshot));}catch(tools.jackson.core.JacksonException ex){throw new IllegalArgumentException("Không thể lưu thông tin giao hàng.");}
         var customer=request.getCustomerId()==null ? null : customers.findById(request.getCustomerId()).orElseThrow(()->new IllegalArgumentException("Khách hàng không tồn tại."));
         if(customer!=null && !Boolean.TRUE.equals(customer.getStatus()))throw new IllegalArgumentException("Khách hàng đã bị vô hiệu hóa.");
@@ -107,6 +131,22 @@ public class PosHoldService {
         var h=locked(username,id,mode);var request=new PosCheckoutRequest();
         request.setCustomerId(h.getCustomer()==null ? null : h.getCustomer().getId());
         request.setVoucherCode(h.getVoucherCode());request.setPaymentMethod(h.getPaymentMethod());request.setNote(h.getNote());
+        request.setDelivery(h.isLaGiaoHang());
+        if (h.getThongTinGiaoHang() != null) {
+            try {
+                var map = mapper.readValue(h.getThongTinGiaoHang(), Map.class);
+                request.setReceiverName((String) map.get("receiverName"));
+                request.setReceiverPhone((String) map.get("receiverPhone"));
+                request.setReceiverEmail((String) map.get("receiverEmail"));
+                if (map.get("provinceId") != null) request.setProvinceId(Integer.valueOf(map.get("provinceId").toString()));
+                if (map.get("wardId") != null) request.setWardId(Integer.valueOf(map.get("wardId").toString()));
+                request.setStreetAddress((String) map.get("streetAddress"));
+                if (map.get("latitude") != null) request.setLatitude(new BigDecimal(map.get("latitude").toString()));
+                if (map.get("longitude") != null) request.setLongitude(new BigDecimal(map.get("longitude").toString()));
+                request.setCoordinateSource((String) map.get("coordinateSource"));
+                if (map.get("confirmNow") != null) request.setConfirmNow(Boolean.parseBoolean(map.get("confirmNow").toString()));
+            } catch (Exception ignored) {}
+        }
         var cart=h.getItems().stream().map(i->{var v=i.getVariant();return new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),v.getMaterial().getName(),v.getColor().getName(),v.getSole().getName(),pricing.calculatePrice(v).getFinalPrice(),i.getQuantity());}).toList();
         com.example.demodatn.dto.donhang.PosOnlineOrderForm online=null;
         if(h.getDeliveryData()!=null)try{online=mapper.readValue(h.getDeliveryData(),com.example.demodatn.dto.donhang.PosOnlineOrderForm.class);}catch(tools.jackson.core.JacksonException ex){throw new IllegalArgumentException("Không đọc được địa chỉ hóa đơn chờ.");}
@@ -138,7 +178,16 @@ public class PosHoldService {
             var price=pricing.priceForVariant(item.getVariantId()).getFinalPrice();
             if(price.compareTo(item.getPrice())!=0)throw new IllegalArgumentException("Giá đã thay đổi. Kiểm tra và xác nhận lại giá trước khi thanh toán.");
         }
-        var order=orders.createPosOrder(cart,customer,employee,request.getVoucherCode(),request.getPaymentMethod(),"Tại quầy",request.getCashReceived(),request.getTransferAmount(),request.getPaymentReference(),request.getNote());
+        Order order;
+        if (request.isDelivery()) {
+            order = orders.createPosDeliveryOrder(cart, customer, employee, request.getVoucherCode(), request.getPaymentMethod(),
+                    request.getReceiverName(), request.getReceiverPhone(), request.getReceiverEmail(),
+                    request.getProvinceId(), request.getWardId(), request.getStreetAddress(),
+                    request.getLatitude(), request.getLongitude(), request.getCoordinateSource(),
+                    request.isTransferReceived(), request.isConfirmNow(), request.getNote());
+        } else {
+            order = orders.createPosOrder(cart, customer, employee, request.getVoucherCode(), request.getPaymentMethod(), "Tại quầy", request.getCashReceived(), request.getTransferAmount(), request.getPaymentReference(), request.getNote());
+        }
         holds.delete(hold);holds.flush();
         return order;
     }

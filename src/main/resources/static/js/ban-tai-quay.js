@@ -48,11 +48,23 @@
             const voucherInput = document.querySelector('#posVoucher');
             const noteInput = document.querySelector('#posNote');
             const methodInput = document.querySelector('input[name="paymentMethod"]:checked');
+            const deliverySwitch = document.querySelector('#deliverySwitch');
 
             document.querySelector('#new-tab-customer-id').value = customerIdInput?.value || '';
             document.querySelector('#new-tab-voucher-code').value = voucherInput?.value || '';
-            document.querySelector('#new-tab-payment-method').value = methodInput?.value || 'CASH';
+            document.querySelector('#new-tab-payment-method').value = methodInput?.value || (deliverySwitch?.checked ? 'COD' : 'CASH');
             document.querySelector('#new-tab-note').value = noteInput?.value || '';
+            document.querySelector('#new-tab-delivery').value = deliverySwitch?.checked ? 'true' : 'false';
+            document.querySelector('#new-tab-receiver-name').value = document.querySelector('#receiverName')?.value || '';
+            document.querySelector('#new-tab-receiver-phone').value = document.querySelector('#receiverPhone')?.value || '';
+            document.querySelector('#new-tab-receiver-email').value = document.querySelector('#receiverEmail')?.value || '';
+            document.querySelector('#new-tab-province-id').value = document.querySelector('#pos-del-province')?.value || '';
+            document.querySelector('#new-tab-ward-id').value = document.querySelector('#pos-del-ward')?.value || '';
+            document.querySelector('#new-tab-street-address').value = document.querySelector('#pos-street')?.value || '';
+            document.querySelector('#new-tab-latitude').value = document.querySelector('#pos-del-latitude')?.value || '';
+            document.querySelector('#new-tab-longitude').value = document.querySelector('#pos-del-longitude')?.value || '';
+            document.querySelector('#new-tab-coordinate-source').value = document.querySelector('#pos-del-source')?.value || '';
+            document.querySelector('#new-tab-confirm-now').value = document.querySelector('#confirmNow')?.checked ? 'true' : 'false';
 
             newTabForm.submit();
         });
@@ -64,6 +76,7 @@
             const holdId = el.dataset.holdId;
             if (!holdId || el.closest('.pos-tab-item')?.classList.contains('is-active')) return;
 
+            const deliveryChecked = document.querySelector('#deliverySwitch')?.checked;
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = `/admin/pos/holds/${holdId}/open`;
@@ -72,8 +85,19 @@
                 <input type="hidden" name="action" value="SAVE">
                 <input type="hidden" name="customerId" value="${document.querySelector('#customerId')?.value || ''}">
                 <input type="hidden" name="voucherCode" value="${document.querySelector('#posVoucher')?.value || ''}">
-                <input type="hidden" name="paymentMethod" value="${document.querySelector('input[name="paymentMethod"]:checked')?.value || 'CASH'}">
+                <input type="hidden" name="paymentMethod" value="${document.querySelector('input[name="paymentMethod"]:checked')?.value || (deliveryChecked ? 'COD' : 'CASH')}">
                 <input type="hidden" name="note" value="${document.querySelector('#posNote')?.value || ''}">
+                <input type="hidden" name="delivery" value="${deliveryChecked ? 'true' : 'false'}">
+                <input type="hidden" name="receiverName" value="${document.querySelector('#receiverName')?.value || ''}">
+                <input type="hidden" name="receiverPhone" value="${document.querySelector('#receiverPhone')?.value || ''}">
+                <input type="hidden" name="receiverEmail" value="${document.querySelector('#receiverEmail')?.value || ''}">
+                <input type="hidden" name="provinceId" value="${document.querySelector('#pos-del-province')?.value || ''}">
+                <input type="hidden" name="wardId" value="${document.querySelector('#pos-del-ward')?.value || ''}">
+                <input type="hidden" name="streetAddress" value="${document.querySelector('#pos-street')?.value || ''}">
+                <input type="hidden" name="latitude" value="${document.querySelector('#pos-del-latitude')?.value || ''}">
+                <input type="hidden" name="longitude" value="${document.querySelector('#pos-del-longitude')?.value || ''}">
+                <input type="hidden" name="coordinateSource" value="${document.querySelector('#pos-del-source')?.value || ''}">
+                <input type="hidden" name="confirmNow" value="${document.querySelector('#confirmNow')?.checked ? 'true' : 'false'}">
             `;
             document.body.appendChild(form);
             form.submit();
@@ -744,6 +768,9 @@
         if (customerSearch) customerSearch.value = '';
         if (customerModeLabel) customerModeLabel.textContent = 'Đã chọn';
 
+        if (typeof loadCustomerAddresses === 'function') {
+            loadCustomerAddresses(id);
+        }
         recalculateTotals();
     }
 
@@ -754,6 +781,9 @@
             if (customerDisplay) customerDisplay.hidden = true;
             if (customerModeLabel) customerModeLabel.textContent = 'Khách lẻ';
             if (customerSearch) customerSearch.value = '';
+            if (typeof loadCustomerAddresses === 'function') {
+                loadCustomerAddresses(null);
+            }
             recalculateTotals();
         });
     }
@@ -1122,12 +1152,143 @@
         });
     }
 
-    // Switch payment method radios
+    // -------------------------------------------------------------
+    // GIAO HÀNG (DELIVERY) & PHƯƠNG THỨC THANH TOÁN
+    // -------------------------------------------------------------
+    const deliverySwitch = document.querySelector('#deliverySwitch');
+    const deliverySection = document.querySelector('#pos-delivery-section');
+    const methodsCounter = document.querySelector('#methods-counter');
+    const methodsDelivery = document.querySelector('#methods-delivery');
+    const btnSubmitLabel = document.querySelector('#btn-pos-checkout-label');
+    const receiverEmailInput = document.querySelector('#receiverEmail');
+    const receiverEmailWarning = document.querySelector('#receiver-email-warning');
+    const posAddressSelect = document.querySelector('#pos-address-select');
+    const posCustomerAddressBox = document.querySelector('#pos-customer-address-box');
+
+    function toggleDeliveryMode(isDelivery) {
+        if (!deliverySection) return;
+        if (isDelivery) {
+            deliverySection.classList.remove('d-none');
+            deliverySection.hidden = false;
+            if (methodsCounter) methodsCounter.hidden = true;
+            if (methodsDelivery) methodsDelivery.hidden = false;
+            if (btnSubmitLabel) btnSubmitLabel.textContent = 'TẠO ĐƠN GIAO HÀNG';
+
+            // Đảm bảo phương thức thanh toán phù hợp khi giao hàng (chỉ COD hoặc TRANSFER)
+            const currentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value;
+            if (currentMethod !== 'TRANSFER') {
+                const codRadio = document.querySelector('#method-delivery-cod');
+                if (codRadio) codRadio.checked = true;
+            } else {
+                const transferRadio = document.querySelector('#method-delivery-transfer');
+                if (transferRadio) transferRadio.checked = true;
+            }
+            document.dispatchEvent(new CustomEvent('delivery:visible'));
+        } else {
+            deliverySection.classList.add('d-none');
+            deliverySection.hidden = true;
+            if (methodsCounter) methodsCounter.hidden = false;
+            if (methodsDelivery) methodsDelivery.hidden = true;
+            if (btnSubmitLabel) btnSubmitLabel.textContent = 'THANH TOÁN';
+
+            // Khi tắt giao hàng, chuyển về Tiền mặt nếu đang chọn COD
+            const currentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value;
+            if (currentMethod === 'COD' || !currentMethod) {
+                const cashRadio = document.querySelector('#method-cash');
+                if (cashRadio) cashRadio.checked = true;
+            } else if (currentMethod === 'TRANSFER') {
+                const transferRadio = document.querySelector('#method-transfer');
+                if (transferRadio) transferRadio.checked = true;
+            }
+        }
+        syncPaymentPanels();
+        recalculateTotals();
+    }
+
+    if (deliverySwitch) {
+        deliverySwitch.addEventListener('change', () => {
+            toggleDeliveryMode(deliverySwitch.checked);
+        });
+    }
+
+    if (receiverEmailInput && receiverEmailWarning) {
+        receiverEmailInput.addEventListener('input', () => {
+            receiverEmailWarning.hidden = Boolean(receiverEmailInput.value.trim());
+        });
+    }
+
+    async function loadCustomerAddresses(customerId) {
+        if (!posAddressSelect || !posCustomerAddressBox) return;
+        if (!customerId) {
+            posCustomerAddressBox.hidden = true;
+            posAddressSelect.innerHTML = '<option value="">-- Chọn địa chỉ từ sổ địa chỉ --</option>';
+            return;
+        }
+        try {
+            const resp = await fetch(`/admin/pos/customers/${customerId}/addresses`);
+            if (!resp.ok) return;
+            const addrs = await resp.json();
+            if (!addrs || addrs.length === 0) {
+                posCustomerAddressBox.hidden = true;
+                return;
+            }
+            posAddressSelect.innerHTML = '<option value="">-- Chọn địa chỉ từ sổ địa chỉ --</option>';
+            let defaultAddr = null;
+            addrs.forEach(a => {
+                const opt = document.createElement('option');
+                opt.value = a.id;
+                opt.textContent = `${a.receiverName} - ${a.phone} (${a.fullAddress || a.streetAddress})`;
+                opt.dataset.json = JSON.stringify(a);
+                posAddressSelect.appendChild(opt);
+                if (a.isDefault) defaultAddr = a;
+            });
+            posCustomerAddressBox.hidden = false;
+
+            // Tự điền địa chỉ mặc định hoặc địa chỉ đầu tiên nếu các ô đang trống hoặc là Khách lẻ
+            const target = defaultAddr || addrs[0];
+            const nameField = document.querySelector('#receiverName');
+            if (target && (!nameField?.value || nameField?.value === 'Khách lẻ')) {
+                fillAddressData(target);
+                posAddressSelect.value = target.id;
+            }
+        } catch (e) {
+            console.error('Không tải được sổ địa chỉ:', e);
+        }
+    }
+
+    function fillAddressData(a) {
+        const nameInput = document.querySelector('#receiverName');
+        const phoneInput = document.querySelector('#receiverPhone');
+        const emailInput = document.querySelector('#receiverEmail');
+        if (nameInput) nameInput.value = a.receiverName || '';
+        if (phoneInput) phoneInput.value = a.phone || '';
+        if (emailInput && a.email) emailInput.value = a.email;
+        if (receiverEmailWarning) receiverEmailWarning.hidden = Boolean(emailInput?.value?.trim());
+
+        const deliveryRoot = document.querySelector('[data-delivery-address]');
+        if (deliveryRoot) {
+            deliveryRoot.dispatchEvent(new CustomEvent('delivery:select-address', { detail: a }));
+        }
+    }
+
+    if (posAddressSelect) {
+        posAddressSelect.addEventListener('change', () => {
+            const selectedOpt = posAddressSelect.selectedOptions[0];
+            if (!selectedOpt || !selectedOpt.dataset.json) return;
+            try {
+                const a = JSON.parse(selectedOpt.dataset.json);
+                fillAddressData(a);
+            } catch (e) {}
+        });
+    }
+
+    // Switch payment method panels
     function syncPaymentPanels() {
-        const val = document.querySelector('input[name="paymentMethod"]:checked')?.value || 'CASH';
-        if (panelCash) panelCash.hidden = (val !== 'CASH');
+        const isDelivery = Boolean(deliverySwitch?.checked);
+        const val = document.querySelector('input[name="paymentMethod"]:checked')?.value || (isDelivery ? 'COD' : 'CASH');
+        if (panelCash) panelCash.hidden = isDelivery || (val !== 'CASH');
         if (panelTransfer) panelTransfer.hidden = (val !== 'TRANSFER');
-        if (panelCombined) panelCombined.hidden = (val !== 'COMBINED');
+        if (panelCombined) panelCombined.hidden = isDelivery || (val !== 'COMBINED');
     }
     syncPaymentPanels();
 
@@ -1142,7 +1303,8 @@
     const paymentForm = document.querySelector('#pos-payment');
     if (paymentForm) {
         paymentForm.addEventListener('submit', (e) => {
-            const method = document.querySelector('input[name="paymentMethod"]:checked')?.value || 'CASH';
+            const isDelivery = Boolean(deliverySwitch?.checked);
+            const method = document.querySelector('input[name="paymentMethod"]:checked')?.value || (isDelivery ? 'COD' : 'CASH');
             const finalAmount = getFinalTotal();
 
             if (getSubtotal() <= 0) {
@@ -1151,50 +1313,105 @@
                 return;
             }
 
-            if (method === 'CASH') {
-                const given = parseVND(cashInput?.value);
-                if (given < finalAmount) {
-                    e.preventDefault();
-                    alert('Tiền khách đưa phải đủ thanh toán tổng đơn hàng.');
-                    cashInput?.focus();
-                    return;
-                }
-                // Format to standard number before submission
-                if (cashInput) cashInput.value = given;
-            } else if (method === 'TRANSFER') {
-                if (!transferReceivedSingle?.checked) {
-                    e.preventDefault();
-                    alert('Vui lòng tích xác nhận "Đã nhận đủ tiền chuyển khoản".');
-                    transferReceivedSingle?.focus();
-                    return;
-                }
-                const transferAmountField = document.querySelector('#transferAmount');
-                if (transferAmountField) transferAmountField.value = finalAmount;
-            } else if (method === 'COMBINED') {
-                const cashVal = parseVND(combinedCashInput?.value);
-                const transferVal = finalAmount - cashVal;
+            if (isDelivery) {
+                const receiverName = document.querySelector('#receiverName')?.value?.trim();
+                const receiverPhone = document.querySelector('#receiverPhone')?.value?.trim();
+                const provinceId = document.querySelector('#pos-del-province')?.value;
+                const wardId = document.querySelector('#pos-del-ward')?.value;
+                const streetAddress = document.querySelector('#pos-street')?.value?.trim();
 
-                if (cashVal <= 0 || transferVal <= 0 || (cashVal + transferVal !== finalAmount)) {
+                if (!receiverName) {
                     e.preventDefault();
-                    alert('Vui lòng nhập số tiền mặt hợp lệ (> 0 và nhỏ hơn tổng tiền).');
-                    combinedCashInput?.focus();
+                    alert('Vui lòng nhập họ tên người nhận.');
+                    document.querySelector('#receiverName')?.focus();
                     return;
                 }
-                if (!transferReceivedCombined?.checked) {
+                if (!receiverPhone) {
                     e.preventDefault();
-                    alert('Vui lòng tích xác nhận "Đã nhận đủ tiền chuyển khoản".');
-                    transferReceivedCombined?.focus();
+                    alert('Vui lòng nhập số điện thoại người nhận.');
+                    document.querySelector('#receiverPhone')?.focus();
                     return;
                 }
-                // Set cashReceived as the cash portion for server
-                if (cashInput) cashInput.value = cashVal;
-                const transferAmountField = document.querySelector('#transferAmount');
-                if (transferAmountField) transferAmountField.value = transferVal;
+                if (!provinceId) {
+                    e.preventDefault();
+                    alert('Vui lòng chọn Tỉnh/Thành phố giao hàng.');
+                    document.querySelector('#pos-del-province')?.focus();
+                    return;
+                }
+                if (!wardId) {
+                    e.preventDefault();
+                    alert('Vui lòng chọn Phường/Xã giao hàng.');
+                    document.querySelector('#pos-del-ward')?.focus();
+                    return;
+                }
+                if (!streetAddress) {
+                    e.preventDefault();
+                    alert('Vui lòng nhập số nhà, tên đường giao hàng.');
+                    document.querySelector('#pos-street')?.focus();
+                    return;
+                }
+
+                if (method === 'TRANSFER') {
+                    if (!transferReceivedSingle?.checked) {
+                        e.preventDefault();
+                        alert('Vui lòng tích xác nhận "Đã nhận đủ tiền chuyển khoản".');
+                        transferReceivedSingle?.focus();
+                        return;
+                    }
+                    const transferAmountField = document.querySelector('#transferAmount');
+                    if (transferAmountField) transferAmountField.value = finalAmount;
+                }
+            } else {
+                if (method === 'CASH') {
+                    const given = parseVND(cashInput?.value);
+                    if (given < finalAmount) {
+                        e.preventDefault();
+                        alert('Tiền khách đưa phải đủ thanh toán tổng đơn hàng.');
+                        cashInput?.focus();
+                        return;
+                    }
+                    if (cashInput) cashInput.value = given;
+                } else if (method === 'TRANSFER') {
+                    if (!transferReceivedSingle?.checked) {
+                        e.preventDefault();
+                        alert('Vui lòng tích xác nhận "Đã nhận đủ tiền chuyển khoản".');
+                        transferReceivedSingle?.focus();
+                        return;
+                    }
+                    const transferAmountField = document.querySelector('#transferAmount');
+                    if (transferAmountField) transferAmountField.value = finalAmount;
+                } else if (method === 'COMBINED') {
+                    const cashVal = parseVND(combinedCashInput?.value);
+                    const transferVal = finalAmount - cashVal;
+
+                    if (cashVal <= 0 || transferVal <= 0 || (cashVal + transferVal !== finalAmount)) {
+                        e.preventDefault();
+                        alert('Vui lòng nhập số tiền mặt hợp lệ (> 0 và nhỏ hơn tổng tiền).');
+                        combinedCashInput?.focus();
+                        return;
+                    }
+                    if (!transferReceivedCombined?.checked) {
+                        e.preventDefault();
+                        alert('Vui lòng tích xác nhận "Đã nhận đủ tiền chuyển khoản".');
+                        transferReceivedCombined?.focus();
+                        return;
+                    }
+                    if (cashInput) cashInput.value = cashVal;
+                    const transferAmountField = document.querySelector('#transferAmount');
+                    if (transferAmountField) transferAmountField.value = transferVal;
+                }
             }
         });
     }
 
     // Initialize state
+    if (deliverySwitch) {
+        toggleDeliveryMode(deliverySwitch.checked);
+    }
+    const initialCustomerId = document.querySelector('#customerId')?.value;
+    if (initialCustomerId) {
+        loadCustomerAddresses(initialCustomerId);
+    }
     recalculateTotals();
 
 })();

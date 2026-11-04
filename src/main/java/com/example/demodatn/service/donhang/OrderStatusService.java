@@ -6,6 +6,7 @@ import com.example.demodatn.service.sanpham.InventoryService;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +20,16 @@ public class OrderStatusService {
     public static final Map<String,String> LABELS=Map.of(
         "PENDING","Chờ xử lý","CONFIRMED","Đã xác nhận","PREPARING","Đang chuẩn bị",
         "SHIPPING","Đang giao","DELIVERED","Hoàn tất","CANCELLED","Đã hủy",
-        "DELIVERY_FAILED","Giao hàng thất bại");
+        "DELIVERY_FAILED","Giao hàng thất bại",
+        "PAYMENT_CONFIRMED","Đã nhận chuyển khoản");
     private final OrderRepository orders;
     private final InventoryService inventory;
     private final EntityManager entityManager;
     private final Clock clock;
     private final DeliveryService delivery;
     private final com.example.demodatn.repository.donhang.OrderStatusHistoryRepository history;
+    private final ApplicationEventPublisher eventPublisher;
+
     private static String actor() {
         var auth=org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
         String value=auth==null || !auth.isAuthenticated()?"Hệ thống":auth.getName();
@@ -133,6 +137,7 @@ public class OrderStatusService {
         if("DELIVERED".equals(status)){order.setPaymentStatus("PAID");order.setDeliveredOn(clock.instant().atZone(DeliveryService.SHOP_ZONE).toLocalDate());}
         order.setStatus(status);order.setUpdatedAt(LocalDateTime.ofInstant(clock.instant(),DeliveryService.SHOP_ZONE));
         record(order,reason,carrier,trackingCode);
+        eventPublisher.publishEvent(new OrderStatusChangedEvent(order.getId(), status, reason, carrier, trackingCode));
     }
 
     @Transactional
@@ -163,6 +168,10 @@ public class OrderStatusService {
         if(Set.of("CANCELLED","DELIVERY_FAILED").contains(order.getStatus()) || !bankTransfer(order))
             throw new IllegalArgumentException("Chỉ xác nhận chuyển khoản cho đơn chưa hủy hoặc thất bại.");
         order.setPaymentStatus("PAID");order.setUpdatedAt(LocalDateTime.now(clock));
+        var row=new com.example.demodatn.entity.donhang.OrderStatusHistory();row.setOrder(order);row.setStatus("PAYMENT_CONFIRMED");
+        row.setChangedAt(LocalDateTime.ofInstant(clock.instant(),DeliveryService.SHOP_ZONE));row.setActor(actor());
+        row.setNote("Đã xác nhận nhận chuyển khoản.");history.save(row);
+        eventPublisher.publishEvent(new OrderStatusChangedEvent(order.getId(), "PAYMENT_CONFIRMED", "Đã nhận thanh toán chuyển khoản.", null, null));
     }
 
     @Transactional

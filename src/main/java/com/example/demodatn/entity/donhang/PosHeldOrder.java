@@ -13,6 +13,8 @@ import java.util.List;
 public class PosHeldOrder {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id;
     @Column(name="order_type",nullable=false,length=10) private String orderType="POS";
+    @Column(name="la_giao_hang",nullable=false) private boolean laGiaoHang = false;
+    @org.hibernate.annotations.Nationalized @Column(name="thong_tin_giao_hang",columnDefinition="nvarchar(max)") private String thongTinGiaoHang;
     @org.hibernate.annotations.Nationalized @Column(name="delivery_data",columnDefinition="nvarchar(max)") private String deliveryData;
     @Column(nullable=false,unique=true,length=40) private String code;
     @ManyToOne(optional=false) @JoinColumn(name="staff_user_id",nullable=false) private User staffUser;

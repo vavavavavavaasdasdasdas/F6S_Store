@@ -2,7 +2,9 @@ package com.example.demodatn.controller.admin.donhang;
 
 import com.example.demodatn.entity.donhang.Invoice;
 import com.example.demodatn.repository.donhang.InvoiceRepository;
+import com.example.demodatn.repository.donhang.OrderMailLogRepository;
 import com.example.demodatn.repository.khachhang.CustomerRepository;
+import com.example.demodatn.service.donhang.OrderEmailService;
 import jakarta.persistence.criteria.JoinType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,6 +29,8 @@ public class AdminInvoiceController {
     private final com.example.demodatn.service.donhang.OrderConfirmationService confirmations;
     private final com.example.demodatn.service.donhang.OrderStatusService orderStatus;
     private final com.example.demodatn.service.donhang.OrderTrackingService orderTrackingService;
+    private final OrderMailLogRepository mailLogs;
+    private final OrderEmailService orderEmailService;
 
     @org.springframework.beans.factory.annotation.Value("${shop.name:SHOP GIÀY}") private String shopName;
     @org.springframework.beans.factory.annotation.Value("${shop.address:}") private String shopAddress;
@@ -207,6 +211,13 @@ public class AdminInvoiceController {
         model.addAttribute("latestCarrier", latestCarrier);
         model.addAttribute("latestTrackingCode", latestTrackingCode);
 
+        var mailLogList = mailLogs.findByOrder_Id(order.getId());
+        Map<String, com.example.demodatn.entity.donhang.OrderMailLog> mailLogMap = new HashMap<>();
+        for (var ml : mailLogList) {
+            mailLogMap.put(ml.getStatus(), ml);
+        }
+        model.addAttribute("mailLogMap", mailLogMap);
+
         return "admin/hoa-don/chi-tiet";
     }
 
@@ -246,6 +257,23 @@ public class AdminInvoiceController {
         }
         if (returnTo != null && returnTo.startsWith("/admin/invoices")) {
             return "redirect:" + returnTo;
+        }
+        return "redirect:/admin/invoices/" + id;
+    }
+
+    @PostMapping("/{id}/resend-mail")
+    public String resendMail(@PathVariable Integer id,
+                             @RequestParam String status,
+                             org.springframework.web.servlet.mvc.support.RedirectAttributes flash) {
+        var invoice = invoice(id);
+        var order = invoice.getOrder();
+        try {
+            orderEmailService.resend(order.getId(), status);
+            flash.addFlashAttribute("message", "Đã gửi lại thông báo trạng thái " + status + " tới email.");
+        } catch (IllegalArgumentException ex) {
+            flash.addFlashAttribute("error", ex.getMessage());
+        } catch (Exception ex) {
+            flash.addFlashAttribute("error", "Lỗi gửi lại thông báo: " + ex.getMessage());
         }
         return "redirect:/admin/invoices/" + id;
     }

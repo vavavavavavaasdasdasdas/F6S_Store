@@ -17,6 +17,17 @@
         <input type="hidden" name="voucherCode" id="new-tab-voucher-code">
         <input type="hidden" name="paymentMethod" id="new-tab-payment-method" value="CASH">
         <input type="hidden" name="note" id="new-tab-note">
+        <input type="hidden" name="delivery" id="new-tab-delivery" value="false">
+        <input type="hidden" name="receiverName" id="new-tab-receiver-name">
+        <input type="hidden" name="receiverPhone" id="new-tab-receiver-phone">
+        <input type="hidden" name="receiverEmail" id="new-tab-receiver-email">
+        <input type="hidden" name="provinceId" id="new-tab-province-id">
+        <input type="hidden" name="wardId" id="new-tab-ward-id">
+        <input type="hidden" name="streetAddress" id="new-tab-street-address">
+        <input type="hidden" name="latitude" id="new-tab-latitude">
+        <input type="hidden" name="longitude" id="new-tab-longitude">
+        <input type="hidden" name="coordinateSource" id="new-tab-coordinate-source">
+        <input type="hidden" name="confirmNow" id="new-tab-confirm-now" value="false">
     </form>
 
     <div class="pos-v2-grid">
@@ -226,14 +237,93 @@
 
             <!-- 4. THẺ THÔNG TIN ĐƠN HÀNG -->
             <div class="pos-card pos-card-payment">
-                <div class="pos-card-header">
+                <div class="pos-card-header d-flex justify-content-between align-items-center">
                     <h2 class="h5 fw-bold mb-0">Thông tin đơn hàng</h2>
+                    <div class="form-check form-switch m-0">
+                        <input class="form-check-input" type="checkbox" id="deliverySwitch" name="delivery" th:checked="${posCheckoutRequest.delivery}" role="switch">
+                        <label class="form-check-label fw-semibold small" for="deliverySwitch">Giao hàng</label>
+                    </div>
                 </div>
 
                 <form id="pos-payment" th:action="@{/admin/pos/checkout}" th:object="${posCheckoutRequest}" method="post" novalidate>
                     <input type="hidden" name="checkoutToken" th:value="${checkoutToken}">
                     <input type="hidden" name="customerId" id="customerId" th:field="*{customerId}">
                     <input type="hidden" name="transferAmount" id="transferAmount">
+
+                    <!-- KHỐI GIAO HÀNG (hiện khi bật Giao hàng) -->
+                    <div id="pos-delivery-section" th:classappend="${posCheckoutRequest.delivery} ? '' : 'd-none'" class="mb-3 p-3 bg-light rounded border">
+                        <h6 class="fw-bold mb-2 text-primary"><i class="bi bi-truck me-1"></i>Thông tin người nhận</h6>
+
+                        <!-- Sổ địa chỉ khách hàng -->
+                        <div id="pos-customer-address-box" class="mb-2" hidden>
+                            <label for="pos-address-select" class="form-label small fw-semibold">Sổ địa chỉ của khách</label>
+                            <select id="pos-address-select" class="form-select form-select-sm">
+                                <option value="">-- Chọn địa chỉ từ sổ địa chỉ --</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="receiverName" class="form-label small fw-semibold">Họ và tên người nhận *</label>
+                            <input type="text" class="form-control form-control-sm" id="receiverName" name="receiverName" th:field="*{receiverName}" placeholder="Nhập họ tên người nhận">
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="receiverPhone" class="form-label small fw-semibold">Số điện thoại *</label>
+                            <input type="tel" class="form-control form-control-sm" id="receiverPhone" name="receiverPhone" th:field="*{receiverPhone}" placeholder="Nhập số điện thoại">
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="receiverEmail" class="form-label small fw-semibold">Email nhận thông báo (khuyến nghị)</label>
+                            <input type="email" class="form-control form-control-sm" id="receiverEmail" name="receiverEmail" th:field="*{receiverEmail}" placeholder="khachhang@example.com">
+                            <div id="receiver-email-warning" class="small text-warning mt-1" th:hidden="${posCheckoutRequest.receiverEmail != null and !posCheckoutRequest.receiverEmail.isBlank()}">
+                                <i class="bi bi-exclamation-triangle me-1"></i>Khách sẽ không nhận được email thông báo
+                            </div>
+                        </div>
+
+                        <!-- Địa chỉ chi tiết và bản đồ (dùng component dia-chi-giao-hang) -->
+                        <div class="delivery-address mt-2" data-delivery-address data-scope="admin">
+                            <div class="row g-2 mb-2">
+                                <div class="col-sm-6">
+                                    <label class="form-label small fw-semibold" for="pos-del-province">Tỉnh/Thành phố *</label>
+                                    <select class="form-select form-select-sm" id="pos-del-province" th:field="*{provinceId}" data-delivery-province>
+                                        <option value="">Chọn Tỉnh/Thành phố</option>
+                                        <option th:each="p : ${provinces}" th:value="${p.id}" th:text="${p.name}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label small fw-semibold" for="pos-del-ward">Phường/Xã *</label>
+                                    <select class="form-select form-select-sm" id="pos-del-ward" th:field="*{wardId}" data-delivery-ward>
+                                        <option value="">Chọn Phường/Xã</option>
+                                        <option th:if="${posCheckoutRequest.provinceId != null}" th:each="w : ${@addressDirectory.wards(posCheckoutRequest.provinceId)}" th:value="${w.id}" th:text="${w.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label small fw-semibold" for="pos-street">Số nhà, tên đường *</label>
+                                <input class="form-control form-control-sm" id="pos-street" th:field="*{streetAddress}" maxlength="255" autocomplete="street-address" placeholder="Nhập số nhà, tên đường" data-delivery-street>
+                            </div>
+                            <input type="hidden" th:field="*{latitude}" id="pos-del-latitude" data-delivery-latitude>
+                            <input type="hidden" th:field="*{longitude}" id="pos-del-longitude" data-delivery-longitude>
+                            <input type="hidden" th:field="*{coordinateSource}" id="pos-del-source" data-delivery-source>
+                            <div class="d-flex flex-wrap gap-2 mb-2">
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-use-location><i class="bi bi-geo-alt me-1"></i>Dùng vị trí của tôi</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-clear-location>Dùng tâm phường/xã</button>
+                            </div>
+                            <p class="small text-muted mb-1 user-message" role="status" aria-live="polite" data-location-message></p>
+                            <div class="delivery-map mb-2" id="pos-del-map" data-delivery-map style="height: 180px; width: 100%; border-radius: 6px;" role="region" aria-label="Bản đồ chọn điểm giao hàng"></div>
+                            <p class="small text-muted mb-0" data-delivery-point>Chưa có vị trí ghim.</p>
+                            <div class="mt-2 pt-2 border-top">
+                                <p class="small text-muted mb-0"><i class="bi bi-info-circle me-1"></i>Phí vận chuyển do đơn vị vận chuyển tính và thu riêng (0 đ)</p>
+                            </div>
+                        </div>
+
+                        <div class="form-check mt-3 pt-2 border-top">
+                            <input class="form-check-input" type="checkbox" id="confirmNow" name="confirmNow" th:field="*{confirmNow}">
+                            <label class="form-check-label small fw-semibold" for="confirmNow">
+                                Xác nhận đơn ngay (trừ kho ngay)
+                            </label>
+                        </div>
+                    </div>
 
                     <!-- Tóm tắt số tiền -->
                     <div class="pos-summary mb-3">
@@ -278,18 +368,28 @@
                         </div>
                     </div>
 
-                    <!-- Hình thức thanh toán: 3 nút chọn (Tiền mặt | Chuyển khoản | Kết hợp) -->
+                    <!-- Hình thức thanh toán: Cho Đơn tại quầy vs Đơn giao hàng -->
                     <div class="pos-payment-methods mb-3">
                         <label class="form-label small fw-bold text-muted d-block">Hình thức thanh toán</label>
-                        <div class="btn-group w-100" role="group" aria-label="Phương thức thanh toán">
-                            <input type="radio" class="btn-check" name="paymentMethod" id="method-cash" value="CASH" th:checked="${posCheckoutRequest.paymentMethod == null or posCheckoutRequest.paymentMethod == 'CASH'}">
+                        <!-- Tại quầy: Tiền mặt | Chuyển khoản | Kết hợp -->
+                        <div id="methods-counter" class="btn-group w-100" role="group" aria-label="Phương thức thanh toán tại quầy" th:hidden="${posCheckoutRequest.delivery}">
+                            <input type="radio" class="btn-check" name="paymentMethod" id="method-cash" value="CASH" th:checked="${!posCheckoutRequest.delivery and (posCheckoutRequest.paymentMethod == null or posCheckoutRequest.paymentMethod == 'CASH')}">
                             <label class="btn btn-outline-primary py-2" for="method-cash">Tiền mặt</label>
 
-                            <input type="radio" class="btn-check" name="paymentMethod" id="method-transfer" value="TRANSFER" th:checked="${posCheckoutRequest.paymentMethod == 'TRANSFER'}">
+                            <input type="radio" class="btn-check" name="paymentMethod" id="method-transfer" value="TRANSFER" th:checked="${!posCheckoutRequest.delivery and posCheckoutRequest.paymentMethod == 'TRANSFER'}">
                             <label class="btn btn-outline-primary py-2" for="method-transfer">Chuyển khoản</label>
 
-                            <input type="radio" class="btn-check" name="paymentMethod" id="method-combined" value="COMBINED" th:checked="${posCheckoutRequest.paymentMethod == 'COMBINED'}">
+                            <input type="radio" class="btn-check" name="paymentMethod" id="method-combined" value="COMBINED" th:checked="${!posCheckoutRequest.delivery and posCheckoutRequest.paymentMethod == 'COMBINED'}">
                             <label class="btn btn-outline-primary py-2" for="method-combined">Kết hợp</label>
+                        </div>
+
+                        <!-- Giao hàng: COD | Chuyển khoản -->
+                        <div id="methods-delivery" class="btn-group w-100" role="group" aria-label="Phương thức thanh toán giao hàng" th:hidden="${!posCheckoutRequest.delivery}">
+                            <input type="radio" class="btn-check" name="paymentMethod" id="method-delivery-cod" value="COD" th:checked="${posCheckoutRequest.delivery and (posCheckoutRequest.paymentMethod == null or posCheckoutRequest.paymentMethod == 'COD')}">
+                            <label class="btn btn-outline-primary py-2" for="method-delivery-cod">COD</label>
+
+                            <input type="radio" class="btn-check" name="paymentMethod" id="method-delivery-transfer" value="TRANSFER" th:checked="${posCheckoutRequest.delivery and posCheckoutRequest.paymentMethod == 'TRANSFER'}">
+                            <label class="btn btn-outline-primary py-2" for="method-delivery-transfer">Chuyển khoản</label>
                         </div>
                     </div>
 
@@ -370,7 +470,7 @@
                         </button>
                         <button type="submit" class="btn btn-primary w-50 fw-bold" id="btn-pos-checkout"
                                 th:disabled="${posCart.empty || !cartValid}">
-                            THANH TOÁN
+                            <span id="btn-pos-checkout-label" th:text="${posCheckoutRequest.delivery ? 'TẠO ĐƠN GIAO HÀNG' : 'THANH TOÁN'}">THANH TOÁN</span>
                         </button>
                     </div>
                 </form>
@@ -527,6 +627,9 @@
         <span id="pos-toast-message">Đã thêm vào giỏ</span>
     </div>
 
+    <link rel="stylesheet" href="/js/vendor/leaflet/leaflet.css">
+    <script src="/js/vendor/leaflet/leaflet.js" defer></script>
+    <script src="/js/dia-chi-giao-hang.js" defer></script>
     <script src="/js/vendor/jsQR-1.4.0.js" defer></script>
     <script src="/js/vendor/qrcodegen-1.8.0.js" defer></script>
     <script src="/js/vietqr.js" defer></script>

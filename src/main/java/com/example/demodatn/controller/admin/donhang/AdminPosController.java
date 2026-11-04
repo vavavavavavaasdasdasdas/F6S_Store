@@ -48,6 +48,8 @@ public class AdminPosController {
     private final SizeRepository sizes;
     private final com.example.demodatn.service.nhanvien.AccountProvisioningService accounts;
     private final com.example.demodatn.service.PeopleService people;
+    private final com.example.demodatn.repository.donhang.ProvinceRepository provinces;
+    private final com.example.demodatn.repository.khachhang.ShippingAddressRepository shippingAddresses;
 
     @GetMapping("/admin/ban-online")
     public String banOnlineRedirect() {
@@ -169,6 +171,7 @@ public class AdminPosController {
                 session.setAttribute("posPaymentReference", VietQrService.newReference());
             }
             model.addAttribute("paymentReference", session.getAttribute("posPaymentReference"));
+            model.addAttribute("provinces", provinces.findAllByOrderByNameAsc());
         }
         return "admin/ban-tai-quay/ban-tai-quay";
     }
@@ -633,29 +636,56 @@ public class AdminPosController {
                 }
                 BigDecimal finalAmount = subtotal.subtract(discount);
 
-                if ("CASH".equals(request.getPaymentMethod())) {
-                    if (request.getCashReceived() == null || request.getCashReceived().compareTo(finalAmount) < 0) {
-                        throw new IllegalArgumentException("Tiền khách đưa phải đủ thanh toán tổng đơn hàng.");
+                if (request.isDelivery()) {
+                    if (!Set.of("COD", "TRANSFER").contains(request.getPaymentMethod())) {
+                        throw new IllegalArgumentException("Đơn giao hàng chỉ hỗ trợ COD hoặc Chuyển khoản.");
                     }
-                } else if ("TRANSFER".equals(request.getPaymentMethod())) {
-                    if (!request.isTransferReceived()) {
-                        throw new IllegalArgumentException("Cần xác nhận đã nhận đủ số tiền chuyển khoản.");
+                    if ("TRANSFER".equals(request.getPaymentMethod())) {
+                        if (!request.isTransferReceived()) {
+                            throw new IllegalArgumentException("Cần xác nhận đã nhận đủ số tiền chuyển khoản.");
+                        }
+                        request.setTransferAmount(finalAmount);
                     }
-                    request.setTransferAmount(finalAmount);
-                } else if ("COMBINED".equals(request.getPaymentMethod())) {
-                    org.slf4j.LoggerFactory.getLogger(AdminPosController.class).info("COMBINED checkout: cashReceived={}, transferAmount={}, finalAmount={}, subtotal={}, discount={}, voucher={}",
-                            request.getCashReceived(), request.getTransferAmount(), finalAmount, subtotal, discount, request.getVoucherCode());
-                    if (request.getCashReceived() == null || request.getCashReceived().compareTo(BigDecimal.ZERO) <= 0) {
-                        throw new IllegalArgumentException("Tiền mặt phải lớn hơn 0 khi thanh toán kết hợp.");
+                    if (request.getReceiverName() == null || request.getReceiverName().isBlank()) {
+                        throw new IllegalArgumentException("Vui lòng nhập họ tên người nhận.");
                     }
-                    if (request.getTransferAmount() == null || request.getTransferAmount().compareTo(BigDecimal.ZERO) <= 0) {
-                        throw new IllegalArgumentException("Tiền chuyển khoản phải lớn hơn 0 khi thanh toán kết hợp.");
+                    if (request.getReceiverPhone() == null || request.getReceiverPhone().isBlank()) {
+                        throw new IllegalArgumentException("Vui lòng nhập số điện thoại người nhận.");
                     }
-                    if (request.getCashReceived().add(request.getTransferAmount()).compareTo(finalAmount) != 0) {
-                        throw new IllegalArgumentException("Tổng tiền mặt và tiền chuyển khoản phải bằng đúng tổng thanh toán.");
+                    if (request.getProvinceId() == null) {
+                        throw new IllegalArgumentException("Vui lòng chọn Tỉnh/Thành phố giao hàng.");
                     }
-                    if (!request.isTransferReceived()) {
-                        throw new IllegalArgumentException("Cần xác nhận đã nhận đủ số tiền chuyển khoản.");
+                    if (request.getWardId() == null) {
+                        throw new IllegalArgumentException("Vui lòng chọn Phường/Xã giao hàng.");
+                    }
+                    if (request.getStreetAddress() == null || request.getStreetAddress().isBlank()) {
+                        throw new IllegalArgumentException("Vui lòng nhập địa chỉ chi tiết (số nhà, tên đường).");
+                    }
+                } else {
+                    if ("CASH".equals(request.getPaymentMethod())) {
+                        if (request.getCashReceived() == null || request.getCashReceived().compareTo(finalAmount) < 0) {
+                            throw new IllegalArgumentException("Tiền khách đưa phải đủ thanh toán tổng đơn hàng.");
+                        }
+                    } else if ("TRANSFER".equals(request.getPaymentMethod())) {
+                        if (!request.isTransferReceived()) {
+                            throw new IllegalArgumentException("Cần xác nhận đã nhận đủ số tiền chuyển khoản.");
+                        }
+                        request.setTransferAmount(finalAmount);
+                    } else if ("COMBINED".equals(request.getPaymentMethod())) {
+                        org.slf4j.LoggerFactory.getLogger(AdminPosController.class).info("COMBINED checkout: cashReceived={}, transferAmount={}, finalAmount={}, subtotal={}, discount={}, voucher={}",
+                                request.getCashReceived(), request.getTransferAmount(), finalAmount, subtotal, discount, request.getVoucherCode());
+                        if (request.getCashReceived() == null || request.getCashReceived().compareTo(BigDecimal.ZERO) <= 0) {
+                            throw new IllegalArgumentException("Tiền mặt phải lớn hơn 0 khi thanh toán kết hợp.");
+                        }
+                        if (request.getTransferAmount() == null || request.getTransferAmount().compareTo(BigDecimal.ZERO) <= 0) {
+                            throw new IllegalArgumentException("Tiền chuyển khoản phải lớn hơn 0 khi thanh toán kết hợp.");
+                        }
+                        if (request.getCashReceived().add(request.getTransferAmount()).compareTo(finalAmount) != 0) {
+                            throw new IllegalArgumentException("Tổng tiền mặt và tiền chuyển khoản phải bằng đúng tổng thanh toán.");
+                        }
+                        if (!request.isTransferReceived()) {
+                            throw new IllegalArgumentException("Cần xác nhận đã nhận đủ số tiền chuyển khoản.");
+                        }
                     }
                 }
 
@@ -666,7 +696,13 @@ public class AdminPosController {
                 }
 
                 var order = heldId == null
-                        ? orders.createPosOrder(cart, customer, employee, request.getVoucherCode(), request.getPaymentMethod(), "Tại quầy", request.getCashReceived(), request.getTransferAmount(), request.getPaymentReference(), request.getNote())
+                        ? (request.isDelivery()
+                                ? orders.createPosDeliveryOrder(cart, customer, employee, request.getVoucherCode(), request.getPaymentMethod(),
+                                        request.getReceiverName(), request.getReceiverPhone(), request.getReceiverEmail(),
+                                        request.getProvinceId(), request.getWardId(), request.getStreetAddress(),
+                                        request.getLatitude(), request.getLongitude(), request.getCoordinateSource(),
+                                        request.isTransferReceived(), request.isConfirmNow(), request.getNote())
+                                : orders.createPosOrder(cart, customer, employee, request.getVoucherCode(), request.getPaymentMethod(), "Tại quầy", request.getCashReceived(), request.getTransferAmount(), request.getPaymentReference(), request.getNote()))
                         : holds.checkout(principal.getName(), heldId, cart, request);
                 clearCart(session);
                 var invoice = invoices.findByOrder_Id(order.getId()).orElse(null);
@@ -861,6 +897,49 @@ public class AdminPosController {
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(Map.of("message", "Lỗi tạo khách hàng: " + ex.getMessage()));
         }
+    }
+
+    @GetMapping("/admin/pos/customers/{id}/addresses")
+    @ResponseBody
+    public List<Map<String, Object>> getCustomerAddresses(@PathVariable Integer id) {
+        var customer = customers.findById(id).orElse(null);
+        if (customer == null) return List.of();
+        var list = shippingAddresses.findByCustomer_IdOrderBySlotAsc(id);
+        List<Map<String, Object>> res = new ArrayList<>();
+        for (var addr : list) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", addr.getId());
+            map.put("receiverName", addr.getReceiverName());
+            map.put("phone", addr.getPhone());
+            map.put("email", customer.getEmail() != null ? customer.getEmail() : (customer.getUser() != null ? customer.getUser().getEmail() : ""));
+            map.put("isDefault", addr.isDefaultAddress());
+            map.put("provinceId", addr.getProvince() != null ? addr.getProvince().getId() : null);
+            map.put("provinceName", addr.getProvince() != null ? addr.getProvince().getName() : "");
+            map.put("wardId", addr.getWard() != null ? addr.getWard().getId() : null);
+            map.put("wardName", addr.getWard() != null ? addr.getWard().getName() : "");
+            map.put("streetAddress", addr.getDisplayStreetAddress());
+            map.put("fullAddress", addr.getFullAddress());
+            map.put("latitude", addr.getLatitude());
+            map.put("longitude", addr.getLongitude());
+            map.put("coordinateSource", addr.getCoordinateSource());
+            res.add(map);
+        }
+        if (res.isEmpty() && customer.getAddress() != null && !customer.getAddress().isBlank()) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", 0);
+            map.put("receiverName", customer.getFullName());
+            map.put("phone", customer.getPhone());
+            map.put("email", customer.getEmail() != null ? customer.getEmail() : (customer.getUser() != null ? customer.getUser().getEmail() : ""));
+            map.put("isDefault", true);
+            map.put("provinceId", null);
+            map.put("provinceName", "");
+            map.put("wardId", null);
+            map.put("wardName", "");
+            map.put("streetAddress", customer.getAddress());
+            map.put("fullAddress", customer.getAddress());
+            res.add(map);
+        }
+        return res;
     }
 
     @GetMapping("/admin/pos/success/{id}")
