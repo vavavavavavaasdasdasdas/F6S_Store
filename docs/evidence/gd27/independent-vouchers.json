@@ -1,0 +1,86 @@
+[
+  {
+    "code": "GD27CAP",
+    "name": "Giảm 25% tối đa 1.200.000đ",
+    "discount_type": "PERCENT",
+    "min_order_value": 0.0,
+    "max_discount": 1200000.0,
+    "eligible": 1,
+    "missing_amount": 0.0,
+    "discount_amount": 1200000.0
+  },
+  {
+    "code": "GD27FIX",
+    "name": "Giảm 500.000đ",
+    "discount_type": "FIXED",
+    "min_order_value": 0.0,
+    "eligible": 1,
+    "missing_amount": 0.0,
+    "discount_amount": 500000.0
+  },
+  {
+    "code": "GIAM50K",
+    "name": "Giảm 50K",
+    "discount_type": "FIXED",
+    "min_order_value": 1000000.0,
+    "eligible": 1,
+    "missing_amount": 0.0,
+    "discount_amount": 500000.0
+  },
+  {
+    "code": "WELCOME10",
+    "name": "Giảm 10% khách mới",
+    "discount_type": "PERCENT",
+    "min_order_value": 500000.0,
+    "max_discount": 200000.0,
+    "eligible": 1,
+    "missing_amount": 0.0,
+    "discount_amount": 200000.0
+  },
+  {
+    "code": "GIAM10PT",
+    "name": "Giam 10%",
+    "discount_type": "PERCENT",
+    "min_order_value": 100000.0,
+    "max_discount": 50000.0,
+    "eligible": 1,
+    "missing_amount": 0.0,
+    "discount_amount": 50000.0
+  },
+  {
+    "code": "GIAM10K",
+    "name": "Giam 10k",
+    "discount_type": "FIXED",
+    "min_order_value": 0.0,
+    "eligible": 1,
+    "missing_amount": 0.0,
+    "discount_amount": 10000.0
+  },
+  {
+    "code": "HETLUOT",
+    "name": "Het luot",
+    "discount_type": "FIXED",
+    "min_order_value": 0.0,
+    "eligible": 1,
+    "missing_amount": 0.0,
+    "discount_amount": 10000.0
+  },
+  {
+    "code": "RIENGTU",
+    "name": "Rieng tu",
+    "discount_type": "FIXED",
+    "min_order_value": 0.0,
+    "eligible": 1,
+    "missing_amount": 0.0,
+    "discount_amount": 10000.0
+  },
+  {
+    "code": "GD27MIN",
+    "name": "Đơn từ 20 triệu",
+    "discount_type": "FIXED",
+    "min_order_value": 20000000.0,
+    "eligible": 0,
+    "missing_amount": 10000000.0,
+    "discount_amount": 0.0
+  }
+]

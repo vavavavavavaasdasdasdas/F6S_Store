@@ -1,0 +1,325 @@
+{
+  "baseline": {
+    "commit": "606ead2",
+    "totals": [
+      282,
+      23,
+      1,
+      0
+    ],
+    "failures": [
+      {
+        "class": "com.example.demodatn.controller.AdminFrameIntegrationTest",
+        "method": "eightSecurityCasesAndForgedCodeIgnored",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.controller.PaginationIntegrationTest",
+        "method": "allListsReturnTwelveTwelveSixWithStableIds",
+        "type": "error",
+        "message": "Cannot invoke \"org.springframework.data.domain.Page.getNumberOfElements()\" because \"data\" is null"
+      },
+      {
+        "class": "com.example.demodatn.security.EmployeeAccessIntegrationTest",
+        "method": "eightSecurityCasesProtectNewCommands",
+        "type": "failure",
+        "message": "Status expected:<302> but was:<403>"
+      },
+      {
+        "class": "com.example.demodatn.service.AccountProvisioningIntegrationTest",
+        "method": "administratorRoutesAndCsrfCannotBeBypassed",
+        "type": "failure",
+        "message": "Status expected:<302> but was:<403>"
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.DeliveryIntegrationTest",
+        "method": "customerInvoiceOwnershipAndEightSecurityScenarios",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.InvoiceOnlineWorkspaceIntegrationTest",
+        "method": "eightSecurityCasesForOnlineAndInvoice",
+        "type": "failure",
+        "message": "Status expected:<302> but was:<403>"
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.OrderRollbackIntegrationTest",
+        "method": "posShortageRollsBackOrderVoucherAndFirstStockWrite",
+        "type": "failure",
+        "message": "Flash attribute 'error'\nExpected: a string containing \"Không đủ tồn kho\"\n     "
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.PosModalPricingIntegrationTest",
+        "method": "testPosAvailableQuantityCalculationsInSession",
+        "type": "failure",
+        "message": "Model attribute 'variants'\nExpected: a collection containing hasProperty(\"availableQuantity\", is <5>)\n     but: mismatches were: [ property 'availableQuantity' was <16>,  property 'availableQuantity' was <4>,  property 'availableQuantity' was <97>,  property 'availableQuantity' was <76>,  property 'availableQuantity' was <18>,  property 'availableQuantity' was <19>,  property 'availableQuantity' w"
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.PosQrIntegrationTest",
+        "method": "initialPosHasNoCustomerListAndShortSearchIsEmpty",
+        "type": "failure",
+        "message": "Response content\nExpected: a string containing \"Nhập tên hoặc số điện thoại để tìm\"\n     "
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.PosQrIntegrationTest",
+        "method": "receiptCheckboxAndExactAmountAreEnforcedBeforeCreatingOrder",
+        "type": "failure",
+        "message": "Flash attribute 'error'\nExpected: a string containing \"Tổng tiền đã thay đổi\"\n     "
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.PosQrIntegrationTest",
+        "method": "invoiceChannelHasOwnColumnAndEightSecurityGroups",
+        "type": "failure",
+        "message": "Response content\nExpected: a string containing \"<th>Khách</th><th>Kênh bán</th><th>Nguồn đơn</th>\"\n     "
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.ShippingOnlineIntegrationTest",
+        "method": "eightSecurityGroupsAndAuthenticatedReadRoutes",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.hotro.AdminChatbotIntegrationTest",
+        "method": "testRevenueMetricsMatchDashboardAndIndependentSql",
+        "type": "failure",
+        "message": "expected: <0> but was: <1>"
+      },
+      {
+        "class": "com.example.demodatn.service.khachhang.ShippingAddressIntegrationTest",
+        "method": "eightSecurityScenarios",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.khuyenmai.DiscountWorkflowIntegrationTest",
+        "method": "voucherIsAlwaysPublicRetainsCounterCannotDeleteAndSwitchHasCsrf",
+        "type": "failure",
+        "message": "Status expected:<302> but was:<403>"
+      },
+      {
+        "class": "com.example.demodatn.service.sanpham.CatalogIntegrationTest",
+        "method": "guestPosCheckoutWritesOrderWithoutCreatingDuplicateGuestCustomer",
+        "type": "failure",
+        "message": "Redirected URL '/admin/invoices/464' does not match the expected URL pattern '/admin/pos/success/*'"
+      },
+      {
+        "class": "com.example.demodatn.service.sanpham.ColorVariantIntegrationTest",
+        "method": "eightSecurityCasesAndOldOrderDisplay",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.sanpham.EditableVariantIntegrationTest",
+        "method": "eightSecurityGroupsAndCrossProductOwnership",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.sanpham.InitialMaterialIntegrationTest",
+        "method": "eightSecurityScenarios",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.sanpham.ProductFeedbackIntegrationTest",
+        "method": "eightSecurityGroupsAndAdminCannotDelete",
+        "type": "failure",
+        "message": "Status expected:<302> but was:<403>"
+      },
+      {
+        "class": "com.example.demodatn.service.sanpham.SoleIntegrationTest",
+        "method": "labelsAndSoleCrudRoutesUseExistingRoleAndCsrfProtection",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.thongke.DashboardIntegrationTest",
+        "method": "cashPlusTransferEqualsTotalPeriodRevenue",
+        "type": "failure",
+        "message": "expected: <0> but was: <1>"
+      },
+      {
+        "class": "com.example.demodatn.service.thongke.StatisticsIntegrationTest",
+        "method": "independentSqlMatchesEveryUnifiedDashboardNumberAcrossAllFilterModes",
+        "type": "failure",
+        "message": "expected: <0> but was: <1>"
+      },
+      {
+        "class": "com.example.demodatn.service.thongke.StatisticsIntegrationTest",
+        "method": "metricsRankingsBoundariesChannelsAndStatusesUseSnapshotMoney",
+        "type": "failure",
+        "message": "expected: <90.50> but was: <0>"
+      }
+    ]
+  },
+  "current": {
+    "totals": [
+      287,
+      23,
+      2,
+      0
+    ],
+    "failures": [
+      {
+        "class": "com.example.demodatn.controller.AdminFrameIntegrationTest",
+        "method": "eightSecurityCasesAndForgedCodeIgnored",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.controller.PaginationIntegrationTest",
+        "method": "allListsReturnTwelveTwelveSixWithStableIds",
+        "type": "error",
+        "message": "Cannot invoke \"org.springframework.data.domain.Page.getNumberOfElements()\" because \"data\" is null"
+      },
+      {
+        "class": "com.example.demodatn.security.EmployeeAccessIntegrationTest",
+        "method": "eightSecurityCasesProtectNewCommands",
+        "type": "failure",
+        "message": "Status expected:<302> but was:<403>"
+      },
+      {
+        "class": "com.example.demodatn.service.AccountProvisioningIntegrationTest",
+        "method": "administratorRoutesAndCsrfCannotBeBypassed",
+        "type": "failure",
+        "message": "Status expected:<302> but was:<403>"
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.DeliveryIntegrationTest",
+        "method": "customerInvoiceOwnershipAndEightSecurityScenarios",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.GeocodingServiceTest",
+        "method": "wardCenterIsValidatedAndPersistedOnce",
+        "type": "error",
+        "message": "No value present"
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.InvoiceOnlineWorkspaceIntegrationTest",
+        "method": "eightSecurityCasesForOnlineAndInvoice",
+        "type": "failure",
+        "message": "Status expected:<302> but was:<403>"
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.OrderRollbackIntegrationTest",
+        "method": "posShortageRollsBackOrderVoucherAndFirstStockWrite",
+        "type": "failure",
+        "message": "Flash attribute 'error'\nExpected: a string containing \"Không đủ tồn kho\"\n     "
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.PosModalPricingIntegrationTest",
+        "method": "testPosAvailableQuantityCalculationsInSession",
+        "type": "failure",
+        "message": "Model attribute 'variants'\nExpected: a collection containing hasProperty(\"availableQuantity\", is <5>)\n     but: mismatches were: [ property 'availableQuantity' was <16>,  property 'availableQuantity' was <4>,  property 'availableQuantity' was <97>,  property 'availableQuantity' was <76>,  property 'availableQuantity' was <18>,  property 'availableQuantity' was <19>,  property 'availableQuantity' w"
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.PosQrIntegrationTest",
+        "method": "initialPosHasNoCustomerListAndShortSearchIsEmpty",
+        "type": "failure",
+        "message": "Response content\nExpected: a string containing \"Nhập tên hoặc số điện thoại để tìm\"\n     "
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.PosQrIntegrationTest",
+        "method": "receiptCheckboxAndExactAmountAreEnforcedBeforeCreatingOrder",
+        "type": "failure",
+        "message": "Flash attribute 'error'\nExpected: a string containing \"Tổng tiền đã thay đổi\"\n     "
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.PosQrIntegrationTest",
+        "method": "invoiceChannelHasOwnColumnAndEightSecurityGroups",
+        "type": "failure",
+        "message": "Response content\nExpected: a string containing \"<th>Khách</th><th>Kênh bán</th><th>Nguồn đơn</th>\"\n     "
+      },
+      {
+        "class": "com.example.demodatn.service.donhang.ShippingOnlineIntegrationTest",
+        "method": "eightSecurityGroupsAndAuthenticatedReadRoutes",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.hotro.AdminChatbotIntegrationTest",
+        "method": "testRevenueMetricsMatchDashboardAndIndependentSql",
+        "type": "failure",
+        "message": "expected: <0> but was: <1>"
+      },
+      {
+        "class": "com.example.demodatn.service.khachhang.ShippingAddressIntegrationTest",
+        "method": "eightSecurityScenarios",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.khuyenmai.DiscountWorkflowIntegrationTest",
+        "method": "voucherIsAlwaysPublicRetainsCounterCannotDeleteAndSwitchHasCsrf",
+        "type": "failure",
+        "message": "Status expected:<302> but was:<403>"
+      },
+      {
+        "class": "com.example.demodatn.service.sanpham.CatalogIntegrationTest",
+        "method": "guestPosCheckoutWritesOrderWithoutCreatingDuplicateGuestCustomer",
+        "type": "failure",
+        "message": "Redirected URL '/admin/invoices/465' does not match the expected URL pattern '/admin/pos/success/*'"
+      },
+      {
+        "class": "com.example.demodatn.service.sanpham.ColorVariantIntegrationTest",
+        "method": "eightSecurityCasesAndOldOrderDisplay",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.sanpham.EditableVariantIntegrationTest",
+        "method": "eightSecurityGroupsAndCrossProductOwnership",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.sanpham.InitialMaterialIntegrationTest",
+        "method": "eightSecurityScenarios",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.sanpham.ProductFeedbackIntegrationTest",
+        "method": "eightSecurityGroupsAndAdminCannotDelete",
+        "type": "failure",
+        "message": "Status expected:<302> but was:<403>"
+      },
+      {
+        "class": "com.example.demodatn.service.sanpham.SoleIntegrationTest",
+        "method": "labelsAndSoleCrudRoutesUseExistingRoleAndCsrfProtection",
+        "type": "failure",
+        "message": "Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>"
+      },
+      {
+        "class": "com.example.demodatn.service.thongke.DashboardIntegrationTest",
+        "method": "cashPlusTransferEqualsTotalPeriodRevenue",
+        "type": "failure",
+        "message": "expected: <0> but was: <1>"
+      },
+      {
+        "class": "com.example.demodatn.service.thongke.StatisticsIntegrationTest",
+        "method": "independentSqlMatchesEveryUnifiedDashboardNumberAcrossAllFilterModes",
+        "type": "failure",
+        "message": "expected: <0> but was: <1>"
+      },
+      {
+        "class": "com.example.demodatn.service.thongke.StatisticsIntegrationTest",
+        "method": "metricsRankingsBoundariesChannelsAndStatusesUseSnapshotMoney",
+        "type": "failure",
+        "message": "expected: <90.50> but was: <0>"
+      }
+    ]
+  },
+  "new_failures": [
+    {
+      "class": "com.example.demodatn.service.donhang.GeocodingServiceTest",
+      "method": "wardCenterIsValidatedAndPersistedOnce",
+      "type": "error",
+      "message": "No value present"
+    }
+  ]
+}

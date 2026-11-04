@@ -79,7 +79,9 @@ class SaleStatusAndCodeIntegrationTest {
         var session=new MockHttpSession();session.setAttribute("cart",basket);
         mvc.perform(get("/cart").session(session)).andExpect(content().string(org.hamcrest.Matchers.containsString("Sản phẩm đã ngừng bán")));
         mvc.perform(post("/cart/add-ajax").with(csrf()).param("variantId",v.getId().toString()).param("quantity","1")).andExpect(status().isBadRequest());
-        mvc.perform(get("/checkout").session(session)).andExpect(redirectedUrl("/cart"));
+        // Giai đoạn 27 keeps the blocked cart visible inside the checkout order card.
+        mvc.perform(get("/checkout").session(session)).andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("data-cart-warning")));
         var checkout=new CheckoutRequest();checkout.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));checkout.setWardId(jdbc.queryForObject("SELECT TOP 1 id FROM phuong_xa WHERE tinh_thanh_id=? ORDER BY id",Integer.class,checkout.getProvinceId()));checkout.setStreetAddress("Số 12, đường Nguyễn Huệ");checkout.setPaymentMethod("COD");
         assertThrows(IllegalArgumentException.class,()->orders.placeOrder(checkout,basket,null,BigDecimal.ZERO));
         assertThrows(IllegalArgumentException.class,()->holds.checkout("admin",hold,basket,request));

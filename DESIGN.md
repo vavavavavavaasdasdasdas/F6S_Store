@@ -119,3 +119,8 @@ Giai đoạn 13: Bán online và Quầy dùng cùng bố cục lưới/giỏ nh�
 Giai đoạn 14: dùng trái tim 40px có nhãn và trạng thái aria-pressed trên thẻ/chi tiết; sao màu vàng đậm, tên khách che, nhãn Đã mua hàng. Danh sách Đánh giá Admin giữ bảng STT/mã/cột riêng, chỉ Xem và công tắc Hiển thị dùng primitive chung. Yêu thích dùng thẻ sản phẩm hiện có; sản phẩm ngừng bán có thẻ tĩnh, không link chi tiết/thêm giỏ.
 
 Giai đoạn 15: Dashboard áp dụng bộ lọc ngày cho toàn bộ thẻ số và bảng, thêm thẻ Doanh thu tiền mặt (CASH/COD) và Doanh thu chuyển khoản (BANK_TRANSFER/TRANSFER), bỏ biểu đồ doanh thu theo ngày và đơn hàng gần đây; bổ sung Top 5 sản phẩm bán chạy, Top 5 khách hàng tiềm năng, khối Đánh giá sản phẩm, khối Sản phẩm yêu thích và lọc Sản phẩm sắp hết hàng theo biến động kho trong kỳ. Thống kê gộp thành một trang duy nhất /admin/statistics không tab với 7 khối theo thứ tự chuẩn, phân trang độc lập từng bảng và chuyển hướng 302 từ các URL cũ.
+
+
+### Giai đoạn 27 — Thanh toán của khách
+
+Checkout giữ màu primary #b94312, font Inter/system và token của he-thong-thiet-ke.css. Bố cục desktop 2:1 với các thẻ trắng, góc bo theo token; phần đơn hàng sticky. Mobile đưa đơn hàng thu gọn lên đầu, thanh tổng/Đặt hàng cố định ở đáy và chừa khoảng nội dung tương ứng. Địa chỉ và thanh toán dùng radio native trong thẻ có focus/viền chọn; tỉnh/phường giữ combo-box.js và fragment địa chỉ. Voucher dùng dialog native với showModal (dropdown neo cạnh đơn hàng ở desktop, drawer đáy ở mobile), nội dung cuộn, Escape/Đóng phục hồi focus. Giá/giảm/tổng/QR chỉ nhận từ service server; CSS không chứa tính toán nghiệp vụ. QR trước khi đặt là xem trước, QR có mã đơn thật vẫn ở trang thành công. Phí vận chuyển do đơn vị vận chuyển tính và thu riêng, không cộng tổng.

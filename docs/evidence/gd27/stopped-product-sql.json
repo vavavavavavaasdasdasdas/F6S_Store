@@ -1,0 +1,18 @@
+{
+  "before": [
+    {
+      "n": 2
+    }
+  ],
+  "after": [
+    {
+      "n": 2
+    }
+  ],
+  "stock": [
+    {
+      "quantity": 99,
+      "status": true
+    }
+  ]
+}

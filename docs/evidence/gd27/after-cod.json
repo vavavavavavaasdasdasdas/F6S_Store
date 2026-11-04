@@ -1,0 +1,61 @@
+{
+  "label": "after-cod",
+  "orders": [
+    {
+      "id": 675,
+      "order_code": "DH000675",
+      "status": "PENDING",
+      "payment_method": "COD",
+      "payment_status": "UNPAID",
+      "total_amount": 10000000.0,
+      "discount_amount": 1200000.0,
+      "shipping_fee": 0.0,
+      "final_amount": 8800000.0,
+      "receiver_name": "Nguyễn Văn Ánh 1",
+      "phone_number": "0912727271",
+      "dia_chi_giao_snapshot": "Số 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội",
+      "da_tru_kho": false
+    }
+  ],
+  "details": [
+    {
+      "order_id": 675,
+      "product_variant_id": 3,
+      "quantity": 1,
+      "price": 10000000.0,
+      "total_price": 10000000.0,
+      "ten_mau_sac": "Khác",
+      "ten_de_giay": "Khác"
+    }
+  ],
+  "stock": [
+    {
+      "id": 3,
+      "quantity": 100,
+      "status": true
+    }
+  ],
+  "addresses": [
+    {
+      "id": 8,
+      "ten_nguoi_nhan": "Nguyễn Văn Ánh 1",
+      "so_nha_duong": "Số 12, đường Nguyễn Huệ",
+      "thu_tu": 1,
+      "la_mac_dinh": true
+    },
+    {
+      "id": 9,
+      "ten_nguoi_nhan": "Nguyễn Văn Ánh 2",
+      "so_nha_duong": "Số 24, đường Nguyễn Huệ",
+      "thu_tu": 2,
+      "la_mac_dinh": false
+    },
+    {
+      "id": 10,
+      "ten_nguoi_nhan": "Nguyễn Văn Ánh 3",
+      "so_nha_duong": "Số 36, đường Nguyễn Huệ",
+      "thu_tu": 3,
+      "la_mac_dinh": false
+    }
+  ]
+}

@@ -100,7 +100,7 @@ class ShippingAddressIntegrationTest {
     @Test @Transactional void checkoutSnapshotsAllThreeAddressesAndTemporaryEdit() throws Exception {
         var o=owner();for(int n=0;n<3;n++)service.save(o.username(),form(n==0?UNICODE:"Địa chỉ "+n));
         var book=service.list(o.username());service.makeDefault(o.username(),book.get(1).getId());
-        var r=mvc.perform(get("/checkout").with(user(o.username()).roles("USER")).session(cart())).andExpect(status().isOk()).andExpect(content().string(containsString("Giao tới"))).andReturn();
+        var r=mvc.perform(get("/checkout").with(user(o.username()).roles("USER")).session(cart())).andExpect(status().isOk()).andExpect(content().string(containsString("Chọn địa chỉ đã lưu"))).andReturn();
         var req=(com.example.demodatn.dto.donhang.CheckoutRequest)r.getModelAndView().getModel().get("checkoutRequest");assertEquals(book.get(1).getId(),req.getShippingAddressId());
         for(int n=0;n<4;n++) {
             var a=book.get(n%3);String text=n==3?"Địa chỉ tạm cho đơn này":a.getAddress();

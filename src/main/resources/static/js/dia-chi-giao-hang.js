@@ -47,6 +47,9 @@
    }catch(error){message.textContent=error.message||'Chưa tải được bản đồ. Bạn vẫn chọn địa chỉ bằng tay được.';}
   }
   async function refreshQuote(){
+   if(form.id==='checkoutForm' && form.querySelector('[data-open-vouchers]')) {
+    root.dispatchEvent(new CustomEvent('delivery:changed',{bubbles:true}));return;
+   }
    clearTimeout(timer);quoteRequest?.abort();const current=++revision;quoteRequest=new AbortController();busy(true);
    if(!province.value||!ward.value||!street.value.trim()){text(root,'[data-delivery-note]','Chọn đầy đủ tỉnh/thành, phường/xã và số nhà, tên đường để tính phí.');busy(false);return;}
    const data=new URLSearchParams(new FormData(form));

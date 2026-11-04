@@ -26,6 +26,29 @@ public class VoucherService {
     }
     public static String normalize(String code) { return code==null ? "" : code.trim().toUpperCase(Locale.ROOT); }
 
+    public record CheckoutVoucher(String code, String name, String discountType, BigDecimal discountValue,
+                                  BigDecimal maxDiscount, BigDecimal minOrderValue, BigDecimal discountAmount,
+                                  BigDecimal missingAmount, boolean eligible, boolean best, String message) {}
+
+    @Transactional(readOnly=true)
+    public java.util.List<CheckoutVoucher> checkoutOptions(Customer customer, BigDecimal subtotal) {
+        var active = voucherRepository.findAll().stream()
+                .filter(v -> "RUNNING".equals(effectivity.voucherState(v))).toList();
+        var calculated = new java.util.LinkedHashMap<Voucher, VoucherResult>();
+        active.forEach(v -> calculated.put(v, calculate(v, customer, subtotal)));
+        BigDecimal best = calculated.values().stream().filter(r -> r.valid).map(r -> r.discountAmount)
+                .max(BigDecimal::compareTo).orElse(BigDecimal.ZERO);
+        return calculated.entrySet().stream().map(entry -> {
+            var v = entry.getKey(); var r = entry.getValue();
+            BigDecimal min = v.getMinOrderValue() == null ? BigDecimal.ZERO : v.getMinOrderValue();
+            return new CheckoutVoucher(v.getCode(), v.getName(), v.getDiscountType(), v.getDiscountValue(),
+                    v.getMaxDiscount(), min, r.discountAmount, min.subtract(subtotal).max(BigDecimal.ZERO),
+                    r.valid, r.valid && best.signum() > 0 && r.discountAmount.compareTo(best) == 0, r.message);
+        }).sorted(java.util.Comparator.comparing(CheckoutVoucher::eligible).reversed()
+                .thenComparing(CheckoutVoucher::discountAmount, java.util.Comparator.reverseOrder())
+                .thenComparing(CheckoutVoucher::code)).toList();
+    }
+
     @Transactional(readOnly=true)
     public VoucherResult validateAndCalculate(String code, Customer customer, BigDecimal subtotal) {
         return calculate(voucherRepository.findByCodeIgnoreCase(normalize(code)).orElse(null),customer,subtotal);

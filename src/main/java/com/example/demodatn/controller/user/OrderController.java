@@ -36,11 +36,19 @@ import java.util.Map;
 @Controller
 public class OrderController {
 
+    @InitBinder("checkoutRequest")
+    void checkoutFields(org.springframework.web.bind.WebDataBinder binder) {
+        // An unused optional hidden field represents no coordinate source, not an empty enum value.
+        binder.registerCustomEditor(String.class,"coordinateSource",new org.springframework.beans.propertyeditors.StringTrimmerEditor(true));
+    }
+
     private final OrderService orderService;
     private final CustomerRepository customerRepository;
     private final VoucherService voucherService;
     private final OrderRepository orderRepository;
     private final PricingService pricingService;
+    @org.springframework.beans.factory.annotation.Autowired private com.example.demodatn.service.donhang.CheckoutService checkout;
+    @org.springframework.beans.factory.annotation.Autowired private com.example.demodatn.service.donhang.VietQrService qr;
     @org.springframework.beans.factory.annotation.Autowired private com.example.demodatn.service.khachhang.ShippingAddressService shippingAddresses;
     @org.springframework.beans.factory.annotation.Autowired
     private com.example.demodatn.repository.sanpham.ProductVariantRepository productVariants;
@@ -78,7 +86,10 @@ public class OrderController {
         
         BigDecimal subTotal;
         try { subTotal=pricingService.refreshCart(cart); }
-        catch(IllegalArgumentException ex) { redirectAttributes.addFlashAttribute("error",ex.getMessage());return "redirect:/cart"; }
+        catch(IllegalArgumentException ex) {
+            model.addAttribute("cartWarning",ex.getMessage());
+            subTotal=cart.stream().map(CartItemDto::getTotalPrice).reduce(BigDecimal.ZERO,BigDecimal::add);
+        }
 
 
         
@@ -110,6 +121,7 @@ public class OrderController {
         model.addAttribute("variantCodes",variantCodes);
         model.addAttribute("variantPrices",cart.stream().collect(java.util.stream.Collectors.toMap(CartItemDto::getVariantId,i->pricingService.priceForVariant(i.getVariantId()),(a,b)->a)));
         model.addAttribute("subTotal", subTotal);
+        model.addAttribute("itemCount",cart.stream().mapToInt(CartItemDto::getQuantity).sum());
         var form=(CheckoutRequest)model.getAttribute("checkoutRequest");
         com.example.demodatn.service.donhang.ShippingFeeService.Quote quote;
         try{quote=shipping.quote(form,com.example.demodatn.service.donhang.ShippingFeeService.quantity(cart),false,"checkout");}
@@ -121,6 +133,29 @@ public class OrderController {
         model.addAttribute("bankOwner", bankOwner);
 
         return "user/thanh-toan";
+    }
+
+    @GetMapping("/checkout/vouchers")
+    @ResponseBody
+    public ResponseEntity<?> checkoutVouchers(HttpSession session, Principal principal) {
+        @SuppressWarnings("unchecked") var cart=(List<CartItemDto>)session.getAttribute("cart");
+        if(cart==null || cart.isEmpty())return ResponseEntity.badRequest().body(Map.of("message","Giỏ hàng rỗng."));
+        try { return ResponseEntity.ok(voucherService.checkoutOptions(getCustomer(principal),pricingService.refreshCart(cart))); }
+        catch(IllegalArgumentException ex){return ResponseEntity.badRequest().body(Map.of("message",ex.getMessage()));}
+    }
+
+    @PostMapping("/checkout/preview")
+    @ResponseBody
+    public ResponseEntity<?> checkoutPreview(@ModelAttribute CheckoutRequest request, BindingResult errors,
+                                              HttpSession session, Principal principal) {
+        @SuppressWarnings("unchecked") var cart=(List<CartItemDto>)session.getAttribute("cart");
+        if(cart==null || cart.isEmpty())return ResponseEntity.badRequest().body(Map.of("message","Giỏ hàng rỗng."));
+        if(errors.hasErrors())return ResponseEntity.badRequest().body(Map.of("message","Thông tin giao hàng không hợp lệ."));
+        try {
+            var preview=shippingPreview.preview(cart,request,getCustomer(principal),request.getVoucherCode(),false,"checkout");
+            // The order code is assigned only when placed. This reference is a preview, never a payment confirmation.
+            return ResponseEntity.ok(Map.of("pricing",preview,"qr",qr.create(preview.total(),"F6SCHECKOUT")));
+        } catch(IllegalArgumentException ex){return ResponseEntity.badRequest().body(Map.of("message",ex.getMessage()));}
     }
     
     @PostMapping("/checkout/validate-voucher-ajax")
@@ -161,10 +196,10 @@ public class OrderController {
                 shippingAddresses.owned(principal.getName(),request.getShippingAddressId());
             }
             shipping.prepare(request,principal.getName());
-            Order order = orderService.placeOrder(request, cart, customer, BigDecimal.ZERO);
+            Order order = checkout.place(request, cart, customer, principal.getName());
             session.removeAttribute("cart");
             return "redirect:/orders/success/" + order.getId();
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | com.example.demodatn.exception.PeopleValidationException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             redirectAttributes.addFlashAttribute("checkoutRequest", request);
             return "redirect:/checkout";

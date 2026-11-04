@@ -23,3 +23,11 @@ ProductFilterService truy vấn biến thể từng sản phẩm; PricingService
 Mô tả cũ nói chờ xác nhận tại chi tiết đơn, trong khi code và test hiện có ghi POS là PAID ngay khi thanh toán. Chỉ sửa hướng dẫn thành xác nhận đã nhận đủ tiền trước khi thanh toán chuyển khoản; không đổi quy tắc thanh toán. Browser kiểm tra lại hai viewport PASS; xác nhận chuyển khoản riêng được kiểm thử bằng đơn Online. Bằng chứng: final-labels-ui.json, admin-orders-sql.json và pos-stock-ledger.json.
 
 BUG-01 đến BUG-03 (schema/checkout, preflight và kiểu SĐT sau chạy lại migration) đã xử lý trong nhóm schema; xem bảng lỗi và metadata trong báo cáo chính. Không thực thi gì trên shopbangiay hoặc shopbangiay_thu.
+
+
+## Phát hiện ngoài phạm vi Giai đoạn 27 (04/11/2026)
+
+- GD27-OBS-01: `/admin/chatbot-faq/new` trả500. `repository/hotro/ChatbotFaqRepository.java:35` CAST hậu tố KB thành int nhưng migration026 có `KB_ADMIN_01`; SQL lỗi conversion `_ADMIN_01`. Chưa sửa vì chỉ được thay checkout.
+- GD27-OBS-02: `/admin/pos` tràn ngang ở desktop1280, scrollWidth1415. Không sửa POS.
+- GD27-OBS-03: baseline606ead2 clean test282:23 failure+1error. Bản GD27 clean test287:23failure+2error; cùng24 lỗi cũ, thêm một lượt GeocodingServiceTest dòng44 lỗi No value present; chạy riêng lại4/4 đạt. Không đổi luật doanh thu/kho/phân quyền hoặc xóa test để cho qua.
+- Bằng chứng, URL/status, từng test lỗi và SQL: [báo cáo Giai đoạn27](GIAI_DOAN_27_THANH_TOAN.md), [đối chứng](evidence/gd27/test-comparison.json), [crawl](evidence/gd27/crawl-manifest.json).

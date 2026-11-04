@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class CheckoutRequest extends com.example.demodatn.dto.donhang.DeliveryAddressForm {
     private Integer shippingAddressId;
+    private boolean saveAddress;
     @NotBlank(message = "Vui lòng nhập họ tên người nhận")
     private String receiverName;
 

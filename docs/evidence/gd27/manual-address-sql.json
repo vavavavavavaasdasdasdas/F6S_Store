@@ -1,0 +1,38 @@
+{
+  "addresses": [
+    {
+      "id": 11,
+      "ten_nguoi_nhan": "Nguyễn Thị Ánh",
+      "so_dien_thoai": "0912727271",
+      "so_nha_duong": "Số 12, đường Nguyễn Huệ",
+      "la_mac_dinh": true,
+      "thu_tu": 1
+    }
+  ],
+  "orders": [
+    {
+      "id": 675,
+      "receiver_name": "Nguyễn Văn Ánh 1",
+      "dia_chi_giao_snapshot": "Số 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội",
+      "total_amount": 10000000.0,
+      "discount_amount": 1200000.0,
+      "final_amount": 8800000.0
+    },
+    {
+      "id": 676,
+      "receiver_name": "Nguyễn Văn Ánh 1",
+      "dia_chi_giao_snapshot": "Số 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội",
+      "total_amount": 10000000.0,
+      "discount_amount": 1200000.0,
+      "final_amount": 8800000.0
+    },
+    {
+      "id": 677,
+      "receiver_name": "Nguyễn Thị Ánh",
+      "dia_chi_giao_snapshot": "Số 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội",
+      "total_amount": 10000000.0,
+      "discount_amount": 0.0,
+      "final_amount": 10000000.0
+    }
+  ]
+}
