@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}">
+<body>
+<section>
+    <div class="admin-heading d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Hỗ trợ khách hàng</h1>
+        <span th:if="${newTicketsCount != null and newTicketsCount > 0}" class="badge bg-danger fs-6">
+            <span th:text="${newTicketsCount}"></span> phiếu mới cần xử lý
+        </span>
+    </div>
+
+    <div class="admin-panel">
+        <form th:action="@{/admin/support-tickets}" method="get" class="filter-bar mb-3" novalidate>
+            <div>
+                <label for="keyword" class="form-label">Từ khóa</label>
+                <input type="text" id="keyword" name="keyword" class="form-control"
+                       placeholder="Mã, tên, liên hệ, nội dung..." th:value="${keyword}">
+            </div>
+            <div>
+                <label for="trangThai" class="form-label">Trạng thái</label>
+                <select id="trangThai" name="trangThai" class="form-select">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="Mới" th:selected="${trangThai == 'Mới'}">Mới</option>
+                    <option value="Đang xử lý" th:selected="${trangThai == 'Đang xử lý'}">Đang xử lý</option>
+                    <option value="Đã xong" th:selected="${trangThai == 'Đã xong'}">Đã xong</option>
+                </select>
+            </div>
+            <div>
+                <label for="fromDate" class="form-label">Từ ngày</label>
+                <input type="date" id="fromDate" name="fromDate" class="form-control" th:value="${fromDate}">
+            </div>
+            <div>
+                <label for="toDate" class="form-label">Đến ngày</label>
+                <input type="date" id="toDate" name="toDate" class="form-control" th:value="${toDate}">
+            </div>
+            <div class="d-flex gap-2 align-items-end">
+                <button type="submit" class="btn btn-primary">Lọc</button>
+                <a th:href="@{/admin/support-tickets}" class="btn btn-outline-secondary">Xóa lọc</a>
+            </div>
+        </form>
+
+        <div class="data-table-scroll" role="region" aria-label="Bảng danh sách phiếu hỗ trợ" tabindex="0">
+            <table class="admin-table data-table" data-table-key="admin-support-tickets">
+                <thead>
+                <tr>
+                    <th style="width: 50px;">STT</th>
+                    <th style="width: 100px;">Mã</th>
+                    <th style="width: 160px;">Khách hàng</th>
+                    <th style="width: 180px;">Liên hệ</th>
+                    <th>Nội dung</th>
+                    <th style="width: 120px;">Trạng thái</th>
+                    <th style="width: 150px;">Thời gian</th>
+                    <th style="width: 100px;">Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="t, it : ${pageResult.content}">
+                    <td th:text="${pageResult.number * pageResult.size + it.count}"></td>
+                    <td>
+                        <a th:href="@{/admin/support-tickets/{id}(id=${t.id})}" class="fw-bold" th:text="${t.ma}"></a>
+                    </td>
+                    <td>
+                        <span class="fw-semibold" th:text="${t.hoTen}"></span>
+                        <span th:if="${t.customer != null}" class="badge bg-info-subtle text-info border border-info-subtle small d-block" style="width: fit-content;">Đã có tài khoản</span>
+                    </td>
+                    <td th:text="${t.lienHe}"></td>
+                    <td>
+                        <div class="text-truncate" style="max-width: 320px;" th:title="${t.noiDung}" th:text="${t.noiDung}"></div>
+                    </td>
+                    <td>
+                        <span th:if="${t.trangThai == 'Mới'}" class="badge bg-danger-subtle text-danger border border-danger-subtle">Mới</span>
+                        <span th:if="${t.trangThai == 'Đang xử lý'}" class="badge bg-warning-subtle text-warning border border-warning-subtle">Đang xử lý</span>
+                        <span th:if="${t.trangThai == 'Đã xong'}" class="badge bg-success-subtle text-success border border-success-subtle">Đã xong</span>
+                        <span th:if="${t.trangThai != 'Mới' and t.trangThai != 'Đang xử lý' and t.trangThai != 'Đã xong'}" class="badge bg-secondary" th:text="${t.trangThai}"></span>
+                    </td>
+                    <td th:text="${#temporals.format(t.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td class="table-actions text-center">
+                        <a th:href="@{/admin/support-tickets/{id}(id=${t.id})}" class="btn btn-sm btn-outline-primary"
+                           title="Xem và trả lời" aria-label="Xem và trả lời">
+                            <i class="bi bi-eye"></i> Trả lời
+                        </a>
+                    </td>
+                </tr>
+                <tr th:if="${pageResult.empty}">
+                    <td colspan="8" class="text-center py-4 text-muted">Không tìm thấy phiếu hỗ trợ nào.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <nav th:if="${pageResult.totalPages > 1}" th:replace="~{fragments/phan-trang :: phan-trang(${pageResult}, 'page')}"></nav>
+    </div>
+</section>
+</body>
+</html>

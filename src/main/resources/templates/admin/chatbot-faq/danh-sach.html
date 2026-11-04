@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}">
+<body>
+<section>
+    <div class="admin-heading d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Kiến thức chatbot (FAQ)</h1>
+        <a th:href="@{/admin/chatbot-faq/new}" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> Thêm câu hỏi
+        </a>
+    </div>
+
+    <div class="admin-panel">
+        <form th:action="@{/admin/chatbot-faq}" method="get" class="filter-bar mb-3" novalidate>
+            <div>
+                <label for="keyword" class="form-label">Từ khóa / Câu hỏi</label>
+                <input type="text" id="keyword" name="keyword" class="form-control"
+                       placeholder="Nhập từ khóa hoặc câu hỏi..." th:value="${keyword}">
+            </div>
+            <div>
+                <label for="hienThi" class="form-label">Trạng thái hiển thị</label>
+                <select id="hienThi" name="hienThi" class="form-select">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="true" th:selected="${hienThi == true}">Đang hiển thị</option>
+                    <option value="false" th:selected="${hienThi == false}">Đã ẩn</option>
+                </select>
+            </div>
+            <div class="d-flex gap-2 align-items-end">
+                <button type="submit" class="btn btn-primary">Lọc</button>
+                <a th:href="@{/admin/chatbot-faq}" class="btn btn-outline-secondary">Xóa lọc</a>
+            </div>
+        </form>
+
+        <div class="data-table-scroll" role="region" aria-label="Bảng kiến thức chatbot" tabindex="0">
+            <table class="admin-table data-table" data-table-key="admin-chatbot-faq">
+                <thead>
+                <tr>
+                    <th style="width: 50px;">STT</th>
+                    <th style="width: 100px;">Mã</th>
+                    <th style="width: 250px;">Câu hỏi</th>
+                    <th style="width: 200px;">Từ khóa</th>
+                    <th>Trả lời</th>
+                    <th style="width: 120px;">Hiển thị</th>
+                    <th style="width: 80px;">Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="f, it : ${pageResult.content}">
+                    <td th:text="${pageResult.number * pageResult.size + it.count}"></td>
+                    <td><strong th:text="${f.ma}"></strong></td>
+                    <td class="fw-semibold" th:text="${f.cauHoi}"></td>
+                    <td><span class="text-muted small" th:text="${f.tuKhoa ?: '—'}"></span></td>
+                    <td style="white-space: pre-line;" th:text="${f.traLoi}"></td>
+                    <td>
+                        <form th:action="@{/admin/chatbot-faq/{id}/toggle(id=${f.id})}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-sm"
+                                    th:classappend="${f.hienThi ? 'btn-success' : 'btn-outline-secondary'}"
+                                    th:title="${f.hienThi ? 'Bấm để ẩn' : 'Bấm để hiển thị'}">
+                                <span th:text="${f.hienThi ? 'Đang bật' : 'Đã tắt'}"></span>
+                            </button>
+                        </form>
+                    </td>
+                    <td class="table-actions text-center">
+                        <a th:href="@{/admin/chatbot-faq/{id}/edit(id=${f.id})}" class="btn btn-sm btn-outline-primary"
+                           title="Sửa câu hỏi" aria-label="Sửa câu hỏi">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr th:if="${pageResult.empty}">
+                    <td colspan="7" class="text-center py-4 text-muted">Không tìm thấy kiến thức FAQ nào phù hợp.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <nav th:if="${pageResult.totalPages > 1}" th:replace="~{fragments/phan-trang :: phan-trang(${pageResult}, 'page')}"></nav>
+    </div>
+</section>
+</body>
+</html>

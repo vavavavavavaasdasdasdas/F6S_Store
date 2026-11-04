@@ -9,6 +9,7 @@ import java.util.List;
 @lombok.RequiredArgsConstructor
 public class AdminPageAdvice {
     private final com.example.demodatn.security.AdminAccess access;
+    private final com.example.demodatn.repository.hotro.SupportTicketRepository ticketRepository;
     public record NavItem(String group, String title, String route, String key) {}
     public static final List<NavItem> NAV = List.of(
         new NavItem("", "Dashboard", "/admin/dashboard", "dashboard"),
@@ -27,6 +28,8 @@ public class AdminPageAdvice {
         new NavItem("", "Nhân viên", "/admin/employees", "employees"),
         new NavItem("KHUYẾN MÃI", "Phiếu giảm giá", "/admin/vouchers", "vouchers"),
         new NavItem("", "Đợt giảm giá", "/admin/promotions", "promotions"),
+        new NavItem("HỖ TRỢ", "Hỗ trợ khách", "/admin/support-tickets", "support_tickets"),
+        new NavItem("", "Kiến thức chatbot", "/admin/chatbot-faq", "chatbot_faq"),
         new NavItem("HỆ THỐNG", "Hồ sơ của tôi", "/admin/account", "account")
     );
     @ModelAttribute
@@ -42,5 +45,10 @@ public class AdminPageAdvice {
         model.addAttribute("adminNav",NAV.stream().filter(n->access.allowed(authentication,"GET",n.route())).map(n->!full&&n.key().equals("account")?new NavItem("",n.title(),n.route(),n.key()):n).toList());
         model.addAttribute("adminActive", active.key());
         model.addAttribute("adminTitle", active.title());
+        try {
+            model.addAttribute("newSupportTicketsCount", ticketRepository.countByTrangThai("Mới"));
+        } catch (Exception ignored) {
+            model.addAttribute("newSupportTicketsCount", 0L);
+        }
     }
 }

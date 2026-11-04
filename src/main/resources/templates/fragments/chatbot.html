@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="widget" id="f6s-chatbot-container" class="f6s-chatbot-container">
+    <!-- Nút nổi góc phải dưới -->
+    <button id="chatbot-toggle-btn" class="chatbot-toggle-btn" type="button"
+            aria-label="Mở trợ lý ảo F6S Store" aria-expanded="false" aria-controls="chatbot-window">
+        <i class="bi bi-chat-dots-fill"></i>
+        <span class="chatbot-badge-dot" aria-hidden="true"></span>
+    </button>
+
+    <!-- Khung chat chính -->
+    <section id="chatbot-window" class="chatbot-window d-none" role="region" aria-label="Hộp thoại trò chuyện trợ lý F6S Store">
+        <!-- Header -->
+        <header class="chatbot-header">
+            <div class="chatbot-header-title">
+                <i class="bi bi-robot me-2"></i>
+                <div>
+                    <h2 class="h6 mb-0">Trợ lý F6S Store</h2>
+                    <span class="chatbot-status-indicator">Đang hoạt động</span>
+                </div>
+            </div>
+            <div class="chatbot-header-actions">
+                <button id="chatbot-clear-btn" class="chatbot-btn-icon" type="button" title="Xóa cuộc trò chuyện" aria-label="Xóa cuộc trò chuyện">
+                    <i class="bi bi-trash3"></i>
+                </button>
+                <button id="chatbot-close-btn" class="chatbot-btn-icon" type="button" title="Đóng chat" aria-label="Đóng chat">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Danh sách tin nhắn -->
+        <div id="chatbot-messages" class="chatbot-messages" role="log" aria-live="polite" aria-atomic="false">
+            <!-- Tin nhắn chào mặc định -->
+            <div class="chatbot-msg chatbot-msg-bot">
+                <div class="chatbot-msg-bubble">
+                    <p class="mb-0">Xin chào! Mình là trợ lý ảo của F6S Store 👟. Mình có thể giúp gì cho bạn hôm nay?</p>
+                </div>
+            </div>
+
+            <!-- Gợi ý nhanh mặc định -->
+            <div id="chatbot-quick-replies" class="chatbot-quick-replies" role="group" aria-label="Gợi ý nhanh">
+                <button type="button" class="chatbot-chip" data-query="Tìm giày">🔍 Tìm giày</button>
+                <button type="button" class="chatbot-chip" data-query="Tư vấn size">📏 Tư vấn size</button>
+                <button type="button" class="chatbot-chip" data-query="Chính sách đổi trả">🔄 Chính sách đổi trả</button>
+                <button type="button" class="chatbot-chip" data-query="Kiểm tra đơn hàng">📦 Kiểm tra đơn hàng</button>
+                <button type="button" class="chatbot-chip" data-query="Nói chuyện với nhân viên">💬 Nói chuyện với nhân viên</button>
+            </div>
+
+            <!-- Chỉ báo đang gõ / trả lời -->
+            <div id="chatbot-typing" class="chatbot-msg chatbot-msg-bot d-none" aria-hidden="true">
+                <div class="chatbot-msg-bubble chatbot-typing-bubble">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Khung tạo phiếu hỗ trợ (khi khách cần nhân viên) -->
+        <div id="chatbot-ticket-modal" class="chatbot-ticket-modal d-none" role="dialog" aria-labelledby="chatbot-ticket-title">
+            <div class="chatbot-ticket-content">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h3 id="chatbot-ticket-title" class="h6 mb-0 text-primary fw-bold">Gửi yêu cầu nhân viên hỗ trợ</h3>
+                    <button type="button" id="chatbot-ticket-close" class="btn-close btn-close-sm" aria-label="Đóng form hỗ trợ"></button>
+                </div>
+                <p class="text-muted small mb-2">Để lại thông tin, nhân viên F6S Store sẽ liên hệ lại với bạn sớm nhất:</p>
+                <form id="chatbot-ticket-form">
+                    <div class="mb-2">
+                        <input type="text" id="ticket-hoten" class="form-control form-control-sm"
+                               placeholder="Họ và tên của bạn *" required maxlength="100"
+                               th:value="${#authentication != null and #authentication.authenticated and !#authentication.name.equals('anonymousUser') ? #authentication.name : ''}">
+                    </div>
+                    <div class="mb-2">
+                        <input type="text" id="ticket-lienhe" class="form-control form-control-sm"
+                               placeholder="Số điện thoại hoặc Email *" required maxlength="100">
+                    </div>
+                    <div class="mb-2">
+                        <textarea id="ticket-noidung" class="form-control form-control-sm" rows="3"
+                                  placeholder="Nội dung cần hỗ trợ *" required maxlength="1000"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" id="chatbot-ticket-cancel" class="btn btn-sm btn-outline-secondary">Hủy</button>
+                        <button type="submit" id="chatbot-ticket-submit" class="btn btn-sm btn-primary">Gửi yêu cầu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Footer / Input -->
+        <footer class="chatbot-footer">
+            <div class="chatbot-input-group">
+                <textarea id="chatbot-input" class="chatbot-input" rows="1"
+                          placeholder="Nhập câu hỏi... (Enter gửi, Shift+Enter xuống dòng)"
+                          aria-label="Nhập tin nhắn cho trợ lý ảo" maxlength="500"></textarea>
+                <button id="chatbot-send-btn" class="chatbot-send-btn" type="button" aria-label="Gửi tin nhắn">
+                    <i class="bi bi-send-fill"></i>
+                </button>
+            </div>
+            <div class="chatbot-disclaimer">
+                <span>Cuộc trò chuyện có thể được lưu để cải thiện hỗ trợ.</span>
+            </div>
+        </footer>
+    </section>
+</div>
+</body>
+</html>

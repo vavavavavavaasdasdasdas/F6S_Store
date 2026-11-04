@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}">
+<body>
+<section>
+    <div class="admin-heading d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <a th:href="@{/admin/support-tickets}" class="text-decoration-none text-muted me-2">
+                <i class="bi bi-arrow-left"></i> Danh sách
+            </a>
+            <h1 class="h3 d-inline-block mb-0">Phiếu hỗ trợ <span th:text="${ticket.ma}"></span></h1>
+        </div>
+        <div>
+            <span th:if="${ticket.trangThai == 'Mới'}" class="badge bg-danger fs-6">Trạng thái: Mới</span>
+            <span th:if="${ticket.trangThai == 'Đang xử lý'}" class="badge bg-warning fs-6">Trạng thái: Đang xử lý</span>
+            <span th:if="${ticket.trangThai == 'Đã xong'}" class="badge bg-success fs-6">Trạng thái: Đã xong</span>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <!-- Cột trái: Thông tin phiếu & Trích đoạn chat -->
+        <div class="col-lg-7">
+            <div class="admin-panel mb-3">
+                <h2 class="h5 mb-3 border-bottom pb-2">Thông tin khách hàng</h2>
+                <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Họ và tên:</div>
+                    <div class="col-sm-8 fw-semibold" th:text="${ticket.hoTen}"></div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Liên hệ:</div>
+                    <div class="col-sm-8">
+                        <strong th:text="${ticket.lienHe}"></strong>
+                        <span th:if="${ticket.lienHe.contains('@')}" class="badge bg-primary-subtle text-primary border border-primary-subtle ms-2">Email</span>
+                        <span th:unless="${ticket.lienHe.contains('@')}" class="badge bg-secondary-subtle text-secondary border border-secondary-subtle ms-2">Điện thoại</span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Thời gian gửi:</div>
+                    <div class="col-sm-8" th:text="${#temporals.format(ticket.createdAt, 'dd/MM/yyyy HH:mm:ss')}"></div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Tài khoản khách:</div>
+                    <div class="col-sm-8">
+                        <span th:if="${ticket.customer != null}" th:text="${ticket.customer.fullName} + ' (' + ${ticket.customer.phone} + ')'"></span>
+                        <span th:if="${ticket.customer == null}" class="text-muted">Khách vãng lai</span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Nội dung yêu cầu:</div>
+                    <div class="col-sm-8">
+                        <div class="p-3 bg-light rounded border" th:text="${ticket.noiDung}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trích đoạn hội thoại 10 tin nhắn gần nhất -->
+            <div class="admin-panel">
+                <h2 class="h5 mb-3 border-bottom pb-2">Trích đoạn hội thoại Chatbot (10 tin gần nhất)</h2>
+                <div th:if="${ticket.trichDoanChat != null and !ticket.trichDoanChat.isBlank()}"
+                     class="p-3 bg-light rounded border font-monospace small" style="white-space: pre-wrap; max-height: 350px; overflow-y: auto;"
+                     th:text="${ticket.trichDoanChat}"></div>
+                <div th:if="${ticket.trichDoanChat == null or ticket.trichDoanChat.isBlank()}" class="text-muted italic">
+                    Không có trích đoạn chat kèm theo.
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột phải: Xử lý và Phản hồi -->
+        <div class="col-lg-5">
+            <div class="admin-panel mb-3">
+                <h2 class="h5 mb-3 border-bottom pb-2">Xử lý yêu cầu</h2>
+
+                <div th:if="${ticket.traLoi != null}" class="mb-4 p-3 bg-success-subtle border border-success-subtle rounded">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <strong class="text-success">Đã phản hồi:</strong>
+                        <span class="text-muted small" th:text="${#temporals.format(ticket.traLoiLuc, 'dd/MM/yyyy HH:mm')}"></span>
+                    </div>
+                    <p class="mb-2" style="white-space: pre-wrap;" th:text="${ticket.traLoi}"></p>
+                    <div class="text-muted small">
+                        Người phản hồi: <span class="fw-semibold" th:text="${ticket.employee != null ? ticket.employee.fullName : 'Hệ thống'}"></span>
+                    </div>
+                </div>
+
+                <div th:unless="${ticket.lienHe.contains('@')}" class="alert alert-warning py-2 mb-3 small">
+                    <i class="bi bi-telephone-outbound me-1"></i> Khách hàng để lại số điện thoại: vui lòng <strong>liên hệ trực tiếp qua điện thoại</strong> để hỗ trợ.
+                </div>
+                <div th:if="${ticket.lienHe.contains('@')}" class="alert alert-info py-2 mb-3 small">
+                    <i class="bi bi-envelope-check me-1"></i> Khách hàng có email: sau khi bấm gửi, hệ thống sẽ <strong>tự động gửi email thông báo</strong> nội dung phản hồi tới khách.
+                </div>
+
+                <form th:action="@{/admin/support-tickets/{id}/reply(id=${ticket.id})}" method="post" novalidate>
+                    <div class="mb-3">
+                        <label for="traLoi" class="form-label fw-semibold">Nội dung phản hồi <span class="text-danger">*</span></label>
+                        <textarea id="traLoi" name="traLoi" class="form-control" rows="6"
+                                  placeholder="Nhập nội dung trả lời / giải đáp cho khách hàng..." required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="trangThai" class="form-label fw-semibold">Cập nhật trạng thái</label>
+                        <select id="trangThai" name="trangThai" class="form-select">
+                            <option value="Đã xong" selected>Đã xong (Hoàn tất hỗ trợ)</option>
+                            <option value="Đang xử lý">Đang xử lý (Đang liên hệ / kiểm tra)</option>
+                            <option value="Mới">Mới (Chưa xử lý)</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send"></i> Lưu & Gửi phản hồi
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

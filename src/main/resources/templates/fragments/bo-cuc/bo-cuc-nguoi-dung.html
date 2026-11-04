@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Design System CSS -->
     <link href="/css/he-thong-thiet-ke.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/chatbot.css}">
 
     <!-- CSRF Meta Tags for AJAX -->
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -44,8 +45,13 @@
     <!-- Footer -->
     <div th:replace="~{fragments/chan-trang :: footer}"></div>
 
+    <!-- Chatbot Widget -->
+    <div th:replace="~{fragments/chatbot :: widget}"></div>
+
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/combo-box.js"></script><script src="/js/chon-bien-the.js"></script><script src="/js/giao-dien-cua-hang.js"></script><script th:src="@{/js/them-nhanh.js}"></script>
-<th:block th:replace="~{fragments/nut-hanh-dong :: library}"></th:block><script src="/js/nut-hanh-dong.js" defer></script><script src="/js/yeu-thich.js" defer></script><script src="/js/o-nhap-so.js" defer></script></body>
+<th:block th:replace="~{fragments/nut-hanh-dong :: library}"></th:block><script src="/js/nut-hanh-dong.js" defer></script><script src="/js/yeu-thich.js" defer></script><script src="/js/o-nhap-so.js" defer></script>
+<script th:src="@{/js/chatbot.js}" defer></script>
+</body>
 </html>
