@@ -6,47 +6,36 @@
         <table class="admin-table data-table pos-modal-table" data-table-key="pos-modal-products">
             <thead>
                 <tr>
-                    <th scope="col" style="width: 50px;">STT</th>
-                    <th scope="col" style="width: 60px;">Ảnh</th>
-                    <th scope="col">Tên sản phẩm & Mã</th>
-                    <th scope="col">Giá bán</th>
-                    <th scope="col" style="width: 90px;">Tồn kho</th>
-                    <th scope="col" style="width: 80px;">Kích cỡ</th>
-                    <th scope="col">Màu sắc</th>
-                    <th scope="col" style="width: 100px;">Thao tác</th>
+                    <th scope="col" style="width: 45px;" class="text-center">STT</th>
+                    <th scope="col" style="width: 80px;">Mã SP</th>
+                    <th scope="col" style="width: 90px;">Mã biến thể</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col" style="width: 55px;" class="text-center">Ảnh</th>
+                    <th scope="col" style="width: 100px;">Màu sắc</th>
+                    <th scope="col" style="width: 90px;">Chất liệu</th>
+                    <th scope="col" style="width: 90px;">Đế giày</th>
+                    <th scope="col" style="width: 70px;" class="text-center">Kích cỡ</th>
+                    <th scope="col" style="width: 85px;" class="text-center">Tồn kho</th>
+                    <th scope="col" style="width: 130px;">Giá bán</th>
+                    <th scope="col" style="width: 130px;">Khuyến mãi</th>
+                    <th scope="col" style="width: 70px;" class="text-center">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:if="${isEmpty}">
-                    <td colspan="8" class="text-center py-4 text-muted">Không có sản phẩm nào phù hợp với bộ lọc hiện tại.</td>
+                    <td colspan="13" class="text-center py-4 text-muted">Không có sản phẩm nào phù hợp với bộ lọc hiện tại.</td>
                 </tr>
                 <tr th:each="v,iter : ${variants}" class="pos-modal-row" th:data-variant-id="${v.id}">
-                    <td class="row-number" th:text="${currentPage * 12 + iter.count}">1</td>
+                    <td class="row-number text-center" th:text="${currentPage * 12 + iter.count}">1</td>
+                    <td class="small fw-semibold text-muted" th:text="${v.productCode}">SP001</td>
+                    <td class="small text-secondary" th:text="${v.variantCode}">BT001</td>
                     <td>
+                        <span class="fw-semibold text-dark" th:text="${v.productName}">Tên sản phẩm</span>
+                    </td>
+                    <td class="text-center">
                         <img class="pos-modal-thumb rounded border"
-                             th:src="${v.imageUrl}"
+                             th:src="${v.imageUrl != null and !v.imageUrl.isBlank() ? v.imageUrl : '/images/placeholder.png'}"
                              alt="Ảnh sản phẩm" loading="lazy">
-                    </td>
-                    <td>
-                        <div class="fw-bold" th:text="${v.productName}">Tên sản phẩm</div>
-                        <div class="small text-muted" th:text="${v.productCode + ' · ' + v.variantCode}">SP001 · BT001</div>
-                    </td>
-                    <td>
-                        <div th:if="${v.hasPromotion}">
-                            <del class="small text-muted d-block" th:text="${v.originalPriceFormatted}">500.000 đ</del>
-                            <span class="text-danger fw-bold" th:text="${v.finalPriceFormatted}">400.000 đ</span>
-                            <span class="badge bg-danger ms-1" th:text="'-' + ${v.discountPercentage} + '%'">-20%</span>
-                        </div>
-                        <div th:unless="${v.hasPromotion}">
-                            <span class="fw-bold text-dark" th:text="${v.finalPriceFormatted}">500.000 đ</span>
-                        </div>
-                    </td>
-                    <td>
-                        <span th:class="${v.quantity <= 5 ? 'badge bg-warning text-dark' : 'badge bg-light text-dark border'}"
-                              th:text="${v.quantity}">10</span>
-                    </td>
-                    <td>
-                        <span class="badge bg-secondary-subtle text-dark border px-2 py-1" th:text="${v.sizeValue}">40</span>
                     </td>
                     <td>
                         <div class="d-flex align-items-center gap-2">
@@ -54,15 +43,50 @@
                             <span th:text="${v.colorName}">Trắng</span>
                         </div>
                     </td>
+                    <td th:text="${v.materialName}">Da</td>
+                    <td th:text="${v.soleName}">Cao su</td>
+                    <td class="text-center">
+                        <span class="badge bg-secondary-subtle text-dark border px-2 py-1" th:text="${v.sizeValue}">40</span>
+                    </td>
+                    <td class="text-center">
+                        <span class="pos-modal-stock-badge badge"
+                              th:classappend="${v.availableQuantity <= 0 ? 'bg-secondary' : (v.availableQuantity <= 5 ? 'bg-warning text-dark' : 'bg-light text-dark border')}"
+                              th:text="${v.availableQuantity}"
+                              th:data-variant-id="${v.id}"
+                              th:data-physical="${v.physicalQuantity}">10</span>
+                    </td>
                     <td>
-                        <button th:if="${v.quantity > 0}" type="button"
-                                class="btn btn-sm btn-primary pos-btn-add-variant w-100"
+                        <div th:if="${v.hasPromotion}">
+                            <span class="text-danger fw-bold d-block" th:text="${v.finalPriceFormatted}">400.000 đ</span>
+                            <del class="small text-muted" th:text="${v.originalPriceFormatted}">500.000 đ</del>
+                            <span class="badge bg-danger ms-1" th:text="${v.discountLabel != null ? v.discountLabel : ('-' + v.discountPercentage + '%')}">-20%</span>
+                        </div>
+                        <div th:unless="${v.hasPromotion}">
+                            <span class="fw-bold text-dark" th:text="${v.finalPriceFormatted}">500.000 đ</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span th:if="${v.hasPromotion and v.promotionName != null and v.promotionName != '—'}"
+                              class="badge bg-danger-subtle text-danger border border-danger-subtle text-wrap"
+                              th:text="${v.promotionName}">Đợt giảm giá</span>
+                        <span th:unless="${v.hasPromotion and v.promotionName != null and v.promotionName != '—'}"
+                              class="text-muted">—</span>
+                    </td>
+                    <td class="text-center">
+                        <button th:if="${v.availableQuantity > 0}" type="button"
+                                class="btn btn-sm btn-primary pos-btn-add-variant px-2 fw-bold"
                                 th:data-variant-id="${v.id}"
-                                th:data-variant-name="${v.productName + ' (' + v.sizeValue + ' - ' + v.colorName + ')'}">
-                            + Thêm
+                                th:data-variant-name="${v.productName + ' (' + v.sizeValue + ' - ' + v.colorName + ')'}"
+                                title="Thêm vào giỏ"
+                                aria-label="Thêm vào giỏ">
+                            +
                         </button>
-                        <button th:unless="${v.quantity > 0}" type="button"
-                                class="btn btn-sm btn-secondary w-100" disabled>
+                        <button th:unless="${v.availableQuantity > 0}" type="button"
+                                class="btn btn-sm btn-secondary pos-btn-add-variant px-1"
+                                th:data-variant-id="${v.id}"
+                                disabled
+                                title="Hết hàng"
+                                aria-label="Hết hàng">
                             Hết hàng
                         </button>
                     </td>

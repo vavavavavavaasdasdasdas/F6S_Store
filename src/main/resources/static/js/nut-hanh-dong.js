@@ -11,7 +11,7 @@
      const content=template.content.cloneNode(true);content.querySelector('svg').dataset.actionIcon='true';content.querySelector('path').setAttribute('d',paths[type]);content.querySelector('.action-label').textContent=label;button.replaceChildren(content);
  }
  function decorate(){
-  document.querySelectorAll('table').forEach(table=>{
+  document.querySelectorAll('table:not(.pos-modal-table):not(.pos-cart-table)').forEach(table=>{
    const heads=[...table.querySelectorAll('thead tr:last-child th')],indices=heads.flatMap((h,i)=>/^(Hành động|Thao tác)$/i.test(h.textContent.trim())?[i]:[]);
    table.querySelectorAll('tbody tr').forEach(row=>indices.forEach(i=>{
     const cell=row.cells[i];if(!cell||cell.colSpan>1)return;cell.classList.add('table-actions');

@@ -13,4 +13,12 @@ public class PriceInfo {
     private BigDecimal finalPrice;
     private int discountPercentage;
     private boolean hasPromotion;
+    private String promotionName;
+    private String discountType;
+    private BigDecimal discountAmount;
+    private String discountLabel;
+
+    public PriceInfo(BigDecimal originalPrice, BigDecimal finalPrice, int discountPercentage, boolean hasPromotion) {
+        this(originalPrice, finalPrice, discountPercentage, hasPromotion, null, null, BigDecimal.ZERO, null);
+    }
 }

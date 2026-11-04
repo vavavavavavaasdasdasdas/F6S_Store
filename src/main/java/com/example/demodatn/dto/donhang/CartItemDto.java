@@ -25,6 +25,11 @@ public class CartItemDto {
     private String colorName;
     private String soleName;
 
+    private BigDecimal originalPrice;
+    private boolean hasPromotion;
+    private String promotionName;
+    private String promotionDiscountLabel;
+
     public CartItemDto(Integer productId, Integer variantId, String productName, String size, String materialName, String colorName, String soleName, BigDecimal price, Integer quantity) {
         this.productId = productId;
         this.variantId = variantId;
@@ -37,12 +42,18 @@ public class CartItemDto {
         this.quantity = quantity;
     }
 
-    public CartItemDto(Integer productId,Integer variantId,String productName,String size,String materialName,BigDecimal price,Integer quantity) {
-        this.productId=productId;this.variantId=variantId;this.productName=productName;this.size=size;this.materialName=materialName;this.price=price;this.quantity=quantity;
+    public CartItemDto(Integer productId, Integer variantId, String productName, String size, String materialName, BigDecimal price, Integer quantity) {
+        this.productId = productId;
+        this.variantId = variantId;
+        this.productName = productName;
+        this.size = size;
+        this.materialName = materialName;
+        this.price = price;
+        this.quantity = quantity;
     }
 
     public CartItemDto(Integer productId, Integer variantId, String productName, String size, BigDecimal price, Integer quantity) {
-        this(productId,variantId,productName,size,null,price,quantity);
+        this(productId, variantId, productName, size, null, price, quantity);
     }
 
     @NotNull(message = "Price is required")
@@ -56,6 +67,23 @@ public class CartItemDto {
     public BigDecimal getTotalPrice() {
         if (price != null && quantity != null) {
             return price.multiply(new BigDecimal(quantity));
+        }
+        return BigDecimal.ZERO;
+    }
+
+    public BigDecimal getOriginalTotalPrice() {
+        BigDecimal base = (originalPrice != null) ? originalPrice : price;
+        if (base != null && quantity != null) {
+            return base.multiply(new BigDecimal(quantity));
+        }
+        return BigDecimal.ZERO;
+    }
+
+    public BigDecimal getPromotionDiscountTotal() {
+        BigDecimal orig = getOriginalTotalPrice();
+        BigDecimal fin = getTotalPrice();
+        if (orig.compareTo(fin) > 0) {
+            return orig.subtract(fin);
         }
         return BigDecimal.ZERO;
     }

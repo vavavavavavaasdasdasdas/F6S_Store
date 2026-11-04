@@ -32,7 +32,12 @@ public class PricingService {
             item.setMaterialName(variant.getMaterial().getName());
             item.setColorName(variant.getColor().getName()); item.setSoleName(variant.getSole().getName());
             item.setProductCode(variant.getProduct().getCode()); item.setVariantCode(variant.getMa());
-            item.setPrice(calculatePrice(variant).getFinalPrice());
+            var pInfo = calculatePrice(variant);
+            item.setPrice(pInfo.getFinalPrice());
+            item.setOriginalPrice(pInfo.getOriginalPrice());
+            item.setHasPromotion(pInfo.isHasPromotion());
+            item.setPromotionName(pInfo.getPromotionName());
+            item.setPromotionDiscountLabel(pInfo.getDiscountLabel());
             total=total.add(item.getTotalPrice());
         }
         return total;
@@ -55,12 +60,10 @@ public class PricingService {
         BigDecimal originalPrice = variant.getPrice();
         if (originalPrice == null) originalPrice = BigDecimal.ZERO;
         
-        
         BigDecimal maxDiscountValue = BigDecimal.ZERO;
         int maxDiscountPercent = 0;
         boolean hasActivePromo = false;
-        
-
+        Promotion bestPromo = null;
         
         for (PromotionDetail detail : details) {
             Promotion promo = detail.getPromotion();
@@ -82,6 +85,7 @@ public class PricingService {
                     maxDiscountValue = discount;
                     maxDiscountPercent = percent;
                     hasActivePromo = true;
+                    bestPromo = promo;
                 }
             }
         }
@@ -90,7 +94,19 @@ public class PricingService {
         if (finalPrice.compareTo(BigDecimal.ZERO) < 0) {
             finalPrice = BigDecimal.ZERO;
         }
+
+        String promoName = (bestPromo != null) ? bestPromo.getName() : null;
+        String discountType = (bestPromo != null) ? bestPromo.getDiscountType() : null;
+        String discountLabel = null;
+        if (hasActivePromo && bestPromo != null) {
+            if ("PERCENT".equalsIgnoreCase(bestPromo.getDiscountType())) {
+                discountLabel = "-" + maxDiscountPercent + "%";
+            } else {
+                java.text.NumberFormat nf = java.text.NumberFormat.getInstance(new java.util.Locale("vi", "VN"));
+                discountLabel = "-" + nf.format(maxDiscountValue) + " đ";
+            }
+        }
         
-        return new PriceInfo(originalPrice, finalPrice, maxDiscountPercent, hasActivePromo);
+        return new PriceInfo(originalPrice, finalPrice, maxDiscountPercent, hasActivePromo, promoName, discountType, maxDiscountValue, discountLabel);
     }
 }

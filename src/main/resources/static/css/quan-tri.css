@@ -342,8 +342,16 @@ html { scrollbar-color:var(--admin-scroll-thumb) var(--admin-scroll-track); scro
   background: #fff;
 }
 .pos-modal-dialog {
-  max-width: 950px;
+  max-width: 1200px;
   width: 95vw;
+}
+.pos-modal-table {
+  min-width: 1080px;
+}
+#pos-modal-filter-form .form-control-sm,
+#pos-modal-filter-form .form-select-sm,
+#pos-modal-filter-form .btn-sm {
+  height: 35px;
 }
 .pos-payment-methods .btn-check:checked + .btn-outline-primary {
   background-color: #0d6efd;

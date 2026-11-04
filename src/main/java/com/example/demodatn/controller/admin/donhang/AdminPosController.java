@@ -139,7 +139,19 @@ public class AdminPosController {
             model.addAttribute("loadedHoldId", loadedId);
             model.addAttribute("heldOrders", holds.list(principal.getName(), "POS"));
             model.addAttribute("cartValid", valid);
-            model.addAttribute("total", cart.stream().map(CartItemDto::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
+            BigDecimal subtotalAmount = cart.stream().map(CartItemDto::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal originalTotalAmount = cart.stream().map(CartItemDto::getOriginalTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal promoDiscountAmount = originalTotalAmount.subtract(subtotalAmount);
+            if (promoDiscountAmount.compareTo(BigDecimal.ZERO) < 0) promoDiscountAmount = BigDecimal.ZERO;
+            model.addAttribute("total", subtotalAmount);
+            model.addAttribute("originalTotal", originalTotalAmount);
+            model.addAttribute("promoDiscount", promoDiscountAmount);
+
+            Map<Integer, Integer> physicalStockMap = new HashMap<>();
+            for (var item : cart) {
+                variants.findById(item.getVariantId()).ifPresent(v -> physicalStockMap.put(v.getId(), v.getQuantity()));
+            }
+            model.addAttribute("physicalStockMap", physicalStockMap);
 
             if (session.getAttribute("posCheckoutToken") == null) {
                 session.setAttribute("posCheckoutToken", UUID.randomUUID().toString());
@@ -167,15 +179,39 @@ public class AdminPosController {
             String productCode,
             String variantCode,
             String imageUrl,
-            int quantity,
+            int physicalQuantity,
+            int availableQuantity,
             String sizeValue,
             String colorName,
             String colorHex,
+            String materialName,
+            String soleName,
             boolean hasPromotion,
             int discountPercentage,
             String originalPriceFormatted,
-            String finalPriceFormatted
-    ) {}
+            String finalPriceFormatted,
+            String promotionName,
+            String discountLabel
+    ) {
+        public Integer getId() { return id; }
+        public String getProductName() { return productName; }
+        public String getProductCode() { return productCode; }
+        public String getVariantCode() { return variantCode; }
+        public String getImageUrl() { return imageUrl; }
+        public int getPhysicalQuantity() { return physicalQuantity; }
+        public int getAvailableQuantity() { return availableQuantity; }
+        public String getSizeValue() { return sizeValue; }
+        public String getColorName() { return colorName; }
+        public String getColorHex() { return colorHex; }
+        public String getMaterialName() { return materialName; }
+        public String getSoleName() { return soleName; }
+        public boolean isHasPromotion() { return hasPromotion; }
+        public int getDiscountPercentage() { return discountPercentage; }
+        public String getOriginalPriceFormatted() { return originalPriceFormatted; }
+        public String getFinalPriceFormatted() { return finalPriceFormatted; }
+        public String getPromotionName() { return promotionName; }
+        public String getDiscountLabel() { return discountLabel; }
+    }
 
     @GetMapping("/admin/pos/products-modal")
     public String productsModal(
@@ -187,12 +223,21 @@ public class AdminPosController {
             @RequestParam(required = false) Integer sizeId,
             @RequestParam(required = false) String priceRange,
             @RequestParam(defaultValue = "0") int page,
+            HttpSession session,
             Model model) {
         var pageResult = catalogQuery.variants(keyword, categoryId, colorId, materialId, soleId, sizeId, priceRange, page);
         var nf = java.text.NumberFormat.getInstance(new Locale("vi", "VN"));
+        var cart = cart(session);
+        Map<Integer, Integer> inCartMap = new HashMap<>();
+        for (var item : cart) {
+            inCartMap.merge(item.getVariantId(), item.getQuantity(), Integer::sum);
+        }
+
         var dtoList = new ArrayList<ModalVariantDto>();
         for (var v : pageResult.getContent()) {
             var pInfo = pricing.calculatePrice(v);
+            int inCart = inCartMap.getOrDefault(v.getId(), 0);
+            int available = Math.max(0, v.getQuantity() - inCart);
             dtoList.add(new ModalVariantDto(
                     v.getId(),
                     v.getProduct().getName(),
@@ -200,13 +245,18 @@ public class AdminPosController {
                     v.getMa() != null ? v.getMa() : "—",
                     v.getProduct().getDisplayImageUrl(),
                     v.getQuantity(),
+                    available,
                     v.getSize().getSizeValue(),
                     v.getColor().getName(),
                     v.getColor().getHexCode() != null ? v.getColor().getHexCode() : "#ccc",
+                    v.getMaterial() != null ? v.getMaterial().getName() : "—",
+                    v.getSole() != null ? v.getSole().getName() : "—",
                     pInfo.isHasPromotion(),
                     pInfo.getDiscountPercentage(),
                     nf.format(pInfo.getOriginalPrice()) + " đ",
-                    nf.format(pInfo.getFinalPrice()) + " đ"
+                    nf.format(pInfo.getFinalPrice()) + " đ",
+                    pInfo.isHasPromotion() && pInfo.getPromotionName() != null ? pInfo.getPromotionName() : "—",
+                    pInfo.getDiscountLabel()
             ));
         }
         model.addAttribute("variants", dtoList);
@@ -259,6 +309,7 @@ public class AdminPosController {
                 return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Số lượng vượt quá tồn kho hiện tại (" + variant.getQuantity() + ")."));
             }
 
+            var pInfo = pricing.calculatePrice(variant);
             if (item == null) {
                 var newItem = new CartItemDto(
                         variant.getProduct().getId(),
@@ -268,23 +319,41 @@ public class AdminPosController {
                         variant.getMaterial().getName(),
                         variant.getColor().getName(),
                         variant.getSole().getName(),
-                        pricing.calculatePrice(variant).getFinalPrice(),
+                        pInfo.getFinalPrice(),
                         1
                 );
                 newItem.setProductCode(variant.getProduct().getCode());
                 newItem.setVariantCode(variant.getMa());
+                newItem.setOriginalPrice(pInfo.getOriginalPrice());
+                newItem.setHasPromotion(pInfo.isHasPromotion());
+                newItem.setPromotionName(pInfo.getPromotionName());
+                newItem.setPromotionDiscountLabel(pInfo.getDiscountLabel());
                 cart.add(newItem);
             } else {
                 item.setQuantity(currentQty + 1);
+                item.setPrice(pInfo.getFinalPrice());
+                item.setOriginalPrice(pInfo.getOriginalPrice());
+                item.setHasPromotion(pInfo.isHasPromotion());
+                item.setPromotionName(pInfo.getPromotionName());
+                item.setPromotionDiscountLabel(pInfo.getDiscountLabel());
             }
             session.removeAttribute("posCheckoutToken");
+            pricing.refreshCart(cart);
             BigDecimal total = cart.stream().map(CartItemDto::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal originalTotal = cart.stream().map(CartItemDto::getOriginalTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal promoDiscount = originalTotal.subtract(total);
+            if (promoDiscount.compareTo(BigDecimal.ZERO) < 0) promoDiscount = BigDecimal.ZERO;
             int totalItems = cart.stream().mapToInt(CartItemDto::getQuantity).sum();
+            int newAvailable = Math.max(0, variant.getQuantity() - (currentQty + 1));
             return ResponseEntity.ok(Map.of(
                     "success", true,
                     "message", "Đã thêm " + variant.getProduct().getName() + " (" + variant.getSize().getSizeValue() + " - " + variant.getColor().getName() + ") vào giỏ hàng.",
                     "variantId", variant.getId(),
+                    "availableQuantity", newAvailable,
+                    "inCartQuantity", currentQty + 1,
                     "total", total,
+                    "originalTotal", originalTotal,
+                    "promoDiscount", promoDiscount,
                     "totalItems", totalItems
             ));
         }
@@ -302,28 +371,83 @@ public class AdminPosController {
                 }
                 var cart = cart(session);
                 var item = cart.stream().filter(i -> i.getVariantId().equals(variantId)).findFirst().orElse(null);
-                long totalQty = quantity + (item == null ? 0L : item.getQuantity());
+                long currentQty = item == null ? 0L : item.getQuantity();
+                long totalQty = quantity + currentQty;
                 if (totalQty > v.getQuantity()) {
                     throw new IllegalArgumentException("Số lượng vượt quá tồn kho hiện tại (" + v.getQuantity() + ").");
                 }
+                var pInfo = pricing.calculatePrice(v);
                 if (item == null) {
-                    var newItem = new CartItemDto(v.getProduct().getId(), v.getId(), v.getProduct().getName(), v.getSize().getSizeValue(), v.getMaterial().getName(), v.getColor().getName(), v.getSole().getName(), pricing.calculatePrice(v).getFinalPrice(), quantity);
+                    var newItem = new CartItemDto(
+                        v.getProduct().getId(),
+                        v.getId(),
+                        v.getProduct().getName(),
+                        v.getSize().getSizeValue(),
+                        v.getMaterial().getName(),
+                        v.getColor().getName(),
+                        v.getSole().getName(),
+                        pInfo.getFinalPrice(),
+                        quantity
+                    );
                     newItem.setProductCode(v.getProduct().getCode());
                     newItem.setVariantCode(v.getMa());
+                    newItem.setOriginalPrice(pInfo.getOriginalPrice());
+                    newItem.setHasPromotion(pInfo.isHasPromotion());
+                    newItem.setPromotionName(pInfo.getPromotionName());
+                    newItem.setPromotionDiscountLabel(pInfo.getDiscountLabel());
                     cart.add(newItem);
                 } else {
                     item.setQuantity((int) totalQty);
+                    item.setPrice(pInfo.getFinalPrice());
+                    item.setOriginalPrice(pInfo.getOriginalPrice());
+                    item.setHasPromotion(pInfo.isHasPromotion());
+                    item.setPromotionName(pInfo.getPromotionName());
+                    item.setPromotionDiscountLabel(pInfo.getDiscountLabel());
                 }
                 session.removeAttribute("posCheckoutToken");
 
                 if ("XMLHttpRequest".equalsIgnoreCase(requestedWith)) {
-                    BigDecimal total = cart.stream().map(CartItemDto::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+                    pricing.refreshCart(cart);
+                    BigDecimal subtotal = cart.stream().map(CartItemDto::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+                    BigDecimal originalTotal = cart.stream().map(CartItemDto::getOriginalTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+                    BigDecimal promoDiscount = originalTotal.subtract(subtotal);
+                    if (promoDiscount.compareTo(BigDecimal.ZERO) < 0) promoDiscount = BigDecimal.ZERO;
                     int totalItems = cart.stream().mapToInt(CartItemDto::getQuantity).sum();
+                    int newAvailable = Math.max(0, v.getQuantity() - (int) totalQty);
+
+                    List<Map<String, Object>> cartList = cart.stream().map(ci -> {
+                        Map<String, Object> m = new HashMap<>();
+                        m.put("variantId", ci.getVariantId());
+                        m.put("productId", ci.getProductId());
+                        m.put("productCode", ci.getProductCode());
+                        m.put("variantCode", ci.getVariantCode());
+                        m.put("productName", ci.getProductName());
+                        m.put("colorName", ci.getColorName());
+                        m.put("materialName", ci.getMaterialName());
+                        m.put("soleName", ci.getSoleName());
+                        m.put("size", ci.getSize());
+                        m.put("quantity", ci.getQuantity());
+                        m.put("price", ci.getPrice());
+                        m.put("originalPrice", ci.getOriginalPrice());
+                        m.put("totalPrice", ci.getTotalPrice());
+                        m.put("hasPromotion", ci.isHasPromotion());
+                        m.put("promotionName", ci.getPromotionName() != null ? ci.getPromotionName() : "");
+                        int phys = variants.findById(ci.getVariantId()).map(ProductVariant::getQuantity).orElse(99);
+                        m.put("maxQuantity", phys);
+                        return m;
+                    }).toList();
+
                     return ResponseEntity.ok(Map.of(
                             "success", true,
                             "message", "Đã thêm " + v.getProduct().getName() + " (" + v.getSize().getSizeValue() + " - " + v.getColor().getName() + ") vào giỏ hàng.",
-                            "total", total,
-                            "totalItems", totalItems
+                            "variantId", v.getId(),
+                            "availableQuantity", newAvailable,
+                            "inCartQuantity", (int) totalQty,
+                            "total", subtotal,
+                            "originalTotal", originalTotal,
+                            "promoDiscount", promoDiscount,
+                            "totalItems", totalItems,
+                            "cartItems", cartList
                     ));
                 }
             } catch (IllegalArgumentException ex) {
@@ -346,13 +470,28 @@ public class AdminPosController {
                 if (quantity <= 0 || quantity > v.getQuantity()) {
                     throw new IllegalArgumentException("Số lượng phải từ 1 đến tồn kho hiện tại (" + v.getQuantity() + ").");
                 }
-                cart(session).stream().filter(i -> i.getVariantId().equals(variantId)).findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("Sản phẩm không còn trong giỏ.")).setQuantity(quantity);
+                var item = cart(session).stream().filter(i -> i.getVariantId().equals(variantId)).findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("Sản phẩm không còn trong giỏ."));
+                item.setQuantity(quantity);
                 session.removeAttribute("posCheckoutToken");
+                pricing.refreshCart(cart(session));
                 if ("XMLHttpRequest".equalsIgnoreCase(requestedWith)) {
                     BigDecimal total = cart(session).stream().map(CartItemDto::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+                    BigDecimal originalTotal = cart(session).stream().map(CartItemDto::getOriginalTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+                    BigDecimal promoDiscount = originalTotal.subtract(total);
+                    if (promoDiscount.compareTo(BigDecimal.ZERO) < 0) promoDiscount = BigDecimal.ZERO;
                     int totalItems = cart(session).stream().mapToInt(CartItemDto::getQuantity).sum();
-                    return ResponseEntity.ok(Map.of("success", true, "total", total, "totalItems", totalItems));
+                    int newAvailable = Math.max(0, v.getQuantity() - quantity);
+                    return ResponseEntity.ok(Map.of(
+                            "success", true,
+                            "variantId", variantId,
+                            "availableQuantity", newAvailable,
+                            "total", total,
+                            "originalTotal", originalTotal,
+                            "promoDiscount", promoDiscount,
+                            "totalItems", totalItems,
+                            "itemTotal", item.getTotalPrice()
+                    ));
                 }
             } catch (IllegalArgumentException ex) {
                 if ("XMLHttpRequest".equalsIgnoreCase(requestedWith)) {
@@ -371,10 +510,23 @@ public class AdminPosController {
         synchronized (session) {
             cart(session).removeIf(i -> i.getVariantId().equals(variantId));
             session.removeAttribute("posCheckoutToken");
+            pricing.refreshCart(cart(session));
             if ("XMLHttpRequest".equalsIgnoreCase(requestedWith)) {
                 BigDecimal total = cart(session).stream().map(CartItemDto::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+                BigDecimal originalTotal = cart(session).stream().map(CartItemDto::getOriginalTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+                BigDecimal promoDiscount = originalTotal.subtract(total);
+                if (promoDiscount.compareTo(BigDecimal.ZERO) < 0) promoDiscount = BigDecimal.ZERO;
                 int totalItems = cart(session).stream().mapToInt(CartItemDto::getQuantity).sum();
-                return ResponseEntity.ok(Map.of("success", true, "total", total, "totalItems", totalItems));
+                int physical = variants.findById(variantId).map(ProductVariant::getQuantity).orElse(0);
+                return ResponseEntity.ok(Map.of(
+                        "success", true,
+                        "variantId", variantId,
+                        "availableQuantity", physical,
+                        "total", total,
+                        "originalTotal", originalTotal,
+                        "promoDiscount", promoDiscount,
+                        "totalItems", totalItems
+                ));
             }
         }
         return "redirect:/admin/pos";
@@ -517,7 +669,13 @@ public class AdminPosController {
                         ? orders.createPosOrder(cart, customer, employee, request.getVoucherCode(), request.getPaymentMethod(), "Tại quầy", request.getCashReceived(), request.getTransferAmount(), request.getPaymentReference(), request.getNote())
                         : holds.checkout(principal.getName(), heldId, cart, request);
                 clearCart(session);
-                return "redirect:/admin/pos/success/" + order.getId();
+                var invoice = invoices.findByOrder_Id(order.getId()).orElse(null);
+                if (invoice != null) {
+                    flash.addFlashAttribute("message", "Thanh toán thành công! Mã hóa đơn: " + invoice.getInvoiceCode());
+                    return "redirect:/admin/invoices/" + invoice.getId();
+                }
+                flash.addFlashAttribute("message", "Thanh toán thành công!");
+                return "redirect:/admin/invoices/" + order.getId();
             } catch (org.springframework.web.server.ResponseStatusException ex) {
                 throw ex;
             } catch (IllegalArgumentException ex) {
@@ -706,10 +864,11 @@ public class AdminPosController {
     }
 
     @GetMapping("/admin/pos/success/{id}")
-    public String success(@PathVariable Integer id, Model model) {
-        var invoice = invoices.findByOrder_Id(id).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));
-        if (!"POS".equals(invoice.getOrder().getOrderType())) throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
-        model.addAttribute("invoice", invoice);
-        return "admin/ban-tai-quay/thanh-toan-thanh-cong";
+    public String success(@PathVariable Integer id) {
+        var invoice = invoices.findByOrder_Id(id).orElse(null);
+        if (invoice != null) {
+            return "redirect:/admin/invoices/" + invoice.getId();
+        }
+        return "redirect:/admin/invoices/" + id;
     }
 }

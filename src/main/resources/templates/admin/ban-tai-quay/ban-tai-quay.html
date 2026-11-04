@@ -144,11 +144,23 @@
                                     <span class="badge bg-light text-dark border px-2 py-1" th:text="${i.size}">40</span>
                                 </td>
                                 <td>
-                                    <input type="number" min="1" class="form-control form-control-sm pos-qty-input"
+                                    <input type="number" min="1"
+                                           th:max="${physicalStockMap != null and physicalStockMap.containsKey(i.variantId) ? physicalStockMap.get(i.variantId) : 99}"
+                                           class="form-control form-control-sm pos-qty-input"
                                            th:value="${i.quantity}" th:data-variant-id="${i.variantId}"
+                                           th:data-max="${physicalStockMap != null and physicalStockMap.containsKey(i.variantId) ? physicalStockMap.get(i.variantId) : 99}"
                                            aria-label="Số lượng sản phẩm">
                                 </td>
-                                <td class="text-end" th:text="${@money.format(i.price) + ' đ'}">500.000 đ</td>
+                                <td class="text-end">
+                                    <div th:if="${i.hasPromotion}">
+                                        <span class="text-danger fw-bold d-block" th:text="${@money.format(i.price) + ' đ'}">400.000 đ</span>
+                                        <del class="small text-muted d-block" th:text="${@money.format(i.originalPrice) + ' đ'}">500.000 đ</del>
+                                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle small d-inline-block mt-1" th:text="${i.promotionName}">Đợt giảm giá</span>
+                                    </div>
+                                    <div th:unless="${i.hasPromotion}">
+                                        <span class="fw-semibold text-dark" th:text="${@money.format(i.price) + ' đ'}">500.000 đ</span>
+                                    </div>
+                                </td>
                                 <td class="text-end fw-bold" th:text="${@money.format(i.totalPrice) + ' đ'}">500.000 đ</td>
                                 <td class="text-center">
                                     <button type="button" class="btn btn-sm btn-outline-danger pos-btn-remove p-1"
@@ -226,8 +238,15 @@
                     <!-- Tóm tắt số tiền -->
                     <div class="pos-summary mb-3">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="text-muted" th:text="'Tổng tiền hàng (' + ${posCart.size()} + ' sản phẩm):'">Tổng tiền hàng:</span>
-                            <strong data-subtotal th:data-subtotal="${total != null ? total.longValue() : 0}" th:text="${@money.format(total) + ' đ'}">0 đ</strong>
+                            <span class="text-muted">Tổng tiền hàng:</span>
+                            <strong id="pos-subtotal-original" data-subtotal-original="${originalTotal != null ? originalTotal.longValue() : 0}"
+                                    th:text="${@money.format(originalTotal) + ' đ'}">0 đ</strong>
+                        </div>
+
+                        <!-- Dòng giảm khuyến mãi -->
+                        <div id="pos-promo-discount-row" class="d-flex justify-content-between text-danger mb-2" th:hidden="${promoDiscount == null or promoDiscount <= 0}">
+                            <span>Giảm khuyến mãi:</span>
+                            <strong id="pos-promo-discount-display" th:text="'-' + ${@money.format(promoDiscount)} + ' đ'">-0 đ</strong>
                         </div>
 
                         <!-- Mã giảm giá -->
@@ -242,11 +261,14 @@
                             <p id="pos-voucher-message" class="small mb-1" role="status"></p>
                         </div>
 
-                        <!-- Dòng giảm giá -->
+                        <!-- Dòng giảm phiếu giảm giá -->
                         <div id="pos-discount-row" class="d-flex justify-content-between text-success mb-2" hidden>
-                            <span>Giảm giá:</span>
+                            <span id="pos-voucher-label">Giảm phiếu giảm giá:</span>
                             <strong id="pos-discount-display">-0 đ</strong>
                         </div>
+
+                        <!-- Data store subtotal sau KM -->
+                        <span data-subtotal hidden th:data-subtotal="${total != null ? total.longValue() : 0}" th:text="${total != null ? total.longValue() : 0}"></span>
 
                         <!-- Tổng thanh toán nổi bật -->
                         <div class="d-flex justify-content-between align-items-baseline pt-2 border-top">
@@ -365,56 +387,56 @@
 
         <!-- Bộ lọc sản phẩm phía trên -->
         <form id="pos-modal-filter-form" class="row g-2 align-items-end mb-3" onsubmit="return false;">
-            <div class="col-md-3">
+            <div class="col-12 col-md-3">
                 <label for="modal-search" class="form-label small fw-semibold">Tìm kiếm</label>
                 <input type="search" class="form-control form-control-sm" id="modal-search" placeholder="Tên / mã SP / mã biến thể">
             </div>
-            <div class="col-md-2 col-6">
-                <label for="modal-category" class="form-label small fw-semibold">Danh mục</label>
+            <div class="col-6 col-md-3 col-lg-2">
+                <label for="modal-category" class="form-label small fw-semibold">Thương hiệu</label>
                 <select class="form-select form-select-sm" id="modal-category">
                     <option value="">Tất cả</option>
                     <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
                 </select>
             </div>
-            <div class="col-md-2 col-6">
+            <div class="col-6 col-md-3 col-lg-2">
                 <label for="modal-color" class="form-label small fw-semibold">Màu sắc</label>
                 <select class="form-select form-select-sm" id="modal-color">
                     <option value="">Tất cả</option>
                     <option th:each="c : ${colors}" th:value="${c.id}" th:text="${c.name}"></option>
                 </select>
             </div>
-            <div class="col-md-2 col-6">
+            <div class="col-6 col-md-3 col-lg-2">
                 <label for="modal-material" class="form-label small fw-semibold">Chất liệu</label>
                 <select class="form-select form-select-sm" id="modal-material">
                     <option value="">Tất cả</option>
                     <option th:each="m : ${materials}" th:value="${m.id}" th:text="${m.name}"></option>
                 </select>
             </div>
-            <div class="col-md-1 col-6">
+            <div class="col-6 col-md-3 col-lg-2">
                 <label for="modal-sole" class="form-label small fw-semibold">Đế giày</label>
                 <select class="form-select form-select-sm" id="modal-sole">
                     <option value="">Tất cả</option>
                     <option th:each="s : ${soles}" th:value="${s.id}" th:text="${s.name}"></option>
                 </select>
             </div>
-            <div class="col-md-1 col-6">
+            <div class="col-6 col-md-3 col-lg-2">
                 <label for="modal-size" class="form-label small fw-semibold">Kích cỡ</label>
                 <select class="form-select form-select-sm" id="modal-size">
                     <option value="">Tất cả</option>
                     <option th:each="s : ${sizes}" th:value="${s.id}" th:text="${s.sizeValue}"></option>
                 </select>
             </div>
-            <div class="col-md-2 col-6">
+            <div class="col-6 col-md-3 col-lg-2">
                 <label for="modal-price" class="form-label small fw-semibold">Khoảng giá</label>
                 <select class="form-select form-select-sm" id="modal-price">
-                    <option value="">Tất cả mức giá</option>
+                    <option value="">Tất cả</option>
                     <option value="UNDER_500">Dưới 500.000 đ</option>
                     <option value="500_1000">500.000 - 1.000.000 đ</option>
                     <option value="1000_2000">1.000.000 - 2.000.000 đ</option>
                     <option value="OVER_2000">Trên 2.000.000 đ</option>
                 </select>
             </div>
-            <div class="col-md-2 col-6 d-flex gap-1">
+            <div class="col-12 col-md-3 col-lg-2 d-flex gap-1">
                 <button type="button" class="btn btn-sm btn-primary flex-grow-1" id="btn-modal-filter">Tìm kiếm</button>
                 <button type="button" class="btn btn-sm btn-outline-secondary" id="btn-modal-reset">Đặt lại</button>
             </div>
