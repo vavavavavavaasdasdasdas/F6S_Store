@@ -1,0 +1,11 @@
+{
+  "beforeSeed": 30,
+  "seeded": 470,
+  "beforeRequest": 500,
+  "http": {
+    "status": 429,
+    "conversationId": 2
+  },
+  "afterRequest": 500,
+  "query": "SELECT COUNT(*) FROM chat_tin_nhan WHERE ip_address=@ip AND created_at>=CONVERT(DATE,GETDATE())"
+}

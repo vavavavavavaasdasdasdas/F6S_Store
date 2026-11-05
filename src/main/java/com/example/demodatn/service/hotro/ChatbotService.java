@@ -48,8 +48,8 @@ public class ChatbotService {
     private final Map<String, int[]> ipRateMap = new ConcurrentHashMap<>();
 
     // Masking Patterns
-    private static final Pattern CARD_PATTERN = Pattern.compile("\\b(?:\\d[ -]*?){13,16}\\b");
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("(?i)(?:mật khẩu|mat khau|password)\\s*(?:là|la|:)?\\s*(\\S+)");
+    private static final Pattern CARD_PATTERN = Pattern.compile("\\b(?:\\d[ -]*?){13,19}\\b");
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("(?i)(?:mật khẩu|mat khau|password|pwd)\\s*(?:(?:của tôi|cua toi|của mình|cua minh)\\s*)?(?:là|la|:|=)?\\s*(\\S+)");
 
     public ChatbotService(@Qualifier("rulesChatbotEngine") ChatbotEngine rulesEngine,
                           @Qualifier("llmChatbotEngine") ChatbotEngine llmEngine,
@@ -214,7 +214,7 @@ public class ChatbotService {
         return ipData[1] <= 300;
     }
 
-    private String maskSensitiveInfo(String text) {
+    public static String maskSensitiveInfo(String text) {
         if (text == null) return "";
         // Che số thẻ
         Matcher cardMatcher = CARD_PATTERN.matcher(text);

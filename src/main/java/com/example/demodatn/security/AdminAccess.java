@@ -14,7 +14,7 @@ public class AdminAccess {
         if(!hasRole(auth,"ROLE_EMPLOYEE"))return false;
         if("POST".equals(method)&&path.equals("/admin/accounts/username-suggestion"))return true;
         if(("GET".equals(method)||"POST".equals(method))&&under(path,com.example.demodatn.controller.admin.donhang.AdminOrderController.LEGACY_PATH))return true;
-        if(under(path,"/admin/pos")||under(path,"/admin/ban-online")||under(path,"/admin/invoices")||under(path,"/admin/account")||under(path,"/admin/support-tickets")||under(path,"/admin/chatbot"))return true;
+        if(under(path,"/admin/pos")||under(path,"/admin/ban-online")||under(path,"/admin/invoices")||under(path,"/admin/account")||under(path,"/admin/support-chat")||under(path,"/admin/support-tickets")||under(path,"/admin/chatbot"))return true;
         if("GET".equals(method)&&path.equals("/admin/inventory"))return true;
         if(under(path,"/admin/customers")){
             if("GET".equals(method))return true;

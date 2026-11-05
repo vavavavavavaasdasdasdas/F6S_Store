@@ -1,108 +1,16 @@
-<!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
-<body>
+<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org"><body>
 <div th:fragment="widget" id="f6s-chatbot-container" class="f6s-chatbot-container">
-    <!-- Nút nổi góc phải dưới -->
-    <button id="chatbot-toggle-btn" class="chatbot-toggle-btn" type="button"
-            aria-label="Mở trợ lý ảo F6S Store" aria-expanded="false" aria-controls="chatbot-window">
-        <i class="bi bi-chat-dots-fill"></i>
-        <span class="chatbot-badge-dot" aria-hidden="true"></span>
-    </button>
-
-    <!-- Khung chat chính -->
-    <section id="chatbot-window" class="chatbot-window d-none" role="region" aria-label="Hộp thoại trò chuyện trợ lý F6S Store">
-        <!-- Header -->
-        <header class="chatbot-header">
-            <div class="chatbot-header-title">
-                <i class="bi bi-robot me-2"></i>
-                <div>
-                    <h2 class="h6 mb-0">Trợ lý F6S Store</h2>
-                    <span class="chatbot-status-indicator">Đang hoạt động</span>
-                </div>
-            </div>
-            <div class="chatbot-header-actions">
-                <button id="chatbot-clear-btn" class="chatbot-btn-icon" type="button" title="Xóa cuộc trò chuyện" aria-label="Xóa cuộc trò chuyện">
-                    <i class="bi bi-trash3"></i>
-                </button>
-                <button id="chatbot-close-btn" class="chatbot-btn-icon" type="button" title="Đóng chat" aria-label="Đóng chat">
-                    <i class="bi bi-x-lg"></i>
-                </button>
-            </div>
-        </header>
-
-        <!-- Danh sách tin nhắn -->
-        <div id="chatbot-messages" class="chatbot-messages" role="log" aria-live="polite" aria-atomic="false">
-            <!-- Tin nhắn chào mặc định -->
-            <div class="chatbot-msg chatbot-msg-bot">
-                <div class="chatbot-msg-bubble">
-                    <p class="mb-0">Xin chào! Mình là trợ lý ảo của F6S Store 👟. Mình có thể giúp gì cho bạn hôm nay?</p>
-                </div>
-            </div>
-
-            <!-- Gợi ý nhanh mặc định -->
-            <div id="chatbot-quick-replies" class="chatbot-quick-replies" role="group" aria-label="Gợi ý nhanh">
-                <button type="button" class="chatbot-chip" data-query="Tìm giày">🔍 Tìm giày</button>
-                <button type="button" class="chatbot-chip" data-query="Tư vấn size">📏 Tư vấn size</button>
-                <button type="button" class="chatbot-chip" data-query="Chính sách đổi trả">🔄 Chính sách đổi trả</button>
-                <button type="button" class="chatbot-chip" data-query="Kiểm tra đơn hàng">📦 Kiểm tra đơn hàng</button>
-                <button type="button" class="chatbot-chip" data-query="Nói chuyện với nhân viên">💬 Nói chuyện với nhân viên</button>
-            </div>
-
-            <!-- Chỉ báo đang gõ / trả lời -->
-            <div id="chatbot-typing" class="chatbot-msg chatbot-msg-bot d-none" aria-hidden="true">
-                <div class="chatbot-msg-bubble chatbot-typing-bubble">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Khung tạo phiếu hỗ trợ (khi khách cần nhân viên) -->
-        <div id="chatbot-ticket-modal" class="chatbot-ticket-modal d-none" role="dialog" aria-labelledby="chatbot-ticket-title">
-            <div class="chatbot-ticket-content">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h3 id="chatbot-ticket-title" class="h6 mb-0 text-primary fw-bold">Gửi yêu cầu nhân viên hỗ trợ</h3>
-                    <button type="button" id="chatbot-ticket-close" class="btn-close btn-close-sm" aria-label="Đóng form hỗ trợ"></button>
-                </div>
-                <p class="text-muted small mb-2">Để lại thông tin, nhân viên F6S Store sẽ liên hệ lại với bạn sớm nhất:</p>
-                <form id="chatbot-ticket-form">
-                    <div class="mb-2">
-                        <input type="text" id="ticket-hoten" class="form-control form-control-sm"
-                               placeholder="Họ và tên của bạn *" required maxlength="100"
-                               th:value="${#authentication != null and #authentication.authenticated and !#authentication.name.equals('anonymousUser') ? #authentication.name : ''}">
-                    </div>
-                    <div class="mb-2">
-                        <input type="text" id="ticket-lienhe" class="form-control form-control-sm"
-                               placeholder="Số điện thoại hoặc Email *" required maxlength="100">
-                    </div>
-                    <div class="mb-2">
-                        <textarea id="ticket-noidung" class="form-control form-control-sm" rows="3"
-                                  placeholder="Nội dung cần hỗ trợ *" required maxlength="1000"></textarea>
-                    </div>
-                    <div class="d-flex justify-content-end gap-2">
-                        <button type="button" id="chatbot-ticket-cancel" class="btn btn-sm btn-outline-secondary">Hủy</button>
-                        <button type="submit" id="chatbot-ticket-submit" class="btn btn-sm btn-primary">Gửi yêu cầu</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Footer / Input -->
-        <footer class="chatbot-footer">
-            <div class="chatbot-input-group">
-                <textarea id="chatbot-input" class="chatbot-input" rows="1"
-                          placeholder="Nhập câu hỏi... (Enter gửi, Shift+Enter xuống dòng)"
-                          aria-label="Nhập tin nhắn cho trợ lý ảo" maxlength="500"></textarea>
-                <button id="chatbot-send-btn" class="chatbot-send-btn" type="button" aria-label="Gửi tin nhắn">
-                    <i class="bi bi-send-fill"></i>
-                </button>
-            </div>
-            <div class="chatbot-disclaimer">
-                <span>Cuộc trò chuyện có thể được lưu để cải thiện hỗ trợ.</span>
-            </div>
-        </footer>
-    </section>
-</div>
-</body>
-</html>
+<button id="chatbot-toggle-btn" class="chatbot-toggle-btn" type="button" aria-label="Mở hỗ trợ khách hàng" aria-expanded="false" aria-controls="chatbot-window"><i class="bi bi-chat-dots-fill" aria-hidden="true"></i><span class="support-badge" data-chat-badge hidden>0</span></button>
+<section id="chatbot-window" class="support-window" role="dialog" aria-labelledby="support-title" aria-modal="false" hidden tabindex="-1">
+<header class="support-header"><img src="/images/logo.jpg" alt="Biểu trưng cửa hàng" width="40" height="40"><div><h2 id="support-title">Hỗ trợ khách hàng</h2><p><span data-chat-online-dot class="support-online-dot"></span><span data-chat-presence>Sẽ phản hồi sớm</span></p></div><button type="button" class="support-icon" data-chat-close title="Đóng khung chat" aria-label="Đóng khung chat"><i class="bi bi-x-lg" aria-hidden="true"></i></button></header>
+<p class="support-notice">Cuộc trò chuyện được lưu để nhân viên hỗ trợ bạn.</p>
+<p class="support-connection" data-chat-connection role="status">Đang kết nối…</p>
+<div class="support-error" data-chat-error role="alert" hidden></div><button type="button" class="btn btn-sm btn-outline-secondary support-reset" data-chat-reset hidden>Bắt đầu phiên chat mới</button>
+<form method="post" th:action="@{/api/support/session}" data-chat-identity class="support-identity" novalidate hidden><h3>Bắt đầu trò chuyện</h3><p>Cho cửa hàng biết tên và cách liên hệ với bạn.</p><label for="support-name">Họ và tên *</label><input id="support-name" name="name" class="form-control" required maxlength="100" autocomplete="name" aria-describedby="support-identity-error"><label for="support-contact">Số điện thoại hoặc email *</label><input id="support-contact" name="contact" class="form-control" required maxlength="100" autocomplete="email" aria-describedby="support-identity-error"><p id="support-identity-error" class="field-error" aria-live="polite"></p><button type="submit" class="btn btn-primary">Bắt đầu trò chuyện</button></form>
+<div class="support-history" data-chat-history tabindex="0" aria-label="Lịch sử trò chuyện, cuộn lên để tải thêm"><button type="button" class="support-load-older" data-chat-older hidden>Tải tin nhắn cũ hơn</button><div data-chat-messages role="log" aria-live="polite" aria-relevant="additions"></div><div class="support-quick" data-chat-quick><p>Chào bạn! Cửa hàng có thể hỗ trợ gì?</p><button type="button" data-chat-query="Tìm giày">Tìm giày</button><button type="button" data-chat-query="Tư vấn size">Tư vấn size</button><button type="button" data-chat-query="Chính sách đổi trả">Chính sách đổi trả</button><button type="button" data-chat-query="Kiểm tra đơn hàng">Kiểm tra đơn hàng</button><button type="button" data-chat-human>Gặp nhân viên</button></div></div>
+<p class="support-typing" data-chat-typing aria-live="polite"></p>
+<footer class="support-compose" data-chat-compose hidden><div class="support-tools"><button type="button" class="support-icon" data-chat-attach title="Đính kèm ảnh" aria-label="Đính kèm ảnh"><i class="bi bi-image" aria-hidden="true"></i></button><input type="file" data-chat-file accept="image/jpeg,image/png,image/webp" hidden><button type="button" class="support-tool" data-chat-product hidden>Gửi sản phẩm đang xem</button><button type="button" class="support-tool" data-chat-orders hidden>Gửi đơn hàng</button><button type="button" class="support-tool" data-chat-human>Gặp nhân viên</button></div><div class="support-input-row"><label class="visually-hidden" for="chatbot-input">Tin nhắn cho cửa hàng</label><textarea id="chatbot-input" rows="1" maxlength="2000" placeholder="Nhập tin nhắn…" aria-describedby="support-character-count"></textarea><button id="chatbot-send-btn" type="button" class="support-send" aria-label="Gửi tin nhắn" title="Gửi tin nhắn"><i class="bi bi-send-fill" aria-hidden="true"></i></button></div><p id="support-character-count" class="support-counter" hidden></p></footer>
+</section>
+<dialog data-chat-order-picker class="user-dialog" aria-labelledby="support-order-title"><h2 id="support-order-title">Gửi đơn hàng</h2><label for="support-order">Chọn đơn hàng của bạn</label><select id="support-order" class="form-select" data-chat-order><option value="">Chọn đơn hàng</option></select><p data-chat-order-message role="status"></p><div class="d-flex gap-2 my-3"><button type="button" class="btn btn-outline-secondary" data-chat-order-prev>Trước</button><span data-chat-order-page></span><button type="button" class="btn btn-outline-secondary" data-chat-order-next>Sau</button></div><div class="user-dialog-actions"><button type="button" class="btn btn-outline-secondary" data-chat-order-cancel>Đóng</button><button type="button" class="btn btn-primary" data-chat-order-send>Gửi đơn hàng</button></div></dialog>
+<script src="/js/vendor/sockjs-1.6.1.min.js" defer></script><script src="/js/vendor/stomp-7.2.1.min.js" defer></script>
+</div></body></html>

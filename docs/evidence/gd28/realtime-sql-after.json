@@ -1,0 +1,14 @@
+{
+  "query": "SELECT c.id,c.ma,c.trang_thai,c.chua_doc_khach,c.chua_doc_nhan_vien,(SELECT COUNT(*) FROM chat_tin_nhan m WHERE m.hoi_thoai_id=c.id AND m.nguoi_gui_loai<>N'KHACH' AND m.da_xem_luc IS NULL) actual_unread_customer,(SELECT COUNT(*) FROM chat_tin_nhan m WHERE m.hoi_thoai_id=c.id AND m.nguoi_gui_loai=N'KHACH' AND m.da_xem_luc IS NULL) actual_unread_staff FROM chat_hoi_thoai c WHERE c.id=1",
+  "rows": [
+    {
+      "id": 1,
+      "ma": "CH0001",
+      "trang_thai": "DANG_XU_LY",
+      "chua_doc_khach": 0,
+      "chua_doc_nhan_vien": 1,
+      "actual_unread_customer": 0,
+      "actual_unread_staff": 1
+    }
+  ]
+}

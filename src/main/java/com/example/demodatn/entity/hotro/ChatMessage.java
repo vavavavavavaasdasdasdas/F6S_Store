@@ -37,4 +37,11 @@ public class ChatMessage {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+    @org.hibernate.annotations.Nationalized @Column(name="nguoi_gui_loai",length=20,nullable=false) private String senderType="HE_THONG";
+    @Column(name="nguoi_gui_id") private Integer senderId;
+    @org.hibernate.annotations.Nationalized @Column(name="loai",length=20,nullable=false) private String type="VAN_BAN";
+    @org.hibernate.annotations.Nationalized @Column(name="tep_dinh_kem",length=255) private String attachment;
+    @Column(name="da_xem_luc") private LocalDateTime seenAt;
+    @Column(name="client_id",length=64) private String clientId;
+    @Column(name="ip_address",length=45) private String ipAddress;
 }

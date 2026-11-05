@@ -86,7 +86,7 @@ public class LlmChatbotEngine implements ChatbotEngine {
         try {
             return callLlm(message, sessionId, authentication);
         } catch (Exception ex) {
-            log.warn("Lỗi hoặc quá thời gian gọi LLM ({}), tự động rơi về RulesChatbotEngine.", ex.getMessage());
+            log.warn("Lỗi hoặc quá thời gian gọi LLM, tự động rơi về RulesChatbotEngine.");
             return rulesEngine.process(message, sessionId, authentication);
         }
     }

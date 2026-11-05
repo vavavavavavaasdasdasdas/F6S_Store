@@ -1,0 +1,32 @@
+{
+  "threads": [
+    {
+      "id": 2,
+      "ma": "CH0002",
+      "customer_id": 100,
+      "trang_thai": "MOI"
+    }
+  ],
+  "messages": [
+    {
+      "id": 3,
+      "hoi_thoai_id": 2,
+      "nguoi_gui_loai": "KHACH",
+      "noi_dung": "Tin khách ẩn danh trước đăng nhập",
+      "client_id": "00182283-a218-4e73-b1ab-4c3f5de09b8f"
+    },
+    {
+      "id": 4,
+      "hoi_thoai_id": 2,
+      "nguoi_gui_loai": "HE_THONG",
+      "noi_dung": "Mình đã chuyển tin nhắn cho nhân viên, bạn sẽ được phản hồi sớm"
+    },
+    {
+      "id": 5,
+      "hoi_thoai_id": 2,
+      "nguoi_gui_loai": "KHACH",
+      "noi_dung": "Tin chưa gửi phải còn sau khi đăng nhập",
+      "client_id": "10e03d85-8b42-41da-97c8-00658712f2f2"
+    }
+  ]
+}

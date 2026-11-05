@@ -124,3 +124,8 @@ Giai đoạn 15: Dashboard áp dụng bộ lọc ngày cho toàn bộ thẻ số
 ### Giai đoạn 27 — Thanh toán của khách
 
 Checkout giữ màu primary #b94312, font Inter/system và token của he-thong-thiet-ke.css. Bố cục desktop 2:1 với các thẻ trắng, góc bo theo token; phần đơn hàng sticky. Mobile đưa đơn hàng thu gọn lên đầu, thanh tổng/Đặt hàng cố định ở đáy và chừa khoảng nội dung tương ứng. Địa chỉ và thanh toán dùng radio native trong thẻ có focus/viền chọn; tỉnh/phường giữ combo-box.js và fragment địa chỉ. Voucher dùng dialog native với showModal (dropdown neo cạnh đơn hàng ở desktop, drawer đáy ở mobile), nội dung cuộn, Escape/Đóng phục hồi focus. Giá/giảm/tổng/QR chỉ nhận từ service server; CSS không chứa tính toán nghiệp vụ. QR trước khi đặt là xem trước, QR có mã đơn thật vẫn ở trang thành công. Phí vận chuyển do đơn vị vận chuyển tính và thu riêng, không cộng tổng.
+
+
+### Giai đoạn 28 — Hỗ trợ khách hàng
+
+Giữ màu primary #b94312 và logo cửa hàng. Bong bóng khách nằm phải, nhân viên/trợ lý nằm trái, phân biệt bằng nhãn chữ và avatar. Cửa sổ desktop 390px, mobile toàn 100dvh; khóa cuộn và inert nền khi mở, khôi phục kiểu dáng/focus khi đóng. Thanh nhập cố định trong khung, lịch sử cuộn độc lập, không đẩy trang. Nút icon có title/aria-label và vùng bấm 40px. Nội dung dài wrap, ảnh giới hạn trong bong bóng. Chỉ tin mới được thêm vào aria-live, không dựng lại toàn bộ lịch sử mỗi lần đọc. Dùng dialog và combo-box.js đã có cho chọn đơn; không thêm bộ select riêng.

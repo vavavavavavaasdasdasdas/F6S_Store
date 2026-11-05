@@ -31,3 +31,12 @@ BUG-01 đến BUG-03 (schema/checkout, preflight và kiểu SĐT sau chạy lạ
 - GD27-OBS-02: `/admin/pos` tràn ngang ở desktop1280, scrollWidth1415. Không sửa POS.
 - GD27-OBS-03: baseline606ead2 clean test282:23 failure+1error. Bản GD27 clean test287:23failure+2error; cùng24 lỗi cũ, thêm một lượt GeocodingServiceTest dòng44 lỗi No value present; chạy riêng lại4/4 đạt. Không đổi luật doanh thu/kho/phân quyền hoặc xóa test để cho qua.
 - Bằng chứng, URL/status, từng test lỗi và SQL: [báo cáo Giai đoạn27](GIAI_DOAN_27_THANH_TOAN.md), [đối chứng](evidence/gd27/test-comparison.json), [crawl](evidence/gd27/crawl-manifest.json).
+
+
+## Phát hiện ngoài phạm vi Giai đoạn 28 (05/11/2026)
+
+- GD28-OBS-01: crawl lại `/admin/chatbot-faq/new` HTTP 500, cùng lỗi GD27-OBS-01 (ChatbotFaqRepository.java:35). Không sửa trang quản lý FAQ ở giai đoạn lõi chat khách.
+- GD28-OBS-02: `/admin/pos` vẫn có scrollWidth lớn hơn viewport desktop; cùng GD27-OBS-02.
+- GD28-OBS-03: lượt clean test cuối 305, 22 failure + 1 error, 0 skip; 23 tên test lỗi đều thuộc baseline606ead2. Lượt trước có 23 failure + 1 error, giữ cả output. Test chat mới15+2 và test engine cũ11, SchemaCheck4 đều đạt. Không thay luật nghiệp vụ hoặc xóa test cũ.
+- GD28-OBS-04: crawl user/admin có lỗi DNS của tài nguyên CDN/font đã có trong layout. Thư viện chat mới phục vụ cục bộ; không thay layout toàn website ngoài phạm vi. Không tuyên bố toàn bộ website không lỗi console.
+- Chi tiết status, SQL, so sánh lỗi nền: [Giai đoạn 28](GIAI_DOAN_28_CHAT_HO_TRO.md) và `evidence/gd28/`.

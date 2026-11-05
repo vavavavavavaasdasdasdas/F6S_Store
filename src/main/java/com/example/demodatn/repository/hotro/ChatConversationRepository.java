@@ -18,4 +18,15 @@ public interface ChatConversationRepository extends JpaRepository<ChatConversati
     @Modifying
     @Query("DELETE FROM ChatConversation c WHERE c.createdAt < :cutoff")
     int deleteOldConversations(@Param("cutoff") LocalDateTime cutoff);
+    Optional<ChatConversation> findByCustomer_Id(Integer customerId);
+    Optional<ChatConversation> findByTokenHash(String hash);
+    @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+    @Query("select c from ChatConversation c where c.id=:id")
+    Optional<ChatConversation> lock(@Param("id") Long id);
+    @Modifying
+    @Query("delete from ChatConversation c where (c.human=true or c.employeeId is not null or c.waiting=true) and coalesce(c.lastMessageAt,c.updatedAt)<:cutoff")
+    int deleteHumanBefore(@Param("cutoff") LocalDateTime cutoff);
+    @Modifying
+    @Query("delete from ChatConversation c where c.human=false and c.employeeId is null and c.waiting=false and coalesce(c.lastMessageAt,c.updatedAt)<:cutoff")
+    int deleteAutomaticBefore(@Param("cutoff") LocalDateTime cutoff);
 }

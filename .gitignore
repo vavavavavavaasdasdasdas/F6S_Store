@@ -51,3 +51,6 @@ target/
 
 # Tệp cách ly sau đợt dọn dẹp, không đưa dữ liệu phiên hoặc capture lên Git.
 /_cho_xoa/
+
+# Ảnh chat riêng tư, không đưa vào Git.
+/uploads/support-chat/

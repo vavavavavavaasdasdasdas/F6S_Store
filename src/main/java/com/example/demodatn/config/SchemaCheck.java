@@ -80,6 +80,8 @@ public class SchemaCheck implements BeanPostProcessor {
 
     private static String migration(String table, String column) {
         if(java.util.Set.of("admin_chat_audit", "admin_chat_hoi_thoai", "admin_chat_tin_nhan").contains(table) || (table.equals("chatbot_faq") && column.equals("doi_tuong"))) return "026_tro_ly_admin.sql";
+        if(table.equals("chat_tin_nhan") && column.equals("ip_address"))return "027_chat_ho_tro_thoi_gian_thuc.sql";
+        if(java.util.Set.of("chat_hoi_thoai","chat_tin_nhan").contains(table) && java.util.Set.of("session_token_hash","ma","customer_id","ho_ten","lien_he","trang_thai","nhan_vien_phu_trach_id","last_message_at","chua_doc_khach","chua_doc_nhan_vien","da_co_nhan_vien","cho_nhan_vien","nguoi_gui_loai","nguoi_gui_id","loai","tep_dinh_kem","da_xem_luc","client_id").contains(column))return "027_chat_ho_tro_thoi_gian_thuc.sql";
         if(java.util.Set.of("chatbot_faq", "phieu_ho_tro", "chat_hoi_thoai", "chat_tin_nhan").contains(table)) return "025_chatbot_va_phieu_ho_tro.sql";
         if("order_mail_log".equals(table) || (table.equals("pos_held_orders") && java.util.Set.of("la_giao_hang", "thong_tin_giao_hang").contains(column))) return "024_pos_giao_hang_va_order_mail_log.sql";
         if(table.equals("orders") && java.util.Set.of("tien_mat","tien_chuyen_khoan","ghi_chu_thanh_toan").contains(column)) return "023_thanh_toan_ket_hop_pos.sql";

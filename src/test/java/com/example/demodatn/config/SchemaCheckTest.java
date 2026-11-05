@@ -35,4 +35,11 @@ class SchemaCheckTest {
         Object bean = new Object();
         assertSame(bean, checker.postProcessBeforeInitialization(bean, "ordinaryBean"));
     }
+    @org.junit.jupiter.api.Test void chatMissingSecurityAndMessageColumnsPointTo027(){
+        var types=java.util.List.<Class<?>>of(com.example.demodatn.entity.hotro.ChatConversation.class,com.example.demodatn.entity.hotro.ChatMessage.class);
+        var required=SchemaCheck.requiredColumns(types);
+        var actual=new java.util.HashMap<String,java.util.Set<String>>();required.forEach((table,cols)->actual.put(table,new java.util.HashSet<>(cols)));
+        actual.get("chat_hoi_thoai").remove("session_token_hash");actual.get("chat_tin_nhan").remove("ip_address");
+        var missing=SchemaCheck.missing(required,actual);org.junit.jupiter.api.Assertions.assertEquals(2,missing.size());org.junit.jupiter.api.Assertions.assertTrue(missing.stream().allMatch(message->message.contains("027_chat_ho_tro_thoi_gian_thuc.sql")));
+    }
 }

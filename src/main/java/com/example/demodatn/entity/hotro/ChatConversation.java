@@ -25,7 +25,7 @@ public class ChatConversation {
     private String sessionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "khach_id")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @Column(name = "ip_address", length = 50)
@@ -36,4 +36,18 @@ public class ChatConversation {
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
+    @Column(name="session_token_hash",length=72) private String tokenHash;
+    @Column(name="khach_id",insertable=false,updatable=false) private Integer legacyCustomerId;
+    @Column(name="ma",length=20,nullable=false,insertable=false,updatable=false)
+    @org.hibernate.annotations.Generated(event=org.hibernate.generator.EventType.INSERT)
+    private String code;
+    @org.hibernate.annotations.Nationalized @Column(name="ho_ten",length=100) private String name;
+    @org.hibernate.annotations.Nationalized @Column(name="lien_he",length=100) private String contact;
+    @org.hibernate.annotations.Nationalized @Column(name="trang_thai",length=20,nullable=false) private String status="MOI";
+    @Column(name="nhan_vien_phu_trach_id") private Integer employeeId;
+    @Column(name="last_message_at") private LocalDateTime lastMessageAt;
+    @Column(name="chua_doc_khach",nullable=false) private int customerUnread;
+    @Column(name="chua_doc_nhan_vien",nullable=false) private int staffUnread;
+    @Column(name="da_co_nhan_vien",nullable=false) private boolean human;
+    @Column(name="cho_nhan_vien",nullable=false) private boolean waiting;
 }

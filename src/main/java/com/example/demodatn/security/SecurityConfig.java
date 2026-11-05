@@ -37,6 +37,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/admin/**").access((authentication,ctx)->new org.springframework.security.authorization.AuthorizationDecision(access.allowed(authentication.get(),ctx.getRequest().getMethod(),ctx.getRequest().getRequestURI().substring(ctx.getRequest().getContextPath().length()))))
                 .requestMatchers("/orders/**", "/checkout/**", "/profile", "/profile/**").authenticated()
+                .requestMatchers("/api/support/**", "/ws/support/**").permitAll()
                 .requestMatchers("/", "/products/**", "/category/**", "/search", "/cart/**", "/login", "/register", "/policy", "/api/chatbot/**", "/css/**", "/js/**", "/images/**", "/anh/**", "/uploads/products/**", "/error").permitAll()
                 .anyRequest().authenticated()
             )
@@ -74,6 +75,8 @@ public class SecurityConfig {
                 .permitAll()
             );
         
+        // SockJS transport POSTs carry the STOMP CONNECT CSRF header, checked by XorCsrfChannelInterceptor.
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/ws/support/**"));
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(new AccountStatusFilter(userDetailsService),
                 org.springframework.security.web.access.intercept.AuthorizationFilter.class);

@@ -151,3 +151,16 @@ sqlcmd -S <SERVER> -E -d <TEN_DB_DANG_DUNG> -b -f 65001 -i <FILE_VAN_HANH.sql>
 ```
 
 Cờ session chỉ cho phép DB sản xuất có tên chính xác trong guard; các tên DB khác vẫn bị từ chối. Sau đó khởi động lại với `spring.jpa.hibernate.ddl-auto=validate`. Lệnh trên là hướng dẫn thao tác thủ công, chưa được chạy trên database thật.
+
+
+## Hỗ trợ khách hàng thời gian thực (giai đoạn 28)
+
+Sau 026, sao lưu rồi áp dụng **027_chat_ho_tro_thoi_gian_thuc.sql**, khởi động với `ddl-auto=validate`. Script đã có trong `chay_tat_ca.sql` và `shopgiay.sql`; không tự chạy khi app khởi động. Lệnh vận hành và bằng chứng: [Giai đoạn 28](docs/GIAI_DOAN_28_CHAT_HO_TRO.md).
+
+Khách nhắn trực tiếp với cửa hàng; trợ lý RULES/LLM chỉ trả lời ý định mua hàng trước khi nhân viên nhận/trả lời. `CHATBOT_PROVIDER=RULES` hoạt động không cần AI bên ngoài. Giữ cấu hình LLM trước đây qua biến môi trường/local, không ghi khóa vào Git/log/trình duyệt. API nhân viên `/admin/support-chat` chỉ Admin/Nhân viên; UI nhận tin sẽ làm ở giai đoạn 29.
+
+`CHAT_UPLOAD_DIR` mặc định `uploads/support-chat`: phải là thư mục riêng **ngoài static và ngoài SHOP_UPLOAD_DIR**, cấp quyền ghi cho tiến trình app, không publish bằng web server; sao lưu cùng database. Chỉ controller có kiểm tra quyền phục vụ ảnh. `CHAT_RETENTION_HUMAN_DAYS=180` (tối thiểu 30) cho hội thoại đã có nhân viên/đang chờ; tự động thuần túy 30 ngày tính từ hoạt động cuối. Tác vụ dọn lúc 03:00 theo timezone máy chủ; cấu hình JVM Asia/Ho_Chi_Minh khi triển khai.
+
+Triển khai HTTPS, proxy phải chuyển WebSocket Upgrade của `/ws/support/**` và giữ cookie/session cùng nguồn. Khi nhiều instance cần sticky session và broker/presence dùng chung; bản này dùng broker bộ nhớ cho một instance. SockJS transport HTTP POST được miễn CSRF hẹp, **STOMP CONNECT vẫn bắt buộc token CSRF**, REST POST luôn bắt buộc. Cookie ẩn danh HttpOnly, SameSite=Lax, Secure trên HTTPS; hết phiên/giả cookie bị từ chối và có nút bắt đầu phiên mới. Không cấu hình reverse proxy phục vụ trực tiếp ảnh chat.
+
+Kiểm tra thủ công triển khai: mở hai trình duyệt khách/nhân viên, gửi/đọc, chặn `/ws/support/**` để xem polling 5 giây và bật lại để nối; test trên điện thoại thật/HTTPS là bước riêng. Thư viện SockJS/STOMP được lưu cục bộ, xem [nguồn và giấy phép](docs/THU_VIEN_CHAT_GD28.md).

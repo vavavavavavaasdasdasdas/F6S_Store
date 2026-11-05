@@ -1,0 +1,90 @@
+COMMAND: mvnw.cmd -B -o clean test
+[INFO]   from pom.xml
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.558 s -- in com.example.demodatn.config.DataInitializerTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.316 s -- in com.example.demodatn.config.SchemaCheckTest
+[ERROR] Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 13.02 s <<< FAILURE! -- in com.example.demodatn.controller.AdminFrameIntegrationTest
+[ERROR] Tests run: 4, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 4.896 s <<< FAILURE! -- in com.example.demodatn.controller.PaginationIntegrationTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.637 s -- in com.example.demodatn.controller.PasswordPolicyIntegrationTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.463 s -- in com.example.demodatn.controller.Phase3ComboFilterIntegrationTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.321 s -- in com.example.demodatn.controller.RouteErrorIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.200 s -- in com.example.demodatn.controller.TablePresentationIntegrationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.270 s -- in com.example.demodatn.controller.user.CheckoutPresentationIntegrationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.151 s -- in com.example.demodatn.controller.user.UserUiIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in com.example.demodatn.DemoDatnApplicationTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s -- in com.example.demodatn.entity.UnicodePersistenceIntegrationTest
+[ERROR] Tests run: 6, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.167 s <<< FAILURE! -- in com.example.demodatn.security.EmployeeAccessIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.059 s -- in com.example.demodatn.security.StandaloneAccountTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in com.example.demodatn.service.AccountCredentialPrivacyTest
+[ERROR] Tests run: 6, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 3.700 s <<< FAILURE! -- in com.example.demodatn.service.AccountProvisioningIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in com.example.demodatn.service.donhang.BankTransferDeadlineTest
+[ERROR] Tests run: 6, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.445 s <<< FAILURE! -- in com.example.demodatn.service.donhang.DeliveryIntegrationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.065 s -- in com.example.demodatn.service.donhang.GeocodingServiceTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.557 s -- in com.example.demodatn.service.donhang.InvoiceManagementIntegrationTest
+[ERROR] Tests run: 5, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.679 s <<< FAILURE! -- in com.example.demodatn.service.donhang.InvoiceOnlineWorkspaceIntegrationTest
+[ERROR] Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 3.277 s <<< FAILURE! -- in com.example.demodatn.service.donhang.OrderRollbackIntegrationTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.795 s -- in com.example.demodatn.service.donhang.OrderStockIntegrationTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.283 s -- in com.example.demodatn.service.donhang.PosDeliveryAndEmailIntegrationTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.283 s -- in com.example.demodatn.service.donhang.PosHoldServiceTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.731 s -- in com.example.demodatn.service.donhang.PosInvoiceIntegrationTest
+[ERROR] Tests run: 5, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.378 s <<< FAILURE! -- in com.example.demodatn.service.donhang.PosModalPricingIntegrationTest
+[ERROR] Tests run: 4, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 3.007 s <<< FAILURE! -- in com.example.demodatn.service.donhang.PosQrIntegrationTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.188 s -- in com.example.demodatn.service.donhang.PricingServiceTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.150 s -- in com.example.demodatn.service.donhang.ShippingFeeTest
+[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.445 s <<< FAILURE! -- in com.example.demodatn.service.donhang.ShippingOnlineIntegrationTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in com.example.demodatn.service.donhang.VietQrServiceTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.301 s -- in com.example.demodatn.service.GiaiDoan20IntegrationTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.427 s -- in com.example.demodatn.service.hotro.AdminChatbotIntegrationTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.327 s -- in com.example.demodatn.service.hotro.ChatbotIntegrationTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.159 s -- in com.example.demodatn.service.hotro.SupportChatAutomationTest
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.001 s -- in com.example.demodatn.service.hotro.SupportChatIntegrationTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.178 s -- in com.example.demodatn.service.khachhang.AdminAddressBookIntegrationTest
+[ERROR] Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.483 s <<< FAILURE! -- in com.example.demodatn.service.khachhang.ShippingAddressIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.078 s -- in com.example.demodatn.service.khuyenmai.CheckoutVoucherOptionsTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.example.demodatn.service.khuyenmai.DiscountEffectivityTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.384 s -- in com.example.demodatn.service.khuyenmai.DiscountIntegrationTest
+[ERROR] Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.070 s <<< FAILURE! -- in com.example.demodatn.service.khuyenmai.DiscountWorkflowIntegrationTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.825 s -- in com.example.demodatn.service.nhanvien.AdminAccountServiceTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.584 s -- in com.example.demodatn.service.PeopleIntegrationTest
+[ERROR] Tests run: 12, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.743 s <<< FAILURE! -- in com.example.demodatn.service.sanpham.CatalogIntegrationTest
+[ERROR] Tests run: 7, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.243 s <<< FAILURE! -- in com.example.demodatn.service.sanpham.ColorVariantIntegrationTest
+[ERROR] Tests run: 9, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.217 s <<< FAILURE! -- in com.example.demodatn.service.sanpham.EditableVariantIntegrationTest
+[ERROR] Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.596 s <<< FAILURE! -- in com.example.demodatn.service.sanpham.InitialMaterialIntegrationTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.459 s -- in com.example.demodatn.service.sanpham.MaterialIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.170 s -- in com.example.demodatn.service.sanpham.ObjectCodeIntegrationTest
+[ERROR] Tests run: 9, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.264 s <<< FAILURE! -- in com.example.demodatn.service.sanpham.ProductFeedbackIntegrationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.217 s -- in com.example.demodatn.service.sanpham.ProductGalleryIntegrationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.example.demodatn.service.sanpham.ProductImageUrlServiceTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.261 s -- in com.example.demodatn.service.sanpham.ProductWorkspaceIntegrationTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.401 s -- in com.example.demodatn.service.sanpham.SaleStatusAndCodeIntegrationTest
+[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.238 s <<< FAILURE! -- in com.example.demodatn.service.sanpham.SoleIntegrationTest
+[ERROR] Tests run: 6, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.149 s <<< FAILURE! -- in com.example.demodatn.service.thongke.DashboardIntegrationTest
+[ERROR] Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.444 s <<< FAILURE! -- in com.example.demodatn.service.thongke.StatisticsIntegrationTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.example.demodatn.util.PaginationTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.example.demodatn.util.PasswordPolicyTest
+[ERROR]   AdminFrameIntegrationTest.eightSecurityCasesAndForgedCodeIgnored:23 Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>
+[ERROR]   EmployeeAccessIntegrationTest.eightSecurityCasesProtectNewCommands:55 Status expected:<302> but was:<403>
+[ERROR]   AccountProvisioningIntegrationTest.administratorRoutesAndCsrfCannotBeBypassed:139 Status expected:<302> but was:<403>
+[ERROR]   DeliveryIntegrationTest.customerInvoiceOwnershipAndEightSecurityScenarios:67 Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>
+[ERROR]   InvoiceOnlineWorkspaceIntegrationTest.eightSecurityCasesForOnlineAndInvoice:69 Status expected:<302> but was:<403>
+[ERROR]   OrderRollbackIntegrationTest.posShortageRollsBackOrderVoucherAndFirstStockWrite:128 Flash attribute 'error'
+[ERROR]   PosModalPricingIntegrationTest.testPosAvailableQuantityCalculationsInSession:125 Model attribute 'variants'
+[ERROR]   PosQrIntegrationTest.initialPosHasNoCustomerListAndShortSearchIsEmpty:43 Response content
+[ERROR]   PosQrIntegrationTest.invoiceChannelHasOwnColumnAndEightSecurityGroups:58 Response content
+[ERROR]   PosQrIntegrationTest.receiptCheckboxAndExactAmountAreEnforcedBeforeCreatingOrder:52 Flash attribute 'error'
+[ERROR]   ShippingOnlineIntegrationTest.eightSecurityGroupsAndAuthenticatedReadRoutes:66 Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>
+[ERROR]   ShippingAddressIntegrationTest.eightSecurityScenarios:123 Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>
+[ERROR]   DiscountWorkflowIntegrationTest.voucherIsAlwaysPublicRetainsCounterCannotDeleteAndSwitchHasCsrf:28 Status expected:<302> but was:<403>
+[ERROR]   CatalogIntegrationTest.guestPosCheckoutWritesOrderWithoutCreatingDuplicateGuestCustomer:116 Redirected URL '/admin/invoices/465' does not match the expected URL pattern '/admin/pos/success/*'
+[ERROR]   ColorVariantIntegrationTest.eightSecurityCasesAndOldOrderDisplay:109 Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>
+[ERROR]   EditableVariantIntegrationTest.eightSecurityGroupsAndCrossProductOwnership:78 Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>
+[ERROR]   InitialMaterialIntegrationTest.eightSecurityScenarios:141 Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>
+[ERROR]   ProductFeedbackIntegrationTest.eightSecurityGroupsAndAdminCannotDelete:67 Status expected:<302> but was:<403>
+[ERROR]   SoleIntegrationTest.labelsAndSoleCrudRoutesUseExistingRoleAndCsrfProtection:83 Range for response status value 403 expected:<REDIRECTION> but was:<CLIENT_ERROR>
+[ERROR]   DashboardIntegrationTest.cashPlusTransferEqualsTotalPeriodRevenue:56 expected: <0> but was: <1>
+[ERROR]   StatisticsIntegrationTest.independentSqlMatchesEveryUnifiedDashboardNumberAcrossAllFilterModes:177 expected: <0> but was: <1>
+[ERROR]   StatisticsIntegrationTest.metricsRankingsBoundariesChannelsAndStatusesUseSnapshotMoney:68 expected: <90.50> but was: <0>
+[ERROR]   PaginationIntegrationTest.allListsReturnTwelveTwelveSixWithStableIds:77->verify:67 NullPointer Cannot invoke "org.springframework.data.domain.Page.getNumberOfElements()" because "data" is null
+[ERROR] Tests run: 305, Failures: 22, Errors: 1, Skipped: 0
+[INFO] BUILD FAILURE
+[INFO] Total time:  01:10 min
+[INFO] Finished at: 2026-11-05T08:27:28+07:00

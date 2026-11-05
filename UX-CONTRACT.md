@@ -94,3 +94,13 @@ Giai đoạn 15: DashboardRepository và StatisticsService dùng chung điều k
 - `CheckoutService` chỉ bọc lưu địa chỉ tùy chọn + `OrderService.placeOrder` trong cùng transaction; `ShippingAddressService` giữ giới hạn/khóa/chủ sở hữu. Không đổi sổ khi sửa tạm.
 - POST cũ validate-voucher-ajax giữ nguyên; không bỏ route. API mới /checkout/vouchers (GET) và /checkout/preview (POST CSRF), mọi số tiền client bị bỏ qua. Không lưu tham chiếu QR xem trước vào đơn.
 - Giỏ lỗi được giữ trên checkout với cảnh báo và khóa hai nút đặt; server giữ kiểm tra `PricingService`/`OrderService`.
+
+
+## Hỗ trợ khách hàng — Giai đoạn 28
+
+- `chatbot.js` sở hữu mở/đóng, focus, inert/scroll lock, bàn phím, outbox IndexedDB và STOMP/polling. Desktop là panel không modal, mobile là dialog modal. Escape đóng và trả focus cho nút nổi. Dialog chọn đơn dùng primitive native và combo dùng chung.
+- `SupportChatService` sở hữu danh tính/chủ hội thoại, mã tin chống trùng, khóa/counter, hạn mức, masking và thẻ sản phẩm/đơn. Chỉ đọc giá từ PricingService, không ghi kho/đơn. Ảnh qua SupportChatImages tái sử dụng bộ kiểm tra ảnh hiện có, thư mục riêng không public.
+- `SupportChatSocketConfig` sở hữu CSRF CONNECT và quyền SUBSCRIBE/SEND; `SupportChatEvents` chỉ phát sau commit. Payload realtime là tín hiệu, client lấy nội dung bằng API có kiểm tra quyền. `SupportChatAutomation` gọi engine ngoài transaction, kiểm tra lại việc nhân viên đã nhận trước khi lưu.
+- REST là đường ghi bền vững; STOMP/SockJS là đường báo tin chính, mất kết nối dùng polling 5 giây. Cùng clientId được giữ trong IndexedDB qua reload/mất mạng. Lỗi tin có thử lại/bỏ, không mất draft; chuyển tài khoản không gửi nhầm outbox.
+- Phiên ẩn danh dùng cookie HttpOnly/SameSite=Lax; DB chỉ lưu hash trong cột riêng, session_id cũ không dùng làm quyền. Khi đăng nhập gộp lịch sử/outbox vào hội thoại hiện tại, đóng rồi gửi lại mở cùng hội thoại.
+- Đồng hồ server Asia/Ho_Chi_Minh; tự động 30 ngày, có nhân viên/hàng chờ 180 ngày cấu hình. Chỉ thông báo lưu cố định, thay checkbox đồng ý cũ. Màn nhận tin nhân viên thuộc giai đoạn 29.

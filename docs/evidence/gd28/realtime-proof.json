@@ -1,0 +1,19 @@
+{
+  "conversationId": 1,
+  "staffAccount": "gd28_employee",
+  "realtimeMs": 42,
+  "pollingMs": 4357,
+  "reconnectMs": 1973,
+  "reconnected": true,
+  "readReceipt": true,
+  "typing": true,
+  "autoBefore": 1,
+  "autoAfter": 1,
+  "unreadBeforeOpen": 1,
+  "cookie": {
+    "httpOnly": true,
+    "sameSite": "Lax"
+  },
+  "staffErrors": [],
+  "fallbackErrors": []
+}

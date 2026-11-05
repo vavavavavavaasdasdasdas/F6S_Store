@@ -342,7 +342,8 @@ public class ChatbotIntegrationTest {
                         .with(csrf())
                         .contentType(APPLICATION_JSON)
                         .content(payload))
-                .andExpect(status().isOk())
+                .andExpect(status().isFound())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl("/api/support/session"))
                 .andReturn().getResponse().getContentAsString();
 
         assertFalse(respStr.toLowerCase().contains("apikey"), "Không được lộ trường apiKey");

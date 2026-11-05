@@ -143,6 +143,13 @@ public class RulesChatbotEngine implements ChatbotEngine {
                 .build();
     }
 
+    /** The support inbox only invokes automation for explicit public shopping intents. */
+    public boolean supportsSupportMessage(String message) {
+        String raw=ChatbotToolService.removeAccents(message).toLowerCase(Locale.ROOT);
+        return !isSecurityViolation(raw) && !isHumanSupportIntent(raw)
+            && raw.matches(".*\\b(giay|sneaker|nike|adidas|puma|converse|vans|size|kich co|ban chan|chan dai|chinh sach|doi tra|bao hanh|giao hang|thanh toan|don hang|tra don|kiem tra don|dh[0-9]+)\\b.*");
+    }
+
     private void resetUnknown(String sessionId) {
         if (sessionId != null) consecutiveUnknownMap.put(sessionId, 0);
     }
@@ -186,7 +193,7 @@ public class RulesChatbotEngine implements ChatbotEngine {
 
     private boolean isSizeAdviceIntent(String raw) {
         return raw.contains("tu van size") || raw.contains("chon size") || raw.contains("size bao nhieu") ||
-               raw.contains("co giay") || raw.contains("kich co") || raw.contains("ban chan") ||
+               raw.contains("co giay") || raw.contains("kich co") || raw.contains("ban chan") || raw.contains("chan dai") ||
                (raw.contains("size") && raw.contains("chan"));
     }
 
