@@ -97,6 +97,11 @@ public class AdminChatbotIntegrationTest {
     @DisplayName("1. Lập bảng đối chiếu câu trả lời trợ lý | SELECT độc lập | số trên Dashboard (khớp 100%)")
     void testRevenueMetricsMatchDashboardAndIndependentSql() {
         LocalDate today = LocalDate.now(ZoneId.of("Asia/Ho_Chi_Minh"));
+        // OrderStatusService lưu DATETIME theo giờ Việt Nam, không phải UTC.
+        // Dòng lúc 20:30 phát hiện phép cộng múi giờ lần hai ngay cả khi test chạy ban ngày.
+        jdbc.update("INSERT orders(order_code,order_type,status,payment_status,payment_method,total_amount,discount_amount,final_amount,created_at) VALUES(?,'ONLINE','DELIVERED','PAID','COD',123457,0,123457,?)",
+                "TZ" + UUID.randomUUID().toString().replace("-", "").substring(0, 12),
+                java.sql.Timestamp.valueOf(today.atTime(20, 30)));
         String sessionId = UUID.randomUUID().toString();
 
         // 1.1 Doanh thu hôm nay
@@ -105,7 +110,7 @@ public class AdminChatbotIntegrationTest {
 
         String sqlToday = "SELECT COALESCE(SUM(" + RevenueCondition.AMOUNT + "), 0) FROM orders o " +
                           "WHERE " + RevenueCondition.SQL + " " +
-                          "AND CAST(o.created_at AT TIME ZONE 'UTC' AT TIME ZONE 'SE Asia Standard Time' AS DATE) = ?";
+                          "AND CAST(o.created_at AS DATE) = ?";
         BigDecimal sqlRevToday = jdbc.queryForObject(sqlToday, BigDecimal.class, today);
 
         ChatbotMessageResponse botRespToday = adminChatbotService.handleMessage(req("Doanh thu hôm nay", sessionId), "127.0.0.1", adminAuth);
@@ -117,7 +122,7 @@ public class AdminChatbotIntegrationTest {
 
         String sqlWeek = "SELECT COALESCE(SUM(" + RevenueCondition.AMOUNT + "), 0) FROM orders o " +
                          "WHERE " + RevenueCondition.SQL + " " +
-                         "AND CAST(o.created_at AT TIME ZONE 'UTC' AT TIME ZONE 'SE Asia Standard Time' AS DATE) BETWEEN ? AND ?";
+                         "AND CAST(o.created_at AS DATE) BETWEEN ? AND ?";
         BigDecimal sqlRevWeek = jdbc.queryForObject(sqlWeek, BigDecimal.class, weekFrom, today);
 
         ChatbotMessageResponse botRespWeek = adminChatbotService.handleMessage(req("Doanh thu tuần này", sessionId), "127.0.0.1", adminAuth);
@@ -129,7 +134,7 @@ public class AdminChatbotIntegrationTest {
 
         String sqlMonth = "SELECT COALESCE(SUM(" + RevenueCondition.AMOUNT + "), 0) FROM orders o " +
                           "WHERE " + RevenueCondition.SQL + " " +
-                          "AND CAST(o.created_at AT TIME ZONE 'UTC' AT TIME ZONE 'SE Asia Standard Time' AS DATE) BETWEEN ? AND ?";
+                          "AND CAST(o.created_at AS DATE) BETWEEN ? AND ?";
         BigDecimal sqlRevMonth = jdbc.queryForObject(sqlMonth, BigDecimal.class, monthFrom, today);
 
         ChatbotMessageResponse botRespMonth = adminChatbotService.handleMessage(req("Doanh thu tháng này", sessionId), "127.0.0.1", adminAuth);
@@ -164,6 +169,8 @@ public class AdminChatbotIntegrationTest {
         System.out.println("==========================================================================================");
 
         // Xác thực khớp số liệu 100%
+        assertTrue(sqlRevToday.compareTo(BigDecimal.valueOf(123457)) >= 0,
+                "SELECT phải tính cả đơn lúc 20:30 theo ngày Việt Nam");
         assertEquals(0, dashRevToday.compareTo(sqlRevToday));
         assertEquals(0, dashRevWeek.compareTo(sqlRevWeek));
         assertEquals(0, dashRevMonth.compareTo(sqlRevMonth));

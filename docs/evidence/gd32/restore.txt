@@ -1,0 +1,3 @@
+Processed 1656 pages for database 'shopbangiay_kt_gd32_20261105_165907', file 'shopbangiay' on file 1.
+Processed 1 pages for database 'shopbangiay_kt_gd32_20261105_165907', file 'shopbangiay_log' on file 1.
+RESTORE DATABASE successfully processed 1657 pages in 0.009 seconds (1437.662 MB/sec).

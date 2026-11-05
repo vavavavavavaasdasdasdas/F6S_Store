@@ -1,0 +1,4 @@
+SELECT id,ma FROM chat_hoi_thoai: 0 | CH0001
+SELECT COUNT(*) FROM chat_tin_nhan WHERE hoi_thoai_id=0: 2
+DOM: data-thread-id="0"
+Playwright: locator.waitFor Timeout 15000ms; admin không mở được hội thoại do selected=0.

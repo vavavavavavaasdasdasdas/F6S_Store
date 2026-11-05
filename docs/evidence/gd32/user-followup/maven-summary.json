@@ -1,0 +1,10 @@
+{
+  "tests": 315,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "command": "mvnw.cmd clean test",
+  "database": "shopbangiay_kt_gd32_20261105_202141",
+  "exit_code": 0,
+  "guard_unchanged": true
+}

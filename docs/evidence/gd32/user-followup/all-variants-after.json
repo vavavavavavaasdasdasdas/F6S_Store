@@ -1,0 +1,12 @@
+{
+  "database": "shopbangiay_kt_gd32_20261105_201412",
+  "all_40_prices_unchanged": true,
+  "only_ordered_variant_decreased_by_one": true,
+  "ordered_variant": {
+    "id": 17,
+    "ma": "BT0017",
+    "price": 1400000.0,
+    "quantity": 21
+  },
+  "other_39_quantities_unchanged": true
+}

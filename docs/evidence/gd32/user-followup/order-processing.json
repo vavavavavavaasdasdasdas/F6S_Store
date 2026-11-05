@@ -1,0 +1,99 @@
+{
+  "transitions": [
+    {
+      "state": "CONFIRMED",
+      "postStatus": 302,
+      "sql": {
+        "stage": "CONFIRMED",
+        "order": 1,
+        "invoice": 1,
+        "stock": 21,
+        "payment": "UNPAID"
+      }
+    },
+    {
+      "state": "PREPARING",
+      "postStatus": 302,
+      "sql": {
+        "stage": "PREPARING",
+        "order": 1,
+        "invoice": 1,
+        "stock": 21,
+        "payment": "UNPAID"
+      }
+    },
+    {
+      "state": "SHIPPING",
+      "postStatus": 302,
+      "sql": {
+        "stage": "SHIPPING",
+        "order": 1,
+        "invoice": 1,
+        "stock": 21,
+        "payment": "UNPAID"
+      }
+    },
+    {
+      "state": "DELIVERED",
+      "postStatus": 302,
+      "sql": {
+        "stage": "DELIVERED",
+        "order": 1,
+        "invoice": 1,
+        "stock": 21,
+        "payment": "PAID"
+      }
+    }
+  ],
+  "userPages": [
+    {
+      "url": "/orders",
+      "width": 1280,
+      "status": 200,
+      "overflow": false,
+      "text": "Lịch sử Đơn Hàng\nMã đơn hàng\nTrạng thái\nTất cả trạng thái\nGiao hàng thất bại\nChờ xử lý\nĐã nhận chuyển khoản\nHoàn tất\nĐang chuẩn bị\nĐã hủy\nĐã xác nhận\nĐang giao\n▾\nTừ ngày\nĐến ngày\nLọc\nXóa lọc\nSTT\tMã Đơn Hàng\tNgày đặt\tTổng tiền\tTrạng thái\tHành động\n1\tDH000001\t05/11/2026 20:16\t1.210.000 đ\tHoàn tất\t\nXem chi tiết"
+    },
+    {
+      "url": "/orders/1",
+      "width": 1280,
+      "status": 200,
+      "overflow": false,
+      "text": "Chi tiết Đơn Hàng DH000001\nQuay lại danh sách\nTheo dõi đơn hàng\nĐã đặt\n20:16 05/11/2026\nuser\nĐã xác nhận\n20:19 05/11/2026\nadmin\nĐang chuẩn bị hàng\n20:19 05/11/2026\nadmin\nĐang giao\n20:19 05/11/2026\nadmin\nĐã giao\n20:19 05/11/2026\nadmin\nLịch sử xử lý\n\nTỉnh/Thành phố: Hà Nội\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nXem hóa đơn\nThông tin nhận hàng\n\nNgười nhận: Nguyễn Văn Ánh\n\nSĐT: 0901234567\n\nĐịa chỉ: Số 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội\n\nNgày đặt: 05/11/2026 20:16\n\nTrạng thái: Hoàn tất\n\nSản phẩm đã mua\nSTT\tMã\tẢnh\tTên sản phẩm\tKích cỡ\tChất liệu\tMàu sắc\tĐế giày\tSố lượng\tĐơn giá\tThành tiền\tHành động\n1\tSP003\t\tConverse Chuck Taylor All Star Classic\t39\tVải canvas\tĐen\tCao su\t1\t1.260.000 đ\t1.260.000 đ\t\nĐánh giá\n\nTổng cộng:\t1.210.000 đ"
+    },
+    {
+      "url": "/orders/1/hoa-don",
+      "width": 1280,
+      "status": 200,
+      "overflow": false,
+      "text": "Chi tiết đơn hàngIn hóa đơn\nF6S_Store\nHÓA ĐƠN BÁN HÀNG\nHD000001\n\n05/11/2026 20:16\n\nTỉnh/Thành phố: Hà Nội\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nNgười nhận: Nguyễn Văn Ánh · SĐT: 0901234567\n\nĐịa chỉ: Số 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội\n\nĐơn hàng: DH000001\nKênh bán: Trực tuyến\n\nKhách: nguyen ngoc viet anh\nSĐT: 0123999999\nNhân viên: Đơn trực tuyến\n\nSTT\tMã\tẢnh\tTên sản phẩm\tKích cỡ\tChất liệu\tMàu sắc\tĐế giày\tSL\tĐơn giá (đ)\tThành tiền (đ)\n1\tSP003\t\tConverse Chuck Taylor All Star Classic\t39\tVải canvas\tĐen\tCao su\t1\t1.260.000\t1.260.000\nTạm tính\n1.260.000 đ\nGiảm giá\n50.000 đ\nTỔNG THANH TOÁN\n1.210.000 đ\nPhương thức\nThanh toán khi nhận hàng\nThanh toán\nĐã thanh toán\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng.\n\nCảm ơn quý khách!"
+    },
+    {
+      "url": "/orders",
+      "width": 375,
+      "status": 200,
+      "overflow": false,
+      "text": "Lịch sử Đơn Hàng\nMã đơn hàng\nTrạng thái\nTất cả trạng thái\nGiao hàng thất bại\nChờ xử lý\nĐã nhận chuyển khoản\nHoàn tất\nĐang chuẩn bị\nĐã hủy\nĐã xác nhận\nĐang giao\n▾\nTừ ngày\nĐến ngày\nLọc\nXóa lọc\nSTT\tMã Đơn Hàng\tNgày đặt\tTổng tiền\tTrạng thái\tHành động\n1\tDH000001\t05/11/2026 20:16\t1.210.000 đ\tHoàn tất\t\nXem chi tiết"
+    },
+    {
+      "url": "/orders/1",
+      "width": 375,
+      "status": 200,
+      "overflow": false,
+      "text": "Chi tiết Đơn Hàng DH000001\nQuay lại danh sách\nTheo dõi đơn hàng\nĐã đặt\n20:16 05/11/2026\nuser\nĐã xác nhận\n20:19 05/11/2026\nadmin\nĐang chuẩn bị hàng\n20:19 05/11/2026\nadmin\nĐang giao\n20:19 05/11/2026\nadmin\nĐã giao\n20:19 05/11/2026\nadmin\nLịch sử xử lý\n\nTỉnh/Thành phố: Hà Nội\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nXem hóa đơn\nThông tin nhận hàng\n\nNgười nhận: Nguyễn Văn Ánh\n\nSĐT: 0901234567\n\nĐịa chỉ: Số 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội\n\nNgày đặt: 05/11/2026 20:16\n\nTrạng thái: Hoàn tất\n\nSản phẩm đã mua\nSTT\tMã\tẢnh\tTên sản phẩm\tKích cỡ\tChất liệu\tMàu sắc\tĐế giày\tSố lượng\tĐơn giá\tThành tiền\tHành động\n1\tSP003\t\tConverse Chuck Taylor All Star Classic\t39\tVải canvas\tĐen\tCao su\t1\t1.260.000 đ\t1.260.000 đ\t\nĐánh giá\n\nTổng cộng:\t1.210.000 đ"
+    },
+    {
+      "url": "/orders/1/hoa-don",
+      "width": 375,
+      "status": 200,
+      "overflow": false,
+      "text": "Chi tiết đơn hàngIn hóa đơn\nF6S_Store\nHÓA ĐƠN BÁN HÀNG\nHD000001\n\n05/11/2026 20:16\n\nTỉnh/Thành phố: Hà Nội\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nNgười nhận: Nguyễn Văn Ánh · SĐT: 0901234567\n\nĐịa chỉ: Số 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội\n\nĐơn hàng: DH000001\nKênh bán: Trực tuyến\n\nKhách: nguyen ngoc viet anh\nSĐT: 0123999999\nNhân viên: Đơn trực tuyến\n\nSTT\tMã\tẢnh\tTên sản phẩm\tKích cỡ\tChất liệu\tMàu sắc\tĐế giày\tSL\tĐơn giá (đ)\tThành tiền (đ)\n1\tSP003\t\tConverse Chuck Taylor All Star Classic\t39\tVải canvas\tĐen\tCao su\t1\t1.260.000\t1.260.000\nTạm tính\n1.260.000 đ\nGiảm giá\n50.000 đ\nTỔNG THANH TOÁN\n1.210.000 đ\nPhương thức\nThanh toán khi nhận hàng\nThanh toán\nĐã thanh toán\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng.\n\nCảm ơn quý khách!"
+    }
+  ],
+  "security": [
+    {
+      "name": "User POST xử lý hóa đơn có CSRF hợp lệ",
+      "status": 403,
+      "expected": 403
+    }
+  ]
+}

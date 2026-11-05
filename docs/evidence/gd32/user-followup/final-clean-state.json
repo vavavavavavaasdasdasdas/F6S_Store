@@ -1,0 +1,185 @@
+{
+  "context": {
+    "database": "shopbangiay_kt_gd32_20261105_203055",
+    "source": {
+      "database_name": "shopbangiay_kt_20261105_gd29",
+      "backup_finish_date": "2026-11-05T09:26:45",
+      "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261105_gd29_schema.bak"
+    }
+  },
+  "counts": [
+    {
+      "bang": "admin_chat_audit",
+      "n": 0
+    },
+    {
+      "bang": "admin_chat_hoi_thoai",
+      "n": 0
+    },
+    {
+      "bang": "admin_chat_tin_nhan",
+      "n": 0
+    },
+    {
+      "bang": "categories",
+      "n": 7
+    },
+    {
+      "bang": "cau_hinh_phi_ship",
+      "n": 1
+    },
+    {
+      "bang": "chat_action_audit",
+      "n": 0
+    },
+    {
+      "bang": "chat_hoi_thoai",
+      "n": 0
+    },
+    {
+      "bang": "chat_lieu",
+      "n": 8
+    },
+    {
+      "bang": "chat_mail_log",
+      "n": 0
+    },
+    {
+      "bang": "chat_tin_nhan",
+      "n": 0
+    },
+    {
+      "bang": "chatbot_faq",
+      "n": 9
+    },
+    {
+      "bang": "customers",
+      "n": 2
+    },
+    {
+      "bang": "danh_gia",
+      "n": 0
+    },
+    {
+      "bang": "de_giay",
+      "n": 8
+    },
+    {
+      "bang": "dia_chi_nhan_hang",
+      "n": 1
+    },
+    {
+      "bang": "employees",
+      "n": 1
+    },
+    {
+      "bang": "inventory_logs",
+      "n": 40
+    },
+    {
+      "bang": "invoices",
+      "n": 0
+    },
+    {
+      "bang": "mau_sac",
+      "n": 11
+    },
+    {
+      "bang": "order_details",
+      "n": 0
+    },
+    {
+      "bang": "order_mail_log",
+      "n": 0
+    },
+    {
+      "bang": "order_status_history",
+      "n": 0
+    },
+    {
+      "bang": "orders",
+      "n": 0
+    },
+    {
+      "bang": "phieu_ho_tro",
+      "n": 0
+    },
+    {
+      "bang": "phuong_xa",
+      "n": 3321
+    },
+    {
+      "bang": "pos_held_items",
+      "n": 0
+    },
+    {
+      "bang": "pos_held_orders",
+      "n": 0
+    },
+    {
+      "bang": "product_images",
+      "n": 5
+    },
+    {
+      "bang": "product_variants",
+      "n": 40
+    },
+    {
+      "bang": "products",
+      "n": 5
+    },
+    {
+      "bang": "promotion_details",
+      "n": 4
+    },
+    {
+      "bang": "promotions",
+      "n": 2
+    },
+    {
+      "bang": "roles",
+      "n": 3
+    },
+    {
+      "bang": "sizes",
+      "n": 8
+    },
+    {
+      "bang": "ten_tinh_thanh_cu",
+      "n": 68
+    },
+    {
+      "bang": "tinh_thanh",
+      "n": 34
+    },
+    {
+      "bang": "users",
+      "n": 2
+    },
+    {
+      "bang": "vouchers",
+      "n": 5
+    },
+    {
+      "bang": "vung_giao_hang",
+      "n": 3
+    },
+    {
+      "bang": "yeu_thich",
+      "n": 0
+    }
+  ],
+  "accounts": [
+    {
+      "id": 1,
+      "username": "admin",
+      "status": true
+    },
+    {
+      "id": 2,
+      "username": "user",
+      "status": true
+    }
+  ],
+  "constraints": "DBCC execution completed. If DBCC printed error messages, contact your system administrator."
+}

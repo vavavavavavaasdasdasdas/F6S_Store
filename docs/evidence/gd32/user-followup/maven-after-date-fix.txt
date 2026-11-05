@@ -1,0 +1,11 @@
+[INFO] Running com.example.demodatn.service.hotro.AdminChatbotIntegrationTest
+2026-11-05 20:29:39.990  INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.hotro.AdminChatbotIntegrationTest]: AdminChatbotIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-05 20:29:40.026  INFO o.s.b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.hotro.AdminChatbotIntegrationTest
+2026-11-05 20:29:40.040  INFO o.s.t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demodatn.service.hotro.AdminChatbotIntegrationTest]: AdminChatbotIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-05 20:29:40.040  INFO o.s.b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demodatn.DemoDatnApplication for test class com.example.demodatn.service.hotro.AdminChatbotIntegrationTest
+Doanh thu h�m nay         | 13,839,457 ?         | 13,839,457 ?         | KH?P 100%
+Doanh thu tu?n n�y        | 13,839,457 ?         | 13,839,457 ?         | KH?P 100%
+Doanh thu th�ng n�y       | 13,839,457 ?         | 13,839,457 ?         | KH?P 100%
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.590 s -- in com.example.demodatn.service.hotro.AdminChatbotIntegrationTest
+[INFO] Tests run: 315, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS

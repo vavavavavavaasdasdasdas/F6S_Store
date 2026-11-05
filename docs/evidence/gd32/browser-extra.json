@@ -1,0 +1,349 @@
+{
+  "guestPages": [
+    {
+      "url": "/",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/"
+    },
+    {
+      "url": "/products",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products"
+    },
+    {
+      "url": "/cart",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/cart"
+    },
+    {
+      "url": "/register",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/register"
+    },
+    {
+      "url": "/login",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/login"
+    },
+    {
+      "url": "/category/1",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/1"
+    },
+    {
+      "url": "/category/2",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/2"
+    },
+    {
+      "url": "/category/3",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/3"
+    },
+    {
+      "url": "/category/4",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/4"
+    },
+    {
+      "url": "/category/5",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/5"
+    },
+    {
+      "url": "/category/6",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/6"
+    },
+    {
+      "url": "/category/8",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/8"
+    },
+    {
+      "url": "/products?promotion=true",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products?promotion=true"
+    },
+    {
+      "url": "/products/5",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products/5"
+    },
+    {
+      "url": "/products/4",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products/4"
+    },
+    {
+      "url": "/products/3",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products/3"
+    },
+    {
+      "url": "/products/2",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products/2"
+    },
+    {
+      "url": "/products?sort=newest",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products?sort=newest"
+    },
+    {
+      "url": "/products/1",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products/1"
+    },
+    {
+      "url": "/policy",
+      "status": 200,
+      "finalUrl": "http://localhost:18032/policy"
+    }
+  ],
+  "pricing": [
+    {
+      "productId": 1,
+      "text": "Trang chủ\nSản phẩm\nNike Air Force 1 '07\nNike Air Force 1 '07\nMã SP: SP001 | Thương hiệu: Nike\n2.929.000 ₫\nChọn thuộc tính biến thể:\nMàu sắc\nChọn màu sắc\nĐen\nTrắng\n▾\nChất liệu\nChọn chất liệu\nDa thật\n▾\nĐế giày\nChọn đế giày\nCao su\n▾\nKích cỡ\nChọn kích cỡ\n39\n40\n41\n42\n▾\nSố lượng:\n-\n+\nVui lòng chọn kích cỡ và chất liệu\nTHÊM VÀO GIỎ\nMUA NGAY\nMô tả sản phẩm\nThông tin chi tiết\n\nNike Air Force 1 '07 có phong cách thể thao cổ điển, phù hợp phối cùng trang phục hằng ngày. Hai lựa chọn trắng và đen giúp bạn dễ chọn màu yêu thích.\n\nĐánh giá sản phẩm\n\nChưa có đánh giá nào.\n\n5 sao: 0\n4 sao: 0\n3 sao: 0\n2 sao: 0\n1 sao: 0"
+    },
+    {
+      "productId": 2,
+      "text": "Trang chủ\nSản phẩm\nAdidas Ultraboost Light\nAdidas Ultraboost Light\nMã SP: SP002 | Thương hiệu: Adidas\n4.200.000 ₫ 4.500.000 ₫ GIẢM -7%\nChọn thuộc tính biến thể:\nMàu sắc\nChọn màu sắc\nĐen\nTrắng\n▾\nChất liệu\nChọn chất liệu\nVải lưới\n▾\nĐế giày\nChọn đế giày\nEVA\n▾\nKích cỡ\nChọn kích cỡ\n39\n40\n41\n42\n▾\nSố lượng:\n-\n+\nVui lòng chọn kích cỡ và chất liệu\nTHÊM VÀO GIỎ\nMUA NGAY\nMô tả sản phẩm\nThông tin chi tiết\n\nAdidas Ultraboost Light là lựa chọn mang phong cách giày chạy bộ. Sản phẩm có hai màu trắng và đen để bạn lựa chọn theo sở thích.\n\nĐánh giá sản phẩm\n\nChưa có đánh giá nào.\n\n5 sao: 0\n4 sao: 0\n3 sao: 0\n2 sao: 0\n1 sao: 0"
+    },
+    {
+      "productId": 3,
+      "text": "Trang chủ\nSản phẩm\nConverse Chuck Taylor All Star Classic\nConverse Chuck Taylor All Star Classic\nMã SP: SP003 | Thương hiệu: Converse\n1.260.000 ₫ 1.400.000 ₫ GIẢM -10%\nChọn thuộc tính biến thể:\nMàu sắc\nChọn màu sắc\nĐen\nTrắng\n▾\nChất liệu\nChọn chất liệu\nVải canvas\n▾\nĐế giày\nChọn đế giày\nCao su\n▾\nKích cỡ\nChọn kích cỡ\n39\n40\n41\n42\n▾\nSố lượng:\n-\n+\nVui lòng chọn kích cỡ và chất liệu\nTHÊM VÀO GIỎ\nMUA NGAY\nMô tả sản phẩm\nThông tin chi tiết\n\nConverse Chuck Taylor All Star Classic mang phong cách giày vải quen thuộc. Thiết kế dễ phối cùng quần jeans hoặc trang phục thường ngày.\n\nĐánh giá sản phẩm\n\nChưa có đánh giá nào.\n\n5 sao: 0\n4 sao: 0\n3 sao: 0\n2 sao: 0\n1 sao: 0"
+    },
+    {
+      "productId": 4,
+      "text": "Trang chủ\nSản phẩm\nVans Old Skool\nVans Old Skool\nMã SP: SP004 | Thương hiệu: Vans\n1.620.000 ₫ 1.800.000 ₫ GIẢM -10%\nChọn thuộc tính biến thể:\nMàu sắc\nChọn màu sắc\nĐen\nTrắng\n▾\nChất liệu\nChọn chất liệu\nVải canvas\n▾\nĐế giày\nChọn đế giày\nCao su\n▾\nKích cỡ\nChọn kích cỡ\n39\n40\n41\n42\n▾\nSố lượng:\n-\n+\nVui lòng chọn kích cỡ và chất liệu\nTHÊM VÀO GIỎ\nMUA NGAY\nMô tả sản phẩm\nThông tin chi tiết\n\nVans Old Skool mang phong cách đường phố đặc trưng của thương hiệu. Hai màu đen và trắng phù hợp nhiều cách phối trang phục.\n\nĐánh giá sản phẩm\n\nChưa có đánh giá nào.\n\n5 sao: 0\n4 sao: 0\n3 sao: 0\n2 sao: 0\n1 sao: 0"
+    },
+    {
+      "productId": 5,
+      "text": "Trang chủ\nSản phẩm\nASICS Gel-Kayano 14\nASICS Gel-Kayano 14\nMã SP: SP005 | Thương hiệu: ASICS\n3.900.000 ₫ 4.200.000 ₫ GIẢM -7%\nChọn thuộc tính biến thể:\nMàu sắc\nChọn màu sắc\nTrắng\nXám\n▾\nChất liệu\nChọn chất liệu\nVải lưới\n▾\nĐế giày\nChọn đế giày\nEVA\n▾\nKích cỡ\nChọn kích cỡ\n39\n40\n41\n42\n▾\nSố lượng:\n-\n+\nVui lòng chọn kích cỡ và chất liệu\nTHÊM VÀO GIỎ\nMUA NGAY\nMô tả sản phẩm\nThông tin chi tiết\n\nASICS Gel-Kayano 14 có phong cách thể thao với cảm hứng giày chạy bộ. Các lựa chọn xám và trắng giúp bạn dễ phối cùng trang phục hằng ngày.\n\nĐánh giá sản phẩm\n\nChưa có đánh giá nào.\n\n5 sao: 0\n4 sao: 0\n3 sao: 0\n2 sao: 0\n1 sao: 0"
+    }
+  ],
+  "vouchers": [
+    {
+      "name": "Converse thấp",
+      "addStatus": 200,
+      "optionsStatus": 200,
+      "options": [
+        {
+          "code": "CHAOMUNG10",
+          "name": "Chào mừng khách mới",
+          "discountType": "PERCENT",
+          "discountValue": 10,
+          "maxDiscount": 150000,
+          "minOrderValue": 500000,
+          "discountAmount": 126000,
+          "missingAmount": 0,
+          "eligible": true,
+          "best": true,
+          "message": "Áp dụng thành công."
+        },
+        {
+          "code": "GIAM50K",
+          "name": "Giảm 50.000đ",
+          "discountType": "FIXED",
+          "discountValue": 50000,
+          "maxDiscount": null,
+          "minOrderValue": 500000,
+          "discountAmount": 50000,
+          "missingAmount": 0,
+          "eligible": true,
+          "best": false,
+          "message": "Áp dụng thành công."
+        },
+        {
+          "code": "GIAM100K",
+          "name": "Giảm 100.000đ",
+          "discountType": "FIXED",
+          "discountValue": 100000,
+          "maxDiscount": null,
+          "minOrderValue": 1500000,
+          "discountAmount": 0,
+          "missingAmount": 240000,
+          "eligible": false,
+          "best": false,
+          "message": "Đơn hàng chưa đạt giá trị tối thiểu 1500000.00 đ."
+        },
+        {
+          "code": "SALE15",
+          "name": "Ưu đãi 15%",
+          "discountType": "PERCENT",
+          "discountValue": 15,
+          "maxDiscount": 300000,
+          "minOrderValue": 2000000,
+          "discountAmount": 0,
+          "missingAmount": 740000,
+          "eligible": false,
+          "best": false,
+          "message": "Đơn hàng chưa đạt giá trị tối thiểu 2000000.00 đ."
+        },
+        {
+          "code": "VIP20",
+          "name": "Ưu đãi lớn 20%",
+          "discountType": "PERCENT",
+          "discountValue": 20,
+          "maxDiscount": 500000,
+          "minOrderValue": 3000000,
+          "discountAmount": 0,
+          "missingAmount": 1740000,
+          "eligible": false,
+          "best": false,
+          "message": "Đơn hàng chưa đạt giá trị tối thiểu 3000000.00 đ."
+        }
+      ]
+    },
+    {
+      "name": "ASICS cao",
+      "addStatus": 200,
+      "optionsStatus": 200,
+      "options": [
+        {
+          "code": "VIP20",
+          "name": "Ưu đãi lớn 20%",
+          "discountType": "PERCENT",
+          "discountValue": 20,
+          "maxDiscount": 500000,
+          "minOrderValue": 3000000,
+          "discountAmount": 500000,
+          "missingAmount": 0,
+          "eligible": true,
+          "best": true,
+          "message": "Áp dụng thành công."
+        },
+        {
+          "code": "SALE15",
+          "name": "Ưu đãi 15%",
+          "discountType": "PERCENT",
+          "discountValue": 15,
+          "maxDiscount": 300000,
+          "minOrderValue": 2000000,
+          "discountAmount": 300000,
+          "missingAmount": 0,
+          "eligible": true,
+          "best": false,
+          "message": "Áp dụng thành công."
+        },
+        {
+          "code": "CHAOMUNG10",
+          "name": "Chào mừng khách mới",
+          "discountType": "PERCENT",
+          "discountValue": 10,
+          "maxDiscount": 150000,
+          "minOrderValue": 500000,
+          "discountAmount": 150000,
+          "missingAmount": 0,
+          "eligible": true,
+          "best": false,
+          "message": "Áp dụng thành công."
+        },
+        {
+          "code": "GIAM100K",
+          "name": "Giảm 100.000đ",
+          "discountType": "FIXED",
+          "discountValue": 100000,
+          "maxDiscount": null,
+          "minOrderValue": 1500000,
+          "discountAmount": 100000,
+          "missingAmount": 0,
+          "eligible": true,
+          "best": false,
+          "message": "Áp dụng thành công."
+        },
+        {
+          "code": "GIAM50K",
+          "name": "Giảm 50.000đ",
+          "discountType": "FIXED",
+          "discountValue": 50000,
+          "maxDiscount": null,
+          "minOrderValue": 500000,
+          "discountAmount": 50000,
+          "missingAmount": 0,
+          "eligible": true,
+          "best": false,
+          "message": "Áp dụng thành công."
+        }
+      ]
+    }
+  ],
+  "requestsFailed": [
+    {
+      "url": "https://tile.openstreetmap.org/12/3251/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    }
+  ],
+  "jsErrors": [],
+  "crawl": {
+    "visited": 20,
+    "remaining": 0
+  },
+  "posOverflow": {
+    "width": 1280,
+    "scrollWidth": 1418,
+    "offenders": [
+      {
+        "tag": "DIV",
+        "id": "",
+        "class": "pos-v2-sidebar"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "class": "pos-card pos-card-customer"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "class": "pos-card-header d-flex justify-content-between align-items-center"
+      },
+      {
+        "tag": "H2",
+        "id": "",
+        "class": "h5 fw-bold mb-0"
+      },
+      {
+        "tag": "SPAN",
+        "id": "customer-mode-label",
+        "class": "small text-muted"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "class": "pos-customer-search-wrap mb-2"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "class": "input-group"
+      },
+      {
+        "tag": "INPUT",
+        "id": "customerSearch",
+        "class": "form-control"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "btn-open-quick-customer",
+        "class": "btn btn-outline-primary"
+      },
+      {
+        "tag": "DIV",
+        "id": "pos-selected-customer-box",
+        "class": ""
+      },
+      {
+        "tag": "DIV",
+        "id": "pos-guest-display",
+        "class": "p-2 rounded bg-light border text-muted small"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "class": "d-flex align-items-center justify-content-between"
+      }
+    ]
+  }
+}

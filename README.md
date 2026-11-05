@@ -116,3 +116,46 @@ DemoDATN/
 ??? README.md                           # T?i li?u d? ?n
 ??? shopgiay.sql                        # Script kh?i t?o schema c? s?
 ```
+
+
+## Giai đoạn 32 — dọn dữ liệu và seed (thao tác riêng, không phải migration)
+
+Giữ `database/tools/` và `database/seed/`. Hai script này không được đưa vào `chay_tat_ca.sql` và không tự chạy khi khởi động ứng dụng. `DataInitializer` chỉ chạy khi bật profile `test`; không bật profile này trên DB chính.
+
+Dừng ứng dụng và sao lưu trước khi tự vận hành trên database cần dọn. Tên DB phải được truyền tường minh; script dừng khi `DB_NAME()` khác `TenDB_DuKien`. Dùng Windows Authentication (`-E`) hoặc tài khoản SQL qua `SQLCMDPASSWORD`, không đặt mật khẩu trong dòng lệnh/repository.
+
+1. Xem trước (toàn bộ thay đổi được ROLLBACK; không reset bộ đếm):
+
+```powershell
+sqlcmd -S localhost -E -C -b -f 65001 -d "<DB_DA_SAO_LUU>" -v TenDB_DuKien="<DB_DA_SAO_LUU>" -i database/tools/don_du_lieu_thu.sql
+```
+
+2. Xác nhận sau khi duyệt bảng đếm/tài khoản giữ lại. Tạo file cục bộ `tmp/xac_nhan_gd32.sql` có nội dung dưới đây rồi chạy sqlcmd cùng các tham số trên, thay `-i` thành `-i tmp/xac_nhan_gd32.sql`:
+
+```sql
+EXEC sys.sp_set_session_context @key=N'XAC_NHAN', @value=N'XOA-DU-LIEU-THU';
+GO
+:r database/tools/don_du_lieu_thu.sql
+```
+
+`@DanhMucDuyetXoa` mặc định rỗng: không xóa thương hiệu/kích cỡ/chất liệu/màu/đế khi chưa duyệt ID. Tài khoản phải có đúng một `admin` và một `user`; script giữ nguyên mật khẩu cùng hồ sơ/địa chỉ liên kết. Script từ chối schema có bảng chưa kiểm kê. Không tắt khóa ngoại.
+
+3. Tạo 5 sản phẩm, 40 biến thể, 2 đợt giảm giá, 5 phiếu:
+
+```powershell
+sqlcmd -S localhost -E -C -b -f 65001 -d "<DB_DA_SAO_LUU>" -v TenDB_DuKien="<DB_DA_SAO_LUU>" -i database/seed/du_lieu_mau.sql
+```
+
+Seed chạy lặp không tăng số dòng, không ghi đè tồn kho đã bán và không thêm log khởi tạo lần hai. Ngày hiệu lực cố định 05/11/2026–31/12/2026 (đợt khai trương kết thúc 30/11), giờ Việt Nam. Ngoại lệ có chủ đích: reset bộ đếm chỉ cho bảng đã xóa sạch, nên mã bắt đầu SP001/BT0001/KM001/CH0001; không reset bộ đếm danh mục/hồ sơ còn dữ liệu.
+
+Ảnh do chủ cửa hàng cung cấp, đặt trong `uploads/products/`:
+
+| Sản phẩm | Tên file |
+|---|---|
+| Nike Air Force 1 '07 | nike-air-force-1-07.jpg |
+| Adidas Ultraboost Light | adidas-ultraboost-light.jpg |
+| Converse Chuck Taylor All Star Classic | converse-chuck-taylor-classic.jpg |
+| Vans Old Skool | vans-old-skool.jpg |
+| ASICS Gel-Kayano 14 | asics-gel-kayano-14.jpg |
+
+Chưa có ảnh thì dùng cơ chế ảnh thay thế hiện có (`/anh/anh-san-pham-thay-the.svg`). Không tự tải/vẽ ảnh. Không tự xóa upload; danh sách file mồ côi, hướng dẫn kiểm tra và kết quả thực tế nằm trong `docs/GIAI_DOAN_32.md`.

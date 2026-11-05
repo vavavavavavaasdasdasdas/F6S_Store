@@ -1,0 +1,126 @@
+[
+  {
+    "bang": "admin_chat_audit",
+    "khop_mau": 0
+  },
+  {
+    "bang": "admin_chat_hoi_thoai",
+    "khop_mau": 0
+  },
+  {
+    "bang": "categories",
+    "khop_mau": 0
+  },
+  {
+    "bang": "chat_action_audit",
+    "khop_mau": 0
+  },
+  {
+    "bang": "chat_hoi_thoai",
+    "khop_mau": 0
+  },
+  {
+    "bang": "chat_lieu",
+    "khop_mau": 0
+  },
+  {
+    "bang": "chatbot_faq",
+    "khop_mau": 0
+  },
+  {
+    "bang": "customers",
+    "khop_mau": 0
+  },
+  {
+    "bang": "danh_gia",
+    "khop_mau": 0
+  },
+  {
+    "bang": "de_giay",
+    "khop_mau": 0
+  },
+  {
+    "bang": "dia_chi_nhan_hang",
+    "khop_mau": 0
+  },
+  {
+    "bang": "employees",
+    "khop_mau": 0
+  },
+  {
+    "bang": "invoices",
+    "khop_mau": 0
+  },
+  {
+    "bang": "mau_sac",
+    "khop_mau": 0
+  },
+  {
+    "bang": "order_details",
+    "khop_mau": 0
+  },
+  {
+    "bang": "order_mail_log",
+    "khop_mau": 0
+  },
+  {
+    "bang": "order_status_history",
+    "khop_mau": 0
+  },
+  {
+    "bang": "orders",
+    "khop_mau": 0
+  },
+  {
+    "bang": "phieu_ho_tro",
+    "khop_mau": 0
+  },
+  {
+    "bang": "phuong_xa",
+    "khop_mau": 0
+  },
+  {
+    "bang": "pos_held_orders",
+    "khop_mau": 0
+  },
+  {
+    "bang": "product_variants",
+    "khop_mau": 0
+  },
+  {
+    "bang": "products",
+    "khop_mau": 0
+  },
+  {
+    "bang": "promotions",
+    "khop_mau": 0
+  },
+  {
+    "bang": "roles",
+    "khop_mau": 0
+  },
+  {
+    "bang": "sizes",
+    "khop_mau": 0
+  },
+  {
+    "bang": "ten_tinh_thanh_cu",
+    "khop_mau": 0
+  },
+  {
+    "bang": "tinh_thanh",
+    "khop_mau": 0
+  },
+  {
+    "bang": "users",
+    "khop_mau": 0
+  },
+  {
+    "bang": "vouchers",
+    "khop_mau": 0
+  },
+  {
+    "bang": "vung_giao_hang",
+    "khop_mau": 0
+  }
+]

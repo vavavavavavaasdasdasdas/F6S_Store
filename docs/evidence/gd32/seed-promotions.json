@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Khai trương: Giảm 10%",
+    "discount_type": "PERCENT",
+    "discount_value": 10.0,
+    "start_date": "2026-11-05T00:00:00",
+    "end_date": "2026-11-30T23:59:59.997",
+    "status": true,
+    "ma": "KM001"
+  },
+  {
+    "id": 2,
+    "name": "Giày chạy bộ: Giảm 300.000đ",
+    "discount_type": "AMOUNT",
+    "discount_value": 300000.0,
+    "start_date": "2026-11-05T00:00:00",
+    "end_date": "2026-12-31T23:59:59.997",
+    "status": true,
+    "ma": "KM002"
+  }
+]

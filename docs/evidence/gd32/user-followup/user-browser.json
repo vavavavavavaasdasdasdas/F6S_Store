@@ -1,0 +1,297 @@
+{
+  "database": "shopbangiay_kt_gd32_20261105_201412",
+  "pages": [
+    {
+      "url": "/profile",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/profile",
+      "overflow": false
+    },
+    {
+      "url": "/orders",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/orders",
+      "overflow": false
+    },
+    {
+      "url": "/favorites",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/favorites",
+      "overflow": false
+    },
+    {
+      "url": "/cart",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/cart",
+      "overflow": false
+    },
+    {
+      "url": "/products",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products",
+      "overflow": false
+    },
+    {
+      "url": "/",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/",
+      "overflow": false
+    },
+    {
+      "url": "/category/1",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/1",
+      "overflow": false
+    },
+    {
+      "url": "/category/2",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/2",
+      "overflow": false
+    },
+    {
+      "url": "/category/3",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/3",
+      "overflow": false
+    },
+    {
+      "url": "/category/4",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/4",
+      "overflow": false
+    },
+    {
+      "url": "/category/5",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/5",
+      "overflow": false
+    },
+    {
+      "url": "/category/6",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/6",
+      "overflow": false
+    },
+    {
+      "url": "/category/8",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/8",
+      "overflow": false
+    },
+    {
+      "url": "/products?promotion=true",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products?promotion=true",
+      "overflow": false
+    },
+    {
+      "url": "/profile?newAddress=true",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/profile?newAddress=true",
+      "overflow": false
+    },
+    {
+      "url": "/policy",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/policy",
+      "overflow": false
+    },
+    {
+      "url": "/products/5",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products/5",
+      "overflow": false
+    },
+    {
+      "url": "/products/4",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products/4",
+      "overflow": false
+    },
+    {
+      "url": "/products/3",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products/3",
+      "overflow": false
+    },
+    {
+      "url": "/products/2",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products/2",
+      "overflow": false
+    },
+    {
+      "url": "/products/1",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products/1",
+      "overflow": false
+    },
+    {
+      "url": "/products?sort=newest",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products?sort=newest",
+      "overflow": false
+    },
+    {
+      "url": "/profile",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "url": "/orders",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "url": "/favorites",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "url": "/profile",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "url": "/orders",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "url": "/favorites",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "url": "/checkout",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "url": "/checkout",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "url": "/orders/1",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "url": "/orders/1",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "overflow": false
+    }
+  ],
+  "security": [
+    {
+      "url": "/admin/products-crud",
+      "role": "user",
+      "status": 403,
+      "expected": 403
+    },
+    {
+      "url": "/admin/employees",
+      "role": "user",
+      "status": 403,
+      "expected": 403
+    },
+    {
+      "url": "/admin/statistics",
+      "role": "user",
+      "status": 403,
+      "expected": 403
+    }
+  ],
+  "javascript": [],
+  "requests404": [],
+  "login": {
+    "success": true,
+    "finalUrl": "http://localhost:18032/"
+  },
+  "crawl": {
+    "visited": 22,
+    "remaining": 0
+  },
+  "addCart": {
+    "status": 200,
+    "body": {
+      "message": "Đã thêm vào giỏ",
+      "totalQuantity": 1
+    }
+  },
+  "checkout": {
+    "discount": "− 50.000 ₫",
+    "total": "1.210.000 ₫"
+  },
+  "orderId": 1,
+  "success": {
+    "url": "http://localhost:18032/orders/success/1",
+    "body": "Đặt hàng thành công\n\nCảm ơn bạn đã mua sắm tại SHOP GIÀY.\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nĐơn hàng DH000001\nSTT\tMã\tTên sản phẩm\tKích cỡ\tChất liệu\tMàu sắc\tĐế giày\tSố lượng\tĐơn giá\tThành tiền\n1\tSP003\tConverse Chuck Taylor All Star Classic\t39\tVải canvas\tĐen\tCao su\t1\t1.260.000 đ\t1.260.000 đ\nNgười nhận\nNguyễn Văn Ánh\nSố điện thoại\n0901234567\nĐịa chỉ\nSố 12, đường Nguyễn Huệ, Phường Ba Đình, Hà Nội\nTạm tính\n1.260.000 đ\nGiảm phiếu giảm giá\n50.000 đ\nVận chuyển\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\nTổng tiền\n1.210.000 đ\nThanh toán\nKhi nhận hàng (COD)\nTrạng thái\nChưa thanh toán\nTiếp tục mua sắm\nXem đơn hàng"
+  }
+}

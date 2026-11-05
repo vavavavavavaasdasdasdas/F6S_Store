@@ -1,0 +1,20 @@
+COMMAND: rg -n CommandLineRunner|ApplicationRunner|@PostConstruct|@Profile src/main/java
+EXIT: 0
+src/main/java\com\example\demodatn\config\DataInitializer.java:15:import org.springframework.boot.CommandLineRunner;
+src/main/java\com\example\demodatn\config\DataInitializer.java:23:@Profile("test")
+src/main/java\com\example\demodatn\config\DataInitializer.java:25:public class DataInitializer implements CommandLineRunner {
+
+COMMAND: rg -n Khách lẻ|NV-SYSTEM|findById\(1\) src/main/java
+EXIT: 0
+src/main/java\com\example\demodatn\repository\thongke\DashboardRepository.java:89:        return jdbc.queryForList("SELECT TOP (10) o.id,o.order_code,o.status,o.final_amount,o.created_at,COALESCE(c.full_name,o.receiver_name,N'Khách lẻ') AS customer FROM orders o LEFT JOIN customers c ON c.id=o.customer_id ORDER BY o.created_at DESC,o.id DESC");
+src/main/java\com\example\demodatn\repository\thongke\DashboardRepository.java:92:        return jdbc.queryForList("SELECT TOP (10) o.id,o.order_code,o.status,o.final_amount,o.created_at,COALESCE(c.full_name,o.receiver_name,N'Khách lẻ') AS customer FROM orders o LEFT JOIN customers c ON c.id=o.customer_id WHERE o.created_at >= ? AND o.created_at < ? ORDER BY o.created_at DESC,o.id DESC", from, to);
+src/main/java\com\example\demodatn\config\DataInitializer.java:63:            employee.setPosition("Admin");employee.setEmployeeCode("NV-SYSTEM");employee.setFullName("Quản trị hệ thống");
+src/main/java\com\example\demodatn\controller\admin\donhang\AdminPosController.java:784:                    flash.addFlashAttribute("error", "Khách đã bị vô hiệu hóa. Chuyển về Khách lẻ.");
+src/main/java\com\example\demodatn\service\hotro\AdminChatbotToolService.java:182:                    : (o.getCustomer() != null ? o.getCustomer().getFullName() : "Khách lẻ");
+src/main/java\com\example\demodatn\service\hotro\AdminChatbotToolService.java:403:                    : (o.getCustomer() != null ? o.getCustomer().getFullName() : "Khách lẻ");
+src/main/java\com\example\demodatn\service\donhang\OrderService.java:240:                : order.getReceiverName() != null ? order.getReceiverName() : "Khách lẻ");
+src/main/java\com\example\demodatn\service\donhang\PosHoldService.java:114:        hold.setCustomer(customer);hold.setCustomerLabel(customer==null ? "Khách lẻ" : customer.getFullName());
+src/main/java\com\example\demodatn\service\donhang\ShippingFeeService.java:18:    public ShippingSettings settings(){return settings.findById(1).orElseThrow(()->new IllegalStateException("Thiếu cấu hình phí vận chuyển. Chạy migration016."));}
+
+COMMAND: git diff -- src/test/java/com/example/demodatn/TestDatabaseGuard.java src/test/java/com/example/demodatn/TestDatabaseGuardListener.java
+EXIT: 0

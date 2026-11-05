@@ -1,0 +1,1 @@
+SELECT code,discount_type,CASE WHEN min_order_value>3900000 THEN 0 WHEN discount_type='FIXED' THEN CASE WHEN discount_value>3900000 THEN 3900000 ELSE discount_value END WHEN max_discount IS NOT NULL AND 3900000*discount_value/100>max_discount THEN max_discount ELSE 3900000*discount_value/100 END discount_for_3900000 FROM vouchers ORDER BY code;

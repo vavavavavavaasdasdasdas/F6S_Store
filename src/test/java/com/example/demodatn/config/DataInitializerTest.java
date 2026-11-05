@@ -18,6 +18,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DataInitializerTest {
     @Test
+    void startupSeedIsRestrictedToTestProfile() {
+        assertArrayEquals(new String[]{"test"}, DataInitializer.class.getAnnotation(org.springframework.context.annotation.Profile.class).value());
+    }
+
+    @Test
     void twoRunsCreateOnlyFoundationOnce() throws Exception {
         RoleRepository roles = mock(RoleRepository.class);
         UserRepository users = mock(UserRepository.class);

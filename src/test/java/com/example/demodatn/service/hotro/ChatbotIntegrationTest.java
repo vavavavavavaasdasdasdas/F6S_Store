@@ -67,6 +67,8 @@ public class ChatbotIntegrationTest {
     @Autowired
     private EntityManager entityManager;
 
+    @Autowired private org.springframework.jdbc.core.JdbcTemplate jdbc;
+
     @Autowired
     private WebApplicationContext context;
 
@@ -130,24 +132,35 @@ public class ChatbotIntegrationTest {
     void testOrderTrackingAuthenticatedAndUnauthenticated() {
         String session = UUID.randomUUID().toString();
 
+        // Tự tạo dữ liệu trong transaction của test, không phụ thuộc đơn mẫu trong DB.
+        String owner = "gd32-" + UUID.randomUUID().toString().substring(0, 8);
+        int uid = jdbc.queryForObject("INSERT users(username,password,role_id,status) OUTPUT INSERTED.id VALUES(?,'mock-only',(SELECT id FROM roles WHERE name='ROLE_USER'),1)", Integer.class, owner);
+        int cid = jdbc.queryForObject("INSERT customers(customer_code,phone,email,full_name,user_id,status) OUTPUT INSERTED.id VALUES(?,?,?,N'Khách kiểm tra chủ đơn',?,1)", Integer.class, owner, String.format("08%08d", uid), owner + "@example.test", uid);
+        int other = jdbc.queryForObject("INSERT customers(customer_code,phone,email,full_name,status) OUTPUT INSERTED.id VALUES(?,?,?,N'Khách kiểm tra khác',1)", Integer.class, owner + "-2", String.format("07%08d", uid), owner + "-2@example.test");
+        String ownCode = "ORD-" + UUID.randomUUID().toString().replace("-", "").substring(0, 12).toUpperCase();
+        String otherCode = "ORD-" + UUID.randomUUID().toString().replace("-", "").substring(0, 12).toUpperCase();
+        for (var entry : java.util.Map.of(ownCode, cid, otherCode, other).entrySet()) {
+            jdbc.update("INSERT orders(order_code,customer_id,order_type,status,total_amount,discount_amount,final_amount,payment_method,payment_status) VALUES(?,?,'ONLINE','PENDING',100000,0,100000,'COD','UNPAID')", entry.getKey(), entry.getValue());
+        }
+
         // 4.1 Chưa đăng nhập
         ChatbotMessageResponse respGuest = chatbotService.handleMessage(
-                req("kiểm tra đơn hàng DH000002", session), "127.0.0.1", null);
+                req("kiểm tra đơn hàng " + ownCode, session), "127.0.0.1", null);
         assertTrue(respGuest.getText().contains("đăng nhập"), "Khách vãng lai phải được yêu cầu đăng nhập");
         assertTrue(respGuest.isRequireLogin(), "Cờ requireLogin phải là true");
 
-        // 4.2 Đã đăng nhập tài khoản 'user' (sở hữu đơn DH000002)
-        var authUser = new UsernamePasswordAuthenticationToken("user", "password",
+        // 4.2 Đã đăng nhập bằng chủ đơn vừa tạo
+        var authUser = new UsernamePasswordAuthenticationToken(owner, "password",
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
         ChatbotMessageResponse respOwner = chatbotService.handleMessage(
-                req("kiểm tra đơn hàng DH000002", session), "127.0.0.1", authUser);
-        assertTrue(respOwner.getText().contains("DH000002"), "Chủ sở hữu phải xem được thông tin đơn");
+                req("kiểm tra đơn hàng " + ownCode, session), "127.0.0.1", authUser);
+        assertTrue(respOwner.getText().contains(ownCode), "Chủ sở hữu phải xem được thông tin đơn");
         assertTrue(respOwner.getText().contains("Trạng thái") || respOwner.getText().contains("Tổng thanh toán"),
                 "Đơn hàng hiển thị đầy đủ thông tin");
 
-        // 4.3 Đòi xem đơn của người khác (đơn ORD-85019F6B thuộc customer khác)
+        // 4.3 Đòi xem đơn vừa tạo của khách khác
         ChatbotMessageResponse respOther = chatbotService.handleMessage(
-                req("tra cứu đơn hàng ORD-85019F6B", session), "127.0.0.1", authUser);
+                req("tra cứu đơn hàng " + otherCode, session), "127.0.0.1", authUser);
         assertTrue(respOther.getText().contains("Không tìm thấy đơn hàng") || respOther.getText().contains("thuộc tài khoản"),
                 "Không được xem đơn của người khác");
     }
