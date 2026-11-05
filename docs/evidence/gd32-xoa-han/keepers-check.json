@@ -1,0 +1,36 @@
+{
+  "users_all_columns_including_password_unchanged": true,
+  "profiles_all_columns_unchanged": true,
+  "retained_profile_ids": {
+    "customers": [
+      9,
+      11
+    ],
+    "employees": [
+      1
+    ],
+    "dia_chi_nhan_hang": [
+      4
+    ]
+  },
+  "shared_tables_unchanged": [
+    "categories",
+    "cau_hinh_phi_ship",
+    "chat_lieu",
+    "chatbot_faq",
+    "de_giay",
+    "mau_sac",
+    "phuong_xa",
+    "roles",
+    "sizes",
+    "ten_tinh_thanh_cu",
+    "tinh_thanh",
+    "vung_giao_hang"
+  ],
+  "remaining": {
+    "customers": 2,
+    "dia_chi_nhan_hang": 1,
+    "employees": 1,
+    "users": 2
+  }
+}

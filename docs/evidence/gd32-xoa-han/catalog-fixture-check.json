@@ -1,0 +1,31 @@
+{
+  "all_five_inactive_test_rows_deleted": [
+    {
+      "table": "categories",
+      "fixture": "VERIFY G32",
+      "remaining": 0
+    },
+    {
+      "table": "sizes",
+      "fixture": "99test",
+      "remaining": 0
+    },
+    {
+      "table": "chat_lieu",
+      "fixture": "poly",
+      "remaining": 0
+    },
+    {
+      "table": "mau_sac",
+      "fixture": "TEST G32 màu",
+      "remaining": 0
+    },
+    {
+      "table": "de_giay",
+      "fixture": "Phase G32",
+      "remaining": 0
+    }
+  ],
+  "synthetic_ASICS_kept_only_when_explicitly_listed": true,
+  "default_rejected_unknown_real_name_before_deletion": true
+}

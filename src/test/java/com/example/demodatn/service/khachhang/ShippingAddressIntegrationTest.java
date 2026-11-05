@@ -45,7 +45,7 @@ class ShippingAddressIntegrationTest {
     }
     ShippingAddressForm form(String text) {var f=new ShippingAddressForm();f.setProvinceId(jdbc.queryForObject("SELECT TOP 1 id FROM tinh_thanh ORDER BY id",Integer.class));f.setWardId(jdbc.queryForObject("SELECT TOP 1 id FROM phuong_xa WHERE tinh_thanh_id=? ORDER BY id",Integer.class,f.getProvinceId()));f.setStreetAddress("Số 12, đường Nguyễn Huệ");f.setReceiverName("Nguyễn Đà Nẵng");f.setPhone("+84901234567");f.setAddress(text);f.setStreetAddress(text);return f;}
     MockHttpSession cart() {
-        var v=variants.findByStatusTrueAndProduct_StatusTrue().stream().filter(x->x.getQuantity()>0).findFirst().orElseThrow();
+        var v=variants.findById(com.example.demodatn.CatalogTestFixtures.variant(jdbc)).orElseThrow();
         var s=new MockHttpSession();s.setAttribute("cart",new ArrayList<>(List.of(new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),v.getPrice(),1))));return s;
     }
     @Test @Transactional void threeAddressesAndUnicodeAndServiceLimit() {

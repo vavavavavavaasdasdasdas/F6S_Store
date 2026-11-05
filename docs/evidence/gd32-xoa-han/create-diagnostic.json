@@ -1,0 +1,114 @@
+{
+  "beforeBox": {
+    "x": 301,
+    "y": 441.671875,
+    "width": 117.5625,
+    "height": 38
+  },
+  "afterBox": {
+    "x": 301,
+    "y": 419.671875,
+    "width": 117.5625,
+    "height": 38
+  },
+  "events": [
+    {
+      "type": "click",
+      "target": "FORM",
+      "id": "ref: <Node>",
+      "prevented": false
+    }
+  ],
+  "errors": [],
+  "dom": {
+    "type": "submit",
+    "disabled": false,
+    "formAction": "http://localhost:18032/admin/categories/save",
+    "formElements": [
+      {
+        "id": "",
+        "name": "_csrf",
+        "type": "hidden"
+      },
+      {
+        "id": "id",
+        "name": "id",
+        "type": "hidden"
+      },
+      {
+        "id": "object-code",
+        "name": "",
+        "type": "text"
+      },
+      {
+        "id": "value",
+        "name": "value",
+        "type": "text"
+      },
+      {
+        "id": "status",
+        "name": "status",
+        "type": "select-one"
+      },
+      {
+        "id": "",
+        "name": "",
+        "type": "text"
+      },
+      {
+        "id": "",
+        "name": "",
+        "type": "button"
+      },
+      {
+        "id": "",
+        "name": "",
+        "type": "button"
+      },
+      {
+        "id": "",
+        "name": "",
+        "type": "submit"
+      }
+    ],
+    "formData": {
+      "adminForm": "",
+      "dirty": "true"
+    },
+    "formNoValidate": true
+  },
+  "url": "http://localhost:18032/admin/categories/create",
+  "online": true,
+  "posts": [],
+  "body": "Thêm thương hiệu\nMã\nTên thương hiệu *\nTrạng thái hiển thị\nĐang hiển thị (Hoạt động)\nĐang ẩn (Ngừng hoạt động)\n×\n▾\nKhi chuyển sang trạng thái Ẩn, mục này không còn trong lựa chọn tạo mới; dữ liệu đang sử dụng vẫn giữ tên.\n+Thêm mới\nQuay lại danh sách",
+  "fields": [
+    {
+      "id": "object-code",
+      "type": "text",
+      "value": "",
+      "invalid": null,
+      "validity": ""
+    },
+    {
+      "id": "value",
+      "type": "text",
+      "value": "VERIFY Thương hiệu nhập mới",
+      "invalid": "false",
+      "validity": ""
+    },
+    {
+      "id": "status",
+      "type": "select-one",
+      "value": "true",
+      "invalid": null,
+      "validity": ""
+    },
+    {
+      "id": "",
+      "type": "text",
+      "value": "Đang hiển thị (Hoạt động)",
+      "invalid": null,
+      "validity": ""
+    }
+  ]
+}

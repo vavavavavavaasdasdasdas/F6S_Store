@@ -1,0 +1,1964 @@
+{
+  "pages": [
+    {
+      "url": "/",
+      "role": "khách",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "GIÀY THỂ THAO CHÍNH HÃNG\n\nPhong cách của bạn – Bước đi của bạn.\n\nMUA NGAY\n Thương hiệu nổi bật\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\nCửa hàng chưa có sản phẩm\n\nSản phẩm mới sẽ được cập nhật tại đây. Bạn có thể quay lại sau để xem bộ sưu tập mới.\n\nXem danh sách sản phẩm\nTại sao nên chọn chúng tôi?\nChính hãng 100%\n\nCam kết hàng thật, chất lượng đảm bảo.\n\nĐổi trả dễ dàng\n\nĐổi trả miễn phí trong vòng 7 ngày.\n\nGiao hàng nhanh\n\nGiao tận nơi trên toàn quốc.\n\nHỗ trợ 24/7\n\nLuôn sẵn sàng giải đáp thắc mắc."
+    },
+    {
+      "url": "/products",
+      "role": "khách",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Trang chủ\nSản phẩm\nBỘ LỌC\nTừ khóa (mã/tên)\nThương hiệu\nTất cả\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\nMàu sắc\nTất cả màu sắc\nĐen\nTrắng\nXám\nĐỏ\nXanh dương\nXanh lá\nVàng\nNâu\nBe\nHồng\nKhác\n▾\nĐế giày\nTất cả đế giày\nCao su\nEVA\nPU\nTPU\nĐế bằng\nĐế độn\nĐế chống trượt\nKhác\n▾\nChất liệu\nTất cả chất liệu\nCao su\nDa lộn\nDa thật\nDa tổng hợp\nKhác\nVải canvas\nVải dệt kim\nVải lưới\n▾\nKích cỡ\n36\n37\n38\n39\n40\n41\n42\n43\nKhoảng giá (VNĐ)\nÁP DỤNG\nXóa bộ lọc\nTất cả sản phẩm (0 sản phẩm)\nSắp xếp:\nMới nhất\nBán chạy\nGiá tăng dần\nGiá giảm dần\n×\n▾\nKhông tìm thấy sản phẩm nào!\n\nVui lòng thử bộ lọc hoặc từ khóa khác.\n\nXóa bộ lọc"
+    },
+    {
+      "url": "/products?promotion=true",
+      "role": "khách",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products?promotion=true",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Trang chủ\nSản phẩm\nBỘ LỌC\nĐang áp dụng 1 bộ lọc\nTừ khóa (mã/tên)\nThương hiệu\nTất cả\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\nMàu sắc\nTất cả màu sắc\nĐen\nTrắng\nXám\nĐỏ\nXanh dương\nXanh lá\nVàng\nNâu\nBe\nHồng\nKhác\n▾\nĐế giày\nTất cả đế giày\nCao su\nEVA\nPU\nTPU\nĐế bằng\nĐế độn\nĐế chống trượt\nKhác\n▾\nChất liệu\nTất cả chất liệu\nCao su\nDa lộn\nDa thật\nDa tổng hợp\nKhác\nVải canvas\nVải dệt kim\nVải lưới\n▾\nKích cỡ\n36\n37\n38\n39\n40\n41\n42\n43\nKhoảng giá (VNĐ)\nÁP DỤNG\nXóa bộ lọc\nSản phẩm khuyến mãi (0 sản phẩm)\nSắp xếp:\nMới nhất\nBán chạy\nGiá tăng dần\nGiá giảm dần\n×\n▾\nKhông tìm thấy sản phẩm nào!\n\nVui lòng thử bộ lọc hoặc từ khóa khác.\n\nXóa bộ lọc"
+    },
+    {
+      "url": "/cart",
+      "role": "khách",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/cart",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": " Giỏ Hàng Của Bạn\nGiỏ hàng trống\n\nBạn chưa có sản phẩm nào trong giỏ hàng.\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nTiếp Tục Mua Sắm"
+    },
+    {
+      "url": "/profile",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/profile",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": " Hồ Sơ Của Tôi\nThông Tin Cá Nhân\nHọ và tên\n\nSố điện thoại\n\nThư điện tử\n\nLưu Thông Tin\nĐổi Mật Khẩu\nMật khẩu cũ\n\nMật khẩu mới\n\nÍt nhất 8 ký tự, có chữ và số; tối đa 72 byte UTF-8.\n\nXác nhận mật khẩu mới\n\nĐổi Mật Khẩu\nĐịa chỉ nhận hàng\n+Thêm địa chỉ\nChọn địa chỉ để xem hoặc sửa\n1. nguyen ngoc viet anh — Hanoi · Mặc định\n×\n▾\nXem địa chỉ\nTên người nhận\n\nSố điện thoại\n\nĐịa chỉ giao hàng chi tiết\nTỉnh/Thành phố *\nChọn Tỉnh/Thành phố\nAn Giang\nBắc Ninh\nCà Mau\nCần Thơ\nCao Bằng\nĐà Nẵng\nĐắk Lắk\nĐiện Biên\nĐồng Nai\nĐồng Tháp\nGia Lai\nHà Nội\nHà Tĩnh\nHải Phòng\nHồ Chí Minh\nHuế\nHưng Yên\nKhánh Hòa\nLai Châu\nLâm Đồng\nLạng Sơn\nLào Cai\nNghệ An\nNinh Bình\nPhú Thọ\nQuảng Ngãi\nQuảng Ninh\nQuảng Trị\nSơn La\nTây Ninh\nThái Nguyên\nThanh Hóa\nTuyên Quang\nVĩnh Long\n▾\nPhường/Xã *\nChọn Phường/Xã\n▾\nSố nhà, tên đường *\nDùng vị trí của tôi\nDùng tâm phường/xã\n\nCho phép định vị để ghim vị trí. Bạn luôn có thể chọn tay, bấm hoặc kéo ghim để chỉnh; định vị cần HTTPS hoặc localhost.\n\n+\n−\n Leaflet | © OpenStreetMap — người đóng góp\n\nChưa có vị trí ghim.\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nĐặt làm mặc định\nLưu sửa địa chỉ\nĐặt làm mặc định\nXóa địa chỉ"
+    },
+    {
+      "url": "/orders",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/orders",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Lịch sử Đơn Hàng\nMã đơn hàng\nTrạng thái\nTất cả trạng thái\nĐã hủy\nĐang chuẩn bị\nHoàn tất\nĐã nhận chuyển khoản\nChờ xử lý\nGiao hàng thất bại\nĐang giao\nĐã xác nhận\n▾\nTừ ngày\nĐến ngày\nLọc\nXóa lọc\nSTT\tMã Đơn Hàng\tNgày đặt\tTổng tiền\tTrạng thái\tHành động\nBạn chưa có đơn hàng phù hợp. Chọn sản phẩm"
+    },
+    {
+      "url": "/favorites",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/favorites",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Sản phẩm yêu thích\nTừ khóa\nThương hiệu\nTất cả thương hiệu\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\n▾\nLọc\nXóa lọc\n\nChưa có sản phẩm yêu thích phù hợp."
+    },
+    {
+      "url": "/cart",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/cart",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": " Giỏ Hàng Của Bạn\nGiỏ hàng trống\n\nBạn chưa có sản phẩm nào trong giỏ hàng.\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nTiếp Tục Mua Sắm"
+    },
+    {
+      "url": "/checkout",
+      "role": "user",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/cart",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Giỏ hàng rỗng.\n\n Giỏ Hàng Của Bạn\nGiỏ hàng trống\n\nBạn chưa có sản phẩm nào trong giỏ hàng.\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nTiếp Tục Mua Sắm"
+    },
+    {
+      "url": "/admin/dashboard",
+      "role": "admin",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/dashboard",
+      "title": "Dashboard | F6S Store",
+      "overflow": false,
+      "realTableRows": 2,
+      "text": "TỔNG QUAN KINH DOANH\nDashboard\n\nTheo dõi hoạt động cửa hàng, thống kê doanh thu và những việc cần xử lý.\n\nNgày 2026-11-05\nTừ ngày\nĐến ngày\nKhoảng nhanh\nTùy chọn\nHôm nay\n7 ngày gần đây\n30 ngày gần đây\nTháng này\nTháng trước\n×\n▾\nKênh bán\nTất cả\nTrực tuyến (Online)\nTại quầy (POS)\n▾\nThương hiệu\nTất cả thương hiệu\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\n▾\nLọc\nXóa lọc\nTổng doanh thu\n↗\n0 ₫\nĐơn đã thanh toán · kỳ tùy chọn\nSố đơn tính doanh thu\n↗\n0\nĐơn đã thanh toán, không hủy\nGiá trị đơn trung bình\n↗\n0 ₫\nTổng doanh thu / số đơn\nDoanh thu tiền mặt\n↗\n0 ₫\nTiền mặt & COD\nDoanh thu chuyển khoản\n↗\n0 ₫\nChuyển khoản ngân hàng\nDoanh thu hôm nay\n↗\n0 ₫\nHôm nay (không áp dụng bộ lọc Ngày)\nDoanh thu tháng\n↗\n0 ₫\nĐầu tháng đến nay (không áp dụng bộ lọc Ngày)\nTổng số đơn hàng\n↗\n0\nTất cả đơn phát sinh trong kỳ\nĐơn chờ xử lý\n↗\n0\nCần xác nhận trong kỳ\nSố sản phẩm\n↗\n0\nKhông áp dụng bộ lọc Ngày, Kênh\nKhách hàng mới\n↗\n0\nTạo trong kỳ (không áp dụng bộ lọc Kênh, Thương hiệu)\nChưa có doanh thu trong khoảng đã chọn\n\nKhông có đơn đã thanh toán và chưa hủy phù hợp. Hãy đổi khoảng ngày, kênh bán hoặc thương hiệu.\n\nDoanh thu theo kênh (Online/POS)\n\nTỷ trọng doanh thu giữa trực tuyến (Online) và tại quầy (POS) theo bộ lọc chung\n\nSTT\tKênh bán\tSố đơn\tDoanh thu (₫)\tTỷ lệ (%)\n1\tTrực tuyến (Online)\t0\t0 ₫\t0.0%\n2\tTại quầy (POS)\t0\t0 ₫\t0.0%\nĐơn hàng theo trạng thái\n\nPhân bổ trạng thái của tất cả đơn hàng theo bộ lọc chung\n\nChưa có đơn hàng trong bộ lọc đã chọn.\n\nTop sản phẩm theo số lượng\n\nXếp hạng sản phẩm theo tổng số lượng bán ra trong các đơn đủ điều kiện\n\nSTT\tẢnh\tMã\tTên\tSố lượng\tDoanh thu\nChưa có sản phẩm được thanh toán trong kỳ.\nTop sản phẩm theo doanh thu\n\nXếp hạng sản phẩm mang lại doanh thu cao nhất trong các đơn đủ điều kiện\n\nSTT\tẢnh\tMã\tTên\tSố lượng\tDoanh thu\nChưa có sản phẩm được thanh toán trong kỳ.\nTop khách hàng theo chi tiêu\n\nKhách hàng có tài khoản chi tiêu cao nhất trong kỳ (khách vãng lai không xếp hạng)\n\nXem tất cả khách hàng →\nSTT\tMã KH\tHọ tên\tSố đơn\tTổng chi tiêu\tHành động\nChưa có dữ liệu khách hàng trong bộ lọc đã chọn.\nĐánh giá sản phẩm\n\nĐiểm trung bình toàn cửa hàng: Chưa có · Tổng số đánh giá: 0 (không áp dụng bộ lọc Kênh)\n\nXem tất cả đánh giá →\nSTT\tMã ĐG\tMã SP\tTên sản phẩm\tKhách hàng\tSố sao\tNội dung\tThời gian\nChưa có đánh giá trong kỳ lọc.\nSản phẩm yêu thích\n\nTổng lượt yêu thích trong kỳ: 0 lượt (không áp dụng bộ lọc Kênh)\n\nSTT\tẢnh\tMã\tTên sản phẩm\tLượt yêu thích\nChưa có lượt yêu thích trong kỳ.\nSản phẩm sắp hết hàng\n\nBiến thể đang bán có tồn kho ≤ 5 và có biến động kho trong kỳ lọc (không áp dụng bộ lọc Kênh)\n\nXem tồn kho →\nSTT\tMã SP\tTên sản phẩm\tMã biến thể\tKích cỡ\tChất liệu\tMàu sắc\tĐế giày\tTồn kho\tHành động\nKhông có sản phẩm dưới ngưỡng cảnh báo có biến động kho trong kỳ lọc."
+    },
+    {
+      "url": "/admin/products-crud",
+      "role": "admin",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/products-crud",
+      "title": "Chi tiết sản phẩm | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Chi tiết sản phẩm\n+Thêm sản phẩm\nTừ khóa\nThương hiệu\nTất cả thương hiệu\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\n▾\nTrạng thái\nTất cả trạng thái\nĐang bán\nNgừng bán\n▾\nTình trạng tồn\nTất cả tình trạng tồn\nCòn hàng (> 5)\nSắp hết (1–5)\nHết hàng (0)\n▾\nSắp xếp\nMới nhất\nTên A–Z\nMã A–Z\n×\n▾\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tẢnh\tMã\tTên sản phẩm\tThương hiệu\tTồn kho\tTrạng thái\tHành động\nKhông tìm thấy sản phẩm."
+    },
+    {
+      "url": "/admin/variants",
+      "role": "admin",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants",
+      "title": "Danh sách biến thể | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Biến thể sản phẩm\n+Thêm biến thể\nTừ khóa\nSản phẩm\nTất cả sản phẩm\n▾\nThương hiệu\nTất cả thương hiệu\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\n▾\nKích cỡ\nTất cả kích cỡ\n36\n37\n38\n39\n40\n41\n42\n43\n▾\nChất liệu\nTất cả chất liệu\nDa thật\nDa tổng hợp\nDa lộn\nVải canvas\nVải lưới\nVải dệt kim\nCao su\nKhác\n▾\nMàu sắc\nTất cả màu sắc\nĐen\nTrắng\nXám\nĐỏ\nXanh dương\nXanh lá\nVàng\nNâu\nBe\nHồng\nKhác\n▾\nĐế giày\nTất cả đế giày\nCao su\nEVA\nPU\nTPU\nĐế bằng\nĐế độn\nĐế chống trượt\nKhác\n▾\nTình trạng tồn\nTất cả tình trạng\nCòn hàng (> 5)\nSắp hết: 1–5\nHết hàng: 0\n▾\nTrạng thái\nTất cả trạng thái\nĐang bán\nNgừng bán\n▾\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tMã biến thể\tMã SP\tTên sản phẩm\tKích cỡ\tChất liệu\tMàu sắc\tĐế giày\tGiá (₫)\tTồn kho\tTrạng thái\tHành động\nChưa có biến thể. Chọn “Thêm biến thể” để tạo kích cỡ, giá và tồn kho.\nQuay lại Chi tiết sản phẩm"
+    },
+    {
+      "url": "/admin/promotions",
+      "role": "admin",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/promotions",
+      "title": "Đợt giảm giá | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Đợt giảm giá\n+Thêm đợt giảm giá\nTừ khóa\nTrạng thái\nTất cả trạng thái\nĐang chạy\nSắp tới\nHết hạn\nĐã khóa\n▾\nTừ ngày\nĐến ngày\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tMã\tTên\tLoại giảm\tGiá trị giảm\tBắt đầu\tKết thúc\tHoạt động\tHành động\nChưa có dữ liệu. Thêm chương trình đầu tiên để bắt đầu."
+    },
+    {
+      "url": "/admin/vouchers",
+      "role": "admin",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/vouchers",
+      "title": "Phiếu giảm giá | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Phiếu giảm giá\n+Thêm phiếu giảm giá\nTừ khóa\nLoại giảm\nTất cả loại\nPhần trăm (%)\nSố tiền (đ)\n▾\nHiệu lực\nTất cả trạng thái\nĐang chạy\nSắp diễn ra\nHết hạn\nTạm dừng\n▾\nTừ ngày\nĐến ngày\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tMã\tTên\tLoại giảm\tGiá trị\tĐơn tối thiểu\tGiảm tối đa\tBắt đầu\tKết thúc\tĐã dùng\tHoạt động\tHành động\nKhông tìm thấy phiếu giảm giá phù hợp."
+    },
+    {
+      "url": "/admin/invoices",
+      "role": "admin",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices",
+      "title": "Quản lý hóa đơn | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Quản lý hóa đơn\n+ Bán hàng tại quầy\nTất cả\n0\nChờ xử lý\n0\nĐã xác nhận\n0\nĐang chuẩn bị\n0\nĐang giao\n0\nĐã giao/Hoàn tất\n0\nĐã hủy\n0\nGiao thất bại\n0\nTừ khóa\nKênh bán\nTất cả kênh\nTại quầy\nTrực tuyến\n▾\nThanh toán\nTất cả thanh toán\nĐã thanh toán\nChưa thanh toán\n▾\nPhương thức\nTất cả phương thức\nTiền mặt\nThanh toán khi nhận hàng (COD)\nChuyển khoản\nKết hợp\n▾\nTừ ngày\nĐến ngày\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tMã hóa đơn\tMã đơn\tNgày\tKhách\tKênh bán\tTrạng thái\tThanh toán\tPhương thức\tTổng tiền (đ)\tHành động\nKhông có hóa đơn phù hợp."
+    },
+    {
+      "url": "/admin/chat",
+      "role": "admin",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/chat",
+      "title": "Chat với khách | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Chat với khách\nÂm báo: Tắt\nCho phép thông báo\n\nĐã kết nối trực tiếp\n\nHội thoại\nTìm hội thoại\nTất cả 0\nChưa đọc 0\nChưa ai nhận 0\nCủa tôi 0\nĐã đóng 0\n\nKhông có hội thoại phù hợp.\n\nChọn một hội thoại để bắt đầu hỗ trợ.\n\nThông tin khách\nChưa chọn hội thoại."
+    },
+    {
+      "url": "/admin/inventory",
+      "role": "admin",
+      "width": 1280,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants",
+      "title": "Danh sách biến thể | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Biến thể sản phẩm\n+Thêm biến thể\nTừ khóa\nSản phẩm\nTất cả sản phẩm\n▾\nThương hiệu\nTất cả thương hiệu\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\n▾\nKích cỡ\nTất cả kích cỡ\n36\n37\n38\n39\n40\n41\n42\n43\n▾\nChất liệu\nTất cả chất liệu\nDa thật\nDa tổng hợp\nDa lộn\nVải canvas\nVải lưới\nVải dệt kim\nCao su\nKhác\n▾\nMàu sắc\nTất cả màu sắc\nĐen\nTrắng\nXám\nĐỏ\nXanh dương\nXanh lá\nVàng\nNâu\nBe\nHồng\nKhác\n▾\nĐế giày\nTất cả đế giày\nCao su\nEVA\nPU\nTPU\nĐế bằng\nĐế độn\nĐế chống trượt\nKhác\n▾\nTình trạng tồn\nTất cả tình trạng\nCòn hàng (> 5)\nSắp hết: 1–5\nHết hàng: 0\n▾\nTrạng thái\nTất cả trạng thái\nĐang bán\nNgừng bán\n▾\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tMã biến thể\tMã SP\tTên sản phẩm\tKích cỡ\tChất liệu\tMàu sắc\tĐế giày\tGiá (₫)\tTồn kho\tTrạng thái\tHành động\nChưa có biến thể. Chọn “Thêm biến thể” để tạo kích cỡ, giá và tồn kho.\nQuay lại Chi tiết sản phẩm"
+    },
+    {
+      "url": "/",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "GIÀY THỂ THAO CHÍNH HÃNG\n\nPhong cách của bạn – Bước đi của bạn.\n\nMUA NGAY\n Thương hiệu nổi bật\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\nCửa hàng chưa có sản phẩm\n\nSản phẩm mới sẽ được cập nhật tại đây. Bạn có thể quay lại sau để xem bộ sưu tập mới.\n\nXem danh sách sản phẩm\nTại sao nên chọn chúng tôi?\nChính hãng 100%\n\nCam kết hàng thật, chất lượng đảm bảo.\n\nĐổi trả dễ dàng\n\nĐổi trả miễn phí trong vòng 7 ngày.\n\nGiao hàng nhanh\n\nGiao tận nơi trên toàn quốc.\n\nHỗ trợ 24/7\n\nLuôn sẵn sàng giải đáp thắc mắc."
+    },
+    {
+      "url": "/products",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Trang chủ\nSản phẩm\n Bộ lọc\nTất cả sản phẩm (0 sản phẩm)\nSắp xếp:\nMới nhất\nBán chạy\nGiá tăng dần\nGiá giảm dần\n×\n▾\nKhông tìm thấy sản phẩm nào!\n\nVui lòng thử bộ lọc hoặc từ khóa khác.\n\nXóa bộ lọc"
+    },
+    {
+      "url": "/products?promotion=true",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products?promotion=true",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Trang chủ\nSản phẩm\n Bộ lọc\nSản phẩm khuyến mãi (0 sản phẩm)\nSắp xếp:\nMới nhất\nBán chạy\nGiá tăng dần\nGiá giảm dần\n×\n▾\nKhông tìm thấy sản phẩm nào!\n\nVui lòng thử bộ lọc hoặc từ khóa khác.\n\nXóa bộ lọc"
+    },
+    {
+      "url": "/cart",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/cart",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": " Giỏ Hàng Của Bạn\nGiỏ hàng trống\n\nBạn chưa có sản phẩm nào trong giỏ hàng.\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nTiếp Tục Mua Sắm"
+    },
+    {
+      "url": "/profile",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/profile",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": " Hồ Sơ Của Tôi\nThông Tin Cá Nhân\nHọ và tên\n\nSố điện thoại\n\nThư điện tử\n\nLưu Thông Tin\nĐổi Mật Khẩu\nMật khẩu cũ\n\nMật khẩu mới\n\nÍt nhất 8 ký tự, có chữ và số; tối đa 72 byte UTF-8.\n\nXác nhận mật khẩu mới\n\nĐổi Mật Khẩu\nĐịa chỉ nhận hàng\n+Thêm địa chỉ\nChọn địa chỉ để xem hoặc sửa\n1. nguyen ngoc viet anh — Hanoi · Mặc định\n×\n▾\nXem địa chỉ\nTên người nhận\n\nSố điện thoại\n\nĐịa chỉ giao hàng chi tiết\nTỉnh/Thành phố *\nChọn Tỉnh/Thành phố\nAn Giang\nBắc Ninh\nCà Mau\nCần Thơ\nCao Bằng\nĐà Nẵng\nĐắk Lắk\nĐiện Biên\nĐồng Nai\nĐồng Tháp\nGia Lai\nHà Nội\nHà Tĩnh\nHải Phòng\nHồ Chí Minh\nHuế\nHưng Yên\nKhánh Hòa\nLai Châu\nLâm Đồng\nLạng Sơn\nLào Cai\nNghệ An\nNinh Bình\nPhú Thọ\nQuảng Ngãi\nQuảng Ninh\nQuảng Trị\nSơn La\nTây Ninh\nThái Nguyên\nThanh Hóa\nTuyên Quang\nVĩnh Long\n▾\nPhường/Xã *\nChọn Phường/Xã\n▾\nSố nhà, tên đường *\nDùng vị trí của tôi\nDùng tâm phường/xã\n\nCho phép định vị để ghim vị trí. Bạn luôn có thể chọn tay, bấm hoặc kéo ghim để chỉnh; định vị cần HTTPS hoặc localhost.\n\n+\n−\n Leaflet | © OpenStreetMap — người đóng góp\n\nChưa có vị trí ghim.\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nĐặt làm mặc định\nLưu sửa địa chỉ\nĐặt làm mặc định\nXóa địa chỉ"
+    },
+    {
+      "url": "/orders",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/orders",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Lịch sử Đơn Hàng\nMã đơn hàng\nTrạng thái\nTất cả trạng thái\nĐã hủy\nĐang chuẩn bị\nHoàn tất\nĐã nhận chuyển khoản\nChờ xử lý\nGiao hàng thất bại\nĐang giao\nĐã xác nhận\n▾\nTừ ngày\nĐến ngày\nLọc\nXóa lọc\nSTT\tMã Đơn Hàng\tNgày đặt\tTổng tiền\tTrạng thái\tHành động\nBạn chưa có đơn hàng phù hợp. Chọn sản phẩm"
+    },
+    {
+      "url": "/favorites",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/favorites",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Sản phẩm yêu thích\nTừ khóa\nThương hiệu\nTất cả thương hiệu\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\n▾\nLọc\nXóa lọc\n\nChưa có sản phẩm yêu thích phù hợp."
+    },
+    {
+      "url": "/cart",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/cart",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": " Giỏ Hàng Của Bạn\nGiỏ hàng trống\n\nBạn chưa có sản phẩm nào trong giỏ hàng.\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nTiếp Tục Mua Sắm"
+    },
+    {
+      "url": "/checkout",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/cart",
+      "title": "F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Giỏ hàng rỗng.\n\n Giỏ Hàng Của Bạn\nGiỏ hàng trống\n\nBạn chưa có sản phẩm nào trong giỏ hàng.\n\nPhí vận chuyển do đơn vị vận chuyển tính và thu riêng\n\nTiếp Tục Mua Sắm"
+    },
+    {
+      "url": "/admin/dashboard",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/dashboard",
+      "title": "Dashboard | F6S Store",
+      "overflow": false,
+      "realTableRows": 2,
+      "text": "TỔNG QUAN KINH DOANH\nDashboard\n\nTheo dõi hoạt động cửa hàng, thống kê doanh thu và những việc cần xử lý.\n\nNgày 2026-11-05\nTừ ngày\nĐến ngày\nKhoảng nhanh\nTùy chọn\nHôm nay\n7 ngày gần đây\n30 ngày gần đây\nTháng này\nTháng trước\n×\n▾\nKênh bán\nTất cả\nTrực tuyến (Online)\nTại quầy (POS)\n▾\nThương hiệu\nTất cả thương hiệu\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\n▾\nLọc\nXóa lọc\nTổng doanh thu\n0 ₫\nĐơn đã thanh toán · kỳ tùy chọn\nSố đơn tính doanh thu\n0\nĐơn đã thanh toán, không hủy\nGiá trị đơn trung bình\n0 ₫\nTổng doanh thu / số đơn\nDoanh thu tiền mặt\n0 ₫\nTiền mặt & COD\nDoanh thu chuyển khoản\n0 ₫\nChuyển khoản ngân hàng\nDoanh thu hôm nay\n0 ₫\nHôm nay (không áp dụng bộ lọc Ngày)\nDoanh thu tháng\n0 ₫\nĐầu tháng đến nay (không áp dụng bộ lọc Ngày)\nTổng số đơn hàng\n0\nTất cả đơn phát sinh trong kỳ\nĐơn chờ xử lý\n0\nCần xác nhận trong kỳ\nSố sản phẩm\n0\nKhông áp dụng bộ lọc Ngày, Kênh\nKhách hàng mới\n0\nTạo trong kỳ (không áp dụng bộ lọc Kênh, Thương hiệu)\nChưa có doanh thu trong khoảng đã chọn\n\nKhông có đơn đã thanh toán và chưa hủy phù hợp. Hãy đổi khoảng ngày, kênh bán hoặc thương hiệu.\n\nDoanh thu theo kênh (Online/POS)\n\nTỷ trọng doanh thu giữa trực tuyến (Online) và tại quầy (POS) theo bộ lọc chung\n\nSTT\tKênh bán\tSố đơn\tDoanh thu (₫)\tTỷ lệ (%)\n1\tTrực tuyến (Online)\t0\t0 ₫\t0.0%\n2\tTại quầy (POS)\t0\t0 ₫\t0.0%\nĐơn hàng theo trạng thái\n\nPhân bổ trạng thái của tất cả đơn hàng theo bộ lọc chung\n\nChưa có đơn hàng trong bộ lọc đã chọn.\n\nTop sản phẩm theo số lượng\n\nXếp hạng sản phẩm theo tổng số lượng bán ra trong các đơn đủ điều kiện\n\nSTT\tẢnh\tMã\tTên\tSố lượng\tDoanh thu\nChưa có sản phẩm được thanh toán trong kỳ.\nTop sản phẩm theo doanh thu\n\nXếp hạng sản phẩm mang lại doanh thu cao nhất trong các đơn đủ điều kiện\n\nSTT\tẢnh\tMã\tTên\tSố lượng\tDoanh thu\nChưa có sản phẩm được thanh toán trong kỳ.\nTop khách hàng theo chi tiêu\n\nKhách hàng có tài khoản chi tiêu cao nhất trong kỳ (khách vãng lai không xếp hạng)\n\nXem tất cả khách hàng →\nSTT\tMã KH\tHọ tên\tSố đơn\tTổng chi tiêu\tHành động\nChưa có dữ liệu khách hàng trong bộ lọc đã chọn.\nĐánh giá sản phẩm\n\nĐiểm trung bình toàn cửa hàng: Chưa có · Tổng số đánh giá: 0 (không áp dụng bộ lọc Kênh)\n\nXem tất cả đánh giá →\nSTT\tMã ĐG\tMã SP\tTên sản phẩm\tKhách hàng\tSố sao\tNội dung\tThời gian\nChưa có đánh giá trong kỳ lọc.\nSản phẩm yêu thích\n\nTổng lượt yêu thích trong kỳ: 0 lượt (không áp dụng bộ lọc Kênh)\n\nSTT\tẢnh\tMã\tTên sản phẩm\tLượt yêu thích\nChưa có lượt yêu thích trong kỳ.\nSản phẩm sắp hết hàng\n\nBiến thể đang bán có tồn kho ≤ 5 và có biến động kho trong kỳ lọc (không áp dụng bộ lọc Kênh)\n\nXem tồn kho →\nSTT\tMã SP\tTên sản phẩm\tMã biến thể\tKích cỡ\tChất liệu\tMàu sắc\tĐế giày\tTồn kho\tHành động\nKhông có sản phẩm dưới ngưỡng cảnh báo có biến động kho trong kỳ lọc."
+    },
+    {
+      "url": "/admin/products-crud",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/products-crud",
+      "title": "Chi tiết sản phẩm | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Chi tiết sản phẩm\n+Thêm sản phẩm\nTừ khóa\nThương hiệu\nTất cả thương hiệu\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\n▾\nTrạng thái\nTất cả trạng thái\nĐang bán\nNgừng bán\n▾\nTình trạng tồn\nTất cả tình trạng tồn\nCòn hàng (> 5)\nSắp hết (1–5)\nHết hàng (0)\n▾\nSắp xếp\nMới nhất\nTên A–Z\nMã A–Z\n×\n▾\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tẢnh\tMã\tTên sản phẩm\tThương hiệu\tTồn kho\tTrạng thái\tHành động\nKhông tìm thấy sản phẩm."
+    },
+    {
+      "url": "/admin/variants",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants",
+      "title": "Danh sách biến thể | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Biến thể sản phẩm\n+Thêm biến thể\nTừ khóa\nSản phẩm\nTất cả sản phẩm\n▾\nThương hiệu\nTất cả thương hiệu\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\n▾\nKích cỡ\nTất cả kích cỡ\n36\n37\n38\n39\n40\n41\n42\n43\n▾\nChất liệu\nTất cả chất liệu\nDa thật\nDa tổng hợp\nDa lộn\nVải canvas\nVải lưới\nVải dệt kim\nCao su\nKhác\n▾\nMàu sắc\nTất cả màu sắc\nĐen\nTrắng\nXám\nĐỏ\nXanh dương\nXanh lá\nVàng\nNâu\nBe\nHồng\nKhác\n▾\nĐế giày\nTất cả đế giày\nCao su\nEVA\nPU\nTPU\nĐế bằng\nĐế độn\nĐế chống trượt\nKhác\n▾\nTình trạng tồn\nTất cả tình trạng\nCòn hàng (> 5)\nSắp hết: 1–5\nHết hàng: 0\n▾\nTrạng thái\nTất cả trạng thái\nĐang bán\nNgừng bán\n▾\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tMã biến thể\tMã SP\tTên sản phẩm\tKích cỡ\tChất liệu\tMàu sắc\tĐế giày\tGiá (₫)\tTồn kho\tTrạng thái\tHành động\nChưa có biến thể. Chọn “Thêm biến thể” để tạo kích cỡ, giá và tồn kho.\nQuay lại Chi tiết sản phẩm"
+    },
+    {
+      "url": "/admin/promotions",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/promotions",
+      "title": "Đợt giảm giá | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Đợt giảm giá\n+Thêm đợt giảm giá\nTừ khóa\nTrạng thái\nTất cả trạng thái\nĐang chạy\nSắp tới\nHết hạn\nĐã khóa\n▾\nTừ ngày\nĐến ngày\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tMã\tTên\tLoại giảm\tGiá trị giảm\tBắt đầu\tKết thúc\tHoạt động\tHành động\nChưa có dữ liệu. Thêm chương trình đầu tiên để bắt đầu."
+    },
+    {
+      "url": "/admin/vouchers",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/vouchers",
+      "title": "Phiếu giảm giá | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Phiếu giảm giá\n+Thêm phiếu giảm giá\nTừ khóa\nLoại giảm\nTất cả loại\nPhần trăm (%)\nSố tiền (đ)\n▾\nHiệu lực\nTất cả trạng thái\nĐang chạy\nSắp diễn ra\nHết hạn\nTạm dừng\n▾\nTừ ngày\nĐến ngày\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tMã\tTên\tLoại giảm\tGiá trị\tĐơn tối thiểu\tGiảm tối đa\tBắt đầu\tKết thúc\tĐã dùng\tHoạt động\tHành động\nKhông tìm thấy phiếu giảm giá phù hợp."
+    },
+    {
+      "url": "/admin/invoices",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices",
+      "title": "Quản lý hóa đơn | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Quản lý hóa đơn\n+ Bán hàng tại quầy\nTất cả\n0\nChờ xử lý\n0\nĐã xác nhận\n0\nĐang chuẩn bị\n0\nĐang giao\n0\nĐã giao/Hoàn tất\n0\nĐã hủy\n0\nGiao thất bại\n0\nTừ khóa\nKênh bán\nTất cả kênh\nTại quầy\nTrực tuyến\n▾\nThanh toán\nTất cả thanh toán\nĐã thanh toán\nChưa thanh toán\n▾\nPhương thức\nTất cả phương thức\nTiền mặt\nThanh toán khi nhận hàng (COD)\nChuyển khoản\nKết hợp\n▾\nTừ ngày\nĐến ngày\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tMã hóa đơn\tMã đơn\tNgày\tKhách\tKênh bán\tTrạng thái\tThanh toán\tPhương thức\tTổng tiền (đ)\tHành động\nKhông có hóa đơn phù hợp."
+    },
+    {
+      "url": "/admin/chat",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/chat",
+      "title": "Chat với khách | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Chat với khách\nÂm báo: Tắt\nCho phép thông báo\n\nĐã kết nối trực tiếp\n\nHội thoại\nTìm hội thoại\nTất cả 0\nChưa đọc 0\nChưa ai nhận 0\nCủa tôi 0\nĐã đóng 0\n\nKhông có hội thoại phù hợp."
+    },
+    {
+      "url": "/admin/inventory",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants",
+      "title": "Danh sách biến thể | F6S Store",
+      "overflow": false,
+      "realTableRows": 0,
+      "text": "Biến thể sản phẩm\n+Thêm biến thể\nTừ khóa\nSản phẩm\nTất cả sản phẩm\n▾\nThương hiệu\nTất cả thương hiệu\nNike\nAdidas\nConverse\nVans\nPuma\nNew Balance\n▾\nKích cỡ\nTất cả kích cỡ\n36\n37\n38\n39\n40\n41\n42\n43\n▾\nChất liệu\nTất cả chất liệu\nDa thật\nDa tổng hợp\nDa lộn\nVải canvas\nVải lưới\nVải dệt kim\nCao su\nKhác\n▾\nMàu sắc\nTất cả màu sắc\nĐen\nTrắng\nXám\nĐỏ\nXanh dương\nXanh lá\nVàng\nNâu\nBe\nHồng\nKhác\n▾\nĐế giày\nTất cả đế giày\nCao su\nEVA\nPU\nTPU\nĐế bằng\nĐế độn\nĐế chống trượt\nKhác\n▾\nTình trạng tồn\nTất cả tình trạng\nCòn hàng (> 5)\nSắp hết: 1–5\nHết hàng: 0\n▾\nTrạng thái\nTất cả trạng thái\nĐang bán\nNgừng bán\n▾\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tMã biến thể\tMã SP\tTên sản phẩm\tKích cỡ\tChất liệu\tMàu sắc\tĐế giày\tGiá (₫)\tTồn kho\tTrạng thái\tHành động\nChưa có biến thể. Chọn “Thêm biến thể” để tạo kích cỡ, giá và tồn kho.\nQuay lại Chi tiết sản phẩm"
+    },
+    {
+      "url": "/",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/"
+    },
+    {
+      "url": "/products",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products"
+    },
+    {
+      "url": "/cart",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/cart"
+    },
+    {
+      "url": "/category/1",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/1"
+    },
+    {
+      "url": "/category/2",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/2"
+    },
+    {
+      "url": "/category/3",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/3"
+    },
+    {
+      "url": "/category/4",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/4"
+    },
+    {
+      "url": "/category/5",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/5"
+    },
+    {
+      "url": "/category/6",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/6"
+    },
+    {
+      "url": "/products?promotion=true",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products?promotion=true"
+    },
+    {
+      "url": "/login",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/login"
+    },
+    {
+      "url": "/register",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/register"
+    },
+    {
+      "url": "/policy",
+      "role": "khách",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/policy"
+    },
+    {
+      "url": "/profile",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/profile"
+    },
+    {
+      "url": "/orders",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/orders"
+    },
+    {
+      "url": "/favorites",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/favorites"
+    },
+    {
+      "url": "/",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/"
+    },
+    {
+      "url": "/products",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products"
+    },
+    {
+      "url": "/category/1",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/1"
+    },
+    {
+      "url": "/category/2",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/2"
+    },
+    {
+      "url": "/category/3",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/3"
+    },
+    {
+      "url": "/category/4",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/4"
+    },
+    {
+      "url": "/category/5",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/5"
+    },
+    {
+      "url": "/category/6",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/category/6"
+    },
+    {
+      "url": "/products?promotion=true",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/products?promotion=true"
+    },
+    {
+      "url": "/cart",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/cart"
+    },
+    {
+      "url": "/profile?newAddress=true",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/profile?newAddress=true"
+    },
+    {
+      "url": "/policy",
+      "role": "user",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/policy"
+    },
+    {
+      "url": "/admin/dashboard",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/dashboard"
+    },
+    {
+      "url": "/admin/products-crud",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/products-crud"
+    },
+    {
+      "url": "/admin/variants",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants"
+    },
+    {
+      "url": "/admin/promotions",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/promotions"
+    },
+    {
+      "url": "/admin/vouchers",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/vouchers"
+    },
+    {
+      "url": "/admin/invoices",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices"
+    },
+    {
+      "url": "/admin/chat",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/chat"
+    },
+    {
+      "url": "/admin/inventory",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants"
+    },
+    {
+      "url": "/admin",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin"
+    },
+    {
+      "url": "/admin/pos",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/pos"
+    },
+    {
+      "url": "/admin/categories",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/categories"
+    },
+    {
+      "url": "/admin/sizes",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/sizes"
+    },
+    {
+      "url": "/admin/soles",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/soles"
+    },
+    {
+      "url": "/admin/materials",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/materials"
+    },
+    {
+      "url": "/admin/colors",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors"
+    },
+    {
+      "url": "/admin/customers",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/customers"
+    },
+    {
+      "url": "/admin/employees",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/employees"
+    },
+    {
+      "url": "/admin/reviews",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/reviews"
+    },
+    {
+      "url": "/admin/invoices?from=2026-10-30&to=2026-11-05&channel=&paymentStatus=PAID",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?from=2026-10-30&to=2026-11-05&channel=&paymentStatus=PAID"
+    },
+    {
+      "url": "/admin/invoices?from=2026-11-05&to=2026-11-05&channel=&paymentStatus=PAID",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?from=2026-11-05&to=2026-11-05&channel=&paymentStatus=PAID"
+    },
+    {
+      "url": "/admin/invoices?from=2026-11-01&to=2026-11-05&channel=&paymentStatus=PAID",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?from=2026-11-01&to=2026-11-05&channel=&paymentStatus=PAID"
+    },
+    {
+      "url": "/admin/invoices?from=2026-10-30&to=2026-11-05&channel=",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?from=2026-10-30&to=2026-11-05&channel="
+    },
+    {
+      "url": "/admin/invoices?status=PENDING&from=2026-10-30&to=2026-11-05&channel=",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?status=PENDING&from=2026-10-30&to=2026-11-05&channel="
+    },
+    {
+      "url": "/admin/products-crud?categoryId=",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/products-crud?categoryId="
+    },
+    {
+      "url": "/admin/variants?stock=low",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?stock=low"
+    },
+    {
+      "url": "/admin/products-crud/create",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/products-crud/create"
+    },
+    {
+      "url": "/admin/variants/create?productId=",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants/create?productId="
+    },
+    {
+      "url": "/admin/promotions/create",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/promotions/create"
+    },
+    {
+      "url": "/admin/vouchers/create",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/vouchers/create"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status="
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=PENDING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=PENDING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=CONFIRMED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=CONFIRMED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=PREPARING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=PREPARING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=SHIPPING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=SHIPPING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=DELIVERED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=DELIVERED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=CANCELLED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=CANCELLED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=DELIVERY_FAILED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=&to=&status=DELIVERY_FAILED"
+    },
+    {
+      "url": "/admin/categories/create",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/categories/create"
+    },
+    {
+      "url": "/admin/categories/edit/1",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/categories/edit/1"
+    },
+    {
+      "url": "/admin/categories/edit/2",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/categories/edit/2"
+    },
+    {
+      "url": "/admin/categories/edit/3",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/categories/edit/3"
+    },
+    {
+      "url": "/admin/categories/edit/4",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/categories/edit/4"
+    },
+    {
+      "url": "/admin/categories/edit/5",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/categories/edit/5"
+    },
+    {
+      "url": "/admin/categories/edit/6",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/categories/edit/6"
+    },
+    {
+      "url": "/admin/sizes/create",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/sizes/create"
+    },
+    {
+      "url": "/admin/sizes/edit/1",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/sizes/edit/1"
+    },
+    {
+      "url": "/admin/sizes/edit/2",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/sizes/edit/2"
+    },
+    {
+      "url": "/admin/sizes/edit/3",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/sizes/edit/3"
+    },
+    {
+      "url": "/admin/sizes/edit/4",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/sizes/edit/4"
+    },
+    {
+      "url": "/admin/sizes/edit/5",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/sizes/edit/5"
+    },
+    {
+      "url": "/admin/sizes/edit/6",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/sizes/edit/6"
+    },
+    {
+      "url": "/admin/sizes/edit/7",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/sizes/edit/7"
+    },
+    {
+      "url": "/admin/sizes/edit/8",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/sizes/edit/8"
+    },
+    {
+      "url": "/admin/soles/create",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/soles/create"
+    },
+    {
+      "url": "/admin/variants?soleId=1",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?soleId=1"
+    },
+    {
+      "url": "/admin/soles/edit/1",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/soles/edit/1"
+    },
+    {
+      "url": "/admin/variants?soleId=2",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?soleId=2"
+    },
+    {
+      "url": "/admin/soles/edit/2",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/soles/edit/2"
+    },
+    {
+      "url": "/admin/variants?soleId=3",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?soleId=3"
+    },
+    {
+      "url": "/admin/soles/edit/3",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/soles/edit/3"
+    },
+    {
+      "url": "/admin/variants?soleId=4",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?soleId=4"
+    },
+    {
+      "url": "/admin/soles/edit/4",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/soles/edit/4"
+    },
+    {
+      "url": "/admin/variants?soleId=5",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?soleId=5"
+    },
+    {
+      "url": "/admin/soles/edit/5",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/soles/edit/5"
+    },
+    {
+      "url": "/admin/variants?soleId=6",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?soleId=6"
+    },
+    {
+      "url": "/admin/soles/edit/6",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/soles/edit/6"
+    },
+    {
+      "url": "/admin/variants?soleId=7",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?soleId=7"
+    },
+    {
+      "url": "/admin/soles/edit/7",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/soles/edit/7"
+    },
+    {
+      "url": "/admin/variants?soleId=8",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?soleId=8"
+    },
+    {
+      "url": "/admin/soles/edit/8",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/soles/edit/8"
+    },
+    {
+      "url": "/admin/materials/create",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/materials/create"
+    },
+    {
+      "url": "/admin/variants?materialId=1",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?materialId=1"
+    },
+    {
+      "url": "/admin/materials/edit/1",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/materials/edit/1"
+    },
+    {
+      "url": "/admin/variants?materialId=2",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?materialId=2"
+    },
+    {
+      "url": "/admin/materials/edit/2",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/materials/edit/2"
+    },
+    {
+      "url": "/admin/variants?materialId=3",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?materialId=3"
+    },
+    {
+      "url": "/admin/materials/edit/3",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/materials/edit/3"
+    },
+    {
+      "url": "/admin/variants?materialId=4",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?materialId=4"
+    },
+    {
+      "url": "/admin/materials/edit/4",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/materials/edit/4"
+    },
+    {
+      "url": "/admin/variants?materialId=5",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?materialId=5"
+    },
+    {
+      "url": "/admin/materials/edit/5",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/materials/edit/5"
+    },
+    {
+      "url": "/admin/variants?materialId=6",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?materialId=6"
+    },
+    {
+      "url": "/admin/materials/edit/6",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/materials/edit/6"
+    },
+    {
+      "url": "/admin/variants?materialId=7",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?materialId=7"
+    },
+    {
+      "url": "/admin/materials/edit/7",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/materials/edit/7"
+    },
+    {
+      "url": "/admin/variants?materialId=8",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?materialId=8"
+    },
+    {
+      "url": "/admin/materials/edit/8",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/materials/edit/8"
+    },
+    {
+      "url": "/admin/colors/create",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors/create"
+    },
+    {
+      "url": "/admin/variants?colorId=1",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?colorId=1"
+    },
+    {
+      "url": "/admin/colors/edit/1",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors/edit/1"
+    },
+    {
+      "url": "/admin/variants?colorId=2",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?colorId=2"
+    },
+    {
+      "url": "/admin/colors/edit/2",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors/edit/2"
+    },
+    {
+      "url": "/admin/variants?colorId=3",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?colorId=3"
+    },
+    {
+      "url": "/admin/colors/edit/3",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors/edit/3"
+    },
+    {
+      "url": "/admin/variants?colorId=4",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?colorId=4"
+    },
+    {
+      "url": "/admin/colors/edit/4",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors/edit/4"
+    },
+    {
+      "url": "/admin/variants?colorId=5",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?colorId=5"
+    },
+    {
+      "url": "/admin/colors/edit/5",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors/edit/5"
+    },
+    {
+      "url": "/admin/variants?colorId=6",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?colorId=6"
+    },
+    {
+      "url": "/admin/colors/edit/6",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors/edit/6"
+    },
+    {
+      "url": "/admin/variants?colorId=7",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?colorId=7"
+    },
+    {
+      "url": "/admin/colors/edit/7",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors/edit/7"
+    },
+    {
+      "url": "/admin/variants?colorId=8",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?colorId=8"
+    },
+    {
+      "url": "/admin/colors/edit/8",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors/edit/8"
+    },
+    {
+      "url": "/admin/variants?colorId=9",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?colorId=9"
+    },
+    {
+      "url": "/admin/colors/edit/9",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors/edit/9"
+    },
+    {
+      "url": "/admin/variants?colorId=10",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?colorId=10"
+    },
+    {
+      "url": "/admin/colors/edit/10",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors/edit/10"
+    },
+    {
+      "url": "/admin/variants?colorId=11",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?colorId=11"
+    },
+    {
+      "url": "/admin/colors/edit/11",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/colors/edit/11"
+    },
+    {
+      "url": "/admin/customers/create",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/customers/create"
+    },
+    {
+      "url": "/admin/customers/detail/11",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/customers/detail/11"
+    },
+    {
+      "url": "/admin/customers/edit/11",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/customers/edit/11"
+    },
+    {
+      "url": "/admin/customers/detail/9",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/customers/detail/9"
+    },
+    {
+      "url": "/admin/customers/edit/9",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/customers/edit/9"
+    },
+    {
+      "url": "/admin/employees/create",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/employees/create"
+    },
+    {
+      "url": "/admin/employees/detail/1",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/employees/detail/1"
+    },
+    {
+      "url": "/admin/employees/edit/1",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/employees/edit/1"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status="
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=PENDING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=PENDING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=CONFIRMED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=CONFIRMED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=PREPARING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=PREPARING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=SHIPPING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=SHIPPING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=DELIVERED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=DELIVERED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=CANCELLED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=CANCELLED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=DELIVERY_FAILED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-10-30&to=2026-11-05&status=DELIVERY_FAILED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status="
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=PENDING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=PENDING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=CONFIRMED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=CONFIRMED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=PREPARING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=PREPARING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=SHIPPING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=SHIPPING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=DELIVERED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=DELIVERED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=CANCELLED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=CANCELLED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=DELIVERY_FAILED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-05&to=2026-11-05&status=DELIVERY_FAILED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status="
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=PENDING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=PENDING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=CONFIRMED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=CONFIRMED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=PREPARING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=PREPARING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=SHIPPING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=SHIPPING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=DELIVERED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=DELIVERED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=CANCELLED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=CANCELLED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=DELIVERY_FAILED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=PAID&paymentMethod=&from=2026-11-01&to=2026-11-05&status=DELIVERY_FAILED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status="
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=PENDING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=PENDING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=CONFIRMED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=CONFIRMED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=PREPARING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=PREPARING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=SHIPPING",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=SHIPPING"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=DELIVERED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=DELIVERED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=CANCELLED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=CANCELLED"
+    },
+    {
+      "url": "/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=DELIVERY_FAILED",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/invoices?q=&channel=&paymentStatus=&paymentMethod=&from=2026-10-30&to=2026-11-05&status=DELIVERY_FAILED"
+    },
+    {
+      "url": "/admin/variants?productId=",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/variants?productId="
+    },
+    {
+      "url": "/admin/customers/11/addresses/create",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/customers/11/addresses/create"
+    },
+    {
+      "url": "/admin/customers/9/addresses/create",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/customers/9/addresses/create"
+    },
+    {
+      "url": "/admin/customers/9/addresses/4/edit",
+      "role": "admin",
+      "width": 375,
+      "status": 200,
+      "finalUrl": "http://localhost:18032/admin/customers/9/addresses/4/edit"
+    }
+  ],
+  "crawls": [
+    {
+      "role": "khách",
+      "visited": 13,
+      "remaining": 0
+    },
+    {
+      "role": "user",
+      "visited": 15,
+      "remaining": 0
+    },
+    {
+      "role": "admin",
+      "visited": 154,
+      "remaining": 0
+    }
+  ],
+  "security": [
+    {
+      "name": "S01 khách vào quản lý",
+      "status": 302,
+      "expected": 302
+    },
+    {
+      "name": "S02 user vào quản lý",
+      "status": 403,
+      "expected": 403
+    },
+    {
+      "name": "S03 admin vào quản lý",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "name": "S04 admin POST thiếu CSRF",
+      "status": 403,
+      "expected": 403
+    },
+    {
+      "name": "S05 admin POST sai CSRF",
+      "status": 403,
+      "expected": 403
+    },
+    {
+      "name": "S06 user POST có CSRF hợp lệ",
+      "status": 403,
+      "expected": 403
+    },
+    {
+      "name": "S07 biến thể thiếu CSRF",
+      "status": 403,
+      "expected": 403
+    },
+    {
+      "name": "S08 chat khách thiếu CSRF",
+      "status": 403,
+      "expected": 403
+    }
+  ],
+  "javascript": [],
+  "requests404": [],
+  "requestFailed": [
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3251/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3250/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3252/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3251/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3250/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3252/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3253/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3249/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3249/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3253/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3251/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3250/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3250/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3251/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3250/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3251/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3251/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3250/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3251/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3250/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3250/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "user",
+      "url": "https://tile.openstreetmap.org/12/3251/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3250/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3250/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3250/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3250/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3250/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3250/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3250/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3250/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3250/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3250/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3250/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3250/1803.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "role": "admin",
+      "url": "https://tile.openstreetmap.org/12/3251/1802.png",
+      "error": "net::ERR_NAME_NOT_RESOLVED"
+    }
+  ],
+  "login": {
+    "user": {
+      "success": true,
+      "url": "http://localhost:18032/"
+    },
+    "admin": {
+      "success": true,
+      "url": "http://localhost:18032/admin"
+    }
+  },
+  "emptyCheckout": {
+    "status": 302,
+    "location": "http://localhost:18032/cart"
+  }
+}

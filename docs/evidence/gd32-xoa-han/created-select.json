@@ -1,0 +1,29 @@
+{
+  "database": "shopbangiay_kt_gd32_20261105_205724",
+  "rows": [
+    {
+      "id": 1,
+      "code": "SP001",
+      "name": "VERIFY Sản phẩm nhập mới",
+      "status": true,
+      "category_id": 8,
+      "brand_code": "TH007",
+      "brand": "VERIFY Thương hiệu nhập mới",
+      "variant_id": 1,
+      "variant_code": "BT0001",
+      "size_value": "39",
+      "color": "Đen",
+      "material": "Da thật",
+      "sole": "Cao su",
+      "price": 200000.0,
+      "quantity": 7,
+      "variant_status": true,
+      "quantity_before": 0,
+      "quantity_change": 7,
+      "quantity_after": 7,
+      "reason": "Khởi tạo",
+      "actor": "admin",
+      "image_path": "/uploads/products/cf5f9462-0cd2-4f03-9d99-46a467725c35.jpg"
+    }
+  ]
+}

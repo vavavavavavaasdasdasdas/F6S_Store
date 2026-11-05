@@ -85,7 +85,8 @@ class EmployeeAccessIntegrationTest {
   mvc.perform(post("/admin/customers/"+protectedCustomerId+"/send-account").with(user(username).roles("EMPLOYEE")).with(csrf()).param("confirmed","true")).andExpect(status().isForbidden());
  }
  @Test void employeeProcessesInvoiceThroughExistingOrderStatusService()throws Exception{
-  var row=jdbc.queryForMap("SELECT TOP 1 v.id,v.product_id,v.quantity,p.name,s.size_value FROM product_variants v JOIN products p ON p.id=v.product_id JOIN sizes s ON s.id=v.size_id WHERE v.quantity>1 AND v.status=1 AND p.status=1 ORDER BY v.id");
+  int ownVariant=com.example.demodatn.CatalogTestFixtures.variant(jdbc);
+  var row=jdbc.queryForMap("SELECT v.id,v.product_id,v.quantity,p.name,s.size_value FROM product_variants v JOIN products p ON p.id=v.product_id JOIN sizes s ON s.id=v.size_id WHERE v.id=?",ownVariant);
   int variant=(Integer)row.get("id"),stock=(Integer)row.get("quantity");var ward=jdbc.queryForMap("SELECT TOP 1 id,tinh_thanh_id FROM phuong_xa ORDER BY id");
   var request=new com.example.demodatn.dto.donhang.CheckoutRequest();request.setProvinceId((Integer)ward.get("tinh_thanh_id"));request.setWardId((Integer)ward.get("id"));request.setStreetAddress("Số 12, đường Nguyễn Huệ");request.setReceiverName("Khách hóa đơn nhân viên");request.setPhone("0901234567");request.setEmail("invoice-g12@example.test");request.setPaymentMethod("COD");
   var item=new com.example.demodatn.dto.donhang.CartItemDto((Integer)row.get("product_id"),variant,row.get("name").toString(),row.get("size_value").toString(),java.math.BigDecimal.ONE,1);

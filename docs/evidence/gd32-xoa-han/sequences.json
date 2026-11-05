@@ -1,0 +1,42 @@
+[
+  {
+    "name": "categories_ma_seq",
+    "current_value": 7
+  },
+  {
+    "name": "chat_lieu_ma_seq",
+    "current_value": 9
+  },
+  {
+    "name": "danh_gia_ma_seq",
+    "current_value": 1
+  },
+  {
+    "name": "de_giay_ma_seq",
+    "current_value": 9
+  },
+  {
+    "name": "mau_sac_ma_seq",
+    "current_value": 12
+  },
+  {
+    "name": "product_code_seq",
+    "current_value": 1
+  },
+  {
+    "name": "product_variants_ma_seq",
+    "current_value": 1
+  },
+  {
+    "name": "promotions_ma_seq",
+    "current_value": 1
+  },
+  {
+    "name": "seq_chat_ma",
+    "current_value": 1
+  },
+  {
+    "name": "sizes_ma_seq",
+    "current_value": 9
+  }
+]

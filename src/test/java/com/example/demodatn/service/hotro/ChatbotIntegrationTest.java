@@ -82,6 +82,10 @@ public class ChatbotIntegrationTest {
     @Test
     @DisplayName("1. Tìm kiếm 'giày Nike màu đen size 42 dưới 3 triệu' khớp tiêu chí giá và tồn")
     void testSearchNikeBlackSize42Under3M() {
+        // Test tự tạo sản phẩm; database vận hành sau dọn có thể hoàn toàn trống.
+        int productId = jdbc.queryForObject("INSERT products(code,name,category_id,status) OUTPUT INSERTED.id VALUES(?,N'Nike kiểm thử chatbot',(SELECT id FROM categories WHERE name=N'Nike'),1)",
+                Integer.class, "CB" + UUID.randomUUID().toString().replace("-", "").substring(0, 12));
+        jdbc.update("INSERT product_variants(product_id,size_id,chat_lieu_id,mau_sac_id,de_giay_id,price,quantity,status) VALUES(?,(SELECT id FROM sizes WHERE size_value=N'42'),(SELECT id FROM chat_lieu WHERE ten=N'Da thật'),(SELECT id FROM mau_sac WHERE ten=N'Đen'),(SELECT id FROM de_giay WHERE ten=N'Cao su'),2500000,7,1)", productId);
         String session = UUID.randomUUID().toString();
         ChatbotMessageResponse resp = chatbotService.handleMessage(
                 req("giày Nike màu đen size 42 dưới 3 triệu", session), "127.0.0.1", null);

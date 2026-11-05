@@ -1,166 +1,177 @@
-# Giai đoạn 32 — dọn dữ liệu và dữ liệu mẫu thực tế
+# Giai đoạn 32 — BẢN THAY THẾ: DELETE hẳn, không seed
 
-Chỉ làm giai đoạn 32 trên nhánh `hoan-thien-chat-thanh-toan`. **Không kết nối hoặc chạy lệnh trên `shopbangiay` và `shopbangiay_thu`.** Không chạy xóa file upload. Không merge/push. Hai script nằm ngoài migration và không được đưa vào chay_tat_ca.sql.
+Báo cáo này thay hoàn toàn bản dọn rồi tạo5sản phẩm mẫu trước đây. **Không kết nối hoặc chạy lệnh trên `shopbangiay`/`shopbangiay_thu`. Không seed. Không xóa file upload.** Các bằng chứng cũ trong `docs/evidence/gd32/` là lịch sử đã bị thay thế, không phải hướng dẫn vận hành hiện tại.
 
-Bản restore nghiệm thu ban đầu: `shopbangiay_kt_gd32_20261105_165907`. Nguồn full backup mới nhất đọc được theo msdb: `C:\Program Files\Microsoft SQL Server\MSSQL17.MSSQLSERVER\MSSQL\Backup\shopbangiay_kt_20261105_gd29_schema.bak`, database nguồn `shopbangiay_kt_20261105_gd29`, hoàn tất `2026-11-05T09:26:45`. Không coi nguồn này là một backup mới của DB chính. RESTORE mới không WITH REPLACE, dừng nếu tên DB đã tồn tại.
+Nhánh: `hoan-thien-chat-thanh-toan`. Bản restore sạch cuối: **`shopbangiay_kt_gd32_20261105_214749`**. Nguồn fullbackup mới nhất đọc được theo msdb: `C:\Program Files\Microsoft SQL Server\MSSQL17.MSSQLSERVER\MSSQL\Backup\shopbangiay_kt_20261105_gd29_schema.bak`, hoàn tất `2026-11-05T09:26:45`, nguồn `shopbangiay_kt_20261105_gd29`. Không coi đây là backup mới của DB chính; agent chỉ đọc file có sẵn và RESTORE tên mới, không WITH REPLACE/không ghi đè DB đã tồn tại. Sau nhóm tạo dữ liệu thử/Maven/UI đã RESTORE thành bản mới, không DROP các DB thử cũ.
 
-Đã lần lượt dùng các bản sao mới hậu tố 162539 (test đầu),164232 (crawl),165400 (chat đã sửa và test cuối),165907 (trạng thái sạch cuối). Không ghi đè DB có sẵn. Sau nhóm ghi dữ liệu, RESTORE thành bản mới; tin nhắn thử không còn trong bản cuối. Các DB thử cũ được để nguyên, không tự DROP.
-
-Tổng 30 hạng mục: **26 PASS / 2 FAIL / 2 NOT TESTED**. Đây không phải nghiệm thu toàn bộ PASS: đăng nhập/đặt đơn/crawl user đã được kiểm tra bổ sung; còn ảnh thật và ngưỡng voucher dưới500.000đ chưa có bằng chứng.
+Kết quả: **27 PASS / 2 FAIL / 0 NOT TESTED**, tổng29hạng mục. Hai FAIL là lỗi UI/mạng ngoài phạm vi cleanup, được ghi rõ, không tuyên bố mọi thứ đều PASS.
 
 | Hạng mục | Cách kiểm tra | Kết quả thực tế | PASS/FAIL/NOT TESTED |
 |---|---|---|---|
-| RESTORE riêng | RESTORE HEADERONLY/FILELISTONLY, tên timestamp, không REPLACE | shopbangiay_kt_gd32_20261105_165907; backup 2026-11-05T09:26:45 | PASS |
-| Kiểm kê toàn bộ | INFORMATION_SCHEMA + sys.tables + FK | 40 bảng, 354 cột, 50 FK; phân loại bên dưới | PASS |
-| Tài khoản giữ | SELECT trước xóa; so mọi cột trước/sau | admin id1 + user id2; giữ nguyên mật khẩu; 2 khách, 1 nhân viên, 1 địa chỉ | PASS |
-| Dữ liệu cấu hình/hành chính/FAQ | So toàn bộ nội dung 12 bảng trước/sau cleanup | Không đổi; không có hồ sơ Khách lẻ; POS dùng customer=NULL | PASS |
-| Chốt sai DB | Chạy trên DB tạm với TenDB_DuKien=WRONG_DATABASE | THROW 51000 trước thay đổi | PASS |
-| Thiếu xác nhận / xem trước | Chạy mặc định; so nội dung cả 40 bảng | ROLLBACK, SHA-256 trước/sau bằng nhau; không reset counter | PASS |
-| Xóa xác nhận và FK | SESSION_CONTEXT đúng; DBCC CHECKCONSTRAINTS | 24 bảng xóa sạch =0; 4 bảng xóa có điều kiện; 50 FK không disabled/untrusted | PASS |
-| Reset mã/identity | SELECT mã + thử mở chat sau reset | SP001..SP005, BT0001..BT0040, KM001..KM002; chat thử ID1/CH0001 | PASS |
-| Seed hai lần | So mọi bản ghi, không chỉ COUNT | 5 SP / 40 BT / 40 log / 5 ảnh tham chiếu / 2 đợt / 4 liên kết / 5 phiếu; không nhân đôi | PASS |
-| Giá/tồn/log chuẩn | SELECT từng dòng, join thuộc tính, log trước/sau | Mỗi SP 8 BT; đúng 1 BT tồn3 và 1 BT tồn0, còn lại 10..25; 40 log Khởi tạo | PASS |
-| Mẫu dữ liệu thử | SELECT LIKE trên mọi cột tên/mã/email liên quan | 31 bảng được quét; tổng khớp P12-/P7-/P8-/Phase/E2E/kiểm thử/test/@example.* =0 | PASS |
-| Không mọc lại dữ liệu | So COUNT 40 bảng sau browser với sau seed | Cả 40 COUNT bằng nhau; DataInitializer chỉ profile test | PASS |
-| ddl-auto=validate / khởi động | Cấu hình env bắt buộc trỏ bản sao, chờ log | Initialized JPA EntityManagerFactory; Started; port18032 | PASS |
-| Đăng nhập admin | Form thật; mật khẩu hiện có | Chuyển /admin; không đổi mật khẩu | PASS |
-| Đăng nhập user | Form đăng nhập thật bằng mật khẩu hiện có | Thành công, chuyển về /; không đổi mật khẩu; user-followup/user-browser.json | PASS |
-| Trang chính 1280/375 | Playwright + ảnh + DOM | 20 lượt trang cuối đều200; đếm đúng5/40/2/5, hóa đơn/chat rỗng, Dashboard tồn0 và3; các trang chính không tràn375 | PASS |
-| Giá trên cửa hàng | Đối chiếu SELECT độc lập với HTML thật | Nike2929000; Adidas4200000; Converse1260000; Vans1620000; ASICS3900000 | PASS |
-| 5 voucher đủ điều kiện | Giỏ thật ASICS3900000, gọi VoucherService qua checkout | 150000/50000/100000/300000/500000; VIP20 Tốt nhất; SELECT khớp | PASS |
-| Voucher chưa đủ: GIAM100K/SALE15/VIP20 | Giỏ Converse1260000 | Bị khóa; thiếu240000/740000/1740000 tương ứng | PASS |
-| Ngưỡng dưới500000 cho CHAOMUNG10/GIAM50K | Cần tạm tính dưới500000 qua luồng thật | Mọi sản phẩm seed đều trên500000; chưa có bằng chứng ca này trên dữ liệu seed | NOT TESTED |
-| Đặt đơn bằng user và xử lý kho | Form thật COD + GIAM50K; bấm xử lý Hóa đơn và SELECT từng bước | Đơn DH000001: 1.260.000−50.000=1.210.000đ; tồn22→22→21→21→21→21; cuối DELIVERED/PAID | PASS |
-| Chat khách–admin realtime | Hai browser context, không reload khách, SELECT | Khách gửi; admin trả lời; khách nhận; ID1/CH0001,3 tin. Sau đó RESTORE bản mới, chat cuối0 | PASS |
-| Crawl nội bộ | BFS anchor đọc; bỏ hành động xóa/đăng xuất/xuất file | 246 URL Admin +20 URL khách; hàng đợi còn0; xem bảng URL chi tiết | PASS |
-| Crawl quyền user | Đăng nhập thật, BFS link đọc + 1280/375 | 22URL duy nhất, queue0; không JS exception/404/tràn; bổ sung 3GETadmin403 và1POSThóađơn403 cóCSRFhợp lệ | PASS |
-| 8 kịch bản bảo mật | GET quyền khách; POST thiếu/sai CSRF; admin thiếu CSRF | 8/8 đúng302/403; không thay đổi dữ liệu | PASS |
-| JavaScript và 404 trang cuối | pageerror + response404 trên20 lượt | 0 JavaScript exception;0 request404 | PASS |
-| Console không lỗi tài nguyên ngoài | console/requestfailed khi mở bản đồ | DNS không phân giải tile.openstreetmap.org; lưu bằng chứng, chưa xử lý trong giai đoạn dữ liệu | FAIL |
-| POS không tràn desktop | Playwright đo scrollWidth tại1280 | /admin/pos overflow=true ở1280, false ở375; lỗi ngoài phạm vi dọn/seed | FAIL |
-| Ảnh sản phẩm thật | Kiểm tra5 đường dẫn file trên đĩa | Thiếu5/5 ảnh do chủ cửa hàng cung cấp; fallback đã hoạt động,0 request404 | NOT TESTED |
-| mvnw clean test | Chạy đầy đủ cuối nhóm sửa | 315 tests,0 failures,0 errors,0 skipped; BUILD SUCCESS; guard giữ nguyên | PASS |
+| RESTORE an toàn | RESTORE mới; guard tên chưa tồn tại, không REPLACE | shopbangiay_kt_gd32_20261105_212258 | PASS |
+| Kiểm kê và phân loại | INFORMATION_SCHEMA + COUNT_BIG từng bảng | 40 bảng: 7 giữ, 24 xóa toàn bộ, 9 xóa ngoài danh sách giữ/gốc | PASS |
+| Nguồn danh mục gốc | Đọc shopgiay.sql qua lịch sử Git | 6 thương hiệu, 8 kích cỡ, 8 chất liệu, 11 màu, 8 đế; không lấy bản đã rút gọn | PASS |
+| Tài khoản và mật khẩu | So toàn bộ cột users trước/sau + đăng nhập form thật | Chỉ admin id1 và user id2; mật khẩu không thay đổi | PASS |
+| Hồ sơ, địa chỉ và cấu hình | So dữ liệu giữ trước/sau | 2 khách, 1 nhân viên, 1 địa chỉ; cấu hình/FAQ/địa giới/roles nguyên vẹn | PASS |
+| Sai tên database | TenDB_DuKien=WRONG_DB trên bản sao | THROW trước thay đổi | PASS |
+| Preview/thiếu xác nhận | Chạy mặc định rồi so toàn bộ bản ghi 40 bảng | ROLLBACK; SHA-256 nội dung trước/sau bằng nhau | PASS |
+| Lệnh sqlcmd công khai | -v TenDB_DuKien + -i script trên bản cuối | Exit0; ROLLBACK; không tạo sản phẩm | PASS |
+| DELETE thật, kể cả đang tắt | COUNT mọi bảng + COUNT mọi trạng thái | 24 bảng nghiệp vụ đều0; products/variants/promotions/vouchers ở mọi trạng thái đều0 | PASS |
+| Danh mục ngoài gốc | Fixture5tên thử đang ẩn, chạy script trên bản sao | Đã DELETE thật ở cả5bảng, không đổi trạng thái để né xóa | PASS |
+| Chốt tên có thể là dữ liệu thật | Fixture ASICS do agent tạo trên bản sao | Mặc định dừng trước DELETE; chỉ giữ sau khi điền rõ @DanhMucGiuThem; đã restore bỏ fixture | PASS |
+| FK và schema | DBCC CHECKCONSTRAINTS; sys.foreign_keys | 40 bảng/50FK còn nguyên, không FK disabled/untrusted, không vi phạm | PASS |
+| Không đổi status / không lách FK | rg UPDATE/NOCHECK/DISABLE/TRUNCATE/DROP trong script | Exit1, không có kết quả; script chỉ DELETE dữ liệu | PASS |
+| Không seed mặc định | Gỡ file seed cũ; rg main/pom/aggregate/migrations; profile | Không gọi seed; DataInitializer chỉ profile test; không thêm route/nút xóa | PASS |
+| Khởi động sau dọn | ddl-auto=validate, log Started/cổng riêng | Catalog bản sao, JPA validate sạch; Started cổng18032 | PASS |
+| Trang rỗng 1280/375 | 34lượt trang chính bằng Playwright | Tất cả200, không tràn; sản phẩm/biến thể/khuyến mãi/hóa đơn/chat rỗng, Dashboard có empty state | PASS |
+| Cửa hàng, giỏ và checkout rỗng | UI + GET checkout không follow redirect | Trang chủ “Cửa hàng chưa có sản phẩm”; danh sách không tìm thấy; giỏ trống; checkout302về/cart, không500 | PASS |
+| Crawl ba vai trò | BFS anchor nội bộ đọc, loại link xóa/đăng xuất/xuất file | Khách13,user15,admin154; mỗi queue còn0, không status400/500 ở link đọc đã crawl | PASS |
+| 8 kịch bản bảo mật | Khách/user/admin; POST thiếu/sai/đúngCSRF nhưng sai quyền | 302/403/200/403/403/403/403/403 đúng kỳ vọng | PASS |
+| Thêm thương hiệu qua UI | Form thật, không gọi POST trực tiếp | Lưu được thương hiệu VERIFY; codeTH007; lỗi lần bấm đầu ghi riêng bên dưới | PASS |
+| Thêm sản phẩm + biến thể qua UI | Form, checkbox39, chất liệu/đế/màu, upload logo sẵn có | POST302; SELECT SP001/BT0001,giá200000,tồn7; log0/+7/7/Khởi tạo/admin | PASS |
+| Reset SEQUENCE/IDENTITY | SELECT sau nhập mới và probe trên bản sao | SP001/BT0001 và ID1; probeKM001/CH0001; không reset bảng còn dữ liệu | PASS |
+| Khôi phục sau nhóm phá dữ liệu | RESTORE bản mới sau test nhập hàng | Bản cuối lại0sản phẩm/biến thể/đơn/hóa đơn/chat/phiếu/đợt; không giữ sản phẩm thử | PASS |
+| Quét mẫu thử | SELECT trên cột tên/mã/email của31bảng | P12-/P7-/P8-/Phase/E2E/kiểm thử/test/poly/@example.*: tổng khớp0 | PASS |
+| Maven không skip | mvnw.cmd clean test trên bản không seed | 315test,0failure,0error,0skip; giữ nguyên TestDatabaseGuard | PASS |
+| Không xóa upload | Kiểm kê đĩa so với DB cuối không còn tham chiếu ảnh | 17file chỉ liệt kê; lệnh riêng mặc định -WhatIf, chưa thực thi | PASS |
+| JavaScript và tài nguyên404 | pageerror/response404 trong trình duyệt | 0JS exception,0request404 | PASS |
+| Bấm Thêm lần đầu ổn định | Đo nút trước/sau blur và event target | Nút lên22px khi ẩn vùng lỗi trống, click đầu rơi vào FORM; click lại lưu được. Chưa sửa UI ngoài phạm vi | FAIL |
+| Tài nguyên bản đồ ngoài | requestfailed khi crawl form địa chỉ | tile.openstreetmap.org: net::ERR_NAME_NOT_RESOLVED. Chưa xử lý mạng ngoài trong giai đoạn dữ liệu | FAIL |
 
-## Kiểm kê trước khi viết script và COUNT trước/sau
+## A. Kiểm kê trước khi viết/chạy
 
-Nguồn: INFORMATION_SCHEMA.TABLES, sys.partitions; [COUNT trước](evidence/gd32/counts-before.json), [output xem trước](evidence/gd32/preview.txt), [output xác nhận](evidence/gd32/confirmed.txt), [COUNT sau browser](evidence/gd32/counts-after-browser.json). Cột Sau xóa được ghi trước seed; seed chỉ thêm ASICS vào categories, không sửa danh mục cũ.
+[COUNT trước](evidence/gd32-xoa-han/counts-before.json), [preview thật](evidence/gd32-xoa-han/preview.txt), [xác nhận](evidence/gd32-xoa-han/confirmed.txt), [COUNT_BIG chính xác cuối](evidence/gd32-xoa-han/final-counts-exact.json), [câu SELECT đủ40bảng](evidence/gd32-xoa-han/SELECT_COUNT_TUNG_BANG.sql).
 
-| Bảng | Nhóm | Trước | Sau xóa | Sau seed / browser |
-|---|---|---|---|---|
-| admin_chat_audit | XÓA SẠCH | 0 | 0 | 0 |
-| admin_chat_hoi_thoai | XÓA SẠCH | 0 | 0 | 0 |
-| admin_chat_tin_nhan | XÓA SẠCH | 0 | 0 | 0 |
-| categories | GIỮ | 6 | 6 | 7 |
-| cau_hinh_phi_ship | GIỮ | 1 | 1 | 1 |
-| chat_action_audit | XÓA SẠCH | 0 | 0 | 0 |
-| chat_hoi_thoai | XÓA SẠCH | 0 | 0 | 0 |
-| chat_lieu | GIỮ | 8 | 8 | 8 |
-| chat_mail_log | XÓA SẠCH | 0 | 0 | 0 |
-| chat_tin_nhan | XÓA SẠCH | 0 | 0 | 0 |
-| chatbot_faq | GIỮ | 9 | 9 | 9 |
-| customers | XÓA THEO ĐIỀU KIỆN | 14 | 2 | 2 |
-| danh_gia | XÓA SẠCH | 0 | 0 | 0 |
-| de_giay | GIỮ | 8 | 8 | 8 |
-| dia_chi_nhan_hang | XÓA THEO ĐIỀU KIỆN | 7 | 1 | 1 |
-| employees | XÓA THEO ĐIỀU KIỆN | 5 | 1 | 1 |
-| inventory_logs | XÓA SẠCH | 63 | 0 | 40 |
-| invoices | XÓA SẠCH | 28 | 0 | 0 |
-| mau_sac | GIỮ | 11 | 11 | 11 |
-| order_details | XÓA SẠCH | 35 | 0 | 0 |
-| order_mail_log | XÓA SẠCH | 0 | 0 | 0 |
-| order_status_history | XÓA SẠCH | 28 | 0 | 0 |
-| orders | XÓA SẠCH | 28 | 0 | 0 |
-| phieu_ho_tro | XÓA SẠCH | 0 | 0 | 0 |
-| phuong_xa | GIỮ | 3321 | 3321 | 3321 |
-| pos_held_items | XÓA SẠCH | 0 | 0 | 0 |
-| pos_held_orders | XÓA SẠCH | 0 | 0 | 0 |
-| product_images | XÓA SẠCH | 6 | 0 | 5 |
-| product_variants | XÓA SẠCH | 20 | 0 | 40 |
-| products | XÓA SẠCH | 10 | 0 | 5 |
-| promotion_details | XÓA SẠCH | 7 | 0 | 4 |
-| promotions | XÓA SẠCH | 5 | 0 | 2 |
-| roles | GIỮ | 3 | 3 | 3 |
-| sizes | GIỮ | 8 | 8 | 8 |
-| ten_tinh_thanh_cu | GIỮ | 68 | 68 | 68 |
-| tinh_thanh | GIỮ | 34 | 34 | 34 |
-| users | XÓA THEO ĐIỀU KIỆN | 12 | 2 | 2 |
-| vouchers | XÓA SẠCH | 15 | 0 | 5 |
-| vung_giao_hang | GIỮ | 3 | 3 | 3 |
-| yeu_thich | XÓA SẠCH | 0 | 0 | 0 |
+Nhóm “XÓA CÁC DÒNG NGOÀI DANH SÁCH GỐC” gồm5danh mục theo danh sách tên gốc và4bảng tài khoản/hồ sơ theo danh sách admin/user + dòng hệ thống. Không có bảng chưa rõ cần đoán. Bảng mới chưa kiểm kê sẽ làm script dừng, không tự xóa.
 
-Không có bảng chưa rõ cần tự đoán. Script kiểm tra danh sách bảng đã kiểm kê; thêm bảng mới thì dừng và duyệt lại. 24 bảng xóa sạch;4 bảng theo điều kiện;12 bảng giữ. Danh mục nghi thử: **0 mục** sau kiểm kê tất cả tên và số đang dùng ([danh sách đầy đủ](evidence/gd32/shared-lookups-before.json)). `@DanhMucDuyetXoa` để rỗng.
+| Bảng | Phân loại | COUNT trước | COUNT sau xóa / bản cuối |
+|---|---|---|---|
+|admin_chat_audit|XÓA HẲN TOÀN BỘ|0|0|
+|admin_chat_hoi_thoai|XÓA HẲN TOÀN BỘ|0|0|
+|admin_chat_tin_nhan|XÓA HẲN TOÀN BỘ|0|0|
+|categories|XÓA CÁC DÒNG NGOÀI DANH SÁCH GỐC|6|6|
+|cau_hinh_phi_ship|GIỮ|1|1|
+|chat_action_audit|XÓA HẲN TOÀN BỘ|0|0|
+|chat_hoi_thoai|XÓA HẲN TOÀN BỘ|0|0|
+|chat_lieu|XÓA CÁC DÒNG NGOÀI DANH SÁCH GỐC|8|8|
+|chat_mail_log|XÓA HẲN TOÀN BỘ|0|0|
+|chat_tin_nhan|XÓA HẲN TOÀN BỘ|0|0|
+|chatbot_faq|GIỮ|9|9|
+|customers|XÓA CÁC DÒNG NGOÀI DANH SÁCH GỐC|14|2|
+|danh_gia|XÓA HẲN TOÀN BỘ|0|0|
+|de_giay|XÓA CÁC DÒNG NGOÀI DANH SÁCH GỐC|8|8|
+|dia_chi_nhan_hang|XÓA CÁC DÒNG NGOÀI DANH SÁCH GỐC|7|1|
+|employees|XÓA CÁC DÒNG NGOÀI DANH SÁCH GỐC|5|1|
+|inventory_logs|XÓA HẲN TOÀN BỘ|63|0|
+|invoices|XÓA HẲN TOÀN BỘ|28|0|
+|mau_sac|XÓA CÁC DÒNG NGOÀI DANH SÁCH GỐC|11|11|
+|order_details|XÓA HẲN TOÀN BỘ|35|0|
+|order_mail_log|XÓA HẲN TOÀN BỘ|0|0|
+|order_status_history|XÓA HẲN TOÀN BỘ|28|0|
+|orders|XÓA HẲN TOÀN BỘ|28|0|
+|phieu_ho_tro|XÓA HẲN TOÀN BỘ|0|0|
+|phuong_xa|GIỮ|3321|3321|
+|pos_held_items|XÓA HẲN TOÀN BỘ|0|0|
+|pos_held_orders|XÓA HẲN TOÀN BỘ|0|0|
+|product_images|XÓA HẲN TOÀN BỘ|6|0|
+|product_variants|XÓA HẲN TOÀN BỘ|20|0|
+|products|XÓA HẲN TOÀN BỘ|10|0|
+|promotion_details|XÓA HẲN TOÀN BỘ|7|0|
+|promotions|XÓA HẲN TOÀN BỘ|5|0|
+|roles|GIỮ|3|3|
+|sizes|XÓA CÁC DÒNG NGOÀI DANH SÁCH GỐC|8|8|
+|ten_tinh_thanh_cu|GIỮ|68|68|
+|tinh_thanh|GIỮ|34|34|
+|users|XÓA CÁC DÒNG NGOÀI DANH SÁCH GỐC|12|2|
+|vouchers|XÓA HẲN TOÀN BỘ|15|0|
+|vung_giao_hang|GIỮ|3|3|
+|yeu_thich|XÓA HẲN TOÀN BỘ|0|0|
 
-### Tài khoản/hồ sơ giữ
+Cả24bảng nhóm xóa sạch có COUNT=0, không chỉ status=1. [SELECT mọi trạng thái](evidence/gd32-xoa-han/final-all-statuses-zero.json) cho products,product_variants,promotions,vouchers: tổng/đang bật/đang tắt/NULL đều0. Không có bảng giỏ hàng/token/session trong schema40bảng này: giỏ nằm trong HttpSession, session persistence tắt; không tự bịa câu DELETE bảng không tồn tại. Bảng phụ mới xuất hiện sẽ bị chốt bảng-chưa-kiểm-kê chặn.
+
+### Tài khoản và dòng hệ thống giữ
 
 | ID | Username | Vai trò | Hồ sơ khách | Hồ sơ nhân viên | Trạng thái |
 |---|---|---|---|---|---|
 |1|admin|ROLE_ADMIN|id11,AD000,Admin|id1,NV001,Lê Quản Trị|Đang hoạt động|
 |2|user|ROLE_USER|id9,KH000,nguyen ngoc viet anh|Không có|Đang hoạt động|
 
-Giữ cả địa chỉ thuộc hai hồ sơ. So toàn bộ cột users bao gồm password trước/sau: bằng nhau; không công bố hash/mật khẩu trong evidence. [Kết quả so sánh](evidence/gd32/keepers-check.json). Nhận diện username không phân biệt hoa thường, dừng nếu không có đúng một user/admin.
+Đúng một user/admin, không phân biệt hoa thường. Giữ địa chỉ liên kết. So toàn bộ cột users bao gồm mật khẩu trước/sau bằng nhau; không xuất hash hoặc mật khẩu vào evidence. Đăng nhập cả hai qua form thật đã PASS. [So sánh](evidence/gd32-xoa-han/keepers-check.json), [tài khoản trước](evidence/gd32-xoa-han/accounts-before.json).
 
-### Dòng hệ thống và bộ khởi tạo
+Giữ cả3vai trò (kể cả ROLE_EMPLOYEE) theo quy tắc không xóa vai trò và để lần nhập nhân viên mới còn cấu hình quyền. Giữ toàn bộ cấu hình phí ship id1,FAQ,địa giới và vùng giao. [rg hệ thống](evidence/gd32-xoa-han/rg-system.txt): ShippingFeeService tham chiếu id1; POS dùng customer=NULL cho Khách lẻ, không có hồ sơ Khách lẻ riêng trong bản restore. Script vẫn giữ hồ sơ mang đúng tên Khách lẻ nếu có. Không tự đổi người dùng/khách hệ thống.
 
-[rg trước/sau và bằng chứng guard](evidence/gd32/rg-startup-system.txt): chỉ có DataInitializer triển khai CommandLineRunner; không thấy runner/fixture khởi động khác trong src/main. Thêm @Profile("test") và test xác nhận annotation; nội dung bootstrap vẫn giữ cho test. Không bật profile test trên DB chính. ShippingFeeService dùng cấu hình id1: giữ toàn bộ cau_hinh_phi_ship. Toàn bộ FAQ,role,tỉnh/xã,tên tỉnh cũ,vùng giao đều giữ. POS biểu diễn khách lẻ bằng customer=null (PosHoldService), không phụ thuộc ID khách cứng; không có bản ghi Khách lẻ trong bản backup. Script vẫn giữ hồ sơ tên Khách lẻ nếu gặp.
+### Danh mục gốc — bảng đã công bố trước khi chạy
 
-Thứ tự xóa con trước cha được suy từ [50 FK](evidence/gd32/foreign-keys-before.json):
+`shopgiay.sql` hiện tại từng bị rút gọn thành3thương hiệu/3kích cỡ. Lấy bản gốc từ lịch sử Git:21f76e6 cho categories/sizes;2229c5b cho chất liệu;ba08a0e cho đế;8410685 cho màu (các lần bổ sung bảng tương ứng). [Đoạn INSERT gốc](evidence/gd32-xoa-han/nguon-danh-muc-goc.txt), [danh sách máy đọc](evidence/gd32-xoa-han/danh-muc-goc.json), [từng ID và số đang dùng trước xóa](evidence/gd32-xoa-han/catalog-before.json).
 
-```text
-admin_chat_audit, admin_chat_tin_nhan, chat_action_audit, chat_mail_log, chat_tin_nhan, danh_gia, dia_chi_nhan_hang, inventory_logs, invoices, order_details, order_mail_log, order_status_history, pos_held_items, product_images, promotion_details, yeu_thich, admin_chat_hoi_thoai, chat_hoi_thoai, orders, pos_held_orders, product_variants, promotions, phieu_ho_tro, products, vouchers, customers, employees, users
-```
-
-Không NOCHECK/disable constraints, không DROP bảng/cột/index/sequence. DBCC CHECKCONSTRAINTS không trả vi phạm;50 FK đều trusted/enabled.
-
-## Dữ liệu mẫu, giá và voucher
-
-[40 biến thể và log](evidence/gd32/seed-products.json), [đợt](evidence/gd32/seed-promotions.json), [liên kết](evidence/gd32/seed-promotion_details.json), [phiếu](evidence/gd32/seed-vouchers.json), [hash chạy seed hai lần](evidence/gd32/seed-idempotent.json). Chạy lại không ghi đè giá/tồn hoặc thêm lại log. Chữ NVARCHAR có dấu giữ nguyên. Mỗi sản phẩm 2 màu ×39/40/41/42,1 chất liệu,1 đế. BT0001 đen39 tồn0;BT0005 trắng39 tồn3;38 dòng khác10..25.
-
-| Mã | Sản phẩm | Giá gốc SELECT | Giá sau giảm SELECT / HTML |
+| Danh mục | Dòng giữ | Dòng sẽ xóa trong bản backup | Cần duyệt thực tế |
 |---|---|---|---|
-| SP001 | Nike Air Force 1 '07 | 2,929,000 | 2,929,000 / 2,929,000 |
-| SP002 | Adidas Ultraboost Light | 4,500,000 | 4,200,000 / 4,200,000 |
-| SP003 | Converse Chuck Taylor All Star Classic | 1,400,000 | 1,260,000 / 1,260,000 |
-| SP004 | Vans Old Skool | 1,800,000 | 1,620,000 / 1,620,000 |
-| SP005 | ASICS Gel-Kayano 14 | 4,200,000 | 3,900,000 / 3,900,000 |
+|Thương hiệu|Nike, Adidas, Converse, Vans, Puma, New Balance|Không có|Không có|
+|Kích cỡ|36, 37, 38, 39, 40, 41, 42, 43|Không có|Không có|
+|Chất liệu|Da thật, Da tổng hợp, Da lộn, Vải canvas, Vải lưới, Vải dệt kim, Cao su, Khác|Không có|Không có|
+|Màu sắc|Đen, Trắng, Xám, Đỏ, Xanh dương, Xanh lá, Vàng, Nâu, Be, Hồng, Khác|Không có|Không có|
+|Đế giày|Cao su, EVA, PU, TPU, Đế bằng, Đế độn, Đế chống trượt, Khác|Không có|Không có|
 
-[SELECT giá độc lập](evidence/gd32/pricing-select.sql) và [HTML/response service](evidence/gd32/browser-extra.json). Ngày bắt đầu05/11/2026 00:00; hết30/11 hoặc31/12 23:59:59.997 giờViệt Nam. Mã SQL: promotion dùng AMOUNT, voucher dùng FIXED theo code sẵn có; không đổi enum hay luật giảm.
+So tên bỏ qua hoa thường và khoảng trắng (space/tab/CR/LF/NBSP), giữ phân biệt dấu. Không dùng ID để đoán gốc. Dòng khớp gốc giữ nguyên toàn bộ dữ liệu/status. Tên ngoài gốc rõ là thử được DELETE; tên ngoài gốc có thể là thật được SELECT “CẦN TÔI DUYỆT” rồi THROW trước DELETE. `@DanhMucGiuThem` mặc định rỗng, chủ dữ liệu tự điền tên đã duyệt GIỮ.
 
-| Phiếu | Tạm tính3.900.000 — service | SELECT độc lập | Tạm tính1.260.000 — service |
+Đã thử5fixture ngoài gốc đang ẩn (VERIFY,99test,poly,TESTmàu,Phaseđế): DELETE thật cả5bảng. ASICS trong ca chốt an toàn là fixture agent tự tạo trên bản sao để thử guard, không phải dữ liệu thực đang chờ duyệt. Mặc định bị chặn, điền rõ giữ thêm mới chạy; sau đó RESTORE bỏ tất cả fixture. [Chặn](evidence/gd32-xoa-han/catalog-approval-blocked.txt), [preview](evidence/gd32-xoa-han/catalog-approved-preview.txt), [commit thử](evidence/gd32-xoa-han/catalog-approved-commit.txt), [SELECT kiểm chứng](evidence/gd32-xoa-han/catalog-fixture-check.json).
+
+## B. Script và an toàn
+
+`database/tools/don_du_lieu_thu.sql` nằm ngoài migration. Toàn bộ DELETE trong một transaction; lỗi XACT_ABORT/ROLLBACK và THROW tên bảng/bước. Tính thứ tự con trước cha theo các FK; không tắt constraint/trigger. Hiển thị tài khoản giữ và kế hoạch danh mục trước DELETE. Có chốt tên DB, đúng một admin/user, danh sách bảng đã kiểm kê, app lock và khóa bảng cho đợt bảo trì. Dừng app trước khi chủ dự án tự vận hành.
+
+Chỉ COMMIT khi @XAC_NHAN bằng chính xác XOA-DU-LIEU-THU. Mặc định ROLLBACK và không reset counter. [Hash toàn bộ40bảng sau preview bằng trước](evidence/gd32-xoa-han/preview-check.json), [saiDB bị chặn](evidence/gd32-xoa-han/wrong-db.txt), [lệnh sqlcmd công khai preview](evidence/gd32-xoa-han/public-sqlcmd-preview.txt).
+
+[rg thô](evidence/gd32-xoa-han/rg-no-status-update-no-seed-guard.txt): `UPDATE|NOCHECK|DISABLE|TRUNCATE|DROP` trong script không có kết quả (exit1). Không có UPDATE kể cả để ghi thống kê; bảng đếm là table variable. Không thêm nút/route xóa vào app. Không đổi schema/package/luật kho/hủy/doanh thu. File seed cũ đã gỡ; không có bước seed trong hướng dẫn mới hoặc aggregate.
+
+[Schema cuối](evidence/gd32-xoa-han/final-schema.json):40bảng,50FK,0disabled/untrusted; DBCC CHECKCONSTRAINTS không trả vi phạm. [Counter cuối](evidence/gd32-xoa-han/final-counters.json): chỉ bảng đã rỗng hoàn toàn được reset; khách/nhân viên/users/địa chỉ còn dữ liệu không reset. Danh mục còn dữ liệu giữ nguyên sequence. Trường hợp bảng chưa từng INSERT dùng RESEED phù hợp để không sinh ID0.
+
+## C. Web sạch, nhập mới và test
+
+[Log Started/catalog](evidence/gd32-xoa-han/app-started.txt). Cấu hình kiểm thử dùng biến môi trường bắt buộc trỏ tên bản restore, port18032,ddl-auto=validate; không sửa application-local.properties/IDE/default datasource. [34lượt trang chính + crawl](evidence/gd32-xoa-han/browser-empty.json), [bảng URL đầy đủ](evidence/gd32-xoa-han/URL_STATUS.md), [8bảo mật](evidence/gd32-xoa-han/SECURITY.md).
+
+- Trang chủ: “Cửa hàng chưa có sản phẩm”; /products: “Không tìm thấy sản phẩm nào!”.
+- Dashboard: doanh thu0,empty state,không500. Hai dòng cố định Online/POS trong bảng kênh không phải đơn hàng; mọi giá trị là0.
+- Chi tiết sản phẩm/biến thể/đợt/phiếu/hóa đơn/chat/tồn kho đều có thông báo rỗng,0dòng dữ liệu. Profile/đơn/yêu thích/giỏ của user vẫn mở được.
+- /checkout khi giỏ rỗng chuyển302 đến /cart (Location có thể là URL tuyệt đối), giữ nguyên nghiệp vụ; không giả tạo checkout có sản phẩm.
+- 34lượt1280/375không tràn ngang,JS exception0,request404=0. Crawl13khách+15user+154admin,queue0; không chạy link xóa/đăng xuất/xuất file.
+
+Ảnh: [cửa hàng rỗng375](evidence/gd32-xoa-han/screenshots/guest-products-375.png), [sản phẩm Admin rỗng375](evidence/gd32-xoa-han/screenshots/admin-products-crud-375.png), [Dashboard375](evidence/gd32-xoa-han/screenshots/admin-dashboard-375.png), các ảnh khác trong thư mục screenshots.
+
+Sau khi chụp/crawl trạng thái rỗng, thử bằng form thật:
+
+| Thao tác | Bằng chứng thực tế |
+|---|---|
+|Thêm thương hiệu|Tên VERIFY Thương hiệu nhập mới,codeTH007,giữ nguyên các6thương hiệu gốc|
+|Thêm sản phẩm đang bán|SP001; ảnh dùng logo.jpg sẵn có trong project, không vẽ/tải ảnh bên thứ ba|
+|Biến thể ban đầu|BT0001,kích cỡ39,màuĐen,chất liệuDa thật,đếCao su,giá200000,tồn7|
+|InventoryLog|Khởi tạo,quantity_before0/change+7/after7,actoradmin|
+|Probe sequence tiếp|KM001 và CH0001; không tạo đợt/chat mẫu|
+
+[SELECT độc lập](evidence/gd32-xoa-han/created-select.sql), [kết quả giá/tồn/log/mã](evidence/gd32-xoa-han/created-select.json), [probe mã](evidence/gd32-xoa-han/sequence-probe.json), [form thật](evidence/gd32-xoa-han/browser-created.json), [thương hiệu](evidence/gd32-xoa-han/browser-created-brand.json), [ảnh biến thể375](evidence/gd32-xoa-han/screenshots/created-variant-375.png).
+
+Sau nhóm ghi dữ liệu, app đã dừng và RESTORE bản mới rồi chạy chỉ DELETE. Bản cuối không còn sản phẩm/thương hiệu thử vừa nhập, không có seed. [COUNT cuối và context](evidence/gd32-xoa-han/final-copy.json). Quét31bảng có tên/mã/email với cả poly: [output0](evidence/gd32-xoa-han/final-pattern-scan.json), [SELECT thô](evidence/gd32-xoa-han/pattern-scan.sql).
+
+### Bộ test không phụ thuộc dữ liệu vận hành
+
+Lượt đầu trên DB không seed:315test,0failure,28error do TOP1 bản ghi sản phẩm/biến thể/đợt/đơn có sẵn hoặc lấy nhầm fixture thiếu thương hiệu. [Output trước sửa](evidence/gd32-xoa-han/maven-before-fixture-fix.txt). Đã sửa13class phụ thuộc dữ liệu thành fixture riêng trong src/test, dùng helper CatalogTestFixtures có guard DB và yêu cầu transaction; các test đang dùng transaction rollback giữ cách rollback đó. InvoiceManagementIntegrationTest vốn kiểm thử giao dịch commit thì tạo fixture riêng bằng TransactionTemplate, nhóm test được loại bỏ bằng RESTORE mới. ObjectCodeIntegrationTest lấy thuộc tính từ danh mục gốc, không lấy từ biến thể tồn sẵn. Không tạo seed khi ứng dụng khởi động.
+
+Giữ mọi test/assertion và không sửa TestDatabaseGuard/Listener. Kết quả chạy đủ sau sửa trên bản restore không seed: **315test,0failure,0error,0skipped,BUILD SUCCESS**. [Output](evidence/gd32-xoa-han/maven-summary.txt), [số liệu](evidence/gd32-xoa-han/maven-summary.json). Sau Maven lại RESTORE trước UI; sau UI lại RESTORE bản cuối. DataInitializer vốn đã @Profile("test") được giữ nguyên, không bật profile này trên DB chính. [rg startup](evidence/gd32-xoa-han/rg-startup.txt).
+
+### Lỗi ngoài phạm vi được ghi riêng
+
+| Mã | File:dòng | Nguyên nhân và bằng chứng | Trạng thái |
 |---|---|---|---|
-| CHAOMUNG10 | 150,000 | 150,000 | 126,000 |
-| GIAM100K | 100,000 | 100,000 | Khóa; mua thêm 240,000 |
-| GIAM50K | 50,000 | 50,000 | 50,000 |
-| SALE15 | 300,000 | 300,000 | Khóa; mua thêm 740,000 |
-| VIP20 | 500,000 | 500,000 | Khóa; mua thêm 1,740,000 |
+|GD32R-UI01|src/main/resources/static/js/quan-tri-danh-muc.js:25|Ẩn vùng lỗi trống khi blur làm nút Thêm nhảy22px: Y441.67→419.67,clickđầu targetFORM/khôngPOST. Bấm lại lúc ổn định lưu được. create-diagnostic.json và ảnh cùng tên.|FAIL,chưa sửa UI|
+|GD32R-NET01|src/main/resources/static/js/dia-chi-giao-hang.js:43|Tile OpenStreetMap lỗiDNS khi crawl form địa chỉ; không phải404 nội bộ/không phải lỗiSQL. browser-empty.json/requestFailed.|FAIL,chưa sửa mạng ngoài|
 
-[SELECT voucher](evidence/gd32/voucher-select.sql). Ngưỡng dưới500.000 cho hai phiếu còn NOT TESTED qua catalog seed vì mọi giá đều cao hơn ngưỡng; không giả giá client để tuyên bố đã test.
+Không tuyên bố console tài nguyên ngoài sạch. Thêm thành công được kiểm bằng thao tác UI bình thường sau khi blur hoàn tất/bấm lại, không dùng form.submit()/POST API hoặc gỡ validation. Ghi thêm trong docs/BUG_PHAT_HIEN.md để làm ở phạm vi riêng.
 
-## Bằng chứng kiểm thử
+## D. CẦN TÔI DUYỆT — không tự xóa file
 
-- [Maven output và số test](evidence/gd32/maven-summary.txt):315/0/0/0. Test tra đơn trước kia phụ thuộc DH000002/ORD-85019F6B: chuyển thành tài khoản/khách/đơn tự tạo có code/phone/email duy nhất trong transaction rollback; giữ nguyên các assertion khách/chủ đơn/người khác. Không xóa test hoặc nới TestDatabaseGuard.
-- [Log Started + catalog](evidence/gd32/app-started.txt), [schema](evidence/gd32/schema-check.json), [quét31 bảng không còn mẫu thử](evidence/gd32/test-pattern-scan.json), [SQL quét thô](evidence/gd32/read-only-select.sql).
-- [Bảng URL đầy đủ](evidence/gd32/URL_STATUS.md):246URL Admin,20URL khách,không còn link đọc mới trong queue; không GET hành động xóa/đăng xuất/xuất file. Đã bổ sung crawl session user ở user-followup/README.md. [8 bảo mật](evidence/gd32/SECURITY.md).
-- [DOM cuối](evidence/gd32/final-browser.json):20lượt200,JS exception0,404=0;5/40/2/5; hóa đơn/chat0; tồn0/3. [Chat nhận không reload](evidence/gd32/chat-realtime.json), [SELECT ID1,CH0001,3tin](evidence/gd32/chat-select-after.json); dữ liệu thử đó đã được loại bằng RESTORE mới.
-- [Ảnh1280/375](evidence/gd32/screenshots/):store,products,dashboard,products-crud,variants,promotions,vouchers,invoices,chat,pos; ảnh chat realtime riêng. Có kiểm tra trực quan ảnh cửa hàng/Dashboard375, bảng cuộn trong khung.
+Danh mục thực ngoài gốc: **không có** trên backup đã kiểm kê. Dòng hệ thống chưa rõ: **không có**. Có17file upload mồ côi so với DB tạm đã dọn (product_images và chat đều0), trong đó một file do lần thử upload logo tạo. Không xóa/di chuyển file nào. Đối chiếu lại tham chiếu trên DB đích sau khi chủ dự án tự dọn thành công; không xóa file trước bước đó.
 
-## Lỗi tìm được và cách xử lý
-
-| Mã | Vị trí | Nguyên nhân / sửa | Chạy lại |
-|---|---|---|---|
-|GD32-01|database/seed/du_lieu_mau.sql:74|Bản seed đầu dùng AMOUNT trong khi VoucherService nhận FIXED; sửa dữ liệu seed thành FIXED, không sửa service|5/5 phiếu đủ điều kiện đúng số tiền; xem voucher-before-fix.json và browser-extra.json|
-|GD32-02|database/tools/don_du_lieu_thu.sql:258|RESEED0 với bảng chưa từng INSERT sinh ID0; phân biệt identity last_valueNULL để dùng seed1|Chat từ0/CH0001 không mở được → ID1/CH0001 nhắn realtime PASS|
-|GD32-03|src/test/java/com/example/demodatn/service/hotro/ChatbotIntegrationTest.java:132|Fixture phụ thuộc đơn cũ đã bị xóa; tự tạo fixture độc lập trong transaction|315test PASS; giữ nguyên assertion quyền|
-|GD32-06|src/test/java/com/example/demodatn/service/hotro/AdminChatbotIntegrationTest.java:98|SELECT test coi DATETIME giờViệtNam là UTC rồi cộng7giờ, làm dữ liệu sau17giờ sang ngày mai. Đổi CAST(created_at AS DATE), thêm fixture20:30 trong transaction rollback và assertion bắt buộc tính dòng đó. Không sửa service/luật doanh thu|Chạy lại toàn bộ315test; output lưu ở user-followup|
-|GD32-04|src/main/resources/static/css/quan-tri.css:175 và trang POS|Đo thấy tràn ngang ở1280; chưa chốt phần tử CSS gây ra. Ngoài phạm vi dữ liệu, chưa sửa|Tái hiện2lượt;375không tràn|
-|GD32-05|src/main/resources/static/js/dia-chi-giao-hang.js:43|Tile OpenStreetMap không phân giải DNS trong môi trường test; không phải404 nội bộ|requestfailed net::ERR_NAME_NOT_RESOLVED; chưa sửa|
-
-Hai lỗi ngoài phạm vi được ghi thêm trong docs/BUG_PHAT_HIEN.md. Không tuyên bố console sạch hoặc toàn bộ UI PASS.
-
-## CẦN TÔI DUYỆT — chưa xóa file
-
-Không có danh mục nghi thử hoặc dòng hệ thống chưa rõ từ dữ liệu đã kiểm kê. Có16file mồ côi sau cleanup/seed, **chỉ là danh sách đề nghị duyệt**, không tự di chuyển/xóa. Kiểm kê lại tham chiếu nếu DB thay đổi trước khi vận hành.
-
-| STT | Đường dẫn | Byte | Đề nghị |
+| STT | Đường dẫn | Byte | Quyết định |
 |---|---|---|---|
 |1|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/0f636dba-2f2e-49c1-b6a3-81b2818fd74a.png|174676|CẦN DUYỆT|
 |2|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/11a7718c-3e08-4f86-a00c-7426c87586d2.png|109157|CẦN DUYỆT|
@@ -176,39 +187,31 @@ Không có danh mục nghi thử hoặc dòng hệ thống chưa rõ từ dữ l
 |12|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/9a3e3459-d2f2-4aaf-b896-05ddc7936379.png|3763542|CẦN DUYỆT|
 |13|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/a26921ee-fc69-4081-9805-d0856cdd7a8c.png|34954|CẦN DUYỆT|
 |14|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/a9e29b27-7030-45e0-9fa8-1e342edd5bf5.png|198416|CẦN DUYỆT|
-|15|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/cfb59015-0be6-46a5-9100-b77787863ad1.png|15067|CẦN DUYỆT|
-|16|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/f8f008a4-d54d-4701-9935-692f875c94d7.jpg|54649|CẦN DUYỆT|
+|15|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/cf5f9462-0cd2-4f03-9d99-46a467725c35.jpg|7524|CẦN DUYỆT|
+|16|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/cfb59015-0be6-46a5-9100-b77787863ad1.png|15067|CẦN DUYỆT|
+|17|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/f8f008a4-d54d-4701-9935-692f875c94d7.jpg|54649|CẦN DUYỆT|
 
-## Ảnh chủ cửa hàng cần bổ sung
+## E. Chỗ đã thay đổi so với bản cũ
 
-| Sản phẩm | Đường dẫn chính xác | Trạng thái |
-|---|---|---|
-|Nike Air Force 1 '07|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/nike-air-force-1-07.jpg|THIẾU — dùng ảnh thay thế hệ thống|
-|Adidas Ultraboost Light|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/adidas-ultraboost-light.jpg|THIẾU — dùng ảnh thay thế hệ thống|
-|Converse Chuck Taylor All Star Classic|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/converse-chuck-taylor-classic.jpg|THIẾU — dùng ảnh thay thế hệ thống|
-|Vans Old Skool|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/vans-old-skool.jpg|THIẾU — dùng ảnh thay thế hệ thống|
-|ASICS Gel-Kayano 14|C:/Users/ADMIN/Documents/DuAnTNDEMO/DuAnTNDEMO/DuAnTNDEMO/DemoDATN/uploads/products/asics-gel-kayano-14.jpg|THIẾU — dùng ảnh thay thế hệ thống|
+- Bỏ hoàn toàn yêu cầu5sản phẩm/40biến thể/2đợt/5phiếu; gỡ database/seed/du_lieu_mau.sql. Database cuối không có dữ liệu mẫu. Chủ cửa hàng tự nhập thật qua UI.
+- Danh mục không giữ rộng theo mọi dòng trong DB: dùng danh sách gốc từ lịch sử shopgiay.sql + @DanhMucGiuThem đã được chủ dữ liệu điền. Tên thật chưa duyệt làm script dừng, không tự đoán.
+- Ngoại lệ có chủ đích: chỉ SEQUENCE/IDENTITY của bảng đã rỗng hoàn toàn được đặt lại; cho phép nhập tiếpSP001/BT0001/KM001/CH0001. Không reset bảng còn dữ liệu giữ, không DROP đối tượng.
+- Test tự tạo fixture thay cho yêu cầu dữ liệu vận hành có sẵn; không khôi phục seed để làm test pass, không xóa test hoặc nới chốt DB.
+- Không thêm route/nút xóa,không sửa nghiệp vụ kho/doanh thu/hủy,không đổi mật khẩu,tên bảng/package/enum hoặc cấu hình DB mặc định.
 
-Không tải/vẽ ảnh bên thứ ba. URL script trỏ /uploads/products/<tên trên>; ProductImageUrlService.source kiểm tra file và trả /anh/anh-san-pham-thay-the.svg khi thiếu, đã thấy trong ảnh và không gây404.
+## F. Lệnh chủ dự án tự chạy trên DB chính SAU SAO LƯU
 
-## Chỗ đã thay đổi so với giai đoạn cũ
-
-- Ngoại lệ có chủ đích: chỉ reset SEQUENCE/IDENTITY của bảng đã xóa sạch, cho phép tái dùng SP001/BT0001/KM001/CH0001. Không reset people/danh mục còn dữ liệu. Không DROP đối tượng. Bảng chưa từng ghi có quy tắc RESEED riêng để không sinh ID0.
-- DataInitializer không chạy ở profile mặc định/production; chỉ profile test. Dữ liệu mẫu được tạo bằng script riêng, không lồng vào migration.
-- Test tra đơn không yêu cầu đơn mẫu cũ tồn tại; tự tạo fixture,không giảm kiểm tra quyền.
-- Không thay luật kho/hủy/doanh thu/giá; không đổi route/package/enum; không đổi mật khẩu admin/user. Không sửa cấu hình datasource mặc định/local/IDE.
-
-## Lệnh chủ dự án tự chạy sau sao lưu — CHƯA thực thi trên DB chính
-
-Dừng app, sao lưu và kiểm tra bản cứu hộ trước. Chạy từ thư mục project. Dùng Windows Authentication hoặc SQLCMDPASSWORD, không đưa mật khẩu vào file/Git/dòng lệnh. **Không tự động chạy các lệnh dưới đây.**
+**Agent chưa thực thi các lệnh này trên DB chính.** Dừng ứng dụng, sao lưu và kiểm tra khả năng khôi phục trước. Chạy từ thư mục project, dùng -E hoặc SQLCMDPASSWORD, không đặt mật khẩu trong repo/dòng lệnh.
 
 ```powershell
-$dbMucTieu="shopbangiay" # chỉ chủ dự án tự chọn sau khi sao lưu
-# 1. XEM TRƯỚC, mặc định ROLLBACK
+$dbMucTieu="shopbangiay" # Chỉ chủ dự án tự chọn sau sao lưu
+# 1. XEM TRƯỚC — ROLLBACK, duyệt tài khoản/danh mục/COUNT
 sqlcmd -S localhost -E -C -b -f 65001 -d $dbMucTieu -v "TenDB_DuKien=$dbMucTieu" -i database/tools/don_du_lieu_thu.sql
 ```
 
-2. Duyệt tài khoản/count/danh mục. Tạo file local tmp/xac_nhan_gd32.sql:
+Nếu có danh mục “CẦN TÔI DUYỆT”, dừng, quyết định và tự điền @DanhMucGiuThem trong script rồi xem trước lại. Mặc định danh sách này rỗng.
+
+2. Chỉ sau khi đã duyệt, tạo file cục bộ tmp/xac_nhan_gd32.sql:
 
 ```sql
 EXEC sys.sp_set_session_context @key=N'XAC_NHAN',@value=N'XOA-DU-LIEU-THU';
@@ -217,30 +220,16 @@ GO
 ```
 
 ```powershell
-# 2. XÁC NHẬN (chỉ sau khi đã duyệt)
+# 2. XÁC NHẬN DELETE — không seed sau bước này
 sqlcmd -S localhost -E -C -b -f 65001 -d $dbMucTieu -v "TenDB_DuKien=$dbMucTieu" -i tmp/xac_nhan_gd32.sql
-# 3. SEED (chạy lại được)
-sqlcmd -S localhost -E -C -b -f 65001 -d $dbMucTieu -v "TenDB_DuKien=$dbMucTieu" -i database/seed/du_lieu_mau.sql
-# 4. FILE MỒ CÔI — riêng, chỉ XEM TRƯỚC; chưa có file nào được xóa
-powershell -NoProfile -File docs/evidence/gd32/xoa_upload_sau_khi_duyet.ps1
+# 3. UPLOAD — riêng, chỉ xem trước từng LiteralPath; chưa chạy xóa
+powershell -NoProfile -File docs/evidence/gd32-xoa-han/xoa_upload_sau_khi_duyet.ps1
 ```
 
-Bước4 có đúng16 LiteralPath và -WhatIf. Chỉ chủ dự án sau sao lưu/duyệt/recheck tham chiếu mới bỏ -WhatIf ở đúng dòng muốn xóa; không dùng wildcard/LIKE rộng/Remove-Item-Recurse. Không xóa ảnh mẫu mới hoặc file vẫn được DB tham chiếu. Hai script bảo trì không chạy qua migration; giai đoạn này không có migration cần chạy.
+Bước3 có đúng các file đã liệt kê và -WhatIf. Chỉ chủ dự án sau sao lưu/duyệt/đối chiếu lại mới bỏ -WhatIf ở dòng được duyệt. Không wildcard,không -Recurse. Không xóa ảnh tĩnh/logo của project hoặc ảnh vẫn còn tham chiếu.
 
-Dừng giai đoạn32 tại đây. Đã bổ sung nghiệm thu đăng nhập/đặt đơn/crawl user sau khi được cung cấp mật khẩu. Ảnh thật và ngưỡng voucher dưới500.000đ vẫn NOT TESTED.
+Không có migration mới,không có bước seed. App/bộ duyệt test đã dừng. Chỉ chốt một commit cho bản thay thế rồi DỪNG; không merge/push hoặc tự vận hành trên DB chính.
 
-App/bộ duyệt kiểm thử đã dừng sau khi chụp bằng chứng; cấu hình local/DB chính không bị thay đổi.
+Bổ sung đối chiếu tag P12- trên danh mục đang tắt: [preview rollback](evidence/gd32-xoa-han/p12-preview.txt), [DELETE xác nhận](evidence/gd32-xoa-han/p12-delete.txt). Lượt Maven cuối chạy sau sửa tag:315/0/0/0. Sau đó đã RESTORE lại bản cuối nêu đầu báo cáo; không giữ fixture P12 hoặc sản phẩm nhập thử.
 
-Kiểm tra thêm bằng đúng `sqlcmd -v TenDB_DuKien=... -i database/tools/don_du_lieu_thu.sql` trên bản cuối sau khi dừng app: exit0, ROLLBACK, COUNT40bảng không đổi ([output thô](evidence/gd32/sqlcmd-public-preview.txt)).
-
-## Bổ sung sau khi chủ dự án cung cấp mật khẩu user
-
-[Báo cáo và SQL trước/sau riêng](evidence/gd32/user-followup/README.md), [form/crawl thật](evidence/gd32/user-followup/user-browser.json), [các bước Hóa đơn](evidence/gd32/user-followup/order-processing.json), [ảnh1280/375](evidence/gd32/user-followup/screenshots/).
-
-Ba hạng mục cũ NOT TESTED (đăng nhập user, đặt đơn/xử lý kho, crawl quyền user) đã chuyển PASS bằng bằng chứng mới. Các ghi chú NOT TESTED trong ảnh/output JSON chụp trước khi có mật khẩu được giữ nguyên để không sửa bằng chứng lịch sử; phần bổ sung này thay kết luận cũ về ba hạng mục đó.
-
-User tự đặt một đơn COD, voucher GIAM50K. SELECT sau đặt: total_amount1260000,discount_amount50000,final_amount1210000,customer_id9,variant_id17,quantity1,statusPENDING,paymentUNPAID,da_tru_kho=false,tồn22. Xác nhận ở Hóa đơn: tồn21 và log−1. Chuẩn bị/Giao/Hoàn tất không trừ lần hai, cuốiDELIVERED/PAID. Cả40giá và39tồn khác không đổi. Chỉ thông tin nhận hàng của đơn thử được nhập, không sửa hồ sơ/mật khẩu/sổ địa chỉ. Thử trên bản RESTORE mới201412; không dùng DB chính.
-
-Test đối chiếu doanh thu được cập nhật thêm ở lượt bổ sung vì lộ lỗi sau17giờ: không đổi truy vấn production. Xem [output thất bại trước sửa](evidence/gd32/user-followup/maven-before-date-fix.txt). Fixture20:30 đảm bảo test không còn phụ thuộc giờ chạy; không xóa assertion hoặc nới điều kiện doanh thu.
-
-Kết quả cuối lượt bổ sung: **315test,0failure,0error,0skip,BUILD SUCCESS** ([output sau sửa test ngày](evidence/gd32/user-followup/maven-after-date-fix.txt)). Không đổi code tính doanh thu production. Sau test đã RESTORE mới thành `shopbangiay_kt_gd32_20261105_203055`, không ghi đè DB cũ; dọn/seed lại: orders/invoices/order_details/chat=0,products5,variants40,promotions2,vouchers5,users2,FKkhôngvi phạm. [COUNT40bảng và tài khoản cuối](evidence/gd32/user-followup/final-clean-state.json), [RESTORE output](evidence/gd32/user-followup/final-clean-restore.txt). App kiểm thử đã dừng. Không kết nối shopbangiay/shopbangiay_thu.
+Chốt bảo toàn dữ liệu giữ trên bản RESTORE cuối: đã so **toàn bộ cột** của users (kể cả mật khẩu), customers IDs9/11,employeeID1,địa chỉID4 trước/sau DELETE; đều bằng nhau. [Bằng chứng boolean và IDs, không công bố mật khẩu/hash](evidence/gd32-xoa-han/keepers-check.json).

@@ -1,0 +1,2 @@
+COMMAND: rg -ni shopbangiay(_thu)?\s*\. src/main/java
+EXIT: 1

@@ -1,0 +1,30 @@
+[
+  {
+    "bang": "products",
+    "tong": 0,
+    "dang_bat": 0,
+    "dang_tat": 0,
+    "trang_thai_null": 0
+  },
+  {
+    "bang": "product_variants",
+    "tong": 0,
+    "dang_bat": 0,
+    "dang_tat": 0,
+    "trang_thai_null": 0
+  },
+  {
+    "bang": "promotions",
+    "tong": 0,
+    "dang_bat": 0,
+    "dang_tat": 0,
+    "trang_thai_null": 0
+  },
+  {
+    "bang": "vouchers",
+    "tong": 0,
+    "dang_bat": 0,
+    "dang_tat": 0,
+    "trang_thai_null": 0
+  }
+]

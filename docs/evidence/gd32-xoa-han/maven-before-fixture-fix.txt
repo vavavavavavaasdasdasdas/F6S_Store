@@ -1,0 +1,89 @@
+[ERROR] Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 29.13 s <<< FAILURE! -- in com.example.demodatn.controller.AdminFrameIntegrationTest
+[ERROR] com.example.demodatn.controller.AdminFrameIntegrationTest.codesSearchAndReadOnlyFormsAndProductMenu -- Time elapsed: 1.649 s <<< ERROR!
+[ERROR] Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 0.123 s <<< FAILURE! -- in com.example.demodatn.controller.user.CheckoutPresentationIntegrationTest
+[ERROR] com.example.demodatn.controller.user.CheckoutPresentationIntegrationTest.codOrderUsesServerPriceAndDoesNotDeductStock -- Time elapsed: 0.027 s <<< ERROR!
+[ERROR] com.example.demodatn.controller.user.CheckoutPresentationIntegrationTest.previewIgnoresForgedTotalsAndRejectsInvalidVoucher -- Time elapsed: 0.011 s <<< ERROR!
+[ERROR] com.example.demodatn.controller.user.CheckoutPresentationIntegrationTest.checkoutRendersCardsAndKeepsDeliveryAndEmailFields -- Time elapsed: 0.014 s <<< ERROR!
+[ERROR] com.example.demodatn.controller.user.CheckoutPresentationIntegrationTest.everyCheckoutPostRequiresCsrfAndGuestsCannotReadVouchers -- Time elapsed: 0.018 s <<< ERROR!
+[ERROR] Tests run: 6, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.748 s <<< FAILURE! -- in com.example.demodatn.security.EmployeeAccessIntegrationTest
+[ERROR] com.example.demodatn.security.EmployeeAccessIntegrationTest.employeeProcessesInvoiceThroughExistingOrderStatusService -- Time elapsed: 0.082 s <<< ERROR!
+[ERROR] Tests run: 6, Failures: 0, Errors: 6, Skipped: 0, Time elapsed: 0.178 s <<< FAILURE! -- in com.example.demodatn.service.donhang.DeliveryIntegrationTest
+[ERROR] com.example.demodatn.service.donhang.DeliveryIntegrationTest.provinceChangesAreAuditedWithoutEstimatedDelivery -- Time elapsed: 0.008 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.DeliveryIntegrationTest.fullOnlineFlowRecordsActorsAndCarrierWithoutEstimatedDelivery -- Time elapsed: 0.007 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.DeliveryIntegrationTest.provinceValidationInService -- Time elapsed: 0.010 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.DeliveryIntegrationTest.customerInvoiceOwnershipAndEightSecurityScenarios -- Time elapsed: 0.037 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.DeliveryIntegrationTest.malformedProvinceValuesHaveVietnameseMessages -- Time elapsed: 0.010 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.DeliveryIntegrationTest.cancellationAndDeliveryFailureReturnStockExactlyOnce -- Time elapsed: 0.012 s <<< ERROR!
+[ERROR] Tests run: 7, Failures: 0, Errors: 7, Skipped: 0, Time elapsed: 0.196 s <<< FAILURE! -- in com.example.demodatn.service.donhang.InvoiceManagementIntegrationTest
+[ERROR] com.example.demodatn.service.donhang.InvoiceManagementIntegrationTest.securityNonAdminNonEmployeeGetsForbidden -- Time elapsed: 0.030 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.InvoiceManagementIntegrationTest.employeeHasAccessToInvoiceListAndDetail -- Time elapsed: 0.018 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.InvoiceManagementIntegrationTest.deliveryFailedRestoresStockAndRequiresReason -- Time elapsed: 0.017 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.InvoiceManagementIntegrationTest.statusTabsMatchDatabaseCountAndFiltersWork -- Time elapsed: 0.018 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.InvoiceManagementIntegrationTest.cancelledOrderRestoresStockAndRequiresReason -- Time elapsed: 0.019 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.InvoiceManagementIntegrationTest.confirmBankTransferPaymentSuccess -- Time elapsed: 0.023 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.InvoiceManagementIntegrationTest.onlineOrderProgressionFromPendingToDelivered -- Time elapsed: 0.022 s <<< ERROR!
+[ERROR] Tests run: 5, Failures: 0, Errors: 5, Skipped: 0, Time elapsed: 0.138 s <<< FAILURE! -- in com.example.demodatn.service.donhang.InvoiceOnlineWorkspaceIntegrationTest
+[ERROR] com.example.demodatn.service.donhang.InvoiceOnlineWorkspaceIntegrationTest.cartsAndDomAreSeparatedAndCustomerSearchIsInitiallyEmpty -- Time elapsed: 0.022 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.InvoiceOnlineWorkspaceIntegrationTest.oldRoutesOnlyRedirectAndPreserveFiltersAndPostBody -- Time elapsed: 0.019 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.InvoiceOnlineWorkspaceIntegrationTest.eightSecurityCasesForOnlineAndInvoice -- Time elapsed: 0.022 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.InvoiceOnlineWorkspaceIntegrationTest.confirmNowAndInvoiceFiltersUseSharedOrderWorkflow -- Time elapsed: 0.022 s <<< ERROR!
+[ERROR] com.example.demodatn.service.donhang.InvoiceOnlineWorkspaceIntegrationTest.holdsAllowFiveOfEachAndRetainDeliverySnapshotAndRejectCrossType -- Time elapsed: 0.024 s <<< ERROR!
+[ERROR] Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.130 s <<< FAILURE! -- in com.example.demodatn.service.khuyenmai.DiscountWorkflowIntegrationTest
+[ERROR] com.example.demodatn.service.khuyenmai.DiscountWorkflowIntegrationTest.selectionPageExcludesStoppedProductsAndRejectsForgedSelection -- Time elapsed: 0.008 s <<< ERROR!
+Caused by: org.attoparser.ParseException: Exception evaluating SpringEL expression: "product.category.name" (template: "user/chi-tiet-san-pham" - line 110, col 69)
+Caused by: org.thymeleaf.exceptions.TemplateProcessingException: Exception evaluating SpringEL expression: "product.category.name" (template: "user/chi-tiet-san-pham" - line 110, col 69)
+Caused by: org.attoparser.ParseException: Exception evaluating SpringEL expression: "product.category.name" (template: "user/chi-tiet-san-pham" - line 110, col 69)
+Caused by: org.thymeleaf.exceptions.TemplateProcessingException: Exception evaluating SpringEL expression: "product.category.name" (template: "user/chi-tiet-san-pham" - line 110, col 69)
+Caused by: org.attoparser.ParseException: Exception evaluating SpringEL expression: "product.category.name" (template: "user/chi-tiet-san-pham" - line 110, col 69)
+Caused by: org.thymeleaf.exceptions.TemplateProcessingException: Exception evaluating SpringEL expression: "product.category.name" (template: "user/chi-tiet-san-pham" - line 110, col 69)
+[ERROR] Tests run: 9, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 1.976 s <<< FAILURE! -- in com.example.demodatn.service.sanpham.ProductFeedbackIntegrationTest
+[ERROR] com.example.demodatn.service.sanpham.ProductFeedbackIntegrationTest.adminAndPublicPagesHandleEmptyAndStrangePages -- Time elapsed: 0.374 s <<< ERROR!
+Caused by: org.attoparser.ParseException: Exception evaluating SpringEL expression: "product.category.name" (template: "user/chi-tiet-san-pham" - line 110, col 69)
+Caused by: org.thymeleaf.exceptions.TemplateProcessingException: Exception evaluating SpringEL expression: "product.category.name" (template: "user/chi-tiet-san-pham" - line 110, col 69)
+[ERROR] com.example.demodatn.service.sanpham.ProductFeedbackIntegrationTest.reviewAndFavoritePaginationUseTwelveAndContinueAdminRowNumbers -- Time elapsed: 0.612 s <<< ERROR!
+Caused by: org.attoparser.ParseException: Exception evaluating SpringEL expression: "product.category.name" (template: "user/chi-tiet-san-pham" - line 110, col 69)
+Caused by: org.thymeleaf.exceptions.TemplateProcessingException: Exception evaluating SpringEL expression: "product.category.name" (template: "user/chi-tiet-san-pham" - line 110, col 69)
+[ERROR] com.example.demodatn.service.sanpham.ProductFeedbackIntegrationTest.favoriteToggleAndInactiveGridAndXssEscape -- Time elapsed: 0.189 s <<< ERROR!
+Caused by: org.attoparser.ParseException: Exception evaluating SpringEL expression: "product.category.name" (template: "user/chi-tiet-san-pham" - line 110, col 69)
+Caused by: org.thymeleaf.exceptions.TemplateProcessingException: Exception evaluating SpringEL expression: "product.category.name" (template: "user/chi-tiet-san-pham" - line 110, col 69)
+[ERROR] Errors:
+[ERROR]   AdminFrameIntegrationTest.codesSearchAndReadOnlyFormsAndProductMenu:36 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   CheckoutPresentationIntegrationTest.setup:38 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   CheckoutPresentationIntegrationTest.setup:38 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   CheckoutPresentationIntegrationTest.setup:38 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   CheckoutPresentationIntegrationTest.setup:38 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   EmployeeAccessIntegrationTest.employeeProcessesInvoiceThroughExistingOrderStatusService:88 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   DeliveryIntegrationTest.cancellationAndDeliveryFailureReturnStockExactlyOnce:50->order:32 � NoSuchElement No value present
+[ERROR]   DeliveryIntegrationTest.customerInvoiceOwnershipAndEightSecurityScenarios:64->order:32 � NoSuchElement No value present
+[ERROR]   DeliveryIntegrationTest.fullOnlineFlowRecordsActorsAndCarrierWithoutEstimatedDelivery:35->order:32 � NoSuchElement No value present
+[ERROR]   DeliveryIntegrationTest.malformedProvinceValuesHaveVietnameseMessages:54->order:32 � NoSuchElement No value present
+[ERROR]   DeliveryIntegrationTest.provinceChangesAreAuditedWithoutEstimatedDelivery:51->order:32 � NoSuchElement No value present
+[ERROR]   DeliveryIntegrationTest.provinceValidationInService:52->order:32 � NoSuchElement No value present
+[ERROR]   InvoiceManagementIntegrationTest.setup:45 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   InvoiceManagementIntegrationTest.setup:45 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   InvoiceManagementIntegrationTest.setup:45 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   InvoiceManagementIntegrationTest.setup:45 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   InvoiceManagementIntegrationTest.setup:45 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   InvoiceManagementIntegrationTest.setup:45 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   InvoiceManagementIntegrationTest.setup:45 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   InvoiceOnlineWorkspaceIntegrationTest.setup:32 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   InvoiceOnlineWorkspaceIntegrationTest.setup:32 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   InvoiceOnlineWorkspaceIntegrationTest.setup:32 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   InvoiceOnlineWorkspaceIntegrationTest.setup:32 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   InvoiceOnlineWorkspaceIntegrationTest.setup:32 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   DiscountWorkflowIntegrationTest.selectionPageExcludesStoppedProductsAndRejectsForgedSelection:41 � EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   ProductFeedbackIntegrationTest.adminAndPublicPagesHandleEmptyAndStrangePages:75 � Servlet Request processing failed: org.thymeleaf.exceptions.TemplateInputException: An error happened during template parsing (template: "class path resource [templates/user/chi-tiet-san-pham.html]")
+[ERROR]   ProductFeedbackIntegrationTest.favoriteToggleAndInactiveGridAndXssEscape:62 � Servlet Request processing failed: org.thymeleaf.exceptions.TemplateInputException: An error happened during template parsing (template: "class path resource [templates/user/chi-tiet-san-pham.html]")
+[ERROR]   ProductFeedbackIntegrationTest.reviewAndFavoritePaginationUseTwelveAndContinueAdminRowNumbers:78 � Servlet Request processing failed: org.thymeleaf.exceptions.TemplateInputException: An error happened during template parsing (template: "class path resource [templates/user/chi-tiet-san-pham.html]")
+[ERROR] Tests run: 315, Failures: 0, Errors: 28, Skipped: 0
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project DemoDATN:
+[ERROR]
+[ERROR] See C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

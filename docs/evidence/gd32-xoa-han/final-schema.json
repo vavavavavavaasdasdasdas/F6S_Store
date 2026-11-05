@@ -1,0 +1,7 @@
+[
+  {
+    "tables": 40,
+    "foreign_keys": 50,
+    "invalid_foreign_keys": 0
+  }
+]

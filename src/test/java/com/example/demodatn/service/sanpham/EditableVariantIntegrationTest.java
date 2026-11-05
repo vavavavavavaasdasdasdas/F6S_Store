@@ -61,10 +61,10 @@ class EditableVariantIntegrationTest {
         var p=product();var v=catalog.saveVariant(form(p));var id=v.getId();catalog.deleteVariant(p.getId(),id);assertFalse(variants.existsById(id));assertEquals(0,jdbc.queryForObject("SELECT COUNT(*) FROM inventory_logs WHERE variant_id=?",Integer.class,id));
     }
     @Test void soldVariantDeleteRejectedWithStopSellingAdvice(){
-        Integer id=jdbc.queryForObject("SELECT TOP 1 product_variant_id FROM order_details ORDER BY id",Integer.class);var v=catalog.variant(id);assertTrue(assertThrows(CatalogValidationException.class,()->catalog.deleteVariant(v.getProduct().getId(),id)).getMessage().contains("Ngừng bán"));
+        Integer id=com.example.demodatn.CatalogTestFixtures.soldVariant(jdbc);var v=catalog.variant(id);assertTrue(assertThrows(CatalogValidationException.class,()->catalog.deleteVariant(v.getProduct().getId(),id)).getMessage().contains("Ngừng bán"));
     }
     @Test void changingPriceKeepsOldOrderSnapshotsAndWarnsAnOpenCart()throws Exception{
-        Integer id=jdbc.queryForObject("SELECT TOP 1 v.id FROM product_variants v JOIN products p ON p.id=v.product_id JOIN order_details d ON d.product_variant_id=v.id WHERE v.status=1 AND p.status=1 AND v.quantity>0 ORDER BY v.id",Integer.class);
+        Integer id=com.example.demodatn.CatalogTestFixtures.soldVariant(jdbc);
         var v=catalog.variant(id);var snapshots=jdbc.queryForList("SELECT id,price,total_price FROM order_details WHERE product_variant_id=? ORDER BY id",id);
         var oldPrice=v.getPrice();var cart=new com.example.demodatn.dto.donhang.CartItemDto(v.getProduct().getId(),id,v.getProduct().getName(),v.getSize().getSizeValue(),oldPrice,1);
         var form=new VariantForm();form.setId(id);form.setProductId(v.getProduct().getId());form.setSizeId(v.getSize().getId());form.setColorId(v.getColor().getId());form.setMaterialId(v.getMaterial().getId());form.setSoleId(v.getSole().getId());form.setPrice(oldPrice.add(BigDecimal.valueOf(1000)));form.setQuantity(v.getQuantity());form.setExpectedQuantity(v.getQuantity());form.setStatus(true);catalog.saveVariant(form);variants.flush();

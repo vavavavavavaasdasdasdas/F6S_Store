@@ -29,7 +29,7 @@ class InvoiceOnlineWorkspaceIntegrationTest {
  MockMvc mvc;Integer variant,ward,province;int stock;
  @BeforeEach void setup(){
   com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-  variant=jdbc.queryForObject("SELECT TOP 1 v.id FROM product_variants v JOIN products p ON p.id=v.product_id WHERE v.quantity>5 AND v.status=1 AND p.status=1 ORDER BY v.id",Integer.class);
+  variant=com.example.demodatn.CatalogTestFixtures.variant(jdbc);
   var w=jdbc.queryForMap("SELECT TOP 1 id,tinh_thanh_id FROM phuong_xa ORDER BY id");ward=((Number)w.get("id")).intValue();province=((Number)w.get("tinh_thanh_id")).intValue();stock=quantity();
  }
  int quantity(){return jdbc.queryForObject("SELECT quantity FROM product_variants WHERE id=?",Integer.class,variant);}

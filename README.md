@@ -118,44 +118,40 @@ DemoDATN/
 ```
 
 
-## Giai đoạn 32 — dọn dữ liệu và seed (thao tác riêng, không phải migration)
+## Giai đoạn 32 — BẢN THAY THẾ: xóa hẳn dữ liệu, không seed
 
-Giữ `database/tools/` và `database/seed/`. Hai script này không được đưa vào `chay_tat_ca.sql` và không tự chạy khi khởi động ứng dụng. `DataInitializer` chỉ chạy khi bật profile `test`; không bật profile này trên DB chính.
+Yêu cầu này thay hoàn toàn bản dọn rồi seed trước đây. Script duy nhất: `database/tools/don_du_lieu_thu.sql`, chạy một lần ngoài migration. File seed sản phẩm của bản cũ đã được gỡ; không có bước tạo dữ liệu mẫu. Sau dọn, chủ cửa hàng tự nhập dữ liệu thật qua giao diện.
 
-Dừng ứng dụng và sao lưu trước khi tự vận hành trên database cần dọn. Tên DB phải được truyền tường minh; script dừng khi `DB_NAME()` khác `TenDB_DuKien`. Dùng Windows Authentication (`-E`) hoặc tài khoản SQL qua `SQLCMDPASSWORD`, không đặt mật khẩu trong dòng lệnh/repository.
+Chỉ chủ dự án tự vận hành trên DB chính sau khi dừng app, sao lưu và kiểm tra bản cứu hộ. Agent chỉ thử trên DB mới RESTORE, không ghi đè DB có sẵn, không kết nối `shopbangiay`/`shopbangiay_thu`.
 
-1. Xem trước (toàn bộ thay đổi được ROLLBACK; không reset bộ đếm):
+Script dùng DELETE theo khóa ngoại, kể cả dòng đang ẩn/ngừng bán/tắt. Không đổi status thay cho xóa, không tắt ràng buộc. Giữ admin/user cùng hồ sơ/địa chỉ, các vai trò/cấu hình/FAQ/tỉnh-phường-xã; DataInitializer chỉ ở profile test (không bật profile test trên DB chính).
+
+Danh mục gốc đối chiếu lịch sử `shopgiay.sql`: 6 thương hiệu từ commit21f76e6 (Nike, Adidas, Converse, Vans, Puma, New Balance), kích cỡ36–43; chất liệu8tên từ2229c5b; đế giày8tên từba08a0e; màu sắc11tên từ8410685. So tên bỏ qua hoa thường và khoảng trắng, giữ phân biệt dấu. Không lấy danh sách3thương hiệu/3kích cỡ đã bị rút gọn về sau làm gốc.
+
+`@DanhMucGiuThem` mặc định rỗng. Tên ngoài gốc có thể là dữ liệu thật sẽ được SELECT rồi THROW để chờ chủ dữ liệu điền thêm tên cần GIỮ (ví dụ categories/ASICS). Các tên thử rõ ràng ngoài gốc được DELETE. Không tự quyết định giữ/xóa tên thật chưa duyệt.
+
+1. Xem trước bằng đúng tên DB; mọi thay đổi ROLLBACK, không reset bộ đếm:
 
 ```powershell
 sqlcmd -S localhost -E -C -b -f 65001 -d "<DB_DA_SAO_LUU>" -v TenDB_DuKien="<DB_DA_SAO_LUU>" -i database/tools/don_du_lieu_thu.sql
 ```
 
-2. Xác nhận sau khi duyệt bảng đếm/tài khoản giữ lại. Tạo file cục bộ `tmp/xac_nhan_gd32.sql` có nội dung dưới đây rồi chạy sqlcmd cùng các tham số trên, thay `-i` thành `-i tmp/xac_nhan_gd32.sql`:
+2. Sau khi duyệt bảng đếm/tài khoản/danh mục, tạo file cục bộ `tmp/xac_nhan_gd32.sql`:
 
 ```sql
-EXEC sys.sp_set_session_context @key=N'XAC_NHAN', @value=N'XOA-DU-LIEU-THU';
+EXEC sys.sp_set_session_context @key=N'XAC_NHAN',@value=N'XOA-DU-LIEU-THU';
 GO
 :r database/tools/don_du_lieu_thu.sql
 ```
 
-`@DanhMucDuyetXoa` mặc định rỗng: không xóa thương hiệu/kích cỡ/chất liệu/màu/đế khi chưa duyệt ID. Tài khoản phải có đúng một `admin` và một `user`; script giữ nguyên mật khẩu cùng hồ sơ/địa chỉ liên kết. Script từ chối schema có bảng chưa kiểm kê. Không tắt khóa ngoại.
-
-3. Tạo 5 sản phẩm, 40 biến thể, 2 đợt giảm giá, 5 phiếu:
-
 ```powershell
-sqlcmd -S localhost -E -C -b -f 65001 -d "<DB_DA_SAO_LUU>" -v TenDB_DuKien="<DB_DA_SAO_LUU>" -i database/seed/du_lieu_mau.sql
+sqlcmd -S localhost -E -C -b -f 65001 -d "<DB_DA_SAO_LUU>" -v TenDB_DuKien="<DB_DA_SAO_LUU>" -i tmp/xac_nhan_gd32.sql
 ```
 
-Seed chạy lặp không tăng số dòng, không ghi đè tồn kho đã bán và không thêm log khởi tạo lần hai. Ngày hiệu lực cố định 05/11/2026–31/12/2026 (đợt khai trương kết thúc 30/11), giờ Việt Nam. Ngoại lệ có chủ đích: reset bộ đếm chỉ cho bảng đã xóa sạch, nên mã bắt đầu SP001/BT0001/KM001/CH0001; không reset bộ đếm danh mục/hồ sơ còn dữ liệu.
+Dùng Windows Authentication hoặc SQLCMDPASSWORD; không ghi mật khẩu vào lệnh/file/repository. Script dừng nếu DB_NAME khác TenDB_DuKien, thiếu đúng một admin/user hoặc gặp bảng chưa kiểm kê. Toàn bộ một transaction; lỗi rollback và nêu bảng/bước.
 
-Ảnh do chủ cửa hàng cung cấp, đặt trong `uploads/products/`:
+Ngoại lệ có chủ đích: chỉ reset IDENTITY/SEQUENCE của bảng đã rỗng hoàn toàn, để nhập tiếp SP001/BT0001/KM001/CH0001. Không reset bộ đếm bảng còn dữ liệu. Không DROP đối tượng/schema.
 
-| Sản phẩm | Tên file |
-|---|---|
-| Nike Air Force 1 '07 | nike-air-force-1-07.jpg |
-| Adidas Ultraboost Light | adidas-ultraboost-light.jpg |
-| Converse Chuck Taylor All Star Classic | converse-chuck-taylor-classic.jpg |
-| Vans Old Skool | vans-old-skool.jpg |
-| ASICS Gel-Kayano 14 | asics-gel-kayano-14.jpg |
+3. File ảnh mồ côi: chỉ kiểm kê, không tự xóa. Xem bảng cần duyệt và lệnh riêng trong `docs/GIAI_DOAN_32.md` (bản thay thế). Không chạy lại hướng dẫn seed hoặc báo cáo cũ trong `docs/evidence/gd32/`; đó chỉ là bằng chứng lịch sử của yêu cầu đã bị thay thế.
 
-Chưa có ảnh thì dùng cơ chế ảnh thay thế hiện có (`/anh/anh-san-pham-thay-the.svg`). Không tự tải/vẽ ảnh. Không tự xóa upload; danh sách file mồ côi, hướng dẫn kiểm tra và kết quả thực tế nằm trong `docs/GIAI_DOAN_32.md`.
+Kiểm thử lại cần đặt `SPRING_DATASOURCE_URL` trỏ rõ tới database RESTORE riêng trước khi chạy `mvnw clean test` hoặc app cổng khác. Giữ nguyên chốt TestDatabaseGuard. Test tự tạo fixture trong src/test, không cần chạy seed sản phẩm. Sau nhóm test ghi dữ liệu, RESTORE lại một bản mới và chạy chỉ script dọn; không đưa bản test còn fixture vào cấu hình vận hành.

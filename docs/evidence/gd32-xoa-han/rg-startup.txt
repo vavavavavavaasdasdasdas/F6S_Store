@@ -1,0 +1,3 @@
+src/main/java\com\example\demodatn\config\DataInitializer.java:15:import org.springframework.boot.CommandLineRunner;
+src/main/java\com\example\demodatn\config\DataInitializer.java:23:@Profile("test")
+src/main/java\com\example\demodatn\config\DataInitializer.java:25:public class DataInitializer implements CommandLineRunner {

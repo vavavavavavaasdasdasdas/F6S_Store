@@ -35,7 +35,7 @@ class CheckoutPresentationIntegrationTest {
         int role=jdbc.queryForObject("SELECT id FROM roles WHERE name='ROLE_USER'",Integer.class);
         int userId=jdbc.queryForObject("INSERT users(username,password,role_id,status) OUTPUT INSERTED.id VALUES('gd27-checkout','mock-only',?,1)",Integer.class,role);
         customerId=jdbc.queryForObject("INSERT customers(customer_code,full_name,email,phone,user_id,status) OUTPUT INSERTED.id VALUES('GD27-CHECKOUT',N'Nguyễn Văn Ánh','gd27@example.test','0912345678',?,1)",Integer.class,userId);
-        variantId=jdbc.queryForObject("SELECT TOP 1 v.id FROM product_variants v JOIN products p ON p.id=v.product_id WHERE v.status=1 AND p.status=1 AND v.quantity>=2 AND v.price>0 ORDER BY v.id",Integer.class);
+        variantId=com.example.demodatn.CatalogTestFixtures.variant(jdbc);
         var v=variants.findById(variantId).orElseThrow();
         var item=new CartItemDto(v.getProduct().getId(),variantId,v.getProduct().getName(),v.getSize().getSizeValue(),v.getMaterial().getName(),v.getColor().getName(),v.getSole().getName(),v.getPrice(),1);
         session=new MockHttpSession();session.setAttribute("cart",new ArrayList<>(List.of(item)));

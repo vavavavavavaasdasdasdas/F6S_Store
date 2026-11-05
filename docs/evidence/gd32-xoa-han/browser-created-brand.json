@@ -1,0 +1,16 @@
+{
+  "url": "http://localhost:18032/admin/categories",
+  "text": "Đã lưu thương hiệu thành công.\n×\nThương hiệu\n+Thêm thương hiệu\nTừ khóa thương hiệu\nTrạng thái\nTất cả trạng thái\nĐang hiển thị\nĐang ẩn\n▾\nTình trạng sử dụng\nTất cả tình trạng\nĐang dùng\nChưa dùng\n▾\nLọc\nXóa lọc\nChưa áp dụng bộ lọc\nSTT\tMã\tTên thương hiệu\tTrạng thái\tHành động\n1\tTH001\tNike\tĐang hiển thị\t\nSửa\nĐang hiển thị\n\n2\tTH002\tAdidas\tĐang hiển thị\t\nSửa\nĐang hiển thị\n\n3\tTH003\tConverse\tĐang hiển thị\t\nSửa\nĐang hiển thị\n\n4\tTH004\tVans\tĐang hiển thị\t\nSửa\nĐang hiển thị\n\n5\tTH005\tPuma\tĐang hiển thị\t\nSửa\nĐang hiển thị\n\n6\tTH006\tNew Balance\tĐang hiển thị\t\nSửa\nĐang hiển thị\n\n7\tTH007\tVERIFY Thương hiệu nhập mới\tĐang hiển thị\t\nSửa\nĐang hiển thị",
+  "beforeBox": {
+    "x": 301,
+    "y": 441.671875,
+    "width": 117.5625,
+    "height": 38
+  },
+  "afterBox": {
+    "x": 301,
+    "y": 419.671875,
+    "width": 117.5625,
+    "height": 38
+  }
+}

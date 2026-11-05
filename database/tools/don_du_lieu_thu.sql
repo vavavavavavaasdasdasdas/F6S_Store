@@ -1,4 +1,4 @@
--- Giai đoạn 32. Ngoài migration. Sao lưu trước khi vận hành.
+-- Giai đoạn 32 BẢN THAY THẾ: DELETE hẳn; KHÔNG seed. Ngoài migration. Sao lưu trước khi vận hành.
 -- sqlcmd -v TenDB_DuKien="<database đã kiểm tra>" -i database/tools/don_du_lieu_thu.sql
 -- Mặc định XEM TRƯỚC. Xác nhận bằng SESSION_CONTEXT như hướng dẫn README.
 SET NOCOUNT ON;
@@ -8,10 +8,55 @@ DECLARE @XAC_NHAN nvarchar(100)=COALESCE(CONVERT(nvarchar(100),SESSION_CONTEXT(N
 IF DB_NAME()<>@TenDB_DuKien THROW 51000,N'Sai database dự kiến. Dừng trước khi thay đổi.',1;
 IF @@TRANCOUNT<>0 THROW 51000,N'Phải chạy độc lập, không nằm trong transaction khác.',1;
 DECLARE @BangLoi sysname=N'Kiểm tra đầu vào';
-DECLARE @DanhMucDuyetXoa TABLE(bang sysname NOT NULL,id int NOT NULL,PRIMARY KEY(bang,id));
--- Chỉ điền ID cụ thể đã được chủ dữ liệu duyệt. Mặc định RỖNG.
--- INSERT @DanhMucDuyetXoa VALUES(N'categories',123);
-DECLARE @ThongKe TABLE(bang sysname PRIMARY KEY,truoc bigint,sau bigint);
+DECLARE @DanhMucGoc TABLE(bang sysname NOT NULL,ten nvarchar(100) NOT NULL);
+DECLARE @DanhMucGiuThem TABLE(bang sysname NOT NULL,ten nvarchar(100) NOT NULL);
+-- Chỉ chủ dữ liệu điền các tên ngoài danh sách gốc đã duyệt GIỮ. Mặc định RỖNG.
+-- INSERT @DanhMucGiuThem VALUES(N'categories',N'ASICS');
+INSERT @DanhMucGoc(bang,ten) VALUES
+(N'categories',N'Nike'),
+(N'categories',N'Adidas'),
+(N'categories',N'Converse'),
+(N'categories',N'Vans'),
+(N'categories',N'Puma'),
+(N'categories',N'New Balance'),
+(N'sizes',N'36'),
+(N'sizes',N'37'),
+(N'sizes',N'38'),
+(N'sizes',N'39'),
+(N'sizes',N'40'),
+(N'sizes',N'41'),
+(N'sizes',N'42'),
+(N'sizes',N'43'),
+(N'chat_lieu',N'Da thật'),
+(N'chat_lieu',N'Da tổng hợp'),
+(N'chat_lieu',N'Da lộn'),
+(N'chat_lieu',N'Vải canvas'),
+(N'chat_lieu',N'Vải lưới'),
+(N'chat_lieu',N'Vải dệt kim'),
+(N'chat_lieu',N'Cao su'),
+(N'chat_lieu',N'Khác'),
+(N'mau_sac',N'Đen'),
+(N'mau_sac',N'Trắng'),
+(N'mau_sac',N'Xám'),
+(N'mau_sac',N'Đỏ'),
+(N'mau_sac',N'Xanh dương'),
+(N'mau_sac',N'Xanh lá'),
+(N'mau_sac',N'Vàng'),
+(N'mau_sac',N'Nâu'),
+(N'mau_sac',N'Be'),
+(N'mau_sac',N'Hồng'),
+(N'mau_sac',N'Khác'),
+(N'de_giay',N'Cao su'),
+(N'de_giay',N'EVA'),
+(N'de_giay',N'PU'),
+(N'de_giay',N'TPU'),
+(N'de_giay',N'Đế bằng'),
+(N'de_giay',N'Đế độn'),
+(N'de_giay',N'Đế chống trượt'),
+(N'de_giay',N'Khác');
+DECLARE @DanhMuc TABLE(bang sysname,id int,ten nvarchar(100),khoa nvarchar(100) COLLATE Latin1_General_100_CI_AS,nhom nvarchar(60));
+DECLARE @Sau TABLE(bang sysname PRIMARY KEY,sau bigint);
+DECLARE @ThongKe TABLE(bang sysname PRIMARY KEY,truoc bigint);
 BEGIN TRY
  BEGIN TRANSACTION;
  DECLARE @Khoa int;
@@ -70,6 +115,15 @@ BEGIN TRY
  INSERT @ThongKe(bang,truoc) SELECT N'vouchers',COUNT_BIG(*) FROM dbo.[vouchers] WITH(TABLOCKX,HOLDLOCK);
  INSERT @ThongKe(bang,truoc) SELECT N'vung_giao_hang',COUNT_BIG(*) FROM dbo.[vung_giao_hang] WITH(TABLOCKX,HOLDLOCK);
  INSERT @ThongKe(bang,truoc) SELECT N'yeu_thich',COUNT_BIG(*) FROM dbo.[yeu_thich] WITH(TABLOCKX,HOLDLOCK);
+ SET @BangLoi=N'Kiểm kê danh mục';
+ IF EXISTS(SELECT 1 FROM @DanhMucGiuThem WHERE bang NOT IN(N'categories',N'sizes',N'chat_lieu',N'mau_sac',N'de_giay')) THROW 51006,N'Bảng giữ thêm không hợp lệ',1;
+ INSERT @DanhMuc(bang,id,ten,khoa,nhom) SELECT N'categories',d.id,d.[name],UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.name,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS,CASE WHEN EXISTS(SELECT 1 FROM @DanhMucGoc g WHERE g.bang=N'categories' AND UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(g.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.name,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS) OR EXISTS(SELECT 1 FROM @DanhMucGiuThem g WHERE g.bang=N'categories' AND UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(g.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.name,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS) THEN N'GIỮ' WHEN d.[name] COLLATE Latin1_General_100_CI_AI LIKE N'%test%' OR d.[name] COLLATE Latin1_General_100_CI_AI LIKE N'%phase%' OR d.[name] COLLATE Latin1_General_100_CI_AI LIKE N'%e2e%' OR d.[name] COLLATE Latin1_General_100_CI_AI LIKE N'%kiểm thử%' OR d.[name] LIKE N'%VERIFY%' OR d.[name] LIKE N'%P12-%' OR d.[name] LIKE N'%P7-%' OR d.[name] LIKE N'%P8-%' OR UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.name,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=N'POLY' THEN N'XÓA NGOÀI DANH SÁCH GỐC' ELSE N'CẦN TÔI DUYỆT' END FROM dbo.[categories] d;
+ INSERT @DanhMuc(bang,id,ten,khoa,nhom) SELECT N'sizes',d.id,d.[size_value],UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.size_value,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS,CASE WHEN EXISTS(SELECT 1 FROM @DanhMucGoc g WHERE g.bang=N'sizes' AND UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(g.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.size_value,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS) OR EXISTS(SELECT 1 FROM @DanhMucGiuThem g WHERE g.bang=N'sizes' AND UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(g.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.size_value,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS) THEN N'GIỮ' WHEN d.[size_value] COLLATE Latin1_General_100_CI_AI LIKE N'%test%' OR d.[size_value] COLLATE Latin1_General_100_CI_AI LIKE N'%phase%' OR d.[size_value] COLLATE Latin1_General_100_CI_AI LIKE N'%e2e%' OR d.[size_value] COLLATE Latin1_General_100_CI_AI LIKE N'%kiểm thử%' OR d.[size_value] LIKE N'%VERIFY%' OR d.[size_value] LIKE N'%P12-%' OR d.[size_value] LIKE N'%P7-%' OR d.[size_value] LIKE N'%P8-%' OR UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.size_value,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=N'POLY' THEN N'XÓA NGOÀI DANH SÁCH GỐC' ELSE N'CẦN TÔI DUYỆT' END FROM dbo.[sizes] d;
+ INSERT @DanhMuc(bang,id,ten,khoa,nhom) SELECT N'chat_lieu',d.id,d.[ten],UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS,CASE WHEN EXISTS(SELECT 1 FROM @DanhMucGoc g WHERE g.bang=N'chat_lieu' AND UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(g.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS) OR EXISTS(SELECT 1 FROM @DanhMucGiuThem g WHERE g.bang=N'chat_lieu' AND UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(g.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS) THEN N'GIỮ' WHEN d.[ten] COLLATE Latin1_General_100_CI_AI LIKE N'%test%' OR d.[ten] COLLATE Latin1_General_100_CI_AI LIKE N'%phase%' OR d.[ten] COLLATE Latin1_General_100_CI_AI LIKE N'%e2e%' OR d.[ten] COLLATE Latin1_General_100_CI_AI LIKE N'%kiểm thử%' OR d.[ten] LIKE N'%VERIFY%' OR d.[ten] LIKE N'%P12-%' OR d.[ten] LIKE N'%P7-%' OR d.[ten] LIKE N'%P8-%' OR UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=N'POLY' THEN N'XÓA NGOÀI DANH SÁCH GỐC' ELSE N'CẦN TÔI DUYỆT' END FROM dbo.[chat_lieu] d;
+ INSERT @DanhMuc(bang,id,ten,khoa,nhom) SELECT N'mau_sac',d.id,d.[ten],UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS,CASE WHEN EXISTS(SELECT 1 FROM @DanhMucGoc g WHERE g.bang=N'mau_sac' AND UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(g.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS) OR EXISTS(SELECT 1 FROM @DanhMucGiuThem g WHERE g.bang=N'mau_sac' AND UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(g.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS) THEN N'GIỮ' WHEN d.[ten] COLLATE Latin1_General_100_CI_AI LIKE N'%test%' OR d.[ten] COLLATE Latin1_General_100_CI_AI LIKE N'%phase%' OR d.[ten] COLLATE Latin1_General_100_CI_AI LIKE N'%e2e%' OR d.[ten] COLLATE Latin1_General_100_CI_AI LIKE N'%kiểm thử%' OR d.[ten] LIKE N'%VERIFY%' OR d.[ten] LIKE N'%P12-%' OR d.[ten] LIKE N'%P7-%' OR d.[ten] LIKE N'%P8-%' OR UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=N'POLY' THEN N'XÓA NGOÀI DANH SÁCH GỐC' ELSE N'CẦN TÔI DUYỆT' END FROM dbo.[mau_sac] d;
+ INSERT @DanhMuc(bang,id,ten,khoa,nhom) SELECT N'de_giay',d.id,d.[ten],UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS,CASE WHEN EXISTS(SELECT 1 FROM @DanhMucGoc g WHERE g.bang=N'de_giay' AND UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(g.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS) OR EXISTS(SELECT 1 FROM @DanhMucGiuThem g WHERE g.bang=N'de_giay' AND UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(g.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS) THEN N'GIỮ' WHEN d.[ten] COLLATE Latin1_General_100_CI_AI LIKE N'%test%' OR d.[ten] COLLATE Latin1_General_100_CI_AI LIKE N'%phase%' OR d.[ten] COLLATE Latin1_General_100_CI_AI LIKE N'%e2e%' OR d.[ten] COLLATE Latin1_General_100_CI_AI LIKE N'%kiểm thử%' OR d.[ten] LIKE N'%VERIFY%' OR d.[ten] LIKE N'%P12-%' OR d.[ten] LIKE N'%P7-%' OR d.[ten] LIKE N'%P8-%' OR UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d.ten,N' ',N''),NCHAR(9),N''),NCHAR(10),N''),NCHAR(13),N''),NCHAR(160),N'')) COLLATE Latin1_General_100_CI_AS=N'POLY' THEN N'XÓA NGOÀI DANH SÁCH GỐC' ELSE N'CẦN TÔI DUYỆT' END FROM dbo.[de_giay] d;
+ SELECT bang,id,ten,nhom FROM @DanhMuc ORDER BY bang,id;
+ IF EXISTS(SELECT 1 FROM @DanhMuc WHERE nhom=N'CẦN TÔI DUYỆT') THROW 51007,N'Có danh mục ngoài gốc có thể là dữ liệu thật. Dừng; chủ dữ liệu phải điền @DanhMucGiuThem trước khi chạy.',1;
  SET @BangLoi=N'admin_chat_audit'; DELETE FROM dbo.[admin_chat_audit];
  SET @BangLoi=N'admin_chat_tin_nhan'; DELETE FROM dbo.[admin_chat_tin_nhan];
  SET @BangLoi=N'chat_action_audit'; DELETE FROM dbo.[chat_action_audit];
@@ -98,53 +152,52 @@ BEGIN TRY
  SET @BangLoi=N'customers'; DELETE FROM dbo.[customers] WHERE id NOT IN(SELECT id FROM @GiuKhach);
  SET @BangLoi=N'employees'; DELETE FROM dbo.[employees] WHERE user_id NOT IN(SELECT id FROM @GiuUser);
  SET @BangLoi=N'users'; DELETE FROM dbo.[users] WHERE id NOT IN(SELECT id FROM @GiuUser);
- IF EXISTS(SELECT 1 FROM @DanhMucDuyetXoa WHERE bang NOT IN(N'categories',N'sizes',N'chat_lieu',N'mau_sac',N'de_giay')) THROW 51003,N'Bảng danh mục không hợp lệ',1;
- SET @BangLoi=N'categories'; DELETE d FROM dbo.[categories] d JOIN @DanhMucDuyetXoa a ON a.bang=N'categories' AND a.id=d.id;
- SET @BangLoi=N'chat_lieu'; DELETE d FROM dbo.[chat_lieu] d JOIN @DanhMucDuyetXoa a ON a.bang=N'chat_lieu' AND a.id=d.id;
- SET @BangLoi=N'de_giay'; DELETE d FROM dbo.[de_giay] d JOIN @DanhMucDuyetXoa a ON a.bang=N'de_giay' AND a.id=d.id;
- SET @BangLoi=N'mau_sac'; DELETE d FROM dbo.[mau_sac] d JOIN @DanhMucDuyetXoa a ON a.bang=N'mau_sac' AND a.id=d.id;
- SET @BangLoi=N'sizes'; DELETE d FROM dbo.[sizes] d JOIN @DanhMucDuyetXoa a ON a.bang=N'sizes' AND a.id=d.id;
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[admin_chat_audit]) WHERE bang=N'admin_chat_audit';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[admin_chat_hoi_thoai]) WHERE bang=N'admin_chat_hoi_thoai';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[admin_chat_tin_nhan]) WHERE bang=N'admin_chat_tin_nhan';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[categories]) WHERE bang=N'categories';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[cau_hinh_phi_ship]) WHERE bang=N'cau_hinh_phi_ship';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[chat_action_audit]) WHERE bang=N'chat_action_audit';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[chat_hoi_thoai]) WHERE bang=N'chat_hoi_thoai';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[chat_lieu]) WHERE bang=N'chat_lieu';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[chat_mail_log]) WHERE bang=N'chat_mail_log';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[chat_tin_nhan]) WHERE bang=N'chat_tin_nhan';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[chatbot_faq]) WHERE bang=N'chatbot_faq';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[customers]) WHERE bang=N'customers';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[danh_gia]) WHERE bang=N'danh_gia';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[de_giay]) WHERE bang=N'de_giay';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[dia_chi_nhan_hang]) WHERE bang=N'dia_chi_nhan_hang';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[employees]) WHERE bang=N'employees';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[inventory_logs]) WHERE bang=N'inventory_logs';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[invoices]) WHERE bang=N'invoices';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[mau_sac]) WHERE bang=N'mau_sac';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[order_details]) WHERE bang=N'order_details';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[order_mail_log]) WHERE bang=N'order_mail_log';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[order_status_history]) WHERE bang=N'order_status_history';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[orders]) WHERE bang=N'orders';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[phieu_ho_tro]) WHERE bang=N'phieu_ho_tro';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[phuong_xa]) WHERE bang=N'phuong_xa';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[pos_held_items]) WHERE bang=N'pos_held_items';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[pos_held_orders]) WHERE bang=N'pos_held_orders';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[product_images]) WHERE bang=N'product_images';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[product_variants]) WHERE bang=N'product_variants';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[products]) WHERE bang=N'products';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[promotion_details]) WHERE bang=N'promotion_details';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[promotions]) WHERE bang=N'promotions';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[roles]) WHERE bang=N'roles';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[sizes]) WHERE bang=N'sizes';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[ten_tinh_thanh_cu]) WHERE bang=N'ten_tinh_thanh_cu';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[tinh_thanh]) WHERE bang=N'tinh_thanh';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[users]) WHERE bang=N'users';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[vouchers]) WHERE bang=N'vouchers';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[vung_giao_hang]) WHERE bang=N'vung_giao_hang';
- UPDATE @ThongKe SET sau=(SELECT COUNT_BIG(*) FROM dbo.[yeu_thich]) WHERE bang=N'yeu_thich';
- SELECT bang,truoc,sau,truoc-sau da_xoa_trong_transaction FROM @ThongKe ORDER BY bang;
+ SET @BangLoi=N'categories'; DELETE d FROM dbo.[categories] d JOIN @DanhMuc a ON a.bang=N'categories' AND a.id=d.id WHERE a.nhom=N'XÓA NGOÀI DANH SÁCH GỐC';
+ SET @BangLoi=N'sizes'; DELETE d FROM dbo.[sizes] d JOIN @DanhMuc a ON a.bang=N'sizes' AND a.id=d.id WHERE a.nhom=N'XÓA NGOÀI DANH SÁCH GỐC';
+ SET @BangLoi=N'chat_lieu'; DELETE d FROM dbo.[chat_lieu] d JOIN @DanhMuc a ON a.bang=N'chat_lieu' AND a.id=d.id WHERE a.nhom=N'XÓA NGOÀI DANH SÁCH GỐC';
+ SET @BangLoi=N'mau_sac'; DELETE d FROM dbo.[mau_sac] d JOIN @DanhMuc a ON a.bang=N'mau_sac' AND a.id=d.id WHERE a.nhom=N'XÓA NGOÀI DANH SÁCH GỐC';
+ SET @BangLoi=N'de_giay'; DELETE d FROM dbo.[de_giay] d JOIN @DanhMuc a ON a.bang=N'de_giay' AND a.id=d.id WHERE a.nhom=N'XÓA NGOÀI DANH SÁCH GỐC';
+ INSERT @Sau(bang,sau) SELECT N'admin_chat_audit',COUNT_BIG(*) FROM dbo.[admin_chat_audit];
+ INSERT @Sau(bang,sau) SELECT N'admin_chat_hoi_thoai',COUNT_BIG(*) FROM dbo.[admin_chat_hoi_thoai];
+ INSERT @Sau(bang,sau) SELECT N'admin_chat_tin_nhan',COUNT_BIG(*) FROM dbo.[admin_chat_tin_nhan];
+ INSERT @Sau(bang,sau) SELECT N'categories',COUNT_BIG(*) FROM dbo.[categories];
+ INSERT @Sau(bang,sau) SELECT N'cau_hinh_phi_ship',COUNT_BIG(*) FROM dbo.[cau_hinh_phi_ship];
+ INSERT @Sau(bang,sau) SELECT N'chat_action_audit',COUNT_BIG(*) FROM dbo.[chat_action_audit];
+ INSERT @Sau(bang,sau) SELECT N'chat_hoi_thoai',COUNT_BIG(*) FROM dbo.[chat_hoi_thoai];
+ INSERT @Sau(bang,sau) SELECT N'chat_lieu',COUNT_BIG(*) FROM dbo.[chat_lieu];
+ INSERT @Sau(bang,sau) SELECT N'chat_mail_log',COUNT_BIG(*) FROM dbo.[chat_mail_log];
+ INSERT @Sau(bang,sau) SELECT N'chat_tin_nhan',COUNT_BIG(*) FROM dbo.[chat_tin_nhan];
+ INSERT @Sau(bang,sau) SELECT N'chatbot_faq',COUNT_BIG(*) FROM dbo.[chatbot_faq];
+ INSERT @Sau(bang,sau) SELECT N'customers',COUNT_BIG(*) FROM dbo.[customers];
+ INSERT @Sau(bang,sau) SELECT N'danh_gia',COUNT_BIG(*) FROM dbo.[danh_gia];
+ INSERT @Sau(bang,sau) SELECT N'de_giay',COUNT_BIG(*) FROM dbo.[de_giay];
+ INSERT @Sau(bang,sau) SELECT N'dia_chi_nhan_hang',COUNT_BIG(*) FROM dbo.[dia_chi_nhan_hang];
+ INSERT @Sau(bang,sau) SELECT N'employees',COUNT_BIG(*) FROM dbo.[employees];
+ INSERT @Sau(bang,sau) SELECT N'inventory_logs',COUNT_BIG(*) FROM dbo.[inventory_logs];
+ INSERT @Sau(bang,sau) SELECT N'invoices',COUNT_BIG(*) FROM dbo.[invoices];
+ INSERT @Sau(bang,sau) SELECT N'mau_sac',COUNT_BIG(*) FROM dbo.[mau_sac];
+ INSERT @Sau(bang,sau) SELECT N'order_details',COUNT_BIG(*) FROM dbo.[order_details];
+ INSERT @Sau(bang,sau) SELECT N'order_mail_log',COUNT_BIG(*) FROM dbo.[order_mail_log];
+ INSERT @Sau(bang,sau) SELECT N'order_status_history',COUNT_BIG(*) FROM dbo.[order_status_history];
+ INSERT @Sau(bang,sau) SELECT N'orders',COUNT_BIG(*) FROM dbo.[orders];
+ INSERT @Sau(bang,sau) SELECT N'phieu_ho_tro',COUNT_BIG(*) FROM dbo.[phieu_ho_tro];
+ INSERT @Sau(bang,sau) SELECT N'phuong_xa',COUNT_BIG(*) FROM dbo.[phuong_xa];
+ INSERT @Sau(bang,sau) SELECT N'pos_held_items',COUNT_BIG(*) FROM dbo.[pos_held_items];
+ INSERT @Sau(bang,sau) SELECT N'pos_held_orders',COUNT_BIG(*) FROM dbo.[pos_held_orders];
+ INSERT @Sau(bang,sau) SELECT N'product_images',COUNT_BIG(*) FROM dbo.[product_images];
+ INSERT @Sau(bang,sau) SELECT N'product_variants',COUNT_BIG(*) FROM dbo.[product_variants];
+ INSERT @Sau(bang,sau) SELECT N'products',COUNT_BIG(*) FROM dbo.[products];
+ INSERT @Sau(bang,sau) SELECT N'promotion_details',COUNT_BIG(*) FROM dbo.[promotion_details];
+ INSERT @Sau(bang,sau) SELECT N'promotions',COUNT_BIG(*) FROM dbo.[promotions];
+ INSERT @Sau(bang,sau) SELECT N'roles',COUNT_BIG(*) FROM dbo.[roles];
+ INSERT @Sau(bang,sau) SELECT N'sizes',COUNT_BIG(*) FROM dbo.[sizes];
+ INSERT @Sau(bang,sau) SELECT N'ten_tinh_thanh_cu',COUNT_BIG(*) FROM dbo.[ten_tinh_thanh_cu];
+ INSERT @Sau(bang,sau) SELECT N'tinh_thanh',COUNT_BIG(*) FROM dbo.[tinh_thanh];
+ INSERT @Sau(bang,sau) SELECT N'users',COUNT_BIG(*) FROM dbo.[users];
+ INSERT @Sau(bang,sau) SELECT N'vouchers',COUNT_BIG(*) FROM dbo.[vouchers];
+ INSERT @Sau(bang,sau) SELECT N'vung_giao_hang',COUNT_BIG(*) FROM dbo.[vung_giao_hang];
+ INSERT @Sau(bang,sau) SELECT N'yeu_thich',COUNT_BIG(*) FROM dbo.[yeu_thich];
+ SELECT t.bang,t.truoc,s.sau,t.truoc-s.sau da_xoa_trong_transaction FROM @ThongKe t JOIN @Sau s ON s.bang=t.bang ORDER BY t.bang;
  IF @XAC_NHAN=N'XOA-DU-LIEU-THU'
  BEGIN
   SET @BangLoi=N'admin_chat_audit'; IF NOT EXISTS(SELECT 1 FROM dbo.[admin_chat_audit])
@@ -308,11 +361,70 @@ BEGIN TRY
     DBCC CHECKIDENT('dbo.vouchers', RESEED, 1) WITH NO_INFOMSGS;
    ELSE DBCC CHECKIDENT('dbo.vouchers', RESEED, 0) WITH NO_INFOMSGS;
   END;
-  ALTER SEQUENCE dbo.[product_code_seq] RESTART WITH 1;
-  ALTER SEQUENCE dbo.[product_variants_ma_seq] RESTART WITH 1;
-  ALTER SEQUENCE dbo.[promotions_ma_seq] RESTART WITH 1;
-  ALTER SEQUENCE dbo.[danh_gia_ma_seq] RESTART WITH 1;
-  ALTER SEQUENCE dbo.[seq_chat_ma] RESTART WITH 1;
+  SET @BangLoi=N'users'; IF NOT EXISTS(SELECT 1 FROM dbo.[users])
+  BEGIN
+   IF EXISTS(SELECT 1 FROM sys.identity_columns WHERE object_id=OBJECT_ID(N'dbo.users') AND last_value IS NULL)
+    DBCC CHECKIDENT('dbo.users', RESEED, 1) WITH NO_INFOMSGS;
+   ELSE DBCC CHECKIDENT('dbo.users', RESEED, 0) WITH NO_INFOMSGS;
+  END;
+  SET @BangLoi=N'customers'; IF NOT EXISTS(SELECT 1 FROM dbo.[customers])
+  BEGIN
+   IF EXISTS(SELECT 1 FROM sys.identity_columns WHERE object_id=OBJECT_ID(N'dbo.customers') AND last_value IS NULL)
+    DBCC CHECKIDENT('dbo.customers', RESEED, 1) WITH NO_INFOMSGS;
+   ELSE DBCC CHECKIDENT('dbo.customers', RESEED, 0) WITH NO_INFOMSGS;
+  END;
+  SET @BangLoi=N'employees'; IF NOT EXISTS(SELECT 1 FROM dbo.[employees])
+  BEGIN
+   IF EXISTS(SELECT 1 FROM sys.identity_columns WHERE object_id=OBJECT_ID(N'dbo.employees') AND last_value IS NULL)
+    DBCC CHECKIDENT('dbo.employees', RESEED, 1) WITH NO_INFOMSGS;
+   ELSE DBCC CHECKIDENT('dbo.employees', RESEED, 0) WITH NO_INFOMSGS;
+  END;
+  SET @BangLoi=N'dia_chi_nhan_hang'; IF NOT EXISTS(SELECT 1 FROM dbo.[dia_chi_nhan_hang])
+  BEGIN
+   IF EXISTS(SELECT 1 FROM sys.identity_columns WHERE object_id=OBJECT_ID(N'dbo.dia_chi_nhan_hang') AND last_value IS NULL)
+    DBCC CHECKIDENT('dbo.dia_chi_nhan_hang', RESEED, 1) WITH NO_INFOMSGS;
+   ELSE DBCC CHECKIDENT('dbo.dia_chi_nhan_hang', RESEED, 0) WITH NO_INFOMSGS;
+  END;
+  SET @BangLoi=N'categories'; IF NOT EXISTS(SELECT 1 FROM dbo.[categories])
+  BEGIN
+   IF EXISTS(SELECT 1 FROM sys.identity_columns WHERE object_id=OBJECT_ID(N'dbo.categories') AND last_value IS NULL)
+    DBCC CHECKIDENT('dbo.categories', RESEED, 1) WITH NO_INFOMSGS;
+   ELSE DBCC CHECKIDENT('dbo.categories', RESEED, 0) WITH NO_INFOMSGS;
+  END;
+  SET @BangLoi=N'sizes'; IF NOT EXISTS(SELECT 1 FROM dbo.[sizes])
+  BEGIN
+   IF EXISTS(SELECT 1 FROM sys.identity_columns WHERE object_id=OBJECT_ID(N'dbo.sizes') AND last_value IS NULL)
+    DBCC CHECKIDENT('dbo.sizes', RESEED, 1) WITH NO_INFOMSGS;
+   ELSE DBCC CHECKIDENT('dbo.sizes', RESEED, 0) WITH NO_INFOMSGS;
+  END;
+  SET @BangLoi=N'chat_lieu'; IF NOT EXISTS(SELECT 1 FROM dbo.[chat_lieu])
+  BEGIN
+   IF EXISTS(SELECT 1 FROM sys.identity_columns WHERE object_id=OBJECT_ID(N'dbo.chat_lieu') AND last_value IS NULL)
+    DBCC CHECKIDENT('dbo.chat_lieu', RESEED, 1) WITH NO_INFOMSGS;
+   ELSE DBCC CHECKIDENT('dbo.chat_lieu', RESEED, 0) WITH NO_INFOMSGS;
+  END;
+  SET @BangLoi=N'mau_sac'; IF NOT EXISTS(SELECT 1 FROM dbo.[mau_sac])
+  BEGIN
+   IF EXISTS(SELECT 1 FROM sys.identity_columns WHERE object_id=OBJECT_ID(N'dbo.mau_sac') AND last_value IS NULL)
+    DBCC CHECKIDENT('dbo.mau_sac', RESEED, 1) WITH NO_INFOMSGS;
+   ELSE DBCC CHECKIDENT('dbo.mau_sac', RESEED, 0) WITH NO_INFOMSGS;
+  END;
+  SET @BangLoi=N'de_giay'; IF NOT EXISTS(SELECT 1 FROM dbo.[de_giay])
+  BEGIN
+   IF EXISTS(SELECT 1 FROM sys.identity_columns WHERE object_id=OBJECT_ID(N'dbo.de_giay') AND last_value IS NULL)
+    DBCC CHECKIDENT('dbo.de_giay', RESEED, 1) WITH NO_INFOMSGS;
+   ELSE DBCC CHECKIDENT('dbo.de_giay', RESEED, 0) WITH NO_INFOMSGS;
+  END;
+  SET @BangLoi=N'product_code_seq'; IF NOT EXISTS(SELECT 1 FROM dbo.[products]) ALTER SEQUENCE dbo.[product_code_seq] RESTART WITH 1;
+  SET @BangLoi=N'product_variants_ma_seq'; IF NOT EXISTS(SELECT 1 FROM dbo.[product_variants]) ALTER SEQUENCE dbo.[product_variants_ma_seq] RESTART WITH 1;
+  SET @BangLoi=N'promotions_ma_seq'; IF NOT EXISTS(SELECT 1 FROM dbo.[promotions]) ALTER SEQUENCE dbo.[promotions_ma_seq] RESTART WITH 1;
+  SET @BangLoi=N'danh_gia_ma_seq'; IF NOT EXISTS(SELECT 1 FROM dbo.[danh_gia]) ALTER SEQUENCE dbo.[danh_gia_ma_seq] RESTART WITH 1;
+  SET @BangLoi=N'seq_chat_ma'; IF NOT EXISTS(SELECT 1 FROM dbo.[chat_hoi_thoai]) ALTER SEQUENCE dbo.[seq_chat_ma] RESTART WITH 1;
+  IF NOT EXISTS(SELECT 1 FROM dbo.[categories]) ALTER SEQUENCE dbo.[categories_ma_seq] RESTART WITH 1;
+  IF NOT EXISTS(SELECT 1 FROM dbo.[sizes]) ALTER SEQUENCE dbo.[sizes_ma_seq] RESTART WITH 1;
+  IF NOT EXISTS(SELECT 1 FROM dbo.[chat_lieu]) ALTER SEQUENCE dbo.[chat_lieu_ma_seq] RESTART WITH 1;
+  IF NOT EXISTS(SELECT 1 FROM dbo.[mau_sac]) ALTER SEQUENCE dbo.[mau_sac_ma_seq] RESTART WITH 1;
+  IF NOT EXISTS(SELECT 1 FROM dbo.[de_giay]) ALTER SEQUENCE dbo.[de_giay_ma_seq] RESTART WITH 1;
   COMMIT; PRINT N'COMMIT: đã xác nhận. Không tự xóa file upload.';
  END
  ELSE BEGIN ROLLBACK; PRINT N'XEM TRƯỚC: ROLLBACK. Không đặt lại sequence/identity.'; END;

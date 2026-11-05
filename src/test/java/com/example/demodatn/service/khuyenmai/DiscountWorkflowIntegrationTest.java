@@ -38,8 +38,10 @@ class DiscountWorkflowIntegrationTest {
   System.out.println("GD11 SECURITY 8 statuses=302,403,200,302,403,403,403,200; voucher DELETE POST=405; public=true; counter=0");
  }
  @Test void selectionPageExcludesStoppedProductsAndRejectsForgedSelection()throws Exception{
-  int promotion=jdbc.queryForObject("SELECT TOP 1 id FROM promotions ORDER BY id",Integer.class);
-  int product=jdbc.queryForObject("SELECT TOP 1 id FROM products WHERE status=1 ORDER BY id",Integer.class);
+  int promotion=jdbc.queryForObject("INSERT promotions(name,discount_type,discount_value,start_date,end_date,status) OUTPUT INSERTED.id VALUES(N'Đợt kiểm thử chọn sản phẩm','PERCENT',10,'20000101','21000101',1)",Integer.class);
+  int variant=com.example.demodatn.CatalogTestFixtures.variant(jdbc);
+  int product=jdbc.queryForObject("SELECT product_id FROM product_variants WHERE id=?",Integer.class,variant);
+  com.example.demodatn.CatalogTestFixtures.variant(jdbc);
   jdbc.update("UPDATE products SET status=0 WHERE id=?",product);
   String html=mvc.perform(get("/admin/promotions/"+promotion+"/products").with(user("admin").roles("ADMIN"))).andExpect(status().isOk()).andReturn().getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8);
   assertFalse(html.contains("id=\"product-"+product+"\""));assertFalse(html.contains("<th>Trạng thái</th>"));assertTrue(html.contains("role=\"switch\""));
