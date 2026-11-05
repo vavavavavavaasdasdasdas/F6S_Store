@@ -225,7 +225,7 @@ class Phase3ComboFilterIntegrationTest {
                 "/admin/sizes?q=40&inUse=true",
                 "/admin/materials?q=Da&status=true&inUse=true",
                 "/admin/soles?q=Cao&status=true&inUse=true",
-                "/admin/inventory?q=Giày&stock=in&changeType=INCREASE",
+                "/admin/variants?q=Giày&stock=in",
                 "/admin/customers?q=Nguyễn&status=true&from=2020-01-01&to=2030-12-31",
                 "/admin/employees?q=admin&status=true&from=2020-01-01&to=2030-12-31",
                 "/admin/vouchers?q=GIAM&discountType=PERCENT&state=RUNNING&from=2020-01-01&to=2030-12-31",

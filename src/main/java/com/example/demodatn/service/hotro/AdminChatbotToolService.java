@@ -212,7 +212,7 @@ public class AdminChatbotToolService {
                 .toList();
 
         if (products.isEmpty()) {
-            return "Không tìm thấy sản phẩm nào khớp với từ khóa '" + keyword + "'. Bạn vui lòng kiểm tra lại mã hoặc tên sản phẩm.\n\n👉 [Xem Quản lý kho](/admin/inventory)";
+            return "Không tìm thấy sản phẩm nào khớp với từ khóa '" + keyword + "'. Bạn vui lòng kiểm tra lại mã hoặc tên sản phẩm.\n\n👉 [Xem Danh sách biến thể](/admin/variants)";
         }
 
         StringBuilder sb = new StringBuilder();
@@ -238,7 +238,7 @@ public class AdminChatbotToolService {
             sb.append("\n");
         }
 
-        sb.append("👉 [Xem chi tiết tại Quản lý kho](/admin/inventory?keyword=").append(kw).append(")");
+        sb.append("👉 [Xem chi tiết tại Danh sách biến thể](/admin/variants?keyword=").append(kw).append(")");
         return sb.toString();
     }
 
@@ -260,7 +260,7 @@ public class AdminChatbotToolService {
         List<Map<String, Object>> rows = jdbc.queryForList(sql, threshold);
 
         if (rows.isEmpty()) {
-            return "Tất cả sản phẩm hiện đều có lượng tồn an toàn (trên " + threshold + " đôi).\n\n👉 [Xem Quản lý kho](/admin/inventory)";
+            return "Tất cả sản phẩm hiện đều có lượng tồn an toàn (trên " + threshold + " đôi).\n\n👉 [Xem Danh sách biến thể](/admin/variants)";
         }
 
         StringBuilder sb = new StringBuilder();
@@ -279,7 +279,7 @@ public class AdminChatbotToolService {
             sb.append("... và còn ").append(rows.size() - limit).append(" biến thể khác sắp hết hàng.\n");
         }
 
-        sb.append("\n👉 [Nhập thêm hàng tại Quản lý tồn kho](/admin/inventory)");
+        sb.append("\n👉 [Kiểm tra tại Danh sách biến thể](/admin/variants?stock=low)");
         return sb.toString();
     }
 
@@ -461,7 +461,7 @@ public class AdminChatbotToolService {
             String link = "";
             if (bestMatch.getMa().equals("KB_ADMIN_01")) link = "\n\n👉 [Mở trang Bán hàng tại quầy](/admin/pos)";
             else if (bestMatch.getMa().equals("KB_ADMIN_02")) link = "\n\n👉 [Mở trang Quản lý hóa đơn](/admin/invoices)";
-            else if (bestMatch.getMa().equals("KB_ADMIN_03")) link = "\n\n👉 [Mở trang Quản lý tồn kho](/admin/inventory)";
+            else if (bestMatch.getMa().equals("KB_ADMIN_03")) link = "\n\n👉 [Mở trang Danh sách biến thể](/admin/variants)";
             else if (bestMatch.getMa().equals("KB_ADMIN_04")) link = "\n\n👉 [Mở trang Chat với khách](/admin/chat)";
 
             return "📖 **" + bestMatch.getCauHoi() + "**:\n\n" + bestMatch.getTraLoi() + link;

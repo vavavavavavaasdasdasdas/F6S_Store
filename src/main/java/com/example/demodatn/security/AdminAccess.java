@@ -16,7 +16,6 @@ public class AdminAccess {
         if(("GET".equals(method)||"POST".equals(method))&&under(path,com.example.demodatn.controller.admin.donhang.AdminOrderController.LEGACY_PATH))return true;
         if(com.example.demodatn.controller.admin.hotro.AdminSupportTicketController.legacy(path))return true;
         if(under(path,"/admin/pos")||under(path,"/admin/ban-online")||under(path,"/admin/invoices")||under(path,"/admin/account")||under(path,"/admin/support-chat")||under(path,"/admin/chat")||under(path,"/admin/chatbot"))return true;
-        if("GET".equals(method)&&path.equals("/admin/inventory"))return true;
         if(under(path,"/admin/customers")){
             if("GET".equals(method))return true;
             return "POST".equals(method)&&(path.equals("/admin/customers/save")||path.matches("/admin/customers/[0-9]+/addresses(?:/.*)?")||path.matches("/admin/customers/[0-9]+/send-account"));

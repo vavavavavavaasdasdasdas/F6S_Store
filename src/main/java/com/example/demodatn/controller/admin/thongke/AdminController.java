@@ -143,6 +143,6 @@ public class AdminController {
 
     @GetMapping(value = {"/ton-kho", "/ton-kho/**"})
     public String tonKho(jakarta.servlet.http.HttpServletRequest request) {
-        return "redirect:/admin/inventory" + (request.getQueryString() == null ? "" : "?" + request.getQueryString());
+        return "redirect:/admin/variants" + (request.getQueryString() == null ? "" : "?" + request.getQueryString());
     }
 }

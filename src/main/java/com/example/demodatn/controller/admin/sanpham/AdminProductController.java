@@ -63,18 +63,20 @@ public class AdminProductController {
     public String view(@PathVariable Integer id,@RequestParam(defaultValue="0") String page,
                        @RequestParam(required=false) Integer sizeId,@RequestParam(required=false) Integer colorId,
                        @RequestParam(required=false) Integer materialId,@RequestParam(required=false) Integer soleId,
+                       @RequestParam(defaultValue="all") String stock,
                        @RequestParam(required=false) Boolean variantStatus,Model model) {
         model.addAttribute("product",catalog.product(id));
         var all=query.variantsPage(id,"all",0,0);
         model.addAttribute("variantCount",all.getTotalElements());
         model.addAttribute("totalStock",query.productStock(id));
         model.addAttribute("productImages",gallery.list(id));
-        var result=query.variantsPage(id,"all",0,page,materialId,sizeId,variantStatus,null,null,colorId,soleId);
+        var result=query.variantsPage(id,stock,lowStockThreshold,page,materialId,sizeId,variantStatus,null,null,colorId,soleId);
         model.addAttribute("variants",result.getContent());model.addAttribute("variantPage",result);
         model.addAttribute("sizes",sizes.findAll());model.addAttribute("colors",colors.findAll());
         model.addAttribute("materials",materials.findAll());model.addAttribute("soles",soles.findAll());
         model.addAttribute("sizeId",sizeId);model.addAttribute("colorId",colorId);model.addAttribute("materialId",materialId);
         model.addAttribute("soleId",soleId);model.addAttribute("variantStatus",variantStatus);
+        model.addAttribute("stock",stock);model.addAttribute("threshold",lowStockThreshold);
         return "admin/san-pham/chi-tiet";
     }
     @GetMapping("/{id}/variants")

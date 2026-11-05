@@ -89,7 +89,7 @@ class MaterialIntegrationTest {
     }
     @Test void materialCrudValidatesAndRequiresAdminAndCsrf() throws Exception {
         var mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();var m=material("Chất liệu ");
-        for(String url:List.of("/admin/materials","/admin/materials/create","/admin/materials/edit/"+m.getId(),"/admin/variants/create","/admin/inventory"))mvc.perform(get(url)).andExpect(status().isOk());
+        for(String url:List.of("/admin/materials","/admin/materials/create","/admin/materials/edit/"+m.getId(),"/admin/variants/create","/admin/variants"))mvc.perform(get(url)).andExpect(status().isOk());
         mvc.perform(post("/admin/materials/save").with(csrf()).param("value",m.getName()).param("status","true")).andExpect(status().isOk()).andExpect(content().string(org.hamcrest.Matchers.containsString("Tên chất liệu đã tồn tại")));
         mvc.perform(post("/admin/materials/save").param("value","Không CSRF")).andExpect(status().isForbidden());
         mvc.perform(get("/admin/materials").with(user("ordinary").roles("USER"))).andExpect(status().isForbidden());

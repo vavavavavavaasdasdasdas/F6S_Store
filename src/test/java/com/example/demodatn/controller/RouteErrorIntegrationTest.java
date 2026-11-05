@@ -29,7 +29,7 @@ class RouteErrorIntegrationTest {
         MockMvc mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
         for(String prefix:List.of("/products/","/category/","/orders/","/orders/success/",
                 "/admin/products-crud/view/","/admin/products-crud/edit/","/admin/variants/edit/",
-                "/admin/inventory/adjust/","/admin/orders/","/admin/invoices/",
+                "/admin/variants/adjust/","/admin/orders/","/admin/invoices/",
                 "/admin/customers/detail/","/admin/customers/edit/","/admin/employees/detail/",
                 "/admin/employees/edit/","/admin/vouchers/edit/","/admin/promotions/edit/",
                 "/admin/categories/edit/","/admin/sizes/edit/","/admin/materials/edit/")) {

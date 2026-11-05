@@ -1,9 +1,161 @@
 <!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org"><body>
 <aside th:fragment="sidebar" id="admin-sidebar" class="admin-sidebar" aria-label="Điều hướng quản trị">
 <a class="admin-brand" th:href="${adminHome}"><img class="shop-logo" src="/images/logo.jpg" alt="Biểu trưng F6S Store"><span>F6S_Store<small>QUẢN TRỊ CỬA HÀNG</small></span></a>
-<nav class="admin-nav"><th:block th:each="item:${adminNav}"><th:block th:if="${item.key()=='products'}"><th:block th:replace="~{fragments/menu-san-pham :: menu}"></th:block></th:block><th:block th:if="${item.key()=='inventory' and !adminFullAccess}"><a th:replace="~{fragments/menu-san-pham :: link(${item.route()},${item.key()},${item.title()})}"></a></th:block><th:block th:unless="${#lists.contains({'products','variants','categories','sizes','soles','materials','colors','inventory'},item.key())}"><p th:if="${!#strings.isEmpty(item.group())}" class="admin-nav-group" th:text="${item.group()}"></p><a th:replace="~{fragments/menu-san-pham :: link(${item.route()},${item.key()},${item.title()})}"></a></th:block></th:block></nav>
+<nav class="admin-nav" id="admin-main-nav">
+
+  <!-- Dashboard: mục đơn, không nhóm (chỉ admin) -->
+  <a th:if="${canDashboard}" th:href="@{/admin/dashboard}" class="admin-nav-item" th:classappend="${adminActive=='dashboard' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='dashboard' ? 'page' : null}">
+    <span class="nav-dot" aria-hidden="true"></span>
+    <span>Dashboard</span>
+  </a>
+
+  <!-- Nhóm 1: BÁN HÀNG -->
+  <details th:if="${hasGroupBanHang}" class="admin-nav-accordion" data-nav-level="1" th:open="${isBanHangActive}">
+    <summary class="admin-nav-summary" th:classappend="${isBanHangActive ? ' has-active-child' : ''}" aria-controls="nav-group-banhang">
+      <span class="nav-summary-left">
+        <span class="admin-nav-arrow" aria-hidden="true">▸</span>
+        <span class="nav-group-title">BÁN HÀNG</span>
+      </span>
+    </summary>
+    <div class="admin-nav-body" id="nav-group-banhang">
+      <a th:if="${canPos}" th:href="@{/admin/pos}" class="admin-nav-link" th:classappend="${adminActive=='pos' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='pos' ? 'page' : null}">
+        <span class="nav-dot" aria-hidden="true"></span>
+        <span>Bán hàng tại quầy</span>
+      </a>
+      <a th:if="${canInvoices}" th:href="@{/admin/invoices}" class="admin-nav-link" th:classappend="${adminActive=='invoices' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='invoices' ? 'page' : null}">
+        <span class="nav-dot" aria-hidden="true"></span>
+        <span>Quản lý hóa đơn</span>
+      </a>
+    </div>
+  </details>
+
+  <!-- Nhóm 2: QUẢN LÝ SẢN PHẨM -->
+  <details th:if="${hasGroupSanPham}" class="admin-nav-accordion" data-nav-level="1" th:open="${isSanPhamActive}">
+    <summary class="admin-nav-summary" th:classappend="${isSanPhamActive ? ' has-active-child' : ''}" aria-controls="nav-group-sanpham">
+      <span class="nav-summary-left">
+        <span class="admin-nav-arrow" aria-hidden="true">▸</span>
+        <span class="nav-group-title">QUẢN LÝ SẢN PHẨM</span>
+      </span>
+    </summary>
+    <div class="admin-nav-body" id="nav-group-sanpham">
+      <!-- Cấp 2: Sản phẩm -->
+      <details class="admin-nav-sub-accordion" data-nav-level="2" th:open="${isSubSanPhamActive}">
+        <summary class="admin-nav-sub-summary" th:classappend="${isSubSanPhamActive ? ' has-active-child' : ''}" aria-controls="nav-sub-sanpham">
+          <span class="nav-summary-left">
+            <span class="admin-nav-arrow" aria-hidden="true">▸</span>
+            <span class="nav-sub-title">Sản phẩm</span>
+          </span>
+        </summary>
+        <div class="admin-nav-sub-body" id="nav-sub-sanpham">
+          <a th:if="${canProducts}" th:href="@{/admin/products-crud}" class="admin-nav-link" th:classappend="${adminActive=='products' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='products' ? 'page' : null}">
+            <span class="nav-dot" aria-hidden="true"></span>
+            <span>Chi tiết sản phẩm</span>
+          </a>
+          <a th:if="${canCategories}" th:href="@{/admin/categories}" class="admin-nav-link" th:classappend="${adminActive=='categories' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='categories' ? 'page' : null}">
+            <span class="nav-dot" aria-hidden="true"></span>
+            <span>Thương hiệu</span>
+          </a>
+        </div>
+      </details>
+
+      <!-- Cấp 2: Biến thể -->
+      <details class="admin-nav-sub-accordion" data-nav-level="2" th:open="${isSubBienTheActive}">
+        <summary class="admin-nav-sub-summary" th:classappend="${isSubBienTheActive ? ' has-active-child' : ''}" aria-controls="nav-sub-bienthe">
+          <span class="nav-summary-left">
+            <span class="admin-nav-arrow" aria-hidden="true">▸</span>
+            <span class="nav-sub-title">Biến thể</span>
+          </span>
+        </summary>
+        <div class="admin-nav-sub-body" id="nav-sub-bienthe">
+          <a th:if="${canVariants}" th:href="@{/admin/variants}" class="admin-nav-link" th:classappend="${adminActive=='variants' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='variants' ? 'page' : null}">
+            <span class="nav-dot" aria-hidden="true"></span>
+            <span>Danh sách biến thể</span>
+          </a>
+          <a th:if="${canSizes}" th:href="@{/admin/sizes}" class="admin-nav-link" th:classappend="${adminActive=='sizes' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='sizes' ? 'page' : null}">
+            <span class="nav-dot" aria-hidden="true"></span>
+            <span>Kích cỡ</span>
+          </a>
+          <a th:if="${canSoles}" th:href="@{/admin/soles}" class="admin-nav-link" th:classappend="${adminActive=='soles' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='soles' ? 'page' : null}">
+            <span class="nav-dot" aria-hidden="true"></span>
+            <span>Đế giày</span>
+          </a>
+          <a th:if="${canMaterials}" th:href="@{/admin/materials}" class="admin-nav-link" th:classappend="${adminActive=='materials' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='materials' ? 'page' : null}">
+            <span class="nav-dot" aria-hidden="true"></span>
+            <span>Chất liệu</span>
+          </a>
+          <a th:if="${canColors}" th:href="@{/admin/colors}" class="admin-nav-link" th:classappend="${adminActive=='colors' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='colors' ? 'page' : null}">
+            <span class="nav-dot" aria-hidden="true"></span>
+            <span>Màu sắc</span>
+          </a>
+        </div>
+      </details>
+    </div>
+  </details>
+
+  <!-- Nhóm 3: TÀI KHOẢN -->
+  <details th:if="${hasGroupTaiKhoan}" class="admin-nav-accordion" data-nav-level="1" th:open="${isTaiKhoanActive}">
+    <summary class="admin-nav-summary" th:classappend="${isTaiKhoanActive ? ' has-active-child' : ''}" aria-controls="nav-group-taikhoan">
+      <span class="nav-summary-left">
+        <span class="admin-nav-arrow" aria-hidden="true">▸</span>
+        <span class="nav-group-title">TÀI KHOẢN</span>
+      </span>
+    </summary>
+    <div class="admin-nav-body" id="nav-group-taikhoan">
+      <a th:if="${canCustomers}" th:href="@{/admin/customers}" class="admin-nav-link" th:classappend="${adminActive=='customers' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='customers' ? 'page' : null}">
+        <span class="nav-dot" aria-hidden="true"></span>
+        <span>Khách hàng</span>
+      </a>
+      <a th:if="${canEmployees}" th:href="@{/admin/employees}" class="admin-nav-link" th:classappend="${adminActive=='employees' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='employees' ? 'page' : null}">
+        <span class="nav-dot" aria-hidden="true"></span>
+        <span>Nhân viên</span>
+      </a>
+    </div>
+  </details>
+
+  <!-- Nhóm 4: KHUYẾN MÃI -->
+  <details th:if="${hasGroupKhuyenMai}" class="admin-nav-accordion" data-nav-level="1" th:open="${isKhuyenMaiActive}">
+    <summary class="admin-nav-summary" th:classappend="${isKhuyenMaiActive ? ' has-active-child' : ''}" aria-controls="nav-group-khuyenmai">
+      <span class="nav-summary-left">
+        <span class="admin-nav-arrow" aria-hidden="true">▸</span>
+        <span class="nav-group-title">KHUYẾN MÃI</span>
+      </span>
+    </summary>
+    <div class="admin-nav-body" id="nav-group-khuyenmai">
+      <a th:if="${canVouchers}" th:href="@{/admin/vouchers}" class="admin-nav-link" th:classappend="${adminActive=='vouchers' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='vouchers' ? 'page' : null}">
+        <span class="nav-dot" aria-hidden="true"></span>
+        <span>Phiếu giảm giá</span>
+      </a>
+      <a th:if="${canPromotions}" th:href="@{/admin/promotions}" class="admin-nav-link" th:classappend="${adminActive=='promotions' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='promotions' ? 'page' : null}">
+        <span class="nav-dot" aria-hidden="true"></span>
+        <span>Đợt giảm giá</span>
+      </a>
+    </div>
+  </details>
+
+  <!-- Nhóm 5: HỖ TRỢ KHÁCH HÀNG -->
+  <details th:if="${hasGroupHoTro}" class="admin-nav-accordion" data-nav-level="1" th:open="${isHoTroActive}">
+    <summary class="admin-nav-summary" th:classappend="${isHoTroActive ? ' has-active-child' : ''}" aria-controls="nav-group-hotro">
+      <span class="nav-summary-left">
+        <span class="admin-nav-arrow" aria-hidden="true">▸</span>
+        <span class="nav-group-title">HỖ TRỢ KHÁCH HÀNG</span>
+      </span>
+      <span data-group-chat-badge class="badge bg-danger rounded-pill ms-auto" th:hidden="${chatUnreadCount==null or chatUnreadCount==0 or isHoTroActive}" th:text="${chatUnreadCount}" aria-label="Tin nhắn chưa đọc"></span>
+    </summary>
+    <div class="admin-nav-body" id="nav-group-hotro">
+      <a th:if="${canChat}" th:href="@{/admin/chat}" class="admin-nav-link" th:classappend="${adminActive=='chat' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='chat' ? 'page' : null}">
+        <span class="nav-dot" aria-hidden="true"></span>
+        <span>Chat với khách</span>
+        <span data-staff-chat-badge class="badge bg-danger rounded-pill ms-auto" th:hidden="${chatUnreadCount==null or chatUnreadCount==0}" th:text="${chatUnreadCount}" aria-label="Tin nhắn chưa đọc"></span>
+      </a>
+      <a th:if="${canReviews}" th:href="@{/admin/reviews}" class="admin-nav-link" th:classappend="${adminActive=='reviews' ? ' is-active' : ''}" th:attr="aria-current=${adminActive=='reviews' ? 'page' : null}">
+        <span class="nav-dot" aria-hidden="true"></span>
+        <span>Đánh giá</span>
+      </a>
+    </div>
+  </details>
+
+</nav>
 <div class="admin-sidebar-footer">
-    <a class="admin-sidebar-profile" th:href="@{/admin/account}" th:classappend="${adminActive=='account' ? ' is-active' : ''}">👤 Hồ sơ của tôi</a>
     <form class="admin-logout" th:action="@{/logout}" method="post"><button type="submit">↪ Đăng xuất</button></form>
 </div>
 </aside></body></html>

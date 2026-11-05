@@ -36,18 +36,22 @@ class EmployeeAccessIntegrationTest {
   }
  }
  @Test void matrixAndMenuUseSamePolicyAndInventoryIsReadOnly()throws Exception{
-  for(String path:List.of("/admin/pos","/admin/invoices","/admin/customers","/admin/customers/create","/admin/inventory","/admin/account"))mvc.perform(get(path).with(user(username).roles("EMPLOYEE"))).andExpect(status().isOk());
-  for(String path:List.of("/admin","/admin/dashboard","/admin/products-crud","/admin/variants","/admin/categories","/admin/sizes","/admin/soles","/admin/materials","/admin/colors","/admin/employees","/admin/vouchers","/admin/promotions")){
-   mvc.perform(get(path).with(user(username).roles("EMPLOYEE"))).andExpect(status().isForbidden());mvc.perform(get(path).with(user("admin").roles("ADMIN"))).andExpect(status().isOk());
+  for(String path:List.of("/admin/pos","/admin/invoices","/admin/customers","/admin/customers/create","/admin/account"))mvc.perform(get(path).with(user(username).roles("EMPLOYEE"))).andExpect(status().isOk());
+  for(String path:List.of("/admin","/admin/dashboard","/admin/products-crud","/admin/variants","/admin/categories","/admin/sizes","/admin/soles","/admin/materials","/admin/colors","/admin/employees","/admin/vouchers","/admin/promotions","/admin/inventory")){
+   mvc.perform(get(path).with(user(username).roles("EMPLOYEE"))).andExpect(status().isForbidden());
   }
+  for(String path:List.of("/admin","/admin/dashboard","/admin/products-crud","/admin/variants","/admin/categories","/admin/sizes","/admin/soles","/admin/materials","/admin/colors","/admin/employees","/admin/vouchers","/admin/promotions")){
+   mvc.perform(get(path).with(user("admin").roles("ADMIN"))).andExpect(status().isOk());
+  }
+  mvc.perform(get("/admin/inventory").with(user("admin").roles("ADMIN"))).andExpect(status().isFound()).andExpect(redirectedUrl("/admin/variants"));
   mvc.perform(get("/admin/shipping-config").with(user(username).roles("EMPLOYEE"))).andExpect(status().isForbidden());
   mvc.perform(get("/admin/shipping-config").with(user("admin").roles("ADMIN"))).andExpect(status().isFound()).andExpect(redirectedUrl("/admin/dashboard"));
   mvc.perform(get("/admin/statistics").with(user(username).roles("EMPLOYEE"))).andExpect(status().isForbidden());mvc.perform(get("/admin/statistics").with(user("admin").roles("ADMIN"))).andExpect(status().isFound()).andExpect(redirectedUrl("/admin/dashboard"));
-  var html=mvc.perform(get("/admin/inventory").with(user(username).roles("EMPLOYEE"))).andReturn().getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8);
-  assertFalse(html.contains("/admin/inventory/adjust/"));String nav=html.substring(html.indexOf("<nav class=\"admin-nav\""));nav=nav.substring(0,nav.indexOf("</nav>"));
-  for(String denied:List.of("/admin/products-crud","/admin/employees","/admin/statistics","/admin/dashboard","HỆ THỐNG"))assertFalse(nav.contains(denied),denied);
-  assertTrue(nav.contains("/admin/inventory")&&nav.contains("/admin/chat")&&nav.contains("/admin/pos"));
-  assertFalse(nav.contains("/admin/account"));String footer=html.substring(html.indexOf("class=\"admin-sidebar-footer\""));assertTrue(footer.contains("/admin/account")&&footer.contains("/logout"));
+  var html=mvc.perform(get("/admin/pos").with(user(username).roles("EMPLOYEE"))).andReturn().getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8);
+  assertFalse(html.contains("/admin/inventory"));String nav=html.substring(html.indexOf("<nav class=\"admin-nav\""));nav=nav.substring(0,nav.indexOf("</nav>"));
+  for(String denied:List.of("/admin/products-crud","/admin/employees","/admin/statistics","/admin/dashboard","HỆ THỐNG","/admin/inventory"))assertFalse(nav.contains(denied),denied);
+  assertTrue(nav.contains("/admin/chat")&&nav.contains("/admin/pos"));
+  assertFalse(nav.contains("/admin/account"));String footer=html.substring(html.indexOf("class=\"admin-sidebar-footer\""));assertFalse(footer.contains("/admin/account"));assertTrue(footer.contains("/logout"));
   mvc.perform(post("/admin/accounts/username-suggestion").with(user(username).roles("EMPLOYEE")).with(csrf()).param("email","g12-suggestion@example.test")).andExpect(status().isOk()).andExpect(jsonPath("$.username").value("g12-suggestion"));
   System.out.println("GD12 MATRIX employee allowed=6 routes HTTP200; denied=14 HTTP403; Admin same routes HTTP200; inventory adjustment hidden");
  }

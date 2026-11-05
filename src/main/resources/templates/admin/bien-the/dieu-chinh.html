@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-quan-tri :: layout(~{::section})}"><body><section class="catalog-page">
+<div class="admin-heading"><div><h1>Điều chỉnh tồn kho biến thể</h1><p th:text="${item.product.name} + ' · ' + ${item.code}"></p></div></div>
+<div class="admin-panel mb-3">
+    <div class="d-flex flex-wrap gap-4">
+        <p class="mb-0">Kích cỡ: <strong th:text="${item.size.sizeValue}"></strong></p>
+        <p class="mb-0">Màu sắc: <strong th:text="${item.color.name}"></strong></p>
+        <p class="mb-0">Chất liệu: <strong th:text="${item.material.name}"></strong></p>
+        <p class="mb-0">Đế giày: <strong th:text="${item.sole.name}"></strong></p>
+        <p class="mb-0">Tồn kho hiện tại: <strong class="stock-count" th:text="${item.quantity}"></strong></p>
+    </div>
+</div>
+<form class="admin-panel catalog-form catalog-form-narrow" th:action="@{/admin/variants/adjust}" th:object="${adjustment}" method="post" novalidate data-admin-form>
+<input type="hidden" th:field="*{variantId}">
+<input type="hidden" th:field="*{expectedQuantity}">
+<p class="form-message" role="alert" hidden></p>
+<div class="catalog-field">
+    <label for="mode">Cách điều chỉnh *</label>
+    <select class="form-select" th:field="*{mode}" id="mode" required aria-describedby="mode-error">
+        <option value="ADD">Nhập thêm vào kho</option>
+        <option value="SET">Chỉnh tồn kho thực tế</option>
+    </select>
+    <p class="field-error" id="mode-error"><span th:if="${#fields.hasErrors('mode')}" th:errors="*{mode}"></span></p>
+</div>
+<div class="catalog-field">
+    <label for="quantity">Số lượng *</label>
+    <input type="number" class="form-control" id="quantity" th:field="*{quantity}" required min="0" max="2147483647" step="1" aria-describedby="quantity-error quantity-help">
+    <p class="field-error" id="quantity-error"><span th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></span></p>
+    <p id="quantity-help" class="field-help">Nhập thêm: số lượng cộng vào kho (&gt; 0). Chỉnh thực tế: số lượng còn lại sau kiểm kê (≥ 0).</p>
+</div>
+<div class="catalog-field">
+    <label for="reason">Lý do *</label>
+    <textarea class="resize-none form-control" id="reason" th:field="*{reason}" required maxlength="500" rows="4" aria-describedby="reason-error"></textarea>
+    <p class="field-error" id="reason-error"><span th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></span></p>
+</div>
+<div class="catalog-form-actions">
+    <button class="btn btn-primary" type="submit">Lưu điều chỉnh</button>
+    <a class="btn btn-outline-secondary" th:href="@{/admin/variants}">Quay lại Danh sách biến thể</a>
+    <a class="btn btn-link" th:href="@{/admin/variants/adjust/{id}(id=${item.id})}">Tải lại tồn kho</a>
+</div>
+</form>
+</section></body></html>

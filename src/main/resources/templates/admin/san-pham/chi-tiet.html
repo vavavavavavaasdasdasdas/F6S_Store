@@ -12,6 +12,7 @@
 <div><label for="variant-filter-colorId">Màu sắc</label><select class="form-select" id="variant-filter-colorId" name="colorId"><option value="">Tất cả màu sắc</option><option th:each="c:${colors}" th:value="${c.id}" th:selected="${colorId==c.id}" th:text="${c.name}"></option></select></div>
 <div><label for="variant-filter-materialId">Chất liệu</label><select class="form-select" id="variant-filter-materialId" name="materialId"><option value="">Tất cả chất liệu</option><option th:each="c:${materials}" th:value="${c.id}" th:selected="${materialId==c.id}" th:text="${c.name}"></option></select></div>
 <div><label for="variant-filter-soleId">Đế giày</label><select class="form-select" id="variant-filter-soleId" name="soleId"><option value="">Tất cả đế giày</option><option th:each="c:${soles}" th:value="${c.id}" th:selected="${soleId==c.id}" th:text="${c.name}"></option></select></div>
+<div><label for="variant-filter-stock">Tình trạng tồn</label><select class="form-select" id="variant-filter-stock" name="stock"><option value="all" th:selected="${stock=='all'}">Tất cả tình trạng</option><option value="in" th:selected="${stock=='in'}" th:text="'Còn hàng (> '+${threshold}+')'"></option><option value="low" th:selected="${stock=='low'}" th:text="'Sắp hết: 1–'+${threshold}"></option><option value="out" th:selected="${stock=='out'}">Hết hàng: 0</option></select></div>
 <div><label for="variant-filter-status">Trạng thái</label><select class="form-select" id="variant-filter-status" name="variantStatus"><option value="">Tất cả trạng thái</option><option value="true" th:selected="${variantStatus==true}">Đang bán</option><option value="false" th:selected="${variantStatus==false}">Ngừng bán</option></select></div>
 <div class="filter-actions"><button class="btn btn-outline-primary" type="submit">Lọc</button><a class="btn btn-outline-secondary" th:href="@{/admin/products-crud/view/{id}(id=${product.id})}">Xóa lọc</a></div>
 </form>
@@ -22,4 +23,69 @@
 <form data-batch-variants method="post" th:action="@{/admin/products-crud/{id}/variants/batch(id=${product.id})}" novalidate>
 <div class="catalog-field"><label for="batch-colorId">Màu sắc</label><select class="form-select" id="batch-colorId" name="colorId" required data-creatable="true" data-create-input="#batch-newColorName" data-maxlength="100"><option value="">Chọn màu sắc</option><option th:each="c:${colors}" th:if="${c.status==true}" th:value="${c.id}" th:text="${c.name}"></option></select><input type="hidden" id="batch-newColorName" name="newColorName"><p class="field-error" data-field-error="colorId" aria-live="polite"></p></div><div class="catalog-field"><label for="batch-materialId">Chất liệu</label><select class="form-select" id="batch-materialId" name="materialId" required data-creatable="true" data-create-input="#batch-newMaterialName" data-maxlength="100"><option value="">Chọn chất liệu</option><option th:each="c:${materials}" th:if="${c.status==true}" th:value="${c.id}" th:text="${c.name}"></option></select><input type="hidden" id="batch-newMaterialName" name="newMaterialName"><p class="field-error" data-field-error="materialId" aria-live="polite"></p></div><div class="catalog-field"><label for="batch-soleId">Đế giày</label><select class="form-select" id="batch-soleId" name="soleId" required data-creatable="true" data-create-input="#batch-newSoleName" data-maxlength="100"><option value="">Chọn đế giày</option><option th:each="c:${soles}" th:if="${c.status==true}" th:value="${c.id}" th:text="${c.name}"></option></select><input type="hidden" id="batch-newSoleName" name="newSoleName"><p class="field-error" data-field-error="soleId" aria-live="polite"></p></div><fieldset class="catalog-field"><legend>Kích cỡ</legend><div class="d-flex flex-wrap gap-3"><label class="form-check" th:each="size:${sizes}"><input class="form-check-input" type="checkbox" name="sizeIds" th:value="${size.id}"><span th:text="${size.sizeValue}"></span></label></div><p class="field-error" data-field-error="sizeIds" aria-live="polite"></p></fieldset>
 <div class="catalog-field"><label for="batch-price">Giá (đồng)</label><input class="form-control" id="batch-price" type="number" name="price" required min="1" step="1"><p class="field-error" data-field-error="price" aria-live="polite"></p></div><div class="catalog-field"><label for="batch-quantity">Tồn kho đầu mỗi kích cỡ</label><input class="form-control" id="batch-quantity" type="number" name="quantity" required min="0" step="1" value="0"><p class="field-error" data-field-error="quantity" aria-live="polite"></p></div><p data-batch-error class="field-error" role="alert"></p><div class="catalog-form-actions"><button type="submit" class="btn btn-primary" data-add-icon>Thêm các biến thể</button><button type="button" class="btn btn-outline-secondary" data-batch-close>Hủy</button></div></form></dialog>
+
+<!-- Modal Dialog Điều chỉnh tồn kho -->
+<dialog id="variant-adjust-dialog" class="catalog-dialog" aria-labelledby="variant-adjust-title" style="max-width: 520px; width: 90%;">
+    <h2 id="variant-adjust-title">Điều chỉnh tồn kho biến thể</h2>
+    <p class="text-muted small mb-2" data-adjust-info></p>
+    <p class="mb-3">Tồn kho hiện tại: <strong data-adjust-current class="text-primary">0</strong></p>
+    <form method="post" th:action="@{/admin/variants/adjust}" novalidate>
+        <input type="hidden" name="variantId" value="">
+        <input type="hidden" name="expectedQuantity" value="">
+        <div class="mb-3">
+            <label for="dialog-adjust-mode-view" class="form-label">Cách điều chỉnh *</label>
+            <select class="form-select" id="dialog-adjust-mode-view" name="mode" required>
+                <option value="ADD">Nhập thêm vào kho</option>
+                <option value="SET">Chỉnh tồn kho thực tế</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="dialog-adjust-quantity-view" class="form-label">Số lượng *</label>
+            <input type="number" class="form-control" id="dialog-adjust-quantity-view" name="quantity" required min="0" max="2147483647" step="1">
+            <div class="form-text">Nhập thêm: số lượng &gt; 0; Chỉnh thực tế: số lượng ≥ 0.</div>
+        </div>
+        <div class="mb-3">
+            <label for="dialog-adjust-reason-view" class="form-label">Lý do điều chỉnh *</label>
+            <textarea class="form-control" id="dialog-adjust-reason-view" name="reason" required maxlength="500" rows="3" placeholder="Nhập lý do kiểm kê, điều chỉnh kho..."></textarea>
+        </div>
+        <div data-adjust-error class="alert alert-danger py-2 small" hidden></div>
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <button type="button" class="btn btn-outline-secondary" data-dialog-close>Hủy</button>
+            <button type="submit" class="btn btn-primary">Lưu điều chỉnh</button>
+        </div>
+    </form>
+</dialog>
+
+<!-- Modal Dialog Lịch sử kho -->
+<dialog id="variant-history-dialog" class="catalog-dialog" aria-labelledby="variant-history-title" style="max-width: 800px; width: 95%;">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 id="variant-history-title" class="mb-1">Lịch sử kho biến thể</h2>
+            <p class="text-muted small mb-0" data-history-title></p>
+        </div>
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-dialog-close>Đóng</button>
+    </div>
+    <div class="table-wrap" style="max-height: 400px; overflow-y: auto;">
+        <table class="admin-table catalog-table data-table w-100">
+            <thead>
+                <tr>
+                    <th scope="col" class="row-number">STT</th>
+                    <th>Thời gian</th>
+                    <th>Trước</th>
+                    <th>Thay đổi</th>
+                    <th>Sau</th>
+                    <th>Lý do</th>
+                    <th>Người thực hiện</th>
+                </tr>
+            </thead>
+            <tbody data-history-tbody>
+                <tr><td colspan="7" class="text-center py-3">Đang tải...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
+        <button type="button" class="btn btn-outline-secondary" data-dialog-close>Đóng</button>
+    </div>
+</dialog>
+
 </article><script src="/js/sua-bien-the-san-pham.js" defer></script></section></body></html>

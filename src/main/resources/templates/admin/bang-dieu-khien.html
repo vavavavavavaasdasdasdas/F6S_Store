@@ -240,7 +240,7 @@
 
 <!-- Khối (9): Sản phẩm sắp hết hàng -->
 <article class="admin-panel dashboard-block mb-4" id="block-low-stock" data-dashboard-block="low-stock">
-<div class="panel-heading"><div><h2>Sản phẩm sắp hết hàng</h2><p>Biến thể đang bán có tồn kho ≤ <span th:text="${dashboard.threshold}"></span> và có biến động kho trong kỳ lọc <span class="text-muted small">(không áp dụng bộ lọc Kênh)</span></p></div><a class="panel-link" th:href="@{/admin/inventory}">Xem tồn kho →</a></div>
+<div class="panel-heading"><div><h2>Sản phẩm sắp hết hàng</h2><p>Biến thể đang bán có tồn kho ≤ <span th:text="${dashboard.threshold}"></span> và có biến động kho trong kỳ lọc <span class="text-muted small">(không áp dụng bộ lọc Kênh)</span></p></div><a class="panel-link" th:href="@{/admin/variants(stock='low')}">Xem tồn kho →</a></div>
 <div class="table-wrap" role="region" aria-label="Bảng sản phẩm sắp hết hàng, cuộn ngang để xem đủ cột" tabindex="0">
 <table data-table-key="admin-bang-dieu-khien-low-stock" class="admin-table data-table" id="lowStockTable">
 <thead><tr><th scope="col" class="row-number">STT</th><th scope="col">Mã SP</th><th scope="col">Tên sản phẩm</th><th scope="col">Mã biến thể</th><th scope="col">Kích cỡ</th><th scope="col">Chất liệu</th><th scope="col">Màu sắc</th><th scope="col">Đế giày</th><th scope="col">Tồn kho</th><th scope="col">Hành động</th></tr></thead>
@@ -255,7 +255,7 @@
 <td th:text="${row.color_name}"></td>
 <td th:text="${row.sole_name}"></td>
 <td><span class="stock-count" th:text="${row.quantity}"></span></td>
-<td class="table-actions"><a class="btn btn-outline-secondary" th:href="@{/admin/inventory(variantId=${row.id})}">Kiểm tra tồn kho</a></td>
+<td class="table-actions"><a class="btn btn-outline-secondary" th:href="@{/admin/variants(variantId=${row.id},keyword=${row.variant_code})}">Kiểm tra tồn kho</a></td>
 </tr>
 <tr th:if="${#lists.isEmpty(dashboard.lowStock)}"><td colspan="10" class="chart-empty">Không có sản phẩm dưới ngưỡng cảnh báo có biến động kho trong kỳ lọc.</td></tr>
 </tbody>

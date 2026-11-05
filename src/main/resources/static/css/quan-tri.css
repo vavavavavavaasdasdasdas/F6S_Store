@@ -430,3 +430,157 @@ html { scrollbar-color:var(--admin-scroll-thumb) var(--admin-scroll-track); scro
 
 /* Sidebar dài: chỉ menu cuộn, hồ sơ/đăng xuất luôn trong viewport. */
 .admin-sidebar{display:flex;flex-direction:column;overflow:hidden}.admin-brand,.admin-sidebar-footer{flex-shrink:0}.admin-nav{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}.admin-sidebar-footer{margin-top:12px}
+
+
+/* ==========================================================================
+   GIAI ĐOẠN 30: Accordion Sidebar & Inventory Adjust / History
+   ========================================================================== */
+.admin-nav-item, .admin-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
+  padding: 6px 12px;
+  border-radius: var(--bs-border-radius, 6px);
+  color: #535c67;
+  font-weight: 500;
+  font-size: 13.5px;
+  margin: 1px 0;
+  text-decoration: none;
+  transition: background 150ms ease, color 150ms ease;
+}
+.admin-nav-item:hover, .admin-nav-link:hover {
+  background: #f5f6f8;
+  color: #20262e;
+}
+.admin-nav-item.is-active, .admin-nav-link.is-active {
+  background: rgba(var(--bs-primary-rgb, 179,74,27), .10);
+  color: var(--bs-primary, #b34a1b);
+  font-weight: 700;
+}
+.admin-nav-accordion {
+  margin: 2px 0;
+}
+.admin-nav-summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: var(--bs-border-radius, 6px);
+  color: #434c56;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 150ms ease, color 150ms ease;
+}
+.admin-nav-summary::-webkit-details-marker {
+  display: none;
+}
+.admin-nav-summary:hover {
+  background: #f5f6f8;
+  color: #20262e;
+}
+.admin-nav-summary:focus-visible {
+  outline: 3px solid var(--bs-primary, #b34a1b);
+  outline-offset: 2px;
+}
+.admin-nav-summary.has-active-child {
+  background: rgba(var(--bs-primary-rgb, 179,74,27), .08);
+  color: var(--bs-primary, #b34a1b);
+  font-weight: 800;
+}
+.admin-nav-summary.has-active-child .nav-group-title {
+  color: var(--bs-primary, #b34a1b);
+}
+.admin-nav-arrow {
+  display: inline-block;
+  font-size: 10px;
+  color: #8c939d;
+  transition: transform 150ms ease;
+  margin-right: 6px;
+}
+details[open] > summary .admin-nav-arrow {
+  transform: rotate(90deg);
+}
+.admin-nav-body {
+  padding-left: 12px;
+  border-left: 1px solid #e7e9ec;
+  margin-left: 14px;
+  margin-top: 2px;
+  margin-bottom: 4px;
+}
+.admin-nav-sub-accordion {
+  margin: 2px 0;
+}
+.admin-nav-sub-summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 32px;
+  padding: 5px 8px;
+  border-radius: var(--bs-border-radius, 6px);
+  color: #535c67;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  transition: background 150ms ease, color 150ms ease;
+}
+.admin-nav-sub-summary::-webkit-details-marker {
+  display: none;
+}
+.admin-nav-sub-summary:hover {
+  background: #f5f6f8;
+  color: #20262e;
+}
+.admin-nav-sub-summary:focus-visible {
+  outline: 3px solid var(--bs-primary, #b34a1b);
+  outline-offset: 2px;
+}
+.admin-nav-sub-summary.has-active-child {
+  color: var(--bs-primary, #b34a1b);
+  font-weight: 700;
+}
+.admin-nav-sub-body {
+  padding-left: 10px;
+  border-left: 1px solid #dce0e4;
+  margin-left: 10px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.admin-logout button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid #dce0e4;
+  color: #535c67;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 150ms;
+}
+.admin-logout button:hover {
+  background: #fdf2ee;
+  color: var(--bs-primary, #b34a1b);
+  border-color: var(--bs-primary, #b34a1b);
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-nav-arrow,
+  .admin-nav-summary,
+  .admin-nav-sub-summary,
+  .admin-nav-link,
+  .admin-nav-item,
+  .admin-logout button {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -3,10 +3,80 @@
 <div class="admin-panel"><form class="catalog-filters mb-3" method="get" th:action="@{/admin/variants}" novalidate>
 <div><label for="keyword">Từ khóa</label><div class="search-control"><input class="form-control" type="search" id="keyword" name="keyword" th:value="${keyword}" placeholder="Mã, tên sản phẩm, size..." maxlength="100"><button type="button" class="search-clear" aria-label="Xóa tìm kiếm" data-clear-search>×</button></div></div>
 <div><label for="productId">Sản phẩm</label><select class="form-select" id="productId" name="productId"><option value="">Tất cả sản phẩm</option><option th:each="p:${products}" th:value="${p.id}" th:text="${p.code}+' · '+${p.name}" th:selected="${productId==p.id}"></option></select></div>
+<div><label for="categoryId">Thương hiệu</label><select class="form-select" id="categoryId" name="categoryId"><option value="">Tất cả thương hiệu</option><option th:each="c:${categories}" th:value="${c.id}" th:selected="${categoryId==c.id}" th:text="${c.name}"></option></select></div>
 <div><label for="sizeId">Kích cỡ</label><select class="form-select" id="sizeId" name="sizeId"><option value="">Tất cả kích cỡ</option><option th:each="s:${sizes}" th:value="${s.id}" th:selected="${sizeId==s.id}" th:text="${s.sizeValue}"></option></select></div>
-<div><label for="materialId">Chất liệu</label><select class="form-select" id="materialId" name="materialId"><option value="">Tất cả chất liệu</option><option th:each="m:${materials}" th:value="${m.id}" th:selected="${materialId==m.id}" th:text="${m.name}"></option></select></div><div><label for="filter-colorId">Màu sắc</label><select id="filter-colorId" class="form-select" name="colorId"><option value="">Tất cả màu sắc</option><option th:each="c:${colors}" th:value="${c.id}" th:selected="${colorId==c.id}" th:text="${c.name}"></option></select></div><div><label for="filter-soleId">Đế giày</label><select id="filter-soleId" class="form-select" name="soleId"><option value="">Tất cả đế giày</option><option th:each="c:${soles}" th:value="${c.id}" th:selected="${soleId==c.id}" th:text="${c.name}"></option></select></div>
+<div><label for="materialId">Chất liệu</label><select class="form-select" id="materialId" name="materialId"><option value="">Tất cả chất liệu</option><option th:each="m:${materials}" th:value="${m.id}" th:selected="${materialId==m.id}" th:text="${m.name}"></option></select></div>
+<div><label for="filter-colorId">Màu sắc</label><select id="filter-colorId" class="form-select" name="colorId"><option value="">Tất cả màu sắc</option><option th:each="c:${colors}" th:value="${c.id}" th:selected="${colorId==c.id}" th:text="${c.name}"></option></select></div>
+<div><label for="filter-soleId">Đế giày</label><select id="filter-soleId" class="form-select" name="soleId"><option value="">Tất cả đế giày</option><option th:each="c:${soles}" th:value="${c.id}" th:selected="${soleId==c.id}" th:text="${c.name}"></option></select></div>
+<div><label for="filter-stock">Tình trạng tồn</label><select class="form-select" id="filter-stock" name="stock"><option value="all" th:selected="${stock=='all'}">Tất cả tình trạng</option><option value="in" th:selected="${stock=='in'}" th:text="'Còn hàng (> '+${threshold}+')'"></option><option value="low" th:selected="${stock=='low'}" th:text="'Sắp hết: 1–'+${threshold}"></option><option value="out" th:selected="${stock=='out'}">Hết hàng: 0</option></select></div>
 <div><label for="variant-status">Trạng thái</label><select class="form-select" id="variant-status" name="status"><option value="">Tất cả trạng thái</option><option value="true" th:selected="${status==true}">Đang bán</option><option value="false" th:selected="${status==false}">Ngừng bán</option></select></div>
 <div class="filter-actions"><button class="btn btn-outline-primary" type="submit">Lọc</button><a class="btn btn-outline-secondary" th:href="@{/admin/variants}">Xóa lọc</a><span class="filter-status-badge" data-filter-count th:text="${activeFilterCount > 0 ? 'Đang lọc: ' + activeFilterCount + ' bộ lọc' : 'Chưa áp dụng bộ lọc'}"></span></div>
 </form>
-<div class="table-wrap" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bien-the-danh-sach-1" class="admin-table catalog-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th>Mã biến thể</th><th>Mã SP</th><th>Tên sản phẩm</th><th>Kích cỡ</th><th>Chất liệu</th><th>Màu sắc</th><th>Đế giày</th><th>Giá (₫)</th><th>Tồn kho</th><th>Trạng thái</th><th>Hành động</th></tr></thead><tbody><tr th:each="v, rowIndex :${variants}" th:classappend="${v.status == false} ? 'row-muted' : ''"><td class="row-number" th:text="${dataPage.number * dataPage.size + rowIndex.count}"></td><td th:text="${v.variant_code}"></td><td><span class="catalog-code" th:text="${v.code}"></span></td><td><span class="catalog-name" th:text="${v.name}"></span></td><td th:text="${v.size_value}"></td><td th:text="${v.material_name}"></td><td th:text="${v.color_name}"></td><td th:text="${v.sole_name}"></td><td th:text="${@money.format(v.price)}"></td><td th:text="${v.quantity}"></td><td th:text="${v.status == true ? 'Đang bán' : 'Ngừng bán'}"></td><td><div class="catalog-actions"><a th:href="@{/admin/variants/edit/{id}(id=${v.id})}">Sửa</a><a th:href="@{/admin/inventory/adjust/{id}(id=${v.id})}">Điều chỉnh tồn</a><div th:replace="~{fragments/trang-thai-ban :: variantSwitch(${v.id},${v.status},${v.name})}"></div></div></td></tr><tr th:if="${#lists.isEmpty(variants)}"><td colspan="11" class="catalog-empty">Chưa có biến thể. Chọn “Thêm biến thể” để tạo kích cỡ, giá và tồn kho.</td></tr></tbody></table></div>
-<a class="btn btn-outline-secondary mt-3" th:href="@{/admin/products-crud}">Quay lại Chi tiết sản phẩm</a></div><nav th:replace="~{fragments/phan-trang :: phan-trang(${dataPage},'page')}"></nav></section></body></html>
+<div class="table-wrap" role="region" aria-label="Bảng dữ liệu, cuộn ngang để xem đủ cột" tabindex="0"><table data-table-key="admin-bien-the-danh-sach-1" class="admin-table catalog-table data-table"><thead><tr><th scope="col" class="row-number">STT</th><th>Mã biến thể</th><th>Mã SP</th><th>Tên sản phẩm</th><th>Kích cỡ</th><th>Chất liệu</th><th>Màu sắc</th><th>Đế giày</th><th>Giá (₫)</th><th>Tồn kho</th><th>Trạng thái</th><th>Hành động</th></tr></thead><tbody><tr th:each="v, rowIndex :${variants}" th:classappend="${v.status == false} ? 'row-muted' : ''"><td class="row-number" th:text="${dataPage.number * dataPage.size + rowIndex.count}"></td><td th:text="${v.variant_code}"></td><td><span class="catalog-code" th:text="${v.code}"></span></td><td><span class="catalog-name" th:text="${v.name}"></span></td><td th:text="${v.size_value}"></td><td th:text="${v.material_name}"></td><td th:text="${v.color_name}"></td><td th:text="${v.sole_name}"></td><td th:text="${@money.format(v.price)}"></td><td><span class="stock-count" th:text="${v.quantity}"></span></td><td th:text="${v.status == true ? 'Đang bán' : 'Ngừng bán'}"></td><td><div class="catalog-actions d-flex align-items-center gap-1"><a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/variants/edit/{id}(id=${v.id})}">Sửa</a><button type="button" class="btn btn-sm btn-outline-primary" data-variant-adjust th:data-id="${v.id}" th:data-code="${v.variant_code}" th:data-name="${v.name}" th:data-size="${v.size_value}" th:data-color="${v.color_name}" th:data-qty="${v.quantity}" title="Điều chỉnh tồn kho" aria-label="Điều chỉnh tồn kho">📦</button><button type="button" class="btn btn-sm btn-outline-info" data-variant-history th:data-id="${v.id}" th:data-code="${v.variant_code}" th:data-name="${v.name}" title="Lịch sử kho" aria-label="Lịch sử kho">📜</button><div th:replace="~{fragments/trang-thai-ban :: variantSwitch(${v.id},${v.status},${v.name})}"></div></div></td></tr><tr th:if="${#lists.isEmpty(variants)}"><td colspan="12" class="catalog-empty">Chưa có biến thể. Chọn “Thêm biến thể” để tạo kích cỡ, giá và tồn kho.</td></tr></tbody></table></div>
+<a class="btn btn-outline-secondary mt-3" th:href="@{/admin/products-crud}">Quay lại Chi tiết sản phẩm</a></div><nav th:replace="~{fragments/phan-trang :: phan-trang(${dataPage},'page')}"></nav>
+
+<!-- Modal Dialog Điều chỉnh tồn kho -->
+<dialog id="variant-adjust-dialog" class="catalog-dialog" aria-labelledby="variant-adjust-title" style="max-width: 520px; width: 90%;">
+    <h2 id="variant-adjust-title">Điều chỉnh tồn kho biến thể</h2>
+    <p class="text-muted small mb-2" data-adjust-info></p>
+    <p class="mb-3">Tồn kho hiện tại: <strong data-adjust-current class="text-primary">0</strong></p>
+    <form method="post" th:action="@{/admin/variants/adjust}" novalidate>
+        <input type="hidden" name="variantId" value="">
+        <input type="hidden" name="expectedQuantity" value="">
+        <div class="mb-3">
+            <label for="dialog-adjust-mode" class="form-label">Cách điều chỉnh *</label>
+            <select class="form-select" id="dialog-adjust-mode" name="mode" required>
+                <option value="ADD">Nhập thêm vào kho</option>
+                <option value="SET">Chỉnh tồn kho thực tế</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="dialog-adjust-quantity" class="form-label">Số lượng *</label>
+            <input type="number" class="form-control" id="dialog-adjust-quantity" name="quantity" required min="0" max="2147483647" step="1">
+            <div class="form-text">Nhập thêm: số lượng &gt; 0; Chỉnh thực tế: số lượng ≥ 0.</div>
+        </div>
+        <div class="mb-3">
+            <label for="dialog-adjust-reason" class="form-label">Lý do điều chỉnh *</label>
+            <textarea class="form-control" id="dialog-adjust-reason" name="reason" required maxlength="500" rows="3" placeholder="Nhập lý do kiểm kê, điều chỉnh kho..."></textarea>
+        </div>
+        <div data-adjust-error class="alert alert-danger py-2 small" hidden></div>
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <button type="button" class="btn btn-outline-secondary" data-dialog-close>Hủy</button>
+            <button type="submit" class="btn btn-primary">Lưu điều chỉnh</button>
+        </div>
+    </form>
+</dialog>
+
+<!-- Modal Dialog Lịch sử kho -->
+<dialog id="variant-history-dialog" class="catalog-dialog" aria-labelledby="variant-history-title" style="max-width: 800px; width: 95%;">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 id="variant-history-title" class="mb-1">Lịch sử kho biến thể</h2>
+            <p class="text-muted small mb-0" data-history-title></p>
+        </div>
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-dialog-close>Đóng</button>
+    </div>
+    <div class="table-wrap" style="max-height: 400px; overflow-y: auto;">
+        <table class="admin-table catalog-table data-table w-100">
+            <thead>
+                <tr>
+                    <th scope="col" class="row-number">STT</th>
+                    <th>Thời gian</th>
+                    <th>Trước</th>
+                    <th>Thay đổi</th>
+                    <th>Sau</th>
+                    <th>Lý do</th>
+                    <th>Người thực hiện</th>
+                </tr>
+            </thead>
+            <tbody data-history-tbody>
+                <tr><td colspan="7" class="text-center py-3">Đang tải...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
+        <button type="button" class="btn btn-outline-secondary" data-dialog-close>Đóng</button>
+    </div>
+</dialog>
+
+</section></body></html>
