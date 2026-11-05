@@ -1,6 +1,0 @@
-<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><body>
-<nav th:fragment="paging(page,url)" class="catalog-pagination" aria-label="Phân trang">
-<span th:text="${page.totalElements}+' bản ghi · Trang '+${page.number+1}+'/'+${T(java.lang.Math).max(1,page.totalPages)}"></span><div>
-<a class="btn btn-outline-secondary btn-sm" th:if="${page.hasPrevious()}" th:href="@{__${url}__(page=${page.number-1},productId=${productId},stock=${stock},variantId=${historyVariant})}">Trang trước</a>
-<a class="btn btn-outline-secondary btn-sm" th:if="${page.hasNext()}" th:href="@{__${url}__(page=${page.number+1},productId=${productId},stock=${stock},variantId=${historyVariant})}">Trang sau</a>
-</div></nav></body></html>

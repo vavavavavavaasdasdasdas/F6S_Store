@@ -1,9 +1,0 @@
-{
-  "dashboard_7d": {"from":"2026-10-27","to":"2026-11-02","pagePeriodRevenue":1200000.00,"sqlPeriodRevenue":1200000.00,"pageCashRevenue":500000.00,"sqlCashRevenue":500000.00,"pageTransferRevenue":700000.00,"sqlTransferRevenue":700000.00,"pageOrders":2,"sqlOrders":2},
-  "dashboard_30d": {"from":"2026-10-04","to":"2026-11-02","pagePeriodRevenue":28230000.00,"sqlPeriodRevenue":28230000.00,"pageCashRevenue":17690000.00,"sqlCashRevenue":17690000.00,"pageTransferRevenue":10540000.00,"sqlTransferRevenue":10540000.00,"pageOrders":31,"sqlOrders":31},
-  "statistics_channel_ALL": {"pageRevenue":28230000.00,"sqlRevenue":28230000.00,"pageCash":17690000.00,"sqlCash":17690000.00,"pageTransfer":10540000.00,"sqlTransfer":10540000.00,"pageOrders":13},
-  "statistics_channel_ONLINE": {"pageRevenue":6050000.00,"sqlRevenue":6050000.00,"pageCash":5150000.00,"sqlCash":5150000.00,"pageTransfer":900000.00,"sqlTransfer":900000.00,"pageOrders":5},
-  "statistics_channel_POS": {"pageRevenue":22180000.00,"sqlRevenue":22180000.00,"pageCash":12540000.00,"sqlCash":12540000.00,"pageTransfer":9640000.00,"sqlTransfer":9640000.00,"pageOrders":8},
-  "statistics_brand_A": {"categoryId":152,"pageRevenue":500000.00,"pageCash":500000.00,"pageTransfer":0.00,"pageOrders":1},
-  "statistics_brand_B": {"categoryId":153,"pageRevenue":1600000.00,"pageCash":0.00,"pageTransfer":1600000.00,"pageOrders":2}
-}

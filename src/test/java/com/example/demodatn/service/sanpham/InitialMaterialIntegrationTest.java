@@ -39,8 +39,7 @@ class InitialMaterialIntegrationTest {
     @Autowired PlatformTransactionManager transactionManager;
     MockMvc mvc;
     @BeforeEach void setup() {
-        assertTrue((Set.of("shopbangiay_kt","shop_verify","shopbangiay_thu").contains(jdbc.queryForObject("SELECT DB_NAME()",String.class)) || jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_")));
-        mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
     AdminProductForm form() {
         var f=new AdminProductForm();f.setInitialColorId(phase5Colors.findAll().get(0).getId());f.setInitialSoleId(phase5Soles.findAll().get(0).getId());f.setCode("INIT-"+UUID.randomUUID());f.setName("Giày thử khởi tạo");

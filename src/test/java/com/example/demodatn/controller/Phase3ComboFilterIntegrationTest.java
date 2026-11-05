@@ -56,10 +56,7 @@ class Phase3ComboFilterIntegrationTest {
 
     @BeforeEach
     void setup() {
-        String dbName = jdbc.queryForObject("SELECT DB_NAME()", String.class);
-        assertTrue(Set.of("shopbangiay_kt", "shop_verify", "shopbangiay_thu").contains(dbName)
-                || (dbName != null && dbName.startsWith("shopbangiay_kt_")),
-                "Never run fixtures against the real DB");
+        com.example.demodatn.TestDatabaseGuard.check(jdbc);
         mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
 

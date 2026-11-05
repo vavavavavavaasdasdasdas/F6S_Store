@@ -25,8 +25,7 @@ class RouteErrorIntegrationTest {
     @Autowired JdbcTemplate jdbc;
 
     @Test void invalidPathIdentifiersRender404WhileInvalidQueryRemains400() throws Exception {
-        assertTrue((Set.of("shopbangiay_kt","shop_verify","shopbangiay_thu").contains(jdbc.queryForObject("SELECT DB_NAME()",String.class)) || jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_")));
-        MockMvc mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        com.example.demodatn.TestDatabaseGuard.check(jdbc);MockMvc mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
         for(String prefix:List.of("/products/","/category/","/orders/","/orders/success/",
                 "/admin/products-crud/view/","/admin/products-crud/edit/","/admin/variants/edit/",
                 "/admin/variants/adjust/","/admin/orders/","/admin/invoices/",

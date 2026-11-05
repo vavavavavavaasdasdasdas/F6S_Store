@@ -1,8 +1,0 @@
-select c1_0.id,c1_0.name,c1_0.status from categories c1_0
-select p1_0.id,p1_0.category_id,p1_0.code,p1_0.description,p1_0.image_url,p1_0.name,p1_0.status from products p1_0
-select pv1_0.id,pv1_0.chat_lieu_id,m1_0.id,m1_0.ten,m1_0.trang_thai,pv1_0.price,p2_0.id,c1_0.id,c1_0.name,c1_0.status,p2_0.code,p2_0.description,p2_0.image_url,p2_0.name,p2_0.status,pv1_0.quantity,s1_0.id,s1_0.size_value,pv1_0.status from product_variants pv1_0 left join products p1_0 on p1_0.id=pv1_0.product_id join chat_lieu m1_0 on m1_0.id=pv1_0.chat_lieu_id left join products p2_0 on p2_0.id=pv1_0.product_id left join categories c1_0 on c1_0.id=p2_0.category_id left join sizes s1_0 on s1_0.id=pv1_0.size_id where p1_0.id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) and pv1_0.status=1 and p1_0.status=1
-select pd1_0.id,p1_0.id,p1_0.category_id,p1_0.code,p1_0.description,p1_0.image_url,p1_0.name,p1_0.status,p2_0.id,p2_0.discount_type,p2_0.discount_value,p2_0.end_date,p2_0.name,p2_0.start_date,p2_0.status from promotion_details pd1_0 left join products p1_0 on p1_0.id=pd1_0.product_id left join promotions p2_0 on p2_0.id=pd1_0.promotion_id where pd1_0.product_id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-SELECT d.product_variant_id AS variantId,SUM(CAST(d.quantity AS bigint)) AS quantity FROM order_details d JOIN orders o ON o.id=d.order_id WHERE o.payment_status='PAID' AND o.status NOT IN ('CANCELLED','DELIVERY_FAILED') GROUP BY d.product_variant_id
-select c1_0.id,c1_0.name,c1_0.status from categories c1_0
-select s1_0.id,s1_0.size_value from sizes s1_0
-select m1_0.id,m1_0.ten,m1_0.trang_thai from chat_lieu m1_0 where m1_0.trang_thai=1 order by m1_0.ten,m1_0.id

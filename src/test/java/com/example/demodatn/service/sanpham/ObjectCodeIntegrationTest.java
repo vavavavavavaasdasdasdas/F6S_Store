@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ObjectCodeIntegrationTest {
     @Autowired JdbcTemplate jdbc;@Autowired PlatformTransactionManager transactions;
-    @BeforeEach void guard(){assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"));}
+    @BeforeEach void guard(){com.example.demodatn.TestDatabaseGuard.check(jdbc);}
     @Test void twentyConcurrentInsertsPerTypeNeverDuplicateAndRollbackDoesNotReuse() throws Exception {
         var pool=Executors.newFixedThreadPool(20);
         try {

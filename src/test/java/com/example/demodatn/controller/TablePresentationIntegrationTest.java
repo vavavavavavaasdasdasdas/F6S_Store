@@ -33,8 +33,7 @@ class TablePresentationIntegrationTest {
     @Autowired SizeRepository sizes;
 
     @Test void serialNumbersContinueAtThirteenAndFieldsRemainSeparate() throws Exception {
-        String database=jdbc.queryForObject("SELECT DB_NAME()",String.class);
-        assertTrue(database.equals("shop_verify")||database.startsWith("shopbangiay_kt_"));
+        com.example.demodatn.TestDatabaseGuard.check(jdbc);
         String marker="SG2-"+UUID.randomUUID();
         var material=new Material();material.setName(marker);material=materials.saveAndFlush(material);
         for(int i=0;i<14;i++) {

@@ -1,3 +1,0 @@
-select c1_0.id,c1_0.name,c1_0.status from categories c1_0
-select pv1_0.id,pv1_0.chat_lieu_id,m1_0.id,m1_0.ten,m1_0.trang_thai,pv1_0.price,p1_0.id,c1_0.id,c1_0.name,c1_0.status,p1_0.code,p1_0.description,p1_0.image_url,p1_0.name,p1_0.status,pv1_0.quantity,s1_0.id,s1_0.size_value,pv1_0.status from product_variants pv1_0 join chat_lieu m1_0 on m1_0.id=pv1_0.chat_lieu_id left join products p1_0 on p1_0.id=pv1_0.product_id left join categories c1_0 on c1_0.id=p1_0.category_id left join sizes s1_0 on s1_0.id=pv1_0.size_id where pv1_0.id=?
-select pd1_0.id,pd1_0.product_id,pd1_0.promotion_id from promotion_details pd1_0 where pd1_0.product_id=?

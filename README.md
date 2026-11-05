@@ -1,177 +1,118 @@
-# Cửa hàng giày
+# F6S Store - H? Th?ng Qu?n L? B?n Gi?y Th? Thao
 
-Ứng dụng Java 17, Spring Boot, Thymeleaf, Spring Security, JPA và SQL Server; gồm cửa hàng trực tuyến, quản trị, POS và thống kê.
+H? th?ng b?n h?ng ?a k?nh (t?i qu?y POS v? tr?c tuy?n Storefront) x?y d?ng tr?n n?n t?ng Spring Boot v? SQL Server.
 
-## Chuẩn bị
+---
 
-JDK 17, Maven Wrapper trong repository, SQL Server và tài khoản có quyền trên database đích. Trên Windows dùng PowerShell và `curl.exe`. Node/Playwright chỉ phục vụ kiểm thử trình duyệt.
+## 1. Y?u C?u M?i Tr??ng
+- **JDK**: Java 17 tr? l?n (khuy?n ngh? Eclipse Adoptium Temurin JDK 17).
+- **C? s? d? li?u**: Microsoft SQL Server 2019 / 2022.
+- **Node.js** (t?y ch?n, ch? khi ch?y ki?m th? Playwright E2E): Node.js 18+.
 
-Không chạy kiểm thử trên `shopbangiay`. Dùng `shop_verify`; diễn tập migration trên bản sao riêng. Sao lưu database và thư mục upload trước triển khai.
+---
 
-## Khởi tạo database thử mới
+## 2. C?u H?nh Database Duy Nh?t
+D? ?n s? d?ng **duy nh?t m?t database ch?nh th?c** c? t?n l?: `shopbangiay`.
 
-Tạo `shop_verify` bằng SSMS. Chạy `shopgiay.sql` với database đích đã chọn; script chứa schema hiện tại và chặn database ngoài danh sách cho phép. Không chạy trên database đã có bảng `users`. Script không seed khách, sản phẩm, đơn hàng mẫu; ứng dụng khởi tạo vai trò, quản trị viên và thương hiệu cơ bản khi chưa tồn tại.
+- C?u h?nh m?c ??nh trong `src/main/resources/application.properties` tr? t?i:
+  `jdbc:sqlserver://${DB_HOST:localhost}:${DB_PORT:1433};databaseName=shopbangiay;encrypt=true;trustServerCertificate=true`
+- ?? t?y ch?nh k?t n?i t?i m?y ph?t tri?n m? kh?ng ?nh h??ng m? ngu?n (file n?y ?? ???c `.gitignore`), sao ch?p file m?u:
+  ```bash
+  cp application-local.properties.example application-local.properties
+  ```
+- Ch?nh s?a `application-local.properties` v?i th?ng tin k?t n?i th?c t?:
+  ```properties
+  spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=shopbangiay;encrypt=true;trustServerCertificate=true
+  spring.datasource.username=sa
+  spring.datasource.password=123456789
+  ```
 
+---
+
+## 3. Kh?i T?o C? S? D? Li?u & Ch?y Migration
+> **L?u ? quan tr?ng**: Tr??c khi ch?y tr?n database ch?nh th?c, h?y th?c hi?n sao l?u (backup) database.
+
+### B??c 1: Kh?i t?o schema c? s? (cho database m?i)
+T?o database r?ng `shopbangiay` tr?n SQL Server, sau ?? ch?y script `shopgiay.sql`:
+```bash
+sqlcmd -S localhost,1433 -U sa -P 123456789 -C -I -b -d shopbangiay -i shopgiay.sql
+```
+
+### B??c 2: C?p nh?t c?c migration phi?n b?n m?i
+Ch?y script migration t?ng h?p `chay_tat_ca.sql`:
+```bash
+sqlcmd -S localhost,1433 -U sa -P 123456789 -C -I -b -d shopbangiay -i chay_tat_ca.sql
+```
+Script `chay_tat_ca.sql` ???c thi?t k? c? t?nh l?y k? (idempotent), c? th? ch?y nhi?u l?n m? kh?ng g?y l?i ho?c tr?ng l?p d? li?u.
+
+---
+
+## 4. Ch?y ?ng D?ng
+S? d?ng Maven Wrapper ?? kh?i ch?y ?ng d?ng Spring Boot:
+- **Windows**:
+  ```powershell
+  .\mvnw.cmd spring-boot:run
+  ```
+- **Linux/macOS**:
+  ```bash
+  ./mvnw spring-boot:run
+  ```
+?ng d?ng s? kh?i ??ng t?i: `http://localhost:8080`.
+
+---
+
+## 5. Ch?y Ki?m Th? (Unit & Integration Tests)
+D? ?n ???c trang b? **CH?T CH?N B?O V? (`TestDatabaseGuard`)**: To?n b? b? test s? **t? ??ng t? ch?i ch?y (fail ngay l?p t?c)** n?u ph?t hi?n URL k?t n?i tr? t?i database ch?nh th?c `shopbangiay`.
+
+?? ch?y ki?m th?, h?y c?u h?nh database t?m (v? d? `shopbangiay_kt_temp`):
 ```powershell
-sqlcmd -S 'localhost,1433' -E -C -I -b -d shop_verify -i shopgiay.sql
+.\mvnw.cmd test "-Dspring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=shopbangiay_kt_temp;encrypt=true;trustServerCertificate=true"
 ```
 
-Với database hiện có, làm theo [hướng dẫn triển khai](docs/HUONG_DAN_TRIEN_KHAI.md): kiểm kê trước, migration **004 → 005 → 006 → 007 → 008 → 009 → 010 → 011 → 012**, đối chiếu dữ liệu sau. **003 xóa dữ liệu nghiệp vụ**, không thuộc quy trình nâng cấp thông thường.
-
-## Cấu hình và chạy
-
-Xem `application-example.properties`. Cung cấp đủ URL, tài khoản và mật khẩu datasource qua biến môi trường hoặc cấu hình local; không có mật khẩu thật mặc định trong cấu hình nguồn. Không commit file cấu hình cục bộ.
-
-Nếu chạy nút Run trong IntelliJ: tạo `application-local.properties` từ file mẫu, điền kết nối `shop_verify` và mật khẩu SQL trên máy, chọn working directory là thư mục gốc dự án. Ứng dụng tự đọc file này; file đã được gitignore. Bạn cũng có thể đặt ba biến môi trường datasource trực tiếp trong Run Configuration. Cổng local là `http://localhost:8080`; lệnh kiểm thử bên dưới dùng 8081.
-
-**Chỉ chạy một phiên ở cổng 8080.** Nếu có `APPLICATION FAILED TO START` kèm `Port 8080 was already in use`, hãy dừng phiên dự án đang chạy (nút Stop trong IntelliJ hoặc phiên JAR trước), rồi Run lại. Kiểm tra tiến trình đang giữ cổng bằng `Get-NetTCPConnection -State Listen -LocalPort 8080 | Select-Object OwningProcess`; không tắt tất cả tiến trình Java vì có thể ảnh hưởng IntelliJ hoặc ứng dụng khác. Khi kiểm thử từ terminal xong, dừng phiên kiểm thử trước khi quay lại nút Run.
-
-```powershell
-$env:JAVA_HOME = 'DUONG_DAN_JDK_17'
-$env:SPRING_DATASOURCE_URL = 'jdbc:sqlserver://localhost:1433;databaseName=shop_verify;encrypt=false;trustServerCertificate=true'
-$env:SPRING_DATASOURCE_USERNAME = 'TAI_KHOAN_SQL_SERVER'
-$taskSecret = Read-Host 'Mật khẩu SQL Server' -AsSecureString
-$env:SPRING_DATASOURCE_PASSWORD = [System.Net.NetworkCredential]::new('', $taskSecret).Password
-$env:SPRING_PROFILES_ACTIVE = 'verify'
-$env:SPRING_JPA_HIBERNATE_DDL_AUTO = 'validate'
-.\mvnw.cmd clean test
-.\mvnw.cmd clean package
-java -jar target\DemoDATN-0.0.1-SNAPSHOT.jar --spring.profiles.active=verify --server.port=8081
+?? ch?y ki?m th? End-to-End v?i Playwright:
+```bash
+cd e2e
+npm install
+npm test
 ```
 
-Dùng `ddl-auto=validate` sau khi chạy đủ migration; ứng dụng báo rõ schema thiếu trước khi khởi động. Cổng thường là 8080; lệnh trên dùng 8081. Chờ log `Started DemoDatnApplication in ...` trước kiểm tra.
+---
 
-Tài khoản khởi tạo khi chưa có: `admin/admin123`. Đổi mật khẩu trước đưa lên môi trường thật. Khách hàng tự đăng ký tại `/register`; không có cam kết tài khoản mẫu `user/user123` trên database mới.
+## 6. C?u H?nh Email
+H? th?ng s? d?ng Spring Mail ?? g?i th? x?c nh?n ??i m?t kh?u, th?ng b?o h?a ??n v? tr?ng th?i giao h?ng.
+- Xem chi ti?t h??ng d?n t?i: [docs/CAU_HINH_EMAIL.md](docs/CAU_HINH_EMAIL.md).
 
-## Cấu trúc
+---
 
-```text
-src/main/java/com/example/demodatn/
-  DemoDatnApplication.java
-  config/ security/ controller/ service/ repository/
-  entity/ dto/ enums/ exception/ util/
-src/main/resources/
-  templates/     user, admin, auth, loi và fragments
-  static/        css, js, anh
-src/test/java/   kiểm thử theo lớp và nghiệp vụ
-database/        schema bổ sung, migrations, kiểm kê triển khai
-docs/            báo cáo và hướng dẫn
+## 7. T?i Kho?n Qu?n Tr? M?c ??nh
+- **Qu?n tr? vi?n (Admin)**: `admin` / `admin123` (to?n quy?n truy c?p Dashboard, POS, Qu?n l? h?a ??n, S?n ph?m, Khuy?n m?i, T?i kho?n, H? tr? kh?ch h?ng).
+- **Nh?n vi?n (Employee)**: ph?n quy?n theo ma tr?n chi ti?t t?i [docs/PHAN_QUYEN.md](docs/PHAN_QUYEN.md).
+
+---
+
+## 8. C?u Tr?c C?y Th? M?c D? ?n
 ```
-
-Xem [cấu trúc dự án](docs/CAU_TRUC_DU_AN.md) và [báo cáo chốt triển khai](docs/BAO_CAO_CHOT_TRIEN_KHAI.md) để biết kết quả thực chạy và giới hạn nghiệm thu. Giá trị enum trong database giữ nguyên; nhãn giao diện dùng tiếng Việt. Văn bản nghiệp vụ mới lưu NVARCHAR; dữ liệu đã mất dấu trước đó cần nhập lại từ nguồn đúng.
-
-Thư mục upload thật, `target/`, `verify/`, log và cấu hình bí mật cục bộ không đưa vào Git. Mật khẩu từng có trong lịch sử Git phải được thay mới; bỏ khỏi file hiện tại không xóa được lịch sử.
-
-Đế giày thuộc sản phẩm, tùy chọn và có thể lọc tại `/products` hoặc `/admin/products-crud`. Quản lý tại `/admin/soles`; migration `010_de_giay.sql` thêm bảng, khóa ngoại và tám giá trị mặc định. `chay_tat_ca.sql` đã gộp 004–012; chạy trên bản sao trước khi triển khai. Thương hiệu giữ nguyên bảng `categories`, lớp `Category` và các route cũ.
-
-
-## Quét căn cước và gửi tài khoản — Giai đoạn 4
-
-Chạy migration `011_can_cuoc_tai_khoan_email.sql` sau 010 trước khi khởi động; Hibernate mặc định `ddl-auto=validate`, không tự sửa schema. Script gộp hiện gồm 004–012. Xem lệnh triển khai và bằng chứng tại [báo cáo Giai đoạn 4](docs/GIAI_DOAN_4_QR_EMAIL.md).
-
-Form tạo/sửa khách hàng và nhân viên có nút **Quét QR căn cước**. Camera chỉ hoạt động trong HTTPS hoặc localhost; phải cấp quyền camera. Nếu không có camera hoặc từ chối quyền, chọn ảnh PNG/JPEG/WebP tối đa 10 MB. Thư viện jsQR được lưu trong `static/js/vendor`, đọc ảnh trên trình duyệt, không tải lên máy chủ và không lưu ảnh. Kiểm tra lại họ tên, CCCD, ngày sinh, giới tính, địa chỉ trước khi lưu; nhập tay SĐT và thư điện tử. Danh sách chỉ hiện bốn số cuối CCCD; Admin được xem đầy đủ tại chi tiết hồ sơ; hóa đơn không chứa CCCD.
-
-Cấu hình biến môi trường `MAIL_HOST`, `MAIL_PORT` (mặc định 587), `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM`, `PUBLIC_BASE_URL` (địa chỉ gốc công khai của website, không kèm `/login`). Mặc định xác thực SMTP và STARTTLS được bật, thời gian chờ kết nối 3 giây, đọc/ghi 5 giây. Không ghi mật khẩu mail vào file theo dõi bởi Git. `application-example.properties` dùng các biến này; nếu chưa cấu hình SMTP, tài khoản vẫn được lưu và trang báo **Chưa gửi được email**. Chỉ với máy chủ mail giả localhost mới đặt `MAIL_AUTH=false`, `MAIL_STARTTLS=false`.
-
-Admin tạo hồ sơ sẽ tạo tài khoản theo quyền hiện có: khách `ROLE_USER`, chức vụ Admin → `ROLE_ADMIN`, chức vụ Nhân viên → `ROLE_EMPLOYEE`. Tên đăng nhập được gợi ý từ email, kiểm tra không trùng, cho phép sửa. Mật khẩu tạm ngẫu nhiên 12 ký tự chỉ được gửi qua email sau khi commit, được lưu bằng BCrypt. Đăng nhập lần đầu bắt buộc đổi mật khẩu (ít nhất 8 ký tự, có chữ và số, tối đa 72 byte UTF-8) trước khi dùng trang khác; vẫn có thể đăng xuất. Hồ sơ cũ chưa có tài khoản dùng **Gửi lại tài khoản** để tạo.
-
-**Gửi lại tài khoản** cần xác nhận: hủy mật khẩu cũ, tạo mật khẩu tạm mới, tối đa 3 lần gửi lại/tài khoản/giờ. Tài khoản đang vô hiệu hóa vẫn bị khóa. Nếu SMTP lỗi, sửa cấu hình rồi gửi lại; không có mật khẩu tạm trong thông báo trang, URL hoặc log.
-
-Thử thủ công camera thật: mở HTTPS/localhost bằng thiết bị có camera → Admin tạo hồ sơ → Quét QR → Mở camera → cấp quyền → đưa căn cước vào khung → đối chiếu năm trường, nhập SĐT/email và sửa trước khi lưu. Thử hộp thư thật: cấu hình SMTP và `PUBLIC_BASE_URL` đúng → tạo hồ sơ bằng email bạn kiểm soát → kiểm tra thư và thư rác → đăng nhập bằng mật khẩu tạm → đổi mật khẩu → kiểm tra gửi lại làm mật khẩu cũ hết hiệu lực. Hai thử nghiệm này **NOT TESTED** trong báo cáo tự động; GreenMail chỉ nhận thư giả trên loopback.
-
-
-## Ngừng bán và mã sản phẩm tự sinh — bổ sung 012
-
-Danh sách và trang xem sản phẩm có **Ngừng bán / Bán lại**, từng biến thể có cùng thao tác. Hộp xác nhận nêu tác động; POST gửi trạng thái đích nên gửi lặp không đảo trạng thái lần nữa. Ngừng bán sản phẩm giữ nguyên trạng thái từng biến thể, số lượng và lịch sử; chỉ chặn bán mới ở User/POS. Giỏ và hóa đơn chờ có dòng ngừng bán sẽ cảnh báo, chặn thanh toán; Admin vẫn quản lý tồn và xem dữ liệu cũ. Nút Xóa giữ hành vi cũ và gợi ý dùng Ngừng bán khi sản phẩm có đơn.
-
-Mã của luồng tạo sản phẩm Admin được sinh trong transaction bằng SQL SEQUENCE `dbo.product_code_seq`: `SP006`, `SP007`… theo dữ liệu hiện có, tối thiểu ba chữ số; sau `SP999` là `SP1000`. Form tạo chỉ hiện **Tự động tạo khi lưu**, form sửa chỉ đọc; server bỏ qua mã gửi lên. Mã cũ không đổi; rollback có thể tạo khoảng trống số, không tái dùng số. Các fixture tạo trực tiếp entity vẫn tự đặt mã như trước; DataInitializer hiện không seed sản phẩm.
-
-Sau khi sao lưu và dừng ứng dụng, chạy migration **012_ma_san_pham_tu_sinh.sql** sau 011; `chay_tat_ca.sql` đã gộp 004–012, `shopgiay.sql` đã đồng bộ. Lệnh triển khai thủ công, SQL trước/sau và kết quả kiểm thử nằm trong [báo cáo bổ sung 012](docs/BO_SUNG_NGUNG_BAN_MA_TU_SINH.md). Không chạy lại bootstrap `shopgiay.sql` lên DB có dữ liệu.
-
-## Giai đoạn 5: Màu sắc và thuộc tính biến thể
-
-Biến thể được xác định bởi sản phẩm + kích cỡ + màu sắc + chất liệu + đế giày. Đế giày ở `products.de_giay_id` chỉ giữ gợi ý cũ; hiển thị và lọc lấy từ biến thể. Trang quản trị màu sắc: `/admin/colors`. Đơn mới chụp tên màu/đế; đơn cũ để trống hiển thị `—`.
-
-Trước khi chạy bản mã này cần migration `database/migrations/013_mau_sac_bien_the.sql` sau 012, hoặc bộ `chay_tat_ca.sql` đã cập nhật. Giữ `ddl-auto=validate`. Không tự chạy migration trên database thật; sao lưu và dùng lệnh trong [báo cáo Giai đoạn 5](docs/GIAI_DOAN_5_MAU_SAC_BIEN_THE.md). Báo cáo có SQL trước/sau, 160 test, Playwright hai viewport và hướng dẫn triển khai.
-
-## Giai đoạn 7: POS và QR chuyển khoản
-
-Chạy migration `014_tham_chieu_thanh_toan.sql` sau 013 trước khi khởi động. Cấu hình `SHOP_BANK_BIN` (6 số), `SHOP_BANK_ACCOUNT`, `SHOP_BANK_ACCOUNT_NAME`, `SHOP_BANK_NAME` qua môi trường; xem `application-example.properties`. Thiếu cấu hình thì hiện **Chưa cấu hình tài khoản nhận tiền**, không tạo QR. QR chỉ cung cấp thông tin chuyển tiền, không xác nhận thu tiền tự động. Nhân viên phải kiểm tra giao dịch và tích **Đã nhận đủ số tiền** trước khi thanh toán POS. Đơn trực tuyến chưa thanh toán hiện QR gồm phí giao hàng; QR ẩn sau khi đã trả tiền hoặc hủy.
-
-POS không nạp danh sách khách khi mở. Nhập ít nhất hai ký tự tên/SĐT để tìm, kết quả tối đa 12 dòng mỗi trang. Khách lẻ là mặc định. Thư viện QR cục bộ và giấy phép: [THU_VIEN_QR.md](docs/THU_VIEN_QR.md).
-
-Thử với ứng dụng ngân hàng thật (**NOT TESTED** trong kiểm thử tự động): cấu hình tài khoản do bạn kiểm soát, tạo đơn giá trị nhỏ, quét QR và đối chiếu ngân hàng, tài khoản, số tiền, nội dung trước khi chuyển. Chỉ xác nhận nhận tiền sau khi kiểm tra giao dịch thực tế. Không dùng thông tin ngân hàng giả trong bằng chứng tự động để chuyển tiền.
-
-## Giai đoạn 8: Theo dõi giao hàng
-
-Chạy `015_theo_doi_giao_hang.sql` sau014 trước khi khởi động; aggregate004–015 và rootshopgiay.sql đã đồng bộ. Giữ `ddl-auto=validate`. Chỉ chạy trên database thật sau khi sao lưu và dùng lệnh trong báo cáo; không dùng bootstrap để ghi đè dữ liệu.
-
-Tỉnh/Thành phố bắt buộc khi lưu địa chỉ hoặc checkout mới. Danh sách34 tên và tên cũ đã đối chiếu nguồn chính thức ngày30/10/2026 trong [NGUON_TINH_THANH_2026.md](docs/NGUON_TINH_THANH_2026.md). Địa chỉ cũ không khớp rõ để trống, Admin sửa tỉnh đơn trước khi giao cho vận chuyển. Địa chỉ chi tiết và tỉnh được chụp riêng vào đơn; sửa tạm checkout không đổi sổ.
-
-Admin sửa số ngày tại `/admin/shipping-times`: Bắc3–3, Trung/Nam5–7 ngày lịch mặc định. Dự kiến được lưu khi xác nhận, theo ngày đặt ở Asia/Ho_Chi_Minh; nếu đã muộn thì tính từ ngày xác nhận và ghi chú. Đổi cấu hình không đổi đơn đã lưu. Thanh tiến trình và lịch sử hiện ở chi tiết đơn online; đơn POS giữ luồng cũ. Hủy/giao thất bại cần lý do. Chủ đơn xem/in hóa đơn tại `/orders/{id}/hoa-don` từ nút Xem hóa đơn; tài khoản khác bị chặn.
-
-## Bổ sung: địa chỉ, phí vận chuyển và đơn online tại POS
-
-Sau migration 015, chạy **016_dia_chi_phi_ship_don_online.sql** trước khi khởi động (`ddl-auto=validate`). `chay_tat_ca.sql` và `shopgiay.sql` đã chứa 016. Sao lưu database trước khi nâng cấp; lệnh và bằng chứng nằm trong [báo cáo bổ sung](docs/BO_SUNG_DIA_CHI_PHI_SHIP_POS.md).
-
-Checkout, sổ địa chỉ và đơn giao hàng POS dùng chung bộ chọn tỉnh → phường/xã và số nhà/tên đường. Dữ liệu 34 tỉnh, 3.321 phường/xã lấy từ file tĩnh; không có bước quận/huyện theo danh mục hiện hành. Tọa độ ghim/GPS được ưu tiên, sau đó tâm phường đã cache. Bản đồ có thể bấm hoặc kéo ghim; Enter tại tâm bản đồ là phương án bàn phím. **Định vị cần HTTPS hoặc localhost**; từ chối quyền/lỗi dịch vụ vẫn chọn tay được.
-
-Admin chỉnh kho, nấc khoảng cách/phí, ngưỡng miễn phí tại `/admin/shipping-times`. Mặc định ≤30km:25.000đ; >30–50km:35.000đ; >50km hoặc thiếu tọa độ:55.000đ; tổng số lượng ≥2 miễn phí. Khoảng cách là đường chim bay, không phải quãng đường xe chạy. Thiếu tọa độ hiện phí tạm tính. Voucher chỉ giảm tiền hàng, server tính lại phí từ giỏ và địa chỉ, bỏ qua phí/khoảng cách POST lên.
-
-Theo quyết định chủ dự án, **chỉ đơn mới có `shipping_policy_version=1` loại ship khỏi doanh thu**; đơn lịch sử có NULL giữ số liệu trước đây. Điều kiện PAID và loại hủy/giao thất bại không đổi; bán chạy vẫn dùng chi tiết hàng. QR dùng tổng thanh toán gồm ship. Địa chỉ đầy đủ và tọa độ/nguồn/khoảng cách/phí được chụp vào đơn; thay cấu hình hoặc tên hành chính không sửa snapshot đơn cũ.
-
-Tại POS, chọn **Đơn giao hàng (online)**, nhập người nhận/SĐT, nguồn đơn, địa chỉ và COD hoặc chuyển khoản. SĐT có sẵn được dùng lại, SĐT mới chỉ tạo khách vãng lai, không tạo tài khoản. Đơn thuộc kênh ONLINE và dùng nguyên luồng trạng thái/kho hiện có. Với chuyển khoản, tạo đơn trước để có mã đơn thật, rồi dùng QR đúng tổng tiền ở chi tiết đơn; việc tạo QR không tự xác nhận đã nhận tiền. Nhân viên có nút sao chép nội dung xác nhận để tự gửi khách.
-
-Leaflet cục bộ, nguồn dữ liệu, giấy phép, giới hạn Nominatim và điểm kho: [NGUON_DIA_CHI_BAN_DO.md](docs/NGUON_DIA_CHI_BAN_DO.md). Biến môi trường xem `application-example.properties`: `SHOP_GEOCODING_ENABLED`, `SHOP_GEOCODER_URL`, `SHOP_GEOCODER_USER_AGENT`, `SHOP_MAP_TILE_URL`, timeout/cache/rate. Test tự động phải tắt geocoding hoặc trỏ stub localhost và mock tile. Không ghi bí mật SMTP/ngân hàng vào repo.
-
-
-Giai đoạn 13: /admin/pos chỉ bán tại quầy, /admin/ban-online tạo đơn giao hàng cho khách vãng lai hoặc khách đã lưu. Hai giỏ và hạn mức 5 hóa đơn chờ mỗi loại độc lập theo nhân viên. Tạo đơn online chuyển tới Hóa đơn để xử lý; QR chuyển khoản có số tiền và mã đơn sau khi tạo, không tự xác nhận thu tiền. Các URL quản trị đơn cũ chuyển hướng sang Hóa đơn. Chạy migration 020 sau 019; xem docs/GIAI_DOAN_13_HOA_DON_BAN_ONLINE.md.
-
-
-Giai đoạn 14: chạy migration 021 sau 020. Chỉ khách có đơn DELIVERED chứa sản phẩm được đánh giá; mỗi khách một đánh giá/sản phẩm, tối đa 5 lần gửi/sửa mỗi phút. Khách sửa/xóa của mình; Admin chỉ ẩn/hiện. Đánh giá ẩn không tính điểm. /favorites lưu sản phẩm yêu thích; sản phẩm ngừng bán vẫn hiện nhãn và không thêm giỏ. Dữ liệu wishlist tự dọn khi xóa sản phẩm/khách chưa giao dịch để giữ hành vi xóa trước đây. Xem docs/GIAI_DOAN_14_DANH_GIA_YEU_THICH.md.
-
-Giai đoạn 15: hoàn thiện Dashboard (/admin/dashboard) và gộp Thống kê thành một trang duy nhất (/admin/statistics). Mọi khối trên Dashboard tuân theo bộ lọc ngày; bổ sung doanh thu tiền mặt/chuyển khoản, top khách hàng, thống kê đánh giá, yêu thích và biến động tồn kho. Xem docs/GIAI_DOAN_15_DASHBOARD_THONG_KE.md.
-
-
-### Lỗi khởi động thiếu `sizes.trang_thai`
-
-Entity `Size` cần `trang_thai BIT NOT NULL`. Nếu log báo thiếu cột này, sao lưu database đang dùng rồi áp dụng riêng `database/migrations/022_kich_co_trang_thai.sql`. Script bổ sung cột với giá trị mặc định 1 cho dữ liệu cũ, chạy lại không đổi trạng thái đã lưu. `SchemaCheck` chỉ kiểm tra và báo lỗi; ứng dụng không tự đổi schema.
-
-Tạo một file vận hành riêng chứa hai dòng sau (đường dẫn tương đối tính từ thư mục gốc project):
-
-```sql
-EXEC sys.sp_set_session_context @key=N'shop.allow-production-migration', @value=1;
-:r database/migrations/022_kich_co_trang_thai.sql
+DemoDATN/
+??? .mvn/                               # C?u h?nh Maven Wrapper
+??? database/                           # Th? m?c database
+?   ??? data/                           # D? li?u ngu?n (JSON h?nh ch?nh)
+?   ??? migrations/                     # 26 file migration SQL l?y k?
+??? docs/                               # T?i li?u h??ng d?n ch?nh th?c
+?   ??? CAU_HINH_EMAIL.md               # H??ng d?n c?u h?nh d?ch v? email
+?   ??? PHAN_QUYEN.md                   # Ma tr?n ph?n quy?n Admin & Nh?n vi?n
+??? e2e/                                # B? ki?m th? t? ??ng Playwright E2E
+?   ??? package.json
+?   ??? README.md
+?   ??? e2e-suite.js
+??? src/
+?   ??? main/                           # M? ngu?n ch?nh (Java, Templates, Static Assets)
+?   ??? test/                           # B? ki?m th? t? ??ng k?m TestDatabaseGuard
+??? .gitattributes                      # C?u h?nh git line endings
+??? .gitignore                          # C?u h?nh lo?i b? file r?c & local
+??? application-local.properties.example# M?u c?u h?nh database local
+??? chay_tat_ca.sql                     # Script ch?y t?t c? migration
+??? mvnw & mvnw.cmd                     # Maven wrapper executable
+??? pom.xml                             # C?u h?nh dependencies Maven
+??? README.md                           # T?i li?u d? ?n
+??? shopgiay.sql                        # Script kh?i t?o schema c? s?
 ```
-
-Chạy bằng tài khoản có quyền sửa schema, thay các tham số thực tế:
-
-```powershell
-sqlcmd -S <SERVER> -E -d <TEN_DB_DANG_DUNG> -b -f 65001 -i <FILE_VAN_HANH.sql>
-```
-
-Cờ session chỉ cho phép DB sản xuất có tên chính xác trong guard; các tên DB khác vẫn bị từ chối. Sau đó khởi động lại với `spring.jpa.hibernate.ddl-auto=validate`. Lệnh trên là hướng dẫn thao tác thủ công, chưa được chạy trên database thật.
-
-
-## Hỗ trợ khách hàng thời gian thực (giai đoạn 28)
-
-Sau 026, sao lưu rồi áp dụng **027_chat_ho_tro_thoi_gian_thuc.sql**, khởi động với `ddl-auto=validate`. Script đã có trong `chay_tat_ca.sql` và `shopgiay.sql`; không tự chạy khi app khởi động. Lệnh vận hành và bằng chứng: [Giai đoạn 28](docs/GIAI_DOAN_28_CHAT_HO_TRO.md).
-
-Khách nhắn trực tiếp với cửa hàng; trợ lý RULES/LLM chỉ trả lời ý định mua hàng trước khi nhân viên nhận/trả lời. `CHATBOT_PROVIDER=RULES` hoạt động không cần AI bên ngoài. Giữ cấu hình LLM trước đây qua biến môi trường/local, không ghi khóa vào Git/log/trình duyệt. API nhân viên `/admin/support-chat` chỉ Admin/Nhân viên; UI nhận tin sẽ làm ở giai đoạn 29.
-
-`CHAT_UPLOAD_DIR` mặc định `uploads/support-chat`: phải là thư mục riêng **ngoài static và ngoài SHOP_UPLOAD_DIR**, cấp quyền ghi cho tiến trình app, không publish bằng web server; sao lưu cùng database. Chỉ controller có kiểm tra quyền phục vụ ảnh. `CHAT_RETENTION_HUMAN_DAYS=180` (tối thiểu 30) cho hội thoại đã có nhân viên/đang chờ; tự động thuần túy 30 ngày tính từ hoạt động cuối. Tác vụ dọn lúc 03:00 theo timezone máy chủ; cấu hình JVM Asia/Ho_Chi_Minh khi triển khai.
-
-Triển khai HTTPS, proxy phải chuyển WebSocket Upgrade của `/ws/support/**` và giữ cookie/session cùng nguồn. Khi nhiều instance cần sticky session và broker/presence dùng chung; bản này dùng broker bộ nhớ cho một instance. SockJS transport HTTP POST được miễn CSRF hẹp, **STOMP CONNECT vẫn bắt buộc token CSRF**, REST POST luôn bắt buộc. Cookie ẩn danh HttpOnly, SameSite=Lax, Secure trên HTTPS; hết phiên/giả cookie bị từ chối và có nút bắt đầu phiên mới. Không cấu hình reverse proxy phục vụ trực tiếp ảnh chat.
-
-Kiểm tra thủ công triển khai: mở hai trình duyệt khách/nhân viên, gửi/đọc, chặn `/ws/support/**` để xem polling 5 giây và bật lại để nối; test trên điện thoại thật/HTTPS là bước riêng. Thư viện SockJS/STOMP được lưu cục bộ, xem [nguồn và giấy phép](docs/THU_VIEN_CHAT_GD28.md).
-
-
-## Chat với khách — Giai đoạn 29
-
-Chạy **028_hop_thu_nhan_vien.sql sau 027**, đã gộp vào chay_tat_ca.sql/shopgiay.sql; xem [báo cáo và lệnh vận hành](docs/GIAI_DOAN_29_INBOX_NHAN_VIEN.md). Script mở rộng hội thoại, thêm audit/mail log và chuyển mỗi phiếu cũ thành hội thoại, không xóa bảng/dữ liệu; có output số phiếu và mapping, chạy lại không nhân đôi.
-
-Admin và Nhân viên dùng `/admin/chat`: nhận/trả về/đóng/mở lại, nhắn/gửi ảnh/thẻ, mẫu trả lời, thông tin khách. Menu cũ được thay bằng Chat với khách, Hồ sơ của tôi/Đăng xuất giữ ở chân. URL cũ 302 tới chat; dữ liệu FAQ vẫn dùng cho trợ lý tự động, không còn màn quản trị riêng. Quyền: docs/PHAN_QUYEN.md.
-
-Email báo tin dùng **nguyên cấu hình MAIL_HOST/MAIL_PORT/MAIL_USERNAME/MAIL_PASSWORD/MAIL_FROM và PUBLIC_BASE_URL của giai đoạn 20**, chỉ qua môi trường hoặc local; không thêm khóa trong Git. Chỉ gửi khi khách không có socket và ngừng hoạt động hơn 2 phút, có email; tối đa một lần thử/30 phút/hội thoại, background sau commit. Chưa cấu hình thì log bỏ qua, lỗi SMTP ghi FAILED và không làm mất tin. Nội dung ngắn đã che thông tin nhạy cảm, HTML escape; link `/?support=open` mở khung chat, không chứa token truy cập. Khách ẩn danh cần còn cookie đúng trình duyệt để xem lịch sử.
-
-Thử triển khai: hai tài khoản nhân viên và một khách ở các trình duyệt khác nhau; bật âm báo bằng nút nếu muốn, cấp quyền thông báo trình duyệt bằng nút riêng. Đóng/mất mạng khách hơn 2 phút rồi nhân viên nhắn; kiểm tra một thư trong 30 phút. Dùng SMTP giả khi test. Âm thanh/notification của OS và hộp thư thật cần thử thủ công; không tự gửi tới khách thật khi kiểm thử.

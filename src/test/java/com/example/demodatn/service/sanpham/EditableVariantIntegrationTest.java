@@ -33,7 +33,7 @@ class EditableVariantIntegrationTest {
     @Autowired JdbcTemplate jdbc;
     @Autowired WebApplicationContext context;
     MockMvc mvc;
-    @BeforeEach void setup(){assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"));mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();}
+    @BeforeEach void setup(){com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();}
     Product product(){var p=new Product();p.setCode("EDIT-"+UUID.randomUUID());p.setName("Giày chỉnh trực tiếp");p.setStatus(false);return products.saveAndFlush(p);}
     VariantForm form(Product p){var f=new VariantForm();f.setProductId(p.getId());f.setSizeId(sizes.findAll().get(0).getId());f.setColorId(colors.findAll().get(0).getId());f.setMaterialId(materials.findAll().get(0).getId());f.setSoleId(soles.findAll().get(0).getId());f.setPrice(BigDecimal.valueOf(180000));f.setQuantity(8);return f;}
     VariantBatchForm batch(Product p){var single=form(p);var f=new VariantBatchForm();f.setProductId(p.getId());f.setSizeIds(sizes.findAll().stream().limit(3).map(Size::getId).toList());f.setColorId(single.getColorId());f.setMaterialId(single.getMaterialId());f.setSoleId(single.getSoleId());f.setPrice(single.getPrice());f.setQuantity(4);return f;}

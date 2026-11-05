@@ -44,8 +44,7 @@ class AccountProvisioningIntegrationTest {
     @Autowired WebApplicationContext context;
     MockMvc mvc;
     @BeforeEach void setup() throws Exception {
-        assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"),"Disposable restored test copy required");
-        SMTP.purgeEmailFromAllMailboxes();SMTP.setUser("sink@example.test","sink","sink");
+        com.example.demodatn.TestDatabaseGuard.check(jdbc);SMTP.purgeEmailFromAllMailboxes();SMTP.setUser("sink@example.test","sink","sink");
         mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
     @AfterAll static void close(){SMTP.stop();}

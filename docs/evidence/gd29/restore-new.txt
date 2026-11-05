@@ -1,4 +1,0 @@
-{"database_name": "shopbangiay_kt_20261104_gd28", "backup_finish_date": "2026-11-04T22:42:17", "physical_device_name": "C:\\Program Files\\Microsoft SQL Server\\MSSQL17.MSSQLSERVER\\MSSQL\\Backup\\shopbangiay_kt_20261104_gd28_schema.bak"}
-Processed 1656 pages for database 'shopbangiay_kt_20261105_gd29', file 'shopbangiay' on file 1.
-Processed 1 pages for database 'shopbangiay_kt_20261105_gd29', file 'shopbangiay_log' on file 1.
-RESTORE DATABASE successfully processed 1657 pages in 0.011 seconds (1176.269 MB/sec).

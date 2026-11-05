@@ -1,6 +1,0 @@
-﻿Processed 1616 pages for database 'shopbangiay_kt_20261102_gd16_sua', file 'shopbangiay' on file 1.
-Processed 1 pages for database 'shopbangiay_kt_20261102_gd16_sua', file 'shopbangiay_log' on file 1.
-RESTORE DATABASE successfully processed 1617 pages in 0.023 seconds (548.976 MB/sec).
-Processed 1616 pages for database 'shopbangiay_kt_20261102_gd16_sua', file 'shopbangiay' on file 1.
-Processed 1 pages for database 'shopbangiay_kt_20261102_gd16_sua', file 'shopbangiay_log' on file 1.
-BACKUP DATABASE successfully processed 1617 pages in 0.053 seconds (238.235 MB/sec).

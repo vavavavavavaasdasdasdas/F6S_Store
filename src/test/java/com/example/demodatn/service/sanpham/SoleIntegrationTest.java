@@ -39,7 +39,7 @@ class SoleIntegrationTest {
     @Autowired JdbcTemplate jdbc;
     @Autowired WebApplicationContext context;
 
-    @BeforeEach void databaseGuard(){String name=jdbc.queryForObject("SELECT DB_NAME()",String.class);assertTrue(name.equals("shop_verify")||name.startsWith("shopbangiay_kt"));}
+    @BeforeEach void databaseGuard(){com.example.demodatn.TestDatabaseGuard.check(jdbc);}
     private Sole sole(boolean active){var form=new LookupForm();form.setValue("Đế Nguyễn Huệ "+UUID.randomUUID());form.setStatus(active);return service.save(form);}
     private AdminProductForm form(Integer soleId){var f=new AdminProductForm();f.setInitialColorId(phase5Colors.findAll().get(0).getId());f.setInitialSoleId(phase5Soles.findAll().get(0).getId());f.setCode("SG1-"+UUID.randomUUID());f.setName("Giày thử đế Nguyễn Huệ");f.setCategoryId(categories.findAll().get(0).getId());f.setSoleId(soleId);f.setStatus(false);return f;}
 

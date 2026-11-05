@@ -25,8 +25,7 @@ class ProductWorkspaceIntegrationTest {
  @Autowired ProductRepository products;
  MockMvc mvc;Integer productId;String createdColorName;
  @BeforeEach void setup(){
-  assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"));
-  mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+  com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
   var p=new Product();p.setCode("G10-"+UUID.randomUUID());p.setName("Giày kiểm tra không trùng");p.setStatus(false);productId=products.saveAndFlush(p).getId();
  }
  @AfterEach void cleanup(){

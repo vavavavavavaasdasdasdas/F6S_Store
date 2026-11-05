@@ -1,8 +1,0 @@
-/ | 159
-/products | 63
-/products/949 | 22
-/category/1 | 41
-/cart | 3
-/admin/pos | 50
-/admin/products-crud | 6
-/admin/inventory | 6

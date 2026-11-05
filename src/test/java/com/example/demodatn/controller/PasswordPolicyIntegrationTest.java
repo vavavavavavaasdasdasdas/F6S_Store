@@ -30,8 +30,7 @@ class PasswordPolicyIntegrationTest {
     String owner;
 
     @BeforeEach void fixture() {
-        assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt"));
-        mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
         owner="qa-pass-"+UUID.randomUUID().toString().substring(0,8);
         int userId=jdbc.queryForObject("INSERT users(username,password,role_id,status,full_name) OUTPUT INSERTED.id VALUES(?,?,(SELECT id FROM roles WHERE name='ROLE_USER'),1,N'Khách mật khẩu')",Integer.class,owner,encoder.encode("Current123!"));
         jdbc.update("INSERT customers(customer_code,full_name,phone,email,user_id,status) VALUES(?,N'Khách mật khẩu',?,?,?,1)",

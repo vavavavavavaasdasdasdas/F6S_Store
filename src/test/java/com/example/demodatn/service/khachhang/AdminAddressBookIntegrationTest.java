@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AdminAddressBookIntegrationTest {
  @Autowired WebApplicationContext context;@Autowired JdbcTemplate jdbc;MockMvc mvc;int customer,province,ward;
  @BeforeEach void setup(){
-  assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"));mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+  com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
   String key=UUID.randomUUID().toString().substring(0,8);customer=jdbc.queryForObject("INSERT customers(customer_code,full_name,phone,email,status) OUTPUT INSERTED.id VALUES(?,N'Khách kiểm thử địa chỉ','0968123400',?,1)",Integer.class,"G12-"+key,key+"@example.test");
   var row=jdbc.queryForMap("SELECT TOP 1 w.id,w.tinh_thanh_id FROM phuong_xa w ORDER BY w.id");ward=(Integer)row.get("id");province=(Integer)row.get("tinh_thanh_id");
  }

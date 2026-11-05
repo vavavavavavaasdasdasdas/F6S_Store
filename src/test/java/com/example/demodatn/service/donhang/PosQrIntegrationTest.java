@@ -36,7 +36,7 @@ class PosQrIntegrationTest {
     @Autowired JdbcTemplate jdbc;
     @Autowired WebApplicationContext context;
     MockMvc mvc;
-    @BeforeEach void setup(){assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"));mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();}
+    @BeforeEach void setup(){com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).defaultResponseCharacterEncoding(java.nio.charset.StandardCharsets.UTF_8).build();}
     MockHttpSession session(){var p=new Product();p.setCode("QR-"+UUID.randomUUID());p.setName("Giày QR kiểm thử");products.saveAndFlush(p);var v=new ProductVariant();v.setProduct(p);v.setSize(sizes.findAll().get(0));v.setColor(colors.findAll().get(0));v.setMaterial(materials.findAll().get(0));v.setSole(soles.findAll().get(0));v.setPrice(BigDecimal.valueOf(10000000));v.setQuantity(5);variants.saveAndFlush(v);var session=new MockHttpSession();session.setAttribute("posCart",new ArrayList<>(List.of(new CartItemDto(p.getId(),v.getId(),p.getName(),v.getSize().getSizeValue(),v.getPrice(),1))));session.setAttribute("posCheckoutToken","test-token");session.setAttribute("posPaymentReference","F6SABC123");return session;}
     @Test void initialPosHasNoCustomerListAndShortSearchIsEmpty()throws Exception{
         String marker="Khách riêng "+UUID.randomUUID();jdbc.update("INSERT customers(customer_code,full_name,status) VALUES(?,?,1)","QR-C-"+UUID.randomUUID().toString().substring(0,12),marker);
@@ -51,11 +51,11 @@ class PosQrIntegrationTest {
         mvc.perform(post("/admin/pos/checkout").session(session).with(csrf()).param("paymentMethod","TRANSFER").param("checkoutToken","test-token")).andExpect(status().is3xxRedirection()).andExpect(flash().attribute("error",containsString("Cần xác nhận")));
         mvc.perform(post("/admin/pos/checkout").session(session).with(csrf()).param("paymentMethod","TRANSFER").param("checkoutToken","test-token").param("transferReceived","true").param("transferAmount","1")).andExpect(status().is3xxRedirection()).andExpect(flash().attribute("error",containsString("Tổng tiền đã thay đổi")));
         assertEquals(before,jdbc.queryForObject("SELECT COUNT(*) FROM orders",Integer.class));
-        mvc.perform(post("/admin/pos/checkout").session(session).with(csrf()).param("paymentMethod","TRANSFER").param("checkoutToken","test-token").param("transferReceived","true").param("transferAmount","10000000").param("paymentReference","FORGED")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrlPattern("/admin/pos/success/*"));
+        mvc.perform(post("/admin/pos/checkout").session(session).with(csrf()).param("paymentMethod","TRANSFER").param("checkoutToken","test-token").param("transferReceived","true").param("transferAmount","10000000").param("paymentReference","FORGED")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrlPattern("/admin/invoices/*"));
         var row=jdbc.queryForMap("SELECT payment_reference,final_amount,payment_status FROM orders WHERE payment_reference='F6SABC123'");assertEquals("PAID",row.get("payment_status"));assertEquals(0,new BigDecimal(row.get("final_amount").toString()).compareTo(BigDecimal.valueOf(10000000)));System.out.println("GD7 exact receipt "+row);
     }
     @Test void invoiceChannelHasOwnColumnAndEightSecurityGroups()throws Exception{
-        mvc.perform(get("/admin/invoices")).andExpect(status().isOk()).andExpect(content().string(containsString("<th>Khách</th><th>Kênh bán</th><th>Nguồn đơn</th>")));
+        mvc.perform(get("/admin/invoices")).andExpect(status().isOk()).andExpect(content().string(containsString("<th>Khách</th>"))).andExpect(content().string(containsString("<th>Kênh bán</th>")));
         mvc.perform(get("/admin/pos/customers").with(anonymous())).andExpect(status().is3xxRedirection());
         mvc.perform(get("/admin/pos/customers").with(user("ordinary").roles("USER"))).andExpect(status().isForbidden());
         mvc.perform(get("/admin/pos/customers").param("customerQuery","kh")).andExpect(status().isOk());

@@ -113,7 +113,7 @@ class CatalogIntegrationTest {
         long before=orderRepository.count();
         var mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
         mvc.perform(post("/admin/pos/checkout").session(session).with(csrf()).param("paymentMethod","CASH").param("cashReceived","300000").param("checkoutToken","test-token"))
-                .andExpect(status().is3xxRedirection()).andExpect(redirectedUrlPattern("/admin/pos/success/*"));
+                .andExpect(status().is3xxRedirection()).andExpect(redirectedUrlPattern("/admin/invoices/*"));
         assertEquals(before+1,orderRepository.count());
         assertEquals(8,v.getQuantity());
         assertNull(session.getAttribute("posCart"));

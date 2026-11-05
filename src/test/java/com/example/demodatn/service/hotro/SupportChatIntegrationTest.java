@@ -37,8 +37,7 @@ class SupportChatIntegrationTest {
     @Autowired WebApplicationContext context;
     MockMvc mvc;SupportChatService.Actor alice,bob,staff;
     @BeforeEach void setup(){
-        assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"));
-        mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
         alice=customer();bob=customer();staff=new SupportChatService.Actor("admin",null);
     }
     private SupportChatService.Actor customer(){

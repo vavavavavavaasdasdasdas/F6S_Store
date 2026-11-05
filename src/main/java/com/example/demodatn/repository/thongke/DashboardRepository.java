@@ -15,8 +15,10 @@ public class DashboardRepository {
     // Legacy revenue stays unchanged; new shipping-policy orders exclude shipping.
     // attributed to creation date because this schema has no paid_at timestamp.
     public static final String REVENUE = "SELECT COALESCE(SUM(" + RevenueCondition.AMOUNT + "),0) FROM orders o WHERE " + RevenueCondition.SQL + " AND o.created_at >= ? AND o.created_at < ?";
-    public static final String CASH_REVENUE = "SELECT COALESCE(SUM(o.tien_mat),0) FROM orders o WHERE " + RevenueCondition.SQL + " AND o.created_at >= ? AND o.created_at < ?";
-    public static final String TRANSFER_REVENUE = "SELECT COALESCE(SUM(o.tien_chuyen_khoan),0) FROM orders o WHERE " + RevenueCondition.SQL + " AND o.created_at >= ? AND o.created_at < ?";
+    public static final String CASH_EXPR = "CASE WHEN (COALESCE(o.tien_mat,0) > 0 OR COALESCE(o.tien_chuyen_khoan,0) > 0) THEN o.tien_mat ELSE CASE WHEN o.payment_method IN ('CASH','COD') THEN " + RevenueCondition.AMOUNT + " ELSE 0 END END";
+    public static final String TRANSFER_EXPR = "CASE WHEN (COALESCE(o.tien_mat,0) > 0 OR COALESCE(o.tien_chuyen_khoan,0) > 0) THEN o.tien_chuyen_khoan ELSE CASE WHEN o.payment_method IN ('TRANSFER','BANK_TRANSFER') THEN " + RevenueCondition.AMOUNT + " ELSE 0 END END";
+    public static final String CASH_REVENUE = "SELECT COALESCE(SUM(" + CASH_EXPR + "),0) FROM orders o WHERE " + RevenueCondition.SQL + " AND o.created_at >= ? AND o.created_at < ?";
+    public static final String TRANSFER_REVENUE = "SELECT COALESCE(SUM(" + TRANSFER_EXPR + "),0) FROM orders o WHERE " + RevenueCondition.SQL + " AND o.created_at >= ? AND o.created_at < ?";
 
     public Number revenue(LocalDate from, LocalDate to) {
         return jdbc.queryForObject(REVENUE, java.math.BigDecimal.class, from, to);

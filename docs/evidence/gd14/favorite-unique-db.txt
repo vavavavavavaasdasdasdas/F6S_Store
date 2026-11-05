@@ -1,1 +1,0 @@
-2627 Violation of PRIMARY KEY constraint 'pk_yeu_thich'. Cannot insert duplicate key in object 'dbo.yeu_thich'. The duplicate key value is (100, 2).

@@ -1,8 +1,0 @@
-[
-  {
-    "name": "ck_pos_hold_type_payment",
-    "definition": "([order_type]='POS' AND ([payment_method]='TRANSFER' OR [payment_method]='CASH') OR [order_type]='ONLINE' AND ([payment_method]='BANK_TRANSFER' OR [payment_method]='COD'))",
-    "is_disabled": false,
-    "is_not_trusted": false
-  }
-]

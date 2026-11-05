@@ -1,5 +1,0 @@
-79: @GetMapping("/checkout")
-138: @GetMapping("/checkout/vouchers")
-147: @PostMapping("/checkout/preview")
-161: @PostMapping("/checkout/validate-voucher-ajax")
-171: @PostMapping("/checkout/place")

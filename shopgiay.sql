@@ -1,3 +1,11 @@
+SET NOCOUNT ON;
+SET QUOTED_IDENTIFIER ON;
+SET ANSI_NULLS ON;
+SET ANSI_PADDING ON;
+SET ANSI_WARNINGS ON;
+SET CONCAT_NULL_YIELDS_NULL ON;
+SET ARITHABORT ON;
+SET NUMERIC_ROUNDABORT OFF;
 -- Khởi tạo schema mới trong database đã chọn bằng sqlcmd -d; không tạo/chuyển database.
 IF DB_NAME() NOT IN (N'shopbangiay_kt',N'shop_verify',N'shop_fresh',N'shopbangiay_thu')
    AND NOT (DB_NAME()=N'shopbangiay' AND COALESCE(TRY_CONVERT(INT,SESSION_CONTEXT(N'shop.allow-production-migration')),0)=1)
@@ -499,7 +507,7 @@ BEGIN TRY
     WHERE t.schema_id=SCHEMA_ID(N'dbo') AND ty.name IN(N'varchar',N'char',N'text')
       AND c.name NOT IN (N'code',N'customer_code',N'employee_code',N'invoice_code',N'order_code',
           N'voucher_code',N'order_type',N'status',N'payment_method',N'payment_status',N'discount_type',
-          N'username',N'password',N'actor',N'so_cccd',N'ma_mau')
+          N'username',N'password',N'actor',N'so_cccd',N'ma_mau',N'ma')
       AND NOT (t.name=N'roles' AND c.name=N'name')
       AND NOT (t.name=N'dia_chi_nhan_hang' AND c.name=N'so_dien_thoai');
 
@@ -1290,6 +1298,271 @@ THROW;
 END CATCH;
 
 GO
+
+-- 023_thanh_toan_ket_hop_pos.sql: Thêm cột tiền mặt, tiền chuyển khoản, ghi chú thanh toán cho đơn hàng và dọn hóa đơn chờ online
+IF DB_NAME() NOT IN (N'shopbangiay_kt',N'shop_verify',N'shop_fresh')
+ AND DB_NAME() NOT LIKE N'shopbangiay[_]kt[_]%'
+ AND NOT (DB_NAME()=N'shopbangiay' AND COALESCE(TRY_CONVERT(INT,SESSION_CONTEXT(N'shop.allow-production-migration')),0)=1)
+ THROW 51000,N'Database không được phép chạy migration.',1;
+SET XACT_ABORT ON;
+BEGIN TRY
+BEGIN TRANSACTION;
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('dbo.orders') AND name = 'tien_mat')
+BEGIN
+    ALTER TABLE dbo.orders ADD tien_mat BIGINT NOT NULL CONSTRAINT df_orders_tien_mat DEFAULT 0;
+END;
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('dbo.orders') AND name = 'tien_chuyen_khoan')
+BEGIN
+    ALTER TABLE dbo.orders ADD tien_chuyen_khoan BIGINT NOT NULL CONSTRAINT df_orders_tien_chuyen_khoan DEFAULT 0;
+END;
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('dbo.orders') AND name = 'ghi_chu_thanh_toan')
+BEGIN
+    ALTER TABLE dbo.orders ADD ghi_chu_thanh_toan NVARCHAR(500) NULL;
+END;
+
+EXEC(N'UPDATE dbo.orders
+SET tien_mat = CASE 
+        WHEN payment_status = ''PAID'' AND payment_method IN (''CASH'', ''COD'') THEN CAST(ROUND(final_amount, 0) AS BIGINT)
+        ELSE 0
+    END,
+    tien_chuyen_khoan = CASE 
+        WHEN payment_status = ''PAID'' AND payment_method IN (''TRANSFER'', ''BANK_TRANSFER'') THEN CAST(ROUND(final_amount, 0) AS BIGINT)
+        ELSE 0
+    END
+WHERE tien_mat = 0 AND tien_chuyen_khoan = 0;');
+
+DELETE FROM dbo.pos_held_orders WHERE order_type = 'ONLINE';
+
+IF EXISTS (SELECT 1 FROM sys.check_constraints WHERE name = 'ck_pos_hold_type_payment')
+BEGIN
+    ALTER TABLE dbo.pos_held_orders DROP CONSTRAINT ck_pos_hold_type_payment;
+END;
+
+ALTER TABLE dbo.pos_held_orders ADD CONSTRAINT ck_pos_hold_type_payment CHECK (
+    ([order_type]='POS' AND ([payment_method]='TRANSFER' OR [payment_method]='CASH' OR [payment_method]='COMBINED'))
+    OR ([order_type]='ONLINE' AND ([payment_method]='BANK_TRANSFER' OR [payment_method]='COD'))
+);
+
+COMMIT;
+PRINT N'HOÀN TẤT 023_thanh_toan_ket_hop_pos.sql';
+END TRY
+BEGIN CATCH
+IF @@TRANCOUNT>0 ROLLBACK;
+THROW;
+END CATCH;
+
+GO
+
+
+-- ==========================================
+-- Migration: 024_pos_giao_hang_va_order_mail_log.sql
+-- ==========================================
+
+-- Giai đoạn 24: Bán online qua nút gạt ở POS và email thông báo trạng thái
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('pos_held_orders') AND name = 'la_giao_hang')
+BEGIN
+    ALTER TABLE pos_held_orders ADD la_giao_hang BIT NOT NULL CONSTRAINT df_pos_held_orders_la_giao_hang DEFAULT 0;
+END;
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('pos_held_orders') AND name = 'thong_tin_giao_hang')
+BEGIN
+    ALTER TABLE pos_held_orders ADD thong_tin_giao_hang NVARCHAR(MAX) NULL;
+END;
+
+IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'order_mail_log')
+BEGIN
+    CREATE TABLE order_mail_log (
+        id BIGINT IDENTITY(1,1) PRIMARY KEY,
+        order_id INT NOT NULL CONSTRAINT fk_order_mail_log_orders REFERENCES orders(id) ON DELETE CASCADE,
+        status VARCHAR(50) NOT NULL,
+        email NVARCHAR(255) NULL,
+        sent_at DATETIME2 NOT NULL,
+        thanh_cong BIT NOT NULL,
+        loi NVARCHAR(MAX) NULL,
+        CONSTRAINT uq_order_mail_log_order_status UNIQUE (order_id, status)
+    );
+    CREATE INDEX ix_order_mail_log_order_id ON order_mail_log(order_id);
+END;
+
+GO
+
+
+-- ==========================================
+-- Migration: 025_chatbot_va_phieu_ho_tro.sql
+-- ==========================================
+
+-- Migration 025: Chatbot FAQ, Support Tickets, and Chat Logs
+-- Giai đoạn 25
+
+-- 1. Bảng chatbot_faq
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'chatbot_faq')
+BEGIN
+    CREATE TABLE chatbot_faq (
+        id INT IDENTITY(1,1) PRIMARY KEY,
+        ma NVARCHAR(50) NOT NULL UNIQUE,
+        cau_hoi NVARCHAR(300) NOT NULL,
+        tu_khoa NVARCHAR(300) NULL,
+        tra_loi NVARCHAR(1500) NOT NULL,
+        hien_thi BIT NOT NULL DEFAULT 1
+    );
+
+    -- Seed FAQ dựa trên chính sách cửa hàng hiện có
+    INSERT INTO chatbot_faq (ma, cau_hoi, tu_khoa, tra_loi, hien_thi)
+    VALUES
+    (N'KB001', N'Chính sách đổi trả hàng như thế nào?', N'đổi trả, doi tra, hoàn tiền, hoan tien, trả hàng, tra hang, bảo hành, bao hanh', N'F6S Store hỗ trợ đổi trả trong vòng 7 ngày kể từ khi nhận hàng với điều kiện giày còn nguyên tem mác, hộp và chưa qua sử dụng.', 1),
+    (N'KB002', N'Thời gian và chính sách giao hàng ra sao?', N'giao hàng, giao hang, vận chuyển, van chuyen, ship, phí ship, phi ship, bao lâu nhận', N'F6S Store giao hàng toàn quốc qua các đơn vị vận chuyển uy tín. Thời gian giao từ 2-4 ngày làm việc. Phí vận chuyển do bên thứ ba thu theo biểu phí thực tế.', 1),
+    (N'KB003', N'Cửa hàng hỗ trợ những phương thức thanh toán nào?', N'thanh toán, thanh toan, cod, chuyển khoản, chuyen khoan, quét mã, qr, tiền mặt, tien mat', N'Cửa hàng hỗ trợ thanh toán khi nhận hàng (COD), chuyển khoản ngân hàng qua VietQR tự động, và thanh toán tiền mặt/kết hợp trực tiếp tại quầy.', 1),
+    (N'KB004', N'Chính sách bảo mật thông tin khách hàng?', N'bảo mật, bao mat, thông tin, thong tin, quyền riêng tư, quyen rieng tu', N'Chúng tôi cam kết bảo mật thông tin cá nhân của bạn. Dữ liệu chỉ dùng để xử lý đơn hàng và liên hệ hỗ trợ khi cần thiết.', 1),
+    (N'KB005', N'Làm thế nào để đặt mua hàng trực tuyến?', N'mua hàng, mua hang, đặt hàng, dat hang, cách mua, cach mua, hướng dẫn, huong dan', N'Bạn chỉ cần chọn sản phẩm ưng ý, chọn size và màu sắc, bấm Thêm vào giỏ và tiến hành Đặt hàng tại trang thanh toán.', 1);
+END;
+
+-- 2. Bảng phieu_ho_tro (Support Tickets)
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'phieu_ho_tro')
+BEGIN
+    CREATE TABLE phieu_ho_tro (
+        id INT IDENTITY(1,1) PRIMARY KEY,
+        ma NVARCHAR(50) NOT NULL UNIQUE,
+        khach_id INT NULL FOREIGN KEY REFERENCES customers(id),
+        ho_ten NVARCHAR(100) NOT NULL,
+        lien_he NVARCHAR(100) NOT NULL,
+        noi_dung NVARCHAR(1000) NOT NULL,
+        trich_doan_chat NVARCHAR(MAX) NULL,
+        trang_thai NVARCHAR(50) NOT NULL DEFAULT N'Mới',
+        created_at DATETIME2 NOT NULL DEFAULT GETDATE(),
+        xu_ly_boi INT NULL FOREIGN KEY REFERENCES employees(id),
+        tra_loi NVARCHAR(MAX) NULL,
+        tra_loi_luc DATETIME2 NULL
+    );
+
+    CREATE INDEX ix_phieu_ho_tro_trang_thai ON phieu_ho_tro(trang_thai);
+    CREATE INDEX ix_phieu_ho_tro_created_at ON phieu_ho_tro(created_at);
+END;
+
+-- 3. Bảng chat_hoi_thoai (Chat Conversation Sessions)
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'chat_hoi_thoai')
+BEGIN
+    CREATE TABLE chat_hoi_thoai (
+        id BIGINT IDENTITY(1,1) PRIMARY KEY,
+        session_id NVARCHAR(100) NOT NULL UNIQUE,
+        khach_id INT NULL FOREIGN KEY REFERENCES customers(id),
+        ip_address NVARCHAR(50) NULL,
+        created_at DATETIME2 NOT NULL DEFAULT GETDATE(),
+        updated_at DATETIME2 NOT NULL DEFAULT GETDATE()
+    );
+
+    CREATE INDEX ix_chat_hoi_thoai_created_at ON chat_hoi_thoai(created_at);
+END;
+
+-- 4. Bảng chat_tin_nhan (Chat Messages)
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'chat_tin_nhan')
+BEGIN
+    CREATE TABLE chat_tin_nhan (
+        id BIGINT IDENTITY(1,1) PRIMARY KEY,
+        hoi_thoai_id BIGINT NOT NULL FOREIGN KEY REFERENCES chat_hoi_thoai(id) ON DELETE CASCADE,
+        sender NVARCHAR(20) NOT NULL,
+        noi_dung NVARCHAR(2000) NOT NULL,
+        payload_json NVARCHAR(MAX) NULL,
+        created_at DATETIME2 NOT NULL DEFAULT GETDATE()
+    );
+
+    CREATE INDEX ix_chat_tin_nhan_hoi_thoai ON chat_tin_nhan(hoi_thoai_id);
+    CREATE INDEX ix_chat_tin_nhan_created_at ON chat_tin_nhan(created_at);
+END;
+
+GO
+
+
+-- ==========================================
+-- Migration: 026_tro_ly_admin.sql
+-- ==========================================
+
+-- Migration 026: Trợ lý cửa hàng trong trang Admin (Admin Chatbot & Audit)
+-- Giai đoạn 26
+
+-- 1. Thêm cột doi_tuong vào bảng chatbot_faq (KHACH / NOI_BO)
+IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('chatbot_faq') AND name = 'doi_tuong')
+BEGIN
+    ALTER TABLE chatbot_faq ADD doi_tuong NVARCHAR(20) NOT NULL CONSTRAINT df_chatbot_faq_doi_tuong DEFAULT N'KHACH';
+END;
+GO
+
+-- 2. Seed hướng dẫn thao tác nội bộ dựa trên chức năng thật của hệ thống
+IF NOT EXISTS (SELECT * FROM chatbot_faq WHERE ma = 'KB_ADMIN_01')
+BEGIN
+    INSERT INTO chatbot_faq (ma, cau_hoi, tu_khoa, tra_loi, hien_thi, doi_tuong)
+    VALUES
+    (N'KB_ADMIN_01', N'Hướng dẫn thao tác bán hàng tại quầy (POS)', 
+     N'pos, ban hang tai quay, tao don pos, hoa don cho, que the, quet ma, vietqr, giao hang pos', 
+     N'Để bán hàng tại quầy: 1) Truy cập menu Bán hàng tại quầy (/admin/pos); 2) Chọn hóa đơn chờ hoặc tạo mới (tối đa 5 hóa đơn chờ); 3) Chọn khách hàng hoặc dùng Khách lẻ mặc định; 4) Bấm nút "Thêm sản phẩm" (+) để chọn giày và số lượng (tồn kho giảm ngay); 5) Chọn phương thức thanh toán: Tiền mặt, Chuyển khoản (VietQR tự động) hoặc gạt công tắc "Giao hàng" nếu khách muốn ship hàng online; 6) Bấm Hoàn tất đơn hàng.', 
+     1, N'NOI_BO'),
+
+    (N'KB_ADMIN_02', N'Hướng dẫn xử lý đơn hàng và hóa đơn', 
+     N'don hang, hoa don, xu ly don, xac nhan don, in hoa don, giao hang, huy don, invoices', 
+     N'Để quản lý đơn hàng: 1) Vào menu Quản lý hóa đơn (/admin/invoices); 2) Sử dụng các tab trạng thái (Chờ xử lý, Đã xác nhận, Đang chuẩn bị, Đang giao, Đã giao, Đã hủy) hoặc thanh lọc từ khóa/kênh bán; 3) Bấm "Xem chi tiết" để xem hóa đơn; 4) Tiến hành "Xác nhận đơn", chuyển trạng thái hoặc bấm "In hóa đơn" để in phiếu giao hàng cho khách.', 
+     1, N'NOI_BO'),
+
+    (N'KB_ADMIN_03', N'Hướng dẫn kiểm tra tồn kho và nhập hàng', 
+     N'nhap hang, ton kho, kiem kho, dieu chinh ton, kho, inventory, bao ton', 
+     N'Để kiểm tra và cập nhật tồn kho: 1) Truy cập Quản lý tồn kho (/admin/inventory); 2) Lọc theo thương hiệu, kích cỡ, màu sắc hoặc tìm theo mã sản phẩm/biến thể; 3) Bấm "Điều chỉnh tồn" để tăng/giảm số lượng thực tế kèm ghi chú lý do (Nhập hàng mới, Kiểm kê định kỳ, Hàng lỗi/xuất hủy); 4) Mọi lịch sử biến động đều được lưu vết trong Lịch sử kho.', 
+     1, N'NOI_BO'),
+
+    (N'KB_ADMIN_04', N'Hướng dẫn xử lý phiếu hỗ trợ khách hàng', 
+     N'phieu ho tro, ho tro khach, support ticket, tra loi khach, khach can gap', 
+     N'Để tiếp nhận và phản hồi phiếu hỗ trợ: 1) Vào menu Hỗ trợ > Phiếu hỗ trợ (/admin/support-tickets); 2) Lọc các phiếu trạng thái "Mới"; 3) Bấm "Xem chi tiết" để đọc nội dung và trích đoạn 10 tin nhắn gần nhất của khách với Chatbot; 4) Nhập nội dung giải đáp vào ô "Phản hồi" và bấm Gửi (hệ thống tự động gửi email thông báo cho khách nếu có email, hoặc ghi chú liên hệ SĐT).', 
+     1, N'NOI_BO');
+END;
+
+-- 3. Bảng admin_chat_audit (Nhật ký truy vấn trợ lý nội bộ)
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'admin_chat_audit')
+BEGIN
+    CREATE TABLE admin_chat_audit (
+        id BIGINT IDENTITY(1,1) PRIMARY KEY,
+        username NVARCHAR(100) NOT NULL,
+        role NVARCHAR(50) NOT NULL,
+        thoi_gian DATETIME2 NOT NULL DEFAULT GETDATE(),
+        cau_hoi_tom_tat NVARCHAR(500) NOT NULL,
+        cong_cu_da_goi NVARCHAR(100) NOT NULL,
+        session_id NVARCHAR(100) NULL
+    );
+
+    CREATE INDEX ix_admin_chat_audit_thoi_gian ON admin_chat_audit(thoi_gian);
+END;
+
+-- 4. Bảng hội thoại và tin nhắn nội bộ của Admin/Nhân viên
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'admin_chat_hoi_thoai')
+BEGIN
+    CREATE TABLE admin_chat_hoi_thoai (
+        id BIGINT IDENTITY(1,1) PRIMARY KEY,
+        session_id NVARCHAR(100) NOT NULL UNIQUE,
+        username NVARCHAR(100) NOT NULL,
+        created_at DATETIME2 NOT NULL DEFAULT GETDATE(),
+        updated_at DATETIME2 NOT NULL DEFAULT GETDATE()
+    );
+
+    CREATE INDEX ix_admin_chat_hoi_thoai_created ON admin_chat_hoi_thoai(created_at);
+END;
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'admin_chat_tin_nhan')
+BEGIN
+    CREATE TABLE admin_chat_tin_nhan (
+        id BIGINT IDENTITY(1,1) PRIMARY KEY,
+        conversation_id BIGINT NOT NULL FOREIGN KEY REFERENCES admin_chat_hoi_thoai(id) ON DELETE CASCADE,
+        sender NVARCHAR(20) NOT NULL,
+        noi_dung NVARCHAR(MAX) NOT NULL,
+        created_at DATETIME2 NOT NULL DEFAULT GETDATE()
+    );
+
+    CREATE INDEX ix_admin_chat_tin_nhan_created ON admin_chat_tin_nhan(created_at);
+END;
+
+GO
+
+GO
+
+
 
 GO
 -- Giai đoạn 28. Mở rộng hai bảng chat hiện có, không xóa dữ liệu cũ.

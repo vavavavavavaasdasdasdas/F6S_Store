@@ -62,9 +62,7 @@ class GiaiDoan20IntegrationTest {
 
     @BeforeEach
     void setup() throws Exception {
-        assertTrue(jdbc.queryForObject("SELECT DB_NAME()", String.class).startsWith("shopbangiay_kt_"),
-                "Disposable restored test copy required");
-        SMTP.purgeEmailFromAllMailboxes();
+        com.example.demodatn.TestDatabaseGuard.check(jdbc);SMTP.purgeEmailFromAllMailboxes();
         mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
 

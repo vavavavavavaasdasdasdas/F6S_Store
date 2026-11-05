@@ -29,8 +29,7 @@ class ShippingOnlineIntegrationTest {
     @Autowired ShippingFeeService shipping;@Autowired WebApplicationContext context;
     MockMvc mvc;Integer province,ward,variant;int stock;
     @BeforeEach void setup(){
-        assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"),"Chỉ kiểm thử trên bản sao RESTORE riêng.");
-        mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
         var row=jdbc.queryForMap("SELECT TOP 1 id,tinh_thanh_id FROM phuong_xa ORDER BY id");ward=((Number)row.get("id")).intValue();province=((Number)row.get("tinh_thanh_id")).intValue();
         variant=jdbc.queryForObject("SELECT TOP 1 v.id FROM product_variants v JOIN products p ON p.id=v.product_id WHERE v.quantity>5 AND v.status=1 AND p.status=1 ORDER BY v.id",Integer.class);stock=stock();
     }

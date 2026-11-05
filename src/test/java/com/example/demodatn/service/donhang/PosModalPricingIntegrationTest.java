@@ -57,7 +57,8 @@ class PosModalPricingIntegrationTest {
         Product p = new Product();
         p.setName("Sản phẩm GD23 " + code);
         p.setCode("P23-" + UUID.randomUUID().toString().substring(0, 8));
-        products.save(p);
+        p.setStatus(true);
+                products.save(p);
 
         ProductVariant v = new ProductVariant();
         v.setProduct(p);
@@ -67,7 +68,8 @@ class PosModalPricingIntegrationTest {
         v.setSole(soles.findAll().get(0));
         v.setPrice(price);
         v.setQuantity(qty);
-        return variants.saveAndFlush(v);
+        v.setStatus(true);
+                return variants.saveAndFlush(v);
     }
 
     @Test
@@ -120,7 +122,7 @@ class PosModalPricingIntegrationTest {
         MockHttpSession session = new MockHttpSession();
 
         // Ban đầu tồn kho thật = 5, giỏ hàng trống -> tồn khả dụng = 5
-        mvc.perform(get("/admin/pos/products-modal").session(session))
+        mvc.perform(get("/admin/pos/products-modal").session(session).param("keyword", v.getProduct().getCode()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("variants", hasItem(hasProperty("availableQuantity", is(5)))));
 

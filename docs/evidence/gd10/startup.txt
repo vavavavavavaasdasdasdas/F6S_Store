@@ -1,2 +1,0 @@
-2026-10-31 23:07:06.606  INFO o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 18310 (http) with context path '/'
-2026-10-31 23:07:06.618  INFO c.example.demodatn.DemoDatnApplication : Started DemoDatnApplication in 8.358 seconds (process running for 8.693)

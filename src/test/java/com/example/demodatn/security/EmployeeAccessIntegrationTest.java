@@ -26,7 +26,7 @@ class EmployeeAccessIntegrationTest {
  @Autowired org.springframework.transaction.PlatformTransactionManager transactions;
  MockMvc mvc;String username;Integer employeeUserId,protectedCustomerId;
  @BeforeEach void setup(){
-  assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"));mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+  com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
   String token=UUID.randomUUID().toString().substring(0,8);var f=new EmployeeDto();f.setEmployeeCode("G12-"+token);f.setFullName("Nhân viên kiểm thử phân quyền");f.setEmail(token+"@example.test");f.setPhone("09"+String.format("%08d",Math.floorMod(token.hashCode(),100000000)));f.setPosition("Nhân viên");f.setAddress("Một địa chỉ nhân viên");username="g12_"+token;f.setUsername(username);f.setPassword("NhanVien123");employeeUserId=people.saveEmployee(f).getUser().getId();
  }
  @AfterEach void cleanupCommittedFixture(){

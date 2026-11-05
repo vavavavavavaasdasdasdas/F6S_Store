@@ -42,11 +42,14 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .exceptionHandling(ex -> ex
-                .defaultAuthenticationEntryPointFor(
-                    new org.springframework.security.web.authentication.Http403ForbiddenEntryPoint(),
-                    request -> request.getRequestURI().startsWith("/admin/chatbot")
-                )
-                .authenticationEntryPoint(new org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint("/login"))
+                .authenticationEntryPoint((request, response, authException) -> {
+                    String uri = request.getRequestURI();
+                    if (uri != null && (uri.startsWith("/admin/chatbot") || uri.startsWith("/admin/chat") || uri.startsWith("/api/") || uri.equals("/checkout/vouchers"))) {
+                        response.sendError(jakarta.servlet.http.HttpServletResponse.SC_FORBIDDEN);
+                    } else {
+                        response.sendRedirect("/login");
+                    }
+                })
                 .accessDeniedHandler((request, response, accessDeniedException) -> {
                     response.sendError(jakarta.servlet.http.HttpServletResponse.SC_FORBIDDEN);
                 })

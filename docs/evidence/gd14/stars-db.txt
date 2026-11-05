@@ -1,1 +1,0 @@
-547 The INSERT statement conflicted with the CHECK constraint "ck_danh_gia_sao". The conflict occurred in database "shopbangiay_kt_20261101_gd14", table "dbo.danh_gia", column 'so_sao'.

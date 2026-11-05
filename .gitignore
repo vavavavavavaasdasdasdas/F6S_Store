@@ -1,56 +1,37 @@
-HELP.md
+# Maven build output
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+*.class
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Node / Test results
+node_modules/
+test-results/
+playwright-report/
+.playwright-cli/
+.playwright-mcp/
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
-
-# Local Phase 5 browser evidence and generated audit files (no session data in Git)
-/.playwright-cli/
-/output/playwright/
-target/
+# Logs and temporary files
 *.log
+*.tmp
+*.orig
+*.rej
+*~
+*.bak
+
+# Environment & Local configuration
+application-local.properties
+.env
+application-verify.properties
+
+# Uploaded content
+uploads/
+
+# IDE files
 .idea/
+*.iml
 .vscode/
 
-/uploads/
-/verify/uploads/
-/verify/
-/application-local.properties
-/application-verify.properties
-/deploy-local.sql
-/.env
-/_untracked_backup/
-
-# Tệp cách ly sau đợt dọn dẹp, không đưa dữ liệu phiên hoặc capture lên Git.
-/_cho_xoa/
-
-# Ảnh chat riêng tư, không đưa vào Git.
-/uploads/support-chat/
+# Backup and verification directories
+_untracked_backup/
+output/
+tmp/
+verify/

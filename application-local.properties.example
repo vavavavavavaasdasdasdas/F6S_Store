@@ -1,42 +1,16 @@
-# ==============================================================================
-# VÍ DỤ CẤU HÌNH CỤC BỘ DÀNH CHO NHÀ PHÁT TRIỂN (DEVELOPMENT ENVIRONMENT)
-# Sao chép nội dung file này thành `application-local.properties` cùng thư mục chạy app.
-# File `application-local.properties` đã được .gitignore, KHÔNG ĐƯỢC COMMIT bí mật lên git.
-# ==============================================================================
+# ===================================================================
+# C?U H?NH PH?T TRI?N C?C B? (LOCAL DEVELOPMENT)
+# Sao ch?p file n?y th?nh application-local.properties v? ch?nh s?a.
+# File application-local.properties ???c gitignore t? ??ng.
+# ===================================================================
 
-# 1. Cấu hình Database kiểm thử (SQL Server)
-spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=shopbangiay_kt_20261103_gd20;encrypt=true;trustServerCertificate=true
+# Database ch?nh th?c duy nh?t c?a d? ?n: shopbangiay
+spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=shopbangiay;encrypt=true;trustServerCertificate=true
 spring.datasource.username=sa
 spring.datasource.password=123456789
-spring.jpa.hibernate.ddl-auto=validate
 
-# 2. Cấu hình Gửi Email (chọn MỘT trong hai cách bên dưới)
-
-# --- CÁCH A: Dùng Gmail thật với "Mật khẩu ứng dụng" (App Password) ---
-# Yêu cầu: Tài khoản Google đã bật 2-Step Verification và tạo App Password 16 ký tự.
-# spring.mail.host=smtp.gmail.com
-# spring.mail.port=587
-# spring.mail.username=your_email@gmail.com
-# spring.mail.password=xxxx yyyy zzzz wwww
-# spring.mail.properties.mail.smtp.auth=true
-# spring.mail.properties.mail.smtp.starttls.enable=true
-# spring.mail.properties.mail.smtp.connectiontimeout=10000
-# spring.mail.properties.mail.smtp.timeout=10000
-# spring.mail.properties.mail.smtp.writetimeout=10000
-# shop.mail.from=your_email@gmail.com
-
-# --- CÁCH B: Dùng máy chủ SMTP giả lập cục bộ (MailHog hoặc smtp4dev) ---
-# Không cần gửi ra Internet, kiểm thử nhanh chóng và bảo mật trên máy nội bộ.
-# spring.mail.host=127.0.0.1
-# spring.mail.port=1025
-# spring.mail.username=
-# spring.mail.password=
-# spring.mail.properties.mail.smtp.auth=false
-# spring.mail.properties.mail.smtp.starttls.enable=false
-# spring.mail.properties.mail.smtp.connectiontimeout=10000
-# spring.mail.properties.mail.smtp.timeout=10000
-# spring.mail.properties.mail.smtp.writetimeout=10000
-# shop.mail.from=noreply@f6s-store.test
-
-# 3. URL công khai cho liên kết trong email
-shop.public-base-url=http://localhost:8080
+# C?u h?nh email (t?y ch?n, xem th?m docs/CAU_HINH_EMAIL.md)
+# MAIL_HOST=smtp.gmail.com
+# MAIL_PORT=587
+# MAIL_USERNAME=your-email@gmail.com
+# MAIL_PASSWORD=your-app-password

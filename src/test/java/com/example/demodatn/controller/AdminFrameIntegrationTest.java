@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest @Transactional
 class AdminFrameIntegrationTest {
  @Autowired WebApplicationContext context;@Autowired JdbcTemplate jdbc;MockMvc mvc;
- @BeforeEach void init(){assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"));mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();}
+ @BeforeEach void init(){com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();}
  @Test void eightSecurityCasesAndForgedCodeIgnored() throws Exception {
   mvc.perform(get("/admin/categories").with(anonymous())).andExpect(status().is3xxRedirection());
   mvc.perform(get("/admin/categories").with(user("ordinary").roles("USER"))).andExpect(status().isForbidden());

@@ -28,7 +28,7 @@ class InvoiceOnlineWorkspaceIntegrationTest {
  @Autowired PosHoldService holds;@Autowired PosOnlineOrderService online;@Autowired InvoiceRepository invoices;@Autowired jakarta.persistence.EntityManager em;
  MockMvc mvc;Integer variant,ward,province;int stock;
  @BeforeEach void setup(){
-  assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"));mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+  com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
   variant=jdbc.queryForObject("SELECT TOP 1 v.id FROM product_variants v JOIN products p ON p.id=v.product_id WHERE v.quantity>5 AND v.status=1 AND p.status=1 ORDER BY v.id",Integer.class);
   var w=jdbc.queryForMap("SELECT TOP 1 id,tinh_thanh_id FROM phuong_xa ORDER BY id");ward=((Number)w.get("id")).intValue();province=((Number)w.get("tinh_thanh_id")).intValue();stock=quantity();
  }

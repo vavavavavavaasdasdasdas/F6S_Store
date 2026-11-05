@@ -42,8 +42,7 @@ class SaleStatusAndCodeIntegrationTest {
     @Autowired PlatformTransactionManager transactions;
     MockMvc mvc;
     @BeforeEach void setup() {
-        assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"));
-        mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
     AdminProductForm form(boolean withVariants) {
         var f=new AdminProductForm();f.setInitialColorId(phase5Colors.findAll().get(0).getId());f.setInitialSoleId(phase5Soles.findAll().get(0).getId());f.setName("Giày bổ sung "+UUID.randomUUID());f.setCode("FORGED-CODE");f.setStatus(withVariants);f.setCategoryId(categories.findAll().get(0).getId());

@@ -40,12 +40,12 @@ public class StatisticsService {
         result.put("average", count == 0 ? BigDecimal.ZERO : revenue.divide(BigDecimal.valueOf(count), 2, RoundingMode.HALF_UP));
 
         BigDecimal cashRevenue = jdbc.queryForObject(
-                "SELECT COALESCE(SUM(o.tien_mat),0) FROM orders o WHERE" + ELIGIBLE,
+                "SELECT COALESCE(SUM(CASE WHEN (COALESCE(o.tien_mat,0) > 0 OR COALESCE(o.tien_chuyen_khoan,0) > 0) THEN o.tien_mat ELSE CASE WHEN o.payment_method IN ('CASH','COD') THEN " + RevenueCondition.AMOUNT + " ELSE 0 END END),0) FROM orders o WHERE" + ELIGIBLE,
                 BigDecimal.class, args);
         result.put("cashRevenue", cashRevenue);
 
         BigDecimal transferRevenue = jdbc.queryForObject(
-                "SELECT COALESCE(SUM(o.tien_chuyen_khoan),0) FROM orders o WHERE" + ELIGIBLE,
+                "SELECT COALESCE(SUM(CASE WHEN (COALESCE(o.tien_mat,0) > 0 OR COALESCE(o.tien_chuyen_khoan,0) > 0) THEN o.tien_chuyen_khoan ELSE CASE WHEN o.payment_method IN ('TRANSFER','BANK_TRANSFER') THEN " + RevenueCondition.AMOUNT + " ELSE 0 END END),0) FROM orders o WHERE" + ELIGIBLE,
                 BigDecimal.class, args);
         result.put("transferRevenue", transferRevenue);
 

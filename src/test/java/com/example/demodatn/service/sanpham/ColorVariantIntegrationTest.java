@@ -42,8 +42,7 @@ class ColorVariantIntegrationTest {
     @Autowired WebApplicationContext context;
     MockMvc mvc;
     @BeforeEach void setup() {
-        assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"));
-        mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
     Color color(String name) {var f=new LookupForm();f.setValue(name);f.setHexCode("#123AbC");return colorService.save(f);}
     Product product() {var p=new Product();p.setCode("COLOR-"+UUID.randomUUID());p.setName("Giày hai màu Nguyễn Huệ");p.setCategory(categories.findAll().get(0));return products.saveAndFlush(p);}

@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest @Transactional
 class DiscountWorkflowIntegrationTest {
  @Autowired WebApplicationContext context;@Autowired JdbcTemplate jdbc;MockMvc mvc;
- @BeforeEach void setup(){assertTrue(jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_"));mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();}
+ @BeforeEach void setup(){com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();}
  @Test void voucherIsAlwaysPublicRetainsCounterCannotDeleteAndSwitchHasCsrf()throws Exception{
   String code="G11-"+UUID.randomUUID().toString().substring(0,8);
   mvc.perform(post("/admin/vouchers/save").with(user("admin").roles("ADMIN")).with(csrf()).param("code",code).param("name","Phiếu công khai Nguyễn Huệ").param("discountType","FIXED").param("discountValue","50000").param("startDate",LocalDateTime.now().minusDays(1).toString()).param("endDate",LocalDateTime.now().plusDays(1).toString()).param("isPublic","false").param("usageLimit","-9").param("customerId","-1").param("status","true")).andExpect(status().isFound());

@@ -208,7 +208,7 @@ BEGIN TRY
     WHERE t.schema_id=SCHEMA_ID(N'dbo') AND ty.name IN(N'varchar',N'char',N'text')
       AND c.name NOT IN (N'code',N'customer_code',N'employee_code',N'invoice_code',N'order_code',
           N'voucher_code',N'order_type',N'status',N'payment_method',N'payment_status',N'discount_type',
-          N'username',N'password',N'actor',N'so_cccd',N'ma_mau')
+          N'username',N'password',N'actor',N'so_cccd',N'ma_mau',N'ma')
       AND NOT (t.name=N'roles' AND c.name=N'name')
       -- 011/013: so_cccd và ma_mau là mã ASCII, giữ VARCHAR theo hợp đồng schema.
       -- Migration 009 quy định số điện thoại sổ địa chỉ là VARCHAR(20).
@@ -1029,16 +1029,16 @@ BEGIN
     ALTER TABLE dbo.orders ADD ghi_chu_thanh_toan NVARCHAR(500) NULL;
 END;
 
-UPDATE dbo.orders
+EXEC(N'UPDATE dbo.orders
 SET tien_mat = CASE 
-        WHEN payment_status = 'PAID' AND payment_method IN ('CASH', 'COD') THEN CAST(ROUND(final_amount, 0) AS BIGINT)
+        WHEN payment_status = ''PAID'' AND payment_method IN (''CASH'', ''COD'') THEN CAST(ROUND(final_amount, 0) AS BIGINT)
         ELSE 0
     END,
     tien_chuyen_khoan = CASE 
-        WHEN payment_status = 'PAID' AND payment_method IN ('TRANSFER', 'BANK_TRANSFER') THEN CAST(ROUND(final_amount, 0) AS BIGINT)
+        WHEN payment_status = ''PAID'' AND payment_method IN (''TRANSFER'', ''BANK_TRANSFER'') THEN CAST(ROUND(final_amount, 0) AS BIGINT)
         ELSE 0
     END
-WHERE tien_mat = 0 AND tien_chuyen_khoan = 0;
+WHERE tien_mat = 0 AND tien_chuyen_khoan = 0;');
 
 DELETE FROM dbo.pos_held_orders WHERE order_type = 'ONLINE';
 

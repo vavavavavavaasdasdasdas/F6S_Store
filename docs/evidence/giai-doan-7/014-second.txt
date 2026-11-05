@@ -1,1 +1,0 @@
-HOÀN TẤT 014_tham_chieu_thanh_toan.sql

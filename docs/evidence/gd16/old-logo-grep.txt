@@ -1,2 +1,0 @@
-COMMAND: rg -n bieu-trung-quan-tri src/main README.md
-exit=1

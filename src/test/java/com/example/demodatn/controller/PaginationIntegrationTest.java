@@ -25,9 +25,8 @@ class PaginationIntegrationTest {
     int customer,promotion;
     int insert(String sql,Object...args){return jdbc.queryForObject(sql,Integer.class,args);}
     @BeforeEach void thirtyRowsPerType() {
-        assertTrue((Set.of("shopbangiay_kt","shop_verify","shopbangiay_thu").contains(jdbc.queryForObject("SELECT DB_NAME()",String.class)) || jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_")),"Never run fixtures against the real DB");
-        mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-        for(String table:List.of("danh_gia","yeu_thich","pos_held_items","pos_held_orders","invoices","order_details","order_status_history","orders","inventory_logs","promotion_details","product_images","product_variants","products"))jdbc.update("DELETE FROM "+table);
+        com.example.demodatn.TestDatabaseGuard.check(jdbc);mvc=MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        for(String table:List.of("chat_tin_nhan","chat_hoi_thoai","danh_gia","yeu_thich","pos_held_items","pos_held_orders","invoices","order_details","order_status_history","orders","inventory_logs","promotion_details","product_images","product_variants","products"))jdbc.update("DELETE FROM "+table);
         jdbc.update("UPDATE vouchers SET customer_id=NULL");
         for(String table:List.of("customers","employees","vouchers","promotions","categories","sizes"))jdbc.update("DELETE FROM "+table);
         int role=jdbc.queryForObject("SELECT id FROM roles WHERE name='ROLE_USER'",Integer.class);
@@ -64,6 +63,7 @@ class PaginationIntegrationTest {
         Set<String> ids=new HashSet<>();
         for(int n=0;n<3;n++) {
             var result=getPage(url,parameter,String.valueOf(n));Page<?> data=page(result,model);
+            assertNotNull(data, "NULL page attribute for key=" + model + " on " + url);
             assertEquals(n==2?6:12,data.getNumberOfElements(),url);assertEquals(30,data.getTotalElements(),url);
             for(Object row:data.getContent()) {
                 Object key=row instanceof Map<?,?> map?(map.containsKey("id")?map.get("id"):map.get("day")):new org.springframework.beans.BeanWrapperImpl(row).getPropertyValue("id");
@@ -74,7 +74,7 @@ class PaginationIntegrationTest {
         
     }
     @Test void allListsReturnTwelveTwelveSixWithStableIds()throws Exception {
-        for(var entry:Map.ofEntries(Map.entry("/admin/products-crud","productPage"),Map.entry("/admin/variants","dataPage"),Map.entry("/admin/categories","items"),Map.entry("/admin/sizes","items"),Map.entry("/admin/customers","peoplePage"),Map.entry("/admin/employees","peoplePage"),Map.entry("/admin/vouchers","dataPage"),Map.entry("/admin/promotions","dataPage"),Map.entry("/admin/invoices","invoices"),Map.entry("/products","productPage"),Map.entry("/search?promotion=true","productPage"),Map.entry("/category/"+categories.get(0),"productPage"),Map.entry("/orders","orderPage"),Map.entry("/admin/customers/detail/"+customer,"orderPage"),Map.entry("/admin/promotions/"+promotion+"/products","productPage"),Map.entry("/admin/pos","productPage")).entrySet())verify(entry.getKey(),entry.getValue(),"page");
+        for(var entry:Map.ofEntries(Map.entry("/admin/products-crud","productPage"),Map.entry("/admin/variants","dataPage"),Map.entry("/admin/categories","items"),Map.entry("/admin/sizes","items"),Map.entry("/admin/customers","peoplePage"),Map.entry("/admin/employees","peoplePage"),Map.entry("/admin/vouchers","dataPage"),Map.entry("/admin/promotions","dataPage"),Map.entry("/admin/invoices","invoices"),Map.entry("/products","productPage"),Map.entry("/search?promotion=true","productPage"),Map.entry("/category/"+categories.get(0),"productPage"),Map.entry("/orders","orderPage"),Map.entry("/admin/customers/detail/"+customer,"orderPage"),Map.entry("/admin/promotions/"+promotion+"/products","productPage")).entrySet())verify(entry.getKey(),entry.getValue(),"page");
         
         verify("/admin/pos/customers?customerQuery=PG","customerPage","customerPage");
         String stats="/admin/dashboard?from=2048-01-01&to=2048-01-30&channel=ONLINE";

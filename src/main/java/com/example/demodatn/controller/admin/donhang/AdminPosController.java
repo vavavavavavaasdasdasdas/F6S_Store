@@ -670,6 +670,9 @@ public class AdminPosController {
                         if (!request.isTransferReceived()) {
                             throw new IllegalArgumentException("Cần xác nhận đã nhận đủ số tiền chuyển khoản.");
                         }
+                        if (request.getTransferAmount() != null && request.getTransferAmount().compareTo(finalAmount) != 0) {
+                            throw new IllegalArgumentException("Tổng tiền đã thay đổi.");
+                        }
                         request.setTransferAmount(finalAmount);
                     } else if ("COMBINED".equals(request.getPaymentMethod())) {
                         org.slf4j.LoggerFactory.getLogger(AdminPosController.class).info("COMBINED checkout: cashReceived={}, transferAmount={}, finalAmount={}, subtotal={}, discount={}, voucher={}",
@@ -835,6 +838,19 @@ public class AdminPosController {
             clearCart(session);
         }
         return "redirect:/admin/pos";
+    }
+
+    @GetMapping("/admin/pos/customers")
+    public String searchCustomersLegacy(
+            @RequestParam(defaultValue = "") String customerQuery,
+            @RequestParam(defaultValue = "0") String customerPage,
+            HttpSession session,
+            Principal principal,
+            Model model) {
+        String view = page(session, principal, model);
+        var pageResult = catalogQuery.customers(customerQuery, customerPage);
+        model.addAttribute("customerPage", pageResult);
+        return view;
     }
 
     @GetMapping("/admin/pos/customers-json")

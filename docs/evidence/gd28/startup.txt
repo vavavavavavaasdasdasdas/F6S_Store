@@ -1,6 +1,0 @@
-database=shopbangiay_kt_20261104_gd28
-port=18428
-spring.jpa.hibernate.ddl-auto=validate
-CHATBOT_PROVIDER=RULES
-2026-11-05 08:25:09.939  INFO o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 18428 (http) with context path '/'
-2026-11-05 08:25:09.955  INFO c.example.demodatn.DemoDatnApplication : Started DemoDatnApplication in 10.707 seconds (process running for 11.043)

@@ -104,22 +104,33 @@ public class ChatbotService {
 
         final Customer finalCustomer = customer;
         final String finalSessionId = sessionId;
-        ChatConversation conversation = conversationRepository.findBySessionId(sessionId)
-                .orElseGet(() -> {
-                    ChatConversation c = new ChatConversation();
-                    c.setSessionId(finalSessionId);
-                    c.setCustomer(finalCustomer);
-                    c.setIpAddress(ipAddress);
-                    c.setCreatedAt(LocalDateTime.now());
-                    c.setUpdatedAt(LocalDateTime.now());
-                    return conversationRepository.save(c);
-                });
-
-        if (customer != null && conversation.getCustomer() == null) {
-            conversation.setCustomer(customer);
+        ChatConversation conversation = null;
+        if (customer != null) {
+            conversation = conversationRepository.findByCustomer_Id(customer.getId()).orElse(null);
         }
-        conversation.setUpdatedAt(LocalDateTime.now());
-        conversationRepository.save(conversation);
+        if (conversation == null) {
+            conversation = conversationRepository.findBySessionId(sessionId).orElse(null);
+        }
+        if (conversation == null) {
+            ChatConversation c = new ChatConversation();
+            c.setSessionId(finalSessionId);
+            c.setCustomer(finalCustomer);
+            c.setIpAddress(ipAddress);
+            c.setCreatedAt(LocalDateTime.now());
+            c.setUpdatedAt(LocalDateTime.now());
+            conversation = conversationRepository.save(c);
+        } else {
+            if (customer != null && conversation.getCustomer() == null) {
+                var existingForCust = conversationRepository.findByCustomer_Id(customer.getId()).orElse(null);
+                if (existingForCust != null && !existingForCust.getId().equals(conversation.getId())) {
+                    conversation = existingForCust;
+                } else {
+                    conversation.setCustomer(customer);
+                }
+            }
+            conversation.setUpdatedAt(LocalDateTime.now());
+            conversation = conversationRepository.save(conversation);
+        }
 
         // 3. Lọc số thẻ / mật khẩu trước khi lưu tin nhắn của khách
         String sanitizedUserMsg = maskSensitiveInfo(msg);

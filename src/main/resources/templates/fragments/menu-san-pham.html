@@ -1,3 +1,0 @@
-<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org"><body>
-<a th:fragment="link(route,key,label)" th:href="${route}" th:classappend="${adminActive==key?'is-active':''}" th:attr="aria-current=${adminActive==key?'page':null}"><span class="nav-dot" aria-hidden="true"></span><span th:text="${label}"></span><span th:if="${key=='chat'}" data-staff-chat-badge class="badge bg-danger ms-auto rounded-pill" th:hidden="${chatUnreadCount==null or chatUnreadCount==0}" th:text="${chatUnreadCount}" aria-label="Tin nhắn chưa đọc"></span></a>
-</body></html>

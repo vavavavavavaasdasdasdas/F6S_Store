@@ -1,1 +1,0 @@
-HOÀN TẤT 011_can_cuoc_tai_khoan_email.sql

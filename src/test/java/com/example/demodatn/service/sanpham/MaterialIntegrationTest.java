@@ -50,7 +50,7 @@ class MaterialIntegrationTest {
     Product product() { Product p=new Product();p.setCode("MAT-"+UUID.randomUUID());p.setName("Giày kiểm thử chất liệu");return products.saveAndFlush(p); }
     VariantForm form(Product p,Material m,int price,int quantity) {var f=new VariantForm();f.setColorId(phase5Colors.findAll().get(0).getId());f.setSoleId(phase5Soles.findAll().get(0).getId());f.setProductId(p.getId());f.setSizeId(sizes.findAll().get(0).getId());f.setMaterialId(m.getId());f.setPrice(BigDecimal.valueOf(price));f.setQuantity(quantity);return f;}
     CartItemDto item(ProductVariant v) {return new CartItemDto(v.getProduct().getId(),v.getId(),v.getProduct().getName(),v.getSize().getSizeValue(),BigDecimal.ONE,1);}
-    @BeforeEach void guard(){assertTrue((Set.of("shopbangiay_kt","shop_verify","shopbangiay_thu").contains(jdbc.queryForObject("SELECT DB_NAME()",String.class)) || jdbc.queryForObject("SELECT DB_NAME()",String.class).startsWith("shopbangiay_kt_")));}
+    @BeforeEach void guard(){com.example.demodatn.TestDatabaseGuard.check(jdbc);}
     @Test void sameSizeDifferentMaterialsAreDistinctAndTripleDuplicateIsRejected(){
         var p=product();var m=material("Da kiểm thử ");var n=material("Vải kiểm thử ");
         var a=catalog.saveVariant(form(p,m,100000,5));var b=catalog.saveVariant(form(p,n,150000,7));
