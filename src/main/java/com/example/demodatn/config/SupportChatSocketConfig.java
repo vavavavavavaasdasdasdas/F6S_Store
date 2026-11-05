@@ -49,7 +49,7 @@ public class SupportChatSocketConfig implements WebSocketMessageBrokerConfigurer
                 }
                 if(command==StompCommand.CONNECT){if(actor==null)throw new AccessDeniedException("Chat không hợp lệ.");chat.identity(actor);actors.put(h.getSessionId(),actor);sessions.put(h.getSessionId(),(jakarta.servlet.http.HttpSession)h.getSessionAttributes().get("supportHttpSession"));chat.socketConnected(h.getSessionId(),actor);}
                 else if(command==StompCommand.SUBSCRIBE){
-                    String target=h.getDestination();if("/topic/support-presence".equals(target)){if(actor==null)throw new AccessDeniedException("Kênh không hợp lệ.");chat.identity(actor);return message;}if(target==null||!target.matches("/topic/support/[0-9]+"))throw new AccessDeniedException("Kênh không được phép.");chat.access(Long.valueOf(target.substring(target.lastIndexOf('/')+1)),actor);
+                    String target=h.getDestination();if("/topic/support-staff".equals(target)){if(!chat.identity(actor).staff())throw new AccessDeniedException("Kênh dành cho nhân viên.");return message;}if("/topic/support-presence".equals(target)){if(actor==null)throw new AccessDeniedException("Kênh không hợp lệ.");chat.identity(actor);return message;}if(target==null||!target.matches("/topic/support/[0-9]+"))throw new AccessDeniedException("Kênh không được phép.");chat.access(Long.valueOf(target.substring(target.lastIndexOf('/')+1)),actor);
                 }else if(command==StompCommand.SEND){
                     String target=h.getDestination();if(target==null||!target.matches("/app/support/[0-9]+/typing"))throw new AccessDeniedException("Không được phát tin trực tiếp lên kênh.");
                     chat.typing(Long.valueOf(target.split("/")[3]),actor);
@@ -63,8 +63,8 @@ public class SupportChatSocketConfig implements WebSocketMessageBrokerConfigurer
     @Override public void configureClientOutboundChannel(ChannelRegistration registration){
         registration.interceptors(new ChannelInterceptor(){@Override public Message<?> preSend(Message<?> message,MessageChannel channel){
             var h=StompHeaderAccessor.wrap(message);String destination=h.getDestination();
-            if(destination!=null&&destination.startsWith("/topic/support/")){
-                try{var actor=actors.get(h.getSessionId());if(actor==null)return null;validateSession(sessions.get(h.getSessionId()),actor);chat.access(Long.valueOf(destination.substring(destination.lastIndexOf('/')+1)),actor);}
+            if(destination!=null&&(destination.startsWith("/topic/support/")||destination.equals("/topic/support-staff"))){
+                try{var actor=actors.get(h.getSessionId());if(actor==null)return null;validateSession(sessions.get(h.getSessionId()),actor);if(destination.equals("/topic/support-staff")){if(!chat.identity(actor).staff())return null;}else chat.access(Long.valueOf(destination.substring(destination.lastIndexOf('/')+1)),actor);}
                 catch(RuntimeException denied){return null;}
             }return message;
         }});

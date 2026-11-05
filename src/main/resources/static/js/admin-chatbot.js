@@ -177,7 +177,7 @@
                     <button type="button" class="admin-chat-chip" data-query="Sản phẩm sắp hết hàng">⚠️ Sản phẩm sắp hết hàng</button>
                     <button type="button" class="admin-chat-chip" data-query="Top bán chạy tuần này">🏆 Top bán chạy tuần này</button>
                     <button type="button" class="admin-chat-chip" data-query="Khách chi tiêu nhiều nhất">🌟 Khách chi tiêu nhiều nhất</button>
-                    <button type="button" class="admin-chat-chip" data-query="Phiếu hỗ trợ mới">📩 Phiếu hỗ trợ mới</button>
+                    <button type="button" class="admin-chat-chip" data-query="Tin nhắn mới">📩 Tin nhắn mới</button>
                     <button type="button" class="admin-chat-chip" data-query="Hướng dẫn thao tác POS">📖 Hướng dẫn thao tác POS</button>
                 </div>
                 <div id="admin-chatbot-typing" class="admin-chat-msg admin-chat-msg-bot d-none" aria-hidden="true">

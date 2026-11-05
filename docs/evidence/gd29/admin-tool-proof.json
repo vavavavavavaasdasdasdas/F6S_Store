@@ -1,0 +1,13 @@
+{
+  "counts": {
+    "total": 31,
+    "unread": 1,
+    "unassigned": 29,
+    "mine": 0,
+    "closed": 1,
+    "unreadMessages": 1
+  },
+  "tool": "Hiện có 1 tin nhắn chưa đọc và 29 hội thoại chưa ai nhận.\n\n👉 [Xem chi tiết](/admin/chat)",
+  "testMail": true,
+  "logoutStatus": 403
+}

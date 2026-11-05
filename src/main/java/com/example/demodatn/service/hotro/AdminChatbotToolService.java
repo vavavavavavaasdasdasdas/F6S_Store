@@ -422,30 +422,8 @@ public class AdminChatbotToolService {
     // ==========================================
     @Transactional(readOnly = true)
     public String getNewSupportTickets() {
-        long count = ticketRepository.countByTrangThai("Mới");
-        if (count == 0) {
-            return "Hiện không có phiếu hỗ trợ mới nào từ khách hàng.\n\n👉 [Xem danh sách hỗ trợ](/admin/support-tickets)";
-        }
-
-        List<SupportTicket> recent = ticketRepository.findAll().stream()
-                .filter(t -> "Mới".equals(t.getTrangThai()))
-                .sorted(Comparator.comparing(SupportTicket::getCreatedAt).reversed())
-                .limit(3)
-                .toList();
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("📩 **Hiện có ").append(count).append(" phiếu hỗ trợ MỚI cần xử lý**:\n");
-
-        int idx = 1;
-        for (SupportTicket t : recent) {
-            sb.append(idx++).append(". **#").append(t.getMa()).append("** - Khách: ")
-              .append(t.getHoTen()).append(" (Liên hệ: ").append(t.getLienHe()).append(")\n")
-              .append("   *Nội dung*: ").append(t.getNoiDung()).append("\n")
-              .append("   👉 [Xem và trả lời phiếu](/admin/support-tickets/").append(t.getId()).append(")\n");
-        }
-
-        sb.append("\n👉 [Xem toàn bộ phiếu hỗ trợ mới](/admin/support-tickets?trangThai=Mới)");
-        return sb.toString();
+        var counts=jdbc.queryForMap("SELECT COALESCE(SUM(chua_doc_nhan_vien),0) unread,COALESCE(SUM(CASE WHEN assigned_user_id IS NULL AND trang_thai<>N'DA_DONG' THEN 1 ELSE 0 END),0) unassigned FROM chat_hoi_thoai WHERE customer_id IS NOT NULL OR khach_id IS NULL OR legacy_ticket_id IS NOT NULL");
+        return "Hiện có "+counts.get("unread")+" tin nhắn chưa đọc và "+counts.get("unassigned")+" hội thoại chưa ai nhận.\n\n👉 [Xem chi tiết](/admin/chat)";
     }
 
     // ==========================================
@@ -484,7 +462,7 @@ public class AdminChatbotToolService {
             if (bestMatch.getMa().equals("KB_ADMIN_01")) link = "\n\n👉 [Mở trang Bán hàng tại quầy](/admin/pos)";
             else if (bestMatch.getMa().equals("KB_ADMIN_02")) link = "\n\n👉 [Mở trang Quản lý hóa đơn](/admin/invoices)";
             else if (bestMatch.getMa().equals("KB_ADMIN_03")) link = "\n\n👉 [Mở trang Quản lý tồn kho](/admin/inventory)";
-            else if (bestMatch.getMa().equals("KB_ADMIN_04")) link = "\n\n👉 [Mở trang Phiếu hỗ trợ](/admin/support-tickets)";
+            else if (bestMatch.getMa().equals("KB_ADMIN_04")) link = "\n\n👉 [Mở trang Chat với khách](/admin/chat)";
 
             return "📖 **" + bestMatch.getCauHoi() + "**:\n\n" + bestMatch.getTraLoi() + link;
         }

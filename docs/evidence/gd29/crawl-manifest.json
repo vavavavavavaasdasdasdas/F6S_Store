@@ -1,0 +1,3128 @@
+[
+  {
+    "role": "guest",
+    "proof": {
+      "exhausted": true,
+      "count": 20,
+      "rows": [
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/products",
+          "status": 200
+        },
+        {
+          "path": "/cart",
+          "status": 200
+        },
+        {
+          "path": "/login",
+          "status": 200
+        },
+        {
+          "path": "/register",
+          "status": 200
+        },
+        {
+          "path": "/category/1",
+          "status": 200
+        },
+        {
+          "path": "/category/2",
+          "status": 200
+        },
+        {
+          "path": "/category/3",
+          "status": 200
+        },
+        {
+          "path": "/category/4",
+          "status": 200
+        },
+        {
+          "path": "/category/5",
+          "status": 200
+        },
+        {
+          "path": "/category/6",
+          "status": 200
+        },
+        {
+          "path": "/products?promotion=true",
+          "status": 200
+        },
+        {
+          "path": "/products?sort=best_seller",
+          "status": 200
+        },
+        {
+          "path": "/products/4",
+          "status": 200
+        },
+        {
+          "path": "/products/5",
+          "status": 200
+        },
+        {
+          "path": "/products/2",
+          "status": 200
+        },
+        {
+          "path": "/products?sort=newest",
+          "status": 200
+        },
+        {
+          "path": "/products/3",
+          "status": 200
+        },
+        {
+          "path": "/policy",
+          "status": 200
+        },
+        {
+          "path": "/products/948",
+          "status": 200
+        }
+      ],
+      "failures": [],
+      "overflows": [],
+      "missingCsrf": []
+    }
+  },
+  {
+    "role": "alpha",
+    "proof": {
+      "exhausted": true,
+      "count": 25,
+      "rows": [
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/products",
+          "status": 200
+        },
+        {
+          "path": "/profile",
+          "status": 200
+        },
+        {
+          "path": "/favorites",
+          "status": 200
+        },
+        {
+          "path": "/orders",
+          "status": 200
+        },
+        {
+          "path": "/cart",
+          "status": 200
+        },
+        {
+          "path": "/checkout",
+          "status": 302,
+          "location": "http://localhost:18429/cart"
+        },
+        {
+          "path": "/category/1",
+          "status": 200
+        },
+        {
+          "path": "/category/2",
+          "status": 200
+        },
+        {
+          "path": "/category/3",
+          "status": 200
+        },
+        {
+          "path": "/category/4",
+          "status": 200
+        },
+        {
+          "path": "/category/5",
+          "status": 200
+        },
+        {
+          "path": "/category/6",
+          "status": 200
+        },
+        {
+          "path": "/products?promotion=true",
+          "status": 200
+        },
+        {
+          "path": "/products?sort=best_seller",
+          "status": 200
+        },
+        {
+          "path": "/products/4",
+          "status": 200
+        },
+        {
+          "path": "/products/5",
+          "status": 200
+        },
+        {
+          "path": "/products/2",
+          "status": 200
+        },
+        {
+          "path": "/products?sort=newest",
+          "status": 200
+        },
+        {
+          "path": "/products/3",
+          "status": 200
+        },
+        {
+          "path": "/policy",
+          "status": 200
+        },
+        {
+          "path": "/orders/674",
+          "status": 200
+        },
+        {
+          "path": "/profile?newAddress=true",
+          "status": 200
+        },
+        {
+          "path": "/products/948",
+          "status": 200
+        },
+        {
+          "path": "/orders/674/hoa-don",
+          "status": 200
+        }
+      ],
+      "failures": [],
+      "overflows": [],
+      "missingCsrf": []
+    }
+  },
+  {
+    "role": "staffa",
+    "proof": {
+      "exhausted": true,
+      "count": 217,
+      "rows": [
+        {
+          "path": "/admin/chat",
+          "status": 200
+        },
+        {
+          "path": "/admin/pos",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers",
+          "status": 200
+        },
+        {
+          "path": "/admin/account",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=PENDING&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=CONFIRMED&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=PREPARING&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=SHIPPING&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=DELIVERED&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=CANCELLED&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=DELIVERY_FAILED&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/287",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/287?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/286",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/286?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/285",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/285?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/284",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/284?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/283",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/283?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/282",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/282?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/281",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/281?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/280",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/280?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/279",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/279?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/278",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/278?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/237",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/237?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/236",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/236?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?page=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/101",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/101",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/100",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/100",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/99",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/99",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/89",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/89",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/88",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/88",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/16",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/16",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/15",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/15",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/14",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/14",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/13",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/13",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/12",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/12",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/11",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/9",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/9",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers?page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=595",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=596",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=597",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=506",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=507",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=508",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=503",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=504",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=505",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=16",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=17",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=18",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=5",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&page=1&paymentMethod=&paymentStatus=&q=&status=&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&page=2&paymentMethod=&paymentStatus=&q=&status=&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/3?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/2?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/129",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/129?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/128",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/128?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/101",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/101?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/47",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/47?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/6",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/6?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/10",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/10?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&page=1&paymentMethod=&paymentStatus=&q=&status=CONFIRMED&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/130",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/130?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/48",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/48?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/1?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/235",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/235?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/5?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/4?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/7",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/7?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/9",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/9?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/8?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/101/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/100/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/99/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/99/addresses/7/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/89/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/89/addresses/6/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/88/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/88/addresses/5/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/16/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/15/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/14/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/13/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/12/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/11/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/9/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/9/addresses/4/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers?page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=595",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=596",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=597",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=506",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=507",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=508",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=503",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=504",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=505",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=16",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=17",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=18",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=9",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=8",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=5",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=6",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=3",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=4",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=1&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=5&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=4",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&page=0&paymentMethod=&paymentStatus=&q=&status=&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&page=0&paymentMethod=&paymentStatus=&q=&status=CONFIRMED&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/8/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/3/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/3/addresses/3/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/2/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/2/addresses/2/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/1/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/1/addresses/1/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=595",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=596",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=597",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=506",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=507",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=508",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=503",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=504",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=505",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=16",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=17",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=18",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=9",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=8",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=5",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=6",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=3",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=4",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=1&page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=5&page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=0&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=2&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=4&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=3",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=9",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=8",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=5",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=6",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=3",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=4",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=0&page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=2&page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=4&page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=3&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=3&page=0",
+          "status": 200
+        }
+      ],
+      "failures": [],
+      "overflows": [
+        {
+          "path": "/admin/pos",
+          "width": 1280,
+          "scroll": 1415
+        }
+      ],
+      "missingCsrf": []
+    }
+  },
+  {
+    "role": "admin",
+    "proof": {
+      "exhausted": true,
+      "count": 504,
+      "rows": [
+        {
+          "path": "/admin/dashboard",
+          "status": 200
+        },
+        {
+          "path": "/admin/pos",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers",
+          "status": 200
+        },
+        {
+          "path": "/admin/promotions",
+          "status": 200
+        },
+        {
+          "path": "/admin/statistics",
+          "status": 302,
+          "location": "http://localhost:18429/admin/dashboard"
+        },
+        {
+          "path": "/admin/account",
+          "status": 200
+        },
+        {
+          "path": "/admin/chat",
+          "status": 200
+        },
+        {
+          "path": "/admin",
+          "status": 200
+        },
+        {
+          "path": "/admin/categories",
+          "status": 200
+        },
+        {
+          "path": "/admin/sizes",
+          "status": 200
+        },
+        {
+          "path": "/admin/soles",
+          "status": 200
+        },
+        {
+          "path": "/admin/materials",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors",
+          "status": 200
+        },
+        {
+          "path": "/admin/reviews",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentStatus=PAID&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-05&paymentStatus=PAID&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-01&paymentStatus=PAID&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&status=PENDING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud?categoryId=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=PENDING&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=CONFIRMED&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=PREPARING&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=SHIPPING&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=DELIVERED&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=CANCELLED&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&paymentMethod=&paymentStatus=&q=&status=DELIVERY_FAILED&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/287",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/287?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/286",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/286?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/285",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/285?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/284",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/284?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/283",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/283?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/282",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/282?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/281",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/281?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/280",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/280?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/279",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/279?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/278",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/278?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/237",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/237?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/236",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/236?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?page=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/view/948",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/edit/948",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/view/947",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/edit/947",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/view/834",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/edit/834",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/view/833",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/edit/833",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/view/24",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/edit/24",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/view/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/edit/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/view/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/edit/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/view/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/edit/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/view/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/edit/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/view/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/products-crud/edit/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/create?productId=",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/595",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/595",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/596",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/596",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/597",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/597",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/506",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/506",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/507",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/507",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/508",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/508",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/503",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/503",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/504",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/504",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/505",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/505",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/16",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/16",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/17",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/17",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/18",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/18",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=595",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=596",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=597",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=506",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=507",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=508",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=503",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=504",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=505",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=16",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=17",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=18",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=5",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/101",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/101",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/100",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/100",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/99",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/99",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/89",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/89",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/88",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/88",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/16",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/16",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/15",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/15",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/14",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/14",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/13",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/13",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/12",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/12",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/11",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/11",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/9",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/9",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers?page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/detail/503",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/edit/503",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/detail/502",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/edit/502",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/detail/501",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/edit/501",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/detail/443",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/edit/443",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/detail/442",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/edit/442",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/detail/40",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/edit/40",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/detail/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/employees/edit/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/146",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/120",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/119",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/17",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/16",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/15",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/14",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/7",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/6",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers?page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/promotions/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/promotions/edit/76",
+          "status": 200
+        },
+        {
+          "path": "/admin/promotions/76/products",
+          "status": 200
+        },
+        {
+          "path": "/admin/promotions/edit/66",
+          "status": 200
+        },
+        {
+          "path": "/admin/promotions/66/products",
+          "status": 200
+        },
+        {
+          "path": "/admin/promotions/edit/65",
+          "status": 200
+        },
+        {
+          "path": "/admin/promotions/65/products",
+          "status": 200
+        },
+        {
+          "path": "/admin/promotions/edit/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/promotions/4/products",
+          "status": 200
+        },
+        {
+          "path": "/admin/promotions/edit/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/promotions/1/products",
+          "status": 200
+        },
+        {
+          "path": "/admin/categories/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/categories/edit/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/categories/edit/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/categories/edit/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/categories/edit/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/categories/edit/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/categories/edit/6",
+          "status": 200
+        },
+        {
+          "path": "/admin/sizes/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/sizes/edit/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/sizes/edit/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/sizes/edit/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/sizes/edit/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/sizes/edit/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/sizes/edit/6",
+          "status": 200
+        },
+        {
+          "path": "/admin/sizes/edit/7",
+          "status": 200
+        },
+        {
+          "path": "/admin/sizes/edit/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/soles/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?soleId=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/soles/edit/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?soleId=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/soles/edit/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?soleId=3",
+          "status": 200
+        },
+        {
+          "path": "/admin/soles/edit/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?soleId=4",
+          "status": 200
+        },
+        {
+          "path": "/admin/soles/edit/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?soleId=5",
+          "status": 200
+        },
+        {
+          "path": "/admin/soles/edit/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?soleId=6",
+          "status": 200
+        },
+        {
+          "path": "/admin/soles/edit/6",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?soleId=7",
+          "status": 200
+        },
+        {
+          "path": "/admin/soles/edit/7",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?soleId=8",
+          "status": 200
+        },
+        {
+          "path": "/admin/soles/edit/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/materials/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?materialId=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/materials/edit/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?materialId=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/materials/edit/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?materialId=3",
+          "status": 200
+        },
+        {
+          "path": "/admin/materials/edit/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?materialId=4",
+          "status": 200
+        },
+        {
+          "path": "/admin/materials/edit/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?materialId=5",
+          "status": 200
+        },
+        {
+          "path": "/admin/materials/edit/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?materialId=6",
+          "status": 200
+        },
+        {
+          "path": "/admin/materials/edit/6",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?materialId=7",
+          "status": 200
+        },
+        {
+          "path": "/admin/materials/edit/7",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?materialId=8",
+          "status": 200
+        },
+        {
+          "path": "/admin/materials/edit/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors/edit/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors/edit/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=3",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors/edit/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=4",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors/edit/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=5",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors/edit/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=6",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors/edit/6",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=7",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors/edit/7",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=8",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors/edit/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=9",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors/edit/9",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=10",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors/edit/10",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=11",
+          "status": 200
+        },
+        {
+          "path": "/admin/colors/edit/11",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=PAID&q=&status=&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=PAID&q=&status=PENDING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=PAID&q=&status=CONFIRMED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=PAID&q=&status=PREPARING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=PAID&q=&status=SHIPPING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=PAID&q=&status=DELIVERED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=PAID&q=&status=CANCELLED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=PAID&q=&status=DELIVERY_FAILED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-05&paymentMethod=&paymentStatus=PAID&q=&status=&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-05&paymentMethod=&paymentStatus=PAID&q=&status=PENDING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-05&paymentMethod=&paymentStatus=PAID&q=&status=CONFIRMED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-05&paymentMethod=&paymentStatus=PAID&q=&status=PREPARING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-05&paymentMethod=&paymentStatus=PAID&q=&status=SHIPPING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-05&paymentMethod=&paymentStatus=PAID&q=&status=DELIVERED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-05&paymentMethod=&paymentStatus=PAID&q=&status=CANCELLED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-05&paymentMethod=&paymentStatus=PAID&q=&status=DELIVERY_FAILED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-01&paymentMethod=&paymentStatus=PAID&q=&status=&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-01&paymentMethod=&paymentStatus=PAID&q=&status=PENDING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-01&paymentMethod=&paymentStatus=PAID&q=&status=CONFIRMED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-01&paymentMethod=&paymentStatus=PAID&q=&status=PREPARING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-01&paymentMethod=&paymentStatus=PAID&q=&status=SHIPPING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-01&paymentMethod=&paymentStatus=PAID&q=&status=DELIVERED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-01&paymentMethod=&paymentStatus=PAID&q=&status=CANCELLED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-11-01&paymentMethod=&paymentStatus=PAID&q=&status=DELIVERY_FAILED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=&q=&status=&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=&q=&status=PENDING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=&q=&status=CONFIRMED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=&q=&status=PREPARING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=&q=&status=SHIPPING&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=&q=&status=DELIVERED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=&q=&status=CANCELLED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=2026-10-30&paymentMethod=&paymentStatus=&q=&status=DELIVERY_FAILED&to=2026-11-05",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&page=1&paymentMethod=&paymentStatus=&q=&status=&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&page=2&paymentMethod=&paymentStatus=&q=&status=&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/3?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/2?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/129",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/129?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/128",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/128?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/101",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/101?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/47",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/47?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/6",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/6?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/10",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/10?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&page=1&paymentMethod=&paymentStatus=&q=&status=CONFIRMED&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/130",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/130?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/48",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/48?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/1?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/235",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/235?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/5?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/4?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/7",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/7?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/9",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/9?print=true",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices/8?print=true",
+          "status": 200
+        },
+        {
+          "path": "/products/948",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/create?productId=948",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/create?productId=947",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/create?productId=834",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/create?productId=833",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/create?productId=24",
+          "status": 200
+        },
+        {
+          "path": "/products/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/create?productId=5",
+          "status": 200
+        },
+        {
+          "path": "/products/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/create?productId=4",
+          "status": 200
+        },
+        {
+          "path": "/products/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/create?productId=3",
+          "status": 200
+        },
+        {
+          "path": "/products/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/create?productId=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/create?productId=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?productId=",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?productId=947",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?productId=834",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?productId=833",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?productId=24",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/9",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/9",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/5",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/6",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/6",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants/edit/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory/adjust/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=595",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=596",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=597",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=506",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=507",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=508",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=503",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=504",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=505",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=16",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=17",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=18",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=9",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=8",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=5",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=6",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=3",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=4",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?stock=all&variantId=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=1&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=5&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=4",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/101/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/100/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/99/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/99/addresses/7/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/89/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/89/addresses/6/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/88/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/88/addresses/5/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/16/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/15/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/14/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/13/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/12/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/11/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/9/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/9/addresses/4/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/8",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/detail/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/edit/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers?page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/3",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/2",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers/edit/1",
+          "status": 200
+        },
+        {
+          "path": "/admin/vouchers?page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?page=1&soleId=8",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?materialId=8&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=11&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&page=0&paymentMethod=&paymentStatus=&q=&status=&to=",
+          "status": 200
+        },
+        {
+          "path": "/admin/invoices?channel=&from=&page=0&paymentMethod=&paymentStatus=&q=&status=CONFIRMED&to=",
+          "status": 200
+        },
+        {
+          "path": "/",
+          "status": 200
+        },
+        {
+          "path": "/products",
+          "status": 200
+        },
+        {
+          "path": "/category/1",
+          "status": 200
+        },
+        {
+          "path": "/category/2",
+          "status": 200
+        },
+        {
+          "path": "/category/3",
+          "status": 200
+        },
+        {
+          "path": "/category/4",
+          "status": 200
+        },
+        {
+          "path": "/category/5",
+          "status": 200
+        },
+        {
+          "path": "/category/6",
+          "status": 200
+        },
+        {
+          "path": "/products?promotion=true",
+          "status": 200
+        },
+        {
+          "path": "/cart",
+          "status": 200
+        },
+        {
+          "path": "/orders",
+          "status": 200
+        },
+        {
+          "path": "/favorites",
+          "status": 200
+        },
+        {
+          "path": "/policy",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?productId=948",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?productId=5",
+          "status": 200
+        },
+        {
+          "path": "/reviews/products/4",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?productId=4",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?productId=3",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?productId=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?productId=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?page=1&productId=",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=595",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=596",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=597",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=506",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=507",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=508",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=503",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=504",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=505",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=16",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=17",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=18",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=9",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=8",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=5",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=6",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=3",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=4",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=1&stock=all&variantId=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=1&page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=5&page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=0&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=2&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=4&page=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=3",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/8/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/3/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/3/addresses/3/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/2/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/2/addresses/2/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/1/addresses/create",
+          "status": 200
+        },
+        {
+          "path": "/admin/customers/1/addresses/1/edit",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?page=0&soleId=8",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?materialId=8&page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?colorId=11&page=0",
+          "status": 200
+        },
+        {
+          "path": "/products?sort=best_seller",
+          "status": 200
+        },
+        {
+          "path": "/products?sort=newest",
+          "status": 200
+        },
+        {
+          "path": "/orders/352",
+          "status": 200
+        },
+        {
+          "path": "/admin/variants?page=0&productId=",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=9",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=8",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=5",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=6",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=3",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=4",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=1",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?page=0&stock=all&variantId=2",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=0&page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=2&page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=4&page=0",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=3&page=1",
+          "status": 200
+        },
+        {
+          "path": "/orders/352/hoa-don",
+          "status": 200
+        },
+        {
+          "path": "/reviews/products/4?orderId=352",
+          "status": 200
+        },
+        {
+          "path": "/admin/inventory?historyPage=3&page=0",
+          "status": 200
+        }
+      ],
+      "failures": [],
+      "overflows": [
+        {
+          "path": "/admin/pos",
+          "width": 1280,
+          "scroll": 1415
+        }
+      ],
+      "missingCsrf": []
+    }
+  }
+]

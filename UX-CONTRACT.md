@@ -104,3 +104,14 @@ Giai đoạn 15: DashboardRepository và StatisticsService dùng chung điều k
 - REST là đường ghi bền vững; STOMP/SockJS là đường báo tin chính, mất kết nối dùng polling 5 giây. Cùng clientId được giữ trong IndexedDB qua reload/mất mạng. Lỗi tin có thử lại/bỏ, không mất draft; chuyển tài khoản không gửi nhầm outbox.
 - Phiên ẩn danh dùng cookie HttpOnly/SameSite=Lax; DB chỉ lưu hash trong cột riêng, session_id cũ không dùng làm quyền. Khi đăng nhập gộp lịch sử/outbox vào hội thoại hiện tại, đóng rồi gửi lại mở cùng hội thoại.
 - Đồng hồ server Asia/Ho_Chi_Minh; tự động 30 ngày, có nhân viên/hàng chờ 180 ngày cấu hình. Chỉ thông báo lưu cố định, thay checkbox đồng ý cũ. Màn nhận tin nhân viên thuộc giai đoạn 29.
+
+
+## Inbox nhân viên — Giai đoạn 29
+
+- AdminAccess là nguồn quyền chung cho menu/HTTP, SupportChatSocketConfig kiểm tra cùng role cho /topic/support-staff cả inbound/outbound; topic chỉ chứa ID/loại event, nội dung lấy từ REST có quyền. Mỗi trang admin chỉ có một kết nối do staff-chat-connection.js quản lý, polling 5s khi socket mất.
+- staff-chat.js sở hữu search debounce/abort/sequence guard, tab, tải thêm 20, chọn hội thoại và lịch sử 30, dialog/focus, composer/busy/retry cùng clientId. Chuyển hội thoại giữ draft trong phiên; gửi lỗi dữ liệu cho chọn lại, lỗi mạng giữ clientId chống trùng. Renderer dùng chung SupportChatView; dữ liệu luôn textContent.
+- SupportChatService giữ một luồng nhận/trả về/đóng/mở lại và gửi; assigned_user_id hỗ trợ Admin không có employee, trả lời khi người khác phụ trách không đổi người nhận. Các thao tác ghi chat_action_audit.
+- Customer presence theo socket còn mở hoặc last_customer_seen_at trong 2 phút, cập nhật cả polling và disconnect. Email listener AFTER_COMMIT/async, reservation REQUIRES_NEW khóa hội thoại rồi commit trước SMTP. Cooldown 30 phút áp dụng cả lần gửi thất bại để tránh gọi SMTP liên tiếp; chat_mail_log ghi PENDING/SENT/FAILED, không lưu body/email ở log này. AccountMailService dùng cấu hình có sẵn, escape HTML và gửi ngoài transaction.
+- Footer sidebar tách vùng cuộn. FAQ nội bộ vẫn cho trợ lý cửa hàng; FAQ KHACH đang bật dùng cho mẫu trả lời khách cùng 5 mẫu hệ thống. Không có xóa hội thoại/FAQ/ticket data. Các route quản trị phiếu/FAQ cũ chỉ chuyển hướng.
+
+Giai đoạn 29: khi phiếu cũ của một tài khoản có ID hội thoại khác, khách xem lịch sử gộp và unread/receipt theo cùng chủ; nhân viên xem riêng từng hội thoại. Events chỉ phát tín hiệu tới các kênh có cùng chủ sau commit, ACL vẫn kiểm tra từng subscriber.

@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
+@org.hibernate.annotations.DynamicUpdate
 @Table(name = "chat_hoi_thoai")
 @Getter
 @Setter
@@ -36,6 +37,10 @@ public class ChatConversation {
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
+    @Column(name="assigned_user_id") private Integer assignedUserId;
+    @Column(name="legacy_ticket_id") private Integer legacyTicketId;
+    @Column(name="last_customer_seen_at") private LocalDateTime lastCustomerSeenAt;
+    @Column(name="last_mail_at") private LocalDateTime lastMailAt;
     @Column(name="session_token_hash",length=72) private String tokenHash;
     @Column(name="khach_id",insertable=false,updatable=false) private Integer legacyCustomerId;
     @Column(name="ma",length=20,nullable=false,insertable=false,updatable=false)

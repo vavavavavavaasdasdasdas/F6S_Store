@@ -28,7 +28,7 @@ public class AdminRulesChatbotEngine implements AdminChatbotEngine {
             "Sản phẩm sắp hết hàng",
             "Top bán chạy tuần này",
             "Khách chi tiêu nhiều nhất",
-            "Phiếu hỗ trợ mới",
+            "Tin nhắn mới",
             "Hướng dẫn thao tác POS"
     );
 
@@ -36,7 +36,7 @@ public class AdminRulesChatbotEngine implements AdminChatbotEngine {
             "Đơn chờ xử lý",
             "Sản phẩm sắp hết hàng",
             "Top bán chạy tuần này",
-            "Phiếu hỗ trợ mới",
+            "Tin nhắn mới",
             "Hướng dẫn thao tác POS",
             "Kiểm tra tồn kho"
     );
@@ -286,7 +286,7 @@ public class AdminRulesChatbotEngine implements AdminChatbotEngine {
     }
 
     private boolean isSupportTicketIntent(String raw) {
-        return raw.contains("phieu ho tro")
+        return raw.contains("tin nhan moi") || raw.contains("hoi thoai") || raw.contains("phieu ho tro")
                 || raw.contains("support ticket")
                 || raw.contains("ticket moi")
                 || raw.contains("khach can tro giup")

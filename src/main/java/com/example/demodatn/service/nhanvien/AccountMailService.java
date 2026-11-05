@@ -84,6 +84,20 @@ public class AccountMailService {
         }
     }
 
+    public boolean sendSupportNotice(String email,String name,String excerpt) {
+        if(TransactionSynchronizationManager.isActualTransactionActive())throw new IllegalStateException("Không gọi SMTP trong transaction.");
+        if(!isConfigured()||getResolvedFrom().isBlank())return false;
+        try {
+            var uri=java.net.URI.create(publicBaseUrl);if(!java.util.Set.of("http","https").contains(uri.getScheme())||uri.getHost()==null)return false;
+            var message=sender.getObject().createMimeMessage();var helper=new MimeMessageHelper(message,true,java.nio.charset.StandardCharsets.UTF_8.name());
+            helper.setFrom(getResolvedFrom());helper.setTo(email);helper.setSubject("Cửa hàng đã trả lời tin nhắn của bạn - F6S Store");
+            String link=publicBaseUrl.replaceAll("/+$","")+"/?support=open";
+            String text="Xin chào "+name+",\n\nNhân viên cửa hàng vừa trả lời bạn:\n"+excerpt+"\n\nXem cuộc trò chuyện: "+link+"\n\nTrân trọng,\nF6S Store";
+            helper.setText(text,"<!doctype html><html lang=\"vi\"><body><p>"+org.springframework.web.util.HtmlUtils.htmlEscape(text).replace("\n","<br>")+"</p></body></html>");
+            sender.getObject().send(message);return true;
+        }catch(Exception ignored){return false;}
+    }
+
     public TestMailResult sendTestMail(String recipientEmail) {
         if (!isConfigured()) {
             return new TestMailResult(false, "Chưa cấu hình thông tin máy chủ email. Vui lòng cấu hình trong application-local.properties hoặc biến môi trường.");

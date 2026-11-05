@@ -44,6 +44,7 @@ public class SupportChatService {
     private final ApplicationEventPublisher events;
     private static final SecureRandom RANDOM=new SecureRandom();
     private final Map<String,Instant> presence=new ConcurrentHashMap<>();
+    private final Map<String,Actor> customerSockets=new ConcurrentHashMap<>();
     private final Map<String,String> socketPresence=new ConcurrentHashMap<>();
     private final Map<String,Instant> typing=new ConcurrentHashMap<>();
     public record Actor(String username,String guestHash) {}
@@ -73,7 +74,7 @@ public class SupportChatService {
     }
     private void check(ChatConversation c,Actor actor){
         var who=identity(actor);if(who.staff())return;
-        if(who.customerId()!=null && c.getCustomer()!=null && who.customerId().equals(c.getCustomer().getId()))return;
+        if(who.customerId()!=null && who.customerId().equals(ownerId(c)))return;
         if(actor.username()==null && c.getCustomer()==null && actor.guestHash()!=null && actor.guestHash().equals(c.getTokenHash()))return;
         throw denied();
     }
@@ -81,7 +82,7 @@ public class SupportChatService {
         var c=conversations.findById(id).orElseThrow(SupportChatService::denied);check(c,actor);return c;
     }
     private ChatConversation locked(Long id,Actor actor){
-        var c=conversations.lock(id).orElseThrow(SupportChatService::denied);entityManager.refresh(c);check(c,actor);if(c.getCustomer()==null&&c.getLegacyCustomerId()!=null)throw new ResponseStatusException(HttpStatus.CONFLICT,"Vui lòng dùng hội thoại hiện tại của khách hàng.");return c;
+        var c=conversations.lock(id).orElseThrow(SupportChatService::denied);entityManager.refresh(c);check(c,actor);return c;
     }
     @Transactional(readOnly=true) public Optional<Opened> current(Actor actor){
         var who=identity(actor);
@@ -131,13 +132,13 @@ public class SupportChatService {
         c.setIpAddress(ip);c.setUpdatedAt(now());if(c.getLastMessageAt()==null)c.setLastMessageAt(now());
         conversations.saveAndFlush(c);return opened(c,who);
     }
-    private Opened opened(ChatConversation c,Identity who){return new Opened(c.getId(),c.getCode(),c.getStatus(),who.staff()?c.getStaffUnread():c.getCustomerUnread(),online(),c.getSessionId());}
+    private Opened opened(ChatConversation c,Identity who){Integer owner=ownerId(c);int unread=who.staff()?c.getStaffUnread():owner==null?c.getCustomerUnread():jdbc.queryForObject("SELECT COALESCE(SUM(chua_doc_khach),0) FROM chat_hoi_thoai WHERE customer_id=? OR khach_id=?",Integer.class,owner,owner);return new Opened(c.getId(),c.getCode(),c.getStatus(),unread,online(),c.getSessionId());}
     public boolean online(){presence.entrySet().removeIf(e->e.getValue().isBefore(clock.instant().minusSeconds(65)));return !presence.isEmpty()||!socketPresence.isEmpty();}
     public void staffPresence(Actor actor){if(!identity(actor).staff())throw denied();presence.put(actor.username(),clock.instant());events.publishEvent(new SupportChatEvents.Presence(true));}
-    public void socketConnected(String sessionId,Actor actor){if(identity(actor).staff()){socketPresence.put(sessionId,actor.username());events.publishEvent(new SupportChatEvents.Presence(true));}}
-    public void socketDisconnected(String sessionId){String username=socketPresence.remove(sessionId);if(username!=null){if(!socketPresence.containsValue(username))presence.remove(username);events.publishEvent(new SupportChatEvents.Presence(online()));}}
+    public void socketConnected(String sessionId,Actor actor){if(!identity(actor).staff()){customerSockets.put(sessionId,actor);customerPresent(actor);}if(identity(actor).staff()){socketPresence.put(sessionId,actor.username());events.publishEvent(new SupportChatEvents.Presence(true));}}
+    public void socketDisconnected(String sessionId){var customer=customerSockets.remove(sessionId);if(customer!=null)customerPresent(customer);String username=socketPresence.remove(sessionId);if(username!=null){if(!socketPresence.containsValue(username))presence.remove(username);events.publishEvent(new SupportChatEvents.Presence(online()));}}
     @Transactional(readOnly=true) public History history(Long id,Long before,Actor actor){
-        var c=access(id,actor);Integer owner=c.getCustomer()==null?c.getLegacyCustomerId():c.getCustomer().getId();var rows=new ArrayList<>(owner==null?messages.history(id,before,PageRequest.of(0,31)):messages.historyForCustomer(id,owner,before,PageRequest.of(0,31)));boolean more=rows.size()>30;if(more)rows.remove(30);Collections.reverse(rows);
+        var c=access(id,actor);var who=identity(actor);Integer owner=ownerId(c);var rows=new ArrayList<>(owner==null||who.staff()?messages.history(id,before,PageRequest.of(0,31)):messages.historyForCustomer(id,owner,before,PageRequest.of(0,31)));boolean more=rows.size()>30;if(more)rows.remove(30);Collections.reverse(rows);
         return new History(opened(c,identity(actor)),rows.stream().map(this::view).toList(),more,isTyping(id,"NHAN_VIEN"),isTyping(id,"KHACH"));
     }
     private boolean isTyping(Long id,String side){var at=typing.get(id+":"+side);return at!=null && at.isAfter(clock.instant().minusSeconds(6));}
@@ -147,16 +148,43 @@ public class SupportChatService {
         if(prior==null||prior.isBefore(clock.instant().minusSeconds(2)))events.publishEvent(new SupportChatEvents.Typing(id,side));
     }
     @Transactional public void read(Long id,long through,Actor actor){
-        var c=locked(id,actor);boolean staff=identity(actor).staff();String condition=staff?"nguoi_gui_loai=N'KHACH'":"nguoi_gui_loai<>N'KHACH'";
+        var c=locked(id,actor);boolean staff=identity(actor).staff();Integer owner=ownerId(c);
+        if(!staff&&owner!=null){
+            jdbc.update("UPDATE m SET da_xem_luc=? FROM chat_tin_nhan m JOIN chat_hoi_thoai h ON h.id=m.hoi_thoai_id WHERE (h.customer_id=? OR h.khach_id=?) AND m.id<=? AND m.da_xem_luc IS NULL AND m.nguoi_gui_loai<>N'KHACH'",now(),owner,owner,through);
+            jdbc.update("UPDATE h SET chua_doc_khach=(SELECT COUNT(*) FROM chat_tin_nhan m WHERE m.hoi_thoai_id=h.id AND m.da_xem_luc IS NULL AND m.nguoi_gui_loai<>N'KHACH') FROM chat_hoi_thoai h WHERE h.customer_id=? OR h.khach_id=?",owner,owner);
+            entityManager.refresh(c);events.publishEvent(new SupportChatEvents.Changed(id,"READ"));return;
+        }
+        String condition=staff?"nguoi_gui_loai=N'KHACH'":"nguoi_gui_loai<>N'KHACH'";
         jdbc.update("UPDATE chat_tin_nhan SET da_xem_luc=? WHERE hoi_thoai_id=? AND id<=? AND da_xem_luc IS NULL AND "+condition,now(),id,through);
         int remaining=jdbc.queryForObject("SELECT COUNT(*) FROM chat_tin_nhan WHERE hoi_thoai_id=? AND da_xem_luc IS NULL AND "+condition,Integer.class,id);
         if(staff)c.setStaffUnread(remaining);else c.setCustomerUnread(remaining);
         events.publishEvent(new SupportChatEvents.Changed(id,"READ"));
     }
-    @Transactional public void claim(Long id,Actor actor,boolean close){
-        if(!identity(actor).staff())throw denied();var c=locked(id,actor);
-        c.setEmployeeId(identity(actor).employeeId());c.setStatus(close?"DA_DONG":"DANG_XU_LY");c.setHuman(true);c.setWaiting(false);c.setUpdatedAt(now());
+    @Transactional public void claim(Long id,Actor actor,boolean close){act(id,actor,close?"close":"claim");}
+    @Transactional public void act(Long id,Actor actor,String action){
+        var who=identity(actor);if(!who.staff())throw denied();var c=locked(id,actor);
+        switch(action){
+            case "claim" -> {c.setAssignedUserId(who.userId());c.setEmployeeId(who.employeeId());c.setStatus("DANG_XU_LY");}
+            case "queue" -> {c.setAssignedUserId(null);c.setEmployeeId(null);c.setStatus("MOI");}
+            case "close" -> c.setStatus("DA_DONG");
+            case "reopen" -> c.setStatus(c.getAssignedUserId()==null?"MOI":"DANG_XU_LY");
+            default -> throw new IllegalArgumentException("Thao tác hội thoại không hợp lệ.");
+        }
+        c.setHuman(true);c.setWaiting("queue".equals(action));c.setUpdatedAt(now());
+        jdbc.update("INSERT chat_action_audit(hoi_thoai_id,user_id,actor_name,hanh_dong,created_at) VALUES(?,?,?,?,?)",id,who.userId(),actor.username(),action,now());
         events.publishEvent(new SupportChatEvents.Changed(id,"STATE"));staffPresence(actor);
+    }
+    public Integer ownerId(ChatConversation c){return c.getCustomer()!=null?c.getCustomer().getId():c.getLegacyCustomerId();}
+    public void customerPresent(Actor actor){
+        if(identity(actor).staff())return;
+        if(actor.username()!=null)jdbc.update("UPDATE c SET last_customer_seen_at=? FROM chat_hoi_thoai c JOIN customers k ON k.id=c.customer_id OR k.id=c.khach_id JOIN users u ON u.id=k.user_id WHERE u.username=?",now(),actor.username());
+        else if(actor.guestHash()!=null)jdbc.update("UPDATE chat_hoi_thoai SET last_customer_seen_at=? WHERE session_token_hash=?",now(),actor.guestHash());
+    }
+    public boolean customerOnline(ChatConversation c){
+        for(var actor:customerSockets.values()){
+            try{var who=identity(actor);if(who.customerId()!=null&&who.customerId().equals(ownerId(c))||actor.guestHash()!=null&&actor.guestHash().equals(c.getTokenHash()))return true;}catch(RuntimeException ignored){}
+        }
+        var last=c.getLastCustomerSeenAt()!=null?c.getLastCustomerSeenAt():c.getCreatedAt();return last.isAfter(now().minusMinutes(2));
     }
     private void rate(Long id,String ip){
         jdbc.execute("DECLARE @r INT; EXEC @r=sys.sp_getapplock @Resource=N'chat.ip."+Integer.toUnsignedString(ip.hashCode())+"',@LockMode='Exclusive',@LockOwner='Transaction',@LockTimeout=5000; IF @r<0 THROW 51000,N'Chưa gửi được tin, vui lòng thử lại.',1;");
@@ -179,10 +207,11 @@ public class SupportChatService {
             case "DON_HANG" -> m.setPayloadJson(json.writeValueAsString(orderCard(request.orderId(),c,who)));
             default -> throw new IllegalArgumentException("Loại tin nhắn không hợp lệ.");
         }
-        if(who.staff()){c.setHuman(true);c.setEmployeeId(who.employeeId());c.setWaiting(false);c.setStatus("DANG_XU_LY");staffPresence(actor);}
-        else if("DA_DONG".equals(c.getStatus()))c.setStatus(c.getEmployeeId()!=null?"DANG_XU_LY":"MOI");
+        if(who.staff()){c.setHuman(true);if(c.getAssignedUserId()==null){c.setAssignedUserId(who.userId());c.setEmployeeId(who.employeeId());jdbc.update("INSERT chat_action_audit(hoi_thoai_id,user_id,actor_name,hanh_dong,created_at) VALUES(?,?,?,N'claim',?)",id,who.userId(),actor.username(),now());}c.setWaiting(false);c.setStatus("DANG_XU_LY");staffPresence(actor);}
+        else if("DA_DONG".equals(c.getStatus()))c.setStatus(c.getAssignedUserId()!=null?"DANG_XU_LY":"MOI");
         append(c,m);if(!who.staff()&&!"VAN_BAN".equals(m.getType())&&!c.isHuman()&&c.getEmployeeId()==null&&!c.isWaiting())queue(c);messages.flush();
         if(!who.staff()&&"VAN_BAN".equals(m.getType())&&!c.isHuman()&&c.getEmployeeId()==null)events.publishEvent(new AutoRequest(id,m.getId(),content,auth));
+        if(who.staff())events.publishEvent(new SupportChatEvents.StaffReply(id,m.getId()));
         return view(m);
     }
     private void append(ChatConversation c,ChatMessage m){
@@ -213,14 +242,18 @@ public class SupportChatService {
         return Map.of("kind","product","id",id,"name",p.getName(),"price",price,"image",productImages.source(p.getDisplayImageUrl()),"url","/products/"+id);
     }
     private Object orderCard(Integer id,ChatConversation c,Identity who){
-        if(c.getCustomer()==null||(!who.staff()&&who.customerId()==null))throw denied();
+        if(ownerId(c)==null||(!who.staff()&&who.customerId()==null))throw denied();
         var order=orders.findById(id==null?-1:id).orElseThrow(SupportChatService::denied);
-        if(order.getCustomer()==null||!order.getCustomer().getId().equals(c.getCustomer().getId()))throw denied();
+        if(order.getCustomer()==null||!order.getCustomer().getId().equals(ownerId(c)))throw denied();
         return Map.of("kind","order","id",order.getId(),"name",order.getOrderCode(),"price",order.getFinalAmount(),"status",OrderStatusService.LABELS.getOrDefault(order.getStatus(),"Đang xử lý"),"url","/orders/"+id);
     }
     @Transactional(readOnly=true) public Object ownOrders(Actor actor,int page){
         var who=identity(actor);if(who.customerId()==null)throw denied();
         return orders.findByCustomer_IdOrderByCreatedAtDescIdDesc(who.customerId(),PageRequest.of(Math.max(0,Math.min(page,10000)),12)).map(o->Map.of("id",o.getId(),"code",o.getOrderCode(),"total",o.getFinalAmount(),"status",OrderStatusService.LABELS.getOrDefault(o.getStatus(),"Đang xử lý")));
+    }
+    @Transactional(readOnly=true) public Object conversationOrders(Long id,Actor actor,int page){
+        if(!identity(actor).staff())throw denied();var owner=ownerId(access(id,actor));if(owner==null)return org.springframework.data.domain.Page.empty();
+        return orders.findByCustomer_IdOrderByCreatedAtDescIdDesc(owner,PageRequest.of(Math.max(0,Math.min(page,10000)),12)).map(o->Map.of("id",o.getId(),"code",o.getOrderCode(),"total",o.getFinalAmount()));
     }
     private Object publicPayload(Object value){
         if(value instanceof List<?> list)return list.stream().map(this::publicPayload).filter(Objects::nonNull).toList();

@@ -9,7 +9,7 @@ import java.util.List;
 @lombok.RequiredArgsConstructor
 public class AdminPageAdvice {
     private final com.example.demodatn.security.AdminAccess access;
-    private final com.example.demodatn.repository.hotro.SupportTicketRepository ticketRepository;
+    private final com.example.demodatn.service.hotro.SupportChatInboxService inbox;
     public record NavItem(String group, String title, String route, String key) {}
     public static final List<NavItem> NAV = List.of(
         new NavItem("", "Dashboard", "/admin/dashboard", "dashboard"),
@@ -28,9 +28,7 @@ public class AdminPageAdvice {
         new NavItem("", "Nhân viên", "/admin/employees", "employees"),
         new NavItem("KHUYẾN MÃI", "Phiếu giảm giá", "/admin/vouchers", "vouchers"),
         new NavItem("", "Đợt giảm giá", "/admin/promotions", "promotions"),
-        new NavItem("HỖ TRỢ", "Hỗ trợ khách", "/admin/support-tickets", "support_tickets"),
-        new NavItem("", "Kiến thức chatbot", "/admin/chatbot-faq", "chatbot_faq"),
-        new NavItem("HỆ THỐNG", "Hồ sơ của tôi", "/admin/account", "account")
+        new NavItem("HỖ TRỢ KHÁCH HÀNG", "Chat với khách", "/admin/chat", "chat")
     );
     @ModelAttribute
     public void navigation(HttpServletRequest request, Model model) {
@@ -43,12 +41,12 @@ public class AdminPageAdvice {
         boolean full=access.isAdmin(authentication);
         model.addAttribute("adminFullAccess",full);model.addAttribute("adminHome",access.home(authentication));
         model.addAttribute("adminNav",NAV.stream().filter(n->access.allowed(authentication,"GET",n.route())).map(n->!full&&n.key().equals("account")?new NavItem("",n.title(),n.route(),n.key()):n).toList());
-        model.addAttribute("adminActive", active.key());
-        model.addAttribute("adminTitle", active.title());
+        model.addAttribute("adminActive", path.startsWith("/admin/account")?"account":active.key());
+        model.addAttribute("adminTitle", path.startsWith("/admin/account")?"Hồ sơ của tôi":active.title());
         try {
-            model.addAttribute("newSupportTicketsCount", ticketRepository.countByTrangThai("Mới"));
+            model.addAttribute("chatUnreadCount", inbox.counts(new com.example.demodatn.service.hotro.SupportChatService.Actor(authentication.getName(),null)).get("unreadMessages"));
         } catch (Exception ignored) {
-            model.addAttribute("newSupportTicketsCount", 0L);
+            model.addAttribute("chatUnreadCount", 0L);
         }
     }
 }

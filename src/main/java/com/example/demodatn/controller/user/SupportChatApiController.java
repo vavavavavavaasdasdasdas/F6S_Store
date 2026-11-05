@@ -26,7 +26,7 @@ public class SupportChatApiController {
     }
     private String ip(HttpServletRequest request){return request.getRemoteAddr();}
     @GetMapping("/api/support/session") public Object session(HttpServletRequest request){
-        var a=actor(request);var current=chat.current(a);var result=new LinkedHashMap<String,Object>();var csrf=(org.springframework.security.web.csrf.CsrfToken)request.getAttribute(org.springframework.security.web.csrf.CsrfToken.class.getName());result.put("csrfToken",csrf==null?null:csrf.getToken());result.put("authenticated",a.username()!=null);String scope=chat.guestScope(a);result.put("mergePending",a.username()!=null&&scope!=null);result.put("mergeFromScope",a.username()!=null?scope:null);result.put("identified",current.isPresent());result.put("conversation",current.orElse(null));return result;
+        var a=actor(request);var current=chat.current(a);if(current.isPresent())chat.customerPresent(a);var result=new LinkedHashMap<String,Object>();var csrf=(org.springframework.security.web.csrf.CsrfToken)request.getAttribute(org.springframework.security.web.csrf.CsrfToken.class.getName());result.put("csrfToken",csrf==null?null:csrf.getToken());result.put("authenticated",a.username()!=null);String scope=chat.guestScope(a);result.put("mergePending",a.username()!=null&&scope!=null);result.put("mergeFromScope",a.username()!=null?scope:null);result.put("identified",current.isPresent());result.put("conversation",current.orElse(null));return result;
     }
     public record Contact(String name,String contact) {}
     @PostMapping("/api/support/session") public ResponseEntity<?> open(@RequestBody(required=false) Contact contact,HttpServletRequest request){
@@ -41,7 +41,7 @@ public class SupportChatApiController {
     }
     @PostMapping("/api/support/reset-session") public ResponseEntity<?> reset(HttpServletRequest request){return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,ResponseCookie.from(COOKIE,"").path("/").httpOnly(true).sameSite("Lax").maxAge(0).build().toString()).body(Map.of("reset",true));}
     @GetMapping({"/api/support/{id}/messages","/admin/support-chat/{id}/messages"})
-    public Object history(@PathVariable Long id,@RequestParam(required=false) Long before,HttpServletRequest request){return chat.history(id,before,actor(request));}
+    public Object history(@PathVariable Long id,@RequestParam(required=false) Long before,HttpServletRequest request){var actor=actor(request);var history=chat.history(id,before,actor);chat.customerPresent(actor);return history;}
     @PostMapping(value={"/api/support/{id}/messages","/admin/support-chat/{id}/messages"},consumes=MediaType.APPLICATION_JSON_VALUE)
     public Object send(@PathVariable Long id,@Valid @RequestBody SupportChatRequest body,HttpServletRequest request,Authentication auth){return chat.send(id,body,null,actor(request),ip(request),auth);}
     @PostMapping(value={"/api/support/{id}/messages","/admin/support-chat/{id}/messages"},consumes=MediaType.MULTIPART_FORM_DATA_VALUE)

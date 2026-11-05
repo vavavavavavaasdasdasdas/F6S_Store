@@ -164,3 +164,14 @@ Khách nhắn trực tiếp với cửa hàng; trợ lý RULES/LLM chỉ trả l
 Triển khai HTTPS, proxy phải chuyển WebSocket Upgrade của `/ws/support/**` và giữ cookie/session cùng nguồn. Khi nhiều instance cần sticky session và broker/presence dùng chung; bản này dùng broker bộ nhớ cho một instance. SockJS transport HTTP POST được miễn CSRF hẹp, **STOMP CONNECT vẫn bắt buộc token CSRF**, REST POST luôn bắt buộc. Cookie ẩn danh HttpOnly, SameSite=Lax, Secure trên HTTPS; hết phiên/giả cookie bị từ chối và có nút bắt đầu phiên mới. Không cấu hình reverse proxy phục vụ trực tiếp ảnh chat.
 
 Kiểm tra thủ công triển khai: mở hai trình duyệt khách/nhân viên, gửi/đọc, chặn `/ws/support/**` để xem polling 5 giây và bật lại để nối; test trên điện thoại thật/HTTPS là bước riêng. Thư viện SockJS/STOMP được lưu cục bộ, xem [nguồn và giấy phép](docs/THU_VIEN_CHAT_GD28.md).
+
+
+## Chat với khách — Giai đoạn 29
+
+Chạy **028_hop_thu_nhan_vien.sql sau 027**, đã gộp vào chay_tat_ca.sql/shopgiay.sql; xem [báo cáo và lệnh vận hành](docs/GIAI_DOAN_29_INBOX_NHAN_VIEN.md). Script mở rộng hội thoại, thêm audit/mail log và chuyển mỗi phiếu cũ thành hội thoại, không xóa bảng/dữ liệu; có output số phiếu và mapping, chạy lại không nhân đôi.
+
+Admin và Nhân viên dùng `/admin/chat`: nhận/trả về/đóng/mở lại, nhắn/gửi ảnh/thẻ, mẫu trả lời, thông tin khách. Menu cũ được thay bằng Chat với khách, Hồ sơ của tôi/Đăng xuất giữ ở chân. URL cũ 302 tới chat; dữ liệu FAQ vẫn dùng cho trợ lý tự động, không còn màn quản trị riêng. Quyền: docs/PHAN_QUYEN.md.
+
+Email báo tin dùng **nguyên cấu hình MAIL_HOST/MAIL_PORT/MAIL_USERNAME/MAIL_PASSWORD/MAIL_FROM và PUBLIC_BASE_URL của giai đoạn 20**, chỉ qua môi trường hoặc local; không thêm khóa trong Git. Chỉ gửi khi khách không có socket và ngừng hoạt động hơn 2 phút, có email; tối đa một lần thử/30 phút/hội thoại, background sau commit. Chưa cấu hình thì log bỏ qua, lỗi SMTP ghi FAILED và không làm mất tin. Nội dung ngắn đã che thông tin nhạy cảm, HTML escape; link `/?support=open` mở khung chat, không chứa token truy cập. Khách ẩn danh cần còn cookie đúng trình duyệt để xem lịch sử.
+
+Thử triển khai: hai tài khoản nhân viên và một khách ở các trình duyệt khác nhau; bật âm báo bằng nút nếu muốn, cấp quyền thông báo trình duyệt bằng nút riêng. Đóng/mất mạng khách hơn 2 phút rồi nhân viên nhắn; kiểm tra một thư trong 30 phút. Dùng SMTP giả khi test. Âm thanh/notification của OS và hộp thư thật cần thử thủ công; không tự gửi tới khách thật khi kiểm thử.

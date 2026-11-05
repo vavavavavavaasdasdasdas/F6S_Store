@@ -184,7 +184,7 @@
    button.addEventListener('click',()=>{field.value='';update();field.focus();field.form.requestSubmit();});
  });
  document.querySelectorAll('textarea').forEach(field=>{
-   const grow=()=>{field.style.height='auto';field.style.height=Math.max(110,field.scrollHeight)+'px';};
+   const grow=()=>{field.style.height='auto';field.style.height=Math.max(Number(field.dataset.minHeight)||110,field.scrollHeight)+'px';};
    grow();field.addEventListener('input',grow);
  });
  const imageInput=document.getElementById('image'),preview=document.getElementById('image-preview');

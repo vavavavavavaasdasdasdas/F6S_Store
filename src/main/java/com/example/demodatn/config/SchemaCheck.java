@@ -33,7 +33,8 @@ public class SchemaCheck implements BeanPostProcessor {
             var types = new ArrayList<Class<?>>();
             for (var candidate : scanner.findCandidateComponents("com.example.demodatn.entity"))
                 types.add(Class.forName(candidate.getBeanClassName()));
-            var missing = missing(requiredColumns(types), actual);
+            var required=requiredColumns(types);required.put("chat_action_audit",Set.of("id","hoi_thoai_id","user_id","actor_name","hanh_dong","created_at"));required.put("chat_mail_log",Set.of("id","hoi_thoai_id","message_id","trang_thai","created_at"));
+            var missing = missing(required, actual);
             if (!missing.isEmpty()) {
                 missing.forEach(item -> log.error("SCHEMA_CHECK: {}", item));
                 throw new IllegalStateException("Schema chưa đầy đủ: " + String.join("; ", missing)
@@ -79,6 +80,7 @@ public class SchemaCheck implements BeanPostProcessor {
     }
 
     private static String migration(String table, String column) {
+        if(java.util.Set.of("chat_action_audit","chat_mail_log").contains(table)||table.equals("chat_hoi_thoai")&&java.util.Set.of("assigned_user_id","legacy_ticket_id","last_customer_seen_at","last_mail_at").contains(column))return "028_hop_thu_nhan_vien.sql";
         if(java.util.Set.of("admin_chat_audit", "admin_chat_hoi_thoai", "admin_chat_tin_nhan").contains(table) || (table.equals("chatbot_faq") && column.equals("doi_tuong"))) return "026_tro_ly_admin.sql";
         if(table.equals("chat_tin_nhan") && column.equals("ip_address"))return "027_chat_ho_tro_thoi_gian_thuc.sql";
         if(java.util.Set.of("chat_hoi_thoai","chat_tin_nhan").contains(table) && java.util.Set.of("session_token_hash","ma","customer_id","ho_ten","lien_he","trang_thai","nhan_vien_phu_trach_id","last_message_at","chua_doc_khach","chua_doc_nhan_vien","da_co_nhan_vien","cho_nhan_vien","nguoi_gui_loai","nguoi_gui_id","loai","tep_dinh_kem","da_xem_luc","client_id").contains(column))return "027_chat_ho_tro_thoi_gian_thuc.sql";

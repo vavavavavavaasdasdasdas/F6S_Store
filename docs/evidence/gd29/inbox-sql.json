@@ -1,0 +1,379 @@
+{
+  "thread": [
+    {
+      "id": 2,
+      "ma": "CH0002",
+      "trang_thai": "MOI",
+      "chua_doc_khach": 0,
+      "chua_doc_nhan_vien": 0
+    }
+  ],
+  "audit": [
+    {
+      "id": 1,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "claim",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:02:41.0566280"
+    },
+    {
+      "id": 2,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "claim",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:05:49.7074748"
+    },
+    {
+      "id": 3,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "queue",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:05:51.4055037"
+    },
+    {
+      "id": 4,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "close",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:05:51.5414882"
+    },
+    {
+      "id": 5,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "reopen",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:05:51.6588612"
+    },
+    {
+      "id": 6,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "close",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:05:51.7924052"
+    },
+    {
+      "id": 7,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "claim",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:06:48.6826852"
+    },
+    {
+      "id": 8,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "queue",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:06:49.8733778"
+    },
+    {
+      "id": 9,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "close",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:06:50.0131961"
+    },
+    {
+      "id": 10,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "reopen",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:06:50.1423972"
+    },
+    {
+      "id": 11,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "close",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:06:50.2806527"
+    },
+    {
+      "id": 12,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "claim",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:10:24.2754279"
+    },
+    {
+      "id": 13,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "claim",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:12:30.6302744"
+    },
+    {
+      "id": 14,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "queue",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:12:31.8756598"
+    },
+    {
+      "id": 15,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "close",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:12:32.0322450"
+    },
+    {
+      "id": 16,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "reopen",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:12:32.1466807"
+    },
+    {
+      "id": 17,
+      "hoi_thoai_id": 2,
+      "hanh_dong": "close",
+      "username": "gd29_staffa",
+      "created_at": "2026-11-05T09:12:32.3007362"
+    }
+  ],
+  "messages": [
+    {
+      "id": 3,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "Tin khách ẩn danh trước đăng nhập",
+      "da_xem_luc": "2026-11-05T09:02:41.0218513"
+    },
+    {
+      "id": 4,
+      "nguoi_gui_loai": "HE_THONG",
+      "loai": "VAN_BAN",
+      "noi_dung": "Mình đã chuyển tin nhắn cho nhân viên, bạn sẽ được phản hồi sớm",
+      "da_xem_luc": "2026-11-05T09:00:06.3509489"
+    },
+    {
+      "id": 5,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "Tin chưa gửi phải còn sau khi đăng nhập",
+      "da_xem_luc": "2026-11-05T09:02:41.0218513"
+    },
+    {
+      "id": 6,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "SAN_PHAM",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:02:41.0218513"
+    },
+    {
+      "id": 7,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "DON_HANG",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:02:41.0218513"
+    },
+    {
+      "id": 8,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "ANH",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:02:41.0218513"
+    },
+    {
+      "id": 9,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "ANH",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:02:41.0218513"
+    },
+    {
+      "id": 10,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "ANH",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:02:41.0218513"
+    },
+    {
+      "id": 11,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "<script>window.chatXss=1</script><img src=x onerror=window.chatXss=2>",
+      "da_xem_luc": "2026-11-05T09:02:41.0218513"
+    },
+    {
+      "id": 12,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "Tin gửi lại với cùng một mã client",
+      "da_xem_luc": "2026-11-05T09:02:41.0218513"
+    },
+    {
+      "id": 13,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "mật khẩu [ĐÃ BẢO MẬT] thẻ ****-****-****",
+      "da_xem_luc": "2026-11-05T09:02:41.0218513"
+    },
+    {
+      "id": 14,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "Hỗ trợ khách ba trình duyệt mw2whwz9",
+      "da_xem_luc": "2026-11-05T09:02:41.0218513"
+    },
+    {
+      "id": 15,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "VAN_BAN",
+      "noi_dung": "Nhân viên B hỗ trợ phối hợp mw2whxbx",
+      "da_xem_luc": "2026-11-05T09:02:41.3900856"
+    },
+    {
+      "id": 16,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "ANH",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:02:41.6870750"
+    },
+    {
+      "id": 17,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "Hỗ trợ khách ba trình duyệt mw2wlyea",
+      "da_xem_luc": "2026-11-05T09:05:49.7325465"
+    },
+    {
+      "id": 18,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "VAN_BAN",
+      "noi_dung": "Nhân viên B hỗ trợ phối hợp mw2wlyz0",
+      "da_xem_luc": "2026-11-05T09:05:50.1445442"
+    },
+    {
+      "id": 19,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "ANH",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:05:50.5695605"
+    },
+    {
+      "id": 20,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "SAN_PHAM",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:05:50.9034445"
+    },
+    {
+      "id": 21,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "DON_HANG",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:05:51.2024784"
+    },
+    {
+      "id": 22,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "Khách mở lại sau đóng mw2wm0e2",
+      "da_xem_luc": "2026-11-05T09:05:51.9833730"
+    },
+    {
+      "id": 23,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "<script>window.gd29Xss=1</script>",
+      "da_xem_luc": "2026-11-05T09:05:52.1415952"
+    },
+    {
+      "id": 24,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "Hỗ trợ khách ba trình duyệt mw2wn834",
+      "da_xem_luc": "2026-11-05T09:06:48.6987162"
+    },
+    {
+      "id": 25,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "VAN_BAN",
+      "noi_dung": "Nhân viên B hỗ trợ phối hợp mw2wn8fe",
+      "da_xem_luc": "2026-11-05T09:06:49.0533495"
+    },
+    {
+      "id": 26,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "ANH",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:06:49.3489077"
+    },
+    {
+      "id": 27,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "SAN_PHAM",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:06:49.5826117"
+    },
+    {
+      "id": 28,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "DON_HANG",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:06:49.8099644"
+    },
+    {
+      "id": 29,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "Khách mở lại sau đóng mw2wn9ir",
+      "da_xem_luc": "2026-11-05T09:06:50.4729847"
+    },
+    {
+      "id": 30,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "<script>window.gd29Xss=1</script>",
+      "da_xem_luc": "2026-11-05T09:06:50.6208633"
+    },
+    {
+      "id": 31,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "Hỗ trợ khách ba trình duyệt mw2wujxt",
+      "da_xem_luc": "2026-11-05T09:12:30.6547056"
+    },
+    {
+      "id": 32,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "VAN_BAN",
+      "noi_dung": "Nhân viên B hỗ trợ phối hợp mw2wuk9v",
+      "da_xem_luc": "2026-11-05T09:12:30.9805432"
+    },
+    {
+      "id": 33,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "ANH",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:12:31.2653495"
+    },
+    {
+      "id": 34,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "SAN_PHAM",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:12:31.5482601"
+    },
+    {
+      "id": 35,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "loai": "DON_HANG",
+      "noi_dung": "",
+      "da_xem_luc": "2026-11-05T09:12:31.7843123"
+    },
+    {
+      "id": 36,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "Khách mở lại sau đóng mw2wulfr",
+      "da_xem_luc": "2026-11-05T09:12:32.5075214"
+    },
+    {
+      "id": 37,
+      "nguoi_gui_loai": "KHACH",
+      "loai": "VAN_BAN",
+      "noi_dung": "<script>window.gd29Xss=1</script>",
+      "da_xem_luc": "2026-11-05T09:12:32.6302960"
+    }
+  ]
+}

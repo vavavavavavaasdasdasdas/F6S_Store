@@ -40,3 +40,12 @@ BUG-01 đến BUG-03 (schema/checkout, preflight và kiểu SĐT sau chạy lạ
 - GD28-OBS-03: lượt clean test cuối 305, 22 failure + 1 error, 0 skip; 23 tên test lỗi đều thuộc baseline606ead2. Lượt trước có 23 failure + 1 error, giữ cả output. Test chat mới15+2 và test engine cũ11, SchemaCheck4 đều đạt. Không thay luật nghiệp vụ hoặc xóa test cũ.
 - GD28-OBS-04: crawl user/admin có lỗi DNS của tài nguyên CDN/font đã có trong layout. Thư viện chat mới phục vụ cục bộ; không thay layout toàn website ngoài phạm vi. Không tuyên bố toàn bộ website không lỗi console.
 - Chi tiết status, SQL, so sánh lỗi nền: [Giai đoạn 28](GIAI_DOAN_28_CHAT_HO_TRO.md) và `evidence/gd28/`.
+
+
+## Phát hiện ngoài phạm vi Giai đoạn 29 (05/11/2026)
+
+- GD29-OBS-01: clean test cuối 314:22 failure+1 error, 0 skip; đều thuộc baseline606ead2. Test menu cũ đã cập nhật theo yêu cầu chuyển Hồ sơ xuống footer, không bỏ test. Test inbox mới6/6 và email3/3 PASS.
+- GD29-OBS-02: crawl 766 URL/4 vai trò không có HTTP4xx/5xx hoặc form POST thiếu CSRF; còn DNS lỗi CDN/font của layout cũ và tràn ngang POS (Admin/Nhân viên). Không sửa layout/POS ngoài phạm vi.
+- GD29-OBS-03: strict UI audit 247 findings toàn repo, gồm công cụ không theo được handler JS/CSS/combo dùng chung. Giữ raw JSON và không đánh dấu audit toàn repo PASS.
+- FAQ/new không còn lỗi500 khi mở URL cũ: endpoint được thay bằng redirect302 theo yêu cầu giai đoạn29, bảng FAQ vẫn giữ.
+- [Báo cáo](GIAI_DOAN_29_INBOX_NHAN_VIEN.md), bằng chứng docs/evidence/gd29.

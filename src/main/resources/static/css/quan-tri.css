@@ -427,3 +427,6 @@ html { scrollbar-color:var(--admin-scroll-thumb) var(--admin-scroll-track); scro
   margin-bottom: 16px;
 }
 
+
+/* Sidebar dài: chỉ menu cuộn, hồ sơ/đăng xuất luôn trong viewport. */
+.admin-sidebar{display:flex;flex-direction:column;overflow:hidden}.admin-brand,.admin-sidebar-footer{flex-shrink:0}.admin-nav{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}.admin-sidebar-footer{margin-top:12px}

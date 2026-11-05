@@ -162,8 +162,8 @@ public class AdminLlmChatbotEngine implements AdminChatbotEngine {
         }
 
         List<String> quickReplies = isAdmin
-                ? List.of("Doanh thu hôm nay", "Đơn chờ xử lý", "Sản phẩm sắp hết hàng", "Top bán chạy tuần này", "Khách chi tiêu nhiều nhất", "Phiếu hỗ trợ mới", "Hướng dẫn thao tác POS")
-                : List.of("Đơn chờ xử lý", "Sản phẩm sắp hết hàng", "Top bán chạy tuần này", "Phiếu hỗ trợ mới", "Hướng dẫn thao tác POS", "Kiểm tra tồn kho");
+                ? List.of("Doanh thu hôm nay", "Đơn chờ xử lý", "Sản phẩm sắp hết hàng", "Top bán chạy tuần này", "Khách chi tiêu nhiều nhất", "Tin nhắn mới", "Hướng dẫn thao tác POS")
+                : List.of("Đơn chờ xử lý", "Sản phẩm sắp hết hàng", "Top bán chạy tuần này", "Tin nhắn mới", "Hướng dẫn thao tác POS", "Kiểm tra tồn kho");
 
         return AdminChatbotResult.builder()
                 .response(ChatbotMessageResponse.builder()
@@ -221,8 +221,8 @@ public class AdminLlmChatbotEngine implements AdminChatbotEngine {
                         Map.of("keyword", Map.of("type", "string", "description", "Mã hoặc tên sản phẩm cần kiểm tra"))),
                 defineTool("trackInvoiceOrOrder", "Tra cứu thông tin chi tiết của đơn hàng/hóa đơn theo mã (DH...) hoặc SĐT khách hàng",
                         Map.of("query", Map.of("type", "string", "description", "Mã đơn hàng (DH000001) hoặc số điện thoại khách"))),
-                defineTool("getNewSupportTickets", "Xem số lượng và danh sách các phiếu hỗ trợ mới từ khách hàng", Map.of()),
-                defineTool("getInternalFaq", "Tra cứu tài liệu hướng dẫn thao tác nội bộ (POS, xử lý hóa đơn, nhập kho, phiếu hỗ trợ)",
+                defineTool("getNewSupportTickets", "Xem số tin nhắn chưa đọc và số hội thoại chưa ai nhận từ khách hàng", Map.of()),
+                defineTool("getInternalFaq", "Tra cứu tài liệu hướng dẫn thao tác nội bộ (POS, xử lý hóa đơn, nhập kho, chat với khách)",
                         Map.of("query", Map.of("type", "string", "description", "Câu hỏi hoặc từ khóa nghiệp vụ cần hướng dẫn")))
         );
     }

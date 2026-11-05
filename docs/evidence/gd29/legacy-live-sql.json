@@ -1,0 +1,27 @@
+{
+  "threads": [
+    {
+      "id": 1,
+      "ma": "CH0001",
+      "customer_id": 100,
+      "chua_doc_khach": 0,
+      "chua_doc_nhan_vien": 2
+    },
+    {
+      "id": 4,
+      "ma": "CH0004",
+      "khach_id": 100,
+      "chua_doc_khach": 0,
+      "chua_doc_nhan_vien": 0
+    }
+  ],
+  "messages": [
+    {
+      "id": 4,
+      "hoi_thoai_id": 4,
+      "nguoi_gui_loai": "NHAN_VIEN",
+      "noi_dung": "Phản hồi phiếu cũ trực tiếp mw2y3ly7",
+      "da_xem_luc": "2026-11-05T09:47:32.7337545"
+    }
+  ]
+}

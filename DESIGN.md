@@ -129,3 +129,8 @@ Checkout giữ màu primary #b94312, font Inter/system và token của he-thong-
 ### Giai đoạn 28 — Hỗ trợ khách hàng
 
 Giữ màu primary #b94312 và logo cửa hàng. Bong bóng khách nằm phải, nhân viên/trợ lý nằm trái, phân biệt bằng nhãn chữ và avatar. Cửa sổ desktop 390px, mobile toàn 100dvh; khóa cuộn và inert nền khi mở, khôi phục kiểu dáng/focus khi đóng. Thanh nhập cố định trong khung, lịch sử cuộn độc lập, không đẩy trang. Nút icon có title/aria-label và vùng bấm 40px. Nội dung dài wrap, ảnh giới hạn trong bong bóng. Chỉ tin mới được thêm vào aria-live, không dựng lại toàn bộ lịch sử mỗi lần đọc. Dùng dialog và combo-box.js đã có cho chọn đơn; không thêm bộ select riêng.
+
+
+### Giai đoạn 29 — Inbox nhân viên
+
+Trang /admin/chat là ngoại lệ danh sách 20 hội thoại tải thêm, ba khung: danh sách, lịch sử, thông tin khách. Dùng cùng chatbot.css và support-chat-view.js để hiển thị bong bóng/ảnh/thẻ/ngày/giờ với khung khách, không tạo renderer thứ hai. Giữ màu primary/font/token. Desktop bên phải là panel; dưới 1100px chuyển sang dialog, 375px chuyển danh sách ↔ hội thoại có nút quay lại. Header dùng icon Bootstrap Icons 1.10.5 cục bộ đã có, có title/aria-label; không CDN mới. Gợi ý mẫu và chọn sản phẩm/đơn là native dialog + combo-box.js. Sidebar chỉ vùng menu cuộn, hồ sơ/đăng xuất nằm chân luôn nhìn thấy. Âm báo mặc định tắt, lưu lựa chọn, quyền thông báo chỉ xin bằng nút người dùng bấm.

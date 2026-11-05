@@ -1,0 +1,37 @@
+{
+  "conversationId": 2,
+  "productCard": {
+    "kind": "product",
+    "id": 2,
+    "name": "Adidas Ultraboost",
+    "price": 2975000,
+    "url": "/products/2",
+    "image": "/anh/anh-san-pham-thay-the.svg"
+  },
+  "orderId": 674,
+  "foreignOrder": 403,
+  "photos": [
+    {
+      "mime": "image/png",
+      "url": "/api/support/2/images/8"
+    },
+    {
+      "mime": "image/jpeg",
+      "url": "/api/support/2/images/9"
+    },
+    {
+      "mime": "image/webp",
+      "url": "/api/support/2/images/10"
+    }
+  ],
+  "fakeImage": 400,
+  "largeImage": 400,
+  "imageOtherGuest": 403,
+  "retry": {
+    "clientId": "ea44bfbd-0867-485e-9ba2-1bec9bd6e5ff",
+    "id": 12,
+    "count": 2
+  },
+  "xssEscaped": true,
+  "masked": "mật khẩu [ĐÃ BẢO MẬT] thẻ ****-****-****"
+}

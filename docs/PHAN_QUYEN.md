@@ -26,3 +26,10 @@ Chức vụ chỉ Admin/ Nhân viên, ánh xạ ROLE_ADMIN/ROLE_EMPLOYEE, không
 | 501 | P12-0900 | employee.p120900 | QA → Nhân viên | ROLE_ADMIN → ROLE_EMPLOYEE |
 
 Chưa áp dụng trên DB thật. Ma trận này là tài liệu để xác nhận; bằng chứng tự động nằm trong báo cáo Giai đoạn 12.
+
+
+## Giai đoạn 29 — Chat với khách
+
+Nguồn quyền duy nhất vẫn là `security/AdminAccess.java`; cả menu và SecurityConfig dùng chung. `/admin/chat/**`, API cũ `/admin/support-chat/**` và kênh STOMP `/topic/support-staff` chỉ ROLE_ADMIN/ROLE_EMPLOYEE. Khách và ROLE_USER bị 403 ở REST và bị ERROR khi đăng ký kênh nhân viên. Mọi nhân viên được đọc/trả lời mọi hội thoại; phụ trách dùng assigned_user_id, không giới hạn quyền trả lời theo người nhận. Nhận/trả về/đóng/mở lại ghi audit người/thời gian. Không có xóa.
+
+Menu HỆ THỐNG/HỖ TRỢ cũ được thay theo yêu cầu; Hồ sơ của tôi và Đăng xuất giữ ở chân sidebar. URL phiếu/FAQ cũ chỉ chuyển hướng 302 tới /admin/chat, không còn quyền sửa dữ liệu qua màn cũ. Bảng phiếu và FAQ được giữ. FAQ đang hiển thị dành cho khách được dùng làm câu trả lời nhanh, FAQ nội bộ tiếp tục phục vụ trợ lý cửa hàng.

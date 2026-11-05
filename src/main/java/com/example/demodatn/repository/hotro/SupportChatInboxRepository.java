@@ -1,0 +1,26 @@
+package com.example.demodatn.repository.hotro;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+import com.example.demodatn.repository.donhang.RevenueCondition;
+import java.util.*;
+@Repository @RequiredArgsConstructor
+public class SupportChatInboxRepository {
+    private final JdbcTemplate jdbc;
+    private static final String ELIGIBLE="(c.customer_id IS NOT NULL OR c.khach_id IS NULL OR c.legacy_ticket_id IS NOT NULL)";
+    private static final String SEARCH=" AND (c.ma LIKE ? ESCAPE '!' OR c.ho_ten LIKE ? ESCAPE '!' OR c.lien_he LIKE ? ESCAPE '!' OR EXISTS(SELECT 1 FROM customers k WHERE k.id=COALESCE(c.customer_id,c.khach_id) AND (k.full_name LIKE ? ESCAPE '!' OR k.phone LIKE ? ESCAPE '!' OR k.email LIKE ? ESCAPE '!')) OR EXISTS(SELECT 1 FROM chat_tin_nhan m WHERE m.hoi_thoai_id=c.id AND m.noi_dung LIKE ? ESCAPE '!'))";
+    private String keyword(String q){return "%"+q.trim().replace("!","!!").replace("%","!%").replace("_","!_")+"%";}
+    public List<Map<String,Object>> list(String q,String tab,int page,int user){
+        String filter=switch(tab){case "unread"->" AND c.chua_doc_nhan_vien>0";case "unassigned"->" AND c.assigned_user_id IS NULL AND c.trang_thai<>N'DA_DONG'";case "mine"->" AND c.assigned_user_id="+user;case "closed"->" AND c.trang_thai=N'DA_DONG'";case "all"->"";default->throw new IllegalArgumentException("Bộ lọc không hợp lệ.");};
+        String k=keyword(q);
+        return jdbc.queryForList("SELECT c.id,c.ma code,CASE WHEN k.user_id IS NOT NULL THEN k.full_name ELSE c.ho_ten END name,c.lien_he contact,c.trang_thai status,c.last_message_at lastAt,c.chua_doc_nhan_vien unread,CASE WHEN k.user_id IS NOT NULL THEN k.id END customerId,c.assigned_user_id assignedUserId,COALESCE(e.full_name,u.username) assignedName,COALESCE((SELECT TOP 1 CASE WHEN m.loai=N'ANH' THEN N'[Ảnh]' WHEN m.loai=N'SAN_PHAM' THEN N'[Sản phẩm]' WHEN m.loai=N'DON_HANG' THEN N'[Đơn hàng]' ELSE LEFT(m.noi_dung,120) END FROM chat_tin_nhan m WHERE m.hoi_thoai_id=c.id ORDER BY m.id DESC),N'') preview FROM chat_hoi_thoai c LEFT JOIN customers k ON k.id=COALESCE(c.customer_id,c.khach_id) LEFT JOIN users u ON u.id=c.assigned_user_id LEFT JOIN employees e ON e.user_id=u.id WHERE "+ELIGIBLE+SEARCH+filter+" ORDER BY c.last_message_at DESC,c.id DESC OFFSET ? ROWS FETCH NEXT 21 ROWS ONLY",k,k,k,k,k,k,k,Math.max(0,Math.min(page,10000))*20);
+    }
+    public Map<String,Object> counts(String q,int user){String k=keyword(q);return jdbc.queryForMap("SELECT COUNT(*) total,COALESCE(SUM(CASE WHEN c.chua_doc_nhan_vien>0 THEN 1 ELSE 0 END),0) unread,COALESCE(SUM(CASE WHEN c.assigned_user_id IS NULL AND c.trang_thai<>N'DA_DONG' THEN 1 ELSE 0 END),0) unassigned,COALESCE(SUM(CASE WHEN c.assigned_user_id=? THEN 1 ELSE 0 END),0) mine,COALESCE(SUM(CASE WHEN c.trang_thai=N'DA_DONG' THEN 1 ELSE 0 END),0) closed,COALESCE(SUM(c.chua_doc_nhan_vien),0) unreadMessages FROM chat_hoi_thoai c WHERE "+ELIGIBLE+SEARCH,user,k,k,k,k,k,k,k);}
+    public Map<String,Object> detail(long id){return jdbc.queryForMap("SELECT c.id,c.ma code,CASE WHEN k.user_id IS NOT NULL THEN k.full_name ELSE c.ho_ten END name,c.lien_he contact,c.trang_thai status,c.assigned_user_id assignedUserId,COALESCE(e.full_name,u.username) assignedName,CASE WHEN k.user_id IS NOT NULL THEN k.id END customerId,COALESCE(CASE WHEN k.user_id IS NOT NULL THEN k.phone END,CASE WHEN c.lien_he NOT LIKE '%@%' THEN c.lien_he END) phone,COALESCE(CASE WHEN k.user_id IS NOT NULL THEN k.email END,CASE WHEN c.lien_he LIKE '%@%' THEN c.lien_he END) email FROM chat_hoi_thoai c LEFT JOIN customers k ON k.id=COALESCE(c.customer_id,c.khach_id) LEFT JOIN users u ON u.id=c.assigned_user_id LEFT JOIN employees e ON e.user_id=u.id WHERE c.id=?",id);}
+    public Map<String,Object> metrics(int customer){return jdbc.queryForMap("SELECT COUNT(*) ordersCount,COALESCE(SUM(CASE WHEN "+RevenueCondition.SQL+" THEN "+RevenueCondition.AMOUNT+" ELSE 0 END),0) spending FROM orders o WHERE o.customer_id=?",customer);}
+    public List<Map<String,Object>> orders(int customer){return jdbc.queryForList("SELECT TOP 5 o.id,o.order_code code,o.final_amount total,i.id invoiceId FROM orders o LEFT JOIN invoices i ON i.order_id=o.id WHERE o.customer_id=? ORDER BY o.created_at DESC,o.id DESC",customer);}
+    public Integer invoice(int order){var ids=jdbc.queryForList("SELECT id FROM invoices WHERE order_id=?",Integer.class,order);return ids.isEmpty()?null:ids.get(0);}
+    public List<Map<String,Object>> products(String q){String k=keyword(q);return jdbc.queryForList("SELECT TOP 12 p.id,p.code,p.name FROM products p WHERE p.status=1 AND EXISTS(SELECT 1 FROM product_variants v WHERE v.product_id=p.id AND v.status=1) AND (p.code LIKE ? ESCAPE '!' OR p.name LIKE ? ESCAPE '!') ORDER BY p.id DESC",k,k);}
+    public List<Map<String,Object>> faq(){return jdbc.queryForList("SELECT cau_hoi title,tra_loi answer FROM chatbot_faq WHERE hien_thi=1 AND doi_tuong='KHACH' ORDER BY id");}
+    public List<Map<String,Object>> audit(long id){return jdbc.queryForList("SELECT a.id,a.actor_name actor,a.hanh_dong action,a.created_at createdAt FROM chat_action_audit a LEFT JOIN users u ON u.id=a.user_id WHERE a.hoi_thoai_id=? ORDER BY a.id",id);}
+}

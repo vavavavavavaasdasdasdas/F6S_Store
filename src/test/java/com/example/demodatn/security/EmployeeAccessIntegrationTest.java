@@ -46,7 +46,8 @@ class EmployeeAccessIntegrationTest {
   var html=mvc.perform(get("/admin/inventory").with(user(username).roles("EMPLOYEE"))).andReturn().getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8);
   assertFalse(html.contains("/admin/inventory/adjust/"));String nav=html.substring(html.indexOf("<nav class=\"admin-nav\""));nav=nav.substring(0,nav.indexOf("</nav>"));
   for(String denied:List.of("/admin/products-crud","/admin/employees","/admin/statistics","/admin/dashboard","HỆ THỐNG"))assertFalse(nav.contains(denied),denied);
-  assertTrue(nav.contains("/admin/inventory")&&nav.contains("/admin/account")&&nav.contains("/admin/pos"));
+  assertTrue(nav.contains("/admin/inventory")&&nav.contains("/admin/chat")&&nav.contains("/admin/pos"));
+  assertFalse(nav.contains("/admin/account"));String footer=html.substring(html.indexOf("class=\"admin-sidebar-footer\""));assertTrue(footer.contains("/admin/account")&&footer.contains("/logout"));
   mvc.perform(post("/admin/accounts/username-suggestion").with(user(username).roles("EMPLOYEE")).with(csrf()).param("email","g12-suggestion@example.test")).andExpect(status().isOk()).andExpect(jsonPath("$.username").value("g12-suggestion"));
   System.out.println("GD12 MATRIX employee allowed=6 routes HTTP200; denied=14 HTTP403; Admin same routes HTTP200; inventory adjustment hidden");
  }
