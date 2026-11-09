@@ -7,8 +7,7 @@ import lombok.Data;
 @Data
 public class EmployeeDto {
     private Integer id;
-    @NotBlank(message="Nhập mã.")
-    @Pattern(regexp="[A-Za-z0-9_-]{1,20}",message="Mã gồm tối đa 20 chữ, số, dấu - hoặc _.")
+    @Pattern(regexp="(?:|[A-Za-z0-9_-]{1,20})",message="Mã gồm tối đa 20 chữ, số, dấu - hoặc _.")
     private String employeeCode;
     @NotBlank(message="Nhập họ tên.") @Size(max=100,message="Họ tên tối đa 100 ký tự.")
     private String fullName;

@@ -89,6 +89,7 @@ public class AdminCustomerController {
     @GetMapping("/create")
     public String create(Model model) {
         var dto = new CustomerDto();
+        dto.setCustomerCode(people.nextCustomerCode());
         dto.getAddresses().add(new CustomerDto.AddressBlock());
         dto.setDefaultAddressIndex(0);
         model.addAttribute("customer", dto);

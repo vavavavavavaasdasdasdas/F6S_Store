@@ -875,7 +875,7 @@ public class AdminPosController {
             form.setFullName(fullName != null ? fullName.trim() : "");
             form.setPhone(phone != null ? phone.trim() : "");
             form.setEmail(email != null && !email.isBlank() ? email.trim() : null);
-            String code = "KH-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase(Locale.ROOT);
+            String code = people.nextCustomerCode();
             form.setCustomerCode(code);
             form.setProvinceId(provinceId != null ? provinceId : 1);
             form.setWardId(wardId != null ? wardId : 1);

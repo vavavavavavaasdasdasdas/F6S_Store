@@ -38,6 +38,46 @@ public class PeopleService {
     private final com.example.demodatn.security.AdminAccess access;
     private final com.example.demodatn.service.khachhang.ShippingAddressService addressService;
     private final com.example.demodatn.repository.nhanvien.AccountIssueRepository accountIssues;
+    private final org.springframework.jdbc.core.JdbcTemplate jdbc;
+
+    
+    @Transactional(readOnly = true)
+    public synchronized String nextEmployeeCode() {
+        Integer maxNum = null;
+        try {
+            maxNum = jdbc.queryForObject(
+                "SELECT MAX(TRY_CAST(SUBSTRING(employee_code, 3, 20) AS INT)) FROM employees WHERE employee_code LIKE 'NV[0-9]%'",
+                Integer.class
+            );
+        } catch (Exception ignored) {
+        }
+        int next = (maxNum != null ? maxNum : 0) + 1;
+        String candidate = String.format(Locale.ROOT, "NV%05d", next);
+        while (employees.existsByEmployeeCodeIgnoreCaseAndIdNot(candidate, -1)) {
+            next++;
+            candidate = String.format(Locale.ROOT, "NV%05d", next);
+        }
+        return candidate;
+    }
+
+    @Transactional(readOnly = true)
+    public synchronized String nextCustomerCode() {
+        Integer maxNum = null;
+        try {
+            maxNum = jdbc.queryForObject(
+                "SELECT MAX(TRY_CAST(SUBSTRING(customer_code, 3, 20) AS INT)) FROM customers WHERE customer_code LIKE 'KH[0-9]%'",
+                Integer.class
+            );
+        } catch (Exception ignored) {
+        }
+        int next = (maxNum != null ? maxNum : 0) + 1;
+        String candidate = String.format(Locale.ROOT, "KH%05d", next);
+        while (customers.existsByCustomerCodeIgnoreCaseAndIdNot(candidate, -1)) {
+            next++;
+            candidate = String.format(Locale.ROOT, "KH%05d", next);
+        }
+        return candidate;
+    }
 
     public Customer customer(Integer id) {
         return customers.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -82,6 +122,9 @@ public class PeopleService {
     @Transactional
     public Customer saveCustomer(CustomerDto form) {
         int id=form.getId()==null ? -1 : form.getId();
+        if(form.getCustomerCode() == null || form.getCustomerCode().trim().isEmpty()) {
+            form.setCustomerCode(nextCustomerCode());
+        }
         if(customers.existsByCustomerCodeIgnoreCaseAndIdNot(form.getCustomerCode().trim(),id))throw new PeopleValidationException("customerCode","Mã khách hàng đã tồn tại.");
         String normEmail = (form.getEmail() == null || form.getEmail().isBlank()) ? null : email(form.getEmail());
         if(normEmail != null && customers.existsByEmailIgnoreCaseAndIdNot(normEmail,id))throw new PeopleValidationException("email","Thư điện tử đã tồn tại.");
@@ -115,6 +158,9 @@ public class PeopleService {
     public Employee saveEmployeeGenerated(EmployeeDto form,String temporaryHash) { return persistEmployee(form,temporaryHash,true); }
     private Employee persistEmployee(EmployeeDto form,String temporaryHash,boolean generated) {
         int id=form.getId()==null ? -1 : form.getId();
+        if(form.getEmployeeCode() == null || form.getEmployeeCode().trim().isEmpty()) {
+            form.setEmployeeCode(nextEmployeeCode());
+        }
         if(employees.existsByEmployeeCodeIgnoreCaseAndIdNot(form.getEmployeeCode().trim(),id))throw new PeopleValidationException("employeeCode","Mã nhân viên đã tồn tại.");
         if(employees.existsByEmailIgnoreCaseAndIdNot(email(form.getEmail()),id))throw new PeopleValidationException("email","Thư điện tử đã tồn tại.");
         if(employees.existsByPhoneAndIdNot(phone(form.getPhone()),id))throw new PeopleValidationException("phone","Số điện thoại đã tồn tại.");

@@ -19,8 +19,7 @@ public class CustomerDto {
     private Integer id;
     @Pattern(regexp="(?:|[A-Za-z0-9_.-]{3,50})",message="Tên đăng nhập gồm 3–50 chữ, số, dấu chấm, gạch dưới hoặc gạch ngang.")
     private String username;
-    @NotBlank(message="Nhập mã.")
-    @Pattern(regexp="[A-Za-z0-9_-]{1,20}",message="Mã gồm tối đa 20 chữ, số, dấu - hoặc _.")
+    @Pattern(regexp="(?:|[A-Za-z0-9_-]{1,20})",message="Mã gồm tối đa 20 chữ, số, dấu - hoặc _.")
     private String customerCode;
     @NotBlank(message="Nhập họ tên.") @Size(max=100,message="Họ tên tối đa 100 ký tự.")
     private String fullName;

@@ -98,7 +98,7 @@ public class AdminEmployeeController {
         return "admin/nhan-vien/danh-sach";
     }
     @GetMapping("/create")
-    public String create(Model model) { model.addAttribute("employee",new EmployeeDto());return "admin/nhan-vien/bieu-mau"; }
+    public String create(Model model) { var dto = new EmployeeDto(); dto.setEmployeeCode(people.nextEmployeeCode()); model.addAttribute("employee", dto); return "admin/nhan-vien/bieu-mau"; }
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id,Model model) {
         var item=people.employee(id);var form=new EmployeeDto();BeanUtils.copyProperties(item,form);
