@@ -43,7 +43,13 @@ public class AccountProvisioningService {
     // Deliberately not a record/@Data: a credential must never acquire a generated toString().
     private static final class Issued {
         final int personId,userId;final String hash,password,email,name,username;
-        Issued(int personId,User user,String password){this.personId=personId;userId=user.getId();hash=user.getPassword();this.password=password;email=user.getEmail();name=user.getFullName();username=user.getUsername();}
+        final boolean isEmployee;final String position;
+        Issued(int personId,User user,String password){this(personId,user,password,false,null);}
+        Issued(int personId,User user,String password,boolean isEmployee,String position){
+            this.personId=personId;userId=user.getId();hash=user.getPassword();this.password=password;
+            email=user.getEmail();name=user.getFullName();username=user.getUsername();
+            this.isEmployee=isEmployee;this.position=position;
+        }
     }
     public static String temporaryPassword() {
         String upper="ABCDEFGHJKLMNPQRSTUVWXYZ",lower="abcdefghijkmnopqrstuvwxyz",digits="23456789",pool=upper+lower+digits;
@@ -85,7 +91,7 @@ public class AccountProvisioningService {
     }
     private Outcome deliver(Issued issued) {
         if(issued.password==null)return new Outcome(issued.personId,false,false);
-        boolean sent=mail.send(issued.email,issued.name,issued.username,issued.password);
+        boolean sent=mail.sendAccountMail(issued.email,issued.name,issued.username,issued.password,issued.isEmployee,issued.position);
         new TransactionTemplate(transactions).executeWithoutResult(s->issues.delivery(issued.userId,issued.hash,sent));
         return new Outcome(issued.personId,true,sent);
     }
@@ -104,7 +110,7 @@ public class AccountProvisioningService {
                 user.setUsername(username(form.getUsername()==null||form.getUsername().isBlank()?user.getUsername():form.getUsername(),email,uid));
                 user.setEmail(email);user.setFullName(customer.getFullName());user.setPhone(customer.getPhone());
                 customer.setUser(users.saveAndFlush(user));customers.saveAndFlush(customer);
-                return new Issued(customer.getId(),user,password);
+                return new Issued(customer.getId(),user,password,false,null);
             }
             // Editing an old customer without an account does not issue credentials implicitly.
             User empty=new User();empty.setId(-1);return new Issued(customer.getId(),empty,null);
@@ -123,7 +129,7 @@ public class AccountProvisioningService {
             var employee=people.saveEmployeeGenerated(form,password==null?null:encoder.encode(password));
             User user=employee.getUser();user.setFullName(employee.getFullName());user.setPhone(employee.getPhone());user.setEmail(email);
             if(password!=null){user.setMustChangePassword(true);user.setCredentialMailFailed(true);user.setCredentialMailPendingUntil(LocalDateTime.now().plusMinutes(1));}
-            users.saveAndFlush(user);return new Issued(employee.getId(),user,password);
+            users.saveAndFlush(user);return new Issued(employee.getId(),user,password,true,employee.getPosition());
         });
         return deliver(issued);
     }
@@ -150,7 +156,7 @@ public class AccountProvisioningService {
             if(linked==null)user.setStatus(Boolean.TRUE.equals(c.getStatus()));
             String password=temporaryPassword();beginIssue(user,password);users.saveAndFlush(user);
             if(customer){c.setUser(user);customers.saveAndFlush(c);}
-            return new Issued(id,user,password);
+            return new Issued(id,user,password,!customer,customer?null:e.getPosition());
         });
         return deliver(issued);
     }

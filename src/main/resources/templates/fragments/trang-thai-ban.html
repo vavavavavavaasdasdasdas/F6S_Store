@@ -78,11 +78,11 @@
 </label>
 </form>
 
-<form th:fragment="employeeSwitch(id,active,name,isSelf,isLastAdmin)" method="post" th:action="@{/admin/employees/status/{id}(id=${id})}" class="d-inline-flex align-items-center catalog-switch-form" data-catalog-switch="employee"
+<form th:fragment="employeeSwitch(id,active,name,isSelf,isLastAdmin,isOtherAdmin)" method="post" th:action="@{/admin/employees/status/{id}(id=${id})}" class="d-inline-flex align-items-center catalog-switch-form" data-catalog-switch="employee"
  th:attr="data-confirm-title='Vô hiệu hóa nhân viên?',data-confirm-off=${'Khi tắt, tài khoản của nhân viên &quot;' + name + '&quot; sẽ bị khóa ngay lập tức và đăng xuất. Lịch sử làm việc được giữ nguyên.'}">
 <input type="hidden" name="enabled" th:value="${active==true}"><input type="hidden" name="active" th:value="${active==true}">
-<label class="discount-switch" th:title="${isSelf==true ? 'Không thể tự tắt tài khoản của chính mình' : (isLastAdmin==true ? 'Hệ thống phải có ít nhất 1 Admin hoạt động' : (active==true ? 'Đang hoạt động — bấm để tắt' : 'Đã tắt — bấm để bật lại'))}">
-<input type="checkbox" role="switch" th:checked="${active==true}" th:disabled="${isSelf==true or isLastAdmin==true}" th:attr="aria-checked=${active==true ? 'true' : 'false'},aria-label=${'Trạng thái hoạt động nhân viên ' + name}">
+<label class="discount-switch" th:title="${isSelf==true ? 'Không thể tự tắt tài khoản của chính mình' : (isOtherAdmin==true ? 'Không thể thay đổi trạng thái của quản trị viên khác' : (isLastAdmin==true ? 'Hệ thống phải có ít nhất 1 Admin hoạt động' : (active==true ? 'Đang hoạt động — bấm để tắt' : 'Đã tắt — bấm để bật lại')))}">
+<input type="checkbox" role="switch" th:checked="${active==true}" th:disabled="${isSelf==true or isLastAdmin==true or isOtherAdmin==true}" th:attr="aria-checked=${active==true ? 'true' : 'false'},aria-label=${'Trạng thái hoạt động nhân viên ' + name}">
 <span class="discount-switch-track" aria-hidden="true"></span>
 <span class="visually-hidden" data-switch-text th:text="${active==true ? 'Đang hoạt động' : 'Đã tắt'}"></span>
 </label>

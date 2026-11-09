@@ -100,23 +100,50 @@ public class AdminEmployeeController {
     @GetMapping("/create")
     public String create(Model model) { var dto = new EmployeeDto(); dto.setEmployeeCode(people.nextEmployeeCode()); model.addAttribute("employee", dto); return "admin/nhan-vien/bieu-mau"; }
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable Integer id,Model model) {
-        var item=people.employee(id);var form=new EmployeeDto();BeanUtils.copyProperties(item,form);
+    public String edit(@PathVariable Integer id,Model model,RedirectAttributes flash) {
+        var item=people.employee(id);
+        boolean isSelf = people.isSelf(item.getUser());
+        boolean isOtherAdmin = item.getUser() != null && item.getUser().getRole() != null 
+                && "ROLE_ADMIN".equals(item.getUser().getRole().getName()) && !isSelf;
+        if (isOtherAdmin) {
+            flash.addFlashAttribute("error", "Quản trị viên không thể chỉnh sửa thông tin của quản trị viên khác.");
+            return "redirect:/admin/employees/detail/" + id;
+        }
+        var form=new EmployeeDto();BeanUtils.copyProperties(item,form);
         form.setUsername(item.getUser().getUsername());
         model.addAttribute("employee",form);return "admin/nhan-vien/bieu-mau";
     }
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Integer id,@RequestParam(defaultValue="0") String page,Model model) {
-        var item=people.employee(id);model.addAttribute("person",item);model.addAttribute("self",people.isSelf(item.getUser()));
+        var item=people.employee(id);
+        boolean isSelf = people.isSelf(item.getUser());
+        boolean isOtherAdmin = item.getUser() != null && item.getUser().getRole() != null 
+                && "ROLE_ADMIN".equals(item.getUser().getRole().getName()) && !isSelf;
+        model.addAttribute("person",item);
+        model.addAttribute("self",isSelf);
+        model.addAttribute("isOtherAdmin",isOtherAdmin);
+        model.addAttribute("canEdit",!isOtherAdmin);
         return "admin/nhan-vien/chi-tiet";
     }
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("employee") EmployeeDto form,BindingResult errors,Model model,RedirectAttributes flash) {
+        if (form.getId() != null) {
+            var existing = people.employee(form.getId());
+            if (existing != null && existing.getUser() != null && existing.getUser().getRole() != null 
+                    && "ROLE_ADMIN".equals(existing.getUser().getRole().getName()) && !people.isSelf(existing.getUser())) {
+                flash.addFlashAttribute("error", "Quản trị viên không thể chỉnh sửa thông tin của quản trị viên khác.");
+                return "redirect:/admin/employees/detail/" + form.getId();
+            }
+        }
         if(!errors.hasErrors()) {
             try {
                 var saved=accounts.saveEmployee(form);flash.addFlashAttribute(saved.issued()&&!saved.sent()?"warning":"message",saved.message());
                 return "redirect:/admin/employees/detail/"+saved.personId();
             } catch(PeopleValidationException ex) { errors.rejectValue(ex.getField(),"invalid",ex.getMessage()); }
+            catch(org.springframework.security.access.AccessDeniedException ex) {
+                flash.addFlashAttribute("error", ex.getMessage());
+                return form.getId() != null ? "redirect:/admin/employees/detail/" + form.getId() : "redirect:/admin/employees";
+            }
             catch(DataIntegrityViolationException ex) { errors.reject("duplicate","Dữ liệu mã/thư điện tử/SĐT/căn cước/tài khoản vừa được sử dụng. Kiểm tra lại trước khi lưu."); }
         }
         form.setPassword(null);
@@ -158,6 +185,12 @@ public class AdminEmployeeController {
     }
     @PostMapping("/{id}/send-account")
     public String sendAccount(@PathVariable Integer id,@RequestParam(defaultValue="false") boolean confirmed,RedirectAttributes flash) {
+        var item = people.employee(id);
+        if (item.getUser() != null && item.getUser().getRole() != null 
+                && "ROLE_ADMIN".equals(item.getUser().getRole().getName()) && !people.isSelf(item.getUser())) {
+            flash.addFlashAttribute("error", "Quản trị viên không thể cấp lại thông tin của quản trị viên khác.");
+            return "redirect:/admin/employees/detail/" + id;
+        }
         try {var result=accounts.resend("employees",id,confirmed);flash.addFlashAttribute(result.sent()?"message":"warning",result.message());}
         catch(PeopleValidationException ex){flash.addFlashAttribute("warning",ex.getMessage());}
         return "redirect:/admin/employees/detail/"+id;

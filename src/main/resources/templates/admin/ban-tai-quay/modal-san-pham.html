@@ -7,14 +7,12 @@
             <thead>
                 <tr>
                     <th scope="col" style="width: 45px;" class="text-center">STT</th>
-                    <th scope="col" style="width: 80px;">Mã SP</th>
-                    <th scope="col" style="width: 90px;">Mã biến thể</th>
+                    <th scope="col" style="width: 90px;">Mã SP</th>
                     <th scope="col">Tên sản phẩm</th>
-                    <th scope="col" style="width: 55px;" class="text-center">Ảnh</th>
                     <th scope="col" style="width: 100px;">Màu sắc</th>
-                    <th scope="col" style="width: 90px;">Chất liệu</th>
-                    <th scope="col" style="width: 90px;">Đế giày</th>
-                    <th scope="col" style="width: 70px;" class="text-center">Kích cỡ</th>
+                    <th scope="col" style="width: 100px;">Chất liệu</th>
+                    <th scope="col" style="width: 100px;">Đế giày</th>
+                    <th scope="col" style="width: 75px;" class="text-center">Kích cỡ</th>
                     <th scope="col" style="width: 85px;" class="text-center">Tồn kho</th>
                     <th scope="col" style="width: 130px;">Giá bán</th>
                     <th scope="col" style="width: 130px;">Khuyến mãi</th>
@@ -23,19 +21,13 @@
             </thead>
             <tbody>
                 <tr th:if="${isEmpty}">
-                    <td colspan="13" class="text-center py-4 text-muted">Không có sản phẩm nào phù hợp với bộ lọc hiện tại.</td>
+                    <td colspan="11" class="text-center py-4 text-muted">Không có sản phẩm nào phù hợp với bộ lọc hiện tại.</td>
                 </tr>
                 <tr th:each="v,iter : ${variants}" class="pos-modal-row" th:data-variant-id="${v.id}">
                     <td class="row-number text-center" th:text="${currentPage * 12 + iter.count}">1</td>
                     <td class="small fw-semibold text-muted" th:text="${v.productCode}">SP001</td>
-                    <td class="small text-secondary" th:text="${v.variantCode}">BT001</td>
                     <td>
                         <span class="fw-semibold text-dark" th:text="${v.productName}">Tên sản phẩm</span>
-                    </td>
-                    <td class="text-center">
-                        <img class="pos-modal-thumb rounded border"
-                             th:src="${v.imageUrl != null and !v.imageUrl.isBlank() ? v.imageUrl : '/images/placeholder.png'}"
-                             alt="Ảnh sản phẩm" loading="lazy">
                     </td>
                     <td>
                         <div class="d-flex align-items-center gap-2">

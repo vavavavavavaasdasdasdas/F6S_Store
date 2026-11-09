@@ -168,6 +168,9 @@ public class PeopleService {
         String rawPos=form.getPosition();
         String resolvedPosition = resolvePosition(rawPos);
         Employee e=form.getId()==null ? new Employee() : employees.findForUpdate(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if(e.getId()!=null && e.getUser()!=null && e.getUser().getRole()!=null && "ROLE_ADMIN".equals(e.getUser().getRole().getName()) && !isSelf(e.getUser())) {
+            throw new org.springframework.security.access.AccessDeniedException("Quản trị viên không thể chỉnh sửa thông tin của quản trị viên khác.");
+        }
         User u=e.getUser()==null ? new User() : e.getUser();
         String username=form.getUsername().trim().toLowerCase(Locale.ROOT);
         if(users.existsByUsernameIgnoreCaseAndIdNot(username,u.getId()==null ? -1 : u.getId()))throw new PeopleValidationException("username","Tên đăng nhập đã tồn tại.");
@@ -207,6 +210,9 @@ public class PeopleService {
     @Transactional
     public void employeeStatus(Integer id,boolean enabled) {
         Employee e=employees.findForUpdate(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if(e.getUser()!=null && e.getUser().getRole()!=null && "ROLE_ADMIN".equals(e.getUser().getRole().getName()) && !isSelf(e.getUser())) {
+            throw new IllegalArgumentException("Không thể thay đổi trạng thái của quản trị viên khác.");
+        }
         if(!enabled)protectSelf(e.getUser());
         e.setStatus(enabled);employees.saveAndFlush(e);syncAccount(e.getUser());
     }
