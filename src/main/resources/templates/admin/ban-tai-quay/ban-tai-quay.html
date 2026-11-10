@@ -121,11 +121,8 @@
                             <tr>
                                 <th scope="col" style="width: 45px;">STT</th>
                                 <th scope="col">Mã SP</th>
-                                <th scope="col">Mã biến thể</th>
                                 <th scope="col">Tên sản phẩm</th>
                                 <th scope="col">Màu sắc</th>
-                                <th scope="col">Chất liệu</th>
-                                <th scope="col">Đế giày</th>
                                 <th scope="col">Kích cỡ</th>
                                 <th scope="col" style="width: 80px;">Số lượng</th>
                                 <th scope="col" class="text-end">Đơn giá</th>
@@ -135,22 +132,19 @@
                         </thead>
                         <tbody>
                             <tr th:if="${posCart.empty}">
-                                <td colspan="12" class="text-center py-5 text-muted pos-empty-cart">
+                                <td colspan="9" class="text-center py-5 text-muted pos-empty-cart">
                                     Giỏ hàng trống.
                                 </td>
                             </tr>
                             <tr th:each="i, iter : ${posCart}" class="pos-line-item" th:data-variant-id="${i.variantId}">
                                 <td class="row-number text-center" th:text="${iter.count}">1</td>
                                 <td th:text="${i.productCode ?: '—'}">SP001</td>
-                                <td th:text="${i.variantCode ?: '—'}">BT001</td>
                                 <td>
                                     <strong th:text="${i.productName}">Giày Sneaker</strong>
                                     <div class="text-warning-emphasis small" th:if="${lineWarnings.containsKey(i.variantId)}"
                                          th:text="${lineWarnings.get(i.variantId)}" role="alert"></div>
                                 </td>
                                 <td th:text="${i.colorName ?: '—'}">Trắng</td>
-                                <td th:text="${i.materialName ?: '—'}">Da</td>
-                                <td th:text="${i.soleName ?: '—'}">Cao su</td>
                                 <td class="text-center">
                                     <span class="badge bg-light text-dark border px-2 py-1" th:text="${i.size}">40</span>
                                 </td>

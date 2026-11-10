@@ -167,7 +167,7 @@
         if (!cartItems || cartItems.length === 0) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="12" class="text-center py-5 text-muted pos-empty-cart">
+                    <td colspan="9" class="text-center py-5 text-muted pos-empty-cart">
                         Giỏ hàng trống.
                     </td>
                 </tr>
@@ -179,13 +179,10 @@
             <tr class="pos-line-item" data-variant-id="${item.variantId}">
                 <td class="row-number text-center">${idx + 1}</td>
                 <td>${item.productCode || '—'}</td>
-                <td>${item.variantCode || '—'}</td>
                 <td>
                     <strong>${item.productName || ''}</strong>
                 </td>
                 <td>${item.colorName || '—'}</td>
-                <td>${item.materialName || '—'}</td>
-                <td>${item.soleName || '—'}</td>
                 <td class="text-center">
                     <span class="badge bg-light text-dark border px-2 py-1">${item.size || ''}</span>
                 </td>
@@ -373,7 +370,7 @@
                     if (!tbody.querySelector('.pos-line-item')) {
                         tbody.innerHTML = `
                             <tr>
-                                <td colspan="12" class="text-center py-5 text-muted pos-empty-cart">
+                                <td colspan="9" class="text-center py-5 text-muted pos-empty-cart">
                                     Giỏ hàng trống.
                                 </td>
                             </tr>
