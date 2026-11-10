@@ -8,15 +8,42 @@
 <dt class="col-sm-4">Vai trò</dt><dd class="col-sm-8" th:text="${account.role == null ? 'Chưa có vai trò' : (account.role.name=='ROLE_ADMIN'?'Quản trị viên':account.role.name=='ROLE_EMPLOYEE'?'Nhân viên':account.role.name=='ROLE_USER'?'Khách hàng':'Quyền khác')}"></dd>
 <dt class="col-sm-4">Trạng thái</dt><dd class="col-sm-8" th:text="${account.status == true ? 'Đang hoạt động' : 'Đã vô hiệu hóa'}"></dd>
 <dt class="col-sm-4">Ngày tạo</dt><dd class="col-sm-8" th:text="${account.createdAt != null ? #temporals.format(account.createdAt,'dd/MM/yyyy HH:mm') : 'Chưa có dữ liệu'}"></dd></dl></div>
+
 <div class="row g-4 mt-1" th:if="${account.role != null and account.role.name == 'ROLE_ADMIN'}">
 <div class="col-12"><div class="admin-panel"><div class="panel-heading"><h2>Cấu hình &amp; Thử nghiệm Email</h2></div>
-<p th:if="${mailConfigured}" class="text-success fw-bold">✓ Máy chủ email đã cấu hình: <span th:text="${mailHost} + ':' + ${mailPort}"></span> (Người gửi: <span th:text="${mailFrom}"></span>)</p>
-<p th:unless="${mailConfigured}" class="text-warning-emphasis fw-bold">⚠ Chưa cấu hình máy chủ email. Tài khoản mới sẽ không được gửi mail. Hãy xem file docs/CAU_HINH_EMAIL.md để cấu hình.</p>
-<p class="field-help">Thử nghiệm gửi email từ hệ thống tới hòm thư quản trị viên (<strong th:text="${accountProfile.email ?: account.email}"></strong>) để xác thực kết nối SMTP.</p>
+<div class="mb-3">
+    <div th:if="${mailConfigured}" class="alert alert-success d-flex align-items-center mb-2" role="status">
+        <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+        <div>
+            <div class="fw-bold" th:text="${mailStatusText}">Email: Đã cấu hình</div>
+            <small class="text-muted">Cấu hình được nạp từ file application-local.properties hoặc biến môi trường.</small>
+        </div>
+    </div>
+    <div th:unless="${mailConfigured}" class="alert alert-warning d-flex align-items-center mb-2" role="status">
+        <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+        <div>
+            <div class="fw-bold" th:text="${mailStatusText}">Email: Chưa cấu hình</div>
+            <small>Tài khoản mới tạo và đơn hàng sẽ không thể gửi email tự động. Vui lòng xem hướng dẫn tại <a href="/docs/CAU_HINH_EMAIL.md" target="_blank" class="alert-link">docs/CAU_HINH_EMAIL.md</a>.</small>
+        </div>
+    </div>
+</div>
+
 <form th:action="@{/admin/account/test-email}" method="post" data-admin-form novalidate>
-<button class="btn btn-outline-primary" type="submit" id="btn-test-email">Gửi email thử</button>
+    <div class="row g-3 align-items-end">
+        <div class="col-sm-8 col-md-6">
+            <label for="recipientEmail" class="form-label fw-semibold">Người nhận email thử</label>
+            <input type="email" id="recipientEmail" name="recipientEmail" class="form-control" th:value="${adminEmail}" placeholder="nhap-email-nhan@example.com" required>
+            <div class="form-text">Mặc định gửi tới email quản trị viên hiện tại, bạn có thể nhập email khác để kiểm tra.</div>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" type="submit" id="btn-test-email">
+                <i class="bi bi-send me-1"></i> Gửi email thử
+            </button>
+        </div>
+    </div>
 </form>
 </div></div></div>
+
 <div class="row g-4 mt-1"><div class="col-lg-6"><div class="admin-panel"><div class="panel-heading"><h2>Sửa thông tin</h2></div>
 <form th:action="@{/admin/account/profile}" method="post" th:object="${profileForm}" data-admin-form novalidate>
 <div class="sales-field"><label for="fullName">Họ tên</label><input id="fullName" class="form-control" th:field="*{fullName}" required maxlength="100" aria-describedby="fullName-error"><p id="fullName-error" class="field-error"><span th:errors="*{fullName}"></span></p></div>

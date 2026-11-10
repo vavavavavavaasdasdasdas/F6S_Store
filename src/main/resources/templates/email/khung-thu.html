@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(noiDung)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${emailSubject}">[F6 Shop]</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8f9fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #272d2d; -webkit-font-smoothing: antialiased;">
+
+    <!-- Preheader ẩn (tối đa 90 ký tự) hiển thị xem trước trong hòm thư -->
+    <div style="display: none; font-size: 1px; color: #ffffff; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"
+         th:text="${preheader != null ? (preheader.length() > 90 ? preheader.substring(0, 90) : preheader) : 'Thông báo từ F6 Shop'}">
+        Thông báo từ F6 Shop
+    </div>
+
+    <!-- Bảng nền bao ngoài -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f8f9fa; margin: 0; padding: 24px 10px;">
+        <tr>
+            <td align="center" valign="top">
+
+                <!-- Thẻ trắng 600px bo góc 12px -->
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 600px; width: 100%; background-color: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e9ecef;">
+                    
+                    <!-- Dải đầu thư: Nền trắng hòa viền logo, logo max 110px, kẻ chỉ màu chính #b94312 -->
+                    <tr>
+                        <td align="center" style="background-color: #ffffff; padding: 22px 20px 18px; border-bottom: 3px solid #b94312;">
+                            <a th:href="${publicUrl}" target="_blank" style="text-decoration: none; display: inline-block;">
+                                <img src="cid:f6s-logo" alt="F6 Shop" width="110" style="display: block; max-width: 110px; width: 110px; height: auto; border: 0;">
+                            </a>
+                            <div style="font-size: 13px; font-weight: bold; color: #b94312; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 6px;"
+                                 th:text="${shopName ?: 'F6 Shop'}">F6 Shop</div>
+                        </td>
+                    </tr>
+
+                    <!-- Thân thư: Khối nội dung chính -->
+                    <tr>
+                        <td style="padding: 28px 24px; color: #272d2d; font-size: 14px; line-height: 1.6;">
+                            <div th:replace="${noiDung}">
+                                <!-- Nội dung thư chi tiết sẽ được nhúng vào đây -->
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Chân thư -->
+                    <tr>
+                        <td style="background-color: #f8f9fa; border-top: 1px solid #e9ecef; padding: 20px 24px; font-size: 12px; color: #6c757d; text-align: center; line-height: 1.6;">
+                            <strong style="color: #272d2d; font-size: 13px;" th:text="${shopName ?: 'F6 Shop'}">F6 Shop</strong>
+                            <div th:if="${shopAddress != null and !shopAddress.isBlank()}" style="margin-top: 4px;" th:text="'Địa chỉ: ' + ${shopAddress}"></div>
+                            <div style="margin-top: 4px;">
+                                <span th:if="${shopHotline != null and !shopHotline.isBlank()}" th:text="'Hotline: ' + ${shopHotline}"></span>
+                                <span th:if="${(shopHotline != null and !shopHotline.isBlank()) and (shopSupportEmail != null and !shopSupportEmail.isBlank())}"> · </span>
+                                <span th:if="${shopSupportEmail != null and !shopSupportEmail.isBlank()}" th:text="'Email hỗ trợ: ' + ${shopSupportEmail}"></span>
+                            </div>
+                            <p style="margin: 10px 0 0; font-size: 11px; color: #adb5bd;">
+                                Đây là thư tự động từ hệ thống F6 Shop. Vui lòng không trả lời thư này.
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

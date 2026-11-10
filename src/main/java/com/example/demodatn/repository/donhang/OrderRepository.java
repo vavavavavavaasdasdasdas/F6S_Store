@@ -14,4 +14,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer>, org.spri
     @org.springframework.data.jpa.repository.Query("select o from Order o where o.id=:id")
     java.util.Optional<Order> findForUpdate(@org.springframework.data.repository.query.Param("id") Integer id);
     java.util.List<Order> findByStatusOrderByCreatedAtDesc(String status);
+    @org.springframework.data.jpa.repository.Query("select distinct o from Order o left join fetch o.orderDetails left join fetch o.customer left join fetch o.voucher where o.id = :id")
+    java.util.Optional<Order> findWithDetailsById(@org.springframework.data.repository.query.Param("id") Integer id);
 }

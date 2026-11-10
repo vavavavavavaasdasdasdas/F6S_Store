@@ -214,7 +214,7 @@
                         <th>Ghi chú / Lý do</th>
                         <th>Đơn vị VC</th>
                         <th>Mã vận đơn</th>
-                        <th th:if="${o.orderType == 'ONLINE'}">Email</th>
+                        <th>Email</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -228,25 +228,27 @@
                         <td th:text="${entry.note ?: '—'}"></td>
                         <td th:text="${entry.carrier ?: '—'}"></td>
                         <td th:text="${entry.trackingCode ?: '—'}"></td>
-                        <td th:if="${o.orderType == 'ONLINE'}">
-                            <span th:if="${mailLogMap != null and mailLogMap[entry.status] != null and mailLogMap[entry.status].thanhCong}"
-                                  class="badge bg-success-subtle text-success border border-success-subtle"
-                                  th:text="'Đã gửi lúc ' + ${#temporals.format(mailLogMap[entry.status].sentAt, 'dd/MM/yyyy HH:mm')}"></span>
-                            <span th:if="${mailLogMap != null and mailLogMap[entry.status] != null and !mailLogMap[entry.status].thanhCong and mailLogMap[entry.status].loi == 'Không có email'}"
-                                  class="text-muted small"
-                                  th:text="${mailLogMap[entry.status].loi}"></span>
-                            <span th:if="${mailLogMap != null and mailLogMap[entry.status] != null and !mailLogMap[entry.status].thanhCong and mailLogMap[entry.status].loi != 'Không có email'}"
-                                  class="badge bg-danger-subtle text-danger border border-danger-subtle"
-                                  th:title="${mailLogMap[entry.status].loi}"
-                                  th:text="'Lỗi: ' + ${mailLogMap[entry.status].loi}"></span>
-                            <span th:if="${mailLogMap == null or mailLogMap[entry.status] == null}" class="text-muted small">—</span>
+                        <td>
+                            <th:block th:with="mailKey=${(entry.status == 'PENDING' or (o.orderType == 'POS' and entry.status == 'CONFIRMED' and (mailLogMap['CONFIRMED'] == null or !mailLogMap['CONFIRMED'].thanhCong) and mailLogMap['PLACED'] != null)) ? 'PLACED' : entry.status}, logItem=${mailLogMap != null ? mailLogMap[(entry.status == 'PENDING' or (o.orderType == 'POS' and entry.status == 'CONFIRMED' and (mailLogMap['CONFIRMED'] == null or !mailLogMap['CONFIRMED'].thanhCong) and mailLogMap['PLACED'] != null)) ? 'PLACED' : entry.status] : null}">
+                                <span th:if="${logItem != null and logItem.thanhCong}"
+                                      class="badge bg-success-subtle text-success border border-success-subtle"
+                                      th:text="'Đã gửi lúc ' + ${#temporals.format(logItem.sentAt, 'dd/MM/yyyy HH:mm')}"></span>
+                                <span th:if="${logItem != null and !logItem.thanhCong and logItem.loi == 'Không có email'}"
+                                      class="text-muted small"
+                                      th:text="${logItem.loi}"></span>
+                                <span th:if="${logItem != null and !logItem.thanhCong and logItem.loi != 'Không có email'}"
+                                      class="badge bg-danger-subtle text-danger border border-danger-subtle"
+                                      th:title="${logItem.loi}"
+                                      th:text="'Lỗi: ' + ${logItem.loi}"></span>
+                                <span th:if="${logItem == null}" class="text-muted small">—</span>
 
-                            <form th:if="${entry.status != 'PENDING'}" th:action="@{/admin/invoices/{id}/resend-mail(id=${invoice.id})}" method="post" class="d-inline ms-1">
-                                <input type="hidden" name="status" th:value="${entry.status}">
-                                <button type="submit" class="btn btn-sm btn-outline-secondary py-0 px-1" title="Gửi lại thông báo" aria-label="Gửi lại thông báo">
-                                    <i class="bi bi-arrow-repeat"></i>
-                                </button>
-                            </form>
+                                <form th:action="@{/admin/invoices/{id}/resend-mail(id=${invoice.id})}" method="post" class="d-inline ms-1">
+                                    <input type="hidden" name="status" th:value="${mailKey}">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary py-0 px-1" title="Gửi lại thông báo" aria-label="Gửi lại thông báo">
+                                        <i class="bi bi-arrow-repeat"></i>
+                                    </button>
+                                </form>
+                            </th:block>
                         </td>
                     </tr>
                     </tbody>

@@ -1,0 +1,122 @@
+package com.example.demodatn.email;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.awt.Color;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class EmailHtmlRulesTest {
+
+    private static final String PREVIEW_DIR = "docs/email-preview";
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "tai-khoan-khach.html",
+            "tai-khoan-nhan-vien.html",
+            "tai-khoan-gui-lai.html",
+            "dat-hang-cod.html",
+            "dat-hang-chuyen-khoan.html",
+            "bien-nhan-tai-quay.html",
+            "trang-thai-da-xac-nhan.html",
+            "trang-thai-dang-chuan-bi.html",
+            "trang-thai-dang-giao.html",
+            "trang-thai-da-giao.html",
+            "trang-thai-da-huy.html",
+            "trang-thai-giao-that-bai.html",
+            "trang-thai-da-nhan-thanh-toan.html"
+    })
+    void testEmailHtmlRules(String fileName) throws Exception {
+        Path path = Paths.get(PREVIEW_DIR, fileName);
+        assertTrue(Files.exists(path), "File preview phải tồn tại: " + fileName);
+
+        String html = Files.readString(path);
+        Document doc = Jsoup.parse(html);
+
+        // 1. Kích thước file HTML dưới 100KB (nếu không tính base64 nhúng để preview thì < 25KB, có base64 vẫn < 100KB)
+        long fileSize = Files.size(path);
+        assertTrue(fileSize < 100 * 1024, "HTML email phải dưới 100KB để tránh bị Gmail cắt cụt (clip). Hiện tại: " + fileSize + " bytes");
+
+        // 2. Thuộc tính lang="vi"
+        Element htmlTag = doc.selectFirst("html");
+        assertNotNull(htmlTag, "Phải có thẻ <html>");
+        assertEquals("vi", htmlTag.attr("lang"), "Thẻ <html> phải có lang=\"vi\"");
+
+        // 3. Tuyệt đối không chứa <script>
+        assertEquals(0, doc.select("script").size(), "Email HTML không được chứa thẻ <script>");
+
+        // 4. Tuyệt đối không chứa link CSS ngoài (<link rel="stylesheet">)
+        assertEquals(0, doc.select("link[rel=stylesheet]").size(), "Email HTML không được chứa link CSS ngoài");
+
+        // 5. Mọi thẻ <img> phải có thuộc tính alt
+        Elements imgs = doc.select("img");
+        for (Element img : imgs) {
+            assertTrue(img.hasAttr("alt") && !img.attr("alt").isBlank(),
+                    "Mọi thẻ <img> phải có thuộc tính alt rõ ràng: " + img.outerHtml());
+        }
+
+        // 6. Không sử dụng display: flex, display: grid, position: absolute, position: fixed trong style inline
+        String lowerHtml = html.toLowerCase();
+        assertFalse(lowerHtml.contains("display: flex") || lowerHtml.contains("display:flex"),
+                "Không được dùng display: flex trong email HTML: " + fileName);
+        assertFalse(lowerHtml.contains("display: grid") || lowerHtml.contains("display:grid"),
+                "Không được dùng display: grid trong email HTML: " + fileName);
+        assertFalse(lowerHtml.contains("position: absolute") || lowerHtml.contains("position:absolute"),
+                "Không được dùng position: absolute trong email HTML: " + fileName);
+        assertFalse(lowerHtml.contains("position: fixed") || lowerHtml.contains("position:fixed"),
+                "Không được dùng position: fixed trong email HTML: " + fileName);
+
+        // 7. Các liên kết (thẻ <a>) phải tuyệt đối theo http:// hoặc https:// hoặc mailto:
+        Elements links = doc.select("a[href]");
+        for (Element a : links) {
+            String href = a.attr("href").trim();
+            assertTrue(href.startsWith("http://") || href.startsWith("https://") || href.startsWith("mailto:"),
+                    "Liên kết phải là tuyệt đối: " + href);
+        }
+    }
+
+    @Test
+    void testContrastRatioRules() {
+        // Kiểm tra cặp màu sử dụng trong thiết kế F6 Shop:
+        // Nền trắng #ffffff với chữ chính #272d2d
+        double ratioTextOnWhite = calculateContrast(Color.decode("#272d2d"), Color.decode("#ffffff"));
+        assertTrue(ratioTextOnWhite >= 4.5, "Tương phản chữ chính #272d2d trên nền trắng phải >= 4.5:1 (Hiện tại: " + ratioTextOnWhite + ")");
+
+        // Nền nút bấm #b94312 với chữ trắng #ffffff
+        double ratioButtonText = calculateContrast(Color.decode("#ffffff"), Color.decode("#b94312"));
+        assertTrue(ratioButtonText >= 4.5, "Tương phản chữ trắng trên nút #b94312 phải >= 4.5:1 (Hiện tại: " + ratioButtonText + ")");
+    }
+
+    private double calculateContrast(Color foreground, Color background) {
+        double l1 = relativeLuminance(foreground);
+        double l2 = relativeLuminance(background);
+        double lighter = Math.max(l1, l2);
+        double darker = Math.min(l1, l2);
+        return (lighter + 0.05) / (darker + 0.05);
+    }
+
+    private double relativeLuminance(Color color) {
+        double r = convertChannel(color.getRed());
+        double g = convertChannel(color.getGreen());
+        double b = convertChannel(color.getBlue());
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    }
+
+    private double convertChannel(int channel) {
+        double c = channel / 255.0;
+        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    }
+}

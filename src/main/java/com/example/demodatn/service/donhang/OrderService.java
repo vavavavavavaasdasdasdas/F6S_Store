@@ -30,6 +30,7 @@ public class OrderService {
     private final InvoiceRepository invoices;
     private final OrderStatusService statuses;
     private final com.example.demodatn.repository.donhang.OrderRepository orders;
+    private final org.springframework.context.ApplicationEventPublisher eventPublisher;
 
     @Transactional(rollbackFor = Exception.class)
     public Order placeOrder(CheckoutRequest request, List<CartItemDto> items, Customer customer, BigDecimal ignoredShippingFee) {
@@ -250,6 +251,7 @@ public class OrderService {
             }
         }
         invoices.save(invoice);
+        eventPublisher.publishEvent(new OrderPlacedEvent(order.getId()));
         return order;
     }
 

@@ -1,131 +1,122 @@
-# Hướng dẫn cấu hình Email (SMTP) cho F6S Store
+# Hướng dẫn cấu hình Email (SMTP) cho F6 Shop
 
-Tài liệu này hướng dẫn chi tiết từng bước thiết lập dịch vụ gửi email cấp tài khoản và thông báo cho hệ thống F6S Store.
-
----
-
-## 1. Cơ chế cấu hình Email trong hệ thống
-
-Hệ thống hỗ trợ đọc cấu hình SMTP linh hoạt từ hai nguồn:
-1. **File cấu hình cục bộ `application-local.properties`** (khuyến nghị khi chạy trên IntelliJ / máy phát triển):
-   - Nằm tại thư mục gốc của dự án (`DuAnTNDEMO/DemoDATN/application-local.properties`).
-   - Đã được đưa vào `.gitignore` để tránh vô tình commit mật khẩu ứng dụng lên kho mã nguồn.
-   - Tham khảo file mẫu `application-local.properties.example`.
-2. **Biến môi trường hệ điều hành (Environment Variables)** (khuyến nghị cho môi trường CI/CD, Docker, máy chủ sản xuất):
-   - `MAIL_HOST`: Địa chỉ máy chủ SMTP (ví dụ: `smtp.gmail.com`).
-   - `MAIL_PORT`: Cổng kết nối (ví dụ: `587`).
-   - `MAIL_USERNAME`: Tên tài khoản / địa chỉ email gửi.
-   - `MAIL_PASSWORD`: Mật khẩu ứng dụng (App Password) hoặc mật khẩu SMTP.
-   - `MAIL_FROM`: Địa chỉ người gửi hiển thị (nếu để trống sẽ tự động lấy `MAIL_USERNAME`).
-   - `MAIL_AUTH`: `true` (mặc định).
-   - `MAIL_STARTTLS`: `true` (mặc định).
-
-Khi ứng dụng khởi động, hệ thống sẽ tự động kiểm tra và ghi đúng một dòng log rõ ràng:
-- Khi đã cấu hình: `Email: ĐÃ cấu hình (<host>:<port>)`
-- Khi chưa cấu hình: `Email: CHƯA cấu hình, tài khoản mới sẽ không được gửi mail`
-*(Lưu ý: Hệ thống TUYỆT ĐỐI không ghi mật khẩu hay thông tin bí mật ra log).*
+Tài liệu này hướng dẫn chi tiết cách cấu hình dịch vụ gửi email cấp tài khoản, xác nhận đơn hàng và thông báo trạng thái đơn hàng cho hệ thống F6 Shop.
 
 ---
 
-## 2. Hướng dẫn thiết lập Gmail (Gửi thư thật)
+## 1. Lưu ý quan trọng & Các thành phần đã gỡ bỏ
 
-Để gửi email thật qua máy chủ SMTP của Google (`smtp.gmail.com`), Google bắt buộc sử dụng **Mật khẩu ứng dụng (App Password)** thay vì mật khẩu đăng nhập thông thường.
+Theo kiến trúc chuẩn và bảo mật của Spring Boot:
+- **ĐÃ GỠ BỎ**: Toàn bộ form nhập cấu hình SMTP (host, port, tài khoản, mật khẩu, From) trên giao diện web `/admin/account`.
+- **ĐÃ GỠ BỎ**: Cơ chế nạp nóng `DynamicJavaMailSender` và mọi mã tự động ghi/sửa file `application-local.properties` lúc ứng dụng đang chạy.
+- **CƠ CHẾ CHUẨN HIỆN TẠI**: Cấu hình email chỉ được đọc tĩnh lúc ứng dụng khởi động từ file cấu hình bảo mật `application-local.properties` (được gitignore) hoặc thông qua biến môi trường hệ thống. Khi thay đổi cấu hình, bạn chỉ cần khởi động lại ứng dụng.
+- **GIỮ NGUYÊN**: Dòng trạng thái CHỈ ĐỌC tại `/admin/account` hiển thị thông tin máy chủ và tài khoản đã che mờ; nút "Gửi email thử"; nút "Gửi lại tài khoản" tại chi tiết khách hàng và nhân viên.
 
-### Bước 1: Bật Xác minh 2 bước (2-Step Verification) cho tài khoản Google
-1. Đăng nhập vào tài khoản Google của bạn tại: [https://myaccount.google.com/](https://myaccount.google.com/)
-2. Ở menu bên trái, chọn **Bảo mật** (Security).
-3. Trong mục **Cách bạn đăng nhập vào Google** (How you sign in to Google), tìm và chọn **Xác minh 2 bước** (2-Step Verification).
-4. Làm theo hướng dẫn trên màn hình để kích hoạt (nếu tài khoản đã bật Xác minh 2 bước thì chuyển sang Bước 2).
+---
 
-### Bước 2: Tạo "Mật khẩu ứng dụng" (App Password)
-1. Truy cập trực tiếp trang Mật khẩu ứng dụng: [https://myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)  
-   *(Hoặc tìm kiếm từ khóa "App passwords" trong ô tìm kiếm của Google Account).*
-2. Nhập tên ứng dụng, ví dụ: `F6S Store Local` hoặc `DemoDATN`.
-3. Nhấn **Tạo** (Create).
-4. Google sẽ hiển thị một chuỗi **16 ký tự** màu vàng (ví dụ: `abcd efgh ijkl mnop`).
-5. **Sao chép chuỗi 16 ký tự này** (chuỗi này chỉ hiện một lần duy nhất). Không cần khoảng trắng khi dán vào cấu hình.
+## 2. Vị trí đặt file & Nội dung mẫu cấu hình
 
-### Bước 3: Điền vào `application-local.properties`
-Mở file `application-local.properties` (tạo mới nếu chưa có, copy từ `application-local.properties.example`) và thêm các dòng sau:
+### Vị trí file
+Tạo hoặc chỉnh sửa file `application-local.properties` nằm ngay tại thư mục gốc của project backend:
+`DuAnTNDEMO/DemoDATN/application-local.properties`
 
+*(File này đã được khai báo trong `.gitignore` để tuyệt đối không bị commit mật khẩu ứng dụng lên kho mã nguồn Git).*
+
+### Nội dung mẫu cho Gmail (gửi thư thật):
 ```properties
-# Cấu hình SMTP Gmail
+# ========================================================
+# CẤU HÌNH GỬI EMAIL CHUẨN SPRING BOOT (GMAIL SMTP)
+# ========================================================
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
 spring.mail.username=dia_chi_email_cua_ban@gmail.com
 spring.mail.password=abcdefghijklmnop
+
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
 spring.mail.properties.mail.smtp.connectiontimeout=10000
 spring.mail.properties.mail.smtp.timeout=10000
 spring.mail.properties.mail.smtp.writetimeout=10000
+
+# Thông tin cửa hàng hiển thị trong thư
+shop.name=F6 Shop
 shop.mail.from=dia_chi_email_cua_ban@gmail.com
+shop.address=123 Đường Cầu Giấy, Phường Quan Hoa, Quận Cầu Giấy, Hà Nội
+shop.hotline=1900 1234
+shop.support-email=support@f6shop.com
+shop.public-url=http://localhost:8080
 ```
 
-### Bước 4: Kiểm tra kết nối bằng nút "Gửi email thử"
-1. Khởi động ứng dụng.
-2. Đăng nhập tài khoản Quản trị viên (Admin).
+> **Lưu ý triển khai**: Khi đưa hệ thống lên máy chủ thực tế (Production), cần đổi `shop.public-url` sang domain thật (ví dụ `https://f6shop.com`) để các liên kết "Đăng nhập", "Xem chi tiết đơn hàng" trong thư hoạt động chính xác.
+
+---
+
+## 3. Các bước lấy Mật khẩu ứng dụng Gmail (16 ký tự)
+
+Để gửi email thông qua máy chủ SMTP của Google (`smtp.gmail.com`), bạn không thể dùng mật khẩu đăng nhập cá nhân thông thường mà bắt buộc phải tạo **Mật khẩu ứng dụng (App Password)** gồm 16 ký tự:
+
+### Bước 1: Bật Xác minh 2 bước (2-Step Verification)
+1. Đăng nhập vào tài khoản Google: [https://myaccount.google.com/](https://myaccount.google.com/)
+2. Chọn menu **Bảo mật** (Security) ở góc bên trái.
+3. Trong mục **Cách bạn đăng nhập vào Google**, tìm chọn **Xác minh 2 bước** (2-Step Verification).
+4. Thực hiện theo hướng dẫn trên màn hình để bật xác minh (qua số điện thoại hoặc Google Prompt).
+
+### Bước 2: Tạo Mật khẩu ứng dụng
+1. Truy cập trực tiếp đường link: [https://myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
+2. Nhập tên ứng dụng nhận diện (ví dụ: `F6 Shop Local`).
+3. Bấm nút **Tạo** (Create).
+4. Google sẽ sinh ra một chuỗi **16 ký tự chữ cái** (ví dụ: `xxxx yyyy zzzz wwww`).
+5. Sao chép 16 ký tự này và dán vào thuộc tính `spring.mail.password` trong file `application-local.properties` (loại bỏ khoảng trắng).
+
+### Bước 3: Khởi động lại ứng dụng & Kiểm tra
+1. Khởi động lại Spring Boot backend (`DemoDATN`).
+2. Mở trình duyệt, đăng nhập tài khoản Quản trị viên (Admin).
 3. Vào trang **Hồ sơ của tôi** (`/admin/account`).
-4. Tìm khối **Cấu hình & Thử nghiệm Email**, nhấn nút **Gửi email thử**.
-5. Hệ thống sẽ gửi một email thử nghiệm đến địa chỉ email của bạn và thông báo kết quả tức thì trên màn hình.
+4. Xem dòng trạng thái: `Email: Đã cấu hình (smtp.gmail.com:587, dia_***@gmail.com)`.
+5. Nhập email của bạn vào ô "Người nhận email thử" và bấm **Gửi email thử** để kiểm tra hoạt động SMTP.
 
 ---
 
-## 3. Hướng dẫn thử nghiệm bằng máy chủ SMTP giả lập (MailHog / smtp4dev)
+## 4. Thử nghiệm bằng máy chủ SMTP giả lập (MailHog)
 
-Nếu bạn không muốn dùng Gmail thật hoặc làm việc trong môi trường offline/cục bộ, hãy sử dụng **MailHog** hoặc **smtp4dev**. Các công cụ này chạy một máy chủ SMTP nội bộ, bắt tất cả email gửi đi và hiển thị trên giao diện web trực quan mà không gửi ra ngoài Internet.
+Nếu bạn đang làm việc offline hoặc không muốn gửi email thật đến hộp thư cá nhân, hãy sử dụng **MailHog**. MailHog giả lập một máy chủ SMTP nội bộ, thu thập mọi thư gửi đi và hiển thị giao diện Web UI trực quan.
 
-### Lựa chọn A: Dùng MailHog (Khuyến nghị)
-1. Tải MailHog:
-   - Dùng Docker:
-     ```bash
-     docker run -d -p 1025:1025 -p 8025:8025 mailhog/mailhog
-     ```
-   - Hoặc tải file `.exe` trực tiếp từ GitHub Releases của MailHog: [https://github.com/mailhog/MailHog/releases](https://github.com/mailhog/MailHog/releases) và chạy file `MailHog_windows_amd64.exe`.
-2. MailHog mở 2 cổng:
-   - Cổng SMTP: `1025` (dùng để nhận thư).
-   - Cổng Giao diện Web: `http://localhost:8025` (mở trên trình duyệt để đọc thư đến).
-3. Cấu hình trong `application-local.properties`:
-   ```properties
-   spring.mail.host=127.0.0.1
-   spring.mail.port=1025
-   spring.mail.username=
-   spring.mail.password=
-   spring.mail.properties.mail.smtp.auth=false
-   spring.mail.properties.mail.smtp.starttls.enable=false
-   spring.mail.properties.mail.smtp.connectiontimeout=10000
-   spring.mail.properties.mail.smtp.timeout=10000
-   spring.mail.properties.mail.smtp.writetimeout=10000
-   shop.mail.from=noreply@f6s-store.test
-   ```
+### Bước 1: Chạy MailHog
+- Chạy bằng Docker:
+  ```bash
+  docker run -d -p 1025:1025 -p 8025:8025 mailhog/mailhog
+  ```
+- Hoặc tải file `.exe` từ [MailHog Releases](https://github.com/mailhog/MailHog/releases) và khởi chạy trên Windows.
 
-### Lựa chọn B: Dùng smtp4dev
-1. Cài đặt hoặc chạy bằng Docker:
-   ```bash
-   docker run -d -p 2525:25 -p 5000:80 rnwood/smtp4dev
-   ```
-2. Mở giao diện xem thư tại `http://localhost:5000`.
-3. Cấu hình trong `application-local.properties`:
-   ```properties
-   spring.mail.host=127.0.0.1
-   spring.mail.port=2525
-   spring.mail.username=
-   spring.mail.password=
-   spring.mail.properties.mail.smtp.auth=false
-   spring.mail.properties.mail.smtp.starttls.enable=false
-   spring.mail.properties.mail.smtp.connectiontimeout=10000
-   spring.mail.properties.mail.smtp.timeout=10000
-   spring.mail.properties.mail.smtp.writetimeout=10000
-   shop.mail.from=noreply@f6s-store.test
-   ```
+### Bước 2: Cấu hình `application-local.properties` cho MailHog
+```properties
+spring.mail.host=127.0.0.1
+spring.mail.port=1025
+spring.mail.username=
+spring.mail.password=
+spring.mail.properties.mail.smtp.auth=false
+spring.mail.properties.mail.smtp.starttls.enable=false
+spring.mail.properties.mail.smtp.starttls.required=false
+spring.mail.properties.mail.smtp.connectiontimeout=10000
+spring.mail.properties.mail.smtp.timeout=10000
+spring.mail.properties.mail.smtp.writetimeout=10000
+
+shop.name=F6 Shop
+shop.mail.from=noreply@f6shop.test
+shop.public-url=http://localhost:8080
+```
+
+### Bước 3: Xem thư gửi đến
+Mở trình duyệt truy cập: `http://localhost:8025` để xem toàn bộ danh sách email được gửi từ hệ thống.
 
 ---
 
-## 4. Xử lý các lỗi thường gặp
+## 5. Bảng xử lý sự cố thường gặp
 
-| Triệu chứng | Nguyên nhân | Cách khắc phục |
+| Trường hợp | Nguyên nhân | Hướng xử lý |
 |---|---|---|
-| Màn hình báo "Chưa cấu hình thông tin máy chủ email..." | `spring.mail.host` đang để trống | Điền cấu hình vào `application-local.properties` và khởi động lại ứng dụng. |
-| Màn hình báo "Xác thực SMTP thất bại..." | Sai tài khoản hoặc mật khẩu thông thường thay vì App Password | Kiểm tra lại email Gmail và đảm bảo tạo App Password 16 ký tự từ mục Bảo mật Google. |
-| Màn hình báo "Không thể kết nối tới máy chủ SMTP..." | Sai cổng, sai host hoặc firewall/mạng chặn | Kiểm tra kết nối mạng, đảm bảo host `smtp.gmail.com` cổng `587` không bị chặn bởi VPN hoặc phần mềm diệt virus. |
-| Tài khoản mới tạo xong nhưng có cảnh báo "Chưa gửi được email" | Email bị lỗi khi gửi | Tài khoản vẫn được lưu trong cơ sở dữ liệu. Sau khi sửa cấu hình email, nhấn nút **Gửi lại tài khoản** trên màn hình chi tiết để gửi lại mật khẩu tạm. |
+| Màn hình báo "Email: Chưa cấu hình" | `spring.mail.host` đang để trống | Điền cấu hình vào `application-local.properties` và khởi động lại server. |
+| Báo lỗi: "Xác thực SMTP thất bại..." | Sai username hoặc dùng mật khẩu thông thường thay vì App Password | Kiểm tra lại địa chỉ Gmail và tạo lại Mật khẩu ứng dụng 16 ký tự từ trang bảo mật Google. |
+| Báo lỗi: "Không thể kết nối tới máy chủ SMTP..." | Sai cổng kết nối, sai host hoặc mạng/firewall chặn cổng 587 | Kiểm tra kết nối Internet, kiểm tra host `smtp.gmail.com` và port `587`. |
+| Tạo khách hàng/nhân viên hiện cảnh báo vàng "Chưa gửi được email" | Máy chủ SMTP từ chối gửi hoặc chưa cấu hình mail | Tài khoản vẫn được lưu an toàn trong DB. Sau khi kiểm tra cấu hình SMTP, nhấn nút **Gửi lại tài khoản** trong chi tiết hồ sơ để gửi email. Khi gửi lại thành công, cảnh báo sẽ tự động biến mất. |

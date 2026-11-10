@@ -43,12 +43,13 @@ public class AccountProvisioningService {
     // Deliberately not a record/@Data: a credential must never acquire a generated toString().
     private static final class Issued {
         final int personId,userId;final String hash,password,email,name,username;
-        final boolean isEmployee;final String position;
-        Issued(int personId,User user,String password){this(personId,user,password,false,null);}
-        Issued(int personId,User user,String password,boolean isEmployee,String position){
+        final boolean isEmployee;final String position;final boolean isResend;
+        Issued(int personId,User user,String password){this(personId,user,password,false,null,false);}
+        Issued(int personId,User user,String password,boolean isEmployee,String position){this(personId,user,password,isEmployee,position,false);}
+        Issued(int personId,User user,String password,boolean isEmployee,String position,boolean isResend){
             this.personId=personId;userId=user.getId();hash=user.getPassword();this.password=password;
             email=user.getEmail();name=user.getFullName();username=user.getUsername();
-            this.isEmployee=isEmployee;this.position=position;
+            this.isEmployee=isEmployee;this.position=position;this.isResend=isResend;
         }
     }
     public static String temporaryPassword() {
@@ -91,7 +92,7 @@ public class AccountProvisioningService {
     }
     private Outcome deliver(Issued issued) {
         if(issued.password==null)return new Outcome(issued.personId,false,false);
-        boolean sent=mail.sendAccountMail(issued.email,issued.name,issued.username,issued.password,issued.isEmployee,issued.position);
+        boolean sent=mail.sendAccountMail(issued.email,issued.name,issued.username,issued.password,issued.isEmployee,issued.position,issued.isResend);
         new TransactionTemplate(transactions).executeWithoutResult(s->issues.delivery(issued.userId,issued.hash,sent));
         return new Outcome(issued.personId,true,sent);
     }
@@ -156,7 +157,7 @@ public class AccountProvisioningService {
             if(linked==null)user.setStatus(Boolean.TRUE.equals(c.getStatus()));
             String password=temporaryPassword();beginIssue(user,password);users.saveAndFlush(user);
             if(customer){c.setUser(user);customers.saveAndFlush(c);}
-            return new Issued(id,user,password,!customer,customer?null:e.getPosition());
+            return new Issued(id,user,password,!customer,customer?null:e.getPosition(),true);
         });
         return deliver(issued);
     }

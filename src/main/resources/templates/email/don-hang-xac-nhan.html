@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{email/khung-thu :: layout(~{::div#noiDung})}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<div id="noiDung">
+    <!-- Tiêu đề lớn -->
+    <h1 style="margin: 0 0 16px 0; font-size: 20px; font-weight: bold; color: #272d2d; line-height: 1.4;"
+        th:text="${isStorePickup ? 'Cảm ơn bạn đã mua hàng tại F6 Shop' : 'Cảm ơn bạn đã đặt hàng tại F6 Shop'}">
+        Cảm ơn bạn đã đặt hàng tại F6 Shop
+    </h1>
+
+    <!-- Lời cảm ơn -->
+    <p style="margin: 0 0 10px 0; font-size: 15px; color: #272d2d;">
+        Xin chào <strong th:text="${receiverName ?: 'Quý khách'}">Quý khách</strong>,
+    </p>
+    <p style="margin: 0 0 20px 0; font-size: 14px; color: #495057; line-height: 1.6;" th:if="${isStorePickup}">
+        Cảm ơn bạn đã tin tưởng mua sắm trực tiếp tại cửa hàng F6 Shop. Dưới đây là thông tin chi tiết hóa đơn mua hàng của bạn.
+    </p>
+    <p style="margin: 0 0 20px 0; font-size: 14px; color: #495057; line-height: 1.6;" th:unless="${isStorePickup}">
+        Chúng tôi đã nhận được đơn hàng của bạn và đang tiến hành xử lý sớm nhất. Dưới đây là chi tiết đơn hàng của bạn.
+    </p>
+
+    <!-- Khối tóm tắt đơn hàng -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f8f9fa; border-radius: 8px; margin-bottom: 24px; border: 1px solid #e9ecef;">
+        <tr>
+            <td style="padding: 16px 18px;">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="font-size: 13px;">
+                    <tr>
+                        <td width="140" style="padding: 4px 0; color: #6c757d;">Mã đơn hàng:</td>
+                        <td style="padding: 4px 0; font-weight: bold; color: #b94312; font-size: 14px;" th:text="${orderCode}">DH000001</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 0; color: #6c757d;">Thời gian đặt:</td>
+                        <td style="padding: 4px 0; font-weight: 500; color: #272d2d;" th:text="${orderTime}">10/11/2026 10:30</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 0; color: #6c757d;">Hình thức thanh toán:</td>
+                        <td style="padding: 4px 0; font-weight: 500; color: #272d2d;" th:text="${paymentMethodText}">Chuyển khoản ngân hàng (VietQR)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 0; color: #6c757d;">Trạng thái thanh toán:</td>
+                        <td style="padding: 4px 0;">
+                            <span th:if="${isPaid}" style="display: inline-block; background-color: #d1e7dd; color: #0f5132; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 12px;">Đã thanh toán</span>
+                            <span th:unless="${isPaid}" style="display: inline-block; background-color: #fff3cd; color: #664d03; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 12px;">Chờ thanh toán</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Khối thanh toán VietQR (nếu đơn chuyển khoản chưa thanh toán) -->
+    <table th:if="${hasQrPayment}" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #fffbf8; border: 1px solid #f8d7c4; border-radius: 8px; margin-bottom: 24px;">
+        <tr>
+            <td style="padding: 20px; text-align: center;">
+                <h2 style="margin: 0 0 6px 0; font-size: 16px; font-weight: bold; color: #b94312;">Thông tin chuyển khoản qua VietQR</h2>
+                <p style="margin: 0 0 16px 0; font-size: 13px; color: #6c757d;">Mở app ngân hàng bất kỳ để quét mã QR thanh toán nhanh chóng</p>
+                
+                <table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 16px auto;">
+                    <tr>
+                        <td align="center" style="background-color: #ffffff; padding: 12px; border: 1px solid #e9ecef; border-radius: 8px;">
+                            <img src="cid:f6s-qr" alt="Mã VietQR thanh toán" width="200" height="200" style="display: block; width: 200px; height: 200px; border: 0;">
+                        </td>
+                    </tr>
+                </table>
+
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 440px; margin: 0 auto; font-size: 13px; text-align: left;">
+                    <tr>
+                        <td width="130" style="padding: 4px 0; color: #6c757d;">Ngân hàng:</td>
+                        <td style="padding: 4px 0; font-weight: bold; color: #272d2d;" th:text="${bankName}">MBBank</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 0; color: #6c757d;">Số tài khoản:</td>
+                        <td style="padding: 4px 0; font-weight: bold; color: #b94312; font-size: 14px; font-family: monospace;" th:text="${bankAccount}">0123456789</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 0; color: #6c757d;">Chủ tài khoản:</td>
+                        <td style="padding: 4px 0; font-weight: bold; color: #272d2d;" th:text="${bankAccountName}">F6S SHOP</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 0; color: #6c757d;">Số tiền:</td>
+                        <td style="padding: 4px 0; font-weight: bold; color: #b94312; font-size: 15px;" th:text="${qrAmountFormatted}">1.500.000 đ</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 0; color: #6c757d;">Nội dung CK:</td>
+                        <td style="padding: 4px 0; font-weight: bold; color: #272d2d; font-family: monospace;" th:text="${qrContent}">DH000001</td>
+                    </tr>
+                    <tr th:if="${paymentDeadline != null}">
+                        <td style="padding: 4px 0; color: #dc3545;">Hạn thanh toán:</td>
+                        <td style="padding: 4px 0; font-weight: bold; color: #dc3545;" th:text="${paymentDeadline}">Trước 24h kể từ khi đặt</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Bảng chi tiết sản phẩm -->
+    <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: bold; color: #272d2d;">Danh sách sản phẩm</h3>
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: collapse; margin-bottom: 20px; font-size: 13px;">
+        <thead>
+            <tr style="background-color: #f8f9fa; border-top: 1px solid #e9ecef; border-bottom: 2px solid #dee2e6;">
+                <th align="left" style="padding: 10px 8px; color: #495057; font-weight: 600;">Sản phẩm</th>
+                <th align="center" style="padding: 10px 8px; color: #495057; font-weight: 600; width: 60px;">SL</th>
+                <th align="right" style="padding: 10px 8px; color: #495057; font-weight: 600; width: 95px;">Đơn giá</th>
+                <th align="right" style="padding: 10px 8px; color: #495057; font-weight: 600; width: 105px;">Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${orderItems}" style="border-bottom: 1px solid #e9ecef;">
+                <td style="padding: 12px 8px; vertical-align: top;">
+                    <div style="font-weight: 600; color: #272d2d; margin-bottom: 3px;" th:text="${item.productName}">Giày Sneaker</div>
+                    <div style="font-size: 12px; color: #6c757d;" th:text="${item.attributesText}">Kích cỡ: 41 - Màu: Trắng - Chất liệu: Da - Đế: Cao su</div>
+                </td>
+                <td align="center" style="padding: 12px 8px; vertical-align: top; color: #272d2d; font-weight: 500;" th:text="${item.quantity}">1</td>
+                <td align="right" style="padding: 12px 8px; vertical-align: top; color: #495057;" th:text="${item.priceFormatted}">1.500.000 đ</td>
+                <td align="right" style="padding: 12px 8px; vertical-align: top; font-weight: 600; color: #272d2d;" th:text="${item.totalFormatted}">1.500.000 đ</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Bảng tổng tiền -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="font-size: 13px; margin-bottom: 22px;">
+        <tr>
+            <td align="right" style="padding: 4px 8px; color: #6c757d;">Tạm tính:</td>
+            <td align="right" width="140" style="padding: 4px 8px; color: #272d2d; font-weight: 500;" th:text="${subtotalFormatted}">1.500.000 đ</td>
+        </tr>
+        <tr th:if="${promotionDiscount != null and !promotionDiscount.equals('0 đ')}">
+            <td align="right" style="padding: 4px 8px; color: #198754;">Giảm giá đợt khuyến mãi:</td>
+            <td align="right" style="padding: 4px 8px; color: #198754; font-weight: 500;" th:text="'-' + ${promotionDiscount}">-100.000 đ</td>
+        </tr>
+        <tr th:if="${voucherDiscount != null and !voucherDiscount.equals('0 đ')}">
+            <td align="right" style="padding: 4px 8px; color: #198754;">
+                Phiếu giảm giá <span th:if="${voucherCode != null}" th:text="'(' + ${voucherCode} + ')'" style="font-family: monospace; font-weight: bold;"></span>:
+            </td>
+            <td align="right" style="padding: 4px 8px; color: #198754; font-weight: 500;" th:text="'-' + ${voucherDiscount}">-50.000 đ</td>
+        </tr>
+        <tr style="border-top: 2px solid #dee2e6;">
+            <td align="right" style="padding: 10px 8px 4px 8px; font-size: 15px; font-weight: bold; color: #272d2d;">Tổng thanh toán:</td>
+            <td align="right" style="padding: 10px 8px 4px 8px; font-size: 17px; font-weight: bold; color: #b94312;" th:text="${totalFormatted}">1.350.000 đ</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right" style="padding: 2px 8px; font-size: 11px; color: #6c757d; font-style: italic;">
+                * Phí vận chuyển do đơn vị vận chuyển tính và thu riêng.
+            </td>
+        </tr>
+    </table>
+
+    <!-- Khối thông tin người nhận (chỉ hiện khi có giao hàng) -->
+    <div th:unless="${isStorePickup}" style="background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 14px 18px; margin-bottom: 24px; font-size: 13px;">
+        <strong style="display: block; margin-bottom: 6px; color: #272d2d; font-size: 14px;">Địa chỉ nhận hàng:</strong>
+        <div style="color: #272d2d; margin-bottom: 3px;">
+            <strong th:text="${receiverName}">Nguyễn Văn A</strong> · <span th:text="${receiverPhone}">0912345678</span>
+        </div>
+        <div style="color: #495057;" th:text="${shippingAddress}">123 Đường ABC, Phường X, Quận Y, Tỉnh Z</div>
+    </div>
+
+    <!-- Nút Xem đơn hàng -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 24px 0 16px 0;">
+        <tr>
+            <td align="center">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td align="center" style="background-color: #b94312; border-radius: 8px;">
+                            <a th:href="${orderDetailUrl}" target="_blank"
+                               style="display: inline-block; padding: 14px 28px; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: bold; border-radius: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                                Xem chi tiết đơn hàng
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Khối Cần hỗ trợ? -->
+    <div style="border-top: 1px dashed #dee2e6; padding-top: 14px; text-align: center; font-size: 13px; color: #6c757d;">
+        Bạn cần hỗ trợ về đơn hàng này? Hãy liên hệ ngay hotline <strong style="color: #b94312;" th:text="${shopHotline}">1900 1234</strong> hoặc email <a th:href="'mailto:' + ${shopSupportEmail}" style="color: #b94312; text-decoration: none;" th:text="${shopSupportEmail}">support@f6shop.com</a>.
+    </div>
+</div>
+
+</body>
+</html>

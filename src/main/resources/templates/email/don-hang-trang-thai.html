@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{email/khung-thu :: layout(~{::div#noiDung})}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<div id="noiDung">
+    <!-- Tiêu đề lớn -->
+    <h1 style="margin: 0 0 14px 0; font-size: 20px; font-weight: bold; color: #272d2d; line-height: 1.4;"
+        th:text="${statusHeading}">
+        Cập nhật trạng thái đơn hàng
+    </h1>
+
+    <!-- Lời chào -->
+    <p style="margin: 0 0 10px 0; font-size: 15px; color: #272d2d;">
+        Xin chào <strong th:text="${receiverName ?: 'Quý khách'}">Quý khách</strong>,
+    </p>
+
+    <!-- Câu thông báo trạng thái chính -->
+    <p style="margin: 0 0 18px 0; font-size: 14px; color: #495057; line-height: 1.6;" th:text="${statusMessage}">
+        Cửa hàng đã xác nhận đơn của bạn và đang tiến hành chuẩn bị đóng gói.
+    </p>
+
+    <!-- DẢI TIẾN TRÌNH 5 BƯỚC (Bằng Table chuẩn email HTML) -->
+    <div th:if="${showProgress}" style="margin: 20px 0 26px 0;">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="font-size: 11px; text-align: center;">
+            <tr>
+                <!-- Bước 1: Đã đặt -->
+                <td align="center" style="width: 20%; vertical-align: top;">
+                    <div style="width: 28px; height: 28px; line-height: 28px; border-radius: 50%; margin: 0 auto 6px auto; font-weight: bold;"
+                         th:styleappend="${step >= 1 ? (step == 1 ? 'background-color: #b94312; color: #ffffff;' : 'background-color: #198754; color: #ffffff;') : 'background-color: #e9ecef; color: #6c757d;'}">
+                        1
+                    </div>
+                    <span style="display: block; font-size: 11px; line-height: 1.3;"
+                          th:styleappend="${step == 1 ? 'font-weight: bold; color: #b94312;' : (step > 1 ? 'color: #198754; font-weight: 500;' : 'color: #adb5bd;')}">
+                        Đã đặt
+                    </span>
+                </td>
+                <!-- Bước 2: Đã xác nhận -->
+                <td align="center" style="width: 20%; vertical-align: top;">
+                    <div style="width: 28px; height: 28px; line-height: 28px; border-radius: 50%; margin: 0 auto 6px auto; font-weight: bold;"
+                         th:styleappend="${step >= 2 ? (step == 2 ? 'background-color: #b94312; color: #ffffff;' : 'background-color: #198754; color: #ffffff;') : 'background-color: #e9ecef; color: #6c757d;'}">
+                        2
+                    </div>
+                    <span style="display: block; font-size: 11px; line-height: 1.3;"
+                          th:styleappend="${step == 2 ? 'font-weight: bold; color: #b94312;' : (step > 2 ? 'color: #198754; font-weight: 500;' : 'color: #adb5bd;')}">
+                        Xác nhận
+                    </span>
+                </td>
+                <!-- Bước 3: Đang chuẩn bị -->
+                <td align="center" style="width: 20%; vertical-align: top;">
+                    <div style="width: 28px; height: 28px; line-height: 28px; border-radius: 50%; margin: 0 auto 6px auto; font-weight: bold;"
+                         th:styleappend="${step >= 3 ? (step == 3 ? 'background-color: #b94312; color: #ffffff;' : 'background-color: #198754; color: #ffffff;') : 'background-color: #e9ecef; color: #6c757d;'}">
+                        3
+                    </div>
+                    <span style="display: block; font-size: 11px; line-height: 1.3;"
+                          th:styleappend="${step == 3 ? 'font-weight: bold; color: #b94312;' : (step > 3 ? 'color: #198754; font-weight: 500;' : 'color: #adb5bd;')}">
+                        Chuẩn bị
+                    </span>
+                </td>
+                <!-- Bước 4: Đang giao -->
+                <td align="center" style="width: 20%; vertical-align: top;">
+                    <div style="width: 28px; height: 28px; line-height: 28px; border-radius: 50%; margin: 0 auto 6px auto; font-weight: bold;"
+                         th:styleappend="${step >= 4 ? (step == 4 ? 'background-color: #b94312; color: #ffffff;' : 'background-color: #198754; color: #ffffff;') : 'background-color: #e9ecef; color: #6c757d;'}">
+                        4
+                    </div>
+                    <span style="display: block; font-size: 11px; line-height: 1.3;"
+                          th:styleappend="${step == 4 ? 'font-weight: bold; color: #b94312;' : (step > 4 ? 'color: #198754; font-weight: 500;' : 'color: #adb5bd;')}">
+                        Đang giao
+                    </span>
+                </td>
+                <!-- Bước 5: Đã giao -->
+                <td align="center" style="width: 20%; vertical-align: top;">
+                    <div style="width: 28px; height: 28px; line-height: 28px; border-radius: 50%; margin: 0 auto 6px auto; font-weight: bold;"
+                         th:styleappend="${step >= 5 ? 'background-color: #198754; color: #ffffff;' : 'background-color: #e9ecef; color: #6c757d;'}">
+                        5
+                    </div>
+                    <span style="display: block; font-size: 11px; line-height: 1.3;"
+                          th:styleappend="${step == 5 ? 'font-weight: bold; color: #198754;' : 'color: #adb5bd;'}">
+                        Đã giao
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Khối thông tin vận chuyển khi ĐANG GIAO -->
+    <div th:if="${status == 'SHIPPING' and (carrier != null or trackingCode != null)}" style="background-color: #e7f5ff; border: 1px solid #a5d8ff; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px;">
+        <strong style="color: #1864ab; display: block; margin-bottom: 6px;">Thông tin vận chuyển:</strong>
+        <div th:if="${carrier != null and !carrier.isBlank()}" style="color: #272d2d; margin-bottom: 3px;">
+            Đơn vị vận chuyển: <strong th:text="${carrier}">Giao Hàng Nhanh</strong>
+        </div>
+        <div th:if="${trackingCode != null and !trackingCode.isBlank()}" style="color: #272d2d;">
+            Mã vận đơn: <strong style="font-family: monospace; color: #b94312; font-size: 14px;" th:text="${trackingCode}">GHN12345678</strong>
+        </div>
+    </div>
+
+    <!-- Khối cảnh báo khi ĐÃ HỦY hoặc GIAO THẤT BẠI -->
+    <div th:if="${status == 'CANCELLED' or status == 'DELIVERY_FAILED'}" style="background-color: #fff5f5; border: 1px solid #ffc9c9; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #c92a2a;">
+        <strong style="display: block; margin-bottom: 4px;" th:text="${status == 'CANCELLED' ? 'Lý do hủy đơn hàng:' : 'Lý do giao hàng không thành công:'}">Lý do:</strong>
+        <div th:text="${note != null and !note.isBlank() ? note : 'Theo yêu cầu từ khách hàng hoặc quá thời hạn giao nhận.'}">Không có lý do chi tiết.</div>
+    </div>
+
+    <!-- Khối thông tin đơn hàng tóm tắt -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f8f9fa; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
+        <tr>
+            <td style="padding: 14px 18px;">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="font-size: 13px;">
+                    <tr>
+                        <td width="130" style="padding: 4px 0; color: #6c757d;">Mã đơn hàng:</td>
+                        <td style="padding: 4px 0; font-weight: bold; color: #b94312;" th:text="${orderCode}">DH000001</td>
+                    </tr>
+                    <tr>
+                        <td width="130" style="padding: 4px 0; color: #6c757d;">Tổng thanh toán:</td>
+                        <td style="padding: 4px 0; font-weight: bold; color: #272d2d;" th:text="${totalFormatted}">1.500.000 đ</td>
+                    </tr>
+                    <tr>
+                        <td width="130" style="padding: 4px 0; color: #6c757d;">Cập nhật lúc:</td>
+                        <td style="padding: 4px 0; color: #272d2d;" th:text="${updateTime}">10/11/2026 14:00</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Danh sách sản phẩm rút gọn -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: collapse; margin-bottom: 20px; font-size: 13px;">
+        <thead>
+            <tr style="background-color: #f8f9fa; border-top: 1px solid #e9ecef; border-bottom: 2px solid #dee2e6;">
+                <th align="left" style="padding: 8px; color: #495057;">Sản phẩm</th>
+                <th align="center" style="padding: 8px; width: 60px; color: #495057;">SL</th>
+                <th align="right" style="padding: 8px; width: 110px; color: #495057;">Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${orderItems}" style="border-bottom: 1px solid #e9ecef;">
+                <td style="padding: 10px 8px;">
+                    <div style="font-weight: 600; color: #272d2d;" th:text="${item.productName}">Tên giày</div>
+                    <div style="font-size: 11px; color: #6c757d;" th:text="${item.attributesText}">Kích cỡ: 40 - Màu: Đen</div>
+                </td>
+                <td align="center" style="padding: 10px 8px; color: #272d2d;" th:text="${item.quantity}">1</td>
+                <td align="right" style="padding: 10px 8px; font-weight: 600; color: #272d2d;" th:text="${item.totalFormatted}">1.500.000 đ</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Nút xem đơn hàng -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 24px 0 16px 0;">
+        <tr>
+            <td align="center">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td align="center" style="background-color: #b94312; border-radius: 8px;">
+                            <a th:href="${orderDetailUrl}" target="_blank"
+                               style="display: inline-block; padding: 14px 28px; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: bold; border-radius: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                                Xem chi tiết đơn hàng
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Khối Cần hỗ trợ? -->
+    <div style="border-top: 1px dashed #dee2e6; padding-top: 14px; text-align: center; font-size: 13px; color: #6c757d;">
+        Mọi thắc mắc về đơn hàng, vui lòng liên hệ hotline <strong style="color: #b94312;" th:text="${shopHotline}">1900 1234</strong> hoặc email <a th:href="'mailto:' + ${shopSupportEmail}" style="color: #b94312; text-decoration: none;" th:text="${shopSupportEmail}">support@f6shop.com</a>.
+    </div>
+</div>
+
+</body>
+</html>
