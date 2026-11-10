@@ -26,5 +26,7 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
     @org.springframework.data.jpa.repository.Query("select v from ProductVariant v where v.id=:id")
     java.util.Optional<ProductVariant> findForUpdate(@org.springframework.data.repository.query.Param("id") Integer id);
     java.util.List<ProductVariant> findByProduct_Id(Integer productId);
+    java.util.Optional<ProductVariant> findFirstByProduct_Id(Integer productId);
+    java.util.Optional<ProductVariant> findFirstByProduct_IdAndIdNot(Integer productId, Integer id);
     java.util.Optional<ProductVariant> findByCodeIgnoreCase(String code);
 }

@@ -285,6 +285,15 @@ public class AdminCatalogService {
             .orElseThrow(()->new CatalogValidationException("colorId","Chọn màu sắc đang hiển thị."));
         var sole=soles.findById(form.getSoleId()==null?-1:form.getSoleId()).filter(c->Boolean.TRUE.equals(c.getStatus()) || (current!=null && current.getSole().getId().equals(c.getId())))
             .orElseThrow(()->new CatalogValidationException("soleId","Chọn đế giày đang hiển thị."));
+        var firstExisting = variants.findFirstByProduct_IdAndIdNot(product.getId(), form.getId() == null ? -1 : form.getId());
+        if (firstExisting.isPresent()) {
+            if (!firstExisting.get().getMaterial().getId().equals(material.getId())) {
+                throw new CatalogValidationException("materialId", "Sản phẩm này có chất liệu cố định là " + firstExisting.get().getMaterial().getName() + ". Sang chất liệu khác là sản phẩm khác.");
+            }
+            if (!firstExisting.get().getSole().getId().equals(sole.getId())) {
+                throw new CatalogValidationException("soleId", "Sản phẩm này có đế giày cố định là " + firstExisting.get().getSole().getName() + ". Sang đế giày khác là sản phẩm khác.");
+            }
+        }
         if (variants.existsByProduct_IdAndSize_IdAndMaterial_IdAndColor_IdAndSole_IdAndIdNot(product.getId(),size.getId(),material.getId(),color.getId(),sole.getId(),form.getId()==null ? -1 : form.getId()))
             throw new CatalogValidationException("materialId","Bộ năm sản phẩm, kích cỡ, chất liệu, màu sắc và đế giày đã tồn tại.");
         ProductVariant variant = form.getId() == null ? new ProductVariant() : current;
@@ -308,7 +317,14 @@ public class AdminCatalogService {
     }
     @Transactional
     public java.util.List<ProductVariant> createVariants(com.example.demodatn.dto.sanpham.VariantBatchForm batch) {
-        products.lockById(batch.getProductId()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Product lockedProduct = products.lockById(batch.getProductId()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
+        var existingVar = variants.findFirstByProduct_Id(batch.getProductId());
+        if (existingVar.isPresent()) {
+            batch.setMaterialId(existingVar.get().getMaterial().getId());
+            batch.setSoleId(existingVar.get().getSole().getId());
+        } else if (lockedProduct.getSole() != null && batch.getSoleId() == null) {
+            batch.setSoleId(lockedProduct.getSole().getId());
+        }
         if(batch.getSizeIds()==null || batch.getSizeIds().isEmpty() || batch.getSizeIds().size()>100)
             throw new CatalogValidationException("sizeIds","Chọn từ 1 đến 100 kích cỡ.");
         if(new java.util.HashSet<>(batch.getSizeIds()).size()!=batch.getSizeIds().size())throw new CatalogValidationException("sizeIds","Kích cỡ trùng trong yêu cầu. Không tạo biến thể nào.");

@@ -74,6 +74,12 @@ public class AdminProductController {
         model.addAttribute("variants",result.getContent());model.addAttribute("variantPage",result);
         model.addAttribute("sizes",sizes.findAll());model.addAttribute("colors",colors.findAll());
         model.addAttribute("materials",materials.findAll());model.addAttribute("soles",soles.findAll());
+        var existingVariants = variants.findByProduct_Id(id);
+        var fixedMaterial = !existingVariants.isEmpty() ? existingVariants.get(0).getMaterial() : null;
+        var prod = catalog.product(id);
+        var fixedSole = (prod.getSole() != null) ? prod.getSole() : (!existingVariants.isEmpty() ? existingVariants.get(0).getSole() : null);
+        model.addAttribute("fixedMaterial", fixedMaterial);
+        model.addAttribute("fixedSole", fixedSole);
         model.addAttribute("sizeId",sizeId);model.addAttribute("colorId",colorId);model.addAttribute("materialId",materialId);
         model.addAttribute("soleId",soleId);model.addAttribute("variantStatus",variantStatus);
         model.addAttribute("stock",stock);model.addAttribute("threshold",lowStockThreshold);
