@@ -34,6 +34,7 @@ public class AccountProvisioningService {
     private final AccountMailService mail;
     private final PasswordEncoder encoder;
     private final PlatformTransactionManager transactions;
+    @Value("${shop.account-mail.window-minutes:5}") private int windowMinutes;
     @Value("${shop.account-mail.max-per-hour:3}") private int maxPerHour;
     private static final SecureRandom RANDOM=new SecureRandom();
 
@@ -150,8 +151,8 @@ public class AccountProvisioningService {
             String email=PeopleService.email(customer?c.getEmail():e.getEmail());
             emailAvailable(email,customer?id:-1,customer?-1:id,user.getId()==null?-1:user.getId());
             LocalDateTime now=LocalDateTime.now();
-            if(user.getCredentialMailWindow()==null || !user.getCredentialMailWindow().isAfter(now.minusHours(1))){user.setCredentialMailWindow(now);user.setCredentialMailCount(0);}
-            if(user.getCredentialMailCount()>=Math.max(1,maxPerHour))throw new PeopleValidationException("email","Đã đạt giới hạn gửi lại tài khoản trong một giờ. Vui lòng thử lại sau.");
+            if(user.getCredentialMailWindow()==null || !user.getCredentialMailWindow().isAfter(now.minusMinutes(windowMinutes))){user.setCredentialMailWindow(now);user.setCredentialMailCount(0);}
+            if(user.getCredentialMailCount()>=Math.max(1,maxPerHour))throw new PeopleValidationException("email","Đã đạt giới hạn gửi lại tài khoản (vui lòng đợi " + windowMinutes + " phút). Vui lòng thử lại sau.");
             user.setCredentialMailCount(user.getCredentialMailCount()+1);
             user.setEmail(email);user.setFullName(customer?c.getFullName():e.getFullName());user.setPhone(customer?c.getPhone():e.getPhone());
             if(linked==null)user.setStatus(Boolean.TRUE.equals(c.getStatus()));
