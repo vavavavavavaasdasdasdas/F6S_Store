@@ -3,7 +3,7 @@
 <div th:if="${person.user != null and person.user.credentialMailFailed == true and canEdit}" class="alert alert-warning d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3" role="alert" data-mail-failed-warning>
     <div>
         <strong>Chưa gửi được email tài khoản!</strong>
-        <span>Tài khoản đã tạo thành công nhưng chưa gửi được email (do chưa cấu hình email hoặc máy chủ thư từ chối). Kiểm tra <a href="/admin/account#email-settings" class="text-decoration-underline fw-bold">Cấu hình email</a> và nhấn nút để gửi lại.</span>
+        <span>Tài khoản đã tạo thành công nhưng chưa gửi được email (do chưa cấu hình email hoặc máy chủ thư từ chối). Kiểm tra cấu hình và nhấn nút để gửi lại.</span>
     </div>
     <form method="post" th:action="@{/admin/employees/{id}/send-account(id=${person.id})}" class="flex-shrink-0">
         <input type="hidden" name="confirmed" value="true">
