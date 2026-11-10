@@ -732,28 +732,50 @@ public class AdminPosController {
     public String newHoldTab(@ModelAttribute PosCheckoutRequest request, HttpSession session, Principal principal, RedirectAttributes flash) {
         synchronized (session) {
             try {
-                var cart = cart(session);
-                if (!cart.isEmpty()) {
-                    var existingHolds = holds.list(principal.getName(), "POS");
-                    Long currentLoadedId = (Long) session.getAttribute("posLoadedHold");
-                    if (currentLoadedId == null && existingHolds.size() >= 5) {
-                        flash.addFlashAttribute("error", PosHoldService.LIMIT_MESSAGE);
-                        return "redirect:/admin/pos";
-                    }
+                var existingHolds = holds.list(principal.getName(), "POS");
+                Long currentLoadedId = (Long) session.getAttribute("posLoadedHold");
+
+                // 1. Nếu đang mở 1 hóa đơn chờ, lưu lại nội dung hiện tại của hóa đơn đó
+                if (currentLoadedId != null) {
+                    var cart = cart(session);
                     holds.save(principal.getName(), cart, request, currentLoadedId, "POS", null);
-                    clearCart(session);
-                    flash.addFlashAttribute("success", "Đã lưu hóa đơn chờ và tạo hóa đơn mới.");
-                } else {
-                    if (session.getAttribute("posLoadedHold") != null) {
-                        clearCart(session);
-                        flash.addFlashAttribute("success", "Đã chuyển sang hóa đơn mới.");
-                    } else {
-                        flash.addFlashAttribute("info", "Bạn đang ở hóa đơn mới.");
-                    }
                 }
+
+                // 2. Kiểm tra nếu đã đủ 5 hóa đơn chờ thì không cho tạo thêm
+                if (existingHolds.size() >= 5) {
+                    flash.addFlashAttribute("error", PosHoldService.LIMIT_MESSAGE);
+                    return "redirect:/admin/pos";
+                }
+
+                // 3. Tạo ngay một hóa đơn chờ mới (không bắt buộc đơn trước phải có sản phẩm)
+                var emptyCart = new ArrayList<CartItemDto>();
+                var defaultReq = new PosCheckoutRequest();
+                defaultReq.setPaymentMethod("CASH");
+                Long newHoldId = holds.save(principal.getName(), emptyCart, defaultReq, null, "POS", null);
+
+                // 4. Mở hóa đơn chờ mới tạo
+                clearCart(session);
+                session.setAttribute("posCart", new ArrayList<CartItemDto>());
+                session.setAttribute("posLoadedHold", newHoldId);
+                session.setAttribute("posHeldRequest", defaultReq);
+                flash.addFlashAttribute("success", "Đã thêm hóa đơn chờ mới.");
             } catch (IllegalArgumentException ex) {
                 flash.addFlashAttribute("error", ex.getMessage());
             }
+        }
+        return "redirect:/admin/pos";
+    }
+
+    @PostMapping("/admin/pos/holds/close")
+    public String closeHoldToCurrent(@ModelAttribute PosCheckoutRequest request, HttpSession session, Principal principal) {
+        synchronized (session) {
+            Long loadedId = (Long) session.getAttribute("posLoadedHold");
+            if (loadedId != null) {
+                try {
+                    holds.save(principal.getName(), cart(session), request, loadedId, "POS", null);
+                } catch (Exception ignored) {}
+            }
+            clearCart(session);
         }
         return "redirect:/admin/pos";
     }

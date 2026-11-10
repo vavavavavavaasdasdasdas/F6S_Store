@@ -43,7 +43,7 @@
                     </div>
                     <div>
                         <button type="button" class="btn btn-sm btn-outline-primary fw-medium" id="btn-add-hold-tab"
-                                th:disabled="${heldOrders.size() >= 5 and loadedHoldId == null}">
+                                th:disabled="${heldOrders.size() >= 5}">
                             + Thêm hóa đơn chờ
                         </button>
                     </div>
@@ -51,7 +51,7 @@
 
                 <div class="pos-held-tabs" id="pos-held-bar" th:data-count="${heldOrders.size()}" th:data-loaded="${loadedHoldId}">
                     <!-- Tab cho giỏ hiện tại nếu chưa lưu thành hóa đơn chờ -->
-                    <div class="pos-tab-item" th:classappend="${loadedHoldId == null ? 'is-active is-current' : ''}" id="tab-current-order">
+                    <div class="pos-tab-item" th:classappend="${loadedHoldId == null ? 'is-active is-current' : ''}" id="tab-current-order" role="button" tabindex="0">
                         <div class="pos-tab-info">
                             <span class="fw-bold">Hóa đơn hiện tại</span>
                             <span class="text-muted small d-block" th:text="${posCart.size() + ' món · ' + @money.format(total) + ' đ'}"></span>

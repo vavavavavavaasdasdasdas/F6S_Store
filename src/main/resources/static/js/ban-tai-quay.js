@@ -104,6 +104,38 @@
         });
     });
 
+    // Chuyển về Hóa đơn hiện tại khi click tab Hóa đơn hiện tại
+    const tabCurrentOrder = document.querySelector('#tab-current-order');
+    if (tabCurrentOrder) {
+        tabCurrentOrder.addEventListener('click', () => {
+            if (tabCurrentOrder.classList.contains('is-active')) return;
+            const deliveryChecked = document.querySelector('#deliverySwitch')?.checked;
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/admin/pos/holds/close';
+            form.innerHTML = `
+                <input type="hidden" name="${csrfHeader === 'X-CSRF-TOKEN' ? '_csrf' : csrfHeader}" value="${csrfToken}">
+                <input type="hidden" name="customerId" value="${document.querySelector('#customerId')?.value || ''}">
+                <input type="hidden" name="voucherCode" value="${document.querySelector('#posVoucher')?.value || ''}">
+                <input type="hidden" name="paymentMethod" value="${document.querySelector('input[name="paymentMethod"]:checked')?.value || (deliveryChecked ? 'COD' : 'CASH')}">
+                <input type="hidden" name="note" value="${document.querySelector('#posNote')?.value || ''}">
+                <input type="hidden" name="delivery" value="${deliveryChecked ? 'true' : 'false'}">
+                <input type="hidden" name="receiverName" value="${document.querySelector('#receiverName')?.value || ''}">
+                <input type="hidden" name="receiverPhone" value="${document.querySelector('#receiverPhone')?.value || ''}">
+                <input type="hidden" name="receiverEmail" value="${document.querySelector('#receiverEmail')?.value || ''}">
+                <input type="hidden" name="provinceId" value="${document.querySelector('#pos-del-province')?.value || ''}">
+                <input type="hidden" name="wardId" value="${document.querySelector('#pos-del-ward')?.value || ''}">
+                <input type="hidden" name="streetAddress" value="${document.querySelector('#pos-street')?.value || ''}">
+                <input type="hidden" name="latitude" value="${document.querySelector('#pos-del-latitude')?.value || ''}">
+                <input type="hidden" name="longitude" value="${document.querySelector('#pos-del-longitude')?.value || ''}">
+                <input type="hidden" name="coordinateSource" value="${document.querySelector('#pos-del-source')?.value || ''}">
+                <input type="hidden" name="confirmNow" value="${document.querySelector('#confirmNow')?.checked ? 'true' : 'false'}">
+            `;
+            document.body.appendChild(form);
+            form.submit();
+        });
+    }
+
     // Countdown timers for held orders
     function updateCountdowns() {
         document.querySelectorAll('[data-hold-countdown]').forEach(el => {

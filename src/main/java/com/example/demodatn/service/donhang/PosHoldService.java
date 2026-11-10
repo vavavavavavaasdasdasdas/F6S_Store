@@ -72,11 +72,15 @@ public class PosHoldService {
     public Long save(String username,List<CartItemDto> cart,PosCheckoutRequest request,Long currentId,String mode,com.example.demodatn.dto.donhang.PosOnlineOrderForm online) {
         if(!Set.of("POS","ONLINE").contains(mode))throw new IllegalArgumentException("Loại hóa đơn chờ không hợp lệ.");
         var user=users.lockByUsername(username).orElseThrow();
-        if(cart.isEmpty())throw new IllegalArgumentException("Giỏ hàng trống, không thể lưu chờ.");
         Set<String> validMethods = (request.isDelivery() || "ONLINE".equals(mode))
                 ? Set.of("COD","BANK_TRANSFER","TRANSFER","CASH")
                 : Set.of("CASH","TRANSFER","COMBINED");
-        if(!validMethods.contains(Objects.toString(request.getPaymentMethod(),"")))
+        String pMethod = Objects.toString(request.getPaymentMethod(),"");
+        if (pMethod.isBlank()) {
+            pMethod = request.isDelivery() ? "COD" : "CASH";
+            request.setPaymentMethod(pMethod);
+        }
+        if(!validMethods.contains(pMethod))
             throw new IllegalArgumentException(request.isDelivery() ? "Chọn COD hoặc Chuyển khoản." : "Chọn Tiền mặt, Chuyển khoản hoặc Kết hợp.");
         if(!"ONLINE".equals(mode)&&request.getNote()!=null && request.getNote().length()>500)throw new IllegalArgumentException("Ghi chú tối đa 500 ký tự.");
         if(request.getVoucherCode()!=null && request.getVoucherCode().length()>50)throw new IllegalArgumentException("Mã phiếu giảm giá tối đa 50 ký tự.");
@@ -159,7 +163,7 @@ public class PosHoldService {
     public Loaded switchTo(String username,Long id,List<CartItemDto> current,PosCheckoutRequest request,Long currentId,boolean saveCurrent,String mode,com.example.demodatn.dto.donhang.PosOnlineOrderForm online) {
         users.lockByUsername(username).orElseThrow();
         locked(username,id,mode);
-        if(saveCurrent && !current.isEmpty())save(username,current,request,currentId,mode,online);
+        if(saveCurrent && currentId != null)save(username,current,request,currentId,mode,online);
         return open(username,id,mode);
     }
 
