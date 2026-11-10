@@ -310,16 +310,44 @@ html { scrollbar-color:var(--admin-scroll-thumb) var(--admin-scroll-track); scro
   border-radius: 8px;
   border: 1px dashed #dee2e6;
 }
+.pos-cart-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+.pos-cart-table {
+  width: 100% !important;
+  min-width: 100% !important;
+  table-layout: auto;
+}
 .pos-cart-table th {
   background: #f8f9fa;
   font-size: 12px;
   text-transform: uppercase;
   color: #495057;
   white-space: nowrap;
+  vertical-align: middle;
 }
 .pos-cart-table td {
   vertical-align: middle;
   font-size: 13px;
+}
+.pos-cart-table th.col-pos-stt { width: 50px; text-align: center; }
+.pos-cart-table th.col-pos-code { width: 90px; }
+.pos-cart-table th.col-pos-name { min-width: 180px; width: auto; white-space: normal; }
+.pos-cart-table th.col-pos-color { width: 90px; }
+.pos-cart-table th.col-pos-size { width: 75px; text-align: center; }
+.pos-cart-table th.col-pos-qty { width: 95px; text-align: center; }
+.pos-cart-table th.col-pos-price { width: 125px; text-align: right; }
+.pos-cart-table th.col-pos-total { width: 135px; text-align: right; }
+.pos-cart-table th.col-pos-action { width: 60px; text-align: center; }
+
+.pos-cart-table td.col-pos-name,
+.pos-cart-table .pos-line-item td:nth-child(3) {
+  white-space: normal;
+  word-break: break-word;
+}
+.pos-cart-table .pos-empty-cart {
+  width: 100%;
 }
 .pos-qty-input {
   width: 65px;

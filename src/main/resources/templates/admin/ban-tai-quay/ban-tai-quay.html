@@ -119,15 +119,15 @@
                     <table class="table admin-table data-table pos-cart-table" data-table-key="pos-cart-table">
                         <thead>
                             <tr>
-                                <th scope="col" style="width: 45px;">STT</th>
-                                <th scope="col">Mã SP</th>
-                                <th scope="col">Tên sản phẩm</th>
-                                <th scope="col">Màu sắc</th>
-                                <th scope="col">Kích cỡ</th>
-                                <th scope="col" style="width: 80px;">Số lượng</th>
-                                <th scope="col" class="text-end">Đơn giá</th>
-                                <th scope="col" class="text-end">Thành tiền</th>
-                                <th scope="col" class="text-center" style="width: 50px;">Thao tác</th>
+                                <th scope="col" class="col-pos-stt text-center">STT</th>
+                                <th scope="col" class="col-pos-code">Mã SP</th>
+                                <th scope="col" class="col-pos-name">Tên sản phẩm</th>
+                                <th scope="col" class="col-pos-color">Màu sắc</th>
+                                <th scope="col" class="col-pos-size text-center">Kích cỡ</th>
+                                <th scope="col" class="col-pos-qty text-center">Số lượng</th>
+                                <th scope="col" class="col-pos-price text-end">Đơn giá</th>
+                                <th scope="col" class="col-pos-total text-end">Thành tiền</th>
+                                <th scope="col" class="col-pos-action text-center">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,7 +139,7 @@
                             <tr th:each="i, iter : ${posCart}" class="pos-line-item" th:data-variant-id="${i.variantId}">
                                 <td class="row-number text-center" th:text="${iter.count}">1</td>
                                 <td th:text="${i.productCode ?: '—'}">SP001</td>
-                                <td>
+                                <td class="col-pos-name">
                                     <strong th:text="${i.productName}">Giày Sneaker</strong>
                                     <div class="text-warning-emphasis small" th:if="${lineWarnings.containsKey(i.variantId)}"
                                          th:text="${lineWarnings.get(i.variantId)}" role="alert"></div>

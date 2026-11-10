@@ -179,7 +179,7 @@
             <tr class="pos-line-item" data-variant-id="${item.variantId}">
                 <td class="row-number text-center">${idx + 1}</td>
                 <td>${item.productCode || '—'}</td>
-                <td>
+                <td class="col-pos-name">
                     <strong>${item.productName || ''}</strong>
                 </td>
                 <td>${item.colorName || '—'}</td>
