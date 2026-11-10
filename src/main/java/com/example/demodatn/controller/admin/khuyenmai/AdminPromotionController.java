@@ -137,7 +137,7 @@ public class AdminPromotionController {
             }
             return c.and(predicates.toArray(new Predicate[0]));
         };
-        var result=pagination.load(page,Sort.by(Sort.Direction.ASC, "product.name").and(Sort.by(Sort.Direction.ASC, "id")),request->productVariants.findAll(filter,request));
+        var result=pagination.load(page,Sort.by(Sort.Direction.ASC, "id"),request->productVariants.findAll(filter,request));
         model.addAttribute("variants",result.getContent());
         model.addAttribute("variantPage",result);
         model.addAttribute("products",result.getContent());
@@ -151,10 +151,21 @@ public class AdminPromotionController {
         if (categoryId != null) activeFilterCount++;
         if (applied != null) activeFilterCount++;
         model.addAttribute("activeFilterCount", activeFilterCount);
-        var pageVariantIds = result.getContent().stream().map(ProductVariant::getId).toList();
-        model.addAttribute("selected",details.findByPromotion_IdAndProductVariant_IdIn(id, pageVariantIds).stream()
-                .filter(d -> d.getProductVariant() != null)
-                .map(d -> d.getProductVariant().getId()).collect(Collectors.toSet()));
+
+        var selectedVariantIds = new java.util.HashSet<Integer>();
+        var promoDetails = details.findByPromotion_Id(id);
+        for (var d : promoDetails) {
+            if (d.getProductVariant() != null) {
+                selectedVariantIds.add(d.getProductVariant().getId());
+            } else if (d.getProduct() != null) {
+                for (var v : result.getContent()) {
+                    if (v.getProduct() != null && v.getProduct().getId().equals(d.getProduct().getId())) {
+                        selectedVariantIds.add(v.getId());
+                    }
+                }
+            }
+        }
+        model.addAttribute("selected", selectedVariantIds);
         return "admin/khuyen-mai/san-pham-ap-dung";
     }
     @PostMapping("/{id}/products")
