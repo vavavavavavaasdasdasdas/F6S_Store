@@ -25,7 +25,7 @@
  const count=selection.querySelector('[data-selection-count]'),inputs=[...selection.querySelectorAll('[name=productIds]')],key='promotion-selection-'+selection.dataset.promotionId;
  let draft={},stored=true;
  try{if(selection.dataset.selectionSaved==='true')sessionStorage.removeItem(key);else draft=JSON.parse(sessionStorage.getItem(key)||'{}');}catch(_){stored=false;}
- const update=()=>count.textContent='Đã chọn '+inputs.filter(input=>input.checked).length+' sản phẩm trên trang này'+(Object.keys(draft).length?' · Có lựa chọn chờ lưu':'');
+ const update=()=>count.textContent='Đã chọn '+inputs.filter(input=>input.checked).length+' biến thể trên trang này'+(Object.keys(draft).length?' · Có lựa chọn chờ lưu':'');
  function persist(){try{sessionStorage.setItem(key,JSON.stringify(draft));stored=true;}catch(_){stored=false;count.textContent='Không lưu được lựa chọn trong trình duyệt. Hãy Lưu thay đổi trước khi chuyển trang.';}setTimeout(()=>{selection.dataset.dirty=stored?'false':'true';},0);}
  inputs.forEach(input=>{if(Object.prototype.hasOwnProperty.call(draft,input.value))input.checked=draft[input.value]===true;input.addEventListener('change',()=>{draft[input.value]=input.checked;update();persist();});});
  selection.querySelectorAll('[data-selection-all]').forEach(button=>button.addEventListener('click',()=>{inputs.forEach(input=>{input.checked=button.dataset.selectionAll==='true';draft[input.value]=input.checked;});update();persist();}));

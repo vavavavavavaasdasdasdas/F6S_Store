@@ -3,11 +3,13 @@ import com.example.demodatn.dto.khuyenmai.PromotionDto;
 import com.example.demodatn.entity.khuyenmai.Promotion;
 import com.example.demodatn.entity.khuyenmai.PromotionDetail;
 import com.example.demodatn.entity.sanpham.Product;
+import com.example.demodatn.entity.sanpham.ProductVariant;
 import com.example.demodatn.exception.DiscountValidationException;
 import com.example.demodatn.repository.khuyenmai.PromotionDetailRepository;
 import com.example.demodatn.repository.khuyenmai.PromotionRepository;
 import com.example.demodatn.repository.sanpham.CategoryRepository;
 import com.example.demodatn.repository.sanpham.ProductRepository;
+import com.example.demodatn.repository.sanpham.ProductVariantRepository;
 import com.example.demodatn.service.khuyenmai.DiscountAdminService;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.validation.Valid;
@@ -33,6 +35,7 @@ public class AdminPromotionController {
     private final PromotionRepository promotions;
     private final PromotionDetailRepository details;
     private final ProductRepository products;
+    private final ProductVariantRepository productVariants;
     private final CategoryRepository categories;
     private final DiscountAdminService discounts;
     private final com.example.demodatn.service.khuyenmai.DiscountEffectivity effectivity;
@@ -106,25 +109,37 @@ public class AdminPromotionController {
                             @RequestParam(defaultValue="0") String page,
                             Model model) {
         model.addAttribute("promotion",discounts.promotion(id));
-        Specification<Product> filter=(r,x,c)->{
+        Specification<ProductVariant> filter=(r,x,c)->{
             List<Predicate> predicates = new ArrayList<>();
             predicates.add(c.isTrue(r.get("status")));
-            predicates.add(c.or(c.like(c.lower(r.get("name")),like(q),'!'),c.like(c.lower(r.get("code")),like(q),'!')));
+            predicates.add(c.isTrue(r.get("product").get("status")));
+            if (!q.trim().isEmpty()) {
+                String pat = like(q);
+                predicates.add(c.or(
+                        c.like(c.lower(r.get("product").get("name")), pat, '!'),
+                        c.like(c.lower(r.get("product").get("code")), pat, '!'),
+                        c.like(c.lower(r.get("code")), pat, '!'),
+                        c.like(c.lower(r.get("color").get("name")), pat, '!'),
+                        c.like(c.lower(r.get("size").get("sizeValue")), pat, '!')
+                ));
+            }
             if (categoryId != null) {
-                predicates.add(c.equal(r.get("category").get("id"), categoryId));
+                predicates.add(c.equal(r.get("product").get("category").get("id"), categoryId));
             }
             if (applied != null) {
                 var sq = x.subquery(Integer.class);
                 var d = sq.from(PromotionDetail.class);
                 sq.select(c.literal(1)).where(
                         c.equal(d.get("promotion").get("id"), id),
-                        c.equal(d.get("product").get("id"), r.get("id"))
+                        c.equal(d.get("productVariant").get("id"), r.get("id"))
                 );
                 predicates.add(applied ? c.exists(sq) : c.not(c.exists(sq)));
             }
             return c.and(predicates.toArray(new Predicate[0]));
         };
-        var result=pagination.load(page,Sort.by("name","id"),request->products.findAll(filter,request));
+        var result=pagination.load(page,Sort.by(Sort.Direction.ASC, "product.name").and(Sort.by(Sort.Direction.ASC, "id")),request->productVariants.findAll(filter,request));
+        model.addAttribute("variants",result.getContent());
+        model.addAttribute("variantPage",result);
         model.addAttribute("products",result.getContent());
         model.addAttribute("productPage",result);
         model.addAttribute("q",q);
@@ -132,23 +147,32 @@ public class AdminPromotionController {
         model.addAttribute("categoryId",categoryId);
         model.addAttribute("applied",applied);
         int activeFilterCount = 0;
-        if (q != null && !q.trim().isEmpty()) activeFilterCount++;
+        if (!q.trim().isEmpty()) activeFilterCount++;
         if (categoryId != null) activeFilterCount++;
         if (applied != null) activeFilterCount++;
         model.addAttribute("activeFilterCount", activeFilterCount);
-        model.addAttribute("selected",details.findByPromotion_IdAndProduct_IdIn(id,result.getContent().stream().map(Product::getId).toList()).stream().map(d->d.getProduct().getId()).collect(Collectors.toSet()));
+        var pageVariantIds = result.getContent().stream().map(ProductVariant::getId).toList();
+        model.addAttribute("selected",details.findByPromotion_IdAndProductVariant_IdIn(id, pageVariantIds).stream()
+                .filter(d -> d.getProductVariant() != null)
+                .map(d -> d.getProductVariant().getId()).collect(Collectors.toSet()));
         return "admin/khuyen-mai/san-pham-ap-dung";
     }
     @PostMapping("/{id}/products")
     public String select(@PathVariable Integer id,
                          @RequestParam(required=false) List<Integer> productIds,
+                         @RequestParam(required=false) List<Integer> variantIds,
                          @RequestParam(required=false) List<Integer> visibleIds,
                          @RequestParam(defaultValue="0") String page,
                          @RequestParam(defaultValue="") String q,
                          @RequestParam(required=false) Integer categoryId,
                          @RequestParam(required=false) Boolean applied,
                          RedirectAttributes flash) {
-        try { discounts.selectProductPage(id,visibleIds==null?List.of():visibleIds,productIds==null?List.of():productIds);flash.addFlashAttribute("message","Đã lưu sản phẩm áp dụng.");flash.addFlashAttribute("selectionSaved",true); }
+        List<Integer> chosen = productIds != null ? productIds : (variantIds != null ? variantIds : List.of());
+        try { 
+            discounts.selectVariantPage(id, visibleIds == null ? List.of() : visibleIds, chosen);
+            flash.addFlashAttribute("message", "Đã lưu biến thể áp dụng.");
+            flash.addFlashAttribute("selectionSaved", true); 
+        }
         catch(IllegalArgumentException ex) { flash.addFlashAttribute("error",ex.getMessage()); }
         String redirect = "redirect:/admin/promotions/"+id+"/products?page="+java.net.URLEncoder.encode(page,java.nio.charset.StandardCharsets.UTF_8)+"&q="+java.net.URLEncoder.encode(q,java.nio.charset.StandardCharsets.UTF_8);
         if (categoryId != null) redirect += "&categoryId=" + categoryId;

@@ -11,6 +11,8 @@ import com.example.demodatn.repository.khuyenmai.PromotionDetailRepository;
 import com.example.demodatn.repository.khuyenmai.PromotionRepository;
 import com.example.demodatn.repository.khuyenmai.VoucherRepository;
 import com.example.demodatn.repository.sanpham.ProductRepository;
+import com.example.demodatn.repository.sanpham.ProductVariantRepository;
+import com.example.demodatn.entity.sanpham.ProductVariant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +33,7 @@ public class DiscountAdminService {
     private final PromotionDetailRepository details;
     private final CustomerRepository customers;
     private final ProductRepository products;
+    private final ProductVariantRepository variants;
     private final OrderRepository orders;
     private final JdbcTemplate jdbc;
 
@@ -133,6 +136,25 @@ public class DiscountAdminService {
         details.deleteByPromotion_Id(id);details.flush();
         for(var product:chosen) { var d=new PromotionDetail();d.setPromotion(p);d.setProduct(product);details.save(d); }
     }
+    @Transactional
+    public void selectVariantPage(Integer id, List<Integer> visible, List<Integer> chosen) {
+        Promotion promotion = promotions.findForUpdate(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (!visible.containsAll(chosen)) throw new IllegalArgumentException("Danh sách biến thể không hợp lệ.");
+        var selected = variants.findAllById(new HashSet<>(chosen));
+        if (selected.size() != new HashSet<>(chosen).size()) {
+            throw new IllegalArgumentException("Có biến thể không tồn tại. Tải lại danh sách.");
+        }
+        details.deleteByPromotion_IdAndProductVariant_IdIn(id, visible);
+        details.flush();
+        for (var variant : selected) {
+            var row = new PromotionDetail();
+            row.setPromotion(promotion);
+            row.setProductVariant(variant);
+            row.setProduct(variant.getProduct());
+            details.save(row);
+        }
+    }
+
     @Transactional
     public void selectProductPage(Integer id,List<Integer> visible,List<Integer> chosen) {
         Promotion promotion=promotions.findForUpdate(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));

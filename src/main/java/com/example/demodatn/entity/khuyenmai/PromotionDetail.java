@@ -1,5 +1,6 @@
 package com.example.demodatn.entity.khuyenmai;
 import com.example.demodatn.entity.sanpham.Product;
+import com.example.demodatn.entity.sanpham.ProductVariant;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,11 +14,15 @@ public class PromotionDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "promotion_id")
     private Promotion promotion;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_variant_id")
+    private ProductVariant productVariant;
 }

@@ -44,16 +44,33 @@ public class PricingService {
     }
 
     public PriceInfo calculatePrice(ProductVariant variant) {
-        return calculatePrice(variant,promotionDetailRepository.findByProductId(variant.getProduct().getId()));
+        if (variant == null) return null;
+        var promoDetails = promotionDetailRepository.findByProductVariant_Id(variant.getId());
+        if (promoDetails.isEmpty() && variant.getProduct() != null) {
+            promoDetails = promotionDetailRepository.findByProductId(variant.getProduct().getId());
+        }
+        return calculatePrice(variant, promoDetails);
     }
 
     public java.util.Map<Integer,PriceInfo> calculatePrices(List<ProductVariant> items) {
         if(items.isEmpty()) return java.util.Map.of();
-        var ids=items.stream().map(v->v.getProduct().getId()).distinct().toList();
-        var details=promotionDetailRepository.findByProduct_IdIn(ids).stream()
-                .collect(java.util.stream.Collectors.groupingBy(d->d.getProduct().getId()));
-        return items.stream().collect(java.util.stream.Collectors.toMap(ProductVariant::getId,
-                v->calculatePrice(v,details.getOrDefault(v.getProduct().getId(),List.of()))));
+        var variantIds = items.stream().map(ProductVariant::getId).distinct().toList();
+        var productIds = items.stream().map(v->v.getProduct().getId()).distinct().toList();
+
+        var variantDetails = promotionDetailRepository.findByProductVariant_IdIn(variantIds).stream()
+                .filter(d -> d.getProductVariant() != null)
+                .collect(java.util.stream.Collectors.groupingBy(d -> d.getProductVariant().getId()));
+        var productDetails = promotionDetailRepository.findByProduct_IdIn(productIds).stream()
+                .filter(d -> d.getProduct() != null)
+                .collect(java.util.stream.Collectors.groupingBy(d -> d.getProduct().getId()));
+
+        return items.stream().collect(java.util.stream.Collectors.toMap(ProductVariant::getId, v -> {
+            var details = variantDetails.get(v.getId());
+            if (details == null || details.isEmpty()) {
+                details = productDetails.getOrDefault(v.getProduct().getId(), List.of());
+            }
+            return calculatePrice(v, details);
+        }));
     }
 
     private PriceInfo calculatePrice(ProductVariant variant,List<PromotionDetail> details) {
