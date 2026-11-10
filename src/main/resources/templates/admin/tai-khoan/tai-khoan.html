@@ -8,15 +8,103 @@
 <dt class="col-sm-4">Vai trò</dt><dd class="col-sm-8" th:text="${account.role == null ? 'Chưa có vai trò' : (account.role.name=='ROLE_ADMIN'?'Quản trị viên':account.role.name=='ROLE_EMPLOYEE'?'Nhân viên':account.role.name=='ROLE_USER'?'Khách hàng':'Quyền khác')}"></dd>
 <dt class="col-sm-4">Trạng thái</dt><dd class="col-sm-8" th:text="${account.status == true ? 'Đang hoạt động' : 'Đã vô hiệu hóa'}"></dd>
 <dt class="col-sm-4">Ngày tạo</dt><dd class="col-sm-8" th:text="${account.createdAt != null ? #temporals.format(account.createdAt,'dd/MM/yyyy HH:mm') : 'Chưa có dữ liệu'}"></dd></dl></div>
-<div class="row g-4 mt-1" th:if="${account.role != null and account.role.name == 'ROLE_ADMIN'}">
-<div class="col-12"><div class="admin-panel"><div class="panel-heading"><h2>Cấu hình &amp; Thử nghiệm Email</h2></div>
-<p th:if="${mailConfigured}" class="text-success fw-bold">✓ Máy chủ email đã cấu hình: <span th:text="${mailHost} + ':' + ${mailPort}"></span> (Người gửi: <span th:text="${mailFrom}"></span>)</p>
-<p th:unless="${mailConfigured}" class="text-warning-emphasis fw-bold">⚠ Chưa cấu hình máy chủ email. Tài khoản mới sẽ không được gửi mail. Hãy xem file docs/CAU_HINH_EMAIL.md để cấu hình.</p>
-<p class="field-help">Thử nghiệm gửi email từ hệ thống tới hòm thư quản trị viên (<strong th:text="${accountProfile.email ?: account.email}"></strong>) để xác thực kết nối SMTP.</p>
-<form th:action="@{/admin/account/test-email}" method="post" data-admin-form novalidate>
-<button class="btn btn-outline-primary" type="submit" id="btn-test-email">Gửi email thử</button>
-</form>
+
+<!-- KHỐI CẤU HÌNH & THỬ NGHIỆM EMAIL CHO ADMIN -->
+<div class="row g-4 mt-1" id="email-settings" th:if="${account.role != null and account.role.name == 'ROLE_ADMIN'}">
+<div class="col-12"><div class="admin-panel">
+    <div class="panel-heading d-flex justify-content-between align-items-center flex-wrap gap-2 pb-2 mb-3 border-bottom">
+        <div>
+            <h2 class="h5 fw-bold mb-1">Cấu hình &amp; Thử nghiệm Email (SMTP)</h2>
+            <p class="text-muted small mb-0">Dùng để gửi thông tin tài khoản cho khách hàng &amp; nhân viên, và thông báo đơn hàng.</p>
+        </div>
+        <div>
+            <span th:if="${mailConfigured}" class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 fw-semibold">
+                ✓ Đã cấu hình (<span th:text="${mailHost} + ':' + ${mailPort}"></span>)
+            </span>
+            <span th:unless="${mailConfigured}" class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle px-3 py-2 fw-semibold">
+                ⚠ Chưa cấu hình máy chủ gửi thư
+            </span>
+        </div>
+    </div>
+
+    <div th:if="${mailLastError != null and !mailLastError.isBlank()}" class="alert alert-danger py-2 mb-3 small" role="alert">
+        <strong>Lỗi gửi thư gần nhất:</strong> <span th:text="${mailLastError}"></span>
+    </div>
+
+    <!-- Form Cấu hình SMTP -->
+    <form th:action="@{/admin/account/email-config}" method="post" th:object="${emailConfigForm}" class="mb-4" novalidate>
+        <div class="row g-3">
+            <div class="col-md-6 col-lg-3">
+                <label for="cfg-host" class="form-label small fw-semibold">Máy chủ SMTP (Host) *</label>
+                <input type="text" id="cfg-host" th:field="*{host}" class="form-control" placeholder="smtp.gmail.com" required>
+            </div>
+            <div class="col-md-6 col-lg-2">
+                <label for="cfg-port" class="form-label small fw-semibold">Cổng (Port) *</label>
+                <input type="number" id="cfg-port" th:field="*{port}" class="form-control" placeholder="587" required>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <label for="cfg-username" class="form-label small fw-semibold">Tài khoản / Email gửi *</label>
+                <input type="email" id="cfg-username" th:field="*{username}" class="form-control" placeholder="email_gui@gmail.com" required>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <label for="cfg-password" class="form-label small fw-semibold">
+                    Mật khẩu ứng dụng (App Password)
+                    <span th:if="${mailHasPassword}" class="text-success small fw-normal">(Đã lưu)</span>
+                </label>
+                <input type="password" id="cfg-password" th:field="*{password}" class="form-control"
+                       th:placeholder="${mailHasPassword ? '•••••••• (để trống nếu không đổi)' : '16 ký tự mật khẩu'}" autocomplete="off">
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <label for="cfg-from" class="form-label small fw-semibold">Địa chỉ người gửi hiển thị (From)</label>
+                <input type="text" id="cfg-from" th:field="*{from}" class="form-control" placeholder="F6S Store <email_gui@gmail.com> (để trống sẽ lấy Email gửi)">
+            </div>
+            <div class="col-md-6 col-lg-3 d-flex align-items-center pt-md-4">
+                <div class="form-check me-3">
+                    <input class="form-check-input" type="checkbox" id="cfg-auth" th:field="*{auth}">
+                    <label class="form-check-label small" for="cfg-auth">Xác thực (Auth)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cfg-starttls" th:field="*{starttls}">
+                    <label class="form-check-label small" for="cfg-starttls">STARTTLS</label>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3 d-flex align-items-center justify-content-lg-end pt-md-4">
+                <button type="submit" class="btn btn-primary w-100 fw-semibold" id="btn-save-email-config">
+                    💾 Lưu cấu hình email
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Khối kiểm tra gửi email thử nghiệm -->
+    <div class="p-3 bg-light rounded border mb-3">
+        <h3 class="h6 fw-bold mb-2">Thử nghiệm kết nối SMTP</h3>
+        <p class="text-muted small mb-2">Nhập địa chỉ email bất kỳ để kiểm tra xem hệ thống đã gửi thư được hay chưa.</p>
+        <form th:action="@{/admin/account/test-email}" method="post" class="row g-2 align-items-center" novalidate>
+            <div class="col-12 col-sm-8 col-md-6 col-lg-5">
+                <input type="email" name="recipientEmail" class="form-control form-control-sm"
+                       th:value="${accountProfile.email ?: account.email}"
+                       placeholder="Nhập email nhận thử nghiệm..." required>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-outline-primary btn-sm fw-medium" type="submit" id="btn-test-email">
+                    ✉ Gửi email thử nghiệm
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Hướng dẫn nhanh cho Gmail -->
+    <div class="small text-muted border-top pt-2">
+        <strong>💡 Hướng dẫn cấu hình Gmail nhanh:</strong>
+        <ol class="mb-0 ps-3 mt-1">
+            <li>Bật <em>Xác minh 2 bước</em> trong tài khoản Google (<a href="https://myaccount.google.com/security" target="_blank" rel="noopener">myaccount.google.com/security</a>).</li>
+            <li>Tạo <em>Mật khẩu ứng dụng</em> tại <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noopener">myaccount.google.com/apppasswords</a>, đặt tên là <code>F6S Store</code> và lấy chuỗi 16 ký tự.</li>
+            <li>Điền Host: <code>smtp.gmail.com</code>, Port: <code>587</code>, Email của bạn, dán chuỗi 16 ký tự vào ô Mật khẩu rồi bấm <strong>Lưu cấu hình email</strong>.</li>
+        </ol>
+    </div>
 </div></div></div>
+
 <div class="row g-4 mt-1"><div class="col-lg-6"><div class="admin-panel"><div class="panel-heading"><h2>Sửa thông tin</h2></div>
 <form th:action="@{/admin/account/profile}" method="post" th:object="${profileForm}" data-admin-form novalidate>
 <div class="sales-field"><label for="fullName">Họ tên</label><input id="fullName" class="form-control" th:field="*{fullName}" required maxlength="100" aria-describedby="fullName-error"><p id="fullName-error" class="field-error"><span th:errors="*{fullName}"></span></p></div>

@@ -1,5 +1,7 @@
 package com.example.demodatn.service.nhanvien;
 
+import com.example.demodatn.config.DynamicJavaMailSender;
+import com.example.demodatn.dto.nhanvien.EmailConfigDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
@@ -16,30 +18,134 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @RequiredArgsConstructor
 public class AccountMailService {
     private final ObjectProvider<JavaMailSender> sender;
+    private final ObjectProvider<DynamicJavaMailSender> dynamicSenderProvider;
+
     @Value("${spring.mail.host:}") private String host;
     @Value("${spring.mail.port:587}") private int port;
     @Value("${spring.mail.username:}") private String username;
     @Value("${shop.mail.from:}") private String from;
     @Value("${shop.public-base-url:http://localhost:8080}") private String publicBaseUrl;
 
+    private volatile String localLastError;
+
     public record TestMailResult(boolean success, String message) {}
 
+    private DynamicJavaMailSender getDynamicSender() {
+        return dynamicSenderProvider.getIfAvailable();
+    }
+
+    private JavaMailSender getMailSender() {
+        DynamicJavaMailSender dynamic = getDynamicSender();
+        if (dynamic != null) {
+            return dynamic;
+        }
+        return sender.getIfAvailable();
+    }
+
     public boolean isConfigured() {
+        DynamicJavaMailSender dynamic = getDynamicSender();
+        if (dynamic != null) {
+            return dynamic.isConfigured();
+        }
         return host != null && !host.isBlank() && sender.getIfAvailable() != null;
     }
 
     public String getResolvedHost() {
+        DynamicJavaMailSender dynamic = getDynamicSender();
+        if (dynamic != null && dynamic.isConfigured()) {
+            return dynamic.getHost();
+        }
         return host != null ? host.trim() : "";
     }
 
     public int getResolvedPort() {
+        DynamicJavaMailSender dynamic = getDynamicSender();
+        if (dynamic != null && dynamic.isConfigured()) {
+            return dynamic.getPort();
+        }
         return port > 0 ? port : 587;
     }
 
+    public String getResolvedUsername() {
+        DynamicJavaMailSender dynamic = getDynamicSender();
+        if (dynamic != null && dynamic.isConfigured()) {
+            return dynamic.getUsername();
+        }
+        return username != null ? username.trim() : "";
+    }
+
     public String getResolvedFrom() {
+        DynamicJavaMailSender dynamic = getDynamicSender();
+        if (dynamic != null && dynamic.isConfigured()) {
+            return dynamic.getFrom();
+        }
         if (from != null && !from.isBlank()) return from.trim();
         if (username != null && !username.isBlank()) return username.trim();
         return "";
+    }
+
+    public boolean isResolvedAuth() {
+        DynamicJavaMailSender dynamic = getDynamicSender();
+        if (dynamic != null && dynamic.isConfigured()) {
+            return dynamic.isAuth();
+        }
+        return true;
+    }
+
+    public boolean isResolvedStarttls() {
+        DynamicJavaMailSender dynamic = getDynamicSender();
+        if (dynamic != null && dynamic.isConfigured()) {
+            return dynamic.isStarttls();
+        }
+        return true;
+    }
+
+    public boolean isPasswordConfigured() {
+        DynamicJavaMailSender dynamic = getDynamicSender();
+        return dynamic != null && dynamic.isPasswordConfigured();
+    }
+
+    public String getLastError() {
+        DynamicJavaMailSender dynamic = getDynamicSender();
+        if (dynamic != null && dynamic.getLastError() != null) {
+            return dynamic.getLastError();
+        }
+        return localLastError;
+    }
+
+    private void recordError(String error) {
+        this.localLastError = error;
+        DynamicJavaMailSender dynamic = getDynamicSender();
+        if (dynamic != null) {
+            dynamic.setLastError(error);
+        }
+    }
+
+    public synchronized TestMailResult updateConfig(EmailConfigDto dto) {
+        if (dto == null) {
+            return new TestMailResult(false, "Dữ liệu cấu hình không hợp lệ.");
+        }
+        DynamicJavaMailSender dynamic = getDynamicSender();
+        if (dynamic == null) {
+            return new TestMailResult(false, "Không tìm thấy bean DynamicJavaMailSender.");
+        }
+
+        String h = dto.getHost() != null ? dto.getHost().trim() : "";
+        int p = dto.getPort() != null && dto.getPort() > 0 ? dto.getPort() : 587;
+        String u = dto.getUsername() != null ? dto.getUsername().trim() : "";
+        String pwd = dto.getPassword();
+        // Giữ nguyên mật khẩu cũ nếu ô nhập để trống và đã có mật khẩu trước đó
+        if ((pwd == null || pwd.isBlank()) && dynamic.isPasswordConfigured()) {
+            pwd = dynamic.getPassword();
+        }
+        String f = (dto.getFrom() != null && !dto.getFrom().isBlank()) ? dto.getFrom().trim() : u;
+        boolean a = dto.getAuth() == null || dto.getAuth();
+        boolean s = dto.getStarttls() == null || dto.getStarttls();
+
+        dynamic.configure(h, p, u, pwd, f, a, s);
+        dynamic.persistConfiguration();
+
+        return new TestMailResult(true, "Đã lưu cấu hình máy chủ SMTP thành công (" + h + ":" + p + ").");
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -60,15 +166,18 @@ public class AccountMailService {
             throw new IllegalStateException("Không được gọi SMTP trong giao dịch database.");
         }
         String resolvedFrom = getResolvedFrom();
-        if (host.isBlank() || resolvedFrom.isBlank() || sender.getIfAvailable() == null) {
+        JavaMailSender mailSender = getMailSender();
+        if (!isConfigured() || resolvedFrom.isBlank() || mailSender == null) {
+            recordError("Chưa cấu hình máy chủ email SMTP hoặc chưa thiết lập email gửi (from).");
             return false;
         }
         try {
             var link = java.net.URI.create(publicBaseUrl);
             if (!java.util.Set.of("http", "https").contains(link.getScheme()) || link.getHost() == null) {
+                recordError("publicBaseUrl không hợp lệ (" + publicBaseUrl + ").");
                 return false;
             }
-            var message = sender.getObject().createMimeMessage();
+            var message = mailSender.createMimeMessage();
             var helper = new MimeMessageHelper(message, true, java.nio.charset.StandardCharsets.UTF_8.name());
             helper.setFrom(resolvedFrom);
             helper.setTo(email);
@@ -92,7 +201,7 @@ public class AccountMailService {
                 noteText = "Quý khách vui lòng đổi mật khẩu sau lần đăng nhập đầu tiên để đảm bảo tính an toàn cho tài khoản.";
             }
 
-            // Plain text (tương thích backward và client không hỗ trợ HTML, đáp ứng integration test)
+            // Plain text
             String text = "Xin chào " + name + ",\n\n" + introText + "\n" +
                     (isEmployee && position != null && !position.isBlank() ? ("Chức vụ: " + position + "\n") : "") +
                     "Tên đăng nhập: " + username + "\n" +
@@ -102,7 +211,7 @@ public class AccountMailService {
                     "Nếu đây là thư gửi lại, mật khẩu tạm trước đó đã hết hiệu lực.\n\n" +
                     "Trân trọng,\nF6S Store";
 
-            // HTML email chuyên nghiệp, tương thích tốt với email client
+            // HTML email responsive
             String html = "<!doctype html><html lang=\"vi\"><head><meta charset=\"UTF-8\"></head><body style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 24px; color: #1e293b;\">" +
                     "<div style=\"max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);\">" +
                     "  <div style=\"background-color: #0f172a; padding: 24px; text-align: center; color: #ffffff;\">" +
@@ -145,42 +254,67 @@ public class AccountMailService {
                 log.warn("Không thể đính kèm logo email: {}", ex.getMessage());
             }
 
-            sender.getObject().send(message);
+            mailSender.send(message);
             log.info("Đã gửi email thông tin tài khoản thành công tới {}", email);
+            recordError(null);
             return true;
+        } catch (jakarta.mail.AuthenticationFailedException | org.springframework.mail.MailAuthenticationException ex) {
+            String err = "Xác thực SMTP thất bại: Sai tài khoản hoặc mật khẩu ứng dụng Gmail (cần App Password 16 chữ số).";
+            recordError(err);
+            log.error("Lỗi xác thực SMTP khi gửi tài khoản tới {}: {}", email, ex.getMessage());
+            return false;
         } catch (Exception ex) {
+            String msg = ex.getMessage() != null ? ex.getMessage() : ex.getClass().getSimpleName();
+            String err;
+            if (msg.contains("Connection refused") || msg.contains("timeout") || msg.contains("timed out") || msg.contains("UnknownHostException")) {
+                err = "Không thể kết nối máy chủ SMTP (" + getResolvedHost() + ":" + getResolvedPort() + "). Vui lòng kiểm tra host, port hoặc mạng.";
+            } else {
+                err = "Lỗi máy chủ gửi thư: " + msg;
+            }
+            recordError(err);
             log.error("Không thể gửi email thông tin tài khoản tới {}: {}", email, ex.getMessage());
             return false;
         }
     }
 
-    public boolean sendSupportNotice(String email,String name,String excerpt) {
-        if(TransactionSynchronizationManager.isActualTransactionActive())throw new IllegalStateException("Không gọi SMTP trong transaction.");
-        if(!isConfigured()||getResolvedFrom().isBlank())return false;
+    public boolean sendSupportNotice(String email, String name, String excerpt) {
+        if (TransactionSynchronizationManager.isActualTransactionActive()) {
+            throw new IllegalStateException("Không gọi SMTP trong transaction.");
+        }
+        if (!isConfigured() || getResolvedFrom().isBlank()) return false;
         try {
-            var uri=java.net.URI.create(publicBaseUrl);if(!java.util.Set.of("http","https").contains(uri.getScheme())||uri.getHost()==null)return false;
-            var message=sender.getObject().createMimeMessage();var helper=new MimeMessageHelper(message,true,java.nio.charset.StandardCharsets.UTF_8.name());
-            helper.setFrom(getResolvedFrom());helper.setTo(email);helper.setSubject("Cửa hàng đã trả lời tin nhắn của bạn - F6S Store");
-            String link=publicBaseUrl.replaceAll("/+$","")+"/?support=open";
-            String text="Xin chào "+name+",\n\nNhân viên cửa hàng vừa trả lời bạn:\n"+excerpt+"\n\nXem cuộc trò chuyện: "+link+"\n\nTrân trọng,\nF6S Store";
-            helper.setText(text,"<!doctype html><html lang=\"vi\"><body><p>"+org.springframework.web.util.HtmlUtils.htmlEscape(text).replace("\n","<br>")+"</p></body></html>");
-            sender.getObject().send(message);return true;
-        }catch(Exception ignored){return false;}
+            var uri = java.net.URI.create(publicBaseUrl);
+            if (!java.util.Set.of("http", "https").contains(uri.getScheme()) || uri.getHost() == null) return false;
+            JavaMailSender mailSender = getMailSender();
+            if (mailSender == null) return false;
+            var message = mailSender.createMimeMessage();
+            var helper = new MimeMessageHelper(message, true, java.nio.charset.StandardCharsets.UTF_8.name());
+            helper.setFrom(getResolvedFrom());
+            helper.setTo(email);
+            helper.setSubject("Cửa hàng đã trả lời tin nhắn của bạn - F6S Store");
+            String link = publicBaseUrl.replaceAll("/+$", "") + "/?support=open";
+            String text = "Xin chào " + name + ",\n\nNhân viên cửa hàng vừa trả lời bạn:\n" + excerpt + "\n\nXem cuộc trò chuyện: " + link + "\n\nTrân trọng,\nF6S Store";
+            helper.setText(text, "<!doctype html><html lang=\"vi\"><body><p>" + org.springframework.web.util.HtmlUtils.htmlEscape(text).replace("\n", "<br>") + "</p></body></html>");
+            mailSender.send(message);
+            return true;
+        } catch (Exception ignored) {
+            return false;
+        }
     }
 
     public TestMailResult sendTestMail(String recipientEmail) {
         if (!isConfigured()) {
-            return new TestMailResult(false, "Chưa cấu hình thông tin máy chủ email. Vui lòng cấu hình trong application-local.properties hoặc biến môi trường.");
+            return new TestMailResult(false, "Chưa cấu hình máy chủ email. Hãy điền thông tin SMTP bên dưới và bấm 'Lưu cấu hình'.");
         }
         if (recipientEmail == null || recipientEmail.isBlank()) {
-            return new TestMailResult(false, "Tài khoản quản trị chưa có địa chỉ email nhận thư.");
+            return new TestMailResult(false, "Vui lòng nhập địa chỉ email nhận thư thử nghiệm.");
         }
         String resolvedFrom = getResolvedFrom();
         if (resolvedFrom.isBlank()) {
-            return new TestMailResult(false, "Chưa cấu hình địa chỉ email gửi (shop.mail.from hoặc spring.mail.username).");
+            return new TestMailResult(false, "Chưa cấu hình địa chỉ email gửi (From hoặc Username).");
         }
         try {
-            JavaMailSender mailSender = sender.getIfAvailable();
+            JavaMailSender mailSender = getMailSender();
             if (mailSender == null) {
                 return new TestMailResult(false, "Không thể khởi tạo dịch vụ gửi thư.");
             }
@@ -194,21 +328,32 @@ public class AccountMailService {
                     + "Thời gian gửi: " + java.time.LocalDateTime.now() + "\nTrân trọng,\nF6S Store";
             helper.setText(text, false);
             mailSender.send(message);
+            recordError(null);
             return new TestMailResult(true, "Gửi email thử nghiệm thành công tới " + recipientEmail + ".");
         } catch (jakarta.mail.AuthenticationFailedException | org.springframework.mail.MailAuthenticationException ex) {
-            return new TestMailResult(false, "Xác thực SMTP thất bại: Sai tên đăng nhập hoặc mật khẩu ứng dụng. Nếu dùng Gmail, hãy tạo Mật khẩu ứng dụng (App Password).");
+            String err = "Xác thực SMTP thất bại: Sai tên đăng nhập hoặc mật khẩu ứng dụng Gmail (cần App Password 16 ký tự).";
+            recordError(err);
+            return new TestMailResult(false, err);
         } catch (jakarta.mail.MessagingException ex) {
             String msg = ex.getMessage() != null ? ex.getMessage() : "";
+            String err;
             if (msg.contains("Connection refused") || msg.contains("timeout") || msg.contains("timed out") || msg.contains("UnknownHostException")) {
-                return new TestMailResult(false, "Không thể kết nối tới máy chủ SMTP (" + getResolvedHost() + ":" + getResolvedPort() + "). Vui lòng kiểm tra host, port hoặc mạng.");
+                err = "Không thể kết nối tới máy chủ SMTP (" + getResolvedHost() + ":" + getResolvedPort() + "). Vui lòng kiểm tra host, port hoặc mạng.";
+            } else {
+                err = "Lỗi máy chủ thư: " + msg;
             }
-            return new TestMailResult(false, "Lỗi máy chủ thư: " + msg);
+            recordError(err);
+            return new TestMailResult(false, err);
         } catch (Exception ex) {
             String msg = ex.getMessage() != null ? ex.getMessage() : "Lỗi không xác định";
+            String err;
             if (msg.contains("timeout") || msg.contains("Connection refused")) {
-                return new TestMailResult(false, "Không thể kết nối tới máy chủ SMTP (" + getResolvedHost() + ":" + getResolvedPort() + "). Vui lòng kiểm tra host, port hoặc mạng.");
+                err = "Không thể kết nối tới máy chủ SMTP (" + getResolvedHost() + ":" + getResolvedPort() + "). Vui lòng kiểm tra host, port hoặc mạng.";
+            } else {
+                err = "Gửi email thử nghiệm thất bại: " + msg;
             }
-            return new TestMailResult(false, "Gửi email thử nghiệm thất bại: " + msg);
+            recordError(err);
+            return new TestMailResult(false, err);
         }
     }
 }
