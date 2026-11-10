@@ -85,7 +85,13 @@ public class AdminPromotionController {
         model.addAttribute("activeFilterCount", activeFilterCount);
         return "admin/khuyen-mai/danh-sach";
     }
-    @GetMapping("/create") public String create(Model model) { model.addAttribute("promotion",new PromotionDto());return "admin/khuyen-mai/bieu-mau"; }
+    @GetMapping("/create")
+    public String create(Model model) {
+        PromotionDto f = new PromotionDto();
+        f.setCode(discounts.nextPromotionCode());
+        model.addAttribute("promotion", f);
+        return "admin/khuyen-mai/bieu-mau";
+    }
     @GetMapping("/edit/{id}") public String edit(@PathVariable Integer id,Model model) { PromotionDto f=new PromotionDto();BeanUtils.copyProperties(discounts.promotion(id),f);model.addAttribute("promotion",f);return "admin/khuyen-mai/bieu-mau"; }
     @PostMapping("/save") public String save(@Valid @ModelAttribute("promotion") PromotionDto f,BindingResult errors,RedirectAttributes flash) {
         if(!errors.hasErrors()) try { Promotion p=discounts.savePromotion(f);flash.addFlashAttribute("message","Đã lưu đợt giảm giá. Chọn sản phẩm áp dụng.");return "redirect:/admin/promotions/"+p.getId()+"/products"; }

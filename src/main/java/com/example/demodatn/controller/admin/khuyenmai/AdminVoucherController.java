@@ -97,7 +97,13 @@ public class AdminVoucherController {
     }
 
     private String form(Model model) { return "admin/voucher/bieu-mau"; }
-    @GetMapping("/create") public String create(Model model) { model.addAttribute("voucher",new VoucherDto());return form(model); }
+    @GetMapping("/create")
+    public String create(Model model) {
+        VoucherDto f = new VoucherDto();
+        f.setCode(discounts.nextVoucherCode());
+        model.addAttribute("voucher", f);
+        return form(model);
+    }
     @GetMapping("/edit/{id}") public String edit(@PathVariable Integer id,Model model) {
         Voucher v=discounts.voucher(id);VoucherDto f=new VoucherDto();BeanUtils.copyProperties(v,f);
         if(v.getCustomer()!=null) f.setCustomerId(v.getCustomer().getId());model.addAttribute("voucher",f);model.addAttribute("usedCount",v.getUsedCount());return form(model);

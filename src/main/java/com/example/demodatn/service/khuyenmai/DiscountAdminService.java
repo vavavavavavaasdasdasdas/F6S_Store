@@ -16,11 +16,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Locale;
 
 @Service @RequiredArgsConstructor
 public class DiscountAdminService {
@@ -30,6 +32,41 @@ public class DiscountAdminService {
     private final CustomerRepository customers;
     private final ProductRepository products;
     private final OrderRepository orders;
+    private final JdbcTemplate jdbc;
+
+    @Transactional(readOnly = true)
+    public synchronized String nextVoucherCode() {
+        Integer maxNum = null;
+        try {
+            maxNum = jdbc.queryForObject(
+                "SELECT MAX(TRY_CAST(SUBSTRING(code, 4, 20) AS INT)) FROM vouchers WHERE code LIKE 'PGG[0-9]%'",
+                Integer.class
+            );
+        } catch (Exception ignored) {
+        }
+        int next = (maxNum != null ? maxNum : 0) + 1;
+        String candidate = String.format(Locale.ROOT, "PGG%05d", next);
+        while (vouchers.existsByCodeIgnoreCaseAndIdNot(candidate, -1)) {
+            next++;
+            candidate = String.format(Locale.ROOT, "PGG%05d", next);
+        }
+        return candidate;
+    }
+
+    @Transactional(readOnly = true)
+    public synchronized String nextPromotionCode() {
+        Integer maxNum = null;
+        try {
+            maxNum = jdbc.queryForObject(
+                "SELECT MAX(TRY_CAST(SUBSTRING(ma, 3, 20) AS INT)) FROM promotions WHERE ma LIKE 'KM[0-9]%'",
+                Integer.class
+            );
+        } catch (Exception ignored) {
+        }
+        int next = (maxNum != null ? maxNum : 0) + 1;
+        return String.format(Locale.ROOT, "KM%03d", next);
+    }
+
     public Voucher voucher(Integer id) { return vouchers.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND)); }
     public Promotion promotion(Integer id) { return promotions.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND)); }
     private void dates(LocalDateTime start,LocalDateTime end) {
@@ -38,7 +75,13 @@ public class DiscountAdminService {
     @Transactional
     public Voucher saveVoucher(VoucherDto f) {
         if(f.getStartDate()==null||f.getEndDate()==null||f.getEndDate().toLocalDate().isBefore(f.getStartDate().toLocalDate()))throw new DiscountValidationException("endDate","Ngày kết thúc không được trước ngày bắt đầu.");
-        String code=VoucherService.normalize(f.getCode());
+        String rawCode = f.getCode();
+        String code;
+        if (rawCode == null || rawCode.trim().isEmpty()) {
+            code = nextVoucherCode();
+        } else {
+            code = VoucherService.normalize(rawCode);
+        }
         if(vouchers.existsByCodeIgnoreCaseAndIdNot(code,f.getId()==null ? -1 : f.getId())) throw new DiscountValidationException("code","Mã phiếu giảm giá đã tồn tại.");
         if(!Set.of("PERCENT","FIXED").contains(f.getDiscountType())) throw new DiscountValidationException("discountType","Loại phiếu giảm giá không hợp lệ.");
         if(f.getDiscountValue()==null || f.getDiscountValue().signum()<=0 || ("PERCENT".equals(f.getDiscountType()) && (f.getDiscountValue().compareTo(BigDecimal.ONE)<0 || f.getDiscountValue().compareTo(BigDecimal.valueOf(100))>0))) throw new DiscountValidationException("discountValue","Phần trăm từ 1–100; số tiền phải lớn hơn 0.");
@@ -60,6 +103,23 @@ public class DiscountAdminService {
         dates(f.getStartDate(),f.getEndDate());
         if(!Set.of("PERCENT","AMOUNT").contains(f.getDiscountType()))throw new DiscountValidationException("discountType","Chọn loại giảm hợp lệ.");
         if(f.getDiscountValue()==null||f.getDiscountValue().signum()<=0||f.getDiscountValue().stripTrailingZeros().scale()>0||f.getDiscountValue().precision()-f.getDiscountValue().scale()>16||("PERCENT".equals(f.getDiscountType())&&f.getDiscountValue().compareTo(BigDecimal.valueOf(100))>0))throw new DiscountValidationException("discountValue","Giá trị là số nguyên dương; phần trăm từ 1 đến 100.");
+        if (f.getId() == null) {
+            try {
+                Integer maxNum = jdbc.queryForObject(
+                    "SELECT MAX(TRY_CAST(SUBSTRING(ma, 3, 20) AS INT)) FROM promotions WHERE ma LIKE 'KM[0-9]%'",
+                    Integer.class
+                );
+                int nextVal = (maxNum != null ? maxNum : 0) + 1;
+                Long currentSeq = jdbc.queryForObject(
+                    "SELECT CAST(current_value AS BIGINT) FROM sys.sequences WHERE name = 'promotions_ma_seq'",
+                    Long.class
+                );
+                if (currentSeq != null && currentSeq < nextVal) {
+                    jdbc.execute("ALTER SEQUENCE dbo.promotions_ma_seq RESTART WITH " + nextVal);
+                }
+            } catch (Exception ignored) {
+            }
+        }
         Promotion p=f.getId()==null ? new Promotion() : promotions.findForUpdate(f.getId()).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
         p.setName(f.getName().trim());p.setDiscountType(f.getDiscountType());p.setDiscountValue(f.getDiscountValue());p.setStartDate(f.getStartDate());p.setEndDate(f.getEndDate());p.setStatus(f.getStatus());
         return promotions.saveAndFlush(p);
