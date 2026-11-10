@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.HashSet;
 import java.util.Locale;
 
@@ -143,6 +144,14 @@ public class DiscountAdminService {
         var selected = variants.findAllById(new HashSet<>(chosen));
         if (selected.size() != new HashSet<>(chosen).size()) {
             throw new IllegalArgumentException("Có biến thể không tồn tại. Tải lại danh sách.");
+        }
+        var visibleVariants = variants.findAllById(visible);
+        Set<Integer> visibleProductIds = visibleVariants.stream()
+                .filter(v -> v.getProduct() != null)
+                .map(v -> v.getProduct().getId())
+                .collect(Collectors.toSet());
+        if (!visibleProductIds.isEmpty()) {
+            details.deleteLegacyProductRows(id, visibleProductIds);
         }
         details.deleteByPromotion_IdAndProductVariant_IdIn(id, visible);
         details.flush();

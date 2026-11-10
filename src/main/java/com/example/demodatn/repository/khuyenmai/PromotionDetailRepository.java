@@ -27,6 +27,11 @@ public interface PromotionDetailRepository extends JpaRepository<PromotionDetail
 
     void deleteByPromotion_IdAndProductVariant_IdIn(Integer promotionId, Collection<Integer> variantIds);
 
+    @org.springframework.data.jpa.repository.Modifying
+    @org.springframework.data.jpa.repository.Query("DELETE FROM PromotionDetail d WHERE d.promotion.id = :promotionId AND d.productVariant IS NULL AND d.product.id IN :productIds")
+    void deleteLegacyProductRows(@org.springframework.data.repository.query.Param("promotionId") Integer promotionId,
+                                 @org.springframework.data.repository.query.Param("productIds") Collection<Integer> productIds);
+
     boolean existsByProductVariant_Product_Id(Integer productId);
 
     boolean existsByProductVariant_Id(Integer variantId);
