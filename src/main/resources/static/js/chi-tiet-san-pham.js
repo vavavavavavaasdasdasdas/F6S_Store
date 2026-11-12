@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
         form.submit();
     }
 
-    document.getElementById('btn-add-cart').addEventListener('click', () => submitForm(false));
-    document.getElementById('btn-buy-now').addEventListener('click', () => submitForm(true));
-    document.getElementById('btn-mobile-buy').addEventListener('click', () => submitForm(false));
+    document.getElementById('btn-add-cart')?.addEventListener('click', () => submitForm(false));
+    document.getElementById('btn-buy-now')?.addEventListener('click', () => submitForm(true));
+    document.getElementById('btn-mobile-buy')?.addEventListener('click', () => submitForm(false));
 });

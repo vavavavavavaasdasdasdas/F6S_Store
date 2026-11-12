@@ -45,4 +45,9 @@ public class ProductVariant {
 
     private Boolean status = true;
     public String getMa() { return code; }
+    public String getColorName() { return color != null ? color.getName() : ""; }
+    public String getColorHexCode() { return color != null ? color.getHexCode() : ""; }
+    public String getSizeValue() { return size != null ? size.getSizeValue() : ""; }
+    public String getMaterialName() { return material != null ? material.getName() : ""; }
+    public String getSoleName() { return sole != null ? sole.getName() : ""; }
 }

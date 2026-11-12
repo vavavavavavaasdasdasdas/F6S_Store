@@ -9,12 +9,12 @@
 <div class="checkout-details">
 <section class="checkout-card" th:if="${!shippingAddresses.empty}" aria-labelledby="saved-address-title">
 <h2 id="saved-address-title">Chọn địa chỉ đã lưu</h2>
-<div class="checkout-addresses">
+<div class="checkout-addresses" id="checkout-address-list">
 <label class="checkout-radio address-card" th:each="a:${shippingAddresses}">
 <input type="radio" th:field="*{shippingAddressId}" th:value="${a.id}" data-address-card th:data-receiver="${a.receiverName}" th:data-phone="${a.phone}" th:data-address="${a.displayStreetAddress}" th:data-ward="${a.ward==null?null:a.ward.id}" th:data-province="${a.province==null?null:a.province.id}" th:data-latitude="${a.latitude}" th:data-longitude="${a.longitude}" th:data-source="${a.coordinateSource}">
 <span><strong th:text="${a.receiverName}"></strong><span th:text="' · '+${a.phone}"></span> <span class="address-default" th:if="${a.defaultAddress}">Mặc định</span><span class="address-full" th:text="${a.fullAddress}"></span></span>
 </label>
-<label class="checkout-radio address-card"><input type="radio" th:field="*{shippingAddressId}" value="" data-address-card><span><i class="bi bi-plus-lg" aria-hidden="true"></i> Dùng địa chỉ khác</span></label>
+<label class="checkout-radio address-card" id="card-new-address"><input type="radio" th:field="*{shippingAddressId}" value="" data-address-card><span><i class="bi bi-plus-lg" aria-hidden="true"></i> Dùng địa chỉ khác</span></label>
 </div><p class="checkout-hint">Thông tin sửa bên dưới chỉ áp dụng cho đơn này.</p>
 </section>
 <section class="checkout-card" aria-labelledby="receiver-title"><h2 id="receiver-title">Thông tin người nhận</h2>
@@ -26,8 +26,14 @@
 <div th:replace="~{fragments/dia-chi-giao-hang :: address('checkout','shippingAddress','USER',true)}"></div>
 </div>
 <p class="checkout-deliver-to" aria-live="polite">Giao đến: <span data-deliver-to>Vui lòng nhập địa chỉ nhận hàng</span></p>
-<label class="checkout-save-address" th:if="${shippingAddresses.size()<3}"><input type="checkbox" th:field="*{saveAddress}" data-save-address> Lưu vào sổ địa chỉ</label>
-<p class="checkout-hint" th:if="${shippingAddresses.size()>=3}">Sổ địa chỉ đã có đủ 3 địa chỉ.</p>
+<div class="mt-2 mb-3 d-flex align-items-center gap-2 flex-wrap" id="wrap-quick-save-address" sec:authorize="isAuthenticated()">
+    <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3 py-2 fw-semibold" id="btn-quick-save-address">
+        <i class="bi bi-bookmark-plus me-1"></i> Lưu địa chỉ mới này vào sổ địa chỉ
+    </button>
+    <span class="small" id="quick-save-address-msg"></span>
+</div>
+<label class="checkout-save-address" th:if="${shippingAddresses.size()<20}"><input type="checkbox" th:field="*{saveAddress}" data-save-address> Tự động lưu địa chỉ này khi hoàn tất đặt hàng</label>
+<p class="checkout-hint" th:if="${shippingAddresses.size()>=20}">Sổ địa chỉ đã đầy.</p>
 </section>
 <section class="checkout-card" aria-labelledby="payment-title"><h2 id="payment-title">Phương thức thanh toán</h2>
 <label class="checkout-radio payment-card"><input type="radio" th:field="*{paymentMethod}" value="COD" required><span><i class="bi bi-cash-coin" aria-hidden="true"></i> Thanh toán khi nhận hàng</span></label>

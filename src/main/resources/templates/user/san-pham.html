@@ -90,10 +90,6 @@
                        th:classappend="${promotion != null and promotion} ? 'btn-danger' : 'btn-outline-danger'">
                         <i class="bi bi-fire me-1"></i>Đang giảm giá
                     </a>
-                    <a th:href="@{/products(maxPrice=500000)}" class="btn btn-sm rounded-pill px-3"
-                       th:classappend="${minPrice == null and maxPrice == 500000} ? 'btn-primary' : 'btn-outline-secondary'">Dưới 500k</a>
-                    <a th:href="@{/products(minPrice=500000,maxPrice=1000000)}" class="btn btn-sm rounded-pill px-3"
-                       th:classappend="${minPrice == 500000 and maxPrice == 1000000} ? 'btn-primary' : 'btn-outline-secondary'">500k - 1 triệu</a>
                     <a th:href="@{/products(minPrice=1000000,maxPrice=2000000)}" class="btn btn-sm rounded-pill px-3"
                        th:classappend="${minPrice == 1000000 and maxPrice == 2000000} ? 'btn-primary' : 'btn-outline-secondary'">1 - 2 triệu</a>
                     <a th:href="@{/products(minPrice=2000000)}" class="btn btn-sm rounded-pill px-3"

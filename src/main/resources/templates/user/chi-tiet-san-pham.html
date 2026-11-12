@@ -41,9 +41,9 @@
 
                 <!-- Display Price from the first variant by default -->
                 <div class="price-display mb-4" th:if="${!variants.isEmpty()}" th:with="firstPrice=${variantPrices.get(variants[0].id)}">
-                    <h3 class="text-danger fw-bold d-inline-block" id="displayFinalPrice" th:text="${@money.format(firstPrice.finalPrice)} + ' ₫'">0 ₫</h3>
-                    <del class="text-muted ms-2 fs-5" id="displayOriginalPrice" th:if="${firstPrice.hasPromotion}" th:text="${@money.format(firstPrice.originalPrice)} + ' ₫'">0 ₫</del>
-                    <span class="badge bg-danger ms-2" id="displayDiscount" th:if="${firstPrice.hasPromotion}" th:text="'GIẢM -' + ${firstPrice.discountPercentage} + '%'">-0%</span>
+                    <h3 class="text-danger fw-bold d-inline-block" id="displayFinalPrice" th:text="${@money.format(firstPrice != null ? firstPrice.finalPrice : variants[0].price)} + ' ₫'">0 ₫</h3>
+                    <del class="text-muted ms-2 fs-5" id="displayOriginalPrice" th:if="${firstPrice != null and firstPrice.hasPromotion}" th:text="${@money.format(firstPrice.originalPrice)} + ' ₫'">0 ₫</del>
+                    <span class="badge bg-danger ms-2" id="displayDiscount" th:if="${firstPrice != null and firstPrice.hasPromotion}" th:text="'GIẢM -' + ${firstPrice.discountPercentage} + '%'">-0%</span>
                 </div>
 
                 <form id="addToCartForm" novalidate th:action="@{/cart/add}" method="post">
@@ -55,19 +55,31 @@
                                 <i class="bi bi-rulers me-1"></i> Bảng quy đổi size
                             </button>
                         </div>
-                        <div class="d-flex flex-wrap gap-2" id="size-container" data-material-picker>
+                        <div class="d-flex flex-wrap gap-2" id="size-container">
                             <th:block th:each="v : ${variants}">
                                 <input type="radio" class="btn-check size-radio" name="variantId" th:id="'size-' + ${v.id}" th:value="${v.id}"
                                        th:disabled="${v.quantity <= 0}"
-                                       th:data-qty="${v.quantity}" th:data-size-id="${v.size.id}" th:data-size-name="${v.size.sizeValue}" th:data-material-id="${v.material.id}" th:data-material-name="${v.material.name}" th:data-color-id="${v.color.id}" th:data-color-name="${v.colorName}" th:data-color-hex="${v.colorHexCode}" th:data-sole-id="${v.sole.id}" th:data-sole-name="${v.sole.name}"
-                                       th:data-finalprice="${variantPrices.get(v.id).finalPrice}"
-                                       th:data-origprice="${variantPrices.get(v.id).originalPrice}"
-                                       th:data-haspromo="${variantPrices.get(v.id).hasPromotion}"
-                                       th:data-discount="${variantPrices.get(v.id).discountPercentage}">
-                                <label class="btn btn-outline-primary rounded-pill px-3 py-2 fw-semibold" th:for="'size-' + ${v.id}" th:classappend="${v.quantity <= 0 ? 'disabled' : ''}" th:text="${v.size.sizeValue}+' · '+${v.material.name}">39</label>
+                                       th:data-qty="${v.quantity}"
+                                       th:data-size-id="${v.size != null ? v.size.id : ''}"
+                                       th:data-size-name="${v.size != null ? v.size.sizeValue : ''}"
+                                       th:data-material-id="${v.material != null ? v.material.id : ''}"
+                                       th:data-material-name="${v.material != null ? v.material.name : ''}"
+                                       th:data-color-id="${v.color != null ? v.color.id : ''}"
+                                       th:data-color-name="${v.colorName}"
+                                       th:data-color-hex="${v.colorHexCode}"
+                                       th:data-sole-id="${v.sole != null ? v.sole.id : ''}"
+                                       th:data-sole-name="${v.sole != null ? v.sole.name : ''}"
+                                       th:data-finalprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).finalPrice : v.price}"
+                                       th:data-origprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).originalPrice : v.price}"
+                                       th:data-haspromo="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).hasPromotion : false}"
+                                       th:data-discount="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).discountPercentage : 0}">
+                                <label class="btn btn-outline-primary rounded-pill px-3 py-2 fw-semibold" th:for="'size-' + ${v.id}"
+                                       th:classappend="${v.quantity <= 0 ? 'disabled text-muted opacity-50' : ''}"
+                                       th:text="${(v.size != null ? v.size.sizeValue : '') + (v.color != null ? ' · ' + v.color.name : '') + (v.material != null ? ' · ' + v.material.name : '')}">39</label>
                             </th:block>
+                            <p th:if="${variants.isEmpty()}" class="text-muted fst-italic">Sản phẩm hiện chưa có biến thể sẵn có.</p>
                         </div>
-                        <div id="size-error" class="text-danger small mt-2 d-none">Vui lòng chọn kích cỡ và chất liệu còn hàng!</div>
+                        <div id="size-error" class="text-danger small mt-2 d-none">Vui lòng chọn kích cỡ và phân loại còn hàng!</div>
                     </div>
 
                     <!-- Quantity & Stock -->

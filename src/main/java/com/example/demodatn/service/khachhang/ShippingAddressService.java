@@ -22,7 +22,8 @@ import java.util.stream.Collectors;
 
 @Service @RequiredArgsConstructor
 public class ShippingAddressService {
-    public static final String LIMIT_MESSAGE="Mỗi khách chỉ lưu tối đa 3 địa chỉ";
+    public static final int MAX_ADDRESSES = 20;
+    public static final String LIMIT_MESSAGE = "Mỗi khách chỉ lưu tối đa " + MAX_ADDRESSES + " địa chỉ";
     private final CustomerRepository customers;
     private final ShippingAddressRepository addresses;
     private final Validator validator;
@@ -64,7 +65,7 @@ public class ShippingAddressService {
         if (blocks == null || blocks.isEmpty()) {
             throw new PeopleValidationException("address", "Vui lòng nhập số nhà, tên đường.");
         }
-        if (blocks.size() > 3) {
+        if (blocks.size() > MAX_ADDRESSES) {
             throw new PeopleValidationException("address", LIMIT_MESSAGE);
         }
         int defIdx = (defaultIndex != null && defaultIndex >= 0 && defaultIndex < blocks.size()) ? defaultIndex : 0;
@@ -148,7 +149,7 @@ public class ShippingAddressService {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy địa chỉ."));
         }
         if(address==null) {
-            if(rows.size()>=3) throw new PeopleValidationException("address",LIMIT_MESSAGE);
+            if(rows.size()>=MAX_ADDRESSES) throw new PeopleValidationException("address",LIMIT_MESSAGE);
             address=new ShippingAddress();address.setCustomer(customer);address.setCreatedAt(LocalDateTime.now(clock));
             int slot=1;
             while(containsSlot(rows,slot))slot++;

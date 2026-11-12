@@ -20,7 +20,7 @@
   });
   document.querySelectorAll('[data-icon-action]').forEach(icon);
   document.querySelectorAll('a.btn,button.btn,[data-address-create]').forEach(button=>{
-   if(button.closest('.table-actions')||button.querySelector('.add-prefix'))return;
+   if(button.closest('.table-actions')||button.querySelector('.add-prefix')||button.hasAttribute('data-no-prefix')||button.closest('.dropdown'))return;
    if(/^Thêm\s/.test(button.textContent.trim())){const plus=document.createElement('span');plus.className='add-prefix';plus.setAttribute('aria-hidden','true');plus.textContent='+';button.prepend(plus);}
   });
  }

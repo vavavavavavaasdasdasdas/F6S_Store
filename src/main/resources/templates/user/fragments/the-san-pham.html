@@ -44,8 +44,8 @@
 
         <div class="mt-auto dropdown">
             <button class="btn btn-outline-primary btn-sm w-100 rounded-pill fw-bold" type="button" data-bs-toggle="dropdown"
-                    data-bs-auto-close="outside" aria-expanded="false" th:disabled="${p.totalStock <= 0}" data-add-icon>
-                <i class="bi bi-bag-plus me-1"></i> Thêm nhanh
+                    data-bs-auto-close="outside" aria-expanded="false" th:disabled="${p.totalStock <= 0}" data-no-prefix>
+                <i class="bi bi-bag me-1"></i> Thêm nhanh
             </button>
             <div class="quick-add-menu dropdown-menu p-3 shadow-lg border-0 rounded-4">
                 <form class="quick-add-form" th:action="@{/cart/add}" method="post">

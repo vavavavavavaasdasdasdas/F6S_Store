@@ -59,6 +59,107 @@
  form.addEventListener('input',event=>{if(event.target.matches('[data-delivery-street]'))deliverTo();});
  delivery.addEventListener('delivery:changed',()=>{deliverTo();});
  delivery.addEventListener('change',deliverTo);deliverTo();
+
+ const btnQuickSave = document.getElementById('btn-quick-save-address');
+ const msgQuickSave = document.getElementById('quick-save-address-msg');
+ if (btnQuickSave) {
+  btnQuickSave.addEventListener('click', async () => {
+   const receiverName = form.elements.receiverName?.value?.trim();
+   const phone = form.elements.phone?.value?.trim();
+   const province = form.querySelector('[data-delivery-province]')?.value;
+   const ward = form.querySelector('[data-delivery-ward]')?.value;
+   const street = form.querySelector('[data-delivery-street]')?.value?.trim();
+   const lat = form.querySelector('[data-delivery-latitude]')?.value;
+   const lng = form.querySelector('[data-delivery-longitude]')?.value;
+   const src = form.querySelector('[data-delivery-source]')?.value;
+
+   if (!receiverName || !phone || !province || !ward || !street) {
+    if (msgQuickSave) {
+     msgQuickSave.textContent = 'Vui lòng điền đủ họ tên, SĐT, tỉnh/thành, phường/xã và số nhà/đường!';
+     msgQuickSave.className = 'small text-danger';
+    }
+    return;
+   }
+
+   btnQuickSave.disabled = true;
+   if (msgQuickSave) {
+    msgQuickSave.textContent = 'Đang lưu địa chỉ…';
+    msgQuickSave.className = 'small text-muted';
+   }
+
+   try {
+    const formData = new URLSearchParams();
+    formData.append('receiverName', receiverName);
+    formData.append('phone', phone);
+    formData.append('provinceId', province);
+    formData.append('wardId', ward);
+    formData.append('streetAddress', street);
+    if (lat) formData.append('latitude', lat);
+    if (lng) formData.append('longitude', lng);
+    if (src) formData.append('coordinateSource', src);
+
+    const res = await fetch('/shipping/addresses/quick-save', {
+     method: 'POST',
+     headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRF-TOKEN': csrf()
+     },
+     body: formData.toString()
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Lỗi khi lưu địa chỉ');
+
+    const list = document.getElementById('checkout-address-list');
+    const cardNew = document.getElementById('card-new-address');
+    if (list && cardNew) {
+     const label = document.createElement('label');
+     label.className = 'checkout-radio address-card';
+     label.innerHTML = `
+      <input type="radio" name="shippingAddressId" value="${data.id}" data-address-card
+             data-receiver="${data.receiverName}" data-phone="${data.phone}"
+             data-address="${data.displayStreetAddress || data.fullAddress}"
+             data-ward="${data.wardId || ''}" data-province="${data.provinceId || ''}"
+             data-latitude="${data.latitude || ''}" data-longitude="${data.longitude || ''}"
+             data-source="${data.source || ''}">
+      <span><strong>${data.receiverName}</strong><span> · ${data.phone}</span> <span class="address-full">${data.fullAddress}</span></span>
+     `;
+     list.insertBefore(label, cardNew);
+
+     const newRadio = label.querySelector('input');
+     newRadio.addEventListener('change', () => {
+      form.elements.receiverName.value = data.receiverName || '';
+      form.elements.phone.value = data.phone || '';
+      delivery.dispatchEvent(new CustomEvent('delivery:select-address', {
+       detail: {
+        provinceId: data.provinceId || '',
+        wardId: data.wardId || '',
+        streetAddress: data.displayStreetAddress || '',
+        latitude: data.latitude || '',
+        longitude: data.longitude || '',
+        coordinateSource: data.source || ''
+       }
+      }));
+      const save=form.querySelector('[data-save-address]');if(save){save.checked=false;save.closest('label').hidden=true;}
+      deliverTo();
+     });
+     newRadio.checked = true;
+     newRadio.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    if (msgQuickSave) {
+     msgQuickSave.textContent = 'Đã lưu địa chỉ thành công! Bạn có thể chọn "+ Dùng địa chỉ khác" để thêm tiếp.';
+     msgQuickSave.className = 'small text-success fw-bold';
+    }
+   } catch (err) {
+    if (msgQuickSave) {
+     msgQuickSave.textContent = err.message;
+     msgQuickSave.className = 'small text-danger';
+    }
+   } finally {
+    btnQuickSave.disabled = false;
+   }
+  });
+ }
  const toggle=form.querySelector('.checkout-order-toggle'),items=form.querySelector('#checkout-items'),mobile=matchMedia('(max-width:991.98px)');
  function summary(){items.hidden=mobile.matches;toggle.setAttribute('aria-expanded',String(!items.hidden));}summary();mobile.addEventListener('change',summary);
  toggle.addEventListener('click',()=>{if(!mobile.matches)return;items.hidden=!items.hidden;toggle.setAttribute('aria-expanded',String(!items.hidden));});
