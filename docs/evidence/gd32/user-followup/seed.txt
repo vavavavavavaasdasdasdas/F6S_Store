@@ -1,6 +1,0 @@
-SP001 Nike Air Force 1 '07 Nike 8 2929000.00 0 25
-SP002 Adidas Ultraboost Light Adidas 8 4500000.00 15 21
-SP003 Converse Chuck Taylor All Star Classic Converse 8 1400000.00 10 25
-SP004 Vans Old Skool Vans 8 1800000.00 13 19
-SP005 ASICS Gel-Kayano 14 ASICS 8 4200000.00 10 25
-Đã seed. Chạy lại không ghi đè tồn kho/giá và không thêm log cho biến thể đã có.

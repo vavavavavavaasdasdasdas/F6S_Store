@@ -1,5 +1,0 @@
-2026-11-05 20:57:35.752  INFO c.example.demodatn.DemoDatnApplication : Starting DemoDatnApplication using Java 17.0.17 with PID 41460 (C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN\target\classes started by ADMIN in C:\Users\ADMIN\Documents\DuAnTNDEMO\DuAnTNDEMO\DuAnTNDEMO\DemoDATN)
-	Default catalog/schema: shopbangiay_kt_gd32_20261105_205724/dbo
-2026-11-05 20:57:42.717  INFO o.s.o.j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-11-05 20:57:47.722  INFO o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 18032 (http) with context path '/'
-2026-11-05 20:57:47.736  INFO c.example.demodatn.DemoDatnApplication : Started DemoDatnApplication in 12.477 seconds (process running for 12.978)

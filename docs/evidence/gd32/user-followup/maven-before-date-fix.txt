@@ -1,8 +1,0 @@
-Doanh thu h�m nay         | 6,858,000 ?          | 0 ?                  | KH?P 100%
-Doanh thu tu?n n�y        | 6,858,000 ?          | 0 ?                  | KH?P 100%
-Doanh thu th�ng n�y       | 6,858,000 ?          | 0 ?                  | KH?P 100%
-[ERROR] com.example.demodatn.service.hotro.AdminChatbotIntegrationTest.testRevenueMetricsMatchDashboardAndIndependentSql -- Time elapsed: 0.404 s <<< FAILURE!
-	at com.example.demodatn.service.hotro.AdminChatbotIntegrationTest.testRevenueMetricsMatchDashboardAndIndependentSql(AdminChatbotIntegrationTest.java:167)
-[ERROR]   AdminChatbotIntegrationTest.testRevenueMetricsMatchDashboardAndIndependentSql:167 expected: <0> but was: <1>
-[ERROR] Tests run: 315, Failures: 1, Errors: 0, Skipped: 0
-[INFO] BUILD FAILURE

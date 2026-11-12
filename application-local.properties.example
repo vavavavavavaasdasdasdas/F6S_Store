@@ -1,16 +1,16 @@
-# ===================================================================
-# C?U H?NH PH?T TRI?N C?C B? (LOCAL DEVELOPMENT)
-# Sao ch?p file n?y th?nh application-local.properties v? ch?nh s?a.
-# File application-local.properties ???c gitignore t? ??ng.
-# ===================================================================
+# Mau cau hinh may phat trien (copy thanh application-local.properties)
+# File application-local.properties da duoc them vao .gitignore, khong bi commit.
+#
+# Cac thuoc tinh o day se ghi de gia tri mac dinh trong application.properties.
+# Neu su dung bien moi truong, bien moi truong van co do uu tien cao hon.
 
-# Database ch?nh th?c duy nh?t c?a d? ?n: shopbangiay
 spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=shopbangiay;encrypt=true;trustServerCertificate=true
 spring.datasource.username=sa
 spring.datasource.password=123456789
+spring.jpa.hibernate.ddl-auto=validate
 
-# C?u h?nh email (t?y ch?n, xem th?m docs/CAU_HINH_EMAIL.md)
-# MAIL_HOST=smtp.gmail.com
-# MAIL_PORT=587
-# MAIL_USERNAME=your-email@gmail.com
-# MAIL_PASSWORD=your-app-password
+# Cau hinh gui mail SMTP (Gmail)
+# spring.mail.host=smtp.gmail.com
+# spring.mail.port=587
+# spring.mail.username=your-email@gmail.com
+# spring.mail.password=your-app-password

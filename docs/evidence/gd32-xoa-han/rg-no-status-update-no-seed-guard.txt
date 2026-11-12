@@ -1,8 +1,0 @@
-COMMAND: rg -ni UPDATE|NOCHECK|DISABLE|TRUNCATE|DROP database/tools/don_du_lieu_thu.sql
-EXIT: 1
-
-COMMAND: rg -n du_lieu_mau|database/seed src/main pom.xml chay_tat_ca.sql database/migrations
-EXIT: 1
-
-COMMAND: git diff -- src/test/java/com/example/demodatn/TestDatabaseGuard.java src/test/java/com/example/demodatn/TestDatabaseGuardListener.java
-EXIT: 0

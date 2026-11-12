@@ -1,2 +1,0 @@
-Msg 51000, Level 16, State 1, Server DESKTOP-AHVKPFM, Line 8
-Sai database dự kiến. Dừng trước khi thay đổi.
