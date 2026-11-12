@@ -115,7 +115,7 @@ class SaleStatusAndCodeIntegrationTest {
     @Test void migrationNeverRewindsConsumedNumbers() throws Exception {
         new TransactionTemplate(transactions).executeWithoutResult(s->{catalog.saveProduct(form(false));s.setRollbackOnly();});
         Long before=jdbc.queryForObject("SELECT CONVERT(BIGINT,current_value) FROM sys.sequences WHERE name='product_code_seq'",Long.class);
-        String script=Files.readString(Path.of("database/migrations/012_ma_san_pham_tu_sinh.sql"));
+        String script=Files.readString(Path.of("src/test/resources/sql/012_ma_san_pham_tu_sinh.sql"));
         jdbc.execute((org.springframework.jdbc.core.ConnectionCallback<Void>) connection->{
             try(var statement=connection.createStatement()) {
                 boolean previous;
