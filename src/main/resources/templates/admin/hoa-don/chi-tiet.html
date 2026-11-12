@@ -150,16 +150,23 @@
                 <h2 class="h5 mb-0">Xử lý đơn hàng</h2>
             </div>
 
-            <!-- Nút xác nhận nhận chuyển khoản nếu chưa thanh toán -->
-            <form th:if="${o.status != 'CANCELLED' and o.status != 'DELIVERY_FAILED' and o.paymentStatus != 'PAID' and (o.paymentMethod == 'TRANSFER' or o.paymentMethod == 'BANK_TRANSFER' or o.paymentMethod == 'COMBINED')}"
-                  th:action="@{/admin/invoices/{id}/confirm-payment(id=${invoice.id})}"
-                  method="post" class="mb-3" novalidate>
-                <button type="button" class="btn btn-success" data-confirm
-                        data-confirm-title="Xác nhận thanh toán"
-                        data-confirm-message="Đã nhận đủ tiền chuyển khoản của đơn hàng này?">
-                    Xác nhận đã nhận chuyển khoản
-                </button>
-            </form>
+            <!-- Thao tác thanh toán nếu chưa thanh toán -->
+            <div th:if="${o.status != 'CANCELLED' and o.status != 'DELIVERY_FAILED' and o.paymentStatus != 'PAID'}" class="d-flex gap-2 flex-wrap mb-3">
+                <a th:href="@{/payment/vnpay/create/{id}(id=${o.id},returnUrl='/admin/invoices/' + ${invoice.id})}"
+                   class="btn btn-outline-primary">
+                    <span class="badge bg-danger me-1">VN</span> Thanh toán qua Cổng VNPay
+                </a>
+
+                <form th:if="${o.paymentMethod == 'TRANSFER' or o.paymentMethod == 'BANK_TRANSFER' or o.paymentMethod == 'COMBINED' or o.paymentMethod == 'VNPAY'}"
+                      th:action="@{/admin/invoices/{id}/confirm-payment(id=${invoice.id})}"
+                      method="post" class="d-inline" novalidate>
+                    <button type="button" class="btn btn-success" data-confirm
+                            data-confirm-title="Xác nhận thanh toán"
+                            data-confirm-message="Xác nhận đã nhận đủ tiền thanh toán của đơn hàng này?">
+                        Xác nhận đã nhận thanh toán
+                    </button>
+                </form>
+            </div>
 
             <!-- Dải nút chuyển bước hợp lệ -->
             <div th:if="${!allowedStatuses.empty}" class="d-flex gap-2 flex-wrap align-items-center">
@@ -276,17 +283,23 @@
                 </div>
             </form>
         </div>
-        <div th:if="${o.paymentStatus != 'PAID' and (o.paymentMethod == 'TRANSFER' or o.paymentMethod == 'COMBINED')}" class="admin-panel mb-3">
+        <div th:if="${o.paymentStatus != 'PAID' and (o.paymentMethod == 'TRANSFER' or o.paymentMethod == 'COMBINED' or o.paymentMethod == 'VNPAY')}" class="admin-panel mb-3">
             <div class="panel-heading mb-3">
                 <h2 class="h5 mb-0">Xử lý thanh toán tại quầy</h2>
             </div>
-            <form th:action="@{/admin/invoices/{id}/confirm-payment(id=${invoice.id})}" method="post" novalidate>
-                <button type="button" class="btn btn-success" data-confirm
-                        data-confirm-title="Xác nhận thanh toán"
-                        data-confirm-message="Đã nhận đủ tiền chuyển khoản của đơn hàng này?">
-                    Xác nhận đã nhận chuyển khoản
-                </button>
-            </form>
+            <div class="d-flex gap-2 flex-wrap">
+                <a th:href="@{/payment/vnpay/create/{id}(id=${o.id},returnUrl='/admin/invoices/' + ${invoice.id})}"
+                   class="btn btn-outline-primary">
+                    <span class="badge bg-danger me-1">VN</span> Thanh toán qua Cổng VNPay
+                </a>
+                <form th:action="@{/admin/invoices/{id}/confirm-payment(id=${invoice.id})}" method="post" novalidate>
+                    <button type="button" class="btn btn-success" data-confirm
+                            data-confirm-title="Xác nhận thanh toán"
+                            data-confirm-message="Đã nhận đủ tiền thanh toán của đơn hàng này?">
+                        Xác nhận đã thanh toán
+                    </button>
+                </form>
+            </div>
         </div>
     </th:block>
 
@@ -358,7 +371,7 @@
             <dd><strong class="fs-5 text-primary" th:text="${@money.format(o.finalAmount)} + ' đ'"></strong></dd>
 
             <dt>Phương thức</dt>
-            <dd th:text="${o.paymentMethod == 'CASH' ? 'Tiền mặt' : (o.paymentMethod == 'COD' ? 'Thanh toán khi nhận hàng (COD)' : (o.paymentMethod == 'COMBINED' ? 'Kết hợp (Tiền mặt + Chuyển khoản)' : 'Chuyển khoản'))}"></dd>
+            <dd th:text="${o.paymentMethod == 'CASH' ? 'Tiền mặt' : (o.paymentMethod == 'COD' ? 'Thanh toán khi nhận hàng (COD)' : (o.paymentMethod == 'COMBINED' ? 'Kết hợp (Tiền mặt + Chuyển khoản)' : (o.paymentMethod == 'VNPAY' ? 'Cổng thanh toán VNPay' : 'Chuyển khoản')))}"></dd>
 
             <dt>Trạng thái thanh toán</dt>
             <dd th:text="${o.status == 'CANCELLED' ? 'Đơn đã hủy' : (o.paymentStatus == 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán')}"></dd>
@@ -464,7 +477,7 @@
             <dt>TỔNG THANH TOÁN</dt>
             <dd><strong th:text="${@money.format(o.finalAmount)} + ' đ'"></strong></dd>
             <dt>Phương thức</dt>
-            <dd th:text="${o.paymentMethod == 'CASH' ? 'Tiền mặt' : (o.paymentMethod == 'COD' ? 'Thanh toán khi nhận hàng' : (o.paymentMethod == 'COMBINED' ? 'Kết hợp' : 'Chuyển khoản'))}"></dd>
+            <dd th:text="${o.paymentMethod == 'CASH' ? 'Tiền mặt' : (o.paymentMethod == 'COD' ? 'Thanh toán khi nhận hàng' : (o.paymentMethod == 'COMBINED' ? 'Kết hợp' : (o.paymentMethod == 'VNPAY' ? 'VNPay' : 'Chuyển khoản')))}"></dd>
             <dt>Thanh toán</dt>
             <dd th:text="${o.status == 'CANCELLED' ? 'Đơn đã hủy' : (o.paymentStatus == 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán')}"></dd>
             <dt th:if="${invoice.cashReceived != null}">Khách đưa</dt>

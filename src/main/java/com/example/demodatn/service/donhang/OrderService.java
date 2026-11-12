@@ -79,7 +79,7 @@ public class OrderService {
                                 String voucherCode, String paymentMethod, String address, BigDecimal cashReceived, BigDecimal transferAmount, String reference, String paymentNote) {
         if (employee == null || !Boolean.TRUE.equals(employee.getStatus()) || employee.getUser() == null || !Boolean.TRUE.equals(employee.getUser().getStatus()))
             throw new IllegalArgumentException("Tài khoản chưa gắn với nhân viên đang hoạt động.");
-        if (!java.util.Set.of("CASH", "TRANSFER", "COMBINED").contains(paymentMethod))
+        if (!java.util.Set.of("CASH", "TRANSFER", "COMBINED", "VNPAY").contains(paymentMethod))
             throw new IllegalArgumentException("Phương thức thanh toán không hợp lệ.");
         if (customer != null && !Boolean.TRUE.equals(customer.getStatus()))
             throw new IllegalArgumentException("Khách hàng đã bị vô hiệu hóa.");
@@ -113,8 +113,8 @@ public class OrderService {
             throw new IllegalArgumentException("Tài khoản chưa gắn với nhân viên đang hoạt động.");
         if (customer != null && !Boolean.TRUE.equals(customer.getStatus()))
             throw new IllegalArgumentException("Khách hàng đã bị vô hiệu hóa.");
-        if (!java.util.Set.of("COD", "TRANSFER").contains(paymentMethod))
-            throw new IllegalArgumentException("Đơn giao hàng chỉ hỗ trợ COD hoặc Chuyển khoản.");
+        if (!java.util.Set.of("COD", "TRANSFER", "VNPAY").contains(paymentMethod))
+            throw new IllegalArgumentException("Đơn giao hàng chỉ hỗ trợ COD, Chuyển khoản hoặc VNPay.");
         if (receiverName == null || receiverName.isBlank())
             throw new IllegalArgumentException("Vui lòng nhập họ tên người nhận.");
         if (phone == null || phone.isBlank())
@@ -148,7 +148,7 @@ public class OrderService {
         addressForm.setCoordinateSource(coordinateSource);
         shipping.apply(order, addressForm, ShippingFeeService.quantity(items));
 
-        if ("TRANSFER".equals(paymentMethod)) {
+        if ("TRANSFER".equals(paymentMethod) || "VNPAY".equals(paymentMethod)) {
             String ref;
             do {
                 ref = VietQrService.newReference();
@@ -209,7 +209,7 @@ public class OrderService {
                     throw new IllegalArgumentException("Tiền khách đưa phải đủ thanh toán tổng đơn hàng.");
                 order.setCashAmount(order.getFinalAmount().longValue());
                 order.setTransferAmount(0L);
-            } else if ("TRANSFER".equals(order.getPaymentMethod())) {
+            } else if ("TRANSFER".equals(order.getPaymentMethod()) || "VNPAY".equals(order.getPaymentMethod())) {
                 order.setCashAmount(0L);
                 order.setTransferAmount(order.getFinalAmount().longValue());
             } else if ("COMBINED".equals(order.getPaymentMethod())) {

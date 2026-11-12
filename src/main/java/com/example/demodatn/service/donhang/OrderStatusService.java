@@ -62,7 +62,7 @@ public class OrderStatusService {
             case "PENDING" -> "CONFIRMED";
             case "CONFIRMED" -> "PREPARING";
             case "PREPARING" -> "SHIPPING";
-            case "SHIPPING" -> (bankTransfer(order) && !"PAID".equals(order.getPaymentStatus())) ? null : "DELIVERED";
+            case "SHIPPING" -> ((bankTransfer(order) || "VNPAY".equals(order.getPaymentMethod())) && !"PAID".equals(order.getPaymentStatus())) ? null : "DELIVERED";
             default -> null;
         };
     }
@@ -90,15 +90,15 @@ public class OrderStatusService {
     public void place(Order order) {
         if(order.getId()!=null)throw new IllegalArgumentException("Đơn hàng đã được tạo.");
         boolean pos="POS".equals(order.getOrderType());
-        if(!pos && !"COD".equals(order.getPaymentMethod()) && !bankTransfer(order))
+        if(!pos && !"COD".equals(order.getPaymentMethod()) && !bankTransfer(order) && !"VNPAY".equals(order.getPaymentMethod()))
             throw new IllegalArgumentException("Phương thức thanh toán không hợp lệ.");
         order.setStatus(pos?"CONFIRMED":"PENDING");
-        order.setPaymentStatus(pos?"PAID":"UNPAID");
+        order.setPaymentStatus((pos && !"VNPAY".equals(order.getPaymentMethod()))?"PAID":"UNPAID");
         order.setCreatedAt(LocalDateTime.ofInstant(clock.instant(),DeliveryService.SHOP_ZONE));order.setUpdatedAt(order.getCreatedAt());
         orders.saveAndFlush(order);
         record(order,"Đã tạo đơn hàng.",null,null);
         order.setOrderCode(String.format("DH%06d",order.getId()));orders.flush();
-        if(pos || bankTransfer(order))inventory.truKhoChoDon(order);
+        if(pos || bankTransfer(order) || "VNPAY".equals(order.getPaymentMethod()))inventory.truKhoChoDon(order);
         else {
             // COD checks availability without reserving. Confirmation checks it again atomically.
             Map<Integer,Integer> quantities=new TreeMap<>();
@@ -126,8 +126,8 @@ public class OrderStatusService {
         if(!LABELS.containsKey(status))throw new IllegalArgumentException("Trạng thái đơn hàng không hợp lệ.");
         if(status.equals(order.getStatus()))return;
         if(!allowedStatuses(order).contains(status))throw new IllegalArgumentException("Không thể chuyển từ "+LABELS.getOrDefault(order.getStatus(),order.getStatus())+" sang "+LABELS.get(status)+".");
-        if("DELIVERED".equals(status) && bankTransfer(order) && !"PAID".equals(order.getPaymentStatus()))
-            throw new IllegalArgumentException("Cần xác nhận đã nhận chuyển khoản trước khi hoàn tất.");
+        if("DELIVERED".equals(status) && (bankTransfer(order) || "VNPAY".equals(order.getPaymentMethod())) && !"PAID".equals(order.getPaymentStatus()))
+            throw new IllegalArgumentException("Cần xác nhận thanh toán chuyển khoản hoặc VNPay trước khi hoàn tất.");
         reason=text(reason,1000);carrier=text(carrier,100);trackingCode=text(trackingCode,100);
         if(!"SHIPPING".equals(status) && (carrier!=null || trackingCode!=null))throw new IllegalArgumentException("Chỉ nhập vận đơn khi giao cho đơn vị vận chuyển.");
         if("CONFIRMED".equals(status)) {
@@ -165,8 +165,8 @@ public class OrderStatusService {
     @Transactional
     public void confirmPayment(Integer id) {
         Order order=locked(id);
-        if(Set.of("CANCELLED","DELIVERY_FAILED").contains(order.getStatus()) || !bankTransfer(order))
-            throw new IllegalArgumentException("Chỉ xác nhận chuyển khoản cho đơn chưa hủy hoặc thất bại.");
+        if(Set.of("CANCELLED","DELIVERY_FAILED").contains(order.getStatus()) || (!bankTransfer(order) && !"VNPAY".equals(order.getPaymentMethod())))
+            throw new IllegalArgumentException("Chỉ xác nhận thanh toán cho đơn chưa hủy hoặc thất bại.");
         order.setPaymentStatus("PAID");order.setUpdatedAt(LocalDateTime.now(clock));
         var row=new com.example.demodatn.entity.donhang.OrderStatusHistory();row.setOrder(order);row.setStatus("PAYMENT_CONFIRMED");
         row.setChangedAt(LocalDateTime.ofInstant(clock.instant(),DeliveryService.SHOP_ZONE));row.setActor(actor());

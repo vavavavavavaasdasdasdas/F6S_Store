@@ -14,6 +14,7 @@ import com.example.demodatn.service.donhang.PosHoldService;
 import com.example.demodatn.service.donhang.PricingService;
 import com.example.demodatn.service.khuyenmai.VoucherService;
 import com.example.demodatn.service.donhang.VietQrService;
+import com.example.demodatn.service.donhang.VnPayService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,7 @@ public class AdminPosController {
     private final com.example.demodatn.service.PeopleService people;
     private final com.example.demodatn.repository.donhang.ProvinceRepository provinces;
     private final com.example.demodatn.repository.khachhang.ShippingAddressRepository shippingAddresses;
+    private final com.example.demodatn.service.donhang.VnPayService vnPayService;
 
     @GetMapping("/admin/ban-online")
     public String banOnlineRedirect() {
@@ -614,7 +616,8 @@ public class AdminPosController {
 
     @PostMapping("/admin/pos/checkout")
     public String checkout(@Valid @ModelAttribute("posCheckoutRequest") PosCheckoutRequest request, BindingResult errors,
-                           HttpSession session, Principal principal, RedirectAttributes flash) {
+                           HttpSession session, Principal principal, RedirectAttributes flash,
+                           jakarta.servlet.http.HttpServletRequest servletRequest) {
         synchronized (session) {
             try {
                 if (errors.hasErrors()) throw new IllegalArgumentException("Kiểm tra lại hình thức thanh toán và các ô số tiền.");
@@ -636,9 +639,13 @@ public class AdminPosController {
                 }
                 BigDecimal finalAmount = subtotal.subtract(discount);
 
+                if ("VNPAY".equals(request.getPaymentMethod())) {
+                    request.setTransferAmount(finalAmount);
+                }
+
                 if (request.isDelivery()) {
-                    if (!Set.of("COD", "TRANSFER").contains(request.getPaymentMethod())) {
-                        throw new IllegalArgumentException("Đơn giao hàng chỉ hỗ trợ COD hoặc Chuyển khoản.");
+                    if (!Set.of("COD", "TRANSFER", "VNPAY").contains(request.getPaymentMethod())) {
+                        throw new IllegalArgumentException("Đơn giao hàng chỉ hỗ trợ COD, Chuyển khoản hoặc VNPay.");
                     }
                     if ("TRANSFER".equals(request.getPaymentMethod())) {
                         if (!request.isTransferReceived()) {
@@ -689,6 +696,8 @@ public class AdminPosController {
                         if (!request.isTransferReceived()) {
                             throw new IllegalArgumentException("Cần xác nhận đã nhận đủ số tiền chuyển khoản.");
                         }
+                    } else if ("VNPAY".equals(request.getPaymentMethod())) {
+                        request.setTransferAmount(finalAmount);
                     }
                 }
 
@@ -708,6 +717,13 @@ public class AdminPosController {
                                 : orders.createPosOrder(cart, customer, employee, request.getVoucherCode(), request.getPaymentMethod(), "Tại quầy", request.getCashReceived(), request.getTransferAmount(), request.getPaymentReference(), request.getNote()))
                         : holds.checkout(principal.getName(), heldId, cart, request);
                 clearCart(session);
+
+                if ("VNPAY".equalsIgnoreCase(request.getPaymentMethod())) {
+                    String clientIp = VnPayService.getClientIp(servletRequest);
+                    String vnpayUrl = vnPayService.createPaymentUrl(order, clientIp);
+                    return "redirect:" + vnpayUrl;
+                }
+
                 var invoice = invoices.findByOrder_Id(order.getId()).orElse(null);
                 if (invoice != null) {
                     flash.addFlashAttribute("message", "Thanh toán thành công! Mã hóa đơn: " + invoice.getInvoiceCode());

@@ -365,7 +365,7 @@
                     <!-- Hình thức thanh toán: Cho Đơn tại quầy vs Đơn giao hàng -->
                     <div class="pos-payment-methods mb-3">
                         <label class="form-label small fw-bold text-muted d-block">Hình thức thanh toán</label>
-                        <!-- Tại quầy: Tiền mặt | Chuyển khoản | Kết hợp -->
+                        <!-- Tại quầy: Tiền mặt | Chuyển khoản | Kết hợp | VNPay -->
                         <div id="methods-counter" class="btn-group w-100" role="group" aria-label="Phương thức thanh toán tại quầy" th:hidden="${posCheckoutRequest.delivery}">
                             <input type="radio" class="btn-check" name="paymentMethod" id="method-cash" value="CASH" th:checked="${!posCheckoutRequest.delivery and (posCheckoutRequest.paymentMethod == null or posCheckoutRequest.paymentMethod == 'CASH')}">
                             <label class="btn btn-outline-primary py-2" for="method-cash">Tiền mặt</label>
@@ -375,15 +375,21 @@
 
                             <input type="radio" class="btn-check" name="paymentMethod" id="method-combined" value="COMBINED" th:checked="${!posCheckoutRequest.delivery and posCheckoutRequest.paymentMethod == 'COMBINED'}">
                             <label class="btn btn-outline-primary py-2" for="method-combined">Kết hợp</label>
+
+                            <input type="radio" class="btn-check" name="paymentMethod" id="method-vnpay" value="VNPAY" th:checked="${!posCheckoutRequest.delivery and posCheckoutRequest.paymentMethod == 'VNPAY'}">
+                            <label class="btn btn-outline-primary py-2" for="method-vnpay"><span class="badge bg-danger me-1">VN</span>VNPay</label>
                         </div>
 
-                        <!-- Giao hàng: COD | Chuyển khoản -->
+                        <!-- Giao hàng: COD | Chuyển khoản | VNPay -->
                         <div id="methods-delivery" class="btn-group w-100" role="group" aria-label="Phương thức thanh toán giao hàng" th:hidden="${!posCheckoutRequest.delivery}">
                             <input type="radio" class="btn-check" name="paymentMethod" id="method-delivery-cod" value="COD" th:checked="${posCheckoutRequest.delivery and (posCheckoutRequest.paymentMethod == null or posCheckoutRequest.paymentMethod == 'COD')}">
                             <label class="btn btn-outline-primary py-2" for="method-delivery-cod">COD</label>
 
                             <input type="radio" class="btn-check" name="paymentMethod" id="method-delivery-transfer" value="TRANSFER" th:checked="${posCheckoutRequest.delivery and posCheckoutRequest.paymentMethod == 'TRANSFER'}">
                             <label class="btn btn-outline-primary py-2" for="method-delivery-transfer">Chuyển khoản</label>
+
+                            <input type="radio" class="btn-check" name="paymentMethod" id="method-delivery-vnpay" value="VNPAY" th:checked="${posCheckoutRequest.delivery and posCheckoutRequest.paymentMethod == 'VNPAY'}">
+                            <label class="btn btn-outline-primary py-2" for="method-delivery-vnpay"><span class="badge bg-danger me-1">VN</span>VNPay</label>
                         </div>
                     </div>
 
@@ -451,7 +457,19 @@
                         </div>
                     </div>
 
-                    <!-- Ghi chú thanh toán -->
+                    <!-- KHỐI 4: VNPAY -->
+                    <div id="panel-vnpay" class="mb-3" th:hidden="${posCheckoutRequest.paymentMethod != 'VNPAY'}">
+                        <div class="p-3 bg-light rounded border text-center">
+                            <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+                                <span class="badge bg-danger px-2 py-1 fs-6">VNPAY</span>
+                                <strong class="text-primary">Cổng thanh toán điện tử VNPay</strong>
+                            </div>
+                            <p class="small text-muted mb-2">Khách hàng thanh toán qua VNPAY-QR, ứng dụng ngân hàng (NCB, Vietcombank,...), thẻ ATM nội địa hoặc thẻ quốc tế (Visa/Mastercard).</p>
+                            <div class="alert alert-info py-2 px-3 small mb-0 text-start">
+                                <i class="bi bi-info-circle me-1"></i>Khi bấm <strong>"Thanh toán qua VNPay"</strong>, hệ thống sẽ mở cổng thanh toán VNPay / giao diện quét mã QR để khách quét mã thanh toán ngay tại quầy.
+                            </div>
+                        </div>
+                    </div>
                     <div class="sales-field mb-3">
                         <label for="posNote" class="small fw-semibold text-muted">Ghi chú thanh toán</label>
                         <textarea id="posNote" class="form-control form-control-sm" th:field="*{note}" rows="2" maxlength="500" placeholder="Ghi chú đơn hàng nếu có..."></textarea>

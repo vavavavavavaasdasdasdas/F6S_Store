@@ -59,6 +59,7 @@
                     <option value="COD" th:selected="${paymentMethod=='COD'}">Thanh toán khi nhận hàng (COD)</option>
                     <option value="TRANSFER" th:selected="${paymentMethod=='TRANSFER'}">Chuyển khoản</option>
                     <option value="COMBINED" th:selected="${paymentMethod=='COMBINED'}">Kết hợp</option>
+                    <option value="VNPAY" th:selected="${paymentMethod=='VNPAY'}">VNPay</option>
                 </select>
             </div>
             <div>
@@ -114,7 +115,7 @@
                         <span class="badge" th:classappend="${i.order.paymentStatus == 'PAID' ? 'bg-success' : 'bg-warning text-dark'}" th:text="${i.order.paymentStatus == 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán'}"></span>
                     </td>
                     <td>
-                        <span th:text="${i.order.paymentMethod == 'CASH' ? 'Tiền mặt' : (i.order.paymentMethod == 'COD' ? 'COD' : (i.order.paymentMethod == 'COMBINED' ? 'Kết hợp' : 'Chuyển khoản'))}"></span>
+                        <span th:text="${i.order.paymentMethod == 'CASH' ? 'Tiền mặt' : (i.order.paymentMethod == 'COD' ? 'COD' : (i.order.paymentMethod == 'COMBINED' ? 'Kết hợp' : (i.order.paymentMethod == 'VNPAY' ? 'VNPay' : 'Chuyển khoản')))}"></span>
                     </td>
                     <td class="money" th:text="${@money.format(i.order.finalAmount)}"></td>
                     <td class="table-actions">

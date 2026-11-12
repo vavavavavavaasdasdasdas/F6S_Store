@@ -49,6 +49,9 @@
                     </td>
                     <td>
                         <a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-sm btn-outline-info">Xem chi tiết</a>
+                        <a th:if="${order.paymentStatus != 'PAID' and order.status != 'CANCELLED' and (order.paymentMethod == 'VNPAY' or order.paymentMethod == 'TRANSFER')}"
+                           th:href="@{/payment/vnpay/create/{id}(id=${order.id})}"
+                           class="btn btn-sm btn-outline-primary ms-1">Thanh toán VNPay</a>
                     </td>
                 </tr>
             <tr th:if="${#lists.isEmpty(orders)}"><td colspan="6" class="empty-state">Bạn chưa có đơn hàng phù hợp. <a href="/products">Chọn sản phẩm</a></td></tr></tbody>

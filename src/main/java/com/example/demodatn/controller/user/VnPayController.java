@@ -34,17 +34,24 @@ public class VnPayController {
 
     private final VnPayService vnPayService;
     private final OrderRepository orderRepository;
+    private final com.example.demodatn.repository.donhang.InvoiceRepository invoiceRepository;
 
     @GetMapping("/payment/vnpay/create/{orderId}")
-    public String createPayment(@PathVariable Integer orderId, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String createPayment(@PathVariable Integer orderId,
+                                @RequestParam(value = "returnUrl", required = false) String returnUrl,
+                                HttpServletRequest request, RedirectAttributes redirectAttributes) {
         Order order = orderRepository.findById(orderId).orElse(null);
         if (order == null) {
             redirectAttributes.addFlashAttribute("error", "Không tìm thấy đơn hàng cần thanh toán.");
-            return "redirect:/orders";
+            return returnUrl != null ? "redirect:" + returnUrl : "redirect:/orders";
         }
+        if (returnUrl != null && !returnUrl.isBlank()) {
+            request.getSession().setAttribute("vnpay_custom_return_url", returnUrl);
+        }
+
         if ("PAID".equalsIgnoreCase(order.getPaymentStatus())) {
             redirectAttributes.addFlashAttribute("message", "Đơn hàng này đã được thanh toán trước đó.");
-            return "redirect:/orders/success/" + order.getId();
+            return resolveOrderDestination(order, request);
         }
 
         try {
@@ -54,12 +61,12 @@ public class VnPayController {
         } catch (Exception e) {
             log.error("Lỗi khởi tạo thanh toán VNPay cho đơn hàng {}", order.getOrderCode(), e);
             redirectAttributes.addFlashAttribute("error", "Không thể kết nối cổng thanh toán VNPay: " + e.getMessage());
-            return "redirect:/orders/success/" + order.getId();
+            return resolveOrderDestination(order, request);
         }
     }
 
     @GetMapping("/payment/vnpay/return")
-    public String handleReturn(@RequestParam Map<String, String> params, RedirectAttributes redirectAttributes) {
+    public String handleReturn(@RequestParam Map<String, String> params, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         PaymentResult result = vnPayService.processReturn(params);
         if (result.order() != null) {
             if (result.success()) {
@@ -67,11 +74,32 @@ public class VnPayController {
             } else {
                 redirectAttributes.addFlashAttribute("error", result.message());
             }
-            return "redirect:/orders/success/" + result.order().getId();
+            return resolveOrderDestination(result.order(), request);
         } else {
             redirectAttributes.addFlashAttribute("error", result.message());
+            String customReturnUrl = (String) request.getSession().getAttribute("vnpay_custom_return_url");
+            request.getSession().removeAttribute("vnpay_custom_return_url");
+            if (customReturnUrl != null && !customReturnUrl.isBlank()) {
+                return "redirect:" + customReturnUrl;
+            }
             return "redirect:/orders";
         }
+    }
+
+    private String resolveOrderDestination(Order order, HttpServletRequest request) {
+        String customReturnUrl = (String) request.getSession().getAttribute("vnpay_custom_return_url");
+        if (customReturnUrl != null && !customReturnUrl.isBlank()) {
+            request.getSession().removeAttribute("vnpay_custom_return_url");
+            return "redirect:" + customReturnUrl;
+        }
+        if ("POS".equalsIgnoreCase(order.getOrderType())) {
+            var invOpt = invoiceRepository.findByOrder_Id(order.getId());
+            if (invOpt.isPresent()) {
+                return "redirect:/admin/invoices/" + invOpt.get().getId();
+            }
+            return "redirect:/admin/invoices/" + order.getId();
+        }
+        return "redirect:/orders/success/" + order.getId();
     }
 
     @GetMapping("/api/payment/vnpay/ipn")

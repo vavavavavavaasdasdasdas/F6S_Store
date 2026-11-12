@@ -893,6 +893,7 @@
     const panelCash = document.querySelector('#panel-cash');
     const panelTransfer = document.querySelector('#panel-transfer');
     const panelCombined = document.querySelector('#panel-combined');
+    const panelVnpay = document.querySelector('#panel-vnpay');
 
     const cashInput = document.querySelector('#cashReceived');
     const cashWarning = document.querySelector('#cash-warning');
@@ -944,6 +945,10 @@
             refreshTransferQr();
         } else if (method === 'COMBINED') {
             updateCombinedCalculations();
+        } else if (method === 'VNPAY') {
+            if (btnCheckout) {
+                btnCheckout.disabled = (finalAmount <= 0);
+            }
         }
     }
 
@@ -1318,6 +1323,19 @@
         if (panelCash) panelCash.hidden = isDelivery || (val !== 'CASH');
         if (panelTransfer) panelTransfer.hidden = (val !== 'TRANSFER');
         if (panelCombined) panelCombined.hidden = isDelivery || (val !== 'COMBINED');
+        if (panelVnpay) panelVnpay.hidden = (val !== 'VNPAY');
+
+        if (btnCheckout) {
+            if (val === 'VNPAY') {
+                btnCheckout.textContent = 'Thanh toán qua VNPay';
+                btnCheckout.classList.remove('btn-success');
+                btnCheckout.classList.add('btn-primary');
+            } else {
+                btnCheckout.textContent = 'Thanh toán đơn hàng';
+                btnCheckout.classList.remove('btn-primary');
+                btnCheckout.classList.add('btn-success');
+            }
+        }
     }
     syncPaymentPanels();
 

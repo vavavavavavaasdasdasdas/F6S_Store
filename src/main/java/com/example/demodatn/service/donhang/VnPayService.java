@@ -35,6 +35,16 @@ public class VnPayService {
     private final OrderRepository orderRepository;
     private final String qrDemoFallbackSecret = UUID.randomUUID().toString();
 
+    public static String getClientIp(jakarta.servlet.http.HttpServletRequest request) {
+        if (request == null) return "127.0.0.1";
+        String forwarded = request.getHeader("X-Forwarded-For");
+        if (forwarded != null && !forwarded.isBlank()) {
+            return forwarded.split(",")[0].trim();
+        }
+        String remote = request.getRemoteAddr();
+        return (remote != null && !remote.isBlank()) ? remote : "127.0.0.1";
+    }
+
     @Transactional
     public String createPaymentUrl(Order order, String clientIp) {
         PaymentGatewayProperties.VnPay config = properties.getVnpay();
