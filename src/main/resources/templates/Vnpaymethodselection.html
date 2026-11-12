@@ -706,11 +706,15 @@
                     stopStatusPolling();
                     scanStatus.className = 'scan-status success';
                     scanStatus.textContent = 'Đã xác nhận thanh toán.';
-                    const target = new URL('/shop', window.location.origin);
-                    target.searchParams.set('paymentResult', 'success');
-                    target.searchParams.set('gateway', 'VNPAY');
-                    target.searchParams.set('orderCode', status.orderCode || '');
-                    window.setTimeout(() => window.location.assign(target.toString()), 700);
+                    let targetUrl;
+                    if (status.isPos) {
+                        targetUrl = '/admin/pos?paymentResult=success&orderCode=' + encodeURIComponent(status.orderCode || '');
+                    } else if (status.orderId) {
+                        targetUrl = '/orders/success/' + status.orderId;
+                    } else {
+                        targetUrl = '/orders';
+                    }
+                    window.setTimeout(() => window.location.assign(targetUrl), 700);
                 } catch (error) {
                     stopStatusPolling();
                     scanStatus.className = 'scan-status error';

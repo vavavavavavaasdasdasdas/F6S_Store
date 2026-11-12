@@ -87,7 +87,9 @@ public class VnPayService {
     public boolean verifySignature(Map<String, String> source) {
         if (source == null) return false;
 
-        boolean usingLocalDemo = !properties.isVnPayConfigured();
+        boolean usingLocalDemo = LOCAL_DEMO_VNPAY_TMN_CODE.equalsIgnoreCase(source.get("vnp_TmnCode"))
+                || !properties.isVnPayConfigured()
+                || properties.getVnpay().isLocalCheckoutEnabled();
         String expectedTmnCode = usingLocalDemo
                 ? LOCAL_DEMO_VNPAY_TMN_CODE
                 : properties.getVnpay().getTmnCode();
@@ -220,14 +222,15 @@ public class VnPayService {
 
     public LocalCheckoutStatus localCheckoutStatus(Map<String, String> params) {
         if (!verifySignature(params)) {
-            return new LocalCheckoutStatus(false, false, "");
+            return new LocalCheckoutStatus(false, false, "", null, false);
         }
         Order order = findOrderByRef(params.get("vnp_TxnRef"));
         if (order == null) {
-            return new LocalCheckoutStatus(false, false, "");
+            return new LocalCheckoutStatus(false, false, "", null, false);
         }
         boolean isPaid = "PAID".equalsIgnoreCase(order.getPaymentStatus());
-        return new LocalCheckoutStatus(true, isPaid, order.getOrderCode());
+        boolean isPos = "POS".equalsIgnoreCase(order.getOrderType()) || order.getEmployee() != null;
+        return new LocalCheckoutStatus(true, isPaid, order.getOrderCode(), order.getId(), isPos);
     }
 
     private Order findOrderByRef(String ref) {
@@ -287,5 +290,5 @@ public class VnPayService {
     }
 
     public record PaymentResult(boolean valid, boolean success, Order order, String message) {}
-    public record LocalCheckoutStatus(boolean valid, boolean paid, String orderCode) {}
+    public record LocalCheckoutStatus(boolean valid, boolean paid, String orderCode, Integer orderId, boolean isPos) {}
 }

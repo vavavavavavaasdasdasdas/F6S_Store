@@ -1,9 +1,64 @@
-<!DOCTYPE html><html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-nguoi-dung :: html}"><body><div th:fragment="content" class="container my-4">
-<h1 th:text="${reviewForm.id==null?'Đánh giá sản phẩm':'Sửa đánh giá'}"></h1><h2 class="h5" th:text="${reviewProduct.name}"></h2><p class="text-muted">Chỉ khách đã nhận hàng được đánh giá. Mỗi khách một đánh giá cho mỗi sản phẩm; tối đa 5 lần gửi hoặc sửa trong một phút.</p>
-<form th:action="@{/reviews/products/{id}(id=${reviewProduct.id})}" th:object="${reviewForm}" method="post" data-user-form novalidate class="admin-panel">
-<input type="hidden" th:field="*{id}"><input type="hidden" th:field="*{orderId}">
-<label for="stars">Số sao *</label><select id="stars" th:field="*{stars}" class="form-select" required aria-describedby="stars-error"><option value="">Chọn số sao</option><option th:each="n:${#numbers.sequence(5,1)}" th:value="${n}" th:text="${n}+' sao'"></option></select><p id="stars-error" class="field-error" th:errors="*{stars}"></p>
-<label for="content" class="mt-3">Nội dung đánh giá</label><textarea id="content" th:field="*{content}" class="form-control resize-none" maxlength="1000" rows="5" aria-describedby="content-error"></textarea><p id="content-error" class="field-error" th:errors="*{content}"></p><p class="form-message" role="alert" hidden></p>
-<div class="d-flex gap-2 flex-wrap mt-3"><button class="btn btn-primary" type="submit">Lưu đánh giá</button><a class="btn btn-outline-secondary" th:if="${reviewProduct.status==true}" th:href="@{/products/{id}(id=${reviewProduct.id})}">Xem sản phẩm</a><a href="/orders" class="btn btn-outline-secondary">Đơn hàng của tôi</a></div></form>
-<form th:if="${reviewForm.id!=null}" method="post" th:action="@{/reviews/{id}/delete(id=${reviewForm.id})}" class="mt-3" novalidate><input type="hidden" name="productId" th:value="${reviewProduct.id}"><button class="btn btn-outline-danger" type="submit" data-confirm data-confirm-title="Xóa đánh giá" data-confirm-message="Bạn muốn xóa đánh giá của mình?">Xóa đánh giá</button></form>
-</div></body></html>
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-nguoi-dung :: html}">
+<body>
+<div th:fragment="content" class="container py-4" style="max-width: 760px;">
+    <div class="card border rounded-4 shadow-sm p-4 p-md-5 bg-white">
+        <!-- Header -->
+        <div class="text-center mb-4">
+            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold text-uppercase" style="letter-spacing: 1px;">F6S Store Feedback</span>
+            <h2 class="fw-bold mt-2 text-dark" th:text="${reviewForm.id == null ? 'Đánh Giá Sản Phẩm' : 'Chỉnh Sửa Đánh Giá'}">Đánh Giá Sản Phẩm</h2>
+            <h5 class="text-primary fw-semibold" th:text="${reviewProduct.name}">Tên sản phẩm</h5>
+            <p class="text-muted small">Ý kiến đóng góp của bạn giúp F6S Store hoàn thiện chất lượng sản phẩm và dịch vụ mỗi ngày.</p>
+        </div>
+
+        <form th:action="@{/reviews/products/{id}(id=${reviewProduct.id})}" th:object="${reviewForm}" method="post" data-user-form novalidate>
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{orderId}">
+
+            <!-- Chọn số sao -->
+            <div class="mb-4">
+                <label for="stars" class="form-label fw-bold text-dark">Chất lượng sản phẩm (Đánh giá số sao) *</label>
+                <select id="stars" th:field="*{stars}" class="form-select rounded-3 py-2" required aria-describedby="stars-error">
+                    <option value="">-- Chọn số sao đánh giá --</option>
+                    <option value="5">⭐⭐⭐⭐⭐ (5 sao - Tuyệt vời, rất hài lòng)</option>
+                    <option value="4">⭐⭐⭐⭐ (4 sao - Hài lòng, giày đẹp)</option>
+                    <option value="3">⭐⭐⭐ (3 sao - Bình thường, ổn)</option>
+                    <option value="2">⭐⭐ (2 sao - Chưa hài lòng lắm)</option>
+                    <option value="1">⭐ (1 sao - Rất không hài lòng)</option>
+                </select>
+                <div id="stars-error" class="text-danger small mt-1" th:errors="*{stars}"></div>
+            </div>
+
+            <!-- Nội dung đánh giá -->
+            <div class="mb-4">
+                <label for="content" class="form-label fw-bold text-dark">Cảm nhận chi tiết của bạn</label>
+                <textarea id="content" th:field="*{content}" class="form-control rounded-3" rows="5" maxlength="1000"
+                          placeholder="Hãy chia sẻ về độ êm, form giày, chất liệu, độ bền hoặc trải nghiệm giao hàng của shop..."
+                          aria-describedby="content-error"></textarea>
+                <div class="d-flex justify-content-between mt-1">
+                    <span id="content-error" class="text-danger small" th:errors="*{content}"></span>
+                    <small class="text-muted ms-auto">Tối đa 1000 ký tự</small>
+                </div>
+                <div class="form-message alert alert-danger mt-2 py-2 small" role="alert" hidden></div>
+            </div>
+
+            <!-- Nút gửi / hủy -->
+            <div class="d-flex gap-2 flex-wrap justify-content-end pt-3 border-top">
+                <a th:if="${reviewProduct.status == true}" th:href="@{/products/{id}(id=${reviewProduct.id})}" class="btn btn-outline-secondary rounded-pill px-4">Quay lại</a>
+                <button class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm" type="submit">
+                    <i class="bi bi-send me-1"></i> Gửi đánh giá
+                </button>
+            </div>
+        </form>
+
+        <!-- Nút xóa đánh giá nếu đang sửa -->
+        <form th:if="${reviewForm.id != null}" method="post" th:action="@{/reviews/{id}/delete(id=${reviewForm.id})}" class="mt-3 pt-3 border-top text-end" novalidate>
+            <input type="hidden" name="productId" th:value="${reviewProduct.id}">
+            <button class="btn btn-outline-danger btn-sm rounded-pill px-3" type="submit" data-confirm data-confirm-title="Xóa đánh giá" data-confirm-message="Bạn chắc chắn muốn xóa bài đánh giá này?">
+                <i class="bi bi-trash me-1"></i> Xóa đánh giá này
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

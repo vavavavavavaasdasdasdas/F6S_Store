@@ -47,39 +47,74 @@
                 </div>
 
                 <form id="addToCartForm" novalidate th:action="@{/cart/add}" method="post">
-                    <!-- Kích cỡ Selection (Buttons) -->
+                    <!-- Lựa chọn biến thể qua các Combobox riêng biệt -->
                     <div class="mb-4">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <label class="form-label fw-bold mb-0">Chọn thuộc tính biến thể:</label>
-                            <button type="button" class="btn btn-link btn-sm p-0 text-primary fw-semibold text-decoration-none" data-bs-toggle="modal" data-bs-target="#sizeGuideModal">
-                                <i class="bi bi-rulers me-1"></i> Bảng quy đổi size
-                            </button>
+                        <input type="hidden" name="variantId" id="selectedVariantId" value="">
+
+                        <!-- Metadata variants data cho JS logic -->
+                        <div id="variants-data" class="d-none">
+                            <span th:each="v : ${variants}"
+                                  th:data-id="${v.id}"
+                                  th:data-qty="${v.quantity}"
+                                  th:data-size-id="${v.size != null ? v.size.id : ''}"
+                                  th:data-size-name="${v.size != null ? v.size.sizeValue : ''}"
+                                  th:data-color-id="${v.color != null ? v.color.id : ''}"
+                                  th:data-color-name="${v.colorName}"
+                                  th:data-material-id="${v.material != null ? v.material.id : ''}"
+                                  th:data-material-name="${v.material != null ? v.material.name : ''}"
+                                  th:data-sole-id="${v.sole != null ? v.sole.id : ''}"
+                                  th:data-sole-name="${v.sole != null ? v.sole.name : ''}"
+                                  th:data-finalprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).finalPrice : v.price}"
+                                  th:data-origprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).originalPrice : v.price}"
+                                  th:data-haspromo="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).hasPromotion : false}"
+                                  th:data-discount="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).discountPercentage : 0}">
+                            </span>
                         </div>
-                        <div class="d-flex flex-wrap gap-2" id="size-container">
-                            <th:block th:each="v : ${variants}">
-                                <input type="radio" class="btn-check size-radio" name="variantId" th:id="'size-' + ${v.id}" th:value="${v.id}"
-                                       th:disabled="${v.quantity <= 0}"
-                                       th:data-qty="${v.quantity}"
-                                       th:data-size-id="${v.size != null ? v.size.id : ''}"
-                                       th:data-size-name="${v.size != null ? v.size.sizeValue : ''}"
-                                       th:data-material-id="${v.material != null ? v.material.id : ''}"
-                                       th:data-material-name="${v.material != null ? v.material.name : ''}"
-                                       th:data-color-id="${v.color != null ? v.color.id : ''}"
-                                       th:data-color-name="${v.colorName}"
-                                       th:data-color-hex="${v.colorHexCode}"
-                                       th:data-sole-id="${v.sole != null ? v.sole.id : ''}"
-                                       th:data-sole-name="${v.sole != null ? v.sole.name : ''}"
-                                       th:data-finalprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).finalPrice : v.price}"
-                                       th:data-origprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).originalPrice : v.price}"
-                                       th:data-haspromo="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).hasPromotion : false}"
-                                       th:data-discount="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).discountPercentage : 0}">
-                                <label class="btn btn-outline-primary rounded-pill px-3 py-2 fw-semibold" th:for="'size-' + ${v.id}"
-                                       th:classappend="${v.quantity <= 0 ? 'disabled text-muted opacity-50' : ''}"
-                                       th:text="${(v.size != null ? v.size.sizeValue : '') + (v.color != null ? ' · ' + v.color.name : '') + (v.material != null ? ' · ' + v.material.name : '')}">39</label>
-                            </th:block>
-                            <p th:if="${variants.isEmpty()}" class="text-muted fst-italic">Sản phẩm hiện chưa có biến thể sẵn có.</p>
+
+                        <div class="row g-3">
+                            <!-- Combobox 1: Kích cỡ -->
+                            <div class="col-sm-6">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <label for="select-size" class="form-label fw-bold small text-dark mb-0">Kích cỡ (Size):</label>
+                                    <button type="button" class="btn btn-link btn-sm p-0 text-primary fw-semibold text-decoration-none small" data-bs-toggle="modal" data-bs-target="#sizeGuideModal" style="font-size: 0.8rem;">
+                                        <i class="bi bi-rulers me-1"></i> Bảng quy đổi size
+                                    </button>
+                                </div>
+                                <select id="select-size" class="form-select rounded-3 py-2">
+                                    <option value="">-- Chọn kích cỡ --</option>
+                                    <option th:each="s : ${availableSizes}" th:value="${s.id}" th:text="${s.sizeValue}">39</option>
+                                </select>
+                            </div>
+
+                            <!-- Combobox 2: Màu sắc -->
+                            <div class="col-sm-6">
+                                <label for="select-color" class="form-label fw-bold small text-dark mb-1">Màu sắc:</label>
+                                <select id="select-color" class="form-select rounded-3 py-2">
+                                    <option value="">-- Chọn màu sắc --</option>
+                                    <option th:each="c : ${availableColors}" th:value="${c.id}" th:text="${c.name}">Đen</option>
+                                </select>
+                            </div>
+
+                            <!-- Combobox 3: Chất liệu -->
+                            <div class="col-sm-6">
+                                <label for="select-material" class="form-label fw-bold small text-dark mb-1">Chất liệu:</label>
+                                <select id="select-material" class="form-select rounded-3 py-2">
+                                    <option value="">-- Chọn chất liệu --</option>
+                                    <option th:each="m : ${availableMaterials}" th:value="${m.id}" th:text="${m.name}">Vải Canvas</option>
+                                </select>
+                            </div>
+
+                            <!-- Combobox 4: Đế giày -->
+                            <div class="col-sm-6">
+                                <label for="select-sole" class="form-label fw-bold small text-dark mb-1">Đế giày:</label>
+                                <select id="select-sole" class="form-select rounded-3 py-2">
+                                    <option value="">-- Chọn đế giày --</option>
+                                    <option th:each="so : ${availableSoles}" th:value="${so.id}" th:text="${so.name}">Cao su lưu hóa</option>
+                                </select>
+                            </div>
                         </div>
-                        <div id="size-error" class="text-danger small mt-2 d-none">Vui lòng chọn kích cỡ và phân loại còn hàng!</div>
+
+                        <div id="size-error" class="text-danger small mt-2 d-none">Vui lòng chọn đầy đủ kích cỡ, màu sắc, chất liệu và đế giày còn hàng!</div>
                     </div>
 
                     <!-- Quantity & Stock -->
@@ -216,19 +251,18 @@
                                         <th>Size VN / EU</th>
                                         <th>Chiều dài bàn chân (cm)</th>
                                         <th>US Men</th>
-                                        <th>US Women</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr><td><strong>36</strong></td><td>22.5 cm</td><td>4.5</td><td>6.0</td></tr>
-                                    <tr><td><strong>37</strong></td><td>23.0 cm</td><td>5.0</td><td>6.5</td></tr>
-                                    <tr><td><strong>38</strong></td><td>23.5 - 24.0 cm</td><td>5.5 - 6.0</td><td>7.0 - 7.5</td></tr>
-                                    <tr><td><strong>39</strong></td><td>24.5 cm</td><td>6.5</td><td>8.0</td></tr>
-                                    <tr><td><strong>40</strong></td><td>25.0 cm</td><td>7.0</td><td>8.5</td></tr>
-                                    <tr><td><strong>41</strong></td><td>25.5 - 26.0 cm</td><td>7.5 - 8.0</td><td>9.0 - 9.5</td></tr>
-                                    <tr><td><strong>42</strong></td><td>26.5 cm</td><td>8.5</td><td>10.0</td></tr>
-                                    <tr><td><strong>43</strong></td><td>27.0 - 27.5 cm</td><td>9.0 - 9.5</td><td>10.5 - 11.0</td></tr>
-                                    <tr><td><strong>44</strong></td><td>28.0 cm</td><td>10.0</td><td>11.5</td></tr>
+                                    <tr><td><strong>36</strong></td><td>22.5 cm</td><td>4.5</td></tr>
+                                    <tr><td><strong>37</strong></td><td>23.0 cm</td><td>5.0</td></tr>
+                                    <tr><td><strong>38</strong></td><td>23.5 - 24.0 cm</td><td>5.5 - 6.0</td></tr>
+                                    <tr><td><strong>39</strong></td><td>24.5 cm</td><td>6.5</td></tr>
+                                    <tr><td><strong>40</strong></td><td>25.0 cm</td><td>7.0</td></tr>
+                                    <tr><td><strong>41</strong></td><td>25.5 - 26.0 cm</td><td>7.5 - 8.0</td></tr>
+                                    <tr><td><strong>42</strong></td><td>26.5 cm</td><td>8.5</td></tr>
+                                    <tr><td><strong>43</strong></td><td>27.0 - 27.5 cm</td><td>9.0 - 9.5</td></tr>
+                                    <tr><td><strong>44</strong></td><td>28.0 cm</td><td>10.0</td></tr>
                                 </tbody>
                             </table>
                         </div>

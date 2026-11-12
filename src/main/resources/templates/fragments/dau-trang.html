@@ -13,15 +13,15 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3 gap-lg-1">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-2 gap-lg-0 gap-xl-1 text-nowrap">
                     <li class="nav-item">
-                        <a class="nav-link fw-bold px-3" th:href="@{/}">Trang chủ</a>
+                        <a class="nav-link fw-bold px-2 px-xl-3 text-nowrap" th:href="@{/}">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-bold px-3" th:href="@{/products}">Sản phẩm</a>
+                        <a class="nav-link fw-bold px-2 px-xl-3 text-nowrap" th:href="@{/products}">Sản phẩm</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <button type="button" class="nav-link dropdown-toggle fw-bold px-3" data-bs-toggle="dropdown" aria-expanded="false">Thương hiệu</button>
+                        <button type="button" class="nav-link dropdown-toggle fw-bold px-2 px-xl-3 text-nowrap" data-bs-toggle="dropdown" aria-expanded="false">Thương hiệu</button>
                         <ul class="dropdown-menu border-0 shadow-sm rounded-3">
                             <li th:each="cat : ${globalCategories}">
                                 <a class="dropdown-item py-2" th:href="@{/category/{id}(id=${cat.id})}" th:text="${cat.name}"></a>
@@ -29,14 +29,14 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-bold text-danger px-3" th:href="@{/products(promotion=true)}"><i class="bi bi-fire"></i> Khuyến mãi</a>
+                        <a class="nav-link fw-bold text-danger px-2 px-xl-3 text-nowrap" th:href="@{/products(promotion=true)}"><i class="bi bi-fire"></i> Khuyến mãi</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold text-muted px-3" th:href="@{/orders}"><i class="bi bi-truck me-1"></i> Tra cứu đơn</a>
+                        <a class="nav-link fw-semibold text-muted px-2 px-xl-3 text-nowrap" th:href="@{/orders}"><i class="bi bi-truck me-1"></i> Tra cứu đơn</a>
                     </li>
                 </ul>
-                <div class="d-flex align-items-center gap-3">
-                    <form class="d-flex position-relative store-search" th:action="@{/products}" method="get" style="min-width: 250px;">
+                <div class="d-flex align-items-center gap-2 gap-lg-3 flex-shrink-0">
+                    <form class="d-flex position-relative store-search" th:action="@{/products}" method="get" style="min-width: 180px; max-width: 240px;">
                         <input class="form-control rounded-pill bg-light border-0" style="padding-left: 2.75rem; padding-right: 1.25rem;" type="search" name="keyword" aria-label="Tìm sản phẩm" placeholder="Tìm giày, thương hiệu...">
                         <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted" style="pointer-events: none;"></i>
                     </form>

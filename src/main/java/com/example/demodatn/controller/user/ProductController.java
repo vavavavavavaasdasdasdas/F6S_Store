@@ -5,6 +5,9 @@ import com.example.demodatn.dto.sanpham.ProductDto;
 import com.example.demodatn.entity.sanpham.Material;
 import com.example.demodatn.entity.sanpham.Product;
 import com.example.demodatn.entity.sanpham.ProductVariant;
+import com.example.demodatn.entity.sanpham.Size;
+import com.example.demodatn.entity.sanpham.Color;
+import com.example.demodatn.entity.sanpham.Sole;
 import com.example.demodatn.repository.sanpham.CategoryRepository;
 import com.example.demodatn.repository.sanpham.MaterialRepository;
 import com.example.demodatn.repository.sanpham.SizeRepository;
@@ -23,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 
 @Controller
@@ -119,7 +124,11 @@ public class ProductController {
         model.addAttribute("productImages", gallery.list(id));
         model.addAttribute("variants", variants);
         model.addAttribute("variantPrices", variantPrices);
-        model.addAttribute("productMaterials", variants.stream().map(ProductVariant::getMaterial).collect(Collectors.toMap(Material::getId,m -> m,(a,b) -> a,java.util.LinkedHashMap::new)).values());
+        model.addAttribute("productMaterials", variants.stream().map(ProductVariant::getMaterial).filter(Objects::nonNull).collect(Collectors.toMap(Material::getId,m -> m,(a,b) -> a,LinkedHashMap::new)).values());
+        model.addAttribute("availableSizes", variants.stream().map(ProductVariant::getSize).filter(Objects::nonNull).collect(Collectors.toMap(Size::getId, s -> s, (a, b) -> a, LinkedHashMap::new)).values());
+        model.addAttribute("availableColors", variants.stream().map(ProductVariant::getColor).filter(Objects::nonNull).collect(Collectors.toMap(Color::getId, c -> c, (a, b) -> a, LinkedHashMap::new)).values());
+        model.addAttribute("availableMaterials", variants.stream().map(ProductVariant::getMaterial).filter(Objects::nonNull).collect(Collectors.toMap(Material::getId, m -> m, (a, b) -> a, LinkedHashMap::new)).values());
+        model.addAttribute("availableSoles", variants.stream().map(ProductVariant::getSole).filter(Objects::nonNull).collect(Collectors.toMap(Sole::getId, s -> s, (a, b) -> a, LinkedHashMap::new)).values());
         model.addAttribute("relatedProducts", relatedProducts);
         
         return "user/chi-tiet-san-pham";
