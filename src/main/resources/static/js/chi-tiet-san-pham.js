@@ -23,8 +23,53 @@ document.addEventListener("DOMContentLoaded", function() {
         return new Intl.NumberFormat('vi-VN').format(value) + ' ₫';
     }
 
+    // Khôi phục text ban đầu cho các options trong combobox
+    function restoreOptionTexts() {
+        if (!selectSize) return;
+        for (let i = 1; i < selectSize.options.length; i++) {
+            const opt = selectSize.options[i];
+            const sizeVal = opt.dataset.sizeValue || opt.text.split('(')[0].trim();
+            opt.dataset.sizeValue = sizeVal;
+            const originalQty = parseInt(opt.dataset.qty, 10) || 0;
+            opt.text = sizeVal + (originalQty <= 0 ? " (Tạm hết hàng)" : " (Còn " + originalQty + " sản phẩm)");
+        }
+    }
+
+    // Cập nhật số lượng còn lại khi người dùng bấm + hoặc -
+    function updateStockDisplay() {
+        if (!stockStatus) return;
+        if (!selectedVariantId || !selectedVariantId.value || currentMaxQty <= 0) {
+            stockStatus.textContent = (currentMaxQty <= 0 && selectedVariantId && selectedVariantId.value)
+                ? "Tạm hết hàng (0 sản phẩm)"
+                : "Vui lòng chọn kích cỡ để xem số lượng còn lại";
+            stockStatus.className = currentMaxQty <= 0 ? "ms-3 text-danger fw-bold" : "ms-3 text-muted";
+            return;
+        }
+
+        const selectedVal = parseInt(qtyInput ? qtyInput.value : 1, 10) || 1;
+        const remaining = Math.max(0, currentMaxQty - selectedVal);
+
+        if (remaining > 0) {
+            stockStatus.textContent = "Còn " + remaining + " sản phẩm";
+            stockStatus.className = "ms-3 text-success fw-bold";
+        } else {
+            stockStatus.textContent = "Đã chọn tối đa (còn 0 sản phẩm)";
+            stockStatus.className = "ms-3 text-warning-emphasis fw-bold";
+        }
+
+        // Đồng bộ cập nhật số lượng còn lại trong combobox size
+        if (selectSize && selectSize.selectedIndex > 0) {
+            const opt = selectSize.options[selectSize.selectedIndex];
+            const sizeVal = opt.dataset.sizeValue || opt.text.split('(')[0].trim();
+            opt.dataset.sizeValue = sizeVal;
+            opt.text = sizeVal + (remaining <= 0 ? " (Đã chọn hết)" : " (Còn " + remaining + " sản phẩm)");
+        }
+    }
+
     function onSizeChange() {
         if (sizeError) sizeError.classList.add('d-none');
+        restoreOptionTexts();
+
         if (!selectSize || !selectSize.value) {
             if (selectedVariantId) selectedVariantId.value = '';
             currentMaxQty = 0;
@@ -51,10 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 qtyInput.max = qty;
                 qtyInput.value = 1;
             }
-            if (stockStatus) {
-                stockStatus.textContent = "Còn " + qty + " sản phẩm";
-                stockStatus.className = "ms-3 text-success fw-bold";
-            }
+            updateStockDisplay();
             if (btnAddCart) btnAddCart.disabled = false;
             if (btnBuyNow) btnBuyNow.disabled = false;
             if (btnMobileBuy) btnMobileBuy.disabled = false;
@@ -107,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let val = parseInt(qtyInput.value, 10) || 1;
             if (val > 1) {
                 qtyInput.value = val - 1;
-                qtyInput.dispatchEvent(new Event('input', { bubbles: true }));
+                updateStockDisplay();
             }
         });
     }
@@ -117,10 +159,10 @@ document.addEventListener("DOMContentLoaded", function() {
             let val = parseInt(qtyInput.value, 10) || 0;
             if (currentMaxQty > 0 && val < currentMaxQty) {
                 qtyInput.value = val + 1;
-                qtyInput.dispatchEvent(new Event('input', { bubbles: true }));
+                updateStockDisplay();
             } else if (currentMaxQty > 0 && val >= currentMaxQty) {
                 if (stockStatus) {
-                    stockStatus.textContent = "Chỉ còn " + currentMaxQty + " sản phẩm";
+                    stockStatus.textContent = "Đã chọn tối đa số lượng trong kho (" + currentMaxQty + " sản phẩm)";
                     stockStatus.className = "ms-3 text-warning-emphasis fw-bold";
                 }
             }
@@ -134,17 +176,12 @@ document.addEventListener("DOMContentLoaded", function() {
             let val = parseInt(raw, 10);
             if (currentMaxQty > 0 && val > currentMaxQty) {
                 this.value = currentMaxQty;
-                if (stockStatus) {
-                    stockStatus.textContent = "Chỉ còn " + currentMaxQty + " sản phẩm";
-                    stockStatus.className = "ms-3 text-warning-emphasis fw-bold";
-                }
-            } else if (currentMaxQty > 0) {
+            } else if (currentMaxQty > 0 && val < 1) {
+                this.value = 1;
+            } else {
                 this.value = val;
-                if (stockStatus) {
-                    stockStatus.textContent = "Còn " + currentMaxQty + " sản phẩm";
-                    stockStatus.className = "ms-3 text-success fw-bold";
-                }
             }
+            updateStockDisplay();
         });
 
         qtyInput.addEventListener('blur', function() {
@@ -154,6 +191,7 @@ document.addEventListener("DOMContentLoaded", function() {
             } else if (currentMaxQty > 0 && val > currentMaxQty) {
                 this.value = currentMaxQty;
             }
+            updateStockDisplay();
         });
     }
 
