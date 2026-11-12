@@ -32,6 +32,7 @@
 <section class="checkout-card" aria-labelledby="payment-title"><h2 id="payment-title">Phương thức thanh toán</h2>
 <label class="checkout-radio payment-card"><input type="radio" th:field="*{paymentMethod}" value="COD" required><span><i class="bi bi-cash-coin" aria-hidden="true"></i> Thanh toán khi nhận hàng</span></label>
 <label class="checkout-radio payment-card"><input type="radio" th:field="*{paymentMethod}" value="BANK_TRANSFER" required><span><i class="bi bi-bank" aria-hidden="true"></i> Chuyển khoản ngân hàng</span></label>
+<label class="checkout-radio payment-card"><input type="radio" th:field="*{paymentMethod}" value="VNPAY" required><span><i class="bi bi-credit-card-2-front text-primary" aria-hidden="true"></i> Cổng thanh toán VNPay (ATM / QR / Visa / Master)</span></label>
 <p class="field-error" id="paymentMethod-error" aria-live="polite"><span th:errors="*{paymentMethod}"></span></p>
 <div id="bankInfo" class="checkout-bank" hidden><p data-qr-message role="status">Đang tải thông tin chuyển khoản…</p><canvas class="vietqr-canvas" data-checkout-qr hidden aria-label="Mã QR chuyển khoản đúng tổng cộng"></canvas><dl data-qr-details hidden><dt>Số tiền</dt><dd data-qr-amount></dd><dt>Ngân hàng</dt><dd data-qr-bank></dd><dt>Chủ tài khoản</dt><dd data-qr-owner></dd><dt>Số tài khoản</dt><dd data-qr-account></dd><dt>Nội dung</dt><dd data-qr-content></dd></dl><p class="checkout-hint">Đây là thông tin xem trước. Hãy đặt hàng và dùng mã QR của đơn đã tạo để chuyển khoản, giúp cửa hàng đối soát đúng đơn.</p></div>
 </section>

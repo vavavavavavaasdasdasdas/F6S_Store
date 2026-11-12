@@ -40,7 +40,12 @@
   finally{if(current===revision){loading=false;lock();}}
  }
  function schedule(){clearTimeout(timer);timer=setTimeout(()=>preview(),250);}
- function paymentChanged(){bank.hidden=payment()!=='BANK_TRANSFER';if(!bank.hidden)preview();}
+ function paymentChanged(){
+  bank.hidden=payment()!=='BANK_TRANSFER';
+  if(!bank.hidden)preview();
+  const label = payment()==='VNPAY' ? 'Thanh toán qua VNPay' : 'Đặt hàng';
+  text('[data-order-button-label]', label);
+ }
  form.querySelectorAll('[name=paymentMethod]').forEach(r=>r.addEventListener('change',paymentChanged));
  if(!payment())form.querySelector('[name=paymentMethod][value=COD]').checked=true;
  bank.hidden=payment()!=='BANK_TRANSFER';

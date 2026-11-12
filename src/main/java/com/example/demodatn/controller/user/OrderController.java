@@ -48,6 +48,7 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final PricingService pricingService;
     @org.springframework.beans.factory.annotation.Autowired private com.example.demodatn.service.donhang.CheckoutService checkout;
+    @org.springframework.beans.factory.annotation.Autowired private com.example.demodatn.service.donhang.VnPayService vnPayService;
     @org.springframework.beans.factory.annotation.Autowired private com.example.demodatn.service.donhang.VietQrService qr;
     @org.springframework.beans.factory.annotation.Autowired private com.example.demodatn.service.khachhang.ShippingAddressService shippingAddresses;
     @org.springframework.beans.factory.annotation.Autowired
@@ -170,7 +171,8 @@ public class OrderController {
 
     @PostMapping("/checkout/place")
     public String placeOrder(@Valid @ModelAttribute("checkoutRequest") CheckoutRequest request, BindingResult result, 
-                           HttpSession session, Principal principal, RedirectAttributes redirectAttributes, Model model) {
+                           HttpSession session, Principal principal, RedirectAttributes redirectAttributes, Model model,
+                           jakarta.servlet.http.HttpServletRequest servletRequest) {
         
         List<CartItemDto> cart = (List<CartItemDto>) session.getAttribute("cart");
         if (cart == null || cart.isEmpty()) {
@@ -198,6 +200,14 @@ public class OrderController {
             shipping.prepare(request,principal.getName());
             Order order = checkout.place(request, cart, customer, principal.getName());
             session.removeAttribute("cart");
+
+            if ("VNPAY".equalsIgnoreCase(request.getPaymentMethod())) {
+                String forwarded = servletRequest.getHeader("X-Forwarded-For");
+                String ip = (forwarded != null && !forwarded.isBlank()) ? forwarded.split(",")[0].trim() : servletRequest.getRemoteAddr();
+                String paymentUrl = vnPayService.createPaymentUrl(order, ip);
+                return "redirect:" + paymentUrl;
+            }
+
             return "redirect:/orders/success/" + order.getId();
         } catch (IllegalArgumentException | com.example.demodatn.exception.PeopleValidationException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
