@@ -71,10 +71,14 @@ public class VnPayController {
         if (result.order() != null) {
             if (result.success()) {
                 redirectAttributes.addFlashAttribute("message", "Thanh toán qua cổng VNPay thành công!");
+                return resolveOrderDestination(result.order(), request);
             } else {
                 redirectAttributes.addFlashAttribute("error", result.message());
+                if ("POS".equalsIgnoreCase(result.order().getOrderType()) || result.order().getEmployee() != null) {
+                    return "redirect:/admin/pos?paymentResult=failed&orderCode=" + encode(result.order().getOrderCode());
+                }
+                return resolveOrderDestination(result.order(), request);
             }
-            return resolveOrderDestination(result.order(), request);
         } else {
             redirectAttributes.addFlashAttribute("error", result.message());
             String customReturnUrl = (String) request.getSession().getAttribute("vnpay_custom_return_url");
@@ -92,12 +96,8 @@ public class VnPayController {
             request.getSession().removeAttribute("vnpay_custom_return_url");
             return "redirect:" + customReturnUrl;
         }
-        if ("POS".equalsIgnoreCase(order.getOrderType())) {
-            var invOpt = invoiceRepository.findByOrder_Id(order.getId());
-            if (invOpt.isPresent()) {
-                return "redirect:/admin/invoices/" + invOpt.get().getId();
-            }
-            return "redirect:/admin/invoices/" + order.getId();
+        if ("POS".equalsIgnoreCase(order.getOrderType()) || order.getEmployee() != null) {
+            return "redirect:/admin/pos?paymentResult=success&orderCode=" + encode(order.getOrderCode());
         }
         return "redirect:/orders/success/" + order.getId();
     }
@@ -142,9 +142,9 @@ public class VnPayController {
     }
 
     @GetMapping("/api/shop/payments/vnpay/checkout/scan-confirm")
-    public ResponseEntity<Void> confirmQrScan(@RequestParam Map<String, String> params) {
+    public ResponseEntity<Void> confirmQrScan(@RequestParam Map<String, String> params, HttpServletRequest request) {
         PaymentResult result = vnPayService.completeLocalCheckout(params, true, "LOCAL-QR-");
-        return localRedirect(result);
+        return localRedirect(result, request);
     }
 
     @GetMapping(
@@ -160,7 +160,7 @@ public class VnPayController {
             value = "/api/shop/payments/vnpay/checkout/complete",
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
     )
-    public ResponseEntity<Void> completeCardPayment(@RequestParam Map<String, String> form) {
+    public ResponseEntity<Void> completeCardPayment(@RequestParam Map<String, String> form, HttpServletRequest request) {
         Map<String, String> signedParams = new LinkedHashMap<>(form);
         String action = signedParams.remove("outcome");
         signedParams.remove("testCardNumber");
@@ -170,29 +170,45 @@ public class VnPayController {
 
         boolean approved = !"cancel".equalsIgnoreCase(action);
         PaymentResult result = vnPayService.completeLocalCheckout(signedParams, approved, "LOCAL-CARD-");
-        return localRedirect(result);
+        return localRedirect(result, request);
     }
 
     @PostMapping(
             value = "/api/shop/payments/vnpay/checkout/wallet/complete",
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
     )
-    public ResponseEntity<Void> completeWalletPayment(@RequestParam Map<String, String> form) {
+    public ResponseEntity<Void> completeWalletPayment(@RequestParam Map<String, String> form, HttpServletRequest request) {
         Map<String, String> signedParams = new LinkedHashMap<>(form);
         String action = signedParams.remove("outcome");
         String channel = signedParams.remove("paymentChannel");
 
         boolean approved = !"cancel".equalsIgnoreCase(action);
         PaymentResult result = vnPayService.completeLocalCheckout(signedParams, approved, "LOCAL-WALLET-" + (channel != null ? channel : "") + "-");
-        return localRedirect(result);
+        return localRedirect(result, request);
     }
 
-    private ResponseEntity<Void> localRedirect(PaymentResult result) {
+    private ResponseEntity<Void> localRedirect(PaymentResult result, HttpServletRequest request) {
+        String customReturnUrl = request != null ? (String) request.getSession().getAttribute("vnpay_custom_return_url") : null;
+        if (request != null) {
+            request.getSession().removeAttribute("vnpay_custom_return_url");
+        }
+        if (customReturnUrl != null && !customReturnUrl.isBlank()) {
+            return ResponseEntity.status(302).location(URI.create(customReturnUrl)).build();
+        }
         if (result.order() != null) {
+            if ("POS".equalsIgnoreCase(result.order().getOrderType()) || result.order().getEmployee() != null) {
+                String target = "/admin/pos?paymentResult=" + (result.success() ? "success" : "failed")
+                        + "&orderCode=" + encode(result.order().getOrderCode());
+                return ResponseEntity.status(302).location(URI.create(target)).build();
+            }
             String target = "/orders/success/" + result.order().getId();
             return ResponseEntity.status(302).location(URI.create(target)).build();
         }
         return ResponseEntity.status(302).location(URI.create("/orders")).build();
+    }
+
+    private String encode(String value) {
+        return URLEncoder.encode(value == null ? "" : value, StandardCharsets.UTF_8);
     }
 
     private ResponseEntity<byte[]> htmlPage(String resourcePath) throws IOException {

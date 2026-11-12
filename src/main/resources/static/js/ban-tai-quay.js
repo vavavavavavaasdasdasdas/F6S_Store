@@ -1461,4 +1461,20 @@
     }
     recalculateTotals();
 
+    // Check VNPay payment return parameters
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentResult = urlParams.get('paymentResult');
+        if (paymentResult) {
+            const code = urlParams.get('orderCode') || '';
+            const isSuccess = paymentResult === 'success';
+            showToast(isSuccess
+                ? `Thanh toán VNPay thành công${code ? ` cho đơn ${code}` : ''}!`
+                : `Thanh toán VNPay không thành công hoặc đã bị hủy${code ? ` cho đơn ${code}` : ''}.`);
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    } catch (e) {
+        console.error('Error handling payment result params:', e);
+    }
+
 })();
