@@ -2,75 +2,77 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/bo-cuc/bo-cuc-nguoi-dung :: html}">
 <head>
-    <title>Trang Chủ | F6S Store</title>
+    <title>Trang Chủ | F6S Store - Giày Thể Thao Chính Hãng</title>
 </head>
 <body>
 <div th:fragment="content" class="px-0">
-    <!-- Hero Section -->
-    <section class="store-hero bg-primary text-white text-center py-5 mb-5 rounded shadow-sm">
-        <div class="container py-4">
-            <div class="row align-items-center">
-                <div class="col-lg-6 text-lg-start text-center mb-4 mb-lg-0">
-                    <h1 class="display-4 fw-bolder mb-3">GIÀY THỂ THAO CHÍNH HÃNG</h1>
-                    <p class="lead mb-4">Phong cách của bạn – Bước đi của bạn.</p>
-                    <a th:href="@{/products}" class="btn btn-light btn-lg px-5 fw-bold text-primary rounded-pill shadow">MUA NGAY</a>
+    <!-- Hero Banner Section -->
+    <section class="store-hero text-white mb-5">
+        <div class="container py-5 px-4 px-md-5">
+            <div class="row align-items-center gy-4">
+                <div class="col-lg-6 text-lg-start text-center">
+                    <span class="hero-tag mb-3">
+                        <i class="bi bi-lightning-charge-fill text-warning"></i> BST SNEAKER 2026
+                    </span>
+                    <h1 class="display-4 fw-bolder mt-2 mb-3 lh-sm text-uppercase">
+                        Nâng Tầm Phong Cách<br><span style="color: #ff9d66;">Bước Chân Của Bạn</span>
+                    </h1>
+                    <p class="lead mb-4 text-white-50" style="max-width: 520px;">
+                        Khám phá các mẫu giày thể thao chính hãng, thiết kế thời thượng, đệm êm ái bứt phá mọi hành trình.
+                    </p>
+                    <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3 mb-4">
+                        <a th:href="@{/products}" class="btn btn-light btn-lg px-4 py-2 fw-bold text-primary rounded-pill shadow">
+                            <i class="bi bi-bag-check me-1"></i> Khám phá ngay
+                        </a>
+                        <a th:href="@{/products(promotion=true)}" class="btn btn-outline-light btn-lg px-4 py-2 fw-bold rounded-pill">
+                            <i class="bi bi-fire text-warning me-1"></i> Săn Deal Hot
+                        </a>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3 small text-white-50">
+                        <span><i class="bi bi-check2-circle text-success me-1"></i> 100% Chính Hãng</span>
+                        <span>•</span>
+                        <span><i class="bi bi-arrow-repeat text-info me-1"></i> Đổi size 7 ngày</span>
+                        <span>•</span>
+                        <span><i class="bi bi-truck text-warning me-1"></i> Freeship toàn quốc</span>
+                    </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6 text-center">
                     <img th:if="${heroProduct != null and heroProduct.imageUrl != null}"
-                         th:with="resolvedImage=${@productImageUrl.source(heroProduct.imageUrl)}" th:src="${resolvedImage}" alt="Hero"
-                         class="hero-image img-fluid rounded shadow-lg">
+                         th:with="resolvedImage=${@productImageUrl.source(heroProduct.imageUrl)}" th:src="${resolvedImage}" alt="Hero Sneaker"
+                         class="hero-image img-fluid">
                     <img th:if="${heroProduct == null or heroProduct.imageUrl == null}"
-                         src="/anh/anh-thay-the.svg" alt="Hero"
-                         class="hero-image img-fluid rounded shadow-lg bg-white p-2">
+                         src="/anh/anh-thay-the.svg" alt="Hero Sneaker"
+                         class="hero-image img-fluid bg-white rounded-4 p-3">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Thương hiệu nổi bật -->
+    <!-- Thương hiệu nổi bật (Brand Grid) -->
     <section class="mb-5" th:if="${brands != null and !brands.isEmpty()}">
         <div class="store-section-heading d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
-            <h3 class="fw-bold m-0"><i class="bi bi-tags text-primary"></i> Thương hiệu nổi bật</h3>
+            <h3 class="fw-bold m-0"><i class="bi bi-grid-fill text-primary me-2"></i> Thương hiệu nổi bật</h3>
+            <a th:href="@{/products}" class="text-decoration-none fw-semibold">Xem tất cả <i class="bi bi-arrow-right"></i></a>
         </div>
-        <div class="row row-cols-2 row-cols-md-4 g-4 text-center">
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
             <div class="col" th:each="c : ${brands}">
-                <a th:href="@{/category/{id}(id=${c.id})}" class="text-decoration-none">
-                    <div class="card border-0 shadow-sm h-100 bg-white">
-                        <div class="card-body p-4">
-                            <h5 class="fw-bold text-dark m-0" th:text="${c.name}">Nike</h5>
-                        </div>
-                    </div>
+                <a th:href="@{/category/{id}(id=${c.id})}" class="brand-card h-100">
+                    <i class="bi bi-tag text-muted mb-2 fs-4"></i>
+                    <h5 class="brand-card-name text-center" th:text="${c.name}">Nike</h5>
+                    <small class="text-muted" style="font-size: 0.75rem;">Chính hãng</small>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Sản phẩm bán chạy -->
-    <section class="mb-5" th:if="${bestSellers != null and !bestSellers.isEmpty()}">
-        <div class="store-section-heading d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
-            <h3 class="fw-bold m-0">
-                <i class="bi bi-fire text-danger"></i> Sản phẩm bán chạy
-            </h3>
-            <a th:href="@{/products(sort='best_seller')}" class="text-decoration-none">Xem tất cả <i class="bi bi-arrow-right"></i></a>
-        </div>
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
-            <div class="col" th:each="p : ${bestSellers}">
-                <div th:replace="~{user/fragments/the-san-pham :: card(${p})}"></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="empty-state mb-5" th:if="${#lists.isEmpty(newest)}" role="status">
-        <h2>Cửa hàng chưa có sản phẩm</h2>
-        <p>Sản phẩm mới sẽ được cập nhật tại đây. Bạn có thể quay lại sau để xem bộ sưu tập mới.</p>
-        <a class="btn btn-outline-primary" href="/products">Xem danh sách sản phẩm</a>
-    </section>
-
-    <!-- Khuyến mãi -->
+    <!-- Flash Sale / Đang khuyến mãi -->
     <section class="mb-5" th:if="${promotions != null and !promotions.isEmpty()}">
         <div class="store-section-heading d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
-            <h3 class="fw-bold m-0"><i class="bi bi-gift text-warning"></i> Đang Khuyến Mãi</h3>
-            <a th:href="@{/products(promotion=true)}" class="text-decoration-none">Xem tất cả <i class="bi bi-arrow-right"></i></a>
+            <h3 class="fw-bold m-0 text-danger">
+                <i class="bi bi-fire me-1"></i> Đang Khuyến Mãi Hot
+                <span class="badge bg-danger ms-2 fs-6 fw-normal rounded-pill">Ưu đãi có hạn</span>
+            </h3>
+            <a th:href="@{/products(promotion=true)}" class="text-decoration-none text-danger fw-semibold">Xem tất cả deal <i class="bi bi-arrow-right"></i></a>
         </div>
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
             <div class="col" th:each="p : ${promotions}">
@@ -79,11 +81,36 @@
         </div>
     </section>
 
-    <!-- Sản phẩm mới -->
+    <!-- Sản phẩm bán chạy -->
+    <section class="mb-5" th:if="${bestSellers != null and !bestSellers.isEmpty()}">
+        <div class="store-section-heading d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+            <h3 class="fw-bold m-0">
+                <i class="bi bi-stars text-warning me-2"></i> Sản phẩm bán chạy
+            </h3>
+            <a th:href="@{/products(sort='best_seller')}" class="text-decoration-none fw-semibold">Xem tất cả <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <div class="col" th:each="p : ${bestSellers}">
+                <div th:replace="~{user/fragments/the-san-pham :: card(${p})}"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Empty state nếu không có sản phẩm nào -->
+    <section class="empty-state mb-5 card border-0 shadow-sm p-5" th:if="${#lists.isEmpty(newest)}" role="status">
+        <div class="empty-icon text-muted mb-3"><i class="bi bi-inbox"></i></div>
+        <h3 class="fw-bold">Cửa hàng đang chuẩn bị sản phẩm mới</h3>
+        <p class="text-muted">Bộ sưu tập giày thể thao mới sẽ được cập nhật sớm nhất. Vui lòng quay lại sau!</p>
+        <div>
+            <a class="btn btn-primary rounded-pill px-4" href="/products">Xem danh sách sản phẩm</a>
+        </div>
+    </section>
+
+    <!-- Sản phẩm mới nhất -->
     <section class="mb-5" th:if="${newest != null and !newest.isEmpty()}">
         <div class="store-section-heading d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
-            <h3 class="fw-bold m-0"><i class="bi bi-stars text-info"></i> Sản phẩm mới</h3>
-            <a th:href="@{/products(sort='newest')}" class="text-decoration-none">Xem tất cả <i class="bi bi-arrow-right"></i></a>
+            <h3 class="fw-bold m-0"><i class="bi bi-sparkles text-primary me-2"></i> Hàng mới về</h3>
+            <a th:href="@{/products(sort='newest')}" class="text-decoration-none fw-semibold">Xem tất cả <i class="bi bi-arrow-right"></i></a>
         </div>
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
             <div class="col" th:each="p : ${newest}">
@@ -92,29 +119,49 @@
         </div>
     </section>
 
-    <!-- Lý do chọn shop -->
-    <section class="py-5 bg-white rounded shadow-sm text-center px-4 mb-2">
-        <h3 class="fw-bold mb-5">Tại sao nên chọn chúng tôi?</h3>
-        <div class="row g-4">
-            <div class="col-md-3">
-                <i class="benefit-icon bi bi-shield-check text-primary"></i>
-                <h5 class="fw-bold">Chính hãng 100%</h5>
-                <p class="text-muted small">Cam kết hàng thật, chất lượng đảm bảo.</p>
+    <!-- Cam kết dịch vụ 4 cột -->
+    <section class="py-5 bg-white rounded-4 shadow-sm px-4 mb-4 border">
+        <div class="text-center mb-4">
+            <span class="badge bg-light text-primary border px-3 py-2 rounded-pill fw-bold text-uppercase" style="letter-spacing: 1px;">Cam Kết Từ F6S Store</span>
+            <h3 class="fw-bold mt-2">Trải Nghiệm Mua Sắm Hoàn Hảo</h3>
+            <p class="text-muted small">Chúng tôi cam kết mang lại sự hài lòng tối đa cho từng bước chân của bạn.</p>
+        </div>
+        <div class="row g-4 text-center">
+            <div class="col-md-3 col-sm-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrap primary">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">100% Chính Hãng</h5>
+                    <p class="text-muted small mb-0">Cam kết nguồn gốc xuất xứ rõ ràng, đền gấp 10 nếu phát hiện hàng giả.</p>
+                </div>
             </div>
-            <div class="col-md-3">
-                <i class="benefit-icon bi bi-arrow-repeat text-primary"></i>
-                <h5 class="fw-bold">Đổi trả dễ dàng</h5>
-                <p class="text-muted small">Đổi trả miễn phí trong vòng 7 ngày.</p>
+            <div class="col-md-3 col-sm-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrap navy">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Đổi Size 7 Ngày</h5>
+                    <p class="text-muted small mb-0">Hỗ trợ đổi size tận nhà nhanh chóng, tiện lợi nếu không vừa chân.</p>
+                </div>
             </div>
-            <div class="col-md-3">
-                <i class="benefit-icon bi bi-truck text-primary"></i>
-                <h5 class="fw-bold">Giao hàng nhanh</h5>
-                <p class="text-muted small">Giao tận nơi trên toàn quốc.</p>
+            <div class="col-md-3 col-sm-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrap success">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Giao Hàng Siêu Tốc</h5>
+                    <p class="text-muted small mb-0">Đóng gói chuẩn form giày, giao hàng tận nơi toàn quốc chỉ từ 2-4 ngày.</p>
+                </div>
             </div>
-            <div class="col-md-3">
-                <i class="benefit-icon bi bi-headset text-primary"></i>
-                <h5 class="fw-bold">Hỗ trợ 24/7</h5>
-                <p class="text-muted small">Luôn sẵn sàng giải đáp thắc mắc.</p>
+            <div class="col-md-3 col-sm-6">
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrap warning">
+                        <i class="bi bi-headset"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Hỗ Trợ Tận Tâm</h5>
+                    <p class="text-muted small mb-0">Đội ngũ chuyên viên tư vấn chọn size và mẫu giày nhiệt tình 24/7.</p>
+                </div>
             </div>
         </div>
     </section>

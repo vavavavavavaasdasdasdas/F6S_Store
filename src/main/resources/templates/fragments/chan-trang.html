@@ -1,38 +1,56 @@
-<div th:fragment="footer" class="footer mt-auto">
-    <div class="container">
+<div th:fragment="footer" class="footer mt-auto" style="background: #0b1a3d; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08);">
+    <div class="container py-5">
         <div class="row gy-4">
-            <div class="col-md-4">
-                <h5 class="mb-3 d-flex align-items-center gap-2"><img class="shop-logo" src="/images/logo.jpg" alt="Logo F6S Store"> <span>F6S Store</span></h5>
-                <p class="text-secondary">Trang web thương mại điện tử F6S Store bán giày thể thao chính hãng tại Việt Nam.</p>
+            <div class="col-lg-4 col-md-6">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <img class="shop-logo bg-white p-1 rounded" src="/images/logo.jpg" alt="Logo F6S Store" style="height: 40px;">
+                    <div>
+                        <h5 class="m-0 text-white fw-bold" style="font-family: var(--font-heading);">F6S STORE</h5>
+                        <small class="text-white-50" style="font-size: 0.68rem; letter-spacing: 1px;">SNEAKERS & STREETWEAR</small>
+                    </div>
+                </div>
+                <p class="text-white-50 small mb-3">Hệ thống phân phối giày thể thao, sneaker chính hãng hàng đầu Việt Nam. Mang lại trải nghiệm êm ái, bứt phá mọi phong cách.</p>
+                <div class="d-flex align-items-center gap-2 text-white-50 small">
+                    <i class="bi bi-clock-history text-warning"></i> Giờ mở cửa: 08:00 - 22:00 hàng ngày
+                </div>
             </div>
-            <div class="col-md-3">
-                <h5 class="mb-3">Chính sách</h5>
-                <ul class="list-unstyled">
-                    <li class="mb-2"><a th:href="@{/policy}">Chính sách bảo mật</a></li>
-                    <li class="mb-2"><a th:href="@{/policy}">Chính sách đổi trả</a></li>
-                    <li class="mb-2"><a th:href="@{/policy}">Giao hàng & thanh toán</a></li>
+            <div class="col-lg-2 col-md-6 col-6">
+                <h6 class="text-white fw-bold mb-3" style="font-family: var(--font-heading);">Chính sách</h6>
+                <ul class="list-unstyled small">
+                    <li class="mb-2"><a th:href="@{/policy}" class="text-white-50 text-decoration-none">Chính sách bảo mật</a></li>
+                    <li class="mb-2"><a th:href="@{/policy}" class="text-white-50 text-decoration-none">Chính sách đổi trả 7 ngày</a></li>
+                    <li class="mb-2"><a th:href="@{/policy}" class="text-white-50 text-decoration-none">Giao hàng & đồng kiểm</a></li>
+                    <li class="mb-2"><a th:href="@{/policy}" class="text-white-50 text-decoration-none">Bảo hành keo chỉ</a></li>
                 </ul>
             </div>
-            <div class="col-md-3">
-                <h5 class="mb-3">Liên hệ</h5>
-                <ul class="list-unstyled text-secondary">
-                    <li class="mb-2"><i class="bi bi-geo-alt me-2"></i>ha noi vn</li>
-                    <li class="mb-2"><i class="bi bi-telephone me-2"></i>1234 1234</li>
-                    <li class="mb-2"><i class="bi bi-envelope me-2"></i>f6test@shoes.com</li>
+            <div class="col-lg-3 col-md-6 col-6">
+                <h6 class="text-white fw-bold mb-3" style="font-family: var(--font-heading);">Liên hệ & Hỗ trợ</h6>
+                <ul class="list-unstyled text-white-50 small">
+                    <li class="mb-2"><i class="bi bi-geo-alt text-danger me-2"></i> Hà Nội, Việt Nam</li>
+                    <li class="mb-2"><i class="bi bi-telephone-outbound text-success me-2"></i> Hotline: <strong>1900 6868</strong></li>
+                    <li class="mb-2"><i class="bi bi-envelope text-info me-2"></i> support@f6sstore.vn</li>
                 </ul>
             </div>
-            <div class="col-md-2">
-                <h5 class="mb-3">Mạng xã hội</h5>
+            <div class="col-lg-3 col-md-6">
+                <h6 class="text-white fw-bold mb-3" style="font-family: var(--font-heading);">Phương thức thanh toán</h6>
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <span class="badge bg-white text-dark px-2 py-1"><i class="bi bi-qr-code text-primary me-1"></i> VietQR</span>
+                    <span class="badge bg-white text-dark px-2 py-1"><i class="bi bi-credit-card-2-front text-danger me-1"></i> VNPay</span>
+                    <span class="badge bg-white text-dark px-2 py-1"><i class="bi bi-cash-stack text-success me-1"></i> COD Tiền mặt</span>
+                </div>
+                <h6 class="text-white fw-bold mb-2" style="font-family: var(--font-heading);">Kết nối với chúng tôi</h6>
                 <div class="d-flex gap-3">
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="fs-4" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="fs-4" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="fs-4" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="text-white-50 fs-5" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-white-50 fs-5" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="text-white-50 fs-5" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                    <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="text-white-50 fs-5" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
                 </div>
             </div>
         </div>
-        <hr class="mt-4 mb-3 border-secondary">
-        <div class="text-center text-secondary small">
-            &copy; 2026 F6S Store
+        <hr class="mt-4 mb-3 border-secondary border-opacity-25">
+        <div class="d-flex flex-wrap justify-content-between align-items-center text-white-50 small">
+            <div>&copy; 2026 <strong>F6S Store</strong> · Giày Thể Thao Chính Hãng. All rights reserved.</div>
+            <div>Thiết kế với chuẩn Sneaker & Streetwear hiện đại</div>
         </div>
     </div>
 </div>

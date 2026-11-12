@@ -1,11 +1,43 @@
 :root {
-  --bs-primary: #b94312;
-  --bs-primary-rgb: 185, 67, 18;
-  --bs-secondary: #272d2d;
-  --bs-body-font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  --bs-body-bg: #f8f9fa;
-  --bs-body-color: #272d2d;
-  --bs-border-radius: 0.5rem;
+  --font-heading: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --bs-font-sans-serif: var(--font-body);
+  --bs-body-font-family: var(--font-body);
+
+  --bs-primary: #c8420e;
+  --bs-primary-rgb: 200, 66, 14;
+  --bs-secondary: #0f2556;
+  --bs-secondary-rgb: 15, 37, 86;
+  --bs-body-bg: #f8fafc;
+  --bs-body-color: #17213a;
+  --bs-border-radius: 0.625rem;
+
+  --navy-dark: #0a192f;
+  --navy: #0f2556;
+  --navy-light: #1e3a8a;
+  --surface-white: #ffffff;
+  --surface-light: #f8fafc;
+  --border-light: #e2e8f0;
+  --shadow-sm: 0 2px 8px rgba(15, 37, 86, 0.04);
+  --shadow-md: 0 10px 25px rgba(15, 37, 86, 0.07);
+  --shadow-lg: 0 16px 36px rgba(15, 37, 86, 0.12);
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.navbar-brand,
+.brand-text,
+.card-title,
+.price,
+.product-price,
+.display-1, .display-2, .display-3, .display-4,
+.store-section-heading h3,
+.stat-value,
+.metric-value,
+.badge-sale,
+.product-sale-badge {
+  font-family: var(--font-heading);
+  letter-spacing: -0.015em;
 }
 
 .product-gallery { min-width:0; }
@@ -118,9 +150,199 @@ body {
 
 /* Storefront components: shared by Home, catalog, cart and account screens. */
 .store-main{min-height:60vh}
-.store-hero{margin-top:-1.5rem}
-.hero-image{max-height:400px;object-fit:contain;width:100%;aspect-ratio:4/3}
-.benefit-icon{font-size:2.5rem;margin-bottom:1rem}
+.store-hero {
+  margin-top: -1rem;
+  background: linear-gradient(135deg, #0f2556 0%, #16326e 50%, #c8420e 100%);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 16px 38px rgba(15, 37, 86, 0.16);
+  position: relative;
+}
+.store-hero::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  border-radius: 50px;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.hero-image {
+  max-height: 420px;
+  object-fit: contain;
+  width: 100%;
+  aspect-ratio: 4/3;
+  filter: drop-shadow(0 15px 30px rgba(0,0,0,0.25));
+  transition: transform 0.4s ease;
+}
+.hero-image:hover {
+  transform: scale(1.03) rotate(-1deg);
+}
+
+/* Site Topbar */
+.site-topbar {
+  background: #0b1a3d;
+  color: #c9d5ea;
+  font-size: 0.8125rem;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.site-topbar a {
+  color: #c9d5ea;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.site-topbar a:hover {
+  color: #ffffff;
+}
+.site-topbar-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Brand Grid Cards */
+.brand-card {
+  background: #ffffff;
+  border: 1px solid #e9edf3;
+  border-radius: 14px;
+  padding: 1.25rem 1rem;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 90px;
+  text-decoration: none !important;
+  box-shadow: 0 2px 6px rgba(15, 37, 86, 0.03);
+}
+.brand-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--bs-primary);
+  box-shadow: 0 10px 24px rgba(200, 66, 14, 0.12);
+}
+.brand-card-name {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #0f2556;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* Benefit Cards */
+.benefit-card {
+  background: #ffffff;
+  border: 1px solid #eef2f7;
+  border-radius: 14px;
+  padding: 1.75rem 1.25rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+}
+.benefit-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(15, 37, 86, 0.06);
+}
+.benefit-icon-wrap {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+.benefit-icon-wrap.primary {
+  background: #fdf2eb;
+  color: var(--bs-primary);
+}
+.benefit-icon-wrap.navy {
+  background: #eef4ff;
+  color: #0f2556;
+}
+.benefit-icon-wrap.success {
+  background: #eaf8ef;
+  color: #199b68;
+}
+.benefit-icon-wrap.warning {
+  background: #fff8e6;
+  color: #b47a00;
+}
+
+/* Product Card Polish */
+.product-card {
+  border-radius: 14px !important;
+  border: 1px solid #e9edf3 !important;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  background: #fff;
+}
+.product-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 14px 32px rgba(15, 37, 86, 0.09) !important;
+  border-color: #cbd5e1 !important;
+}
+.product-card .card-img-top {
+  padding: 12px;
+  transition: transform 0.3s ease;
+}
+.product-card:hover .card-img-top {
+  transform: scale(1.04);
+}
+.product-card .card-title {
+  font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+.product-card .price-now {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.12rem;
+  color: var(--bs-primary);
+}
+.product-card .price-old {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: #7b8495;
+  text-decoration: line-through;
+}
+
+/* Size Guide Modal & Table */
+.size-guide-table th {
+  background: #0f2556;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+}
+.size-guide-table td {
+  text-align: center;
+  vertical-align: middle;
+  font-weight: 500;
+}
+.size-guide-table tr:hover td {
+  background-color: #f7f9fc;
+}
 .empty-icon{font-size:5rem}
 .quantity-column{width:130px}
 .cart-thumbnail{width:70px;height:70px;object-fit:contain}

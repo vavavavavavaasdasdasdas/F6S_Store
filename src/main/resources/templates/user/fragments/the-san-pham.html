@@ -3,54 +3,63 @@
 <body>
 
 <div th:fragment="card(p)" class="card h-100 shadow-sm border-0 product-card position-relative">
-    <span class="product-sale-badge position-absolute top-0 start-0 m-2 badge bg-danger"
-          th:if="${p.hasPromotion}" th:text="|GIẢM -${p.discountPercentage}%|">GIẢM</span>
+    <span class="product-sale-badge position-absolute top-0 start-0 m-2 badge bg-danger rounded-pill px-2 py-1 shadow-sm"
+          th:if="${p.hasPromotion}">
+        <i class="bi bi-tag-fill me-1"></i><span th:text="|-${p.discountPercentage}%|">GIẢM</span>
+    </span>
 
-    <a th:href="@{/products/{id}(id=${p.id})}">
+    <div class="position-absolute top-0 end-0 m-2 z-2">
+        <th:block th:replace="~{fragments/yeu-thich-danh-gia :: heart(${p.id})}"></th:block>
+    </div>
+
+    <a th:href="@{/products/{id}(id=${p.id})}" class="text-center d-block bg-light bg-opacity-25 p-2">
         <img th:with="resolvedImage=${@productImageUrl.source(p.imageUrl)}" th:src="${resolvedImage}"
-             class="product-image card-img-top" th:alt="${p.name}" loading="lazy"
-
-            >
+             class="product-image card-img-top" th:alt="${p.name}" loading="lazy">
     </a>
 
-    <div class="card-body d-flex flex-column"><div class="d-flex justify-content-end"><th:block th:replace="~{fragments/yeu-thich-danh-gia :: heart(${p.id})}"></th:block></div><th:block th:replace="~{fragments/yeu-thich-danh-gia :: score(${p.id})}"></th:block>
-        <small class="text-muted" th:if="${p.categoryName != null}" th:text="${p.categoryName}">Brand</small>
-        <h6 class="card-title text-truncate mb-1">
+    <div class="card-body d-flex flex-column p-3">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+            <small class="text-muted fw-semibold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.5px;" th:if="${p.categoryName != null}" th:text="${p.categoryName}">Brand</small>
+            <th:block th:replace="~{fragments/yeu-thich-danh-gia :: score(${p.id})}"></th:block>
+        </div>
+
+        <h6 class="card-title text-truncate mb-2" th:title="${p.name}">
             <a th:href="@{/products/{id}(id=${p.id})}" class="text-decoration-none text-dark" th:text="${p.name}">Tên SP</a>
         </h6>
 
-        <p class="small text-muted mb-2" th:if="${!#strings.isEmpty(p.materialNames)}" th:text="'Chất liệu: '+${p.materialNames}"></p>
-        <div class="mb-2">
-            <span class="fw-bold text-danger me-2"
-                  th:text="${@money.format(p.minFinalPrice)} + ' đ'">0 đ</span>
-            <span class="text-muted text-decoration-line-through small" th:if="${p.hasPromotion}"
-                  th:text="${@money.format(p.minOriginalPrice)} + ' đ'">0 đ</span>
+        <p class="small text-muted mb-2 text-truncate" th:if="${!#strings.isEmpty(p.materialNames)}" th:text="'Chất liệu: '+${p.materialNames}"></p>
+
+        <div class="mb-2 d-flex align-items-baseline gap-2">
+            <span class="price-now"
+                  th:text="${@money.format(p.minFinalPrice)} + ' ₫'">0 ₫</span>
+            <span class="price-old" th:if="${p.hasPromotion}"
+                  th:text="${@money.format(p.minOriginalPrice)} + ' ₫'">0 ₫</span>
         </div>
 
-        <div class="small mb-2">
-            <span th:if="${p.totalStock > 10}" class="text-success"><i class="bi bi-check-circle"></i> Còn hàng</span>
-            <span th:if="${p.totalStock > 0 and p.totalStock <= 10}" class="text-warning"><i class="bi bi-exclamation-triangle"></i> Sắp hết</span>
-            <span th:if="${p.totalStock <= 0}" class="text-danger"><i class="bi bi-x-circle"></i> Hết hàng</span>
+        <div class="small mb-3">
+            <span th:if="${p.totalStock > 10}" class="text-success fw-medium"><i class="bi bi-check-circle-fill me-1"></i> Còn hàng</span>
+            <span th:if="${p.totalStock > 0 and p.totalStock <= 10}" class="text-warning fw-medium"><i class="bi bi-exclamation-circle-fill me-1"></i> Sắp hết</span>
+            <span th:if="${p.totalStock <= 0}" class="text-danger fw-medium"><i class="bi bi-x-circle-fill me-1"></i> Hết hàng</span>
         </div>
 
         <div class="mt-auto dropdown">
-            <button class="btn btn-primary btn-sm w-100" type="button" data-bs-toggle="dropdown"
+            <button class="btn btn-outline-primary btn-sm w-100 rounded-pill fw-bold" type="button" data-bs-toggle="dropdown"
                     data-bs-auto-close="outside" aria-expanded="false" th:disabled="${p.totalStock <= 0}" data-add-icon>
-                Thêm nhanh
+                <i class="bi bi-bag-plus me-1"></i> Thêm nhanh
             </button>
-            <div class="quick-add-menu dropdown-menu p-3 shadow">
+            <div class="quick-add-menu dropdown-menu p-3 shadow-lg border-0 rounded-4">
                 <form class="quick-add-form" th:action="@{/cart/add}" method="post">
-                    <div class="fw-bold small mb-2">Chọn kích cỡ:</div>
-                    <div class="d-flex flex-wrap gap-2 mb-2" data-material-picker>
+                    <div class="fw-bold small mb-2 text-dark">Chọn phân loại biến thể:</div>
+                    <div class="d-flex flex-wrap gap-2 mb-3" data-material-picker>
                         <th:block th:each="v : ${p.variants}">
                             <input type="radio" class="btn-check" name="variantId"
                                    th:id="|qa-${p.id}-${v.id}|" th:value="${v.id}" th:data-size-id="${v.sizeId}" th:data-size-name="${v.sizeValue}" th:data-material-id="${v.materialId}" th:data-material-name="${v.materialName}" th:data-color-id="${v.colorId}" th:data-color-name="${v.colorName}" th:data-color-hex="${v.colorHexCode}" th:data-sole-id="${v.soleId}" th:data-sole-name="${v.soleName}" th:disabled="${v.quantity <= 0}">
-                            <label class="btn btn-outline-dark btn-sm" th:for="|qa-${p.id}-${v.id}|"
+                            <label class="btn btn-outline-dark btn-sm rounded-pill px-2 py-1" th:for="|qa-${p.id}-${v.id}|"
                                    th:classappend="${v.quantity <= 0} ? 'opacity-50'" th:text="${v.sizeValue}+' · '+${v.materialName}">39</label>
                         </th:block>
                     </div>
                     <input type="hidden" name="quantity" value="1">
-                    <button type="submit" class="btn btn-dark btn-sm w-100" data-add-icon>Thêm vào giỏ</button>
+                    <button type="submit" class="btn btn-primary btn-sm w-100 rounded-pill fw-bold" data-add-icon>Thêm vào giỏ</button>
                     <div class="quick-add-msg small mt-2 d-none"></div>
                 </form>
             </div>
