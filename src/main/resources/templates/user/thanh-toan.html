@@ -57,7 +57,7 @@
 </div>
 <input type="hidden" th:field="*{voucherCode}">
 <p data-checkout-message class="field-error" role="status" aria-live="polite"></p>
-<dl class="checkout-totals"><div><dt>Tạm tính</dt><dd data-subtotal th:text="${@money.format(subTotal)}+' ₫'"></dd></div><div data-discount-row hidden><dt>Giảm voucher</dt><dd class="text-success" data-discount></dd></div><div class="checkout-shipping"><dt>Phí vận chuyển</dt><dd>Do đơn vị vận chuyển tính và thu riêng</dd></div><div class="checkout-grand-total"><dt>Tổng cộng</dt><dd data-total th:text="${@money.format(total)}+' ₫'"></dd></div></dl>
+<dl class="checkout-totals"><div><dt>Tạm tính</dt><dd data-subtotal th:text="${@money.format(subTotal)}+' ₫'"></dd></div><div data-discount-row hidden><dt>Giảm voucher</dt><dd class="text-success" data-discount></dd></div><div class="checkout-shipping"><dt>Phí vận chuyển (GHN)</dt><dd data-shipping-fee th:text="${@money.format(shippingFee != null ? shippingFee : 30000)}+' ₫'">30.000 ₫</dd></div><div class="checkout-grand-total"><dt>Tổng cộng</dt><dd data-total th:text="${@money.format(total)}+' ₫'"></dd></div></dl>
 <button id="btnPlaceOrder" data-delivery-submit type="submit" class="btn btn-primary checkout-submit" th:disabled="${cartWarning!=null}"><span data-order-button-label>Đặt hàng</span></button><a class="checkout-back" href="/cart">Quay lại giỏ hàng</a>
 </aside>
 </div>

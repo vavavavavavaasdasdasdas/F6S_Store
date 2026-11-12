@@ -29,6 +29,7 @@
    const p=result.pricing;
    voucher.value=p.valid?code.trim().toUpperCase():'';
    text('[data-subtotal]',money(p.subtotal));text('[data-total]',money(p.total));text('[data-discount]','− '+money(p.discountAmount));
+   text('[data-shipping-fee]',money(p.shippingFee));
    form.querySelector('[data-discount-row]').hidden=!p.valid||Number(p.discountAmount)===0;
    message.textContent=p.valid?'':p.message;
    if(p.valid&&code){selectedName=options.find(o=>o.code.toUpperCase()===code.trim().toUpperCase())?.name||code.trim();text('[data-selected-voucher]',selectedName+' · −'+money(p.discountAmount));}
@@ -53,12 +54,12 @@
   const d=r.dataset;form.elements.receiverName.value=d.receiver||'';form.elements.phone.value=d.phone||'';
   delivery.dispatchEvent(new CustomEvent('delivery:select-address',{detail:{provinceId:d.province||'',wardId:d.ward||'',streetAddress:d.address||'',latitude:d.latitude||'',longitude:d.longitude||'',coordinateSource:d.source||''}}));
   const save=form.querySelector('[data-save-address]');if(save){save.checked=false;save.closest('label').hidden=Boolean(r.value);}
-  deliverTo();
+  deliverTo();schedule();
  }));
  const save=form.querySelector('[data-save-address]');if(save)save.closest('label').hidden=Boolean(form.querySelector('[name=shippingAddressId]:checked')?.value);
  form.addEventListener('input',event=>{if(event.target.matches('[data-delivery-street]'))deliverTo();});
- delivery.addEventListener('delivery:changed',()=>{deliverTo();});
- delivery.addEventListener('change',deliverTo);deliverTo();
+ delivery.addEventListener('delivery:changed',()=>{deliverTo();schedule();});
+ delivery.addEventListener('change',()=>{deliverTo();schedule();});deliverTo();
 
  const btnQuickSave = document.getElementById('btn-quick-save-address');
  const msgQuickSave = document.getElementById('quick-save-address-msg');

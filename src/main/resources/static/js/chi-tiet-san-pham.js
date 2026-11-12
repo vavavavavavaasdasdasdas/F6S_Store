@@ -1,9 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     document.body.classList.add("has-mobile-actions");
     const selectSize = document.getElementById('select-size');
-    const selectColor = document.getElementById('select-color');
-    const selectMaterial = document.getElementById('select-material');
-    const selectSole = document.getElementById('select-sole');
     const selectedVariantId = document.getElementById('selectedVariantId');
 
     const qtyInput = document.getElementById('quantity');
@@ -16,115 +13,93 @@ document.addEventListener("DOMContentLoaded", function() {
     const displayOriginalPrice = document.getElementById('displayOriginalPrice');
     const displayDiscount = document.getElementById('displayDiscount');
 
+    const btnAddCart = document.getElementById('btn-add-cart');
+    const btnBuyNow = document.getElementById('btn-buy-now');
+    const btnMobileBuy = document.getElementById('btn-mobile-buy');
+
     let currentMaxQty = 0;
 
     function formatCurrency(value) {
         return new Intl.NumberFormat('vi-VN').format(value) + ' ₫';
     }
 
-    const variants = Array.from(document.querySelectorAll('#variants-data span')).map(el => ({
-        id: el.dataset.id,
-        qty: parseInt(el.dataset.qty, 10) || 0,
-        sizeId: el.dataset.sizeId || '',
-        sizeName: el.dataset.sizeName || '',
-        colorId: el.dataset.colorId || '',
-        colorName: el.dataset.colorName || '',
-        materialId: el.dataset.materialId || '',
-        materialName: el.dataset.materialName || '',
-        soleId: el.dataset.soleId || '',
-        soleName: el.dataset.soleName || '',
-        finalPrice: parseFloat(el.dataset.finalprice) || 0,
-        origPrice: parseFloat(el.dataset.origprice) || 0,
-        hasPromo: el.dataset.haspromo === 'true',
-        discount: el.dataset.discount || 0
-    }));
-
-    function updateVariantSelection() {
+    function onSizeChange() {
         if (sizeError) sizeError.classList.add('d-none');
-        const sVal = selectSize ? selectSize.value : '';
-        const cVal = selectColor ? selectColor.value : '';
-        const mVal = selectMaterial ? selectMaterial.value : '';
-        const soVal = selectSole ? selectSole.value : '';
-
-        // Check if any combobox is not yet selected
-        if (!sVal || !cVal || !mVal || !soVal) {
+        if (!selectSize || !selectSize.value) {
             if (selectedVariantId) selectedVariantId.value = '';
             currentMaxQty = 0;
             if (stockStatus) {
-                stockStatus.textContent = "Vui lòng chọn kích cỡ, màu sắc, chất liệu và đế giày";
+                stockStatus.textContent = "Vui lòng chọn kích cỡ để xem số lượng còn lại";
                 stockStatus.className = "ms-3 text-muted";
+            }
+            if (qtyInput) {
+                qtyInput.value = 1;
+                qtyInput.max = 1;
             }
             return;
         }
 
-        // Find match in variants list
-        const match = variants.find(v =>
-            String(v.sizeId) === String(sVal) &&
-            String(v.colorId) === String(cVal) &&
-            String(v.materialId) === String(mVal) &&
-            String(v.soleId) === String(soVal)
-        );
+        const selectedOption = selectSize.options[selectSize.selectedIndex];
+        if (!selectedOption) return;
 
-        if (match) {
-            if (selectedVariantId) selectedVariantId.value = match.id;
-            const qty = match.qty;
-            currentMaxQty = qty;
-            if (qtyInput) qtyInput.max = qty;
+        if (selectedVariantId) selectedVariantId.value = selectSize.value;
+        const qty = parseInt(selectedOption.dataset.qty, 10) || 0;
+        currentMaxQty = qty;
 
-            if (qty > 0) {
-                if (qtyInput) qtyInput.value = 1;
-                if (stockStatus) {
-                    stockStatus.textContent = "Còn " + qty + " sản phẩm";
-                    stockStatus.className = "ms-3 text-success fw-semibold";
-                }
-            } else {
-                if (qtyInput) qtyInput.value = 0;
-                if (stockStatus) {
-                    stockStatus.textContent = "Tạm hết hàng";
-                    stockStatus.className = "ms-3 text-danger fw-semibold";
-                }
+        if (qty > 0) {
+            if (qtyInput) {
+                qtyInput.max = qty;
+                qtyInput.value = 1;
             }
+            if (stockStatus) {
+                stockStatus.textContent = "Còn " + qty + " sản phẩm";
+                stockStatus.className = "ms-3 text-success fw-bold";
+            }
+            if (btnAddCart) btnAddCart.disabled = false;
+            if (btnBuyNow) btnBuyNow.disabled = false;
+            if (btnMobileBuy) btnMobileBuy.disabled = false;
+        } else {
+            if (qtyInput) {
+                qtyInput.max = 0;
+                qtyInput.value = 0;
+            }
+            if (stockStatus) {
+                stockStatus.textContent = "Tạm hết hàng (0 sản phẩm)";
+                stockStatus.className = "ms-3 text-danger fw-bold";
+            }
+            if (btnAddCart) btnAddCart.disabled = true;
+            if (btnBuyNow) btnBuyNow.disabled = true;
+            if (btnMobileBuy) btnMobileBuy.disabled = true;
+        }
 
-            // Update price
-            if (displayFinalPrice) displayFinalPrice.textContent = formatCurrency(match.finalPrice);
-            if (match.hasPromo) {
-                if (displayOriginalPrice) {
-                    displayOriginalPrice.textContent = formatCurrency(match.origPrice);
-                    displayOriginalPrice.classList.remove('d-none');
-                }
-                if (displayDiscount) {
-                    displayDiscount.textContent = "GIẢM -" + match.discount + "%";
-                    displayDiscount.classList.remove('d-none');
-                }
-            } else {
-                if (displayOriginalPrice) displayOriginalPrice.classList.add('d-none');
-                if (displayDiscount) displayDiscount.classList.add('d-none');
+        // Cập nhật giá bán và khuyến mãi tương ứng
+        const finalPrice = parseFloat(selectedOption.dataset.finalprice);
+        const origPrice = parseFloat(selectedOption.dataset.origprice);
+        const hasPromo = selectedOption.dataset.haspromo === 'true';
+        const discount = selectedOption.dataset.discount;
+
+        if (!isNaN(finalPrice) && displayFinalPrice) {
+            displayFinalPrice.textContent = formatCurrency(finalPrice);
+        }
+        if (hasPromo) {
+            if (displayOriginalPrice && !isNaN(origPrice)) {
+                displayOriginalPrice.textContent = formatCurrency(origPrice);
+                displayOriginalPrice.classList.remove('d-none');
+            }
+            if (displayDiscount && discount) {
+                displayDiscount.textContent = "GIẢM -" + discount + "%";
+                displayDiscount.classList.remove('d-none');
             }
         } else {
-            if (selectedVariantId) selectedVariantId.value = '';
-            currentMaxQty = 0;
-            if (qtyInput) qtyInput.value = 0;
-            if (stockStatus) {
-                stockStatus.textContent = "Không có sẵn kết hợp này";
-                stockStatus.className = "ms-3 text-danger fw-semibold";
-            }
+            if (displayOriginalPrice) displayOriginalPrice.classList.add('d-none');
+            if (displayDiscount) displayDiscount.classList.add('d-none');
         }
     }
 
-    [selectSize, selectColor, selectMaterial, selectSole].forEach(sel => {
-        if (sel) {
-            sel.addEventListener('change', updateVariantSelection);
-        }
-    });
-
-    // Auto-select first in-stock variant or first variant
-    if (variants.length > 0) {
-        const defaultVar = variants.find(v => v.qty > 0) || variants[0];
-        if (selectSize && defaultVar.sizeId) selectSize.value = defaultVar.sizeId;
-        if (selectColor && defaultVar.colorId) selectColor.value = defaultVar.colorId;
-        if (selectMaterial && defaultVar.materialId) selectMaterial.value = defaultVar.materialId;
-        if (selectSole && defaultVar.soleId) selectSole.value = defaultVar.soleId;
-        updateVariantSelection();
+    if (selectSize) {
+        selectSize.addEventListener('change', onSizeChange);
+        // Khởi tạo trạng thái ban đầu: chưa chọn kích cỡ
+        onSizeChange();
     }
 
     if (btnMinus && qtyInput) {
@@ -167,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 this.value = val;
                 if (stockStatus) {
                     stockStatus.textContent = "Còn " + currentMaxQty + " sản phẩm";
-                    stockStatus.className = "ms-3 text-success";
+                    stockStatus.className = "ms-3 text-success fw-bold";
                 }
             }
         });
@@ -188,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
         if (currentMaxQty <= 0) {
-            alert('Thuộc tính biến thể này đã hết hàng, vui lòng chọn phân loại khác.');
+            alert('Kích cỡ này đã hết hàng, vui lòng chọn kích cỡ khác.');
             return;
         }
 

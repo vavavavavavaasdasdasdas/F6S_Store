@@ -98,17 +98,7 @@ public class OrderStatusService {
         orders.saveAndFlush(order);
         record(order,"Đã tạo đơn hàng.",null,null);
         order.setOrderCode(String.format("DH%06d",order.getId()));orders.flush();
-        if(pos || bankTransfer(order) || "VNPAY".equals(order.getPaymentMethod()))inventory.truKhoChoDon(order);
-        else {
-            // COD checks availability without reserving. Confirmation checks it again atomically.
-            Map<Integer,Integer> quantities=new TreeMap<>();
-            for(var detail:order.getOrderDetails())quantities.merge(detail.getProductVariant().getId(),detail.getQuantity(),Math::addExact);
-            for(var line:quantities.entrySet()) {
-                var variant=inventory.lock(line.getKey());
-                if(!ProductSalePolicy.isSelling(variant) || variant.getQuantity()<line.getValue())
-                    throw new IllegalArgumentException("Không đủ tồn kho hoặc sản phẩm ngừng bán: "+variant.getProduct().getName()+" / Kích cỡ "+variant.getSize().getSizeValue()+" / "+variant.getMaterial().getName());
-            }
-        }
+        inventory.truKhoChoDon(order);
     }
 
     @Transactional

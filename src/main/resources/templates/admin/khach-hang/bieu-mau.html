@@ -35,7 +35,7 @@
 <p class="field-error" role="alert" th:if="${#fields.hasErrors('provinceId')}" th:errors="*{provinceId}"></p>
 <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
 <button type="button" class="btn btn-outline-primary" id="add-customer-address-btn" data-add-customer-address data-add-icon th:disabled="${#lists.size(customer.addresses)>=3}">Thêm địa chỉ</button>
-<span class="field-help mb-0" data-address-limit-note th:text="${#lists.size(customer.addresses)>=3 ? 'Mỗi khách chỉ lưu tối đa 3 địa chỉ' : 'Tối đa 3 địa chỉ nhận hàng.'}"></span>
+<span class="field-help mb-0" data-address-limit-note th:text="${#lists.size(customer.addresses)>=5 ? 'Mỗi khách chỉ lưu tối đa 5 địa chỉ' : 'Tối đa 5 địa chỉ nhận hàng.'}"></span>
 </div>
 <template id="customer-address-template">
 <fieldset class="delivery-address customer-address-block col-12 mb-3 p-3 border rounded" data-delivery-address data-customer-address-block data-scope="USER">

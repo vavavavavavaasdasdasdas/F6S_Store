@@ -10,9 +10,26 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.*;
 import java.util.*;
 
-@Service @RequiredArgsConstructor
+@Service
 public class ShippingFeeService {
-    private final ShippingSettingsRepository settings;private final AddressDirectory directory;private final GeocodingService geocoding;private final Validator validator;
+    private final ShippingSettingsRepository settings;
+    private final AddressDirectory directory;
+    private final GeocodingService geocoding;
+    private final Validator validator;
+    private final GhnService ghnService;
+
+    public ShippingFeeService(ShippingSettingsRepository settings, AddressDirectory directory, GeocodingService geocoding, Validator validator) {
+        this(settings, directory, geocoding, validator, new GhnService());
+    }
+
+    @org.springframework.beans.factory.annotation.Autowired
+    public ShippingFeeService(ShippingSettingsRepository settings, AddressDirectory directory, GeocodingService geocoding, Validator validator, GhnService ghnService) {
+        this.settings = settings;
+        this.directory = directory;
+        this.geocoding = geocoding;
+        this.validator = validator;
+        this.ghnService = ghnService;
+    }
     private static final double EARTH_RADIUS_KM=6371.0088;
     public record Quote(BigDecimal shippingFee,BigDecimal distanceKm,BigDecimal latitude,BigDecimal longitude,String coordinateSource,boolean freeShip,String note,String hint,String fullAddress,String provinceCode,String wardCode,String wardName) {}
     public ShippingSettings settings(){return settings.findById(1).orElseThrow(()->new IllegalStateException("Thiếu cấu hình phí vận chuyển. Chạy migration016."));}
@@ -44,9 +61,15 @@ public class ShippingFeeService {
         GeocodingService.Point point=null;String source=null;
         if(form.getLatitude()!=null && Set.of("GPS","GHIM_TAY").contains(Objects.toString(form.getCoordinateSource(),""))){point=GeocodingService.point(form.getLatitude(),form.getLongitude());source=form.getCoordinateSource();}
         else if(ward!=null){var found=ward.getLatitude()!=null && ward.getLongitude()!=null?Optional.of(GeocodingService.point(ward.getLatitude(),ward.getLongitude())):allowGeocoding?geocoding.wardCenter(ward,client):Optional.<GeocodingService.Point>empty();if(found.isPresent()){point=found.get();source="TAM_PHUONG_XA";}}
-        BigDecimal distance=point==null?null:haversine(s.getOriginLatitude(),s.getOriginLongitude(),point.latitude(),point.longitude());boolean free=quantity>=s.getFreeQuantity();
+        BigDecimal distance=point==null?null:haversine(s.getOriginLatitude(),s.getOriginLongitude(),point.latitude(),point.longitude());
+        boolean free=quantity>=s.getFreeQuantity();
         String address=ward==null || form.getStreetAddress()==null || form.getStreetAddress().isBlank()?null:form.getStreetAddress().trim()+", "+ward.getName()+", "+ward.getProvince().getName();
-        return new Quote(BigDecimal.ZERO,distance,point==null?null:point.latitude(),point==null?null:point.longitude(),source,false,"Phí vận chuyển do đơn vị vận chuyển tính và thu riêng","",address,ward==null?null:ward.getProvince().getAdministrativeCode(),ward==null?null:ward.getCode(),ward==null?null:ward.getName());
+
+        var ghnQuote = ghnService.calculateFee(ward, quantity, BigDecimal.ZERO);
+        BigDecimal fee = free ? BigDecimal.ZERO : ghnQuote.fee();
+        String note = free ? "Miễn phí vận chuyển F6S" : ghnQuote.serviceName();
+
+        return new Quote(fee,distance,point==null?null:point.latitude(),point==null?null:point.longitude(),source,free,note,"",address,ward==null?null:ward.getProvince().getAdministrativeCode(),ward==null?null:ward.getCode(),ward==null?null:ward.getName());
     }
     public void apply(Order order,DeliveryAddressForm form,int quantity){
         var ward=validateAddress(form);
@@ -54,7 +77,17 @@ public class ShippingFeeService {
         order.setProvince(ward.getProvince());order.setProvinceName(ward.getProvince().getName());order.setWard(ward);order.setStreetAddress(form.getStreetAddress().trim());
         order.setShippingAddress(form.getStreetAddress().trim());order.setDeliveryAddressSnapshot(fullAddress);order.setDeliveryProvinceCode(ward.getProvince().getAdministrativeCode());order.setDeliveryWardCode(ward.getCode());order.setDeliveryWardName(ward.getName());
         order.setLatitude(form.getLatitude());order.setLongitude(form.getLongitude());order.setCoordinateSource(form.getCoordinateSource());
-        order.setDistanceKm(null);order.setShippingFee(BigDecimal.ZERO);order.setFreeShip(false);order.setShippingNote("Phí vận chuyển do đơn vị vận chuyển tính và thu riêng");order.setShippingPolicyVersion(1);
+
+        var s=settings();
+        boolean free=quantity>=s.getFreeQuantity();
+        var ghnQuote = ghnService.calculateFee(ward, quantity, order.getTotalAmount());
+        BigDecimal fee = free ? BigDecimal.ZERO : ghnQuote.fee();
+
+        order.setDistanceKm(null);
+        order.setShippingFee(fee);
+        order.setFreeShip(free);
+        order.setShippingNote(free ? "Miễn phí vận chuyển F6S" : ghnQuote.serviceName());
+        order.setShippingPolicyVersion(1);
     }
     @Transactional public void update(ShippingSettingsForm form){
         var errors=validator.validate(form);if(!errors.isEmpty()){var e=errors.iterator().next();throw new PeopleValidationException(e.getPropertyPath().toString(),"Kiểm tra giá trị cấu hình vận chuyển.");}

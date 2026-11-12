@@ -124,12 +124,12 @@
     const src=b.querySelector('[data-delivery-source]');if(src){src.name=`addresses[${idx}].coordinateSource`;src.id=`customer-addr-${idx}-source`;}
     const mapBox=b.querySelector('[data-delivery-map]');if(mapBox)mapBox.id=`customer-addr-${idx}-map`;
    });
-   addBtn.disabled=blocks.length>=3;
-   if(limitNote)limitNote.textContent=blocks.length>=3?'Mỗi khách chỉ lưu tối đa 3 địa chỉ':'Tối đa 3 địa chỉ nhận hàng.';
+   addBtn.disabled=blocks.length>=5;
+   if(limitNote)limitNote.textContent=blocks.length>=5?'Mỗi khách chỉ lưu tối đa 5 địa chỉ':'Tối đa 5 địa chỉ nhận hàng.';
   }
   addBtn.addEventListener('click',()=>{
    const count=container.querySelectorAll('[data-customer-address-block]').length;
-   if(count>=3)return;
+   if(count>=5)return;
    const html=template.innerHTML.replace(/__INDEX__/g,String(count));
    const temp=document.createElement('div');temp.innerHTML=html.trim();
    const block=temp.firstElementChild;

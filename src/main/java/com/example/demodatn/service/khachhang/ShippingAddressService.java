@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service @RequiredArgsConstructor
 public class ShippingAddressService {
-    public static final int MAX_ADDRESSES = 20;
+    public static final int MAX_ADDRESSES = 5;
     public static final String LIMIT_MESSAGE = "Mỗi khách chỉ lưu tối đa " + MAX_ADDRESSES + " địa chỉ";
     private final CustomerRepository customers;
     private final ShippingAddressRepository addresses;

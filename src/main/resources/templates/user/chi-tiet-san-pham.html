@@ -47,74 +47,57 @@
                 </div>
 
                 <form id="addToCartForm" novalidate th:action="@{/cart/add}" method="post">
-                    <!-- Lựa chọn biến thể qua các Combobox riêng biệt -->
-                    <div class="mb-4">
+                    <!-- Lựa chọn biến thể xếp dọc xuống -->
+                    <div class="mb-4 d-flex flex-column gap-3">
                         <input type="hidden" name="variantId" id="selectedVariantId" value="">
 
-                        <!-- Metadata variants data cho JS logic -->
-                        <div id="variants-data" class="d-none">
-                            <span th:each="v : ${variants}"
-                                  th:data-id="${v.id}"
-                                  th:data-qty="${v.quantity}"
-                                  th:data-size-id="${v.size != null ? v.size.id : ''}"
-                                  th:data-size-name="${v.size != null ? v.size.sizeValue : ''}"
-                                  th:data-color-id="${v.color != null ? v.color.id : ''}"
-                                  th:data-color-name="${v.colorName}"
-                                  th:data-material-id="${v.material != null ? v.material.id : ''}"
-                                  th:data-material-name="${v.material != null ? v.material.name : ''}"
-                                  th:data-sole-id="${v.sole != null ? v.sole.id : ''}"
-                                  th:data-sole-name="${v.sole != null ? v.sole.name : ''}"
-                                  th:data-finalprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).finalPrice : v.price}"
-                                  th:data-origprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).originalPrice : v.price}"
-                                  th:data-haspromo="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).hasPromotion : false}"
-                                  th:data-discount="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).discountPercentage : 0}">
+                        <!-- Màu sắc (Hiển thị trực tiếp) -->
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold text-dark" style="min-width: 100px;">Màu sắc:</span>
+                            <span class="badge bg-light text-dark border px-3 py-2 fw-semibold fs-6" th:if="${!variants.isEmpty() and variants[0].color != null}">
+                                <span class="d-inline-block rounded-circle me-2 border shadow-sm"
+                                      th:style="'width: 14px; height: 14px; vertical-align: middle; background-color: ' + (${variants[0].colorHexCode != null and !variants[0].colorHexCode.isEmpty()} ? ${variants[0].colorHexCode} : '#000')"></span>
+                                <span th:text="${variants[0].colorName}">Đen</span>
                             </span>
                         </div>
 
-                        <div class="row g-3">
-                            <!-- Combobox 1: Kích cỡ -->
-                            <div class="col-sm-6">
-                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <label for="select-size" class="form-label fw-bold small text-dark mb-0">Kích cỡ (Size):</label>
-                                    <button type="button" class="btn btn-link btn-sm p-0 text-primary fw-semibold text-decoration-none small" data-bs-toggle="modal" data-bs-target="#sizeGuideModal" style="font-size: 0.8rem;">
-                                        <i class="bi bi-rulers me-1"></i> Bảng quy đổi size
-                                    </button>
-                                </div>
-                                <select id="select-size" class="form-select rounded-3 py-2">
-                                    <option value="">-- Chọn kích cỡ --</option>
-                                    <option th:each="s : ${availableSizes}" th:value="${s.id}" th:text="${s.sizeValue}">39</option>
-                                </select>
-                            </div>
-
-                            <!-- Combobox 2: Màu sắc -->
-                            <div class="col-sm-6">
-                                <label for="select-color" class="form-label fw-bold small text-dark mb-1">Màu sắc:</label>
-                                <select id="select-color" class="form-select rounded-3 py-2">
-                                    <option value="">-- Chọn màu sắc --</option>
-                                    <option th:each="c : ${availableColors}" th:value="${c.id}" th:text="${c.name}">Đen</option>
-                                </select>
-                            </div>
-
-                            <!-- Combobox 3: Chất liệu -->
-                            <div class="col-sm-6">
-                                <label for="select-material" class="form-label fw-bold small text-dark mb-1">Chất liệu:</label>
-                                <select id="select-material" class="form-select rounded-3 py-2">
-                                    <option value="">-- Chọn chất liệu --</option>
-                                    <option th:each="m : ${availableMaterials}" th:value="${m.id}" th:text="${m.name}">Vải Canvas</option>
-                                </select>
-                            </div>
-
-                            <!-- Combobox 4: Đế giày -->
-                            <div class="col-sm-6">
-                                <label for="select-sole" class="form-label fw-bold small text-dark mb-1">Đế giày:</label>
-                                <select id="select-sole" class="form-select rounded-3 py-2">
-                                    <option value="">-- Chọn đế giày --</option>
-                                    <option th:each="so : ${availableSoles}" th:value="${so.id}" th:text="${so.name}">Cao su lưu hóa</option>
-                                </select>
-                            </div>
+                        <!-- Chất liệu (Hiển thị trực tiếp) -->
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold text-dark" style="min-width: 100px;">Chất liệu:</span>
+                            <span class="badge bg-light text-dark border px-3 py-2 fw-semibold fs-6"
+                                  th:text="${!variants.isEmpty() and variants[0].material != null ? variants[0].material.name : 'Vải Canvas'}">Vải Canvas</span>
                         </div>
 
-                        <div id="size-error" class="text-danger small mt-2 d-none">Vui lòng chọn đầy đủ kích cỡ, màu sắc, chất liệu và đế giày còn hàng!</div>
+                        <!-- Đế giày (Hiển thị trực tiếp) -->
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold text-dark" style="min-width: 100px;">Đế giày:</span>
+                            <span class="badge bg-light text-dark border px-3 py-2 fw-semibold fs-6"
+                                  th:text="${!variants.isEmpty() and variants[0].sole != null ? variants[0].sole.name : 'Cao su lưu hóa'}">Cao su lưu hóa</span>
+                        </div>
+
+                        <!-- Chọn kích cỡ (Combobox dọc xuống) -->
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-1" style="max-width: 380px;">
+                                <label for="select-size" class="form-label fw-bold small text-dark mb-0">Chọn kích cỡ (Size):</label>
+                                <button type="button" class="btn btn-link btn-sm p-0 text-primary fw-semibold text-decoration-none small" data-bs-toggle="modal" data-bs-target="#sizeGuideModal" style="font-size: 0.8rem;">
+                                    <i class="bi bi-rulers me-1"></i> Bảng quy đổi size
+                                </button>
+                            </div>
+                            <select id="select-size" class="form-select rounded-3 py-2" style="max-width: 380px;">
+                                <option value="">-- Chọn kích cỡ --</option>
+                                <option th:each="v : ${variants}"
+                                        th:value="${v.id}"
+                                        th:data-qty="${v.quantity}"
+                                        th:data-finalprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).finalPrice : v.price}"
+                                        th:data-origprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).originalPrice : v.price}"
+                                        th:data-haspromo="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).hasPromotion : false}"
+                                        th:data-discount="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).discountPercentage : 0}"
+                                        th:text="'Size ' + ${v.sizeValue} + (${v.quantity <= 0} ? ' (Tạm hết hàng)' : ' (Còn ' + ${v.quantity} + ' sản phẩm)')">
+                                    Size 39 (Còn 12 sản phẩm)
+                                </option>
+                            </select>
+                            <div id="size-error" class="text-danger small mt-1 d-none">Vui lòng chọn kích cỡ giày còn hàng!</div>
+                        </div>
                     </div>
 
                     <!-- Quantity & Stock -->
@@ -250,19 +233,18 @@
                                     <tr>
                                         <th>Size VN / EU</th>
                                         <th>Chiều dài bàn chân (cm)</th>
-                                        <th>US Men</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr><td><strong>36</strong></td><td>22.5 cm</td><td>4.5</td></tr>
-                                    <tr><td><strong>37</strong></td><td>23.0 cm</td><td>5.0</td></tr>
-                                    <tr><td><strong>38</strong></td><td>23.5 - 24.0 cm</td><td>5.5 - 6.0</td></tr>
-                                    <tr><td><strong>39</strong></td><td>24.5 cm</td><td>6.5</td></tr>
-                                    <tr><td><strong>40</strong></td><td>25.0 cm</td><td>7.0</td></tr>
-                                    <tr><td><strong>41</strong></td><td>25.5 - 26.0 cm</td><td>7.5 - 8.0</td></tr>
-                                    <tr><td><strong>42</strong></td><td>26.5 cm</td><td>8.5</td></tr>
-                                    <tr><td><strong>43</strong></td><td>27.0 - 27.5 cm</td><td>9.0 - 9.5</td></tr>
-                                    <tr><td><strong>44</strong></td><td>28.0 cm</td><td>10.0</td></tr>
+                                    <tr><td><strong>36</strong></td><td>22.5 cm</td></tr>
+                                    <tr><td><strong>37</strong></td><td>23.0 cm</td></tr>
+                                    <tr><td><strong>38</strong></td><td>23.5 - 24.0 cm</td></tr>
+                                    <tr><td><strong>39</strong></td><td>24.5 cm</td></tr>
+                                    <tr><td><strong>40</strong></td><td>25.0 cm</td></tr>
+                                    <tr><td><strong>41</strong></td><td>25.5 - 26.0 cm</td></tr>
+                                    <tr><td><strong>42</strong></td><td>26.5 cm</td></tr>
+                                    <tr><td><strong>43</strong></td><td>27.0 - 27.5 cm</td></tr>
+                                    <tr><td><strong>44</strong></td><td>28.0 cm</td></tr>
                                 </tbody>
                             </table>
                         </div>
