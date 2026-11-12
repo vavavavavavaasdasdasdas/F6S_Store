@@ -113,8 +113,11 @@ public class OrderService {
             throw new IllegalArgumentException("Tài khoản chưa gắn với nhân viên đang hoạt động.");
         if (customer != null && !Boolean.TRUE.equals(customer.getStatus()))
             throw new IllegalArgumentException("Khách hàng đã bị vô hiệu hóa.");
+        if ("CASH".equalsIgnoreCase(paymentMethod)) {
+            paymentMethod = "COD";
+        }
         if (!java.util.Set.of("COD", "TRANSFER", "VNPAY").contains(paymentMethod))
-            throw new IllegalArgumentException("Đơn giao hàng chỉ hỗ trợ COD, Chuyển khoản hoặc VNPay.");
+            throw new IllegalArgumentException("Đơn giao hàng chỉ hỗ trợ Tiền mặt, Chuyển khoản hoặc VNPay.");
         if (receiverName == null || receiverName.isBlank())
             throw new IllegalArgumentException("Vui lòng nhập họ tên người nhận.");
         if (phone == null || phone.isBlank())

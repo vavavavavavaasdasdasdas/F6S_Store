@@ -644,8 +644,11 @@ public class AdminPosController {
                 }
 
                 if (request.isDelivery()) {
+                    if ("CASH".equalsIgnoreCase(request.getPaymentMethod())) {
+                        request.setPaymentMethod("COD");
+                    }
                     if (!Set.of("COD", "TRANSFER", "VNPAY").contains(request.getPaymentMethod())) {
-                        throw new IllegalArgumentException("Đơn giao hàng chỉ hỗ trợ COD, Chuyển khoản hoặc VNPay.");
+                        throw new IllegalArgumentException("Đơn giao hàng chỉ hỗ trợ Tiền mặt, Chuyển khoản hoặc VNPay.");
                     }
                     if ("TRANSFER".equals(request.getPaymentMethod())) {
                         if (!request.isTransferReceived()) {
