@@ -892,15 +892,8 @@
 
     const panelCash = document.querySelector('#panel-cash');
     const panelTransfer = document.querySelector('#panel-transfer');
-    const subpanelVietqr = document.querySelector('#subpanel-vietqr');
-    const subpanelVnpay = document.querySelector('#subpanel-vnpay');
-    const transferSubRadios = document.querySelectorAll('input[name="transferSubMethod"]');
     const panelCombined = document.querySelector('#panel-combined');
     const panelVnpay = document.querySelector('#panel-vnpay');
-
-    function getTransferSubMethod() {
-        return document.querySelector('input[name="transferSubMethod"]:checked')?.value || 'VIETQR';
-    }
 
     const cashInput = document.querySelector('#cashReceived');
     const cashWarning = document.querySelector('#cash-warning');
@@ -946,24 +939,15 @@
         }
 
         const method = document.querySelector('input[name="paymentMethod"]:checked')?.value || (deliverySwitch?.checked ? 'COD' : 'CASH');
-        const transferSub = getTransferSubMethod();
         if (method === 'CASH') {
             updateCashCalculations();
-        } else if (method === 'TRANSFER') {
-            if (transferSub === 'VIETQR') {
-                refreshTransferQr();
-            } else {
-                if (btnCheckout) {
-                    btnCheckout.disabled = (finalAmount <= 0);
-                }
+        } else if (method === 'TRANSFER' || method === 'VNPAY') {
+            if (btnCheckout) {
+                btnCheckout.disabled = (finalAmount <= 0);
             }
         } else if (method === 'COMBINED') {
             updateCombinedCalculations();
         } else if (method === 'COD') {
-            if (btnCheckout) {
-                btnCheckout.disabled = (finalAmount <= 0);
-            }
-        } else if (method === 'VNPAY') {
             if (btnCheckout) {
                 btnCheckout.disabled = (finalAmount <= 0);
             }
@@ -1231,9 +1215,9 @@
             if (methodsDelivery) methodsDelivery.hidden = false;
             if (btnSubmitLabel) btnSubmitLabel.textContent = 'TẠO ĐƠN GIAO HÀNG';
 
-            // Đảm bảo phương thức thanh toán phù hợp khi giao hàng (chỉ COD hoặc TRANSFER)
+            // Đảm bảo phương thức thanh toán phù hợp khi giao hàng (chỉ COD hoặc VNPAY/TRANSFER)
             const currentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value;
-            if (currentMethod !== 'TRANSFER') {
+            if (currentMethod !== 'TRANSFER' && currentMethod !== 'VNPAY') {
                 const codRadio = document.querySelector('#method-delivery-cod');
                 if (codRadio) codRadio.checked = true;
             } else {
@@ -1253,7 +1237,7 @@
             if (currentMethod === 'COD' || !currentMethod) {
                 const cashRadio = document.querySelector('#method-cash');
                 if (cashRadio) cashRadio.checked = true;
-            } else if (currentMethod === 'TRANSFER') {
+            } else if (currentMethod === 'TRANSFER' || currentMethod === 'VNPAY') {
                 const transferRadio = document.querySelector('#method-transfer');
                 if (transferRadio) transferRadio.checked = true;
             }
@@ -1343,15 +1327,10 @@
     function syncPaymentPanels() {
         const isDelivery = Boolean(deliverySwitch?.checked);
         const val = document.querySelector('input[name="paymentMethod"]:checked')?.value || (isDelivery ? 'COD' : 'CASH');
-        const transferSub = getTransferSubMethod();
 
         if (panelCash) panelCash.hidden = isDelivery || (val !== 'CASH');
-        if (panelTransfer) panelTransfer.hidden = (val !== 'TRANSFER');
+        if (panelTransfer) panelTransfer.hidden = (val !== 'TRANSFER' && val !== 'VNPAY');
         if (panelCombined) panelCombined.hidden = isDelivery || (val !== 'COMBINED');
-        if (panelVnpay) panelVnpay.hidden = true;
-
-        if (subpanelVietqr) subpanelVietqr.hidden = (val !== 'TRANSFER' || transferSub !== 'VIETQR');
-        if (subpanelVnpay) subpanelVnpay.hidden = (val !== 'TRANSFER' || transferSub !== 'VNPAY');
 
         const vnpayGuidance = document.querySelector('#vnpay-guidance-btn-text');
         if (vnpayGuidance) {
@@ -1359,7 +1338,7 @@
         }
 
         if (btnCheckout) {
-            if (val === 'TRANSFER' && transferSub === 'VNPAY') {
+            if (val === 'TRANSFER' || val === 'VNPAY') {
                 btnCheckout.textContent = isDelivery ? 'TẠO ĐƠN & THANH TOÁN VNPAY' : 'THANH TOÁN QUA VNPAY';
                 btnCheckout.classList.remove('btn-success');
                 btnCheckout.classList.add('btn-primary');
@@ -1383,20 +1362,12 @@
         });
     });
 
-    transferSubRadios.forEach(radio => {
-        radio.addEventListener('change', () => {
-            syncPaymentPanels();
-            recalculateTotals();
-        });
-    });
-
     // Form submit validation
     const paymentForm = document.querySelector('#pos-payment');
     if (paymentForm) {
         paymentForm.addEventListener('submit', (e) => {
             const isDelivery = Boolean(deliverySwitch?.checked);
             let method = document.querySelector('input[name="paymentMethod"]:checked')?.value || (isDelivery ? 'COD' : 'CASH');
-            const transferSub = getTransferSubMethod();
             const finalAmount = getFinalTotal();
 
             if (getSubtotal() <= 0) {
@@ -1405,9 +1376,8 @@
                 return;
             }
 
-            // Nếu chọn Chuyển khoản và chọn Cổng VNPay, chuyển phương thức thành VNPAY khi gửi lên server
-            if (method === 'TRANSFER' && transferSub === 'VNPAY') {
-                method = 'VNPAY';
+            // Chuyển khoản qua VNPay
+            if (method === 'TRANSFER' || method === 'VNPAY') {
                 let hiddenMethod = paymentForm.querySelector('input[name="paymentMethod"][type="hidden"]');
                 if (!hiddenMethod) {
                     hiddenMethod = document.createElement('input');
@@ -1456,17 +1426,6 @@
                     document.querySelector('#pos-street')?.focus();
                     return;
                 }
-
-                if (method === 'TRANSFER' && transferSub === 'VIETQR') {
-                    if (!transferReceivedSingle?.checked) {
-                        e.preventDefault();
-                        alert('Vui lòng tích xác nhận "Đã nhận đủ tiền chuyển khoản".');
-                        transferReceivedSingle?.focus();
-                        return;
-                    }
-                    const transferAmountField = document.querySelector('#transferAmount');
-                    if (transferAmountField) transferAmountField.value = finalAmount;
-                }
             } else {
                 if (method === 'CASH') {
                     const given = parseVND(cashInput?.value);
@@ -1477,15 +1436,6 @@
                         return;
                     }
                     if (cashInput) cashInput.value = given;
-                } else if (method === 'TRANSFER' && transferSub === 'VIETQR') {
-                    if (!transferReceivedSingle?.checked) {
-                        e.preventDefault();
-                        alert('Vui lòng tích xác nhận "Đã nhận đủ tiền chuyển khoản".');
-                        transferReceivedSingle?.focus();
-                        return;
-                    }
-                    const transferAmountField = document.querySelector('#transferAmount');
-                    if (transferAmountField) transferAmountField.value = finalAmount;
                 } else if (method === 'COMBINED') {
                     const cashVal = parseVND(combinedCashInput?.value);
                     const transferVal = finalAmount - cashVal;

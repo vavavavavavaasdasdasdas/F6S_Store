@@ -83,15 +83,13 @@
                 <tr>
                     <th scope="col" class="row-number">STT</th>
                     <th>Mã hóa đơn</th>
-                    <th>Mã đơn</th>
                     <th>Ngày</th>
                     <th>Khách</th>
                     <th>Kênh bán</th>
                     <th>Trạng thái</th>
-                    <th>Thanh toán</th>
                     <th>Phương thức</th>
                     <th class="money">Tổng tiền (đ)</th>
-                    <th>Hành động</th>
+                    <th style="white-space: nowrap; min-width: 95px;" class="text-center">Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -99,9 +97,6 @@
                     <td class="row-number" th:text="${invoices.number * invoices.size + rowIndex.count}"></td>
                     <td>
                         <a th:href="@{/admin/invoices/{id}(id=${i.id})}" th:text="${i.invoiceCode}"></a>
-                    </td>
-                    <td>
-                        <a th:href="@{/admin/invoices/{id}(id=${i.id})}" th:text="${i.order.orderCode}"></a>
                     </td>
                     <td th:text="${#temporals.format(i.issuedAt, 'dd/MM/yyyy HH:mm')}"></td>
                     <td th:text="${i.customerName}"></td>
@@ -112,14 +107,11 @@
                         <span class="status-pill" th:data-status="${i.order.status}" th:text="${statusLabels[i.order.status] ?: i.order.status}"></span>
                     </td>
                     <td>
-                        <span class="badge" th:classappend="${i.order.paymentStatus == 'PAID' ? 'bg-success' : 'bg-warning text-dark'}" th:text="${i.order.paymentStatus == 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán'}"></span>
-                    </td>
-                    <td>
-                        <span th:text="${i.order.paymentMethod == 'CASH' ? 'Tiền mặt' : (i.order.paymentMethod == 'COD' ? 'COD' : (i.order.paymentMethod == 'COMBINED' ? 'Kết hợp' : (i.order.paymentMethod == 'VNPAY' ? 'VNPay' : 'Chuyển khoản')))}"></span>
+                        <span th:text="${i.order.paymentMethod == 'CASH' ? 'Tiền mặt' : (i.order.paymentMethod == 'COD' ? 'Tiền mặt' : (i.order.paymentMethod == 'COMBINED' ? 'Kết hợp' : (i.order.paymentMethod == 'VNPAY' ? 'VNPay' : 'VNPay')))}"></span>
                     </td>
                     <td class="money" th:text="${@money.format(i.order.finalAmount)}"></td>
-                    <td class="table-actions">
-                        <div class="d-flex gap-1 align-items-center flex-wrap">
+                    <td class="table-actions" style="white-space: nowrap; min-width: 95px;">
+                        <div class="d-inline-flex gap-1 align-items-center flex-nowrap justify-content-center" style="white-space: nowrap;">
                             <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/invoices/{id}(id=${i.id})}" title="Xem và xử lý chi tiết">Xem / xử lý</a>
                             <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/invoices/{id}(id=${i.id},print=true)}" title="In hóa đơn">In</a>
                             <!-- Nút chuyển bước tiếp theo cho đơn trực tuyến nếu có bước hợp lệ -->
@@ -140,7 +132,7 @@
                     </td>
                 </tr>
                 <tr th:if="${invoices.empty}">
-                    <td colspan="11" class="sales-empty">Không có hóa đơn phù hợp.</td>
+                    <td colspan="9" class="sales-empty">Không có hóa đơn phù hợp.</td>
                 </tr>
                 </tbody>
             </table>

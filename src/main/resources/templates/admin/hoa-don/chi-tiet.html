@@ -31,9 +31,6 @@
                 <dt class="col-sm-5 text-muted">Mã hóa đơn:</dt>
                 <dd class="col-sm-7"><strong th:text="${invoice.invoiceCode}"></strong></dd>
 
-                <dt class="col-sm-5 text-muted">Mã đơn hàng:</dt>
-                <dd class="col-sm-7"><strong th:text="${o.orderCode}"></strong></dd>
-
                 <dt class="col-sm-5 text-muted">Ngày tạo:</dt>
                 <dd class="col-sm-7" th:text="${#temporals.format(invoice.issuedAt, 'dd/MM/yyyy HH:mm')}"></dd>
 
@@ -42,8 +39,8 @@
                     <span class="badge" th:classappend="${o.orderType == 'POS' ? 'bg-secondary' : 'bg-info text-dark'}" th:text="${o.orderType == 'POS' ? 'Bán tại quầy (POS)' : 'Trực tuyến (Online)'}"></span>
                 </dd>
 
-                <dt class="col-sm-5 text-muted">Nhân viên bán:</dt>
-                <dd class="col-sm-7" th:text="${o.employee != null ? o.employee.fullName : (invoice.employeeName ?: 'Đơn trực tuyến')}"></dd>
+                <dt class="col-sm-5 text-muted">Mã nhân viên:</dt>
+                <dd class="col-sm-7"><strong th:text="${o.employee != null ? (o.employee.employeeCode ?: o.employee.fullName) : (invoice.employeeName ?: 'Đơn trực tuyến')}"></strong></dd>
 
                 <dt class="col-sm-5 text-muted">Trạng thái:</dt>
                 <dd class="col-sm-7">
@@ -54,15 +51,6 @@
                 <dd class="col-sm-7">
                     <span class="badge" th:classappend="${o.paymentStatus == 'PAID' ? 'bg-success' : 'bg-warning text-dark'}" th:text="${o.paymentStatus == 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán'}"></span>
                 </dd>
-
-                <dt class="col-sm-5 text-muted">Ghi chú bán hàng:</dt>
-                <dd class="col-sm-7" th:text="${o.salesNote ?: '—'}"></dd>
-
-                <dt class="col-sm-5 text-muted">Ghi chú thanh toán:</dt>
-                <dd class="col-sm-7" th:text="${o.paymentNote ?: '—'}"></dd>
-
-                <dt th:if="${o.paymentReference != null}" class="col-sm-5 text-muted">Mã đối soát:</dt>
-                <dd th:if="${o.paymentReference != null}" class="col-sm-7"><strong th:text="${o.paymentReference}"></strong></dd>
             </dl>
         </div>
 
@@ -200,10 +188,7 @@
             </div>
         </section>
 
-        <!-- 3. Mã VietQR khi đơn online chưa thanh toán chuyển khoản -->
-        <th:block th:if="${o.paymentStatus != 'PAID' and (o.paymentMethod == 'TRANSFER' or o.paymentMethod == 'BANK_TRANSFER' or o.paymentMethod == 'COMBINED')}">
-            <th:block th:replace="~{fragments/vietqr :: payment(${o})}"></th:block>
-        </th:block>
+
 
         <!-- 4. Lịch sử thay đổi trạng thái chi tiết -->
         <section class="admin-panel mb-3" aria-label="Lịch sử thay đổi trạng thái">
@@ -266,6 +251,31 @@
 
     <!-- KHỐI ĐƠN TẠI QUẦY (POS ONLY) -->
     <th:block th:if="${o.orderType == 'POS'}">
+        <!-- 1. Tiến trình các bước đơn tại quầy (hiển thị rõ đang ở bước nào giống online) -->
+        <section class="admin-panel order-tracking mb-3" aria-label="Tiến trình đơn hàng tại quầy">
+            <div class="panel-heading">
+                <h2 class="h5 mb-0">Tiến trình đơn hàng tại quầy</h2>
+            </div>
+            <div class="order-progress-scroll mt-2" role="region" aria-label="Tiến trình đơn hàng, cuộn ngang để xem" tabindex="0">
+                <ol class="order-progress">
+                    <li th:each="step : ${@orderTrackingService.steps(o)}"
+                        th:classappend="${step.current ? 'is-current' : step.at != null ? 'is-done' : ''}"
+                        th:attr="aria-current=${step.current ? 'step' : null}">
+                        <strong th:text="${step.label}"></strong>
+                        <time th:if="${step.at != null}" th:text="${#temporals.format(step.at, 'HH:mm dd/MM/yyyy')}"></time>
+                        <span th:if="${step.actor != null}" th:text="${step.actor}"></span>
+                        <span th:if="${step.at == null}" class="text-muted">Chưa thực hiện</span>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Cảnh báo nếu đã hủy -->
+            <div th:if="${o.status == 'CANCELLED'}" class="alert alert-danger mt-3 mb-0" role="alert">
+                <strong>Đơn hàng đã hủy.</strong> Hàng đã được hoàn kho tự động và ghi lịch sử xử lý.
+            </div>
+        </section>
+
+        <!-- 2. Cập nhật trạng thái đơn tại quầy -->
         <div th:if="${!allowedStatuses.empty}" class="admin-panel mb-3">
             <div class="panel-heading mb-3">
                 <h2 class="h5 mb-0">Cập nhật trạng thái đơn tại quầy</h2>
