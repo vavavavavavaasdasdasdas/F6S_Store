@@ -42,19 +42,43 @@
   finally{if(current===revision){loading=false;lock();}}
  }
  function schedule(){clearTimeout(timer);timer=setTimeout(()=>preview(),250);}
- function paymentChanged(){
-  bank.hidden=payment()!=='BANK_TRANSFER';
-  if(!bank.hidden)preview();
-  const label = payment()==='VNPAY' ? 'Thanh toán qua VNPay' : 'Đặt hàng';
+ function updateOrderButtonLabel(totalVal) {
+  const totalNum = Number(totalVal || 0);
+  const isLarge = totalNum >= 3000000;
+  let label = 'Đặt hàng';
+  if (isLarge) {
+   const depVal = Math.round(totalNum * 0.1);
+   label = 'Đặt hàng (Cọc 10%: ' + money(depVal) + ')';
+  } else if (payment() === 'VNPAY') {
+   label = 'Thanh toán qua VNPay';
+  }
   text('[data-order-button-label]', label);
  }
+ function paymentChanged(){
+  if (bank) {
+   bank.hidden=payment()!=='BANK_TRANSFER';
+   if(!bank.hidden)preview();
+  }
+  const curTotalStr = document.querySelector('[data-total]')?.textContent?.replace(/[^0-9]/g, '') || '0';
+  updateOrderButtonLabel(parseInt(curTotalStr, 10));
+ }
  function updateLargeOrderNotice(totalVal){
-  const isLarge = Number(totalVal) >= 2000000;
+  const totalNum = Number(totalVal || 0);
+  const isLarge = totalNum >= 3000000;
   const codInput = form.querySelector('[name=paymentMethod][value=COD]');
   const vnpayInput = form.querySelector('[name=paymentMethod][value=VNPAY]');
   const warn = document.getElementById('large-order-warning');
   const codCard = document.getElementById('cod-payment-card');
+  const rowDeposit = document.getElementById('row-deposit');
+  const depositEl = document.getElementById('deposit-amount');
   if (warn) warn.hidden = !isLarge;
+  if (rowDeposit) {
+   rowDeposit.hidden = !isLarge;
+   if (isLarge && depositEl) {
+    const depVal = Math.round(totalNum * 0.1);
+    depositEl.textContent = money(depVal) + ' ₫';
+   }
+  }
   if (codInput) {
    codInput.disabled = isLarge;
    if (codCard) {
@@ -63,9 +87,9 @@
    }
    if (isLarge && codInput.checked && vnpayInput) {
     vnpayInput.checked = true;
-    paymentChanged();
    }
   }
+  updateOrderButtonLabel(totalNum);
  }
  form.querySelectorAll('[name=paymentMethod]').forEach(r=>r.addEventListener('change',paymentChanged));
  const initTotalStr = document.querySelector('[data-total]')?.textContent?.replace(/[^0-9]/g, '');
@@ -78,7 +102,7 @@
    if(vnpayInput) vnpayInput.checked = true;
   }
  }
- bank.hidden=payment()!=='BANK_TRANSFER';
+ if (bank) bank.hidden=payment()!=='BANK_TRANSFER';
  form.querySelectorAll('[data-address-card]').forEach(r=>r.addEventListener('change',()=>{
   const d=r.dataset;form.elements.receiverName.value=d.receiver||'';form.elements.phone.value=d.phone||'';
   delivery.dispatchEvent(new CustomEvent('delivery:select-address',{detail:{provinceId:d.province||'',wardId:d.ward||'',streetAddress:d.address||'',latitude:d.latitude||'',longitude:d.longitude||'',coordinateSource:d.source||''}}));
@@ -205,10 +229,12 @@
   button.addEventListener('click',()=>preview(o.code,true));return button;
  }
  function positionVouchers(){
-  if(mobile.matches){dialog.style.margin='';dialog.style.left='';dialog.style.top='';return;}
-  const rect=form.querySelector('[data-open-vouchers]').getBoundingClientRect();dialog.style.margin='0';dialog.style.left=Math.max(16,Math.min(rect.right-dialog.offsetWidth,innerWidth-dialog.offsetWidth-16))+'px';dialog.style.top=Math.max(16,Math.min(rect.bottom+8,innerHeight-dialog.offsetHeight-16))+'px';
+  dialog.style.margin='auto';
+  dialog.style.left='';
+  dialog.style.top='';
  }
  window.addEventListener('resize',()=>{if(dialog.open)positionVouchers();});
+ dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
  form.querySelector('[data-open-vouchers]').addEventListener('click',async()=>{
   dialog.showModal();listMessage.textContent='Đang tải voucher…';list.replaceChildren();optionRequest?.abort();optionRequest=new AbortController();
   positionVouchers();

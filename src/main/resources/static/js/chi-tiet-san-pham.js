@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     document.body.classList.add("has-mobile-actions");
+    const selectColor = document.getElementById('select-color');
     const selectSize = document.getElementById('select-size');
     const selectedVariantId = document.getElementById('selectedVariantId');
 
@@ -138,8 +139,43 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    function filterSizesByColor() {
+        if (!selectSize) return;
+        const selectedColorId = selectColor ? selectColor.value : '';
+        for (let i = 1; i < selectSize.options.length; i++) {
+            const opt = selectSize.options[i];
+            const optColorId = opt.dataset.colorId || '';
+            const match = !selectedColorId || optColorId === selectedColorId;
+            opt.hidden = !match;
+            opt.disabled = !match;
+        }
+        if (selectSize.selectedIndex > 0 && selectSize.options[selectSize.selectedIndex].hidden) {
+            selectSize.value = '';
+            onSizeChange();
+        }
+    }
+
+    if (selectColor) {
+        if (selectColor.options.length === 2) {
+            selectColor.selectedIndex = 1;
+        }
+        selectColor.addEventListener('change', function() {
+            filterSizesByColor();
+        });
+        filterSizesByColor();
+    }
+
     if (selectSize) {
-        selectSize.addEventListener('change', onSizeChange);
+        selectSize.addEventListener('change', function() {
+            if (selectColor && !selectColor.value && selectSize.selectedIndex > 0) {
+                const opt = selectSize.options[selectSize.selectedIndex];
+                if (opt.dataset.colorId) {
+                    selectColor.value = opt.dataset.colorId;
+                    filterSizesByColor();
+                }
+            }
+            onSizeChange();
+        });
         // Khởi tạo trạng thái ban đầu: chưa chọn kích cỡ
         onSizeChange();
     }

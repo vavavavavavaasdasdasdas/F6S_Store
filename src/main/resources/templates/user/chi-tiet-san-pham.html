@@ -5,6 +5,18 @@
 </head>
 <body>
     <div th:fragment="content">
+        <style>
+            .combo-box[data-combo-for="select-color"],
+            .combo-box[data-combo-for="select-size"],
+            #select-color,
+            #select-size,
+            .combo-box[data-combo-for="select-color"] .combo-input,
+            .combo-box[data-combo-for="select-size"] .combo-input {
+                width: 220px !important;
+                max-width: 220px !important;
+                min-width: 180px !important;
+            }
+        </style>
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="py-3">
             <ol class="breadcrumb mb-0">
@@ -51,52 +63,61 @@
                     <div class="mb-4 d-flex flex-column gap-3">
                         <input type="hidden" name="variantId" id="selectedVariantId" value="">
 
-                        <!-- Màu sắc (Hiển thị trực tiếp) -->
+                        <!-- Màu sắc (Combobox ngắn) -->
                         <div class="d-flex align-items-center gap-2">
-                            <span class="fw-bold text-dark" style="min-width: 100px;">Màu sắc:</span>
-                            <span class="badge bg-light text-dark border px-3 py-2 fw-semibold fs-6" th:if="${!variants.isEmpty() and variants[0].color != null}">
-                                <span class="d-inline-block rounded-circle me-2 border shadow-sm"
-                                      th:style="'width: 14px; height: 14px; vertical-align: middle; background-color: ' + (${variants[0].colorHexCode != null and !variants[0].colorHexCode.isEmpty()} ? ${variants[0].colorHexCode} : '#000')"></span>
-                                <span th:text="${variants[0].colorName}">Đen</span>
-                            </span>
+                            <label for="select-color" class="fw-bold text-dark mb-0" style="min-width: 100px;">Màu sắc:</label>
+                            <div style="width: 220px; max-width: 220px;">
+                                <select id="select-color" class="form-select rounded-3 py-2" style="width: 220px !important; max-width: 220px !important;">
+                                    <option value="">-- Chọn màu sắc --</option>
+                                    <option th:each="c : ${availableColors}"
+                                            th:value="${c.id}"
+                                            th:data-hex="${c.hexCode}"
+                                            th:text="${c.name}">
+                                        Trắng
+                                    </option>
+                                </select>
+                            </div>
                         </div>
 
                         <!-- Chất liệu (Hiển thị trực tiếp) -->
                         <div class="d-flex align-items-center gap-2">
-                            <span class="fw-bold text-dark" style="min-width: 100px;">Chất liệu:</span>
-                            <span class="badge bg-light text-dark border px-3 py-2 fw-semibold fs-6"
+                            <span class="fw-bold text-dark mb-0" style="min-width: 100px;">Chất liệu:</span>
+                            <span class="badge bg-light text-dark border px-3 py-2 fw-semibold fs-6" style="max-width: 220px;"
                                   th:text="${!variants.isEmpty() and variants[0].material != null ? variants[0].material.name : 'Vải Canvas'}">Vải Canvas</span>
                         </div>
 
                         <!-- Đế giày (Hiển thị trực tiếp) -->
                         <div class="d-flex align-items-center gap-2">
-                            <span class="fw-bold text-dark" style="min-width: 100px;">Đế giày:</span>
-                            <span class="badge bg-light text-dark border px-3 py-2 fw-semibold fs-6"
+                            <span class="fw-bold text-dark mb-0" style="min-width: 100px;">Đế giày:</span>
+                            <span class="badge bg-light text-dark border px-3 py-2 fw-semibold fs-6" style="max-width: 220px;"
                                   th:text="${!variants.isEmpty() and variants[0].sole != null ? variants[0].sole.name : 'Cao su lưu hóa'}">Cao su lưu hóa</span>
                         </div>
 
-                        <!-- Chọn kích cỡ (Combobox dọc xuống) -->
+                        <!-- Chọn kích cỡ (Combobox ngắn) -->
                         <div>
-                            <div class="d-flex align-items-center gap-3 mb-1">
-                                <label for="select-size" class="form-label fw-bold small text-dark mb-0">Chọn kích cỡ (Size):</label>
-                                <button type="button" class="btn btn-link btn-sm p-0 text-primary fw-semibold text-decoration-none small" data-bs-toggle="modal" data-bs-target="#sizeGuideModal" style="font-size: 0.8rem;">
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                <label for="select-size" class="fw-bold text-dark mb-0" style="min-width: 100px;">Kích cỡ (Size):</label>
+                                <div style="width: 220px; max-width: 220px;">
+                                    <select id="select-size" class="form-select rounded-3 py-2" style="width: 220px !important; max-width: 220px !important;">
+                                        <option value="">-- Chọn kích cỡ --</option>
+                                        <option th:each="v : ${variants}"
+                                                th:value="${v.id}"
+                                                th:data-qty="${v.quantity}"
+                                                th:data-color-id="${v.color != null ? v.color.id : ''}"
+                                                th:data-finalprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).finalPrice : v.price}"
+                                                th:data-origprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).originalPrice : v.price}"
+                                                th:data-haspromo="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).hasPromotion : false}"
+                                                th:data-discount="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).discountPercentage : 0}"
+                                                th:text="'Size ' + ${v.sizeValue} + (${v.quantity <= 0} ? ' (Tạm hết hàng)' : ' (Còn ' + ${v.quantity} + ' sản phẩm)')">
+                                            Size 39 (Còn 12 sản phẩm)
+                                        </option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-link btn-sm p-0 text-primary fw-semibold text-decoration-none small ms-2" data-bs-toggle="modal" data-bs-target="#sizeGuideModal" style="font-size: 0.82rem; white-space: nowrap;">
                                     <i class="bi bi-rulers me-1"></i> Bảng quy đổi size
                                 </button>
                             </div>
-                            <select id="select-size" class="form-select rounded-3 py-2" style="width: 200px; max-width: 200px;">
-                                <option value="">-- Chọn kích cỡ --</option>
-                                <option th:each="v : ${variants}"
-                                        th:value="${v.id}"
-                                        th:data-qty="${v.quantity}"
-                                        th:data-finalprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).finalPrice : v.price}"
-                                        th:data-origprice="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).originalPrice : v.price}"
-                                        th:data-haspromo="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).hasPromotion : false}"
-                                        th:data-discount="${variantPrices.get(v.id) != null ? variantPrices.get(v.id).discountPercentage : 0}"
-                                        th:text="'Size ' + ${v.sizeValue} + (${v.quantity <= 0} ? ' (Tạm hết hàng)' : ' (Còn ' + ${v.quantity} + ' sản phẩm)')">
-                                    Size 39 (Còn 12 sản phẩm)
-                                </option>
-                            </select>
-                            <div id="size-error" class="text-danger small mt-1 d-none">Vui lòng chọn kích cỡ giày còn hàng!</div>
+                            <div id="size-error" class="text-danger small mt-1 d-none" style="margin-left: 108px;">Vui lòng chọn kích cỡ giày còn hàng!</div>
                         </div>
                     </div>
 

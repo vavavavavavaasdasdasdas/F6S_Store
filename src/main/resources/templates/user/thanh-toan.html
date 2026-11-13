@@ -36,10 +36,10 @@
 <p class="checkout-hint" th:if="${shippingAddresses.size()>=20}">Sổ địa chỉ đã đầy.</p>
 </section>
 <section class="checkout-card" aria-labelledby="payment-title"><h2 id="payment-title">Phương thức thanh toán</h2>
-<div id="large-order-warning" class="alert alert-warning py-2 mb-3 small" th:hidden="${total == null or total.compareTo(new java.math.BigDecimal('2000000')) < 0}">
-    <i class="bi bi-exclamation-triangle-fill me-1"></i> Đơn hàng giá trị lớn (từ 2.000.000 ₫) cần thanh toán/cọc trước qua VNPay. Không áp dụng thanh toán khi nhận hàng (COD).
+<div id="large-order-warning" class="alert alert-warning py-2 mb-3 small" th:hidden="${total == null or total.compareTo(new java.math.BigDecimal('3000000')) < 0}">
+    <i class="bi bi-shield-lock-fill me-1"></i> Đơn hàng từ 3.000.000 ₫ yêu cầu cọc trước 10% qua VNPay để xác nhận đơn. Không áp dụng thanh toán toàn bộ khi nhận hàng (COD).
 </div>
-<label class="checkout-radio payment-card" id="cod-payment-card" th:classappend="${total != null and total.compareTo(new java.math.BigDecimal('2000000')) >= 0} ? 'opacity-50' : ''"><input type="radio" th:field="*{paymentMethod}" value="COD" required th:disabled="${total != null and total.compareTo(new java.math.BigDecimal('2000000')) >= 0}"><span><i class="bi bi-cash-coin" aria-hidden="true"></i> Thanh toán khi nhận hàng (COD) <small th:if="${total != null and total.compareTo(new java.math.BigDecimal('2000000')) >= 0}">(Đơn &gt;= 2 triệu phải cọc trước)</small></span></label>
+<label class="checkout-radio payment-card" id="cod-payment-card" th:classappend="${total != null and total.compareTo(new java.math.BigDecimal('3000000')) >= 0} ? 'opacity-50' : ''"><input type="radio" th:field="*{paymentMethod}" value="COD" required th:disabled="${total != null and total.compareTo(new java.math.BigDecimal('3000000')) >= 0}"><span><i class="bi bi-cash-coin" aria-hidden="true"></i> Thanh toán khi nhận hàng (COD) <small th:if="${total != null and total.compareTo(new java.math.BigDecimal('3000000')) >= 0}">(Đơn &ge; 3 triệu cần cọc 10%)</small></span></label>
 <label class="checkout-radio payment-card"><input type="radio" th:field="*{paymentMethod}" value="VNPAY" required><span><i class="bi bi-credit-card-2-front text-primary" aria-hidden="true"></i> Cổng thanh toán VNPay (ATM / QR / Visa / Master)</span></label>
 <p class="field-error" id="paymentMethod-error" aria-live="polite"><span th:errors="*{paymentMethod}"></span></p>
 </section>
@@ -58,7 +58,7 @@
 </div>
 <input type="hidden" th:field="*{voucherCode}">
 <p data-checkout-message class="field-error" role="status" aria-live="polite"></p>
-<dl class="checkout-totals"><div><dt>Tạm tính</dt><dd data-subtotal th:text="${@money.format(subTotal)}+' ₫'"></dd></div><div data-discount-row hidden><dt>Giảm voucher</dt><dd class="text-success" data-discount></dd></div><div class="checkout-shipping"><dt>Phí vận chuyển (GHN)</dt><dd data-shipping-fee th:text="${@money.format(shippingFee != null ? shippingFee : 30000)}+' ₫'">30.000 ₫</dd></div><div class="checkout-grand-total"><dt>Tổng cộng</dt><dd data-total th:text="${@money.format(total)}+' ₫'"></dd></div></dl>
+<dl class="checkout-totals"><div><dt>Tạm tính</dt><dd data-subtotal th:text="${@money.format(subTotal)}+' ₫'"></dd></div><div data-discount-row hidden><dt>Giảm voucher</dt><dd class="text-success" data-discount></dd></div><div class="checkout-shipping"><dt>Phí vận chuyển (GHN)</dt><dd data-shipping-fee th:text="${@money.format(shippingFee != null ? shippingFee : 30000)}+' ₫'">30.000 ₫</dd></div><div class="checkout-grand-total"><dt>Tổng cộng</dt><dd data-total th:text="${@money.format(total)}+' ₫'"></dd></div><div id="row-deposit" class="text-danger fw-bold border-top pt-2" th:hidden="${total == null or total.compareTo(new java.math.BigDecimal('3000000')) < 0}"><dt class="text-danger"><i class="bi bi-shield-check me-1"></i>Cần cọc trước (10%)</dt><dd id="deposit-amount" class="text-danger fs-5" data-deposit th:text="${@money.format(total != null ? total.multiply(new java.math.BigDecimal('0.10')) : 0)}+' ₫'"></dd></div></dl>
 <button id="btnPlaceOrder" data-delivery-submit type="submit" class="btn btn-primary checkout-submit" th:disabled="${cartWarning!=null}"><span data-order-button-label>Đặt hàng</span></button><a class="checkout-back" href="/cart">Quay lại giỏ hàng</a>
 </aside>
 </div>

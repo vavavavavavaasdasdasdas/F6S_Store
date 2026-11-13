@@ -202,8 +202,8 @@ public class OrderController {
             return "redirect:/checkout";
         }
 
-        if ("COD".equalsIgnoreCase(request.getPaymentMethod()) && subTotal.compareTo(new BigDecimal("2000000")) >= 0) {
-            redirectAttributes.addFlashAttribute("error", "Đơn hàng có giá trị lớn (từ 2.000.000 ₫) cần thanh toán hoặc cọc trước qua VNPay.");
+        if ("COD".equalsIgnoreCase(request.getPaymentMethod()) && subTotal.compareTo(new BigDecimal("3000000")) >= 0) {
+            redirectAttributes.addFlashAttribute("error", "Đơn hàng từ 3.000.000 ₫ yêu cầu cọc trước 10% qua VNPay để xác nhận đơn.");
             redirectAttributes.addFlashAttribute("checkoutRequest", request);
             return "redirect:/checkout";
         }

@@ -52,7 +52,11 @@ public class VnPayService {
         String transactionRef = "VP" + order.getId() + "T" + System.currentTimeMillis();
         LocalDateTime now = LocalDateTime.now(VIETNAM_ZONE);
 
-        long amount = order.getFinalAmount() != null ? order.getFinalAmount().longValue() : 0L;
+        long fullAmount = order.getFinalAmount() != null ? order.getFinalAmount().longValue() : 0L;
+        boolean isDeposit = "ONLINE".equalsIgnoreCase(order.getOrderType())
+                && order.getFinalAmount() != null
+                && order.getFinalAmount().compareTo(new java.math.BigDecimal("3000000")) >= 0;
+        long amount = isDeposit ? Math.round(fullAmount * 0.1) : fullAmount;
         long vnpAmount = amount * 100L;
 
         TreeMap<String, String> params = new TreeMap<>();
@@ -62,7 +66,9 @@ public class VnPayService {
         params.put("vnp_Amount", String.valueOf(vnpAmount));
         params.put("vnp_CurrCode", "VND");
         params.put("vnp_TxnRef", transactionRef);
-        params.put("vnp_OrderInfo", "Thanh toan don hang " + order.getOrderCode());
+        params.put("vnp_OrderInfo", isDeposit
+                ? ("Dat coc 10% (" + amount + "d) don hang " + order.getOrderCode())
+                : ("Thanh toan don hang " + order.getOrderCode()));
         params.put("vnp_OrderType", "other");
         params.put("vnp_Locale", "vn");
         params.put("vnp_ReturnUrl", properties.baseUrl() + "/payment/vnpay/return");
@@ -135,9 +141,14 @@ public class VnPayService {
         }
 
         long receivedAmount = parseLong(params.get("vnp_Amount")) / 100L;
-        long orderAmount = order.getFinalAmount() != null ? order.getFinalAmount().longValue() : 0L;
-        if (receivedAmount != orderAmount) {
-            log.warn("VNPay return amount mismatch: order {} expects {} but got {}", order.getOrderCode(), orderAmount, receivedAmount);
+        long fullAmount = order.getFinalAmount() != null ? order.getFinalAmount().longValue() : 0L;
+        boolean isDeposit = "ONLINE".equalsIgnoreCase(order.getOrderType())
+                && order.getFinalAmount() != null
+                && order.getFinalAmount().compareTo(new java.math.BigDecimal("3000000")) >= 0;
+        long expectedAmount = isDeposit ? Math.round(fullAmount * 0.1) : fullAmount;
+
+        if (receivedAmount != expectedAmount && receivedAmount != fullAmount) {
+            log.warn("VNPay return amount mismatch: order {} expects {} but got {}", order.getOrderCode(), expectedAmount, receivedAmount);
             return new PaymentResult(false, false, order, "Số tiền thanh toán không khớp");
         }
 
@@ -153,7 +164,11 @@ public class VnPayService {
             }
             String bankCode = params.get("vnp_BankCode");
             String payDate = params.get("vnp_PayDate");
-            order.setPaymentNote("VNPay thanh toán thành công qua " + (bankCode != null ? bankCode : "VNPAY") + " (GD: " + transNo + ")");
+            if (isDeposit) {
+                order.setPaymentNote("VNPay đã cọc 10% (" + receivedAmount + " ₫) qua " + (bankCode != null ? bankCode : "VNPAY") + " (GD: " + transNo + ")");
+            } else {
+                order.setPaymentNote("VNPay thanh toán thành công qua " + (bankCode != null ? bankCode : "VNPAY") + " (GD: " + transNo + ")");
+            }
             orderRepository.save(order);
             log.info("Order {} marked PAID via VNPay transaction {}", order.getOrderCode(), transNo);
             return new PaymentResult(true, true, order, "Thanh toán thành công");
@@ -175,8 +190,12 @@ public class VnPayService {
         }
 
         long receivedAmount = parseLong(params.get("vnp_Amount")) / 100L;
-        long orderAmount = order.getFinalAmount() != null ? order.getFinalAmount().longValue() : 0L;
-        if (receivedAmount != orderAmount) {
+        long fullAmount = order.getFinalAmount() != null ? order.getFinalAmount().longValue() : 0L;
+        boolean isDeposit = "ONLINE".equalsIgnoreCase(order.getOrderType())
+                && order.getFinalAmount() != null
+                && order.getFinalAmount().compareTo(new java.math.BigDecimal("3000000")) >= 0;
+        long expectedAmount = isDeposit ? Math.round(fullAmount * 0.1) : fullAmount;
+        if (receivedAmount != expectedAmount && receivedAmount != fullAmount) {
             return Map.of("RspCode", "04", "Message", "Invalid amount");
         }
 
@@ -212,7 +231,15 @@ public class VnPayService {
             order.setPaymentStatus("PAID");
             String transNo = prefix + System.currentTimeMillis();
             order.setPaymentReference(transNo);
-            order.setPaymentNote("VNPay Demo xác nhận thành công (" + transNo + ")");
+            boolean isDeposit = "ONLINE".equalsIgnoreCase(order.getOrderType())
+                    && order.getFinalAmount() != null
+                    && order.getFinalAmount().compareTo(new java.math.BigDecimal("3000000")) >= 0;
+            if (isDeposit) {
+                long dep = Math.round(order.getFinalAmount().longValue() * 0.1);
+                order.setPaymentNote("VNPay Demo đã cọc 10% (" + dep + " ₫ - " + transNo + ")");
+            } else {
+                order.setPaymentNote("VNPay Demo xác nhận thành công (" + transNo + ")");
+            }
             orderRepository.save(order);
             return new PaymentResult(true, true, order, "Thanh toán thành công");
         } else {

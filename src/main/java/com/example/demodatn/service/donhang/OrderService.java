@@ -239,7 +239,8 @@ public class OrderService {
         Invoice invoice = new Invoice();
         invoice.setOrder(order);
         java.time.LocalDateTime issuedAt = order.getCreatedAt() != null ? order.getCreatedAt() : java.time.LocalDateTime.now();
-        String baseCode = "HD" + issuedAt.format(java.time.format.DateTimeFormatter.ofPattern("ddMMyyyyHHmmss"));
+        // Định dạng ngắn gọn theo thứ tự: giờ (HHmm), ngày (dd), tháng (MM), năm (yyyy) - không thêm giây
+        String baseCode = "HD" + issuedAt.format(java.time.format.DateTimeFormatter.ofPattern("HHmmddMMyyyy"));
         String invoiceCode = baseCode;
         int seq = 1;
         while (invoices.existsByInvoiceCode(invoiceCode)) {

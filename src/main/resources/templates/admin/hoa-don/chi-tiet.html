@@ -39,8 +39,18 @@
                     <span class="badge" th:classappend="${o.orderType == 'POS' ? 'bg-secondary' : 'bg-info text-dark'}" th:text="${o.orderType == 'POS' ? 'Bán tại quầy (POS)' : 'Trực tuyến (Online)'}"></span>
                 </dd>
 
-                <dt class="col-sm-5 text-muted">Mã nhân viên:</dt>
-                <dd class="col-sm-7"><strong th:text="${o.employee != null ? (o.employee.employeeCode ?: o.employee.fullName) : (invoice.employeeName ?: 'Đơn trực tuyến')}"></strong></dd>
+                <dt class="col-sm-5 text-muted">Sản phẩm:</dt>
+                <dd class="col-sm-7">
+                    <div th:each="d : ${o.orderDetails}" class="mb-1">
+                        <strong th:text="${d.productName ?: d.productVariant.product.name}"></strong>
+                        <span class="text-muted small" th:text="' - Size ' + ${d.sizeName ?: d.productVariant.size.sizeValue} + ' (x' + ${d.quantity} + ')'"></span>
+                    </div>
+                </dd>
+
+                <th:block th:if="${o.orderType == 'POS'}">
+                    <dt class="col-sm-5 text-muted">Mã nhân viên:</dt>
+                    <dd class="col-sm-7"><strong th:text="${o.employee != null ? (o.employee.employeeCode ?: o.employee.fullName) : (invoice.employeeName ?: '—')}"></strong></dd>
+                </th:block>
 
                 <dt class="col-sm-5 text-muted">Trạng thái:</dt>
                 <dd class="col-sm-7">
@@ -444,7 +454,7 @@
             <p>
                 Khách: <strong th:text="${invoice.customerName}"></strong><br>
                 <span th:if="${invoice.customerPhone != null}" th:text="'SĐT: ' + ${invoice.customerPhone} + '<br>'"></span>
-                Nhân viên: <span th:text="${o.employee != null ? o.employee.fullName : (invoice.employeeName ?: 'Đơn trực tuyến')}"></span>
+                <span th:if="${o.orderType == 'POS'}">Nhân viên: <span th:text="${o.employee != null ? (o.employee.employeeCode ?: o.employee.fullName) : (invoice.employeeName ?: '—')}"></span></span>
             </p>
         </div>
 
