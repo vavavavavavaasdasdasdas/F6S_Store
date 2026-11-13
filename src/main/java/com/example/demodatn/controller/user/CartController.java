@@ -136,6 +136,13 @@ public class CartController {
         }
 
         List<CartItemDto> cart = getCart(session);
+        int newTotal = cart.stream()
+                .mapToInt(item -> item.getVariantId().equals(variantId) ? quantity : item.getQuantity())
+                .sum();
+        if (newTotal > 5) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Đơn hàng online giới hạn tối đa 5 sản phẩm."));
+        }
+
         for (CartItemDto item : cart) {
             if (item.getVariantId().equals(variantId)) {
                 item.setQuantity(quantity);
@@ -200,6 +207,11 @@ public class CartController {
         int inCart = existing == null ? 0 : existing.getQuantity();
         if (inCart + quantity > stock) {
             return "Vượt quá tồn kho (còn " + stock + ", trong giỏ đã có " + inCart + ")";
+        }
+
+        int currentTotal = cart.stream().mapToInt(CartItemDto::getQuantity).sum();
+        if (currentTotal + quantity > 5) {
+            return "Đơn hàng online giới hạn tối đa 5 sản phẩm (trong giỏ hiện có " + currentTotal + " sản phẩm).";
         }
 
         BigDecimal finalPrice = pricingService.calculatePrice(variant).getFinalPrice();

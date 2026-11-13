@@ -36,7 +36,8 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/admin/**").access((authentication,ctx)->new org.springframework.security.authorization.AuthorizationDecision(access.allowed(authentication.get(),ctx.getRequest().getMethod(),ctx.getRequest().getRequestURI().substring(ctx.getRequest().getContextPath().length()))))
-                .requestMatchers("/orders/**", "/checkout/**", "/profile", "/profile/**").authenticated()
+                .requestMatchers("/checkout/**", "/orders/success/**").permitAll()
+                .requestMatchers("/orders", "/orders/**", "/profile", "/profile/**").authenticated()
                 .requestMatchers("/api/support/**", "/ws/support/**").permitAll()
                 .requestMatchers("/payment/**", "/api/payment/**", "/api/shop/payments/**", "/vnpay-demo", "/vnpay-demo.html").permitAll()
                 .requestMatchers("/", "/products/**", "/category/**", "/search", "/cart/**", "/login", "/register", "/policy", "/api/chatbot/**", "/css/**", "/js/**", "/images/**", "/anh/**", "/uploads/products/**", "/error").permitAll()

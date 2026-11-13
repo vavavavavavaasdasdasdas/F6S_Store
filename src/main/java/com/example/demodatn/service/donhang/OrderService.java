@@ -238,8 +238,15 @@ public class OrderService {
         statuses.place(order);
         Invoice invoice = new Invoice();
         invoice.setOrder(order);
-        invoice.setInvoiceCode(String.format("HD%06d", order.getId()));
-        invoice.setIssuedAt(order.getCreatedAt());
+        java.time.LocalDateTime issuedAt = order.getCreatedAt() != null ? order.getCreatedAt() : java.time.LocalDateTime.now();
+        String baseCode = "HD" + issuedAt.format(java.time.format.DateTimeFormatter.ofPattern("ddMMyyyyHHmmss"));
+        String invoiceCode = baseCode;
+        int seq = 1;
+        while (invoices.existsByInvoiceCode(invoiceCode)) {
+            invoiceCode = baseCode + "_" + seq++;
+        }
+        invoice.setInvoiceCode(invoiceCode);
+        invoice.setIssuedAt(issuedAt);
         invoice.setCustomerName(order.getCustomer() != null ? order.getCustomer().getFullName()
                 : order.getReceiverName() != null ? order.getReceiverName() : "Khách lẻ");
         invoice.setCustomerPhone(order.getCustomer() != null ? order.getCustomer().getPhone() : order.getPhoneNumber());

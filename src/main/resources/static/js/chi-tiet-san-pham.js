@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (qty > 0) {
             if (qtyInput) {
-                qtyInput.max = qty;
+                qtyInput.max = Math.min(qty, 5);
                 qtyInput.value = 1;
             }
             updateStockDisplay();
@@ -157,12 +157,17 @@ document.addEventListener("DOMContentLoaded", function() {
     if (btnPlus && qtyInput) {
         btnPlus.addEventListener('click', function() {
             let val = parseInt(qtyInput.value, 10) || 0;
-            if (currentMaxQty > 0 && val < currentMaxQty) {
+            let effectiveMax = Math.min(currentMaxQty, 5);
+            if (currentMaxQty > 0 && val < effectiveMax) {
                 qtyInput.value = val + 1;
                 updateStockDisplay();
-            } else if (currentMaxQty > 0 && val >= currentMaxQty) {
+            } else if (currentMaxQty > 0 && val >= effectiveMax) {
                 if (stockStatus) {
-                    stockStatus.textContent = "Đã chọn tối đa số lượng trong kho (" + currentMaxQty + " sản phẩm)";
+                    if (effectiveMax === 5 && currentMaxQty > 5) {
+                        stockStatus.textContent = "Đơn hàng online giới hạn tối đa 5 sản phẩm";
+                    } else {
+                        stockStatus.textContent = "Đã chọn tối đa số lượng trong kho (" + currentMaxQty + " sản phẩm)";
+                    }
                     stockStatus.className = "ms-3 text-warning-emphasis fw-bold";
                 }
             }

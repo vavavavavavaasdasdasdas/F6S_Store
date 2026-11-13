@@ -30,6 +30,7 @@
    voucher.value=p.valid?code.trim().toUpperCase():'';
    text('[data-subtotal]',money(p.subtotal));text('[data-total]',money(p.total));text('[data-discount]','− '+money(p.discountAmount));
    text('[data-shipping-fee]',money(p.shippingFee));
+   updateLargeOrderNotice(p.total);
    form.querySelector('[data-discount-row]').hidden=!p.valid||Number(p.discountAmount)===0;
    message.textContent=p.valid?'':p.message;
    if(p.valid&&code){selectedName=options.find(o=>o.code.toUpperCase()===code.trim().toUpperCase())?.name||code.trim();text('[data-selected-voucher]',selectedName+' · −'+money(p.discountAmount));}
@@ -47,8 +48,36 @@
   const label = payment()==='VNPAY' ? 'Thanh toán qua VNPay' : 'Đặt hàng';
   text('[data-order-button-label]', label);
  }
+ function updateLargeOrderNotice(totalVal){
+  const isLarge = Number(totalVal) >= 2000000;
+  const codInput = form.querySelector('[name=paymentMethod][value=COD]');
+  const vnpayInput = form.querySelector('[name=paymentMethod][value=VNPAY]');
+  const warn = document.getElementById('large-order-warning');
+  const codCard = document.getElementById('cod-payment-card');
+  if (warn) warn.hidden = !isLarge;
+  if (codInput) {
+   codInput.disabled = isLarge;
+   if (codCard) {
+    if (isLarge) codCard.classList.add('opacity-50');
+    else codCard.classList.remove('opacity-50');
+   }
+   if (isLarge && codInput.checked && vnpayInput) {
+    vnpayInput.checked = true;
+    paymentChanged();
+   }
+  }
+ }
  form.querySelectorAll('[name=paymentMethod]').forEach(r=>r.addEventListener('change',paymentChanged));
- if(!payment())form.querySelector('[name=paymentMethod][value=COD]').checked=true;
+ const initTotalStr = document.querySelector('[data-total]')?.textContent?.replace(/[^0-9]/g, '');
+ if(initTotalStr) updateLargeOrderNotice(parseInt(initTotalStr, 10));
+ if(!payment()){
+  const codInput = form.querySelector('[name=paymentMethod][value=COD]');
+  if(codInput && !codInput.disabled) codInput.checked = true;
+  else {
+   const vnpayInput = form.querySelector('[name=paymentMethod][value=VNPAY]');
+   if(vnpayInput) vnpayInput.checked = true;
+  }
+ }
  bank.hidden=payment()!=='BANK_TRANSFER';
  form.querySelectorAll('[data-address-card]').forEach(r=>r.addEventListener('change',()=>{
   const d=r.dataset;form.elements.receiverName.value=d.receiver||'';form.elements.phone.value=d.phone||'';

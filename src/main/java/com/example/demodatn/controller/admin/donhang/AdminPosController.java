@@ -662,6 +662,9 @@ public class AdminPosController {
                     if (request.getReceiverPhone() == null || request.getReceiverPhone().isBlank()) {
                         throw new IllegalArgumentException("Vui lòng nhập số điện thoại người nhận.");
                     }
+                    if (request.getReceiverEmail() == null || request.getReceiverEmail().isBlank()) {
+                        throw new IllegalArgumentException("Vui lòng nhập email người nhận để giữ thông tin liên lạc.");
+                    }
                     if (request.getProvinceId() == null) {
                         throw new IllegalArgumentException("Vui lòng chọn Tỉnh/Thành phố giao hàng.");
                     }

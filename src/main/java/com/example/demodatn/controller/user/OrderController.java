@@ -84,6 +84,12 @@ public class OrderController {
             redirectAttributes.addFlashAttribute("error", "Giỏ hàng rỗng.");
             return "redirect:/cart";
         }
+
+        int totalCartQty = cart.stream().mapToInt(CartItemDto::getQuantity).sum();
+        if (totalCartQty > 5) {
+            redirectAttributes.addFlashAttribute("error", "Đơn hàng online giới hạn tối đa 5 sản phẩm. Vui lòng giảm bớt số lượng trong giỏ hàng.");
+            return "redirect:/cart";
+        }
         
         BigDecimal subTotal;
         try { subTotal=pricingService.refreshCart(cart); }
@@ -179,6 +185,12 @@ public class OrderController {
             redirectAttributes.addFlashAttribute("error", "Giỏ hàng rỗng.");
             return "redirect:/cart";
         }
+
+        int totalCartQty = cart.stream().mapToInt(CartItemDto::getQuantity).sum();
+        if (totalCartQty > 5) {
+            redirectAttributes.addFlashAttribute("error", "Đơn hàng online giới hạn tối đa 5 sản phẩm. Vui lòng giảm bớt số lượng trong giỏ hàng.");
+            return "redirect:/cart";
+        }
         
         BigDecimal subTotal;
         try { subTotal=pricingService.refreshCart(cart); }
@@ -190,6 +202,11 @@ public class OrderController {
             return "redirect:/checkout";
         }
 
+        if ("COD".equalsIgnoreCase(request.getPaymentMethod()) && subTotal.compareTo(new BigDecimal("2000000")) >= 0) {
+            redirectAttributes.addFlashAttribute("error", "Đơn hàng có giá trị lớn (từ 2.000.000 ₫) cần thanh toán hoặc cọc trước qua VNPay.");
+            redirectAttributes.addFlashAttribute("checkoutRequest", request);
+            return "redirect:/checkout";
+        }
 
         Customer customer = getCustomer(principal);
         try {
@@ -197,9 +214,10 @@ public class OrderController {
                 if (principal == null) throw new IllegalArgumentException("Địa chỉ nhận hàng không hợp lệ.");
                 shippingAddresses.owned(principal.getName(),request.getShippingAddressId());
             }
-            shipping.prepare(request,principal.getName());
-            Order order = checkout.place(request, cart, customer, principal.getName());
+            shipping.prepare(request, principal != null ? principal.getName() : "guest");
+            Order order = checkout.place(request, cart, customer, principal != null ? principal.getName() : null);
             session.removeAttribute("cart");
+            session.setAttribute("guestOrderId", order.getId());
 
             if ("VNPAY".equalsIgnoreCase(request.getPaymentMethod())) {
                 String forwarded = servletRequest.getHeader("X-Forwarded-For");
@@ -308,8 +326,17 @@ public class OrderController {
     }
 
     @GetMapping("/orders/success/{id}")
-    public String orderSuccess(@PathVariable Integer id, Principal principal, Model model) {
-        Order order = customerOrder(id,principal);
+    public String orderSuccess(@PathVariable Integer id, Principal principal, HttpSession session, Model model) {
+        Order order;
+        if (principal != null) {
+            order = customerOrder(id, principal);
+        } else {
+            order = orderRepository.findById(id).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));
+            Integer guestOrderId = (Integer) session.getAttribute("guestOrderId");
+            if (order.getCustomer() != null && (guestOrderId == null || !guestOrderId.equals(id))) {
+                throw new org.springframework.security.access.AccessDeniedException("Không có quyền truy cập");
+            }
+        }
 
         model.addAttribute("order", order);
         model.addAttribute("bankName", bankName);
